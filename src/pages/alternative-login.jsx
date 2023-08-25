@@ -1,7 +1,7 @@
 import Link from "next/link";
 import AltLoginForm from "@/components/utils/forms/AltLoginForm";
 
-export default function registro() {
+export default function AlternativeLogin() {
   return (
     <div className="bg-blanco w-screen min-h-screen px-10">
       <h1 className="text-negroTexto font-bold text-2xl py-5">LOGIN TO SOS</h1>

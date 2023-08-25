@@ -1,7 +1,7 @@
 import Link from "next/link";
 import RegisterForm from "@/components/utils/forms/RegisterForm";
 
-export default function registro() {
+export default function Registro() {
   return (
     <div className="bg-blanco w-screen min-h-screen px-10">
       <h1 className="text-negroTexto font-bold text-2xl py-5">REGISTER</h1>

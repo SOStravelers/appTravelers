@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import LoginForm from "@/components/utils/forms/LoginForm";
 
-export default function login() {
+export default function Login() {
   return (
     <div className="bg-blanco w-screen min-h-screen px-10">
       <h1 className="text-negroTexto font-bold text-2xl py-5">WELCOME BACK</h1>

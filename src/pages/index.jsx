@@ -1,4 +1,3 @@
-import Image from "next/image";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";

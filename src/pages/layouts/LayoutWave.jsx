@@ -5,7 +5,7 @@ function LayoutWave() {
   return (
     <>
       <TopBar />
-      {children}
+
       <Navbar />
     </>
   );

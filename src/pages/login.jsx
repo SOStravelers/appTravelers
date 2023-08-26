@@ -4,7 +4,7 @@ import LoginForm from "@/components/utils/forms/LoginForm";
 
 export default function Login() {
   return (
-    <div className="bg-blanco w-screen px-10">
+    <div className="bg-blanco h-full w-screen px-10">
       <h1 className="text-negroTexto font-bold text-2xl py-5">WELCOME BACK</h1>
       <h2 className="text-negroTexto py-5">Get back to account</h2>
       <LoginForm />

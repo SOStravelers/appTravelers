@@ -13,7 +13,9 @@ function LoginForm() {
           Forgot password?
         </p>
       </Link>
-      <SolidButton text="Login" />
+      <Link href="/">
+        <SolidButton text="Login" />
+      </Link>
     </form>
   );
 }

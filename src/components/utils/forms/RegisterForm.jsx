@@ -15,7 +15,9 @@ function RegisterForm() {
           Forgot password?
         </p>
       </Link>
-      <SolidButton text="Register" />
+      <Link href="/">
+        <SolidButton text="Register" />
+      </Link>
     </form>
   );
 }

@@ -8,7 +8,9 @@ function LoginForm() {
       <OutlinedInput text="Apple" />
       <OutlinedInput text="Google" />
       <OutlinedInput text="Facebook" />
-      <SolidButton text="Sign in with you email" />
+      <Link href="/login">
+        <SolidButton text="Sign in with you email" />
+      </Link>
     </form>
   );
 }

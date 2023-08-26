@@ -11,7 +11,8 @@ module.exports = {
       negroTexto: "#2e2e2e",
       blanco: "#FFFFFF",
       negro: "#000000",
-      gris: "#4e4e4e"
+      gris: "#4e4e4e",
+      grisClaro: "#D9D9D9"
     },
     extend: {},
   },

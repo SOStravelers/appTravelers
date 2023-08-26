@@ -3,9 +3,14 @@ import Logo from "../../../public/logo.png";
 
 function TopBar() {
   return (
-    <div className="w-screen flex justify-center items-center h-40 bg-azul">
-      <Image className="my-auto" src={Logo} alt="logo" />
-    
+    <div className="w-screen flex items-center bg-azul h-28 px-5">
+      <Image
+        className="my-auto absolute"
+        src={Logo}
+        width={50}
+        height={50}
+        alt="logo"
+      />
     </div>
   );
 }

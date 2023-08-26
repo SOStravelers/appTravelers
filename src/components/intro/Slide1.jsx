@@ -1,13 +1,14 @@
+import Image from "next/image";
 import SolidButton from "../utils/buttons/SolidButton";
 
 function Slide1({ setSlide }) {
   return (
     <div className="flex flex-col items-center px-10">
-      <h1 className="text-negro my-5">Book services with ease</h1>
-      <p className="text-negroTexto text-center w-3/4">
+      <h1 className="text-negro my-5 text-3xl">Book services with ease</h1>
+      <p className="text-negroTexto text-center text-xl px-5">
         it includes services like haircut, massage, tattoo and much more.
       </p>
-      <div className="bg-negroTexto h-60 w-60 my-10"></div>
+      <Image src="/assets/slide1.png" width={300} height={300} className="my-10" />
       <SolidButton onClick={() => setSlide(2)} text="Continue" />
     </div>
   );

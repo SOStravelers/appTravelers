@@ -1,12 +1,21 @@
-import Navbar from "@/components/layout/Navbar";
+import { useRouter } from "next/router";
 import TopBar from "@/components/layout/TopBar";
-
+import WaveBar from "@/components/layout/WaveBar";
 function Layout({ children }) {
+  const router = useRouter();
+
   return (
     <>
-      <TopBar />
-      {children}
-      <Navbar />
+      <div className="relative">
+        {router.pathname === "/login" ||
+        router.pathname === "/register" ||
+        router.pathname === "/alternative-login" ? (
+          <WaveBar />
+        ) : (
+          router.pathname !== "/intro" && <TopBar />
+        )}
+        {children}
+      </div>
     </>
   );
 }

@@ -1,5 +1,9 @@
 import Image from "next/image";
+<<<<<<< HEAD
 import Logo from "@/assets/logo.png";
+=======
+import Logo from "../../../public/logo.png";
+>>>>>>> 2178b09eddbd9e9c98053ac5eb0eeeb0b2b997cf
 import { AvatarIcon, NotificationIcon, LocationIcon } from "@/constants/icons";
 
 function TopBar() {

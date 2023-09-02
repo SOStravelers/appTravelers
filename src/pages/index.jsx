@@ -29,9 +29,9 @@ export default function Home({ user }) {
           Services
         </h1>
         <div className="flex overflow-x-auto pb-10">
-          <ServiceCard />
-          <ServiceCard />
-          <ServiceCard />
+          <ServiceCard link={"/subservices"} name={'Servicio'} />
+          <ServiceCard link={"/subservices"} name={'Servicio'} />
+          <ServiceCard link={"/subservices"} name={'Servicio'} />
         </div>
       </section>
 

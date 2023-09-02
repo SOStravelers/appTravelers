@@ -38,7 +38,6 @@ function RegisterForm() {
 
       router.push("/");
     } catch (error) {
-      console.error(error);
       let message;
       if (error?.response?.status === 409)
         message = error?.response?.data?.message;

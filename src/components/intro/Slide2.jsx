@@ -9,7 +9,13 @@ function Slide2() {
       <p className="text-negroTexto text-center text-xl px-5">
         If you are worker then you can own offer services & get paid.
       </p>
-      <Image src="/assets/slide2.png" width={300} height={300} className="my-10" alt="Imagen Provedores"/>
+      <Image
+        src={'/assets/slide2.png'}
+        width={300}
+        height={300}
+        className="my-10"
+        alt="Imagen Provedores"
+      />
       <Link href={"/"} className="w-full">
         <SolidButton text="Let's go" />
       </Link>

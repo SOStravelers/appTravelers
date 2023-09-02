@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import SolidButton from "../utils/buttons/SolidButton";
-import slide2 from "../../../public/assets/slide2.png";
 
 function Slide2() {
   return (
@@ -11,7 +10,7 @@ function Slide2() {
         If you are worker then you can own offer services & get paid.
       </p>
       <Image
-        src={slide2}
+        src={'/assets/slide2.png'}
         width={300}
         height={300}
         className="my-10"

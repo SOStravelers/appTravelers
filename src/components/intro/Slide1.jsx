@@ -1,6 +1,5 @@
 import Image from "next/image";
 import SolidButton from "../utils/buttons/SolidButton";
-import slide1 from "../../../public/assets/slide1.png";
 
 function Slide1({ setSlide }) {
   return (
@@ -10,7 +9,7 @@ function Slide1({ setSlide }) {
         it includes services like haircut, massage, tattoo and much more.
       </p>
       <Image
-        src={slide1}
+        src={"/assets/slide2.png"}
         width={300}
         height={300}
         className="my-10"

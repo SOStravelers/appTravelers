@@ -18,7 +18,6 @@ function LoginForm() {
   const router = useRouter();
 
   const login = async (values) => {
-    console.log(values);
     try {
       const response = await UserService.login(values.email, values.password);
 
@@ -35,7 +34,6 @@ function LoginForm() {
       
       router.push("/");
     } catch (error) {
-      console.error(error);
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.message;

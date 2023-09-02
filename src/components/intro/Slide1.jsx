@@ -8,7 +8,7 @@ function Slide1({ setSlide }) {
       <p className="text-negroTexto text-center text-xl px-5">
         it includes services like haircut, massage, tattoo and much more.
       </p>
-      <Image src="/assets/slide1.png" width={300} height={300} className="my-10" />
+      <Image src="/assets/slide1.png" width={300} height={300} className="my-10" alt="Imagen Servicios"/>
       <SolidButton onClick={() => setSlide(2)} text="Continue" />
     </div>
   );

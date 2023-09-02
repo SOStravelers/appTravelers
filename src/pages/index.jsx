@@ -50,7 +50,7 @@ export default function Home({ user }) {
 
 export async function getServerSideProps({ req }) {
   const userId = req.cookies["auth.user_id"];
-  let user;
+  let user = null;
   try {
     const response = await UserService.get(userId);
     user = response.data;

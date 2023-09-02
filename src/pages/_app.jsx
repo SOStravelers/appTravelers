@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import { useRouter } from "next/router";
 import Navbar from "@/components/layout/Navbar";
-import Layout from "./layouts/Layout";
+import Layout from "../layouts/Layout";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

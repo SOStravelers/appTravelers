@@ -7,11 +7,23 @@ export default function SelectHostel() {
       <OutlinedInput placeholder={"Search here"} />
       <h1 className="my-8 font-semibold">Nearby You</h1>
       <div className="flex flex-col items-center">
-        <HostelCard />
+        <HostelCard
+          link={"reservation"}
+          name={"Hotel Name"}
+          location={"Location"}
+        />
         <hr className="w-full my-5 text-grisClaro" />
-        <HostelCard />
+        <HostelCard
+          link={"reservation"}
+          name={"Hotel Name"}
+          location={"Location"}
+        />
         <hr className="w-full my-5 text-grisClaro" />
-        <HostelCard />
+        <HostelCard
+          link={"reservation"}
+          name={"Hotel Name"}
+          location={"Location"}
+        />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ function RecomendationCard() {
     >
       <div className="w-full h-40 bg-azul rounded-tr-2xl rounded-tl-2xl"></div>
       <div className="px-2">
-        <h1 className="text-md font-bold mt-2">Nombre Servicio</h1>
+        <h1 className="text-md font-semibold mt-2">Nombre Servicio</h1>
         <p className="text-negroTexto text-sm">Nombre proveedor</p>
       </div>
     </div>

@@ -1,0 +1,21 @@
+import { PinIcon } from "@/constants/icons";
+import Link from "next/link";
+
+function HostelCard({ link, name, location }) {
+  return (
+    <Link href={link}>
+      <div className="flex w-72 items-center">
+        <div className="w-20 h-20 rounded-xl bg-azul"></div>
+        <div className="flex flex-col p-2">
+          <h1 className="font-semibold">{name}</h1>
+          <div className="flex items-center">
+            <PinIcon color={"#5B78C7"} className="mr-1" />
+            <p className="text-grisTexto">{location}</p>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export default HostelCard;

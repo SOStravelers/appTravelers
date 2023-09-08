@@ -84,7 +84,7 @@ function Navbar() {
         </button>
       </Link>
 
-      <Link href="/login">
+      <Link href="/profile">
         <button className="flex flex-col items-center">
           {" "}
           <ProfileIcon

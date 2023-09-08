@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRightIcon, ClockIcon } from "@/constants/icons";
 
-function WorkerCardChat({ link, name, service, score, showArrow = true }) {
+function WorkerCardChat({ link, name, service, showArrow = true }) {
   return (
     <div
       className="flex py-4 w-full rounded-lg justify-around my-2 items-center"

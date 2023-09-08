@@ -23,7 +23,7 @@ function WorkerCardFavorite({ link, name, service, score, showArrow = true }) {
       {showArrow ? (
         <Link href={"/summary"}>
           <div className="w-10 h-10 flex items-center justify-center">
-            <FavIconBorder className="ml-1" />
+            <FavIconBorder color={"#5B78C7"} className="ml-1" />
           </div>
         </Link>
       ) : (

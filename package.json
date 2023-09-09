@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "autoprefixer": "10.4.15",
+    "aws-amplify": "^5.3.10",
     "axios": "^1.5.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
@@ -18,6 +19,7 @@
     "houseform": "^1.11.1",
     "js-cookie": "^3.0.5",
     "next": "13.4.16",
+    "next-auth": "^4.23.1",
     "postcss": "8.4.28",
     "react": "18.2.0",
     "react-day-picker": "^8.8.1",

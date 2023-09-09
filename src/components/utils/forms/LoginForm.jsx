@@ -12,6 +12,8 @@ import UserService from "@/services/UserService";
 
 import Cookies from "js-cookie";
 import { useStore } from "@/store";
+import FacebookButton from "../buttons/FacebookButton";
+import GoogleButton from "../buttons/GoogleButton";
 
 function LoginForm() {
   const { setUser, setLoggedIn } = useStore();
@@ -31,10 +33,10 @@ function LoginForm() {
 
       setUser(response.data.user);
       setLoggedIn(true);
-      
+
       router.push("/");
     } catch (error) {
-      console.error(error)
+      console.error(error);
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.message;
@@ -113,6 +115,8 @@ function LoginForm() {
             </p>
           </Link>
           <SolidButton text="Login" disabled={!isValid} />
+          <FacebookButton />
+          <GoogleButton />
         </form>
       )}
     </Form>

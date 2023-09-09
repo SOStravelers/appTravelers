@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";
+import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
 import clsx from "clsx";
 import { Poppins } from "next/font/google";
 const poppins = Poppins({
@@ -11,16 +12,30 @@ const poppins = Poppins({
 function Layout({ children }) {
   const router = useRouter();
 
+  const isLoginPage =
+    router.pathname === "/login" ||
+    router.pathname === "/register" ||
+    router.pathname === "/alternative-login";
+
+  const arePrincipalPages =
+    router.pathname === "/booking" ||
+    router.pathname === "/chat" ||
+    router.pathname === "/favorites" ||
+    router.pathname === "/";
+
+  const isSubservicesPage = router.pathname === "/subservices";
+
   return (
     <>
       <div className={clsx("relative", poppins.className)}>
-        {router.pathname === "/login" ||
-        router.pathname === "/register" ||
-        router.pathname === "/alternative-login" ? (
+        {isLoginPage ? (
           <WaveBar />
+        ) : arePrincipalPages ? (
+          <TopBar />
         ) : (
-          router.pathname !== "/intro" && <TopBar />
+          <TopBarSubMenu />
         )}
+
         {children}
       </div>
     </>

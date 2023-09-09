@@ -304,3 +304,20 @@ export const FavIconBorder = ({ color, ...props }) => (
     />
   </svg>
 );
+
+export const ReturnArrowIcon = ({ color, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="23"
+    height="23"
+    viewBox="0 0 23 23"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M14.2761 5.95068L8.72607 11.5007L14.2761 17.0507"
+      stroke="white"
+      strokeWidth="4"
+    />
+  </svg>
+);

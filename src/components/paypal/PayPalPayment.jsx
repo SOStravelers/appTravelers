@@ -11,6 +11,18 @@ const PayPalPayment = () => {
                 }
             );
             console.log("orden creada ->", response)
+            if(response.id){
+                console.log("entro")
+                return response.id
+            }
+            else {
+                const errorDetail = orderData?.details?.[0];
+                const errorMessage = errorDetail
+                  ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                  : JSON.stringify(orderData);
+      
+                throw new Error(errorMessage);
+              }
         } catch (error) {
             let message;
             if (error?.response?.status === 409)

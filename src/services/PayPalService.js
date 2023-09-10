@@ -44,13 +44,18 @@ export default class PayPalService {
 
 
   static async onApprove(payload) {
-    return axios.post(`${this.baseUrl}/approve`, {
-      body: JSON.stringify({
-        orderID: payload.orderID
-      })
-    })
+    console.log("va para la api",payload)
+    const body = {
+      orderID: payload.orderID,
+    };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json', // Especifica que estás enviando JSON
+      },
+    };
+    return axios.post(`${this.baseUrlLocal}/approvedOrder`, body,config)   
     .then((response) => {
-      response.data
+      return response.data
     })
     .catch((error) => {
       console.error(error);

@@ -7,7 +7,7 @@ const PayPalPayment = () => {
             const response = await PayPalService.createOrder(
                 {
                     description: "servicio de barbero",
-                    cost: "15.99"
+                    cost: "25.60"
                 }
             );
             console.log("orden creada ->", response)
@@ -32,14 +32,18 @@ const PayPalPayment = () => {
             toast.error(message);
         }
     };
-    const onApprove = async (values) => {
+    const onApprove = async (data) => {
         try {
+            console.log("activando onApprove", data)
             const response = await PayPalService.onApprove(
                 {
-                    orderID: "11",
+                    orderID: data.orderID,
                 }
             );
-            console.log("orden aprobada ->", response)
+            if(response){
+                console.log("aprobado")
+                //console.log("orden aprobada ->", response)
+            }
         } catch (error) {
             let message;
             if (error?.response?.status === 409)

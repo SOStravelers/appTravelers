@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -24,7 +23,11 @@ export default class PayPalService {
     };
   
     try {
-      const response = await axios.post(`${this.baseUrlLocal}/newOrder`, body, config);
+      const response = await axios.post(
+        `${this.baseUrl}/newOrder`,
+        body,
+        config
+      );
       return response.data; // Si estás esperando una respuesta JSON del servidor
     } catch (error) {
       // Manejar errores aquí

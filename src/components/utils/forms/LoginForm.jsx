@@ -12,8 +12,6 @@ import UserService from "@/services/UserService";
 
 import Cookies from "js-cookie";
 import { useStore } from "@/store";
-import FacebookButton from "../buttons/FacebookButton";
-import GoogleButton from "../buttons/GoogleButton";
 
 function LoginForm() {
   const { setUser, setLoggedIn } = useStore();
@@ -115,8 +113,6 @@ function LoginForm() {
             </p>
           </Link>
           <SolidButton text="Login" disabled={!isValid} />
-          <FacebookButton />
-          <GoogleButton />
         </form>
       )}
     </Form>

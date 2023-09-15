@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { StarIcon, ArrowRightIcon } from "@/constants/icons";
 
 function WorkerCard({
@@ -19,7 +20,13 @@ function WorkerCard({
     >
       <Link href={link}>
         <div className="flex">
-          <div className="w-20 h-20 rounded-xl bg-azul mr-2"></div>
+          <div className="w-20 h-20 rounded-xl bg-azul mr-2 relative">
+            <Image
+              src={"/assets/proovedor.png"}
+              fill
+              className="object-cover rounded-xl"
+            />
+          </div>
           <div className="flex flex-col">
             <h1 className="font-semibold">{name}</h1>
             <p className="text-negroTexto">{service}</p>

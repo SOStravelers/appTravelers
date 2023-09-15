@@ -11,6 +11,7 @@ function WaveBar() {
         height="90"
         viewBox="0 0 390 90"
         fill="none"
+        className="w-screen -mt-1"
       >
         <path
           fillRule="evenodd"

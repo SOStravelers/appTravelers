@@ -18,6 +18,8 @@ module.exports = {
       error: "rgb(239 68 68)",
       success: "rgba(0, 160, 6, 0.77)",
       grisBoton: "#000000C4",
+      fb: "#3b5998",
+      google: "#eee",
     },
     extend: {},
   },

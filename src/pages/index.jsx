@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
@@ -6,16 +6,26 @@ import RecomendationCard from "@/components/utils/cards/RecomendationCard";
 
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
+import ServiceService from "@/services/ServiceService";
 
 export default function Home({ user }) {
   const { setUser, setLoggedIn } = useStore();
+
+  const [services, setServices] = useState([]);
 
   useLayoutEffect(() => {
     if (user) {
       setUser(user);
       setLoggedIn(true);
     }
+    getData();
   }, []);
+
+  const getData = async () => {
+    ServiceService.list({ isActive: true, page: 1 }).then((response) => {
+      setServices(response.data.docs);
+    });
+  };
 
   return (
     <main className="flex flex-col bg-blanco pb-10 px-5">
@@ -26,9 +36,13 @@ export default function Home({ user }) {
           Services
         </h1>
         <div className="flex overflow-x-auto pb-10">
-          <ServiceCard link={"/subservices"} name={"Servicio"} />
-          <ServiceCard link={"/subservices"} name={"Servicio"} />
-          <ServiceCard link={"/subservices"} name={"Servicio"} />
+          {services?.map((s) => (
+            <ServiceCard
+              key={s.id}
+              link={`/subservices/${s.id}`}
+              name={s.name}
+            />
+          ))}
         </div>
       </section>
 

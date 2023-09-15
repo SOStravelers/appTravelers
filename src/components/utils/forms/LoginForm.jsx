@@ -31,14 +31,17 @@ function LoginForm() {
 
       setUser(response.data.user);
       setLoggedIn(true);
-      
+
       router.push("/");
     } catch (error) {
+      console.error(error);
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.message;
       else if (error?.response?.status === 400)
         message = error?.response?.data?.result;
+      else if (error?.response?.status === 401)
+        message = error?.response?.data?.message;
       toast.error(message);
     }
   };

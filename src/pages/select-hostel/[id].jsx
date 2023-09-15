@@ -27,7 +27,7 @@ export default function SelectHostel() {
   };
 
   return (
-    <div className="p-10 flex flex-col">
+    <div className="p-10 pb-20 flex flex-col">
       <OutlinedInput placeholder={"Search here"} />
       <h1 className="my-8 font-semibold">Nearby You</h1>
       <div className="flex flex-col items-center">

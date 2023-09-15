@@ -28,7 +28,7 @@ export default function Home({ user }) {
   };
 
   return (
-    <main className="flex flex-col bg-blanco pb-10 px-5">
+    <main className="flex flex-col bg-blanco pb-20 px-5">
       <BookingCard />
 
       <section>

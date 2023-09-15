@@ -251,7 +251,7 @@ export const ArrowRightIcon = ({ color, ...props }) => (
     <path
       d="M8.72393 17.0493L14.2739 11.4993L8.72393 5.94932"
       stroke="white"
-      stroke-width="2"
+      strokeWidth="2"
     />
   </svg>
 );

@@ -1,22 +1,59 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import WorkerCard from "@/components/utils/cards/WorkerCard";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import Link from "next/link";
 import { ClockIcon, EditIcon } from "@/constants/icons";
 
+import { useStore } from "@/store";
+import HostelService from "@/services/HostelService";
+import WorkerService from "@/services/WokerService";
+
 export default function Summary() {
+  const { setService, service } = useStore();
+  const router = useRouter();
+
+  const [worker, setWorker] = useState(null);
+  const [hostel, setHostel] = useState(null);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const { hostelId, workerId } = service;
+
+    if (!hostelId || !workerId) router.push("/");
+
+    console.log(service);
+    HostelService.get(hostelId).then((response) => {
+      setHostel(response.data);
+    });
+    WorkerService.get(workerId).then((response) => {
+      setWorker(response.data);
+    });
+  };
+
+  const fullName = (data) => {
+    if (!data) return "";
+    const { first, last } = data;
+    return first + (last ?? "");
+  };
+
   return (
     <div className="flex flex-col px-10 items-center">
       <h1 className="my-5 text-gris text-center">
         Read all the points carefully and make sure that it is what you need.
       </h1>
       <HostelCardSummary
-        name={"Nombre hostal"}
+        name={fullName(hostel?.personalData?.name)}
         location={"Ubicación"}
         link={"/hostel/" + 1}
       />
       <WorkerCard
-        name={"Nombre trabajador"}
+        name={fullName(worker?.personalData?.name)}
         service={"Barbero"}
         score={5}
         link={"/worker/" + 1}
@@ -30,8 +67,10 @@ export default function Summary() {
         <EditIcon />
       </div>
       <div className="flex w-full my-5">
-        <input type="checkbox" className="mr-2" />
-        <p className="text-negroTexto">Accept terms & conditions of SOS</p>
+        <input id="terms" type="checkbox" className="mr-2" />
+        <label className="text-negroTexto" htmlFor="terms">
+          Accept terms & conditions of SOS
+        </label>
       </div>
       <div className="flex justify-between items-end w-full my-5">
         <p className="text-negroTexto font-semibold">Total Service Fee</p>

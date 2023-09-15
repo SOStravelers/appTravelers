@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 
@@ -10,7 +10,7 @@ export default function Subservices() {
 
   const [subServices, setSubservices] = useState([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getData();
   }, []);
 
@@ -24,7 +24,11 @@ export default function Subservices() {
   return (
     <div className="flex flex-wrap justify-center pt-5 pb-10">
       {subServices?.map((s) => (
-        <SubServiceCard key={s.id} link={"/select-hostel"} name={s.name} />
+        <SubServiceCard
+          key={s.id}
+          link={`/select-hostel/${s.id}`}
+          name={s.name}
+        />
       ))}
     </div>
   );

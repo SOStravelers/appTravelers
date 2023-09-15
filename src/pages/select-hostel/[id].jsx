@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import HostelCard from "@/components/utils/cards/HostelCard";
+
 import HostelService from "@/services/HostelService";
 
 export default function SelectHostel() {

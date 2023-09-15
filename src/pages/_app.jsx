@@ -6,10 +6,10 @@ import Layout from "../layouts/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-//import awsmobile from "@/aws-exports";
-//import { Amplify } from "aws-amplify";
+import awsmobile from "@/aws-exports";
+import { Amplify } from "aws-amplify";
 
-//Amplify.configure(awsmobile);
+Amplify.configure(awsmobile);
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();

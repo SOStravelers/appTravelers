@@ -12,7 +12,7 @@ import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WokerService";
 
 export default function Summary() {
-  const { setService, service } = useStore();
+  const { service } = useStore();
   const router = useRouter();
 
   const [worker, setWorker] = useState(null);

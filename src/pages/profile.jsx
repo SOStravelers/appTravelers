@@ -6,8 +6,8 @@ export default function Profile() {
     <div className="bg-blanco h-full w-screen p-10">
       <ProfileForm />
       <SolidButton text="Settings" color="gris"/>
-      <SolidButton text="Add Payment Method" color="rojo" />
       <SolidButton text="Invite Friend" color="verde" />
+      <SolidButton text="Log Out" color="rojo" />
     </div>
   );
 }

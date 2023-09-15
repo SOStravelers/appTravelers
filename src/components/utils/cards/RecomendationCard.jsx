@@ -1,11 +1,15 @@
-import React from "react";
+import Image from "next/image";
 
 function RecomendationCard() {
   return (
-    <div
-      className="text-negro flex flex-col bg-blanco w-40 h-60 mx-2 rounded-2xl shadow-xl"
-    >
-      <div className="w-full h-40 bg-azul rounded-tr-2xl rounded-tl-2xl"></div>
+    <div className="text-negro flex flex-col bg-blanco w-40 h-60 mx-2 rounded-2xl shadow-xl">
+      <div className="w-full h-40 bg-azul rounded-tr-2xl rounded-tl-2xl relative">
+        <Image
+          src={"/assets/service.png"}
+          fill
+          className="object-cover rounded-tr-2xl rounded-tl-2xl"
+        />
+      </div>
       <div className="px-2">
         <h1 className="text-md font-semibold mt-2">Nombre Servicio</h1>
         <p className="text-negroTexto text-sm">Nombre proveedor</p>

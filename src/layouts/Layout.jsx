@@ -4,6 +4,7 @@ import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
 import clsx from "clsx";
 import { Poppins } from "next/font/google";
+import { is } from "date-fns/locale";
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
@@ -21,7 +22,10 @@ function Layout({ children }) {
     router.pathname === "/booking" ||
     router.pathname === "/chat" ||
     router.pathname === "/favorites" ||
+    router.pathname === "/profile" ||
     router.pathname === "/";
+
+  const isIntro = router.pathname === "/intro";
 
   const isSubservicesPage = router.pathname === "/subservices";
 
@@ -33,7 +37,7 @@ function Layout({ children }) {
         ) : arePrincipalPages ? (
           <TopBar />
         ) : (
-          <TopBarSubMenu />
+          !isIntro && <TopBarSubMenu />
         )}
 
         {children}

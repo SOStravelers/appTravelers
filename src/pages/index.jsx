@@ -23,7 +23,6 @@ export default function Home({ user }) {
 
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
-      console.log(response.data.docs);
       setServices(response.data.docs);
     });
   };

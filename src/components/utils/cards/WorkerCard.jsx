@@ -1,7 +1,17 @@
 import Link from "next/link";
 import { StarIcon, ArrowRightIcon } from "@/constants/icons";
 
-function WorkerCard({ link, name, service, score, showArrow = true }) {
+function WorkerCard({
+  link,
+  name,
+  service,
+  score,
+  showArrow = true,
+  onClickSummary,
+}) {
+  const handleSummary = () => {
+    if (onClickSummary) onClickSummary();
+  };
   return (
     <div
       className="flex py-4 w-80 rounded-lg justify-around my-2 items-center"
@@ -22,7 +32,10 @@ function WorkerCard({ link, name, service, score, showArrow = true }) {
       </Link>
       {showArrow ? (
         <Link href={"/summary"}>
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-azul">
+          <div
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-azul"
+            onClick={handleSummary}
+          >
             <ArrowRightIcon className="ml-1" />
           </div>
         </Link>

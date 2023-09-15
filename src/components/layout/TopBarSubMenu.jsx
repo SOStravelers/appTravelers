@@ -14,6 +14,7 @@ function TopBarSubMenu() {
   const isReservation = actualURL.includes("reservation");
   const isWorkersFound = actualURL.includes("workers-found");
   const isSumary = actualURL.includes("summary");
+  const isPayment = actualURL.includes("payment");
 
   useEffect(() => {
     handleUrl();
@@ -30,6 +31,8 @@ function TopBarSubMenu() {
       setTitulo("Workers Found");
     } else if (isSumary) {
       setTitulo("Summary");
+    } else if (isPayment) {
+      setTitulo("Payment Method");
     }
   };
 

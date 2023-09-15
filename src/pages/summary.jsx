@@ -43,7 +43,7 @@ export default function Summary() {
   };
 
   return (
-    <div className="flex flex-col px-10 items-center">
+    <div className="flex flex-col px-8 items-center pb-20">
       <h1 className="my-5 text-gris text-center">
         Read all the points carefully and make sure that it is what you need.
       </h1>

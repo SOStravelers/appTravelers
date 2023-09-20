@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import awsmobile from "@/aws-exports";
 import { Amplify } from "aws-amplify";
 
+console.log(awsmobile)
+
 Amplify.configure({ ...awsmobile, ssr: true });
 
 export default function App({ Component, pageProps }) {

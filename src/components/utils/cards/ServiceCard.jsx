@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HairCutIcon } from "@/constants/icons";
+import { mazzard } from "@/utils/mazzardFont";
 
 function ServiceCard({ link, icon, name }) {
   return (
@@ -8,7 +9,7 @@ function ServiceCard({ link, icon, name }) {
         <div className="w-14 h-14 rounded-full bg-azul flex items-center justify-center">
           <HairCutIcon />
         </div>
-        <h1 className="text-center mt-2">{name}</h1>
+        <h1 className={`text-center mt-2 ${mazzard.className}`}>{name}</h1>
       </div>
     </Link>
   );

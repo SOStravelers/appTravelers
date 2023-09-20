@@ -7,6 +7,7 @@ import RecomendationCard from "@/components/utils/cards/RecomendationCard";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import ServiceService from "@/services/ServiceService";
+import { mazzard } from "@/utils/mazzardFont";
 
 export default function Home({ user }) {
   const { setUser, setLoggedIn } = useStore();
@@ -32,7 +33,9 @@ export default function Home({ user }) {
       <BookingCard />
 
       <section>
-        <h1 className="text-negro text-xl font-semibold mt-10 mb-5">
+        <h1
+          className={`text-negro text-xl font-semibold mt-10 mb-5 ${mazzard.className}`}
+        >
           Services
         </h1>
         <div className="flex overflow-x-auto pb-10">
@@ -47,7 +50,9 @@ export default function Home({ user }) {
       </section>
 
       <section>
-        <h1 className="text-negro text-xl font-semibold mb-5">
+        <h1
+          className={`text-negro text-xl font-semibold mb-5 ${mazzard.className}`}
+        >
           Recommended for you
         </h1>
         <div className="flex overflow-x-auto pb-10">

@@ -13,10 +13,19 @@ function TopBar() {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
+        {/* <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
         <div className="border border-white text-white px-3 py-1 rounded-xl">
           RR
-        </div>
+        </div>*/}
+        <Link className="text-white" to="/login">
+          Sing In
+        </Link>
+        <Link
+          className="text-white border border-white px-3 py-1 rounded-xl"
+          to="/login"
+        >
+          Join
+        </Link>
       </div>
     </div>
   );

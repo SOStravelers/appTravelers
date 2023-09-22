@@ -1,7 +1,46 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
+
 import AltLoginForm from "@/components/utils/forms/AltLoginForm";
 
+import { Auth, Hub } from "aws-amplify";
+
 export default function AlternativeLogin() {
+  const [user, setUser] = useState(null);
+  const [customState, setCustomState] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = Hub.listen("auth", (response) => {
+      console.log(response);
+      console.log('-------------------------------------------------------------')
+      /*switch (event) {
+        case "signIn":
+          setUser(data);
+          break;
+        case "signOut":
+          setUser(null);
+          break;
+        case "CustomOAuthState":
+          setCustomState(data);
+          break;
+      }*/
+    });
+
+    getUser();
+
+    return unsubscribe;
+  }, []);
+
+  const getUser = async () => {
+    try {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      setUser(currentUser);
+      console.log(currentUser);
+    } catch (error) {
+      console.error(error);
+      console.log("Not signed in");
+    }
+  };
   return (
     <div className="bg-white w-screen min-h-screen px-10">
       <h1 className="text-blackText font-semibold text-2xl py-5">

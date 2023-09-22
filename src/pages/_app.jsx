@@ -6,10 +6,19 @@ import Layout from "../layouts/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-//import awsmobile from "@/aws-exports";
-//import { Amplify } from "aws-amplify";
+import awsmobile from "@/aws-exports";
+import { Amplify } from "aws-amplify";
 
-//Amplify.configure(awsmobile);
+console.log(awsmobile);
+
+Amplify.configure({
+  ...awsmobile,
+  oauth: {
+    ...awsmobile.oauth,
+    redirectSignIn: "https://dev.sostvl.com/alternative-login",
+    redirectSignOut: "https://dev.sostvl.com/alternative-login",
+  },
+});
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();

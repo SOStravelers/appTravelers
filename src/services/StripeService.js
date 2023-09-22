@@ -9,6 +9,6 @@ export default class StripeService {
   static baseUrlLocal = `http://localhost:4000/${this.resource}`;
 
   static async createPaymentIntent(params) {
-    return axios.post(`${this.baseUrlLocal}/payment-intents`, params);
+    return axios.post(`${this.baseUrl}/payment-intents`, params);
   }
 }

@@ -68,8 +68,10 @@ export async function getServerSideProps({ req }) {
   const userId = req.cookies["auth.user_id"];
   let user = null;
   try {
-    const response = await UserService.get(userId);
-    user = response.data;
+    if (userId) {
+      const response = await UserService.get(userId);
+      user = response.data;
+    }
   } catch (error) {
     console.error(error);
   }

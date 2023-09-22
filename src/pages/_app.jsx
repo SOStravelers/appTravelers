@@ -9,7 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 import awsmobile from "@/aws-exports";
 import { Amplify } from "aws-amplify";
 
-console.log(awsmobile);
+console.log({
+  ...awsmobile,
+  oauth: {
+    ...awsmobile.oauth,
+    redirectSignIn: "https://dev.sostvl.com/alternative-login",
+    redirectSignOut: "https://dev.sostvl.com/alternative-login",
+  },
+});
 
 Amplify.configure({
   ...awsmobile,

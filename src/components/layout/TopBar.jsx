@@ -1,4 +1,5 @@
 import { AvatarIcon, NotificationIcon, LogoWhite } from "@/constants/icons";
+import Link from "next/link";
 
 function TopBar() {
   return (
@@ -13,10 +14,19 @@ function TopBar() {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
+        {/* <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
         <div className="border border-white text-white px-3 py-1 rounded-xl">
           RR
-        </div>
+        </div>*/}
+        <Link className="text-white mr-2" href="/login">
+          Sing In
+        </Link>
+        <Link
+          className="text-white border border-white px-3 py-1 rounded-xl"
+          href="/login"
+        >
+          Join
+        </Link>
       </div>
     </div>
   );

@@ -14,7 +14,9 @@ function TopBar() {
       </div>
       <div className="flex justify-center items-center">
         <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
-        <AvatarIcon color="#FFFFFF" />
+        <div className="border border-white text-white px-3 py-1 rounded-xl">
+          RR
+        </div>
       </div>
     </div>
   );

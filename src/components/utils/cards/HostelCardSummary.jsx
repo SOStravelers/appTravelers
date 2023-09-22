@@ -2,7 +2,7 @@ import { PinIcon, ChangeIcon } from "@/constants/icons";
 import Link from "next/link";
 import Image from "next/image";
 
-function HostelCardSummary({ link, name, location }) {
+function HostelCardSummary({ subserviceId, link, name, location }) {
   return (
     <Link href={link}>
       <div className="flex flex-col w-72">
@@ -21,7 +21,7 @@ function HostelCardSummary({ link, name, location }) {
               <p className="text-blackText text-sm">{location}</p>
             </div>
           </div>
-          <Link href={"/summary"} className="h-full">
+          <Link href={`/select-hostel/${subserviceId}`} className="h-full">
             <div className="w-8 h-20 flex items-center justify-centerrounded-r-2xl cursor-pointer">
               <ChangeIcon className="ml-1" />
             </div>

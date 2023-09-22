@@ -24,7 +24,7 @@ export default function Summary() {
   }, []);
 
   const getData = async () => {
-    const { hostelId, workerId } = service;
+    const { hostelId, workerId, subServiceId } = service;
 
     if (!hostelId || !workerId) router.push("/");
 
@@ -52,7 +52,7 @@ export default function Summary() {
         name={fullName(hostel?.personalData?.name)}
         location={"Ubicación"}
         link={"/hostel/" + 1}
-        hostelId={hostel?.id}
+        subserviceId={service?.subServiceId}
       />
       <hr className="w-full my-1 text-lightGrey" />
       <WorkerCardSumary

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import WorkerCard from "@/components/utils/cards/WorkerCard";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
-import SolidButton from "@/components/utils/buttons/SolidButton";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import Link from "next/link";
 import { ClockIcon, EditIcon } from "@/constants/icons";
 
@@ -44,7 +44,7 @@ export default function Summary() {
 
   return (
     <div className="flex flex-col px-8 items-center pb-20">
-      <h1 className="my-5 text-gris text-center">
+      <h1 className="my-5 text-grey text-center">
         Read all the points carefully and make sure that it is what you need.
       </h1>
       <HostelCardSummary
@@ -68,16 +68,16 @@ export default function Summary() {
       </div>
       <div className="flex w-full my-5">
         <input id="terms" type="checkbox" className="mr-2" />
-        <label className="text-negroTexto" htmlFor="terms">
+        <label className="text-blackText" htmlFor="terms">
           Accept terms & conditions of SOS
         </label>
       </div>
       <div className="flex justify-between items-end w-full my-5">
-        <p className="text-negroTexto font-semibold">Total Service Fee</p>
-        <p className="text-azul font-semibold text-2xl">$ 100.00</p>
+        <p className="text-blackText font-semibold">Total Service Fee</p>
+        <p className="text-lightBlue font-semibold text-2xl">$ 100.00</p>
       </div>
       <Link href={"/payment"} className="w-full">
-        <SolidButton text={"Hire Now"} />
+        <OutlinedButton text={"Hire Now"} />
       </Link>
     </div>
   );

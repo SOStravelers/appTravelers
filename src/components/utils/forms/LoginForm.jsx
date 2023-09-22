@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
-import SolidButton from "@/components/utils/buttons/SolidButton";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 
 import { Field, Form } from "houseform";
 import { z } from "zod";
@@ -74,7 +74,7 @@ function LoginForm() {
                     onChange={(e) => setValue(e.target.value)}
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-error">
+                    <p key={error} className="text-red">
                       {error}
                     </p>
                   ))}
@@ -99,7 +99,7 @@ function LoginForm() {
                     type="password"
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-error">
+                    <p key={error} className="text-red">
                       {error}
                     </p>
                   ))}
@@ -108,11 +108,11 @@ function LoginForm() {
             }}
           </Field>
           <Link href="/register">
-            <p className="text-negroTexto font-bold my-5 text-right">
+            <p className="text-blackText mt-2 mb-5 text-right">
               Forgot password?
             </p>
           </Link>
-          <SolidButton text="Login" disabled={!isValid} />
+          <OutlinedButton text="Login" disabled={!isValid} />
         </form>
       )}
     </Form>

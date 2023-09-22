@@ -14,33 +14,30 @@ function WorkerCard({
     if (onClickSummary) onClickSummary();
   };
   return (
-    <div
-      className="flex py-4 w-80 rounded-lg justify-around my-2 items-center"
-      style={{ boxShadow: "2px 2px 24px 0px rgba(0, 0, 0, 0.15)" }}
-    >
-      <Link href={link}>
-        <div className="flex">
-          <div className="w-20 h-20 rounded-xl bg-azul mr-2 relative">
+    <div className="flex py-4 w-80 rounded-lg justify-around my-2 items-center">
+      <div className="flex">
+        <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
+          <Link href={link}>
             <Image
               src={"/assets/proovedor.png"}
               fill
               className="object-cover rounded-xl"
             />
-          </div>
-          <div className="flex flex-col">
-            <h1 className="font-semibold">{name}</h1>
-            <p className="text-negroTexto">{service}</p>
-            <div className="flex items-center">
-              <StarIcon color={"#5B78C7"} className="mr-1" />
-              <p className="text-negroTexto">{score}</p>
-            </div>
+          </Link>
+        </div>
+        <div className="flex flex-col" onClick={handleSummary}>
+          <h1 className="font-semibold">{name}</h1>
+          <p className="text-blackText">{service}</p>
+          <div className="flex items-center">
+            <StarIcon color={"#1CDAE5"} className="mr-1" />
+            <p className="text-blackText">{score}</p>
           </div>
         </div>
-      </Link>
+      </div>
       {showArrow ? (
-        <Link href={"/summary"}>
+        <Link href={"/summary"} className="h-full">
           <div
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-azul"
+            className="w-8 h-20 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
             onClick={handleSummary}
           >
             <ArrowRightIcon className="ml-1" />

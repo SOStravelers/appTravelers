@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { DayPicker } from "react-day-picker";
 import TimeButton from "../buttons/TimeButton";
-import SolidButton from "../buttons/SolidButton";
+import OutlinedButton from "../buttons/OutlinedButton";
 import "react-day-picker/dist/style.css";
 import Link from "next/link";
 
@@ -72,7 +72,7 @@ function Calendar({ id }) {
         </div>
         {time && (
           <Link href={`/workers-found/${id}`}>
-            <SolidButton text={"Next"} />
+            <OutlinedButton text={"Next"} />
           </Link>
         )}
       </div>

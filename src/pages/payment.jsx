@@ -1,4 +1,4 @@
-import SolidButton from "@/components/utils/buttons/SolidButton";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import Image from "next/image";
 
 export default function Payment() {
@@ -31,7 +31,7 @@ export default function Payment() {
           <input type="radio" name="paypal" id="paypal" />
         </div>
       </div>
-      <SolidButton text="Continue" color="azul" />
+      <OutlinedButton text="Continue" color="lightBlue" />
     </div>
   );
 }

@@ -10,7 +10,7 @@ function WorkerCardChat({ link, name, service, showArrow = true }) {
     >
       <Link href={link}>
         <div className="flex">
-          <div className="w-20 h-20 rounded-xl bg-azul mr-2 relative">
+          <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
           <Image
             src={"/assets/proovedor.png"}
             fill
@@ -19,17 +19,17 @@ function WorkerCardChat({ link, name, service, showArrow = true }) {
           </div>
           <div className="flex flex-col">
             <h1 className="font-semibold">{name}</h1>
-            <p className="text-negroTexto">{service}</p>
+            <p className="text-blackText">{service}</p>
             <div className="flex items-center">
               <ClockIcon color={"#5B78C7"} className="mr-1" />
-              <p className="text-negroTexto text-sm">8 Aug, 2023 | 04:30 PM</p>
+              <p className="text-blackText text-sm">8 Aug, 2023 | 04:30 PM</p>
             </div>
           </div>
         </div>
       </Link>
       {showArrow ? (
         <Link href={link}>
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-azul">
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-lightBlue">
             <ArrowRightIcon className="ml-1" />
           </div>
         </Link>

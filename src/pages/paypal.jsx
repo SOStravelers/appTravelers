@@ -12,7 +12,7 @@ export default function Paypal() {
 
 
   return(
-  <div className="w-screen h-screen bg-blanco text-negro">
+  <div className="w-screen h-screen bg-white text-black">
     <PayPalScriptProvider options={initialOptions}>
       <PayPalPayment></PayPalPayment>
     </PayPalScriptProvider>

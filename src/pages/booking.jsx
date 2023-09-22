@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Booking() {
-  return <div className="w-screen h-screen bg-blanco text-negro">Booking</div>;
+  return <div className="w-screen h-screen bg-white text-black">Booking</div>;
 }

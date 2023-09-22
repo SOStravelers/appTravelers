@@ -14,7 +14,7 @@ function Navbar() {
 
   return (
     <div
-      className="w-screen h-14 fixed bottom-0 left-0 z-10 bg-blanco flex justify-around items-center"
+      className="w-screen h-14 fixed bottom-0 left-0 z-10 bg-white flex justify-around items-center"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.35)" }}
     >
       <Link href="/">
@@ -25,7 +25,7 @@ function Navbar() {
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/" ? "text-azul" : "text-grisTexto"
+              router.pathname === "/" ? "text-lightBlue" : "text-greyText"
             )}
           >
             Home
@@ -42,7 +42,7 @@ function Navbar() {
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/booking" ? "text-azul" : "text-grisTexto"
+              router.pathname === "/booking" ? "text-lightBlue" : "text-greyText"
             )}
           >
             Bookings
@@ -58,7 +58,7 @@ function Navbar() {
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/chat" ? "text-azul" : "text-grisTexto"
+              router.pathname === "/chat" ? "text-lightBlue" : "text-greyText"
             )}
           >
             Chat
@@ -76,7 +76,7 @@ function Navbar() {
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/favorites" ? "text-azul" : "text-grisTexto"
+              router.pathname === "/favorites" ? "text-lightBlue" : "text-greyText"
             )}
           >
             Favorites
@@ -93,7 +93,7 @@ function Navbar() {
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/profile" ? "text-azul" : "text-grisTexto"
+              router.pathname === "/profile" ? "text-lightBlue" : "text-greyText"
             )}
           >
             Profile

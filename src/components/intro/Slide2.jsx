@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import SolidButton from "../utils/buttons/SolidButton";
+import OutlinedButton from "../utils/buttons/OutlinedButton";
 
 function Slide2() {
   return (
     <div className="flex flex-col items-center px-10">
-      <h1 className="text-negro my-5 text-3xl">Offer Own Services</h1>
-      <p className="text-negroTexto text-center text-xl px-5">
+      <h1 className="text-black my-5 text-3xl">Offer Own Services</h1>
+      <p className="text-blackText text-center text-xl px-5">
         If you are worker then you can own offer services & get paid.
       </p>
       <Image
@@ -17,7 +17,7 @@ function Slide2() {
         alt="Imagen Provedores"
       />
       <Link href={"/"} className="w-full">
-        <SolidButton text="Let's go" />
+        <OutlinedButton text="Let's go" />
       </Link>
     </div>
   );

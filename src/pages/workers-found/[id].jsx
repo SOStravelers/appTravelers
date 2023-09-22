@@ -36,7 +36,7 @@ export default function WorkersFound() {
 
   return (
     <div className="flex flex-col px-10 items-center pb-20">
-      <h1 className="my-5 text-gris text-center">
+      <h1 className="my-5 text-grey text-center">
         These are the available barbers, select the one that best suits your
         needs.
       </h1>

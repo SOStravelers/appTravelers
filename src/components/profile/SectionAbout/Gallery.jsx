@@ -7,10 +7,10 @@ function Gallery() {
         Gallery
       </h1>
       <div className="grid grid-cols-2 gap-1">
-        <div className="w-full h-28 rounded-xl bg-azulClaro"></div>
-        <div className="w-full h-28 rounded-xl bg-azulClaro"></div>
-        <div className="w-full h-28 rounded-xl bg-azulClaro"></div>
-        <div className="w-full h-28 rounded-xl bg-azulClaro"></div>
+        <div className="w-full h-28 rounded-xl bg-transparentBlue"></div>
+        <div className="w-full h-28 rounded-xl bg-transparentBlue"></div>
+        <div className="w-full h-28 rounded-xl bg-transparentBlue"></div>
+        <div className="w-full h-28 rounded-xl bg-transparentBlue"></div>
       </div>
     </div>
   );

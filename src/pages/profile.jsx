@@ -21,9 +21,9 @@ export default function Profile() {
   };
 
   return (
-    <div className="bg-blanco h-full w-screen p-10 mb-20">
+    <div className="bg-white h-full w-screen p-10 mb-20">
       <ProfileForm />
-      <SolidButton text="Settings" color="gris" />
+      <SolidButton text="Settings" color="grey"/>
       <SolidButton text="Invite Friend" color="verde" />
       <SolidButton text="Log Out" color="rojo" onClick={logout} />
     </div>

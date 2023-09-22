@@ -1,11 +1,11 @@
 import Image from "next/image";
-import SolidButton from "../utils/buttons/SolidButton";
+import OutlinedButton from "../utils/buttons/OutlinedButton";
 
 function Slide1({ setSlide }) {
   return (
     <div className="flex flex-col items-center px-10">
-      <h1 className="text-negro my-5 text-3xl">Book services with ease</h1>
-      <p className="text-negroTexto text-center text-xl px-5">
+      <h1 className="text-black my-5 text-3xl">Book services with ease</h1>
+      <p className="text-blackText text-center text-xl px-5">
         it includes services like haircut, massage, tattoo and much more.
       </p>
       <Image
@@ -15,7 +15,7 @@ function Slide1({ setSlide }) {
         className="my-10"
         alt="Imagen Servicios"
       />
-      <SolidButton onClick={() => setSlide(2)} text="Continue" />
+      <OutlinedButton onClick={() => setSlide(2)} text="Continue" />
     </div>
   );
 }

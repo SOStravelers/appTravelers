@@ -6,7 +6,7 @@ function HostelCardSummary({ link, name, location }) {
   return (
     <Link href={link}>
       <div className="flex flex-col w-72">
-        <div className="w-full h-28 rounded-xl bg-azul relative">
+        <div className="w-full h-28 rounded-xl bg-lightBlue relative">
           <Image
             src={"/assets/lugar.png"}
             fill
@@ -17,7 +17,7 @@ function HostelCardSummary({ link, name, location }) {
           <h1 className="font-regukar">{name}</h1>
           <div className="flex items-center mt-1">
             <PinIcon color={"#5B78C7"} className="mr-1" />
-            <p className="text-grisTexto text-sm">{location}</p>
+            <p className="text-greyText text-sm">{location}</p>
           </div>
         </div>
       </div>

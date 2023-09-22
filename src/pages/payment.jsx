@@ -1,7 +1,6 @@
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
-import SolidButton from "@/components/utils/buttons/SolidButton";
 import Image from "next/image";
 
 export default function Payment() {
@@ -70,7 +69,7 @@ export default function Payment() {
           />
         </div>
       </div>
-      <SolidButton text="Continue" color="azul" onClick={pay} />
+      <OutlinedButton text="Continue" color="lightBlue" onClick={pay} />
     </div>
   );
 }

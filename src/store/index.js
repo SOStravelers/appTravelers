@@ -2,10 +2,10 @@ import { create } from "zustand";
 
 export const useStore = create((set) => {
   return {
-    user: null,
+    user: {},
     loggedIn: false,
     service: {},
-    setUser: (user) => set({ user: user }),
+    setUser: (user) => set({ user: { ...user } }),
     setLoggedIn: (loggedIn) => set({ loggedIn: loggedIn }),
     setService: (service) =>
       set((state) => ({ service: { ...state.service, ...service } })),

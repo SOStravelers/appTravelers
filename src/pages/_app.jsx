@@ -13,8 +13,8 @@ console.log({
   ...awsmobile,
   oauth: {
     ...awsmobile.oauth,
-    redirectSignIn: "https://dev.sostvl.com/alternative-login",
-    redirectSignOut: "https://dev.sostvl.com/alternative-login",
+    redirectSignIn: "https://dev.sostvl.com/alternative-login/",
+    redirectSignOut: "https://dev.sostvl.com/alternative-login/",
   },
 });
 

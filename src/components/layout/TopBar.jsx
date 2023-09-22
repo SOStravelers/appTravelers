@@ -1,7 +1,23 @@
 import { AvatarIcon, NotificationIcon, LogoWhite } from "@/constants/icons";
+import { useEffect } from "react";
+
 import Link from "next/link";
 
+import { useStore } from "@/store";
+
 function TopBar() {
+  const { loggedIn, user } = useStore();
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
+  const initials = () => {
+    if (Object.keys(user).length === 0) return "";
+    const { first, last } = user?.personalData?.name;
+    const str = `${first.charAt(0)}${last ? last.charAt(0) : ""}`.toUpperCase();
+    return str;
+  };
+
   return (
     <div className="w-screen flex items-center justify-between bg-darkBlue h-24 px-5">
       <div className="flex items-center">
@@ -14,19 +30,26 @@ function TopBar() {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        {/* <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
-        <div className="border border-white text-white px-3 py-1 rounded-xl">
-          RR
-        </div>*/}
-        <Link className="text-white mr-2" href="/login">
-          Sing In
-        </Link>
-        <Link
-          className="text-white border border-white px-3 py-1 rounded-xl"
-          href="/login"
-        >
-          Join
-        </Link>
+        {loggedIn ? (
+          <>
+            <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
+            <div className="border border-white text-white px-3 py-1 rounded-xl">
+              {initials()}
+            </div>
+          </>
+        ) : (
+          <>
+            <Link className="text-white mr-2" href="/login">
+              Sing In
+            </Link>
+            <Link
+              className="text-white border border-white px-3 py-1 rounded-xl"
+              href="/login"
+            >
+              Join
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

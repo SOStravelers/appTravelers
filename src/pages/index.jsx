@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
@@ -14,7 +14,7 @@ export default function Home({ user }) {
 
   const [services, setServices] = useState([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (user) {
       setUser(user);
       setLoggedIn(true);
@@ -67,13 +67,13 @@ export default function Home({ user }) {
 export async function getServerSideProps({ req }) {
   const userId = req.cookies["auth.user_id"];
   let user = null;
-  try {
-    if (userId) {
+  if (userId) {
+    try {
       const response = await UserService.get(userId);
       user = response.data;
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
   }
   return {
     props: {

@@ -40,13 +40,13 @@ function TopBarSubMenu() {
     <div
       className={clsx(
         "w-screen flex items-center justify-between h-24 px-5 shadow-xl",
-        isSubservices ? "bg-azul" : "bg-blanco"
+        isSubservices ? "bg-lightBlue" : "bg-white"
       )}
     >
       <div
         className={clsx(
           " border-2 rounded-full p-2",
-          isSubservices ? "border-blanco" : "border-negroTexto"
+          isSubservices ? "border-white" : "border-blackText"
         )}
         onClick={() => router.back()}
       >
@@ -55,7 +55,7 @@ function TopBarSubMenu() {
       <h1
         className={clsx(
           " text-xl",
-          isSubservices ? "text-blanco" : "text-negroTexto"
+          isSubservices ? "text-white" : "text-blackText"
         )}
       >
         {titulo}

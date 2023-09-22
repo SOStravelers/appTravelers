@@ -14,7 +14,7 @@ function FacebookButton() {
   };
   return (
     <button
-      className="bg-fb text-blanco py-4 w-full rounded-xl my-2 flex flex-row items-center justify-center"
+      className="bg-greyButton border-2 border-darkBlue text-black py-3 w-full rounded-xl my-2 flex items-center px-5"
       type="button"
       onClick={login}
     >

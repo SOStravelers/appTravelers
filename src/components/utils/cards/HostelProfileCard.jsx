@@ -4,8 +4,8 @@ import { PinIcon, StarIcon } from "@/constants/icons";
 function HostelProfileCard({ name, location, score }) {
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">
-      <div className="w-36 h-32 p-1 border border-negro rounded-2xl mr-2">
-        <div className="bg-azul w-full h-full rounded-2xl relative">
+      <div className="w-36 h-32 p-1 border border-black rounded-2xl mr-2">
+        <div className="bg-lightBlue w-full h-full rounded-2xl relative">
           <Image
             src={"/assets/lugar.png"}
             fill
@@ -17,11 +17,11 @@ function HostelProfileCard({ name, location, score }) {
         <h1 className="font-semibold">{name}</h1>
         <div className="flex items-center my-2">
           <PinIcon color={"#5B78C7"} className="mr-1" />
-          <p className="text-negroTexto">{location}</p>
+          <p className="text-blackText">{location}</p>
         </div>
         <div className="flex items-center">
           <StarIcon color={"#5B78C7"} className="mr-1" />
-          <p className="text-negroTexto">{score}</p>
+          <p className="text-blackText">{score}</p>
         </div>
       </div>
     </div>

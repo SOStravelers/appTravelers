@@ -29,12 +29,12 @@ export default function Home({ user }) {
   };
 
   return (
-    <main className="flex flex-col bg-blanco pb-20 px-5">
+    <main className="flex flex-col bg-white pb-20 px-5">
       <BookingCard />
 
       <section>
         <h1
-          className={`text-negro text-xl font-semibold mt-10 mb-5 ${mazzard.className}`}
+          className={`text-black text-xl font-semibold mt-10 mb-5 ${mazzard.className}`}
         >
           Services
         </h1>
@@ -51,7 +51,7 @@ export default function Home({ user }) {
 
       <section>
         <h1
-          className={`text-negro text-xl font-semibold mb-5 ${mazzard.className}`}
+          className={`text-black text-xl font-semibold mb-5 ${mazzard.className}`}
         >
           Recommended for you
         </h1>

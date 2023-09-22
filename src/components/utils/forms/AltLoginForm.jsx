@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import SolidButton from "@/components/utils/buttons/SolidButton";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import FacebookButton from "@/components/utils/buttons/FacebookButton";
 import GoogleButton from "@/components/utils/buttons/GoogleButton";
 
@@ -9,8 +9,8 @@ function LoginForm() {
     <form className="w-full flex flex-col">
       <FacebookButton />
       <GoogleButton />
-      <Link href="/login">
-        <SolidButton text="Sign in with you email" />
+      <Link href="/login" className="mt-5">
+        <OutlinedButton text="Sign in with you email" />
       </Link>
     </form>
   );

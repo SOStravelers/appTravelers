@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
-import SolidButton from "@/components/utils/buttons/SolidButton";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 
 import { Field, Form } from "houseform";
 import { z } from "zod";
@@ -76,7 +76,7 @@ function RegisterForm() {
                     onChange={(e) => setValue(e.target.value)}
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-error">
+                    <p key={error} className="text-red">
                       {error}
                     </p>
                   ))}
@@ -98,7 +98,7 @@ function RegisterForm() {
                     onChange={(e) => setValue(e.target.value)}
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-error">
+                    <p key={error} className="text-red">
                       {error}
                     </p>
                   ))}
@@ -123,7 +123,7 @@ function RegisterForm() {
                     type="password"
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-error">
+                    <p key={error} className="text-red">
                       {error}
                     </p>
                   ))}
@@ -153,7 +153,7 @@ function RegisterForm() {
                     type="password"
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-error">
+                    <p key={error} className="text-red">
                       {error}
                     </p>
                   ))}
@@ -162,11 +162,11 @@ function RegisterForm() {
             }}
           </Field>
           <Link href="/">
-            <p className="text-negroTexto font-bold my-5 text-right">
+            <p className="text-blackText font-semibold mb-4 mt-2 text-right">
               Forgot password?
             </p>
           </Link>
-          <SolidButton text="Register" disabled={!isValid} />
+          <OutlinedButton text="Register" disabled={!isValid} />
         </form>
       )}
     </Form>

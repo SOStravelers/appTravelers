@@ -4,22 +4,31 @@ import LoginForm from "@/components/utils/forms/LoginForm";
 
 export default function Login() {
   return (
-    <div className="bg-blanco h-full w-screen px-10">
-      <h1 className="text-negroTexto font-bold text-2xl py-5">WELCOME BACK</h1>
-      <h2 className="text-negroTexto py-5">Get back to account</h2>
+    <div className="bg-white h-full w-screen px-10">
+      <h1 className="text-blackText font-bold text-2xl py-5">WELCOME BACK</h1>
+      <h2 className="text-blackText py-5">Get back to account</h2>
       <LoginForm />
       <div className="flex flex-col items-center justify-center mt-10">
-        <p className="text-negroTexto">
+        <p className="text-blackText">
           Are you a new member?
-          <Link className="text-azul ml-2" href={"/register"}>
+          <Link className="text-lightBlue ml-2" href={"/register"}>
             Register
           </Link>
         </p>
         <Link href="/alternative-login">
-          <p className="text-azul font-bold my-5">Sing in with other options</p>
+          <p className="text-lightBlue my-5">
+            <span className="text-blackText">Or </span>sing in with other
+            options
+          </p>
         </Link>
+        <p className="text-xs">
+          By joining, you agree to our{" "}
+          <Link href={"terms"} className="font-bold text-blackText">
+            Terms of Service.
+          </Link>
+        </p>
         <Link href="/">
-          <p className="text-negro font-bold my-5">Skip For Now</p>
+          <p className="text-black font-semibold my-5">Skip For Now</p>
         </Link>
       </div>
     </div>

@@ -3,7 +3,7 @@ import React from "react";
 function SectionServiceCard({ title, list }) {
   return (
     <div
-      className="text-negro my-5 p-5 w-full flex flex-col justify-center bg-blanco rounded-2xl"
+      className="text-black my-5 p-5 w-full flex flex-col justify-center bg-white rounded-2xl"
       style={{
         boxShadow: "2px 2px 12px 0px rgba(0, 0, 0, 0.14)",
       }}
@@ -15,7 +15,7 @@ function SectionServiceCard({ title, list }) {
         {list?.map((item, index) => (
           <li key={index} className="flex justify-between my-1">
             <span> {item.name}</span>
-            <span className="text-azul"> ${item.price}</span>
+            <span className="text-lightBlue"> ${item.price}</span>
           </li>
         ))}
       </ul>

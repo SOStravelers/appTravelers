@@ -4,9 +4,9 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 
 export default function WhoAreYou() {
   return (
-    <section className="h-screen w-screen flex flex-col items-center justify-center bg-blanco px-10">
+    <section className="h-screen w-screen flex flex-col items-center justify-center bg-white px-10">
       <Image className="mb-10" src={'/logo.png'} alt="logo" />
-      <h1 className="text-negroTexto font-bold text-2xl my-10">Who are you?</h1>
+      <h1 className="text-blackText font-bold text-2xl my-10">Who are you?</h1>
       <SolidButton text="User" />
       <OutlinedButton text="Worker" />
     </section>

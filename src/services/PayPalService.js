@@ -24,7 +24,7 @@ export default class PayPalService {
   
     try {
       const response = await axios.post(
-        `${this.baseUrlLocal}/newOrder`,
+        `${this.baseUrl}/newOrder`,
         body,
         config
       );

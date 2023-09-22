@@ -61,10 +61,10 @@
       "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.sostvl.com/alternative-login\"],\"LogoutURLs\":[\"https://dev.sostvl.com/alternative-login\"]}",
     "authProviders": [],
     "userPoolGroups": false,
     "adminQueries": false,
-    "thirdPartyAuth": false
+    "thirdPartyAuth": false,
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.sostvl.com/alternative-login/\",\"http://localhost:3000/alternative-login/\"],\"LogoutURLs\":[\"https://dev.sostvl.com/alternative-login/\",\"http://localhost:3000/alternative-login/\"]}"
   }
 }

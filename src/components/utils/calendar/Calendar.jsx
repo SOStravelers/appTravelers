@@ -25,7 +25,7 @@ const HOURS = [
 ];
 
 function Calendar({ id }) {
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState("");
   const [time, setTime] = useState();
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
@@ -36,21 +36,33 @@ function Calendar({ id }) {
   }, []);
 
   useEffect(() => {
-    console.log(selected);
+    if (selected) {
+      const dateString = moment({
+        year: selected.getFullYear(),
+        month: selected.getMonth(),
+        day: selected.getDate(),
+      }).format("YYYY-MM-DD");
+      initialize(dateString);
+    }
   }, [selected]);
 
-  const initialize = () => {
+  const initialize = (dateString = "") => {
+    let hours = [];
     const now = moment();
-    setSelected(now.toDate());
-    setFromDate(now.toDate());
-    setToDate(now.add(2, "months").toDate());
-    const nhs = now.add(2, "hours").format("hh:mm a");
-    const hours = HOURS.filter((h) => {
-      const nh = moment(nhs, "hh:mm a");
-      const mh = moment(h, "hh:mm a");
+    if (dateString === now.format("YYYY-MM-DD") || selected === "") {
+      if (!selected) setSelected(now.toDate());
+      setFromDate(now.toDate());
+      setToDate(now.add(2, "months").toDate());
+      const nhs = now.add(2, "hours").format("hh:mm a");
+      hours = HOURS.filter((h) => {
+        const nh = moment(nhs, "hh:mm a");
+        const mh = moment(h, "hh:mm a");
 
-      return mh > nh;
-    });
+        return mh > nh;
+      });
+    } else {
+      hours = HOURS.slice();
+    }
     setHours(hours);
   };
 

@@ -9,9 +9,16 @@ import "react-toastify/dist/ReactToastify.css";
 import awsmobile from "@/aws-exports";
 import { Amplify } from "aws-amplify";
 
-console.log(awsmobile)
+console.log(awsmobile);
 
-Amplify.configure({ ...awsmobile, ssr: true });
+Amplify.configure({
+  ...awsmobile,
+  oauth: {
+    ...awsmobile.oauth,
+    redirectSignIn: process.env.NEXT_PUBLIC_REDIRECT_SIGNIN,
+    redirectSignOut: process.env.NEXT_PUBLIC_REDIRECT_SIGNOUT,
+  },
+});
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();

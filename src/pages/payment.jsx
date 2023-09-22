@@ -1,17 +1,26 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
+
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function Payment() {
+  const router = useRouter();
+
   const [paymentType, setPaymentType] = useState("stripe");
 
   const pay = async () => {
-    console.log(paymentType);
+    let url = "/";
+    switch (paymentType) {
+      case "paypal":
+        url = "/paypal";
+        break;
+      case "stripe":
+        url = "/stripe";
+        break;
+    }
+    router.push(url);
   };
-
-  useEffect(() => {
-    console.log(paymentType);
-  }, [paymentType]);
 
   return (
     <div className="px-10 flex flex-col items-center justify-between my-5 min-h-[70vh]">
@@ -38,11 +47,10 @@ export default function Payment() {
             checked={paymentType === "stripe"}
           />
         </div>
-
         <div className="flex justify-between items-center">
           <div
             className="flex items-center my-3"
-            onClick={() => setPaymentType("stripe")}
+            onClick={() => setPaymentType("paypal")}
           >
             <Image
               src={"/icons/paypal.svg"}

@@ -17,6 +17,7 @@ export default function Summary() {
 
   const [worker, setWorker] = useState(null);
   const [hostel, setHostel] = useState(null);
+  const [selected, setSelected] = useState(false);
 
   useEffect(() => {
     getData();
@@ -67,7 +68,13 @@ export default function Summary() {
         <EditIcon />
       </div>
       <div className="flex w-full my-5">
-        <input id="terms" type="checkbox" className="mr-2" />
+        <input
+          id="terms"
+          type="checkbox"
+          className="mr-2"
+          checked={selected}
+          onChange={(event) => setSelected(!selected)}
+        />
         <label className="text-negroTexto" htmlFor="terms">
           Accept terms & conditions of SOS
         </label>
@@ -77,7 +84,7 @@ export default function Summary() {
         <p className="text-azul font-semibold text-2xl">$ 100.00</p>
       </div>
       <Link href={"/payment"} className="w-full">
-        <SolidButton text={"Hire Now"} />
+        <SolidButton text={"Hire Now"} disabled={!selected} />
       </Link>
     </div>
   );

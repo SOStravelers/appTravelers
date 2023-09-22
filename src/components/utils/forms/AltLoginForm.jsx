@@ -1,5 +1,5 @@
 import Link from "next/link";
-import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import FacebookButton from "@/components/utils/buttons/FacebookButton";
 import GoogleButton from "@/components/utils/buttons/GoogleButton";

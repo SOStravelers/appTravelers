@@ -26,6 +26,7 @@ export default function Subservices() {
       {subServices?.map((s) => (
         <SubServiceCard
           key={s.id}
+          id={s.id}
           link={`/select-hostel/${s.id}`}
           name={s.name}
         />

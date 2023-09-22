@@ -31,11 +31,12 @@ export default function SelectHostel() {
       <OutlinedInput placeholder={"Search here"} />
       <h1 className="my-8 font-semibold text-center">Nearby You</h1>
       <div className="flex flex-col items-center">
-        {hostels.map((h) => (
-          <div key={h.id}>
+        {hostels.map((hostel) => (
+          <div className="w-full" key={hostel.id}>
             <HostelCard
-              link={`/reservation/${h.id}`}
-              name={fullName(h.personalData?.name)}
+              id={hostel.id}
+              link={`/reservation/${hostel.id}`}
+              name={fullName(hostel.personalData?.name)}
               location={"Location"}
             />
             <hr className="w-full my-5 text-blueBorder" />

@@ -1,7 +1,12 @@
 function About() {
   return (
     <div className="my-5">
-      <h1 className="mb-5 underline font-semibold underline-offset-8">About</h1>
+      <h1
+        className="mb-5 underline font-semibold underline-offset-8"
+        style={{ textDecorationColor: "#00A0D5", textDecorationThickness: 2 }}
+      >
+        About
+      </h1>
       <p className="text-blackText">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum
         similique exercitationem porro neque non, labore hic eligendi facilis

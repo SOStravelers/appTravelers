@@ -1,4 +1,5 @@
 import { AvatarIcon, NotificationIcon, LogoWhite } from "@/constants/icons";
+import Link from "next/link";
 
 function TopBar() {
   return (
@@ -17,12 +18,12 @@ function TopBar() {
         <div className="border border-white text-white px-3 py-1 rounded-xl">
           RR
         </div>*/}
-        <Link className="text-white" to="/login">
+        <Link className="text-white mr-2" href="/login">
           Sing In
         </Link>
         <Link
           className="text-white border border-white px-3 py-1 rounded-xl"
-          to="/login"
+          href="/login"
         >
           Join
         </Link>

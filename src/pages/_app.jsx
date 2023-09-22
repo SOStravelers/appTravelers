@@ -15,8 +15,8 @@ Amplify.configure({
   ...awsmobile,
   oauth: {
     ...awsmobile.oauth,
-    redirectSignIn: process.env.NEXT_PUBLIC_REDIRECT_SIGNIN,
-    redirectSignOut: process.env.NEXT_PUBLIC_REDIRECT_SIGNOUT,
+    redirectSignIn: "https://dev.sostvl.com/alternative-login",
+    redirectSignOut: "https://dev.sostvl.com/alternative-login",
   },
 });
 

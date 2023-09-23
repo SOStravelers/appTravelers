@@ -40,11 +40,11 @@ function TopBar() {
         ) : (
           <>
             <Link className="text-white mr-2" href="/login">
-              Sing In
+              Sign In
             </Link>
             <Link
               className="text-white border border-white px-3 py-1 rounded-xl"
-              href="/login"
+              href="/register"
             >
               Join
             </Link>

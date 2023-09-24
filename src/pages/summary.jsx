@@ -61,6 +61,7 @@ export default function Summary() {
         service={"Barbero"}
         score={5}
         link={"/worker/" + 1}
+        img={worker?.img?.imgUrl}
         showArrow={false}
         hostelId={hostel?.id}
       />

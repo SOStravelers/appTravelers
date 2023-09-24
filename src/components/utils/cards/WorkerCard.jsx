@@ -5,6 +5,7 @@ import { StarIcon, ArrowRightIcon } from "@/constants/icons";
 function WorkerCard({
   link,
   name,
+  img,
   service,
   score,
   showArrow = true,
@@ -19,7 +20,7 @@ function WorkerCard({
         <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
           <Link href={link}>
             <Image
-              src={"/assets/proovedor.png"}
+              src={img}
               fill
               className="object-cover rounded-xl"
             />

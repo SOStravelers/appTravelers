@@ -2,13 +2,13 @@ import { PinIcon, ChangeIcon } from "@/constants/icons";
 import Link from "next/link";
 import Image from "next/image";
 
-function HostelCardSummary({ subserviceId, link, name, location }) {
+function HostelCardSummary({ subserviceId, link, name, location, image }) {
   return (
     <Link href={link}>
       <div className="flex flex-col w-72">
         <div className="w-full h-28 rounded-xl bg-lightBlue relative">
           <Image
-            src={"/assets/lugar.png"}
+            src={image}
             fill
             className="object-cover rounded-xl"
           />

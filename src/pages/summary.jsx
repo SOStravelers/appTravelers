@@ -49,8 +49,9 @@ export default function Summary() {
         Read all the points carefully and make sure that it is what you need.
       </h1>
       <HostelCardSummary
-        name={fullName(hostel?.personalData?.name)}
-        location={"Ubicación"}
+        image ={hostel?.img?.imgUrl}
+        name={hostel?.businessData?.name}
+        location={hostel?.businessData?.location?.city}
         link={"/hostel/" + 1}
         subserviceId={service?.subServiceId}
       />
@@ -87,7 +88,7 @@ export default function Summary() {
       </div>
       <div className="flex justify-between items-end w-full my-5">
         <p className="text-blackText font-semibold">Total Service Fee</p>
-        <p className="text-lightBlue font-semibold text-2xl">$ 100.00</p>
+        <p className="text-blackBlue font-semibold text-2xl">$ 100.00</p>
       </div>
       <Link href={"/payment"} className="w-full">
         <OutlinedButton text={"Hire Now"} disabled={!selected} />

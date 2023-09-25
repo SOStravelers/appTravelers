@@ -14,7 +14,7 @@ import Cookies from "js-cookie";
 import { useStore } from "@/store";
 
 function LoginForm() {
-  const { setUser, setLoggedIn } = useStore();
+  const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
 
   const login = async (values) => {
@@ -32,7 +32,8 @@ function LoginForm() {
       setUser(response.data.user);
       setLoggedIn(true);
 
-      router.push("/");
+      if (Object.keys(service).length > 0) router.push(`/summary`);
+      else router.push("/");
     } catch (error) {
       console.error(error);
       let message;

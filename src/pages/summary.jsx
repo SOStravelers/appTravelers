@@ -12,7 +12,7 @@ import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WokerService";
 
 export default function Summary() {
-  const { service } = useStore();
+  const { loggedIn, service } = useStore();
   const router = useRouter();
 
   const [worker, setWorker] = useState(null);
@@ -43,6 +43,12 @@ export default function Summary() {
     return first + (last ?? "");
   };
 
+  const hireNow = () => {
+    console.log(loggedIn);
+    if (!loggedIn) router.push("login");
+    else router.push("/payment");
+  };
+
   return (
     <div className="flex flex-col px-8 items-center pb-20">
       <h1 className="my-5 text-grey text-center">
@@ -69,23 +75,31 @@ export default function Summary() {
       </div>
       <div className="flex w-full my-5">
         <input
-          id="terms"
           type="checkbox"
           className="mr-2"
           checked={selected}
           onChange={(event) => setSelected(!selected)}
         />
-        <label className="text-negroTexto" htmlFor="terms">
-          Accept terms & conditions of SOS
-        </label>
+        <p className="text-negroTexto">
+          Accept{" "}
+          <Link
+            href="/terms-of-service"
+            class="font-medium text-blue-600 dark:text-blue-500 underline"
+          >
+            terms & conditions
+          </Link>{" "}
+          of SOS
+        </p>
       </div>
       <div className="flex justify-between items-end w-full my-5">
         <p className="text-blackText font-semibold">Total Service Fee</p>
         <p className="text-lightBlue font-semibold text-2xl">$ 100.00</p>
       </div>
-      <Link href={"/payment"} className="w-full">
-        <OutlinedButton text={"Hire Now"} disabled={!selected} />
-      </Link>
+      <OutlinedButton
+        text={"Hire Now"}
+        disabled={!selected}
+        onClick={() => hireNow()}
+      />
     </div>
   );
 }

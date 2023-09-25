@@ -23,7 +23,7 @@ export default function Login() {
         </Link>
         <p className="text-xs">
           By joining, you agree to our{" "}
-          <Link href={"terms"} className="font-bold text-blackText">
+          <Link href={"terms-of-service"} className="font-bold text-blackText">
             Terms of Service.
           </Link>
         </p>

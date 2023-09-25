@@ -12,7 +12,9 @@ export default function AlternativeLogin() {
   useEffect(() => {
     const unsubscribe = Hub.listen("auth", (response) => {
       console.log(response);
-      console.log('-------------------------------------------------------------')
+      console.log(
+        "-------------------------------------------------------------"
+      );
       /*switch (event) {
         case "signIn":
           setUser(data);
@@ -57,7 +59,7 @@ export default function AlternativeLogin() {
         </p>
         <p className="text-xs mt-5">
           By joining, you agree to our{" "}
-          <Link href={"terms"} className="font-bold text-blackText">
+          <Link href={"terms-of-service"} className="font-bold text-blackText">
             Terms of Service.
           </Link>
         </p>

@@ -35,7 +35,6 @@ function LoginForm() {
       if (Object.keys(service).length > 0) router.push(`/summary`);
       else router.push("/");
     } catch (error) {
-      console.error(error);
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.message;

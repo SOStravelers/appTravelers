@@ -11,3 +11,16 @@
 body {
   color: rgb(var(--foreground-rgb));
 }
+
+.rdp {
+  --rdp-cell-size: 40px !important;
+  --rdp-accent-color: #00A0D5 !important;
+  --rdp-background-color: #e7edff !important;
+  /* Switch to dark colors for dark themes */
+  --rdp-accent-color-dark: #00A0D5 !important;
+  --rdp-background-color-dark: #0063d5 !important;
+  /* Outline border for focused elements */
+  --rdp-outline: 2px solid var(--rdp-accent-color) !important;
+  /* Outline border for focused and selected elements */
+  --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75) !important;
+}

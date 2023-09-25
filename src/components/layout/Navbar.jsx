@@ -20,7 +20,7 @@ function Navbar() {
       <Link href="/">
         <button className="flex flex-col items-center">
           <HomeIcon
-            color={clsx(router.pathname === "/" ? "#5B78C7" : "#D9D9D9")}
+            color={clsx(router.pathname === "/" ? "#3498db" : "#D9D9D9")}
           />
           <p
             className={clsx(
@@ -37,7 +37,7 @@ function Navbar() {
         <button className="flex flex-col items-center">
           {" "}
           <BookingIcon
-            color={clsx(router.pathname === "/booking" ? "#5B78C7" : "#D9D9D9")}
+            color={clsx(router.pathname === "/booking" ? "#3498db" : "#D9D9D9")}
           />
           <p
             className={clsx(
@@ -53,7 +53,7 @@ function Navbar() {
         <button className="flex flex-col items-center">
           {" "}
           <ChatIcon
-            color={clsx(router.pathname === "/chat" ? "#5B78C7" : "#D9D9D9")}
+            color={clsx(router.pathname === "/chat" ? "#3498db" : "#D9D9D9")}
           />
           <p
             className={clsx(
@@ -70,7 +70,7 @@ function Navbar() {
           {" "}
           <FavoriteIcon
             color={clsx(
-              router.pathname === "/favorites" ? "#5B78C7" : "#D9D9D9"
+              router.pathname === "/favorites" ? "#3498db" : "#D9D9D9"
             )}
           />
           <p
@@ -88,7 +88,7 @@ function Navbar() {
         <button className="flex flex-col items-center">
           {" "}
           <ProfileIcon
-            color={clsx(router.pathname === "/profile" ? "#5B78C7" : "#D9D9D9")}
+            color={clsx(router.pathname === "/profile" ? "#3498db" : "#D9D9D9")}
           />
           <p
             className={clsx(

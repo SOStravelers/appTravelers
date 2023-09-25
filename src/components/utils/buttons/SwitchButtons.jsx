@@ -7,7 +7,7 @@ function SwitchButtons({ actualView, setActualView }) {
       <button
         className={clsx(
           "w-1/2 h-full font-semibold rounded-xl",
-          actualView === SECTION_ABOUT ? "bg-lightBlue text-white" : " text-lightBlue"
+          actualView === SECTION_ABOUT ? "bg-blueBorder text-white" : " text-blueBorder"
         )}
         onClick={() => setActualView(SECTION_ABOUT)}
       >
@@ -16,7 +16,7 @@ function SwitchButtons({ actualView, setActualView }) {
       <button
         className={clsx(
           "w-1/2 h-full font-semibold rounded-xl",
-          actualView === SECTION_SERVICES ? "bg-lightBlue text-white" : " text-lightBlue"
+          actualView === SECTION_SERVICES ? "bg-blueBorder text-white" : " text-blueBorder"
         )}
         onClick={() => setActualView(SECTION_SERVICES)}
       >

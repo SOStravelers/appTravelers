@@ -17,7 +17,7 @@ export default function Login() {
         </p>
         <Link href="/alternative-login">
           <p className="text-lightBlue my-5">
-            <span className="text-blackText">Or </span>sing in with other
+            <span className="text-blackText">Or </span>sign in with other
             options
           </p>
         </Link>

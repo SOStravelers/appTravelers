@@ -4,18 +4,15 @@ import { ArrowRightIcon, ClockIcon } from "@/constants/icons";
 
 function WorkerCardChat({ link, name, service, showArrow = true }) {
   return (
-    <div
-      className="flex py-4 w-full rounded-lg justify-around my-2 items-center"
-      style={{ boxShadow: "2px 2px 24px 0px rgba(0, 0, 0, 0.15)" }}
-    >
+    <div className="flex py-4 w-full rounded-2xl border-b-2 border-blueBorder justify-around my-2 items-center">
       <Link href={link}>
         <div className="flex">
           <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
-          <Image
-            src={"/assets/proovedor.png"}
-            fill
-            className="object-cover rounded-xl"
-          />
+            <Image
+              src={"/assets/proovedor.png"}
+              fill
+              className="object-cover rounded-xl"
+            />
           </div>
           <div className="flex flex-col">
             <h1 className="font-semibold">{name}</h1>
@@ -29,9 +26,7 @@ function WorkerCardChat({ link, name, service, showArrow = true }) {
       </Link>
       {showArrow ? (
         <Link href={link}>
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-lightBlue">
-            <ArrowRightIcon className="ml-1" />
-          </div>
+          <div className="w-3 h-3 flex items-center justify-center rounded-full bg-lightBlue"></div>
         </Link>
       ) : (
         <div className="w-10"></div>

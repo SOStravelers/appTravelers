@@ -33,7 +33,6 @@ export default function SelectHostel() {
       <div className="flex flex-col items-center">
         {hostels.map((hostel) => (
           <div className="w-full" key={hostel.id}>
-           
             <HostelCard
               id={hostel.id}
               link={`/reservation/${hostel.id}`}
@@ -41,7 +40,7 @@ export default function SelectHostel() {
               location={hostel.businessData.location}
               img={hostel.img.imgUrl}
             />
-            <hr className="w-full my-5 text-blueBorder" />
+            <hr className="w-[90%] my-5 text-blueBorder" />
           </div>
         ))}
       </div>

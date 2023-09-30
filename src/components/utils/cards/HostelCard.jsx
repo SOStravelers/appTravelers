@@ -25,7 +25,7 @@ function HostelCard({ id, link, name, location, img }) {
         </div>
       </div>
       <Link href={link} className="h-full">
-        <div className="w-8 h-20 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
+        <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
           <ArrowRightIcon className="ml-1" />
         </div>
       </Link>

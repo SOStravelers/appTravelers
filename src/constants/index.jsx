@@ -1,2 +1,2 @@
-export const SECTION_ABOUT = 1;
-export const SECTION_SERVICES = 2;
+export const SECTION_ONE = 1;
+export const SECTION_TWO = 2;

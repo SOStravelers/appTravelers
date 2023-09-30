@@ -40,7 +40,6 @@ export default function SelectHostel() {
               location={hostel.businessData.location}
               img={hostel.img.imgUrl}
             />
-            <hr className="w-[90%] my-5 text-blueBorder" />
           </div>
         ))}
       </div>

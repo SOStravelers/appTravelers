@@ -42,7 +42,7 @@ export default function WorkersFound() {
       </h1>
       <div className="flex flex-col items-center">
         {wokers.map((worker) => (
-          <div className="w-full" key={worker.id}>
+          <div className="w-[80vw]" key={worker.id}>
             <WorkerCard
               key={worker.id}
               name={fullName(worker.personalData?.name)}
@@ -54,7 +54,6 @@ export default function WorkersFound() {
                 selectWorker(worker.id);
               }}
             />
-            <hr className="w-[85%] my-3 text-blueBorder" />
           </div>
         ))}
       </div>

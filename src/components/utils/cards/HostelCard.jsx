@@ -4,8 +4,8 @@ import Image from "next/image";
 
 function HostelCard({ id, link, name, location, img }) {
   return (
-    <div className="flex justify-between items-center">
-      <div className="flex items-center">
+    <div className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2">
+      <div className="flex items-center ml-2">
         <Link href={`/hostel/${id}`}>
           <div className="w-20 h-20 rounded-xl relative">
             <Image
@@ -19,7 +19,7 @@ function HostelCard({ id, link, name, location, img }) {
         <div className="flex flex-col p-2">
           <h1 className="font-semibold">{name}</h1>
           <div className="flex items-center">
-            <PinIcon color={"#3498db"} className="mr-1" />
+            <PinIcon color={"#0057FF"} className="mr-1" />
             <p className="text-blackText">{location.city}</p>
           </div>
         </div>

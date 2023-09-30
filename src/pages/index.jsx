@@ -38,7 +38,7 @@ export default function Home({ user }) {
         >
           Services
         </h1>
-        <div className="flex overflow-x-auto pb-10">
+        <div className="w-[90vw] flex overflow-x-auto pb-5">
           {services?.map((s) => (
             <ServiceCard
               key={s.id}

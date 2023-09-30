@@ -15,6 +15,7 @@ function TopBarSubMenu() {
   const isWorkersFound = actualURL.includes("workers-found");
   const isSumary = actualURL.includes("summary");
   const isPayment = actualURL.includes("payment");
+  const isServiceHistoy = actualURL.includes("service-history");
 
   useEffect(() => {
     handleUrl();
@@ -33,6 +34,8 @@ function TopBarSubMenu() {
       setTitulo("Summary");
     } else if (isPayment) {
       setTitulo("Payment Method");
+    } else if (isServiceHistoy) {
+      setTitulo("Service History");
     }
   };
 
@@ -40,26 +43,16 @@ function TopBarSubMenu() {
     <div
       className={clsx(
         "w-screen flex items-center justify-between h-24 px-5 shadow-xl",
-       "bg-darkBlue" 
+        "bg-darkBlue"
       )}
     >
       <div
-        className={clsx(
-          " border-2 rounded-full p-2",
-         "border-white" 
-        )}
+        className={clsx(" border-2 rounded-full p-2", "border-white")}
         onClick={() => router.back()}
       >
-        <ReturnArrowIcon color={clsx("#fff" )} />
+        <ReturnArrowIcon color={clsx("#fff")} />
       </div>
-      <h1
-        className={clsx(
-          " text-xl",
-           "text-white" 
-        )}
-      >
-        {titulo}
-      </h1>
+      <h1 className={clsx(" text-xl", "text-white")}>{titulo}</h1>
       <div className="w-5"></div>
     </div>
   );

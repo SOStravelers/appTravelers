@@ -5,7 +5,7 @@ import { mazzard } from "@/utils/mazzardFont";
 function ServiceCard({ link, icon, name }) {
   return (
     <Link href={link}>
-      <div className="text-black flex flex-col items-center justify-center bg-white w-28 h-28 mx-2 rounded-2xl">
+      <div className="text-black flex flex-col items-center justify-center mx-5">
         <div className="w-14 h-14 rounded-full bg-blueBorder flex items-center justify-center">
           <HairCutIcon />
         </div>

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import { DayPicker } from "react-day-picker";
 import TimeButton from "../buttons/TimeButton";
 import OutlinedButton from "../buttons/OutlinedButton";
 import "react-day-picker/dist/style.css";
-import Link from "next/link";
 
+import { useStore } from "@/store";
 import moment from "moment";
 
 const HOURS = [
@@ -25,6 +26,9 @@ const HOURS = [
 ];
 
 function Calendar({ id }) {
+  const router = useRouter();
+  const { setService } = useStore();
+
   const [selected, setSelected] = useState("");
   const [time, setTime] = useState();
   const [fromDate, setFromDate] = useState();
@@ -45,6 +49,15 @@ function Calendar({ id }) {
       initialize(dateString);
     }
   }, [selected]);
+
+  const select = () => {
+    const dateStr = moment(selected).format('YYYY-MM-DD')
+    setService({
+      date: dateStr,
+      hour: time,
+    });
+    router.push(`/workers-found/${id}`);
+  };
 
   const initialize = (dateString = "") => {
     let hours = [];
@@ -82,11 +95,7 @@ function Calendar({ id }) {
             />
           ))}
         </div>
-        {time && (
-          <Link href={`/workers-found/${id}`}>
-            <OutlinedButton text={"Next"} />
-          </Link>
-        )}
+        {time && <OutlinedButton text={"Next"} onClick={select} />}
       </div>
     );
   }

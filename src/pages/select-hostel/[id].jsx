@@ -18,6 +18,7 @@ export default function SelectHostel() {
   const getData = async () => {
     const id = router.query.id;
     HostelService.list({ id: id }).then((response) => {
+      console.log(response.data)
       setHostels(response.data.docs);
     });
   };
@@ -33,7 +34,6 @@ export default function SelectHostel() {
       <div className="flex flex-col items-center">
         {hostels.map((hostel) => (
           <div className="w-full" key={hostel.id}>
-           
             <HostelCard
               id={hostel.id}
               link={`/reservation/${hostel.id}`}

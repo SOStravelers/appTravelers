@@ -2,9 +2,12 @@ import { useRouter } from "next/router";
 
 import PayPalService from "@/services/PayPalService";
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useStore } from "@/store";
+import BookingService from "@/services/BookingService";
 
 const PayPalPayment = () => {
   const router = useRouter();
+  const { service } = useStore();
 
   const createOrder = async (values) => {
     try {
@@ -33,6 +36,7 @@ const PayPalPayment = () => {
       toast.error(message);
     }
   };
+
   const onApprove = async (data) => {
     try {
       console.log("activando onApprove", data);
@@ -41,6 +45,7 @@ const PayPalPayment = () => {
       });
       if (response) {
         console.log("aprobado");
+        await createBooking();
         router.push("/payment-confirmation");
       }
     } catch (error) {
@@ -51,6 +56,25 @@ const PayPalPayment = () => {
         message = error?.response?.data?.result;
       toast.error(message);
     }
+  };
+
+  const createBooking = async () => {
+    const userId = localStorage.getItem("auth.user_id");
+    const startTime = service.hour.toUpperCase();
+    const endTime = moment(service.hour, "hh:mm a")
+      .add(1, "hour")
+      .format("hh:mm a")
+      .toUpperCase();
+    const params = {
+      worker: service.workerId,
+      client: userId,
+      creator: userId,
+      startTime: startTime,
+      endTime: endTime,
+      date: service.date,
+    };
+    const response = await BookingService.create(params);
+    console.log(response);
   };
 
   return (

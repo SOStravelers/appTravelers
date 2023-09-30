@@ -24,7 +24,9 @@ function Layout({ children }) {
     router.pathname === "/chat" ||
     router.pathname === "/favorites" ||
     router.pathname === "/profile" ||
-    router.pathname === "/";
+    router.pathname === "/" ||
+    router.pathname === "/worker/home" ||
+    router.pathname === "/worker/booking";
 
   const isIntro = router.pathname === "/intro";
 

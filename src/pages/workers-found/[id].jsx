@@ -18,6 +18,7 @@ export default function WorkersFound() {
 
   const getData = async () => {
     WorkerService.list().then((response) => {
+      console.log(response.data)
       setWorkers(response.data.docs);
     });
   };

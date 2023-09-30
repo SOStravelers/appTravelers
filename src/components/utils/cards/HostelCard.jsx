@@ -1,8 +1,22 @@
+import { useRouter } from "next/router";
+import { useStore } from "@/store";
+
 import { PinIcon, ArrowRightIcon } from "@/constants/icons";
 import Link from "next/link";
 import Image from "next/image";
 
 function HostelCard({ id, link, name, location, img }) {
+  const router = useRouter();
+  const { setService } = useStore();
+
+  const select = () => {
+    setService({
+      hostelId: id,
+      location: location.city,
+    });
+    router.push(link);
+  };
+
   return (
     <div className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2">
       <div className="flex items-center ml-2">
@@ -24,11 +38,12 @@ function HostelCard({ id, link, name, location, img }) {
           </div>
         </div>
       </div>
-      <Link href={link} className="h-full">
-        <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
-          <ArrowRightIcon className="ml-1" />
-        </div>
-      </Link>
+      <div
+        className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
+        onClick={select}
+      >
+        <ArrowRightIcon className="ml-1" />
+      </div>
     </div>
   );
 }

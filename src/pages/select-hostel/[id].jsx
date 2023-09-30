@@ -18,6 +18,7 @@ export default function SelectHostel() {
   const getData = async () => {
     const id = router.query.id;
     HostelService.list({ id: id }).then((response) => {
+      console.log(response.data)
       setHostels(response.data.docs);
     });
   };

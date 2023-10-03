@@ -65,6 +65,6 @@
     "userPoolGroups": false,
     "adminQueries": false,
     "thirdPartyAuth": false,
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.sostvl.com/alternative-login/\",\"http://localhost:3000/alternative-login/\"],\"LogoutURLs\":[\"https://dev.sostvl.com/alternative-login/\",\"http://localhost:3000/alternative-login/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.sostvl.com/alternative-login/\",\"http://localhost:3000/alternative-login/\"],\"LogoutURLs\":[\"https://dev.sostvl.com/alternative-login/\"]}"
   }
 }

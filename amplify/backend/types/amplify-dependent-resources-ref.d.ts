@@ -1,22 +1,22 @@
 export type AmplifyDependentResourcesAttributes = {
-  "api": {
-    "apptravelers": {
-      "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string",
-      "GraphQLAPIKeyOutput": "string"
+    "api": {
+        "apptravelers": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
+    },
+    "auth": {
+        "apptravelersb4418972": {
+            "IdentityPoolId": "string",
+            "IdentityPoolName": "string",
+            "HostedUIDomain": "string",
+            "OAuthMetadata": "string",
+            "UserPoolId": "string",
+            "UserPoolArn": "string",
+            "UserPoolName": "string",
+            "AppClientIDWeb": "string",
+            "AppClientID": "string"
+        }
     }
-  },
-  "auth": {
-    "apptravelersb4418972": {
-      "AppClientID": "string",
-      "AppClientIDWeb": "string",
-      "HostedUIDomain": "string",
-      "IdentityPoolId": "string",
-      "IdentityPoolName": "string",
-      "OAuthMetadata": "string",
-      "UserPoolArn": "string",
-      "UserPoolId": "string",
-      "UserPoolName": "string"
-    }
-  }
 }

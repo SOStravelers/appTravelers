@@ -6,8 +6,7 @@
 
 export { default as BlogCreateForm } from "./BlogCreateForm";
 export { default as BlogUpdateForm } from "./BlogUpdateForm";
-export { default as CommentCreateForm } from "./CommentCreateForm";
-export { default as CommentUpdateForm } from "./CommentUpdateForm";
 export { default as PostCreateForm } from "./PostCreateForm";
 export { default as PostUpdateForm } from "./PostUpdateForm";
-export { default as studioTheme } from "./studioTheme";
+export { default as CommentCreateForm } from "./CommentCreateForm";
+export { default as CommentUpdateForm } from "./CommentUpdateForm";

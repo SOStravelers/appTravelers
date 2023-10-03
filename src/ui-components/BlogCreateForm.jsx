@@ -6,24 +6,25 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { fetchByPath, validateField } from "./utils";
-import { API } from "aws-amplify";
-import { createBlog } from "../graphql/mutations";
+import { Blog } from "../models";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { DataStore } from "aws-amplify";
 export default function BlogCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
+    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    name: "",
+    name: undefined,
   };
   const [name, setName] = React.useState(initialValues.name);
   const [errors, setErrors] = React.useState({});
@@ -34,15 +35,7 @@ export default function BlogCreateForm(props) {
   const validations = {
     name: [{ type: "Required" }],
   };
-  const runValidationTasks = async (
-    fieldName,
-    currentValue,
-    getDisplayValue
-  ) => {
-    const value =
-      currentValue && getDisplayValue
-        ? getDisplayValue(currentValue)
-        : currentValue;
+  const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -85,19 +78,7 @@ export default function BlogCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value === "") {
-              modelFields[key] = null;
-            }
-          });
-          await API.graphql({
-            query: createBlog,
-            variables: {
-              input: {
-                ...modelFields,
-              },
-            },
-          });
+          await DataStore.save(new Blog(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -106,19 +87,17 @@ export default function BlogCreateForm(props) {
           }
         } catch (err) {
           if (onError) {
-            const messages = err.errors.map((e) => e.message).join("\n");
-            onError(modelFields, messages);
+            onError(modelFields, err.message);
           }
         }
       }}
-      {...getOverrideProps(overrides, "BlogCreateForm")}
       {...rest}
+      {...getOverrideProps(overrides, "BlogCreateForm")}
     >
       <TextField
         label="Name"
         isRequired={true}
         isReadOnly={false}
-        value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -145,16 +124,18 @@ export default function BlogCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={(event) => {
-            event.preventDefault();
-            resetStateValues();
-          }}
+          onClick={resetStateValues}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
-        <Flex
-          gap="15px"
-          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
-        >
+        <Flex {...getOverrideProps(overrides, "RightAlignCTASubFlex")}>
+          <Button
+            children="Cancel"
+            type="button"
+            onClick={() => {
+              onCancel && onCancel();
+            }}
+            {...getOverrideProps(overrides, "CancelButton")}
+          ></Button>
           <Button
             children="Submit"
             type="submit"

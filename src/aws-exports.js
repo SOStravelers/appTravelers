@@ -21,7 +21,7 @@ const awsmobile = {
             "aws.cognito.signin.user.admin"
         ],
         "redirectSignIn": "https://dev.sostvl.com/alternative-login/,http://localhost:3000/alternative-login/",
-        "redirectSignOut": "https://dev.sostvl.com/alternative-login/,http://localhost:3000/alternative-login/",
+        "redirectSignOut": "https://dev.sostvl.com/alternative-login/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",

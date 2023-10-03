@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -18,10 +18,10 @@ export declare type CommentCreateFormInputValues = {
 export declare type CommentCreateFormValidationValues = {
     content?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CommentCreateFormOverridesProps = {
-    CommentCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    content?: PrimitiveOverrideProps<TextFieldProps>;
+    CommentCreateFormGrid?: FormProps<GridProps>;
+    content?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CommentCreateFormProps = React.PropsWithChildren<{
     overrides?: CommentCreateFormOverridesProps | undefined | null;
@@ -30,7 +30,8 @@ export declare type CommentCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: CommentCreateFormInputValues) => CommentCreateFormInputValues;
     onSuccess?: (fields: CommentCreateFormInputValues) => void;
     onError?: (fields: CommentCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: CommentCreateFormInputValues) => CommentCreateFormInputValues;
     onValidate?: CommentCreateFormValidationValues;
-} & React.CSSProperties>;
+}>;
 export default function CommentCreateForm(props: CommentCreateFormProps): React.ReactElement;

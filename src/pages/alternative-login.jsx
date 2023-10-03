@@ -15,7 +15,7 @@ export default function AlternativeLogin() {
       console.log(
         "-------------------------------------------------------------"
       );
-      /*switch (event) {
+      switch (event) {
         case "signIn":
           setUser(data);
           break;
@@ -25,7 +25,7 @@ export default function AlternativeLogin() {
         case "CustomOAuthState":
           setCustomState(data);
           break;
-      }*/
+      }
     });
 
     getUser();

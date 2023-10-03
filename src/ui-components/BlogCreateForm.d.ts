@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -18,10 +18,10 @@ export declare type BlogCreateFormInputValues = {
 export declare type BlogCreateFormValidationValues = {
     name?: ValidationFunction<string>;
 };
-export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BlogCreateFormOverridesProps = {
-    BlogCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
+    BlogCreateFormGrid?: FormProps<GridProps>;
+    name?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type BlogCreateFormProps = React.PropsWithChildren<{
     overrides?: BlogCreateFormOverridesProps | undefined | null;
@@ -30,7 +30,8 @@ export declare type BlogCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: BlogCreateFormInputValues) => BlogCreateFormInputValues;
     onSuccess?: (fields: BlogCreateFormInputValues) => void;
     onError?: (fields: BlogCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: BlogCreateFormInputValues) => BlogCreateFormInputValues;
     onValidate?: BlogCreateFormValidationValues;
-} & React.CSSProperties>;
+}>;
 export default function BlogCreateForm(props: BlogCreateFormProps): React.ReactElement;

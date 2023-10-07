@@ -1,4 +1,3 @@
-import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import OptionCard from "@/components/utils/cards/OptionCard";
@@ -7,7 +6,6 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 
 export default function GuestSettings() {
-  const { setWorker } = useStore();
   const router = useRouter();
 
   const onFunction = () => {
@@ -18,13 +16,6 @@ export default function GuestSettings() {
     console.log("Off");
   };
 
-  const workerModeOn = () => {
-    setWorker(true);
-  };
-
-  const workerModeOff = () => {
-    setWorker(false);
-  };
   return (
     <div className="flex flex-col py-5 px-10">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
@@ -37,7 +28,12 @@ export default function GuestSettings() {
         />
       </div>
       <div className="flex items-center justify-center my-5">
-        <Image src="/icons/LogoCompleto.svg" width={200} height={200} />
+        <Image
+          src="/icons/LogoCompleto.svg"
+          width={200}
+          height={200}
+          alt="SOS Traveler Logo"
+        />
       </div>
 
       <OutlinedButton

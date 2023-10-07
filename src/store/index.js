@@ -9,8 +9,10 @@ export const useStore = create((set) => {
     user: {},
     loggedIn: false,
     service: service,
+    isWorker: false,
     setUser: (user) => set({ user: { ...user } }),
     setLoggedIn: (loggedIn) => set({ loggedIn: loggedIn }),
+    setWorker: (isWorker) => set({ isWorker: isWorker }),
     setService: (service) =>
       set((state) => {
         const data = { service: { ...state.service, ...service } };

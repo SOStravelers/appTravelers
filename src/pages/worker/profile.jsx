@@ -5,7 +5,7 @@ import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 
-export default function Profile({ user }) {
+export default function WorkerProfile({ user }) {
   console.log(user);
   const router = useRouter();
   const { setUser, setLoggedIn } = useStore();
@@ -30,9 +30,9 @@ export default function Profile({ user }) {
       <OutlinedButton text="Personal Details" />
       <OutlinedButton
         text="Settings"
-        onClick={() => router.push("/settings")}
+        onClick={() => router.push("/worker/settings")}
       />
-      <OutlinedButton text="Invite Friends" />
+      <OutlinedButton text="Worker Profile" />
       <OutlinedButton secondary text="Log Out" onClick={logout} />
     </div>
   );

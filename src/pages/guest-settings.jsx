@@ -1,0 +1,49 @@
+import { useStore } from "@/store";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import OptionCard from "@/components/utils/cards/OptionCard";
+import OptionSwitch from "@/components/utils/switch/OptionSwitch";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import { WorldIcon, MailIcon } from "@/constants/icons";
+
+export default function GuestSettings() {
+  const { setWorker } = useStore();
+  const router = useRouter();
+
+  const onFunction = () => {
+    console.log("On");
+  };
+
+  const offFunction = () => {
+    console.log("Off");
+  };
+
+  const workerModeOn = () => {
+    setWorker(true);
+  };
+
+  const workerModeOff = () => {
+    setWorker(false);
+  };
+  return (
+    <div className="flex flex-col py-5 px-10">
+      <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
+      <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
+      <div className="flex flex-col my-4">
+        <OptionSwitch
+          title="Activate Ubication"
+          onFunction={onFunction}
+          offFunction={offFunction}
+        />
+      </div>
+      <div className="flex items-center justify-center my-5">
+        <Image src="/icons/LogoCompleto.svg" width={200} height={200} />
+      </div>
+
+      <OutlinedButton
+        text="Register Now"
+        onClick={() => router.push("/register")}
+      />
+    </div>
+  );
+}

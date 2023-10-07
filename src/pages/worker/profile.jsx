@@ -26,7 +26,7 @@ export default function WorkerProfile({ user }) {
   };
 
   return (
-    <div className="bg-white h-full w-screen p-10 mb-20">
+    <div className="bg-white h-full w-screen px-10 py-5 mb-20">
       <OutlinedButton
         text="Personal Details"
         onClick={() => router.push("/personal-details")}
@@ -35,7 +35,10 @@ export default function WorkerProfile({ user }) {
         text="Settings"
         onClick={() => router.push("/worker/settings")}
       />
-      <OutlinedButton text="Worker Profile" />
+      <OutlinedButton
+        text="Worker Profile"
+        onClick={() => router.push("/worker/profile-config")}
+      />
       <OutlinedButton secondary text="Log Out" onClick={logout} />
     </div>
   );

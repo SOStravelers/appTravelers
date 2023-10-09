@@ -16,7 +16,7 @@ function DaySection({ weekDays, selectedDay, setSelectedDay }) {
         ))}
       </div>
 
-      <h1 className="text-center text-xl my-5">1:00pm</h1>
+      <h1 className="text-center text-xl my-5"> 1:00pm</h1>
 
       <div className="flex flex-col">
         <WorkerCardBooking

@@ -1,11 +1,11 @@
 import About from "./About";
 import Gallery from "./Gallery";
 
-function SectionAbout() {
+function SectionAbout({ description, gallery }) {
   return (
     <div>
-      <About />
-      <Gallery />
+      <About description={description} />
+      <Gallery images={gallery} />
     </div>
   );
 }

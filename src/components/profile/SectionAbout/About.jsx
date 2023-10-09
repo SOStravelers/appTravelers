@@ -1,18 +1,38 @@
-function About() {
+import { useState } from "react";
+import { EditIcon, CheckIconBlack } from "@/constants/icons";
+function About({ description }) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleEdit = () => {
+    setIsEditing(false);
+  };
+
   return (
     <div className="my-5">
-      <h1
-        className="mb-5 underline font-semibold underline-offset-8"
-        style={{ textDecorationColor: "#00A0D5", textDecorationThickness: 2 }}
-      >
-        About
-      </h1>
-      <p className="text-blackText">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum
-        similique exercitationem porro neque non, labore hic eligendi facilis
-        explicabo iure maxime inventore molestiae reprehenderit laborum nisi
-        perspiciatis maiores quidem quo.
-      </p>
+      <div className="flex justify-between">
+        <h1
+          className="mb-5 underline font-semibold underline-offset-8"
+          style={{ textDecorationColor: "#00A0D5", textDecorationThickness: 2 }}
+        >
+          About
+        </h1>
+        {isEditing ? (
+          <CheckIconBlack onClick={handleEdit} />
+        ) : (
+          <EditIcon onClick={() => setIsEditing(true)} />
+        )}
+      </div>
+
+      {isEditing ? (
+        <textarea
+          className="w-full h-28 p-3 rounded-xl bg-transparentBlue"
+          defaultValue={description}
+        />
+      ) : (
+        <p className="text-blackText">
+          {description?.length > 0 ? description : "No description yet"}
+        </p>
+      )}
     </div>
   );
 }

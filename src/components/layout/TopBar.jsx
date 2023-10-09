@@ -7,9 +7,6 @@ import { useStore } from "@/store";
 
 function TopBar() {
   const { loggedIn, user } = useStore();
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   const initials = () => {
     if (Object.keys(user).length === 0) return "";

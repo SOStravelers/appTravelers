@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useStore } from "@/store";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -7,11 +8,10 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { Field, Form } from "houseform";
 import { z } from "zod";
 import { toast } from "react-toastify";
-
+import { UserIcon, LockIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 import Cookies from "js-cookie";
-import { useStore } from "@/store";
 
 function LoginForm() {
   const { setUser, setLoggedIn, service } = useStore();
@@ -72,6 +72,7 @@ function LoginForm() {
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
+                    icon={UserIcon}
                   />
                   {errors.map((error) => (
                     <p key={error} className="text-red">
@@ -97,6 +98,7 @@ function LoginForm() {
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
+                    icon={LockIcon}
                   />
                   {errors.map((error) => (
                     <p key={error} className="text-red">

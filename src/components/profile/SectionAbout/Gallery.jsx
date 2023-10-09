@@ -1,6 +1,6 @@
 import React from "react";
 
-function Gallery() {
+function Gallery({ images }) {
   return (
     <div className="my-5">
       <h1
@@ -10,10 +10,22 @@ function Gallery() {
         Gallery
       </h1>
       <div className="grid grid-cols-2 gap-1">
-        <div className="w-full h-28 rounded-xl bg-transparentBlue"></div>
-        <div className="w-full h-28 rounded-xl bg-transparentBlue"></div>
-        <div className="w-full h-28 rounded-xl bg-transparentBlue"></div>
-        <div className="w-full h-28 rounded-xl bg-transparentBlue"></div>
+        {images?.length > 0 ? (
+          images?.map((image) => (
+            <div className="w-36 h-32 rounded-2xl mr-2 relative">
+              <div className="bg-lightBlue w-full h-full rounded-2xl relative">
+                <Image
+                  src={image}
+                  fill
+                  className="object-cover rounded-2xl hover:opacity-50 transition-opacity duration-300"
+                  alt="Worker avatar"
+                />
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No images yet</p>
+        )}
       </div>
     </div>
   );

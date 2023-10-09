@@ -1,4 +1,5 @@
 import { useState } from "react";
+import dayjs from "dayjs";
 import MultiSwitchButtons from "@/components/utils/buttons/MultiSwitchButtons";
 import DaySection from "@/components/bookingWorker/DaySection";
 import ListSection from "@/components/bookingWorker/ListSection";
@@ -10,15 +11,13 @@ import {
   SECTION_FOUR,
 } from "@/constants";
 
-const weekDays = [
-  { day: "Mon", number: 25 },
-  { day: "Tue", number: 26 },
-  { day: "Wed", number: 27 },
-  { day: "Thu", number: 28 },
-  { day: "Fri", number: 29 },
-  { day: "Sat", number: 30 },
-  { day: "Sun", number: 31 },
-];
+const weekDays = [];
+const today = dayjs();
+weekDays.push({ day: today.format("ddd"), number: today.format("D") });
+for (let i = 1; i <= 6; i++) {
+  const day = today.add(i, "day");
+  weekDays.push({ day: day.format("ddd"), number: day.format("D") });
+}
 
 export default function WorkerBooking() {
   const [actualView, setActualView] = useState(SECTION_ONE);

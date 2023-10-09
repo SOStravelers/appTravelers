@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { PinIcon, StarIcon } from "@/constants/icons";
 
-function HostelProfileCard({ name, location, score }) {
+function HostelProfileCard({ name, location, score, avatar }) {
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">
       <div className="w-36 h-32  rounded-2xl mr-2">
         <div className="bg-lightBlue w-full h-full rounded-2xl relative">
           <Image
-            src={"/assets/lugar.png"}
+            src={avatar ?? "/assets/lugar.png"}
             fill
             className="object-cover rounded-2xl"
           />

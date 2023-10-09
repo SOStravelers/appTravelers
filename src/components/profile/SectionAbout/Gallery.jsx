@@ -15,6 +15,7 @@ function Gallery({ images }) {
     setSelectedImage(null);
   };
 
+function Gallery({ images }) {
   return (
     <div className="my-5">
       <h1

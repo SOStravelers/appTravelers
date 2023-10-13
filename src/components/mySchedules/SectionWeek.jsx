@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ScheduleCardWeek from "@/components/utils/cards/ScheduleCardWeek";
+import dayjs from "dayjs";
 import { WEEK_DAYS } from "@/constants";
 
 function SectionWeek() {
@@ -9,27 +10,10 @@ function SectionWeek() {
     console.log(horario);
   }, [horario]);
 
-  const addInterval2 = (dayID, interval) => {
-    const dayExists = horario.some((day) => day.day === dayID);
-    if (dayExists) {
-      const newHorario = horario.map((day) => {
-        if (day.day === dayID) {
-          day.intervals.push(interval);
-        }
-        return day;
-      });
-      setHorario(newHorario);
-    } else {
-      setHorario([...horario, { day: dayID, intervals: [interval] }]);
-    }
-  };
-  const convertTime = (timeString) => {
-    const [hours, minutes] = timeString.split(":");
-    const date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    console.log(date);
-  };
+  function convertToValidTimeFormat(value) {
+    return dayjs(value).format("HH:mm");
+  }
+
   const addInterval = (dayID, interval) => {
     const dayExists = horario.some((day) => day.day === dayID);
     if (dayExists) {
@@ -43,10 +27,31 @@ function SectionWeek() {
           if (!intervalExists) {
             day.intervals.push(interval);
           } else {
-            /*day.intervals = day.intervals.filter(
-                        (i) => i.startTime !== interval.startTime && i.endTime !== interval.endTime
-                    );*/
-            console.log("interval reoeated");
+            console.log("interval repeated");
+          }
+        }
+        return day;
+      });
+      setHorario(newHorario);
+    } else {
+      setHorario([...horario, { day: dayID, intervals: [interval] }]);
+    }
+  };
+  const addIntervalandVerify = (dayID, interval) => {
+    const dayExists = horario.some((day) => day.day === dayID);
+    if (dayExists) {
+      const newHorario = horario.map((day) => {
+        if (day.day === dayID) {
+          const intervalCollides = day.intervals.some(
+            (i) =>
+              (i.startTime <= interval.startTime &&
+                i.endTime >= interval.startTime) ||
+              (i.startTime <= interval.endTime && i.endTime >= interval.endTime)
+          );
+          if (!intervalCollides) {
+            day.intervals.push(interval);
+          } else {
+            console.log("interval collides");
           }
         }
         return day;
@@ -75,7 +80,7 @@ function SectionWeek() {
         <ScheduleCardWeek
           key={day.id}
           day={day}
-          addInterval={addInterval}
+          addInterval={addIntervalandVerify}
           deleteInterval={deleteInterval}
           horario={horario.filter((d) => d.day === day.id)[0]}
         />

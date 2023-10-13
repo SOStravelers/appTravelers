@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
-import OutlinedButton from "../buttons/OutlinedButton";
-import ScheduleCard from "../cards/ScheduleCard";
+import ScheduleCardCalendar from "../cards/ScheduleCardCalendar";
 import "react-day-picker/dist/style.css";
 import Link from "next/link";
 
@@ -41,7 +40,7 @@ function CalendarSchedule({ id }) {
     footer = (
       <div className="w-80 mt-14">
         <Link href={`/service-history`}>
-          <ScheduleCard />
+          <ScheduleCardCalendar />
         </Link>
       </div>
     );

@@ -69,7 +69,6 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
                 name="startTime"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                step={3600}
                 className="w-20"
               />
             </div>
@@ -83,7 +82,6 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
                 name="endTime"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                step={3600}
                 className="w-20"
               />
             </div>

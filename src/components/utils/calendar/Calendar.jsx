@@ -85,7 +85,7 @@ function Calendar({ id }) {
       <div>
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
         <h1 className="font-semibold text-2xl my-3">Time</h1>
-        <div className="w-80 flex flex-wrap justify-center mb-5">
+        <div className="w-full flex flex-wrap justify-center mb-5">
           {hours.map((hour) => (
             <TimeButton
               key={hour}

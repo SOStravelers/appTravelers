@@ -6,10 +6,6 @@ import { WEEK_DAYS } from "@/constants";
 function SectionWeek() {
   const [horario, setHorario] = useState([]);
 
-  useEffect(() => {
-    console.log(horario);
-  }, [horario]);
-
   function convertToValidTimeFormat(value) {
     return dayjs(value).format("HH:mm");
   }
@@ -68,14 +64,13 @@ function SectionWeek() {
       (i) =>
         i.startTime === interval.startTime && i.endTime === interval.endTime
     );
-    console.log(dayIndex, intervalIndex);
     const newHorario = [...horario];
     newHorario[dayIndex].intervals.splice(intervalIndex, 1);
     setHorario(newHorario);
   };
 
   return (
-    <section>
+    <section className="w-full">
       {WEEK_DAYS.map((day) => (
         <ScheduleCardWeek
           key={day.id}

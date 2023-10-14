@@ -30,6 +30,33 @@ export default class UserService {
     return axios.get(`${this.baseUrl}/${id}`);
   }
 
+  static async updateUser(
+    _id,
+    isActive,
+    isValidate,
+    email,
+    type,
+    img,
+    about,
+    languaje,
+    personalData,
+    workerData,
+    username
+  ) {
+    return axios.put(`${this.baseUrl}/usersAuth/${_id}`, {
+      isActive: isActive,
+      isValidate: isValidate,
+      email: email,
+      type: type,
+      img: img,
+      about: about,
+      languaje: languaje,
+      personalData: personalData,
+      workerData: workerData,
+      username: username,
+    });
+  }
+
   static getHeaders() {
     return {
       headers: {},

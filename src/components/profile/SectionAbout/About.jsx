@@ -1,4 +1,4 @@
-function About() {
+function About({ description }) {
   return (
     <div className="my-5">
       <h1
@@ -8,10 +8,7 @@ function About() {
         About
       </h1>
       <p className="text-blackText">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum
-        similique exercitationem porro neque non, labore hic eligendi facilis
-        explicabo iure maxime inventore molestiae reprehenderit laborum nisi
-        perspiciatis maiores quidem quo.
+        {description?.length > 0 ? description : "No description"}
       </p>
     </div>
   );

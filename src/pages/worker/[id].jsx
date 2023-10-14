@@ -4,19 +4,26 @@ import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import SectionAbout from "@/components/profile/SectionAbout/SectionAbout";
 import SectionServices from "@/components/profile/SectionServices/SectionServices";
 import { SECTION_ONE } from "@/constants";
+import UserService from "@/services/UserService";
 
-export default function Worker() {
+export default function Worker({ user }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
   return (
     <div className="px-10 pb-20">
-      <WorkerProfileCard name={"Worker Name"} service={"Service"} score={5} />
-      <SwitchButtons actualView={actualView} setActualView={setActualView} titleOne={'About'} titleTwo={'Services'} />
+      <WorkerProfileCard
+        name={user?.personalData?.name?.first}
+        service={user?.workerData?.services}
+        score={5}
+        avatar={user?.img?.imgUrl}
+      />
+      <SwitchButtons
+        actualView={actualView}
+        setActualView={setActualView}
+        titleOne={"About"}
+        titleTwo={"Services"}
+      />
       {actualView === SECTION_ONE ? (
-        <SectionAbout
-          description={"Description"}
-          experience={"Experience"}
-          languages={"Languages"}
-        />
+        <SectionAbout description={user?.about} gallery={[user?.img?.imgUrl,user?.img?.imgUrl]} />
       ) : (
         <SectionServices
           services={"Services"}
@@ -26,4 +33,30 @@ export default function Worker() {
       )}
     </div>
   );
+}
+
+export async function getServerSideProps({ params }) {
+  const redirect = {
+    redirect: {
+      destination: "/guest-settings",
+      permanent: false,
+    },
+  };
+  const userId = params.id;
+  console.log(userId);
+  if (!userId) return redirect;
+
+  let user = null;
+  try {
+    const response = await UserService.get(userId);
+    user = response.data;
+  } catch (error) {
+    console.error(error);
+  }
+
+  return {
+    props: {
+      user: user,
+    },
+  };
 }

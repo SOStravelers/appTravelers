@@ -3,14 +3,16 @@ import React from "react";
 import { FBIcon } from "@/constants/icons";
 
 import { Auth } from "aws-amplify";
-
+import { useSession, signIn, signOut } from "next-auth/react"
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 
 function FacebookButton() {
-  const login = () => {
-    Auth.federatedSignIn({
-      provider: CognitoHostedUIIdentityProvider.Facebook,
-    });
+  const login = async() => {
+    const result = await signIn('facebook',{callbackUrl: 'http://localhost:3000'});
+    // Puedes manejar el resultado de la autenticación aquí
+    if (result&&result.error) {
+      console.error('Error al iniciar sesión:', result.error);
+    }
   };
   return (
     <button

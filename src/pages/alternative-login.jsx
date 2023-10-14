@@ -10,27 +10,27 @@ export default function AlternativeLogin() {
   const [customState, setCustomState] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = Hub.listen("auth", (response) => {
-      console.log(response);
-      console.log(
-        "-------------------------------------------------------------"
-      );
-      switch (event) {
-        case "signIn":
-          setUser(data);
-          break;
-        case "signOut":
-          setUser(null);
-          break;
-        case "CustomOAuthState":
-          setCustomState(data);
-          break;
-      }
-    });
+    // const unsubscribe = Hub.listen("auth", (response) => {
+    //   console.log(response);
+    //   console.log(
+    //     "-------------------------------------------------------------"
+    //   );
+    //   switch (event) {
+    //     case "signIn":
+    //       setUser(data);
+    //       break;
+    //     case "signOut":
+    //       setUser(null);
+    //       break;
+    //     case "CustomOAuthState":
+    //       setCustomState(data);
+    //       break;
+    //   }
+    // });
 
-    getUser();
+    //getUser();
 
-    return unsubscribe;
+   // return unsubscribe;
   }, []);
 
   const getUser = async () => {

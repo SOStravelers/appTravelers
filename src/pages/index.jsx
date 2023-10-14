@@ -8,19 +8,41 @@ import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import ServiceService from "@/services/ServiceService";
 import { mazzard } from "@/utils/mazzardFont";
+import { getServerSession } from "next-auth";
+import { getSession } from 'next-auth/react';
+import {nextAuth} from "../pages/api/auth/[...nextauth].js"
+import { useSession } from 'next-auth/react'
+import axios from 'axios';
 
 export default function Home({ user }) {
   const { setUser, setLoggedIn } = useStore();
-
   const [services, setServices] = useState([]);
-
-  useEffect(() => {
+    useEffect(() => {
+      obtenerInformacionUsuario();
     if (user) {
       setUser(user);
       setLoggedIn(true);
     }
     getData();
   }, []);
+
+  async function obtenerInformacionUsuario() {
+    try {
+      console.log("casa")
+      const response = await fetch('/api/getUserInfo'); // Reemplaza esto con la URL correcta de tu API
+      console.log("perro")
+
+      if (response.ok) {
+        const userInfo = await response.json();
+        console.log('Información del usuario:', userInfo);
+      } else {
+        console.error('Error al obtener la información del usuario:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al obtener la información del usuario:', error);
+    }
+  }
+  
 
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
@@ -64,20 +86,3 @@ export default function Home({ user }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
-  const userId = req.cookies["auth.user_id"];
-  let user = null;
-  if (userId) {
-    try {
-      const response = await UserService.get(userId);
-      user = response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  return {
-    props: {
-      user: user,
-    },
-  };
-}

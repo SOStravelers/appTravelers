@@ -1,15 +1,18 @@
 import React from "react";
 
 import { Auth } from "aws-amplify";
-
+import { useSession, signIn, signOut } from "next-auth/react"
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import { GoogleIcon } from "@/constants/icons";
+import { ca } from "date-fns/locale";
 
 function GoogleButton() {
-  const login = () => {
-    Auth.federatedSignIn({
-      provider: CognitoHostedUIIdentityProvider.Google,
-    });
+  const login = async() => {
+    const result = await signIn('google', {callbackUrl: 'http://localhost:3000'});
+    // Puedes manejar el resultado de la autenticación aquí
+    if (result &&result.error) {
+      console.error('Error al iniciar sesión:', result.error);
+    }
   };
   return (
     <button

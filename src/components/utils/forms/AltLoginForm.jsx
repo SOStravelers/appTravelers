@@ -11,11 +11,6 @@ import nextAuth from "next-auth";
 
 function LoginForm() {
 
-  useEffect(() => {
-   
-    
-  }, []);
-
   return (
     <form className="w-full flex flex-col">
       <FacebookButton />

@@ -26,8 +26,8 @@ function Gallery({ images }) {
       </h1>
       <div className="grid grid-cols-2 gap-1">
         {images?.length > 0 ? (
-          images?.map((image) => (
-            <div className="w-36 h-32 rounded-2xl mr-2 relative">
+          images?.map((image, index) => (
+            <div key={index} className="w-36 h-32 rounded-2xl mr-2 relative">
               <div className="bg-lightBlue w-full h-full rounded-2xl relative">
                 <Image
                   src={image}

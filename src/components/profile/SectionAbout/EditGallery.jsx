@@ -40,7 +40,7 @@ function EditGallery({ images }) {
             <img
               key={index}
               src={image}
-              alt={image.alt}
+              alt={image.alt || "fotoo"}
               className="w-full h-28 rounded-xl bg-transparentBlue cursor-pointer"
               onClick={() => handleImageClick(image)}
             />

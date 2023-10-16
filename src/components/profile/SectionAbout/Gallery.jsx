@@ -53,6 +53,7 @@ function Gallery({ images }) {
               &times;
             </button>
             <img
+              key={index}
               src={selectedImage}
               alt={selectedImage.alt}
               className="max-w-full max-h-full"

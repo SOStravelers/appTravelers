@@ -10,6 +10,7 @@ function WorkerCardSumary({ link, name, service, score, img, hostelId }) {
           <Link href={link}>
             <Image
               src={img}
+              alt={"alt1"}
               fill
               className="object-cover rounded-xl"
             />

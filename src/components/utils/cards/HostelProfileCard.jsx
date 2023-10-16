@@ -9,6 +9,7 @@ function HostelProfileCard({ name, location, score, avatar }) {
           <Image
             src={avatar ?? "/assets/lugar.png"}
             fill
+            alt="hola"
             className="object-cover rounded-2xl"
           />
         </div>

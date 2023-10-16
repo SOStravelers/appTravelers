@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
 
+  
+
 function Gallery({ images }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -14,8 +16,6 @@ function Gallery({ images }) {
     setShowModal(false);
     setSelectedImage(null);
   };
-
-function Gallery({ images }) {
   return (
     <div className="my-5">
       <h1

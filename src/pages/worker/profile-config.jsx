@@ -15,6 +15,7 @@ export default function WorkerProfile() {
   // };
 
   // const userId = getCookieValue("auth.user_id");
+  const userId = null
   const router = useRouter();
 
   return (

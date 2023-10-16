@@ -11,6 +11,7 @@ function WorkerCardChat({ link, name, service, showArrow = true }) {
             <Image
               src={"/assets/proovedor.png"}
               fill
+              alt="cosa"
               className="object-cover rounded-xl"
             />
           </div>

@@ -7,6 +7,7 @@ function RecomendationCard() {
         <Image
           src={"/assets/service.png"}
           fill
+          alt="casa"
           className="object-cover rounded-tr-2xl rounded-tl-2xl"
         />
       </div>

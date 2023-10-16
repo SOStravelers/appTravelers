@@ -11,6 +11,7 @@ function WorkerCardBooking({ link, name, location }) {
             <Image
               src={"/assets/proovedor.png"}
               fill
+              alt="buenos"
               className="object-cover rounded-xl"
             />
           </div>

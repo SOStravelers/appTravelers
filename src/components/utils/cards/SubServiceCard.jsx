@@ -15,6 +15,7 @@ function SubServiceCard({ id, link, icon, name }) {
           <Image
             src={"/assets/subservice.png"}
             fill
+            alt="perro"
             className="object-contain ml-1"
           />
         </div>

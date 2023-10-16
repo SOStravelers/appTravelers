@@ -14,6 +14,7 @@ function WorkerCardFavorite({ link, name, service, score, showArrow = true }) {
             <Image
               src={"/assets/proovedor.png"}
               fill
+              alt="leon"
               className="object-cover rounded-xl"
             />
           </div>

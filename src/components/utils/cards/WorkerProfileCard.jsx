@@ -9,6 +9,7 @@ function WorkerProfileCard({ name, service, score, avatar }) {
           <Image
             src={avatar ?? "/assets/proovedor.png"}
             fill
+            alt="nuevo"
             className="object-cover rounded-2xl"
           />
         </div>

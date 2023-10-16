@@ -10,6 +10,7 @@ function WorkerProfileCardChat({ name, service, score }) {
         <Image
             src={"/assets/proovedor.png"}
             fill
+            alt="otro alt"
             className="object-cover rounded-2xl"
           />
         </div>

@@ -10,6 +10,7 @@ function HostelCardSummary({ subserviceId, link, name, location, image }) {
           <Image
             src={image}
             fill
+            alt="buena"
             className="object-cover rounded-xl"
           />
         </div>

@@ -3,18 +3,18 @@ import OptionCard from "@/components/utils/cards/OptionCard";
 import { UserIcon, ListIcon, LockIcon } from "@/constants/icons";
 
 export default function WorkerProfile() {
-  const getCookieValue = (name) => {
-    const cookies = document.cookie.split("; ");
-    for (const cookie of cookies) {
-      const [cookieName, cookieValue] = cookie.split("=");
-      if (cookieName === name) {
-        return cookieValue;
-      }
-    }
-    return null;
-  };
+  // const getCookieValue = (name) => {
+  //   const cookies = document.cookie.split("; ");
+  //   for (const cookie of cookies) {
+  //     const [cookieName, cookieValue] = cookie.split("=");
+  //     if (cookieName === name) {
+  //       return cookieValue;
+  //     }
+  //   }
+  //   return null;
+  // };
 
-  const userId = getCookieValue("auth.user_id");
+  // const userId = getCookieValue("auth.user_id");
   const router = useRouter();
 
   return (

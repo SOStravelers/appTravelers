@@ -30,8 +30,8 @@ export default function GuestSettings() {
       <div className="flex items-center justify-center my-5">
         <Image
           src="/icons/LogoCompleto.svg"
-          width={200}
-          height={200}
+          width={120}
+          height={120}
           alt="SOS Traveler Logo"
         />
       </div>

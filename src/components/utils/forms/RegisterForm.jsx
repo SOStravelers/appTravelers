@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import GoogleButton from "@/components/utils/buttons/GoogleButton";
 
 import { Field, Form } from "houseform";
 import { z } from "zod";
@@ -163,11 +164,12 @@ function RegisterForm() {
             }}
           </Field>
           <Link href="/">
-            <p className="text-blackText font-semibold mb-4 mt-2 text-right">
+            <p className="text-blackText mt-1 mb-2 text-right">
               Forgot password?
             </p>
           </Link>
           <OutlinedButton text="Register" disabled={!isValid} />
+          <GoogleButton />
         </form>
       )}
     </Form>

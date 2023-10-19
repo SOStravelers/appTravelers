@@ -8,10 +8,13 @@ import { ca } from "date-fns/locale";
 
 function GoogleButton() {
   const login = async() => {
-    const result = await signIn('google', {callbackUrl: 'http://localhost:3000'});
+    const result = await signIn('google', {callbackUrl: 'http://localhost:3000/login'});
     // Puedes manejar el resultado de la autenticación aquí
     if (result &&result.error) {
       console.error('Error al iniciar sesión:', result.error);
+    }
+    else{
+      console.log("todo bien")
     }
   };
   return (
@@ -21,7 +24,7 @@ function GoogleButton() {
       onClick={login}
     >
       <GoogleIcon />
-      <p className="ml-5">Sign in with Google</p>
+      <p className="ml-5">Continue with Google</p>
     </button>
   );
 }

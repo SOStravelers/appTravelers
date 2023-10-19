@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import { signOut } from "next-auth/react";
 
 export default function Profile({ user }) {
   console.log(user);
@@ -21,7 +22,7 @@ export default function Profile({ user }) {
 
     setUser({});
     setLoggedIn(false);
-
+    signOut({ redirect: false });
     router.push("/");
   };
 

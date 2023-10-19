@@ -20,14 +20,12 @@ export default function Login() {
       const result = await fetch("/api/getUserInfo"); // Reemplaza esto con la URL correcta de tu API
       if (result.ok) {
         const userInfo = await result.json();
-        console.log(userInfo.name, userInfo.image);
         const response = await UserService.loginGoogle(
           userInfo.name,
           userInfo.email,
           userInfo.image
         );
         if (response) {
-          console.log("la respuesta!!!!", response);
           localStorage.setItem("auth.access_token", response.data.access_token);
           localStorage.setItem(
             "auth.refresh_token",

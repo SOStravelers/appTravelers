@@ -37,8 +37,11 @@ function RegisterForm() {
       setUser(response.data.user);
       setLoggedIn(true);
 
-      if (Object.keys(service).length > 0) router.push(`/summary`);
-      else router.push("/");
+      if (service && Object.keys(service).length > 0) {
+        router.push(`/summary`);
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       let message;
       if (error?.response?.status === 409)

@@ -20,7 +20,7 @@ export default class UserService {
 
   static async login(email, password) {
     console.log("login email");
-    return axios.post(`${this.baseUrlLocal}/loginEmail`, {
+    return axios.post(`${this.baseUrl}/loginEmail`, {
       email: email,
       password: password,
       accessTime: "15min",
@@ -28,8 +28,7 @@ export default class UserService {
     });
   }
   static async loginGoogle(name, email, image) {
-    console.log("casa", name, email, image);
-    return axios.post(`${this.baseUrlLocal}/loginGoogle`, {
+    return axios.post(`${this.baseUrl}/loginGoogle`, {
       name: name,
       email: email,
       image: image,

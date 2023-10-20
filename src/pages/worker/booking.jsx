@@ -23,7 +23,7 @@ export default function WorkerBooking() {
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
   return (
-    <div className="p-5">
+    <div className="py-28 px-5 md:pl-80">
       <MultiSwitchButtons
         actualView={actualView}
         setActualView={setActualView}

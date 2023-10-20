@@ -24,7 +24,7 @@ export default function Settings() {
     setWorker(false);
   };
   return (
-    <div className="flex flex-col py-5 px-10">
+    <div className="flex flex-col py-28 px-5 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
       <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
       <div className="flex flex-col my-4">
@@ -40,7 +40,7 @@ export default function Settings() {
           offFunction={offFunction}
         />
       </div>
-      <div className="mt-40">
+      <div className="mt-40 flex flex-col">
         <OutlinedButton text="Save Changes" />
         <OutlinedButton text="Delete Account" secondary />
       </div>

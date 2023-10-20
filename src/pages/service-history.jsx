@@ -2,8 +2,8 @@ import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 
 function ServiceHistory() {
   return (
-    <div className="flex flex-col px-5">
-      <h1 className="text-xl text-center my-8">Last service</h1>
+    <div className="flex flex-col py-28 px-5 md:pl-80">
+      <h1 className="text-xl text-center my-8 max-w-lg">Last service</h1>
       <WorkerCardBooking
         link={"/"}
         name={"John Doe"}
@@ -11,7 +11,7 @@ function ServiceHistory() {
         showArrow={false}
       />
 
-      <h1 className="text-xl text-center my-8">Previous</h1>
+      <h1 className="text-xl text-center my-8 max-w-lg">Previous</h1>
       <WorkerCardBooking
         link={"/"}
         name={"John Doe"}

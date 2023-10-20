@@ -4,8 +4,8 @@ import Image from "next/image";
 
 function HostelCardSummary({ subserviceId, link, name, location, image }) {
   return (
-    <Link href={link}>
-      <div className="flex flex-col w-72">
+    <Link className="w-full max-w-lg" href={link}>
+      <div className="flex flex-col">
         <div className="w-full h-28 rounded-xl bg-lightBlue relative">
           <Image
             src={image}

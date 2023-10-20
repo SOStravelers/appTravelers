@@ -10,7 +10,7 @@ export default function Hostel({ hostel }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
 
   return (
-    <div className="px-10 mb-20">
+    <div className="mb-20 py-28 px-5 md:pl-80">
       <HostelProfileCard
         name={hostel?.businessData?.name}
         location={`${hostel?.businessData?.location?.city} , ${hostel?.businessData?.location?.country}`}

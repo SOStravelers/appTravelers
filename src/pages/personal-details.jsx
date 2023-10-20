@@ -5,7 +5,7 @@ import { UserIcon, MailIcon, HouseIcon, LockIcon } from "@/constants/icons";
 export default function PersonalDetails() {
   const router = useRouter();
   return (
-    <div className="flex flex-col justify-center px-10 py-5">
+    <div className="flex flex-col justify-center py-28 px-5 md:pl-80">
       <OptionCard title="Name" icon={UserIcon} subtitle="Ricardo Cid" />
       <OptionCard
         title="Email"

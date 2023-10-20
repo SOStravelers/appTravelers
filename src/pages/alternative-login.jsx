@@ -27,10 +27,8 @@ export default function AlternativeLogin() {
     //       break;
     //   }
     // });
-
     //getUser();
-
-   // return unsubscribe;
+    // return unsubscribe;
   }, []);
 
   const getUser = async () => {
@@ -44,12 +42,14 @@ export default function AlternativeLogin() {
     }
   };
   return (
-    <div className="bg-white w-screen min-h-screen px-10">
+    <div className="bg-white min-h-screen w-full flex flex-col md:items-center px-10">
       <h1 className="text-blackText font-semibold text-2xl py-5">
         LOGIN TO SOS
       </h1>
       <h2 className="text-blackText pb-5">Choose one option</h2>
-      <AltLoginForm />
+      <div className="w-full md:w-80">
+        <AltLoginForm />
+      </div>
       <div className="flex flex-col items-center justify-center mt-10">
         <p className="text-blackText">
           Don’t have an account?

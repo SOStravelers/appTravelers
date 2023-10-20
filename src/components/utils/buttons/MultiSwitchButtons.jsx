@@ -15,7 +15,7 @@ function MultiSwitchButtons({
   titleFour,
 }) {
   return (
-    <div className="bg-transparentBlue w-full h-14 flex rounded-xl">
+    <div className="bg-transparentBlue w-full max-w-lg h-14 flex rounded-xl">
       <button
         className={clsx(
           "w-1/4 h-full font-semibold rounded-xl",

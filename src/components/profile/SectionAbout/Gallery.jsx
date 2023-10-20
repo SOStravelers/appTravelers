@@ -1,8 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
 
-  
-
 function Gallery({ images }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -24,7 +22,7 @@ function Gallery({ images }) {
       >
         Gallery
       </h1>
-      <div className="grid grid-cols-2 gap-1">
+      <div className="grid grid-cols-2 gap-1 w-full max-w-lg">
         {images?.length > 0 ? (
           images?.map((image, index) => (
             <div key={index} className="w-36 h-32 rounded-2xl mr-2 relative">
@@ -32,7 +30,7 @@ function Gallery({ images }) {
                 <Image
                   src={image}
                   fill
-                  className="object-cover rounded-2xl hover:opacity-50 transition-opacity duration-300"
+                  className="object-cover rounded-2xl hover:opacity-50 transition-opacity duration-300 cursor-pointer"
                   alt="Worker avatar"
                   onClick={() => handleImageClick(image)}
                 />
@@ -53,10 +51,9 @@ function Gallery({ images }) {
               &times;
             </button>
             <img
-              key={index}
               src={selectedImage}
               alt={selectedImage.alt}
-              className="max-w-full max-h-full"
+              className="max-w-full max-h-full md:w-[50vw] md:h-[50vh] object-cover"
             />
           </div>
         </div>

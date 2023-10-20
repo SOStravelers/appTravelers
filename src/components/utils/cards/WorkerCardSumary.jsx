@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { StarIcon, ArrowRightIcon, ChangeIcon } from "@/constants/icons";
+import { StarIcon, ChangeIcon } from "@/constants/icons";
 
 function WorkerCardSumary({ link, name, service, score, img, hostelId }) {
   return (
-    <div className="flex py-4 w-80 rounded-lg justify-around my-2 items-center">
+    <div className="flex py-4 w-full max-w-lg rounded-lg justify-between my-2 items-center">
       <div className="flex">
         <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
           <Link href={link}>

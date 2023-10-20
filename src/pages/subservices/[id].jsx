@@ -22,7 +22,7 @@ export default function Subservices() {
   };
 
   return (
-    <div className="flex flex-wrap justify-center pt-5 pb-20">
+    <div className="flex flex-wrap justify-center md:justify-start py-28 md:pl-80">
       {subServices?.map((s) => (
         <SubServiceCard
           key={s.id}

@@ -24,7 +24,7 @@ export default function WorkerHome({ user }) {
   };
 
   return (
-    <main className="flex flex-col bg-white pb-20 px-5">
+    <main className="flex flex-col bg-white py-28 px-5 md:pl-80">
       <BookingCard />
 
       <section className="py-5">
@@ -34,7 +34,7 @@ export default function WorkerHome({ user }) {
         />
       </section>
 
-      <section className="flex flex-col items-center">
+      <section className="flex flex-col items-center md:items-start">
         <h1 className="text-black text-xl font-medium text-center my-5">
           Upcoming
         </h1>

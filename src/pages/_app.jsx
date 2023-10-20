@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { useRouter } from "next/router";
 import Navbar from "@/components/layout/Navbar";
 import Layout from "../layouts/Layout";
+import Sidebar from "@/components/layout/Sidebar";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,8 +41,20 @@ export default function App({ Component, pageProps }) {
     }
   };
 
+  const renderSidebar = () => {
+    if (
+      router.pathname !== "/login" &&
+      router.pathname !== "/register" &&
+      router.pathname !== "/alternative-login" &&
+      router.pathname !== "/intro"
+    ) {
+      return <Sidebar />;
+    }
+  };
+
   return (
     <Layout>
+      {renderSidebar()}
       <ToastContainer position="top-center" theme="dark" />
       <Component {...pageProps} />
       {renderNavbar()}

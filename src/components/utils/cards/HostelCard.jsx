@@ -18,7 +18,7 @@ function HostelCard({ id, link, name, location, img }) {
   };
 
   return (
-    <div className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2">
+    <div className="flex  max-w-lg justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2">
       <div className="flex items-center ml-2">
         <Link href={`/hostel/${id}`}>
           <div className="w-20 h-20 rounded-xl relative">

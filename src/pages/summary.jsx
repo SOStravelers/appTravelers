@@ -51,8 +51,8 @@ export default function Summary() {
   };
 
   return (
-    <div className="flex flex-col px-8 items-center pb-20">
-      <h1 className="my-5 text-grey text-sm text-center">
+    <div className="flex flex-col items-center md:items-start py-28 px-10 md:pl-80">
+      <h1 className="my-5 text-grey text-sm text-center max-w-lg">
         Read all the points carefully and make sure that it is what you need.
       </h1>
       <HostelCardSummary
@@ -62,7 +62,7 @@ export default function Summary() {
         link={"/hostel/" + 1}
         subserviceId={service?.subServiceId}
       />
-      <hr className="w-full my-1 text-lightGrey" />
+      <hr className="w-full max-w-lg my-1 text-lightGrey" />
       <WorkerCardSumary
         name={fullName(worker?.personalData?.name)}
         service={"Barbero"}
@@ -72,7 +72,7 @@ export default function Summary() {
         showArrow={false}
         hostelId={hostel?.id}
       />
-      <hr className="w-full my-1 text-lightGrey" />
+      <hr className="w-full max-w-lg my-1 text-lightGrey" />
       <div className="flex justify-between w-72 pr-5 my-5">
         <div className="flex ">
           <ClockIcon />
@@ -82,7 +82,7 @@ export default function Summary() {
           <ChangeIcon />
         </Link>
       </div>
-      <div className="flex items-center w-full my-2">
+      <div className="flex items-center w-full max-w-lg my-2">
         <input
           type="checkbox"
           className="mr-2"
@@ -100,7 +100,7 @@ export default function Summary() {
           of SOS
         </p>
       </div>
-      <div className="flex justify-between items-end w-full my-5">
+      <div className="flex justify-between items-end w-full max-w-lg my-5">
         <p className="text-blackText font-semibold">Total Service Fee</p>
         <p className="text-blackBlue font-semibold text-2xl">$ 100.00</p>
       </div>

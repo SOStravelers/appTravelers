@@ -4,7 +4,7 @@ import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 function DaySection({ weekDays, selectedDay, setSelectedDay }) {
   return (
     <>
-      <div className="flex my-5">
+      <div className="flex my-5 md:mx-16">
         {weekDays.map((day, index) => (
           <DayButton
             key={index}
@@ -16,7 +16,7 @@ function DaySection({ weekDays, selectedDay, setSelectedDay }) {
         ))}
       </div>
 
-      <h1 className="text-center text-xl my-3">My next Commitments</h1>
+      <h1 className="text-center max-w-lg text-xl my-3">My next Commitments</h1>
 
       <div className="flex flex-col">
         <WorkerCardBooking

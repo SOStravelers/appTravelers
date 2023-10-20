@@ -5,7 +5,7 @@ function OutlinedButton({ text, secondary, ...props }) {
   return (
     <button
       className={clsx(
-        "border-2 border-solid  text-lg py-3 w-full rounded-xl my-2",
+        "border-2 border-solid max-w-lg text-lg py-3 w-full rounded-xl my-2 cursor-pointer",
         secondary
           ? "text-grey border-grey"
           : "border-blueBorder text-blackText bg-blueButton"

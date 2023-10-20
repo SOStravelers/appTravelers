@@ -18,7 +18,7 @@ export default function WorkersFound() {
 
   const getData = async () => {
     WorkerService.list().then((response) => {
-      console.log(response.data)
+      console.log(response.data);
       setWorkers(response.data.docs);
     });
   };
@@ -36,8 +36,8 @@ export default function WorkersFound() {
   };
 
   return (
-    <div className="flex flex-col px-10 items-center pb-20">
-      <h1 className="my-5 text-grey text-center">
+    <div className="flex flex-col items-center md:items-start py-28 px-5 md:pl-80">
+      <h1 className="my-5 text-grey text-center max-w-lg">
         These are the available barbers, select the one that best suits your
         needs.
       </h1>

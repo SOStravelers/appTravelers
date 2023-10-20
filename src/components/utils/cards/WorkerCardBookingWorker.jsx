@@ -4,7 +4,7 @@ import { PinIcon, ClockIcon } from "@/constants/icons";
 
 function WorkerCardBookingWorker({ link, name, location }) {
   return (
-    <div className="flex p-4 w-full rounded-2xl border-b-2 border-blueBorder my-2 items-center">
+    <div className="flex p-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder my-2 items-center">
       <Link href={link}>
         <div className="flex flex-col px-2">
           <h1 className="font-semibold">{name}</h1>

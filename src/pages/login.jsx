@@ -50,10 +50,12 @@ export default function Login() {
   }
 
   return (
-    <div className="bg-white h-full w-screen px-10">
+    <div className="bg-white h-full w-full flex flex-col md:items-center px-10">
       <h1 className="text-blackText font-bold text-2xl py-5">WELCOME BACK</h1>
-      {/* <h2 className="text-blackText py-5">Log In</h2> */}
-      <LoginForm />
+      <h2 className="text-blackText py-5">Get back to account</h2>
+      <div className="w-full md:w-80">
+        <LoginForm />
+      </div>
       <div className="flex flex-col items-center justify-center mt-10">
         <p className="text-blackText">
           Are you a new?

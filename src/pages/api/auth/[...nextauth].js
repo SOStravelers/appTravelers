@@ -30,4 +30,5 @@ export default NextAuth({
     //   from: "<no-reply@example.com>",
     // }),
   ],
+  site: "https://dev.sostvl.com",
 });

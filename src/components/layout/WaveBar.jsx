@@ -2,7 +2,7 @@ import { LogoWhite } from "@/constants/icons";
 
 function WaveBar() {
   return (
-    <div className="w-screen flex flex-col justify-center items-center bg-white">
+    <div className="w-screen flex flex-col justify-center items-center bg-white md:bg-darkBlue md:h-40 object-cover">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="100vw"

@@ -4,13 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 
 export default NextAuth({
-  // secret: process.env.SECRET,
   providers: [
-    // OAuth authentication providers
-    // AppleProvider({
-    //   clientId: process.env.APPLE_ID,
-    //   clientSecret: process.env.APPLE_SECRET,
-    // }),
     GoogleProvider({
       clientId:
         "85474741679-0a1g2k2caj8d59iomohvo2ag6rqr9vlg.apps.googleusercontent.com",
@@ -30,5 +24,4 @@ export default NextAuth({
     //   from: "<no-reply@example.com>",
     // }),
   ],
-  site: "https://dev.sostvl.com",
 });

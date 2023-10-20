@@ -18,7 +18,7 @@ export default function Booking() {
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
 
   return (
-    <div className="w-screen h-screen p-5 bg-white text-black">
+    <div className="w-full min-h-screen py-28 px-5 md:pl-80 bg-white text-black">
       <SwitchButtons
         actualView={actualView}
         setActualView={setActualView}

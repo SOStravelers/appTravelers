@@ -4,15 +4,9 @@ import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
 
-import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import ServiceService from "@/services/ServiceService";
 import { mazzard } from "@/utils/mazzardFont";
-import { getServerSession } from "next-auth";
-import { getSession } from "next-auth/react";
-import { nextAuth } from "../pages/api/auth/[...nextauth].js";
-import { useSession } from "next-auth/react";
-import axios from "axios";
 
 export default function Home({ user }) {
   const { setUser, setLoggedIn } = useStore();

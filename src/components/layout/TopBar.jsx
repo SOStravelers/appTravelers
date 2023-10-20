@@ -44,9 +44,12 @@ function TopBar() {
                 />
               </Link>
             ) : (
-              <div className="border border-white text-white px-3 py-1 rounded-xl">
+              <Link
+                href="/profile"
+                className="border border-white text-white px-3 py-1 rounded-xl"
+              >
                 {initials()}
-              </div>
+              </Link>
             )}
           </>
         ) : (

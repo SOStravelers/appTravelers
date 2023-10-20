@@ -1,6 +1,9 @@
 import React from "react";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import { useRouter } from "next/router";
 
 export default function TermsOfService() {
+  const router = useRouter();
   return (
     <section className="m-2 mb-16">
       <h1 className="mb-2 font-bold text-2xl">
@@ -231,6 +234,7 @@ export default function TermsOfService() {
         personal data stored within the platform, such as favorites and
         conversations.
       </p>
+      <OutlinedButton text="Return" onClick={() => router.push("/login")} />
     </section>
   );
 }

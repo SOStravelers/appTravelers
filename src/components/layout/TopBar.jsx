@@ -18,9 +18,9 @@ function TopBar() {
   return (
     <div className="w-screen z-20 flex items-center justify-between bg-darkBlue h-24 px-5 fixed top-0">
       <div className="flex items-center">
-        <div className="mr-2">
+        <Link href="/" className="mr-2">
           <LogoWhite color={"white"} />
-        </div>
+        </Link>
         <div>
           <p className="text-white font-semibold text-xl">SOS</p>
           <p className="text-white font-semibold text-xl">Travelers</p>
@@ -30,9 +30,27 @@ function TopBar() {
         {loggedIn ? (
           <>
             <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
-            <div className="border border-white text-white px-3 py-1 rounded-xl">
-              {initials()}
-            </div>
+
+            {user.img && user.img.imgUrl ? (
+              <Link
+                className="rounded-xl"
+                href="/profile"
+                style={{ width: "40px", height: "40px", overflow: "hidden" }}
+              >
+                <img
+                  src="https://lh3.googleusercontent.com/a/ACg8ocIz-Id4iEHT5RbaBxFPGMtygpl_5qDEdv9G2dhWURDW=s96-c"
+                  alt="Descripción de la imagen"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </Link>
+            ) : (
+              <Link
+                href="/profile"
+                className="border border-white text-white px-3 py-1 rounded-xl"
+              >
+                {initials()}
+              </Link>
+            )}
           </>
         ) : (
           <>

@@ -6,6 +6,7 @@ export default class UserService {
   static apiUrl = API_URL;
   static resource = "users";
   static baseUrl = `${this.apiUrl}${this.resource}`;
+  static baseUrlLocal = `http://localhost:4000/${this.resource}`;
 
   static async register(name, email, password) {
     return axios.post(`${this.baseUrl}/register`, {
@@ -18,11 +19,19 @@ export default class UserService {
   }
 
   static async login(email, password) {
+    console.log("login email");
     return axios.post(`${this.baseUrl}/loginEmail`, {
       email: email,
       password: password,
       accessTime: "15min",
       refreshTime: "30min",
+    });
+  }
+  static async loginGoogle(name, email, image) {
+    return axios.post(`${this.baseUrl}/loginGoogle`, {
+      name: name,
+      email: email,
+      image: image,
     });
   }
 

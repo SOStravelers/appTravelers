@@ -11,8 +11,8 @@ export default function Registro() {
       </div>
       <div className="flex flex-col items-center justify-center mt-5">
         <p className="text-blackText">
-          Already a member?
-          <Link className="text-lightBlue ml-2" href={"/login"}>
+          You have an account?
+          <Link className="text-black font-semibold ml-2" href={"/login"}>
             Login
           </Link>{" "}
         </p>

@@ -4,6 +4,7 @@ import { useStore } from "@/store";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import GoogleButton from "@/components/utils/buttons/GoogleButton";
 
 import { Field, Form } from "houseform";
 import { z } from "zod";
@@ -19,8 +20,9 @@ function LoginForm() {
 
   const login = async (values) => {
     try {
+      console.log("--login--");
       const response = await UserService.login(values.email, values.password);
-
+      console.log(response);
       localStorage.setItem("auth.access_token", response.data.access_token);
       localStorage.setItem("auth.refresh_token", response.data.refresh_token);
       localStorage.setItem("auth.user_id", response.data.user._id);
@@ -31,9 +33,13 @@ function LoginForm() {
 
       setUser(response.data.user);
       setLoggedIn(true);
-
-      if (Object.keys(service).length > 0) router.push(`/summary`);
-      else router.push("/");
+      console.log("gato");
+      console.log("perro", service);
+      if (service && Object.keys(service).length > 0) {
+        router.push(`/summary`);
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       let message;
       if (error?.response?.status === 404)
@@ -110,11 +116,13 @@ function LoginForm() {
             }}
           </Field>
           <Link href="/register">
-            <p className="text-blackText mt-2 mb-5 text-right">
+            <p className="text-blackText mt-1 mb-2 text-right">
               Forgot password?
             </p>
           </Link>
           <OutlinedButton text="Login" disabled={!isValid} />
+
+          <GoogleButton />
         </form>
       )}
     </Form>

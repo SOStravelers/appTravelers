@@ -34,14 +34,14 @@ export default function App({ Component, pageProps }) {
       : "https://dev.sostvl.com/alternative-login/";
 
     // Use redirectSignIn and redirectSignOut as needed
-    console.log({ redirectSignIn, redirectSignOut });
+    //console.log({ redirectSignIn, redirectSignOut });
     Amplify.configure({
       ...awsmobile,
-      oauth: {
-        ...awsmobile.oauth,
-        redirectSignIn,
-        redirectSignOut,
-      },
+      // oauth: {
+      //   ...awsmobile.oauth,
+      //   redirectSignIn,
+      //   redirectSignOut,
+      // },
     });
   }, []);
 
@@ -50,7 +50,12 @@ export default function App({ Component, pageProps }) {
       router.pathname !== "/login" &&
       router.pathname !== "/register" &&
       router.pathname !== "/alternative-login" &&
-      router.pathname !== "/intro"
+      router.pathname !== "/intro" &&
+      router.pathname !== "/terms-of-service" &&
+      router.pathname !== "/guest-settings" &&
+      router.pathname !== "/payment" &&
+      router.pathname !== "/stripe" &&
+      router.pathname !== "/paypal"
     ) {
       return <Navbar />;
     }

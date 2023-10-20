@@ -1,20 +1,21 @@
 import React from "react";
 
 import { Auth } from "aws-amplify";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import { GoogleIcon } from "@/constants/icons";
 import { ca } from "date-fns/locale";
 
 function GoogleButton() {
-  const login = async() => {
-    const result = await signIn('google', {callbackUrl: 'http://localhost:3000/login'});
+  const login = async () => {
+    const result = await signIn("google", {
+      callbackUrl: "https://dev.sostvl.com/login",
+    });
     // Puedes manejar el resultado de la autenticación aquí
-    if (result &&result.error) {
-      console.error('Error al iniciar sesión:', result.error);
-    }
-    else{
-      console.log("todo bien")
+    if (result && result.error) {
+      console.error("Error al iniciar sesión:", result.error);
+    } else {
+      console.log("todo bien");
     }
   };
   return (

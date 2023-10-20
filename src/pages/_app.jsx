@@ -10,15 +10,6 @@ import awsmobile from "@/aws-exports";
 import { Amplify } from "aws-amplify";
 import { useEffect } from "react";
 
-Amplify.configure({
-  ...awsmobile,
-  oauth: {
-    ...awsmobile.oauth,
-    redirectSignIn: "https://dev.sostvl.com/alternative-login/",
-    redirectSignOut: "https://dev.sostvl.com/alternative-login/",
-  },
-});
-
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   useEffect(() => {
@@ -31,17 +22,6 @@ export default function App({ Component, pageProps }) {
     const redirectSignOut = isLocalhost
       ? "http://localhost:3000/alternative-login/"
       : "https://dev.sostvl.com/alternative-login/";
-
-    // Use redirectSignIn and redirectSignOut as needed
-    //console.log({ redirectSignIn, redirectSignOut });
-    Amplify.configure({
-      ...awsmobile,
-      // oauth: {
-      //   ...awsmobile.oauth,
-      //   redirectSignIn,
-      //   redirectSignOut,
-      // },
-    });
   }, []);
 
   const renderNavbar = () => {

@@ -9,7 +9,7 @@ import { ca } from "date-fns/locale";
 function GoogleButton() {
   const login = async () => {
     const result = await signIn("google", {
-      callbackUrl: "https://app-travelers.vercel.app/login",
+      callbackUrl: "https://dev.sostvl.com/login",
     });
     // Puedes manejar el resultado de la autenticación aquí
     if (result && result.error) {

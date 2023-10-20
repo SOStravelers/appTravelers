@@ -5,7 +5,7 @@ import { StarIcon, FavIconBorder } from "@/constants/icons";
 function WorkerCardFavorite({ link, name, service, score, showArrow = true }) {
   return (
     <div
-      className="flex py-4 w-80 rounded-lg justify-around my-2 items-center"
+      className="flex py-4 w-full max-w-lg rounded-lg justify-around my-2 items-center"
       style={{ boxShadow: "2px 2px 24px 0px rgba(0, 0, 0, 0.15)" }}
     >
       <Link href={link}>

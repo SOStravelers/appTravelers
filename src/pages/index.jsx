@@ -9,16 +9,16 @@ import { useStore } from "@/store";
 import ServiceService from "@/services/ServiceService";
 import { mazzard } from "@/utils/mazzardFont";
 import { getServerSession } from "next-auth";
-import { getSession } from 'next-auth/react';
-import {nextAuth} from "../pages/api/auth/[...nextauth].js"
-import { useSession } from 'next-auth/react'
-import axios from 'axios';
+import { getSession } from "next-auth/react";
+import { nextAuth } from "../pages/api/auth/[...nextauth].js";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 export default function Home({ user }) {
   const { setUser, setLoggedIn } = useStore();
   const [services, setServices] = useState([]);
-    useEffect(() => {
-      obtenerInformacionUsuario();
+  useEffect(() => {
+    obtenerInformacionUsuario();
     if (user) {
       setUser(user);
       setLoggedIn(true);
@@ -28,21 +28,23 @@ export default function Home({ user }) {
 
   async function obtenerInformacionUsuario() {
     try {
-      console.log("casa")
-      const response = await fetch('/api/getUserInfo'); // Reemplaza esto con la URL correcta de tu API
-      console.log("perro")
+      console.log("casa");
+      const response = await fetch("/api/getUserInfo"); // Reemplaza esto con la URL correcta de tu API
+      console.log("perro");
 
       if (response.ok) {
         const userInfo = await response.json();
-        console.log('Información del usuario:', userInfo);
+        console.log("Información del usuario:", userInfo);
       } else {
-        console.error('Error al obtener la información del usuario:', response.statusText);
+        console.error(
+          "Error al obtener la información del usuario:",
+          response.statusText
+        );
       }
     } catch (error) {
-      console.error('Error al obtener la información del usuario:', error);
+      console.error("Error al obtener la información del usuario:", error);
     }
   }
-  
 
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
@@ -51,7 +53,7 @@ export default function Home({ user }) {
   };
 
   return (
-    <main className="flex flex-col bg-white pb-20 px-5">
+    <main className="flex flex-col w-full bg-white py-28 px-5 md:pl-80">
       <BookingCard />
 
       <section>
@@ -60,7 +62,7 @@ export default function Home({ user }) {
         >
           Services
         </h1>
-        <div className="w-[90vw] flex overflow-x-auto pb-5">
+        <div className="w-[90vw] md:w-full flex overflow-x-auto pb-5">
           {services?.map((s) => (
             <ServiceCard
               key={s.id}
@@ -85,4 +87,3 @@ export default function Home({ user }) {
     </main>
   );
 }
-

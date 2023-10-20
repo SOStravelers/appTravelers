@@ -42,7 +42,6 @@ function Layout({ children }) {
         ) : (
           !isIntro && !isPaymentConfirm && <TopBarSubMenu />
         )}
-
         {children}
       </div>
     </>

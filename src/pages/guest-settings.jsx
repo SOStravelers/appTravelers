@@ -17,7 +17,7 @@ export default function GuestSettings() {
   };
 
   return (
-    <div className="flex flex-col py-5 px-10">
+    <div className="flex flex-col py-28 px-10 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
       <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
       <div className="flex flex-col my-4">
@@ -27,7 +27,7 @@ export default function GuestSettings() {
           offFunction={offFunction}
         />
       </div>
-      <div className="flex items-center justify-center my-5">
+      <div className="flex items-center justify-center my-5 max-w-lg">
         <Image
           src="/icons/LogoCompleto.svg"
           width={200}

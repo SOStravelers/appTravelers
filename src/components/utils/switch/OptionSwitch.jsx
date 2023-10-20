@@ -15,7 +15,7 @@ function OptionSwitch({
   };
 
   return (
-    <div className="flex items-center justify-between my-3">
+    <div className="flex items-center justify-between my-3 max-w-lg">
       <h1>{title}</h1>
       <div className="flex">
         <div

@@ -9,7 +9,7 @@ import { ca } from "date-fns/locale";
 function GoogleButton() {
   const login = async () => {
     const result = await signIn("google", {
-      callbackUrl: "https://dev.sostvl.com/login",
+      callbackUrl: "http://localhost:3000/login",
     });
     // Puedes manejar el resultado de la autenticación aquí
     if (result && result.error) {

@@ -9,7 +9,7 @@ import UserService from "@/services/UserService";
 export default function Worker({ user }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
   return (
-    <div className="px-10 pb-20">
+    <div className="py-28 px-5 md:pl-80">
       <WorkerProfileCard
         name={user?.personalData?.name?.first}
         service={user?.workerData?.services}
@@ -23,7 +23,10 @@ export default function Worker({ user }) {
         titleTwo={"Services"}
       />
       {actualView === SECTION_ONE ? (
-        <SectionAbout description={user?.about} gallery={[user?.img?.imgUrl,user?.img?.imgUrl]} />
+        <SectionAbout
+          description={user?.about}
+          gallery={[user?.img?.imgUrl, user?.img?.imgUrl]}
+        />
       ) : (
         <SectionServices
           services={"Services"}

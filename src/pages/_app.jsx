@@ -57,7 +57,14 @@ export default function App({ Component, pageProps }) {
   };
 
   const renderSidebar = () => {
-    return <Sidebar />;
+    if (
+      router.pathname !== "/login" &&
+      router.pathname !== "/register" &&
+      router.pathname !== "/alternative-login" &&
+      router.pathname !== "/intro"
+    ) {
+      return <Sidebar />;
+    }
   };
 
   return (

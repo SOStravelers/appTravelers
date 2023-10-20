@@ -7,7 +7,7 @@ function About({ description }) {
       >
         About
       </h1>
-      <p className="text-blackText">
+      <p className="text-blackText max-w-lg">
         {description?.length > 0 ? description : "No description"}
       </p>
     </div>

@@ -18,7 +18,7 @@ export default function SelectHostel() {
   const getData = async () => {
     const id = router.query.id;
     HostelService.list({ id: id }).then((response) => {
-      console.log(response.data)
+      console.log(response.data);
       setHostels(response.data.docs);
     });
   };
@@ -28,9 +28,9 @@ export default function SelectHostel() {
   };
 
   return (
-    <div className="p-10 pb-20 flex flex-col">
+    <div className="p-10 pb-20 flex flex-col py-28 px-5 md:pl-80">
       <OutlinedInput placeholder={"Search here"} />
-      <h1 className="my-8 font-semibold text-center">Nearby You</h1>
+      <h1 className="my-8 font-semibold text-center max-w-lg">Nearby You</h1>
       <div className="flex flex-col items-center">
         {hostels.map((hostel) => (
           <div className="w-full" key={hostel.id}>

@@ -15,11 +15,16 @@ function WorkerCard({
     if (onClickSummary) onClickSummary();
   };
   return (
-    <div className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2">
+    <div className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2 max-w-lg">
       <div className="flex">
         <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 ml-3 relative">
           <Link href={link}>
-            <Image src={img} alt="gato" fill className="object-cover rounded-xl" />
+            <Image
+              src={img}
+              alt="gato"
+              fill
+              className="object-cover rounded-xl"
+            />
           </Link>
         </div>
         <div className="flex flex-col" onClick={handleSummary}>

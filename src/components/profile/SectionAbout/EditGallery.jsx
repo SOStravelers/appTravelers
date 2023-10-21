@@ -27,7 +27,7 @@ function EditGallery({ images }) {
   };
 
   return (
-    <div className="my-5">
+    <div className="my-5 max-w-lg">
       <h1
         className="mb-5 underline font-semibold underline-offset-8"
         style={{ textDecorationColor: "#00A0D5", textDecorationThickness: 2 }}

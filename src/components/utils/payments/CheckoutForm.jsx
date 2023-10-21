@@ -6,6 +6,8 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 
+import SolidButton from "../buttons/SolidButton";
+
 import { toast } from "react-toastify";
 
 export default function CheckoutForm() {
@@ -38,9 +40,10 @@ export default function CheckoutForm() {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button disabled={isProcessing}>
-        <span>{isProcessing ? "Precessing..." : "Pay now"}</span>
-      </button>
+      <SolidButton
+        text={isProcessing ? "Precessing..." : "Pay now"}
+        disabled={!stripe || isProcessing}
+      ></SolidButton>
     </form>
   );
 }

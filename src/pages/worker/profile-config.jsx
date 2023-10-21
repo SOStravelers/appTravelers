@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import OptionCard from "@/components/utils/cards/OptionCard";
-import { UserIcon, ListIcon, LockIcon } from "@/constants/icons";
+import { UserIcon, ListIcon, LockIcon, ServicesIcon } from "@/constants/icons";
 
 export default function WorkerProfile() {
   // const getCookieValue = (name) => {
@@ -15,7 +15,7 @@ export default function WorkerProfile() {
   // };
 
   // const userId = getCookieValue("auth.user_id");
-  const userId = null
+  const userId = null;
   const router = useRouter();
 
   return (
@@ -23,7 +23,7 @@ export default function WorkerProfile() {
       <OptionCard
         title="My Services"
         subtitle="Abilities and skills"
-        icon={UserIcon}
+        icon={ServicesIcon}
         check
         onClick={() => router.push("/worker/my-services")}
       />
@@ -40,13 +40,6 @@ export default function WorkerProfile() {
         icon={ListIcon}
         check
         onClick={() => router.push("/worker/my-schedules")}
-      />
-      <OptionCard
-        title="My Tools"
-        subtitle="Instruments and devices"
-        icon={ListIcon}
-        check
-        onClick={() => router.push("/worker/my-tools")}
       />
       <OptionCard
         title="My Workplaces"

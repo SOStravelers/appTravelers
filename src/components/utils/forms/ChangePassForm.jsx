@@ -4,7 +4,7 @@ import { LockIcon } from "@/constants/icons";
 
 function ChangePassForm() {
   return (
-    <form className="w-full flex flex-col">
+    <form className="w-full flex flex-col max-w-lg">
       <OutlinedInput
         placeholder="Current Password"
         type="password"

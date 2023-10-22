@@ -1,8 +1,11 @@
 import WorkerProfileCardEdit from "@/components/utils/cards/WorkerProfileCardEdit";
 import SectionAboutEdit from "@/components/profile/SectionAbout/SectionAboutEdit";
 import UserService from "@/services/UserService";
+import { useStore } from "@/store";
 
-export default function WorkerEdit({ user }) {
+export default function WorkerEdit() {
+  const { user } = useStore();
+  console.log("el user", user);
   return (
     <div className="py-28 px-5 md:pl-80">
       <WorkerProfileCardEdit
@@ -11,7 +14,10 @@ export default function WorkerEdit({ user }) {
         score={5}
         avatar={user?.img?.imgUrl}
       />
-      <SectionAboutEdit description={user?.about} gallery={user?.img?.gallery} />
+      <SectionAboutEdit
+        description={user?.about}
+        gallery={user?.img?.gallery}
+      />
     </div>
   );
 }

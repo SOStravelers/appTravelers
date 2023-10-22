@@ -6,13 +6,14 @@ import { StarIcon } from "@/constants/icons";
 function WorkerProfileCard({ name, service, score, avatar }) {
   const [isInputHidden, setIsInputHidden] = useState(true);
   const [newAvatar, setNewAvatar] = useState(null);
-
+  console.log("avatarr", name, avatar);
   const handleImageClick = () => {
     setIsInputHidden(false);
   };
 
   const handleInputChange = (event) => {
     const file = event.target.files[0];
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -40,7 +41,7 @@ function WorkerProfileCard({ name, service, score, avatar }) {
           onClick={handleImageClick}
         >
           <Image
-            src={newAvatar ?? avatar}
+            src={newAvatar ?? avatar ?? null}
             fill
             className="object-cover rounded-2xl hover:opacity-50 transition-opacity duration-300"
             alt="Worker avatar"

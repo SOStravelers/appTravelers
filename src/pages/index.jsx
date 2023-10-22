@@ -11,8 +11,10 @@ import { mazzard } from "@/utils/mazzardFont";
 
 export default function Home({}) {
   const [services, setServices] = useState([]);
+  const { setService } = useStore();
   useEffect(() => {
     getData();
+    setService(null);
   }, []);
 
   const getData = async () => {

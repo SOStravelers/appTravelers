@@ -7,6 +7,10 @@ export const useStore = create((set) => {
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : {};
 
+      const user =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("auth_user") ?? "{}").service
+      : {};
   const urls = () => {
     console.log("perro");
     let final = null;
@@ -25,7 +29,7 @@ export const useStore = create((set) => {
   const theUrls = urls();
 
   return {
-    user: {},
+    user: user,
     urls: theUrls,
     loggedIn: false,
     service: service,

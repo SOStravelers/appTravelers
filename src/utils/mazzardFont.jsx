@@ -26,3 +26,4 @@ export const mazzard = localFont({
   subsets: ["latin"],
   display: "swap",
 });
+

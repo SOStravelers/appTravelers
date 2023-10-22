@@ -93,7 +93,7 @@ export default function Summary() {
           Accept{" "}
           <Link
             href="/terms-of-service"
-            class="font-medium text-blue-600 dark:text-blue-500 underline"
+            className="font-medium text-blue-600 dark:text-blue-500 underline"
           >
             terms & conditions
           </Link>{" "}

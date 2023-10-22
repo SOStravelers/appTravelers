@@ -16,3 +16,4 @@ const api = apis.get(env.trim());
 const front = apis.get(env.trim());
 
 export default { api, front };
+

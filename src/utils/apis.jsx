@@ -7,8 +7,8 @@ function SetLocalStorage(env) {
   const fronts = new Map();
   fronts.set("local", "http://localhost:3000/");
   fronts.set("dev", "https://dev.sostvl.com/");
-  front.set("extra", "https://app-travelers.vercel.app/");
   fronts.set("development", "https://dev.sostvl.com/");
+  fronts.set("extra", "https://app-travelers.vercel.app/");
   const api = apis.get(env.trim());
   const front = fronts.get(env.trim());
   return { api, front };

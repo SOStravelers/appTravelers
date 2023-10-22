@@ -1,4 +1,5 @@
 import { LogoWhite } from "@/constants/icons";
+import Link from "next/link";
 
 function WaveBar() {
   return (
@@ -15,6 +16,7 @@ function WaveBar() {
           fill="#001C25"
         />
       </svg>
+
       <LogoWhite
         className="my-auto absolute"
         height={100}

@@ -4,7 +4,7 @@ function SetLocalStorage(env) {
   apis.set("local", "http://localhost:4000/");
   apis.set("dev", "https://www.apidev.sostvl.com/");
   apis.set("development", "https://www.apidev.sostvl.com/");
-  fronts.set("extra", "https://www.apidev.sostvl.com/");
+  apis.set("extra", "https://www.apidev.sostvl.com/");
   const fronts = new Map();
   fronts.set("local", "http://localhost:3000/");
   fronts.set("dev", "https://dev.sostvl.com/");

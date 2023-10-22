@@ -1,5 +1,6 @@
 import React from "react";
 import { useStore } from "/src/store/index";
+import { useRouter } from "next/router";
 import { Auth } from "aws-amplify";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
@@ -7,15 +8,15 @@ import { GoogleIcon } from "@/constants/icons";
 import { ca } from "date-fns/locale";
 
 function GoogleButton() {
+  const router = useRouter();
   const login = async () => {
     const { front } = useStore.getState().urls;
-    const result = await signIn("google", {
-      callbackUrl: front + "/login",
-    });
+    const result = await signIn("google");
     // Puedes manejar el resultado de la autenticación aquí
     if (result && result.error) {
       console.error("Error al iniciar sesión:", result.error);
     } else {
+      router.push("/login");
       console.log("todo bien");
     }
   };

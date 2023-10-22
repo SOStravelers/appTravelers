@@ -28,6 +28,7 @@ export default class UserService {
     });
   }
   static async loginGoogle(name, email, image) {
+    console.log("la imagen", image);
     return axios.post(`${this.baseUrl}/loginGoogle`, {
       name: name,
       email: email,

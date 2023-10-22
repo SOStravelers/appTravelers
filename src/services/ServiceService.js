@@ -11,7 +11,6 @@ export default class ServiceService {
 
   static async list(params = {}) {
     let query = "";
-    console.log("base", this.baseUrl);
     Object.keys(params).forEach((key) => {
       query += `${key}=${params[key]}&`;
     });

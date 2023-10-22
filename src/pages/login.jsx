@@ -28,6 +28,7 @@ export default function Login() {
         console.log(result); // Reemplaza esto con la URL correcta de tu API
         if (result.ok) {
           const userInfo = await result.json();
+          console.log(userInfo.image);
           const response = await UserService.loginGoogle(
             userInfo.name,
             userInfo.email,

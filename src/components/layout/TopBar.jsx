@@ -38,7 +38,7 @@ function TopBar() {
                 style={{ width: "40px", height: "40px", overflow: "hidden" }}
               >
                 <img
-                  src="https://lh3.googleusercontent.com/a/ACg8ocIz-Id4iEHT5RbaBxFPGMtygpl_5qDEdv9G2dhWURDW=s96-c"
+                  src={user.img.imgUrl}
                   alt="Descripción de la imagen"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />

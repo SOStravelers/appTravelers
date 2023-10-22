@@ -3,7 +3,6 @@ import { useStore } from "../store/index";
 
 export default class SubserviceService {
   static resource = "subservices";
-
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${SubserviceService.resource}`;

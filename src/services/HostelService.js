@@ -3,7 +3,6 @@ import { useStore } from "../store/index";
 
 export default class HostelService {
   static resource = "users";
-  static baseUrl = `${API_URL}${this.resource}`;
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${HostelService.resource}`;

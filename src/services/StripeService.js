@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useStore } from "../store/index";
+
 export default class StripeService {
   static resource = "payments/stripe";
   static get baseUrl() {

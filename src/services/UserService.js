@@ -1,12 +1,12 @@
 import axios from "axios";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { useStore } from "../store/index";
 
 export default class UserService {
-  static apiUrl = API_URL;
   static resource = "users";
-  static baseUrl = `${this.apiUrl}${this.resource}`;
-  static baseUrlLocal = `http://localhost:4000/${this.resource}`;
+  static get baseUrl() {
+    const { api } = useStore.getState().urls;
+    return `${api}${UserService.resource}`;
+  }
 
   static async register(name, email, password) {
     return axios.post(`${this.baseUrl}/register`, {

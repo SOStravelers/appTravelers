@@ -1,12 +1,31 @@
 import { create } from "zustand";
+import SetLocalStorage from "../utils/apis";
 
 export const useStore = create((set) => {
   const service =
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : {};
+
+  const urls = () => {
+    let final = null;
+    let env = process.env.NODE_ENV;
+    if (typeof window !== "undefined") {
+      let storage = localStorage.getItem("apiUrl");
+      storage
+        ? (final = SetLocalStorage(storage))
+        : (final = SetLocalStorage(env));
+    } else {
+      final = SetLocalStorage("dev");
+    }
+    return final;
+  };
+
+  const theUrls = urls();
+
   return {
     user: {},
+    urls: theUrls,
     loggedIn: false,
     service: service,
     isWorker: false,

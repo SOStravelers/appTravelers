@@ -1,17 +1,21 @@
 import axios from "axios";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { useStore } from "../store/index";
 
 export default class ServiceService {
-  static apiUrl = API_URL;
   static resource = "services/get";
-  static baseUrl = `${this.apiUrl}${this.resource}`;
+
+  static get baseUrl() {
+    const { api } = useStore.getState().urls;
+    return `${api}${ServiceService.resource}`;
+  }
 
   static async list(params = {}) {
     let query = "";
+    console.log("base", this.baseUrl);
     Object.keys(params).forEach((key) => {
       query += `${key}=${params[key]}&`;
     });
+
     return axios.get(`${this.baseUrl}/all?${query}`);
   }
 }

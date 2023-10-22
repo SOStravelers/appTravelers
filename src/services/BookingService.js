@@ -1,14 +1,13 @@
 import axios from "axios";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { useStore } from "../store/index";
 
 export default class BookingService {
-  static apiUrl = API_URL;
   static resource = "bookingAuth";
-  static baseUrl = `${this.apiUrl}${this.resource}`;
 
   static async create(params) {
-    return axios.post(`${this.baseUrl}`, params, {
+    const urls = useStore.getState().urls;
+    const baseUrl = `${urls.api}${this.resource}`;
+    return axios.post(`${baseUrl}`, params, {
       headers: {
         Authorization: localStorage.getItem("auth.access_token"),
       },

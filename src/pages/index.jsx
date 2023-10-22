@@ -14,7 +14,7 @@ export default function Home({}) {
   const { setService } = useStore();
   useEffect(() => {
     getData();
-    setService(null);
+    //setService(null);
   }, []);
 
   const getData = async () => {

@@ -19,7 +19,6 @@ function Layout({ children }) {
   const router = useRouter();
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
   useEffect(() => {
-    console.log("usasda ", user);
     if (!user || Object.keys(user).length == 0) {
       obtenerInformacionUsuario();
     }

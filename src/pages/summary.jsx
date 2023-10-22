@@ -14,7 +14,7 @@ import WorkerService from "@/services/WokerService";
 export default function Summary() {
   const { loggedIn, service } = useStore();
   const router = useRouter();
-
+  const { hour, date } = service;
   const [worker, setWorker] = useState(null);
   const [hostel, setHostel] = useState(null);
   const [selected, setSelected] = useState(false);
@@ -76,7 +76,9 @@ export default function Summary() {
       <div className="flex justify-between w-72 pr-5 my-5">
         <div className="flex ">
           <ClockIcon />
-          <p className="ml-2">4 Aug, 2023 | 04:30 PM</p>
+          <p className="ml-2">
+            {date} | {hour}
+          </p>
         </div>
         <Link href={`/reservation/${service?.hostelId}`}>
           <ChangeIcon />

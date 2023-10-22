@@ -20,7 +20,7 @@ export default function Profile({ user }) {
     Cookies.remove("auth.refresh_token");
     Cookies.remove("auth.user_id");
     Cookies.remove("auth.user");
-    Cookies.removeItem("service");
+    Cookies.remove("service");
 
     setUser({});
     setLoggedIn(false);

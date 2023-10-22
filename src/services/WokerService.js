@@ -5,7 +5,7 @@ export default class WorkerService {
   static resource = "users";
   static get baseUrl() {
     const { api } = useStore.getState().urls;
-    return `${api}${PayPalService.resource}`;
+    return `${api}${WorkerService.resource}`;
   }
 
   static async list() {

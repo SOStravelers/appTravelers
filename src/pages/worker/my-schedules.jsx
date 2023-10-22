@@ -8,7 +8,7 @@ export default function MySchedules() {
   const [actualView, setActualView] = useState(SECTION_ONE);
 
   return (
-    <section className="p-5 flex flex-col items-center">
+    <section className="flex flex-col items-center md:items-start py-28 px-5 md:pl-80">
       <SwitchButtons
         titleOne={"Week"}
         titleTwo={"Calendar"}

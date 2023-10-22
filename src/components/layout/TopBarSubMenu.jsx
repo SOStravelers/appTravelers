@@ -50,7 +50,9 @@ function TopBarSubMenu() {
       )}
     >
       <div
-        className={clsx(" border-2 rounded-full p-2", "border-white")}
+        className={clsx(
+          " border-2 rounded-full p-2 border-white cursor-pointer"
+        )}
         onClick={() => router.back()}
       >
         <ReturnArrowIcon color={clsx("#fff")} />

@@ -70,7 +70,7 @@ function SectionWeek() {
   };
 
   return (
-    <section className="w-full">
+    <section className="w-full max-w-lg">
       {WEEK_DAYS.map((day) => (
         <ScheduleCardWeek
           key={day.id}

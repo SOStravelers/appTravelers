@@ -27,7 +27,7 @@ export default function Stripe() {
   };
 
   return (
-    <section className="m-3">
+    <section className="py-28 px-5 md:pl-80 w-full max-w-2xl">
       {clientSecret && <StripeForm clientSecret={clientSecret} />}
     </section>
   );

@@ -11,7 +11,7 @@ export default function Paypal() {
   };
 
   return (
-    <div className="w-screen h-screen bg-white text-black">
+    <div className="w-full max-w-2xl h-screen bg-white text-black py-28 px-5 md:pl-80">
       <PayPalScriptProvider options={initialOptions}>
         <PayPalPayment></PayPalPayment>
       </PayPalScriptProvider>

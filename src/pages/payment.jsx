@@ -22,8 +22,8 @@ export default function Payment() {
   };
 
   return (
-    <div className="px-10 flex flex-col items-center justify-between my-5 min-h-[70vh]">
-      <div className="flex flex-col w-full">
+    <div className="flex flex-col items-center md:items-start justify-between py-28 px-5 md:pl-80 min-h-[70vh]">
+      <div className="flex flex-col w-full max-w-lg">
         <div className="flex justify-between items-center">
           <div
             className="flex items-center my-3"

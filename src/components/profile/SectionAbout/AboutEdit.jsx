@@ -9,7 +9,7 @@ function AboutEdit({ description }) {
 
   return (
     <div className="my-5">
-      <div className="flex justify-between">
+      <div className="flex justify-between max-w-lg">
         <h1
           className="mb-5 underline font-semibold underline-offset-8"
           style={{ textDecorationColor: "#00A0D5", textDecorationThickness: 2 }}

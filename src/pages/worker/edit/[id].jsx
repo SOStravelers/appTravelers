@@ -4,7 +4,7 @@ import UserService from "@/services/UserService";
 
 export default function WorkerEdit({ user }) {
   return (
-    <div className="px-10 pb-20">
+    <div className="py-28 px-5 md:pl-80">
       <WorkerProfileCardEdit
         name={user?.personalData?.name?.first}
         service={user?.workerData?.services}

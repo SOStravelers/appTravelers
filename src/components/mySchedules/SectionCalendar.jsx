@@ -9,8 +9,11 @@ function SectionCalendar() {
   }
 
   return (
-    <div>
-      <CalendarSchedule selectedDate={selectedDate} onDateChange={handleDateChange} />
+    <div className="md:ml-28">
+      <CalendarSchedule
+        selectedDate={selectedDate}
+        onDateChange={handleDateChange}
+      />
     </div>
   );
 }

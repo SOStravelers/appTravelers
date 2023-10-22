@@ -673,3 +673,54 @@ export const CloseIcon = ({ ...props }) => (
     />
   </svg>
 );
+
+export const ServicesIcon = ({ ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="19"
+    height="20"
+    viewBox="0 0 19 20"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M1 3.79123L2.88889 5.68012L6.66667 1.90234"
+      stroke="#00A0D5"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M1 10.4023L2.88889 12.2912L6.66667 8.51343"
+      stroke="#00A0D5"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M1 17.0135L2.88889 18.9024L6.66667 15.1246"
+      stroke="#00A0D5"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M16.1112 2.37457H10.4445C9.6621 2.37457 9.02783 3.00884 9.02783 3.79124C9.02783 4.57364 9.6621 5.20791 10.4445 5.20791H16.1112C16.8936 5.20791 17.5278 4.57364 17.5278 3.79124C17.5278 3.00884 16.8936 2.37457 16.1112 2.37457Z"
+      stroke="#00A0D5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M16.1112 8.98572H10.4445C9.6621 8.98572 9.02783 9.61998 9.02783 10.4024C9.02783 11.1848 9.6621 11.8191 10.4445 11.8191H16.1112C16.8936 11.8191 17.5278 11.1848 17.5278 10.4024C17.5278 9.61998 16.8936 8.98572 16.1112 8.98572Z"
+      stroke="#00A0D5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M16.1112 15.5969H10.4445C9.6621 15.5969 9.02783 16.2311 9.02783 17.0135C9.02783 17.7959 9.6621 18.4302 10.4445 18.4302H16.1112C16.8936 18.4302 17.5278 17.7959 17.5278 17.0135C17.5278 16.2311 16.8936 15.5969 16.1112 15.5969Z"
+      stroke="#00A0D5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);

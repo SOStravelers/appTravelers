@@ -3,10 +3,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { StarIcon } from "@/constants/icons";
 
-function WorkerProfileCard({ name, service, score, avatar }) {
+function WorkerProfileCard({ name, service, score, avatar, lastName }) {
   const [isInputHidden, setIsInputHidden] = useState(true);
   const [newAvatar, setNewAvatar] = useState(null);
-  console.log("avatarr", name, avatar);
   const handleImageClick = () => {
     setIsInputHidden(false);
   };
@@ -57,7 +56,9 @@ function WorkerProfileCard({ name, service, score, avatar }) {
         </div>
       </div>
       <div className="flex flex-col">
-        <h1 className="font-semibold">{name}</h1>
+        <h1 className="font-semibold">
+          {name} {lastName}
+        </h1>
         <p className="text-blackText my-2">
           {service?.length > 0
             ? service?.map((s) => s.name).join(", ")

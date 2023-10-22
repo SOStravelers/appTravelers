@@ -10,6 +10,7 @@ export default function WorkerEdit() {
     <div className="py-28 px-5 md:pl-80">
       <WorkerProfileCardEdit
         name={user?.personalData?.name?.first}
+        lastName={user?.personalData?.name?.last}
         service={user?.workerData?.services}
         score={5}
         avatar={user?.img?.imgUrl}

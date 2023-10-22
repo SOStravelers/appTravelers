@@ -1,9 +1,13 @@
 import axios from "axios";
-import { API_URL, FRONT_URL } from "../utils/apis";
+import { useStore } from "../store/index";
 
 export default class SubserviceService {
   static resource = "subservices";
-  static baseUrl = `${API_URL}${this.resource}`;
+
+  static get baseUrl() {
+    const { api } = useStore.getState().urls;
+    return `${api}${SubserviceService.resource}`;
+  }
 
   static async list(params = {}) {
     let query = "";

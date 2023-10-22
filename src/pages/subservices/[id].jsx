@@ -11,6 +11,7 @@ export default function Subservices() {
   const [subServices, setSubservices] = useState([]);
 
   useEffect(() => {
+    console.log("vamos");
     getData();
   }, []);
 

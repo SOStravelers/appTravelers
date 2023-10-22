@@ -13,18 +13,7 @@ import { useEffect } from "react";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-  useEffect(() => {
-    // This code runs on the client side after the component is mounted
-    const isLocalhost = window.location.hostname.includes("localhost");
-    const redirectSignIn = isLocalhost
-      ? "http://localhost:3000/alternative-login/"
-      : "https://dev.sostvl.com/alternative-login/";
-
-    const redirectSignOut = isLocalhost
-      ? "http://localhost:3000/alternative-login/"
-      : "https://dev.sostvl.com/alternative-login/";
-  }, []);
-
+  console.log("app");
   const renderNavbar = () => {
     if (
       router.pathname !== "/login" &&

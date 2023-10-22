@@ -1,46 +1,22 @@
 import { useEffect, useState } from "react";
-
+import Cookies from "js-cookie";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
 
 import { useStore } from "@/store";
 import ServiceService from "@/services/ServiceService";
+import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
 
-export default function Home({ user }) {
-  const { setUser, setLoggedIn } = useStore();
+export default function Home({}) {
   const [services, setServices] = useState([]);
   useEffect(() => {
-    obtenerInformacionUsuario();
-    if (user) {
-      setUser(user);
-      setLoggedIn(true);
-    }
     getData();
   }, []);
 
-  async function obtenerInformacionUsuario() {
-    try {
-      console.log("casa");
-      const response = await fetch("/api/getUserInfo"); // Reemplaza esto con la URL correcta de tu API
-      console.log("perro");
-
-      if (response.ok) {
-        const userInfo = await response.json();
-        console.log("Información del usuario:", userInfo);
-      } else {
-        console.error(
-          "Error al obtener la información del usuario:",
-          response.statusText
-        );
-      }
-    } catch (error) {
-      console.error("Error al obtener la información del usuario:", error);
-    }
-  }
-
   const getData = async () => {
+    console.log("sa");
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
       setServices(response.data.docs);
     });

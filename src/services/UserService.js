@@ -36,6 +36,7 @@ export default class UserService {
   }
 
   static async get(id) {
+    console.log("isd", id);
     return axios.get(`${this.baseUrl}/${id}`);
   }
 

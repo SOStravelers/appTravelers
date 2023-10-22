@@ -9,6 +9,7 @@ import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 
 export default function Login() {
+  console.log("login");
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
   useEffect(() => {
@@ -17,12 +18,14 @@ export default function Login() {
 
   async function obtenerInformacionUsuario() {
     let storageUser = localStorage.getItem("auth.user");
-    if (storageUser && Object.keys(user).length > 0) {
+    if (storageUser && Object.keys(storageUser).length > 0) {
       setUser(storageUser);
       setLoggedIn(true);
     } else {
       try {
-        const result = await fetch("/api/getUserInfo"); // Reemplaza esto con la URL correcta de tu API
+        console.log("intentando");
+        const result = await fetch("/api/getUserInfo");
+        console.log(result); // Reemplaza esto con la URL correcta de tu API
         if (result.ok) {
           const userInfo = await result.json();
           const response = await UserService.loginGoogle(

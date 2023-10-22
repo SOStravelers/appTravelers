@@ -13,10 +13,11 @@ export default function WorkerHome({ user }) {
   const { setUser, setLoggedIn } = useStore();
 
   useEffect(() => {
-    if (user) {
-      setUser(user);
-      setLoggedIn(true);
-    }
+    console.log("hola");
+    // if (user) {
+    //   setUser(user);
+    //   setLoggedIn(true);
+    // }
   }, []);
 
   const goTo = (path) => {

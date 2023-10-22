@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useStore } from "/src/store/index";
 import { Auth } from "aws-amplify";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
@@ -8,8 +8,9 @@ import { ca } from "date-fns/locale";
 
 function GoogleButton() {
   const login = async () => {
+    const { front } = useStore.getState().urls;
     const result = await signIn("google", {
-      callbackUrl: "https://app-travelers.vercel.app/login",
+      callbackUrl: front + "/login",
     });
     // Puedes manejar el resultado de la autenticación aquí
     if (result && result.error) {

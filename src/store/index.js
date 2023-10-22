@@ -8,6 +8,7 @@ export const useStore = create((set) => {
       : {};
 
   const urls = () => {
+    console.log("perro");
     let final = null;
     let env = process.env.NODE_ENV;
     if (typeof window !== "undefined") {

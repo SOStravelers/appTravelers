@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 function LoginForm() {
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
-
+  console.log("login form");
   const login = async (values) => {
     try {
       console.log("--login--");

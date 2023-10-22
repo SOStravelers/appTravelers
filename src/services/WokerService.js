@@ -1,9 +1,12 @@
 import axios from "axios";
-import { API_URL, FRONT_URL } from "../utils/apis";
+import { useStore } from "../store/index";
 
 export default class WorkerService {
   static resource = "users";
-  static baseUrl = `${API_URL}${this.resource}`;
+  static get baseUrl() {
+    const { api } = useStore.getState().urls;
+    return `${api}${PayPalService.resource}`;
+  }
 
   static async list() {
     let query = "isActive=true&page=1&type=worker";

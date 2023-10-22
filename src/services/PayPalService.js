@@ -1,9 +1,12 @@
 import axios from "axios";
-import { API_URL, FRONT_URL } from "../utils/apis";
+import { useStore } from "../store/index";
 
 export default class PayPalService {
   static resource = "payments";
-  static baseUrl = `${API_URL}${this.resource}`;
+  static get baseUrl() {
+    const { api } = useStore.getState().urls;
+    return `${api}${PayPalService.resource}`;
+  }
 
   static async createOrder(payload) {
     const body = {

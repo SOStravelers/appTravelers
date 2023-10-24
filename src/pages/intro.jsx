@@ -2,11 +2,10 @@ import { useState } from "react";
 import clsx from "clsx";
 import Slide1 from "@/components/intro/Slide1";
 import Slide2 from "@/components/intro/Slide2";
-const env = localStorage.getItem("apiUrl") || process.env.NODE_ENV;
-const { api, front } = urls(env);
 
 export default function Intro() {
   const [slide, setSlide] = useState(1);
+
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center bg-white">
       <div className="flex mb-20">

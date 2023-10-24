@@ -18,7 +18,6 @@ export default function Home({}) {
   }, []);
 
   const getData = async () => {
-    console.log("sa");
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
       setServices(response.data.docs);
     });

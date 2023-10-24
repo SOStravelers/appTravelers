@@ -26,11 +26,9 @@ function Layout({ children }) {
 
   async function obtenerInformacionUsuario() {
     let storageUser = localStorage.getItem("auth.user_id");
-    console.log("sss", storageUser);
     if (storageUser && Object.keys(storageUser).length > 0) {
       console.log("loguando");
       try {
-        console.log("casa");
         UserService.get(storageUser).then((response) => {
           console.log("response.data", response.data);
           localStorage.setItem("auth.user_id", response.data._id);

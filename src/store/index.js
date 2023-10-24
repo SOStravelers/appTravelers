@@ -7,16 +7,17 @@ export const useStore = create((set) => {
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : {};
 
-      const user =
+  const user =
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("auth_user") ?? "{}").service
       : {};
   const urls = () => {
-    console.log("perro");
     let final = null;
     let env = process.env.NODE_ENV;
-    if (typeof window !== "undefined") {
+    if (typeof window != "undefined") {
+      console.log("buenaa");
       let storage = localStorage.getItem("apiUrl");
+      console.log(storage);
       storage
         ? (final = SetLocalStorage(storage))
         : (final = SetLocalStorage(env));

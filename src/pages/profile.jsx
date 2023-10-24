@@ -15,16 +15,18 @@ export default function Profile({ user }) {
     localStorage.removeItem("auth.user_id");
     localStorage.removeItem("auth.user");
     localStorage.removeItem("service");
+    localStorage.removeItem("next-auth.session-token");
 
     Cookies.remove("auth.access_token");
     Cookies.remove("auth.refresh_token");
     Cookies.remove("auth.user_id");
     Cookies.remove("auth.user");
     Cookies.remove("service");
+    Cookies.remove("next-auth.session-token");
 
     setUser({});
     setLoggedIn(false);
-    signOut({ redirect: false });
+    await signOut({ redirect: false });
     router.push("/");
   };
 

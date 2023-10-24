@@ -19,6 +19,7 @@ export default function Login() {
   async function obtenerInformacionUsuario() {
     console.log("obtener Informacion");
     let storageUser = localStorage.getItem("auth.user");
+    console.log("el auth", storageUser);
     if (storageUser && Object.keys(storageUser).length > 0) {
       setUser(storageUser);
       setLoggedIn(true);
@@ -29,7 +30,6 @@ export default function Login() {
         console.log(result); // Reemplaza esto con la URL correcta de tu API
         if (result.ok) {
           const userInfo = await result.json();
-          console.log(userInfo.image);
           const response = await UserService.loginGoogle(
             userInfo.name,
             userInfo.email,
@@ -45,7 +45,7 @@ export default function Login() {
               response.data.refresh_token
             );
             localStorage.setItem("auth.user_id", response.data.user._id);
-            localStorage.setItem("auth.user", response.data.user);
+            localStorage.setItem("auth.user", response.data.user.toString());
             Cookies.set("auth.access_token", response.data.access_token);
             Cookies.set("auth.refresh_token", response.data.refresh_token);
             Cookies.set("auth.user_id", response.data.user._id);

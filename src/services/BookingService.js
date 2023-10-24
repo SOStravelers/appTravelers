@@ -11,8 +11,16 @@ export default class BookingService {
   static async create(params) {
     return axios.post(`${baseUrl}`, params, {
       headers: {
-        Authorization: localStorage.getItem("auth.access_token"),
+        Authorization: getHeaders(),
       },
     });
+  }
+
+  static getHeaders() {
+    return {
+      Authorization: localStorage.getItem("auth.access_token")
+        ? localStorage.getItem("auth.access_token")
+        : {},
+    };
   }
 }

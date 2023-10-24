@@ -3,11 +3,22 @@ import { useStore } from "../store/index";
 
 export default class UserService {
   static resource = "users";
+  static resourceAuth = "usersAuth";
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${UserService.resource}`;
   }
-
+  static get baseUrlAuth() {
+    const { api } = useStore.getState().urls;
+    return `${api}${UserService.resourceAuth}`;
+  }
+  static getHeaders() {
+    return {
+      Authorization: localStorage.getItem("auth.access_token")
+        ? localStorage.getItem("auth.access_token")
+        : {},
+    };
+  }
   static async register(name, email, password) {
     return axios.post(`${this.baseUrl}/register`, {
       name: name,
@@ -41,36 +52,25 @@ export default class UserService {
     return axios.get(`${this.baseUrl}/${id}`);
   }
 
-  static async updateUser(
-    _id,
-    isActive,
-    isValidate,
-    email,
-    type,
-    img,
-    about,
-    languaje,
-    personalData,
-    workerData,
-    username
-  ) {
-    return axios.put(`${this.baseUrl}/usersAuth/${_id}`, {
-      isActive: isActive,
-      isValidate: isValidate,
-      email: email,
-      type: type,
-      img: img,
-      about: about,
-      languaje: languaje,
-      personalData: personalData,
-      workerData: workerData,
-      username: username,
-    });
+  static async updateUser(user) {
+    console.log("el userr", user);
+    return axios.put(
+      `${this.baseUrlAuth}/${user._id}`,
+      {
+        user,
+      },
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
-  static getHeaders() {
-    return {
-      headers: {},
-    };
+  static async changeProfileImg(file) {
+    console.log("fotito", this.getHeaders());
+    const formData = new FormData();
+    formData.append("file", file);
+    return axios.post(`${this.baseUrlAuth}/profile/photo`, formData, {
+      headers: this.getHeaders(),
+    });
   }
 }

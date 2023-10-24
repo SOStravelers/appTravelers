@@ -17,6 +17,7 @@ export default function Login() {
   }, []);
 
   async function obtenerInformacionUsuario() {
+    console.log("obtener Informacion");
     let storageUser = localStorage.getItem("auth.user");
     if (storageUser && Object.keys(storageUser).length > 0) {
       setUser(storageUser);

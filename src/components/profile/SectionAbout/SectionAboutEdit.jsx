@@ -1,10 +1,10 @@
 import AboutEdit from "./AboutEdit";
 import EditGallery from "./EditGallery";
 
-function SectionAboutEdit({ description, gallery }) {
+function SectionAboutEdit({ about, gallery }) {
   return (
     <div>
-      <AboutEdit description={description} />
+      <AboutEdit about={about} />
       <EditGallery images={gallery} />
     </div>
   );

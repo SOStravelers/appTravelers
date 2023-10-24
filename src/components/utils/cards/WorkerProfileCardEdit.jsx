@@ -1,11 +1,14 @@
 import { useState } from "react";
-
+import { useStore } from "@/store";
 import Image from "next/image";
 import { StarIcon } from "@/constants/icons";
+import UserService from "@/services/UserService";
 
 function WorkerProfileCard({ name, service, score, avatar, lastName }) {
   const [isInputHidden, setIsInputHidden] = useState(true);
   const [newAvatar, setNewAvatar] = useState(null);
+  const { user, setUser } = useStore();
+
   const handleImageClick = () => {
     setIsInputHidden(false);
   };
@@ -15,9 +18,22 @@ function WorkerProfileCard({ name, service, score, avatar, lastName }) {
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onloadend = () => {
+    reader.onloadend = async () => {
       // Do something with the uploaded image
       setNewAvatar(reader.result);
+      console.log(reader.result);
+      try {
+        const response = await UserService.changeProfileImg(reader.result);
+        if (response.data.img) {
+          console.log(user);
+          user.img = response.data.img;
+          setUser(user);
+        }
+
+        console.log("foto guardada", response.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
   };
 

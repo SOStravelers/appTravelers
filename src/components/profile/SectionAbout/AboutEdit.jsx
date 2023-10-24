@@ -1,10 +1,26 @@
 import { useState } from "react";
+import { useStore } from "@/store";
+import UserService from "@/services/UserService";
 import { EditIcon, CheckIconBlack } from "@/constants/icons";
-function AboutEdit({ description }) {
-  const [isEditing, setIsEditing] = useState(false);
 
-  const handleEdit = () => {
+function AboutEdit({ about }) {
+  console.log("perro", about);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedAbout, setEditedAbout] = useState(about); // Agregar un estado para el valor editado
+  const { user, setUser } = useStore();
+
+  const handleEdit = async () => {
+    console.log("editando", editedAbout); // Accede a editedAbout en lugar de about
     setIsEditing(false);
+    user.about = editedAbout;
+    console.log("antes de enviar", user);
+    const response = await UserService.updateUser(user);
+    console.log("weno", user);
+    if (response.data) {
+      console.log("respesta", response.data);
+      setUser(response.data);
+    }
+    console.log(user);
   };
 
   return (
@@ -25,12 +41,13 @@ function AboutEdit({ description }) {
 
       {isEditing ? (
         <textarea
-          className="w-full h-28 p-3 rounded-xl bg-transparentBlue"
-          defaultValue={description}
+          className="w-full h-40 p-3 rounded-xl bg-transparentBlue"
+          value={editedAbout} // Usar editedAbout para reflejar el valor editado
+          onChange={(e) => setEditedAbout(e.target.value)} // Actualizar editedAbout cuando se edite el textarea
         />
       ) : (
-        <p className="text-blackText">
-          {description?.length > 0 ? description : "No description yet"}
+        <p className="text-blackText" style={{ whiteSpace: "pre-wrap" }}>
+          {editedAbout?.length > 0 ? editedAbout : "No description yet"}
         </p>
       )}
     </div>

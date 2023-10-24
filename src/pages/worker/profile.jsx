@@ -15,11 +15,13 @@ export default function WorkerProfile({ user }) {
     localStorage.removeItem("auth.refresh_token");
     localStorage.removeItem("auth.user_id");
     localStorage.removeItem("auth.user");
+    localStorage.removeItem("service");
 
     Cookies.remove("auth.access_token");
     Cookies.remove("auth.refresh_token");
     Cookies.remove("auth.user_id");
     Cookies.remove("auth.user");
+    Cookies.remove("service");
 
     setUser({});
     setLoggedIn(false);

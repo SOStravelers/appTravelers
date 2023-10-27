@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useEffect } from "react";
 
 function OptionSwitch({
   title,
   onFunction,
   offFunction,
   initialState = false,
+  isOn,
+  setIsOn,
 }) {
-  const [isOn, setIsOn] = useState(initialState);
+  useEffect(() => {
+    setIsOn(initialState);
+  }, [initialState]);
 
   const handleSwitch = () => {
     setIsOn(!isOn);

@@ -1,12 +1,17 @@
+import { useState } from "react";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import TextModal from "@/components/utils/modal/TextModal";
 import { useStore } from "@/store";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 export default function Settings() {
   const { setWorker, isWorker } = useStore();
+  const [open, setOpen] = useState(false);
+  const [isOnWorker, setIsOnWorker] = useState(false);
+  const [isOnNotifications, setIsOnNotifications] = useState(false);
 
   const onFunction = () => {
     console.log("On");
@@ -17,12 +22,25 @@ export default function Settings() {
   };
 
   const workerModeOn = () => {
-    setWorker(true);
+    setOpen(true);
   };
 
   const workerModeOff = () => {
-    setWorker(false);
+    setOpen(false);
   };
+
+  const confirmChangeWorkerMode = async () => {
+    setWorker(true);
+    setOpen(false);
+    setIsOnWorker(true);
+  };
+
+  const cancelChangeWorkerMode = async () => {
+    setWorker(false);
+    setOpen(false);
+    setIsOnWorker(false);
+  };
+
   return (
     <div className="flex flex-col py-28 px-5 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
@@ -33,17 +51,30 @@ export default function Settings() {
           onFunction={workerModeOn}
           offFunction={workerModeOff}
           initialState={isWorker}
+          isOn={isOnWorker}
+          setIsOn={setIsOnWorker}
         />
         <OptionSwitch
           title="Activate Notifications"
           onFunction={onFunction}
           offFunction={offFunction}
+          isOn={isOnNotifications}
+          setIsOn={setIsOnNotifications}
         />
       </div>
       <div className="mt-40 flex flex-col">
         <OutlinedButton text="Save Changes" />
         <OutlinedButton text="Delete Account" secondary />
       </div>
+      <TextModal
+        title="Estas seguro que quieres habilitar el modo worker????"
+        text="Take a moment to add missing details, update your skills, and showcase your best work. Don't wait for opportunities to pass you by finish your worker profile today and unlock your full potential!"
+        buttonText="I Understand"
+        open={open}
+        setOpen={setOpen}
+        onAccept={confirmChangeWorkerMode}
+        onCancel={cancelChangeWorkerMode}
+      />
     </div>
   );
 }

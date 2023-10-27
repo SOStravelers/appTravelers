@@ -1,4 +1,9 @@
-import { AvatarIcon, NotificationIcon, LogoWhite } from "@/constants/icons";
+import {
+  AvatarIcon,
+  NotificationIcon,
+  NotificationOffIcon,
+  LogoWhite,
+} from "@/constants/icons";
 import { useEffect } from "react";
 
 import Link from "next/link";
@@ -29,7 +34,13 @@ function TopBar() {
       <div className="flex justify-center items-center">
         {loggedIn ? (
           <>
-            <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
+            <Link href="/notifications">
+              <NotificationOffIcon
+                color="#FFFFFF"
+                active={true}
+                className="mr-3 cursor-pointer"
+              />
+            </Link>
 
             {user.img && user.img.imgUrl ? (
               <Link

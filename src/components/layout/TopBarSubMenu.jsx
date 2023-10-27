@@ -17,6 +17,7 @@ function TopBarSubMenu() {
   const isPayment = actualURL.includes("payment");
   const isServiceHistoy = actualURL.includes("service-history");
   const isSettings = actualURL.includes("settings");
+  const isNotifications = actualURL.includes("notifications");
 
   useEffect(() => {
     handleUrl();
@@ -39,6 +40,8 @@ function TopBarSubMenu() {
       setTitulo("Service History");
     } else if (isSettings) {
       setTitulo("Settings");
+    } else if (isNotifications) {
+      setTitulo("Notifications");
     }
   };
 

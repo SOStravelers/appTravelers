@@ -117,7 +117,7 @@ function LoginForm() {
               );
             }}
           </Field>
-          <Link href="/register">
+          <Link href="/forgot-password">
             <p className="text-blackText mt-1 mb-2 text-right">
               Forgot password?
             </p>

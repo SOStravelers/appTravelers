@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useStore } from "@/store";
 
 function TopBar() {
-  const { loggedIn, user } = useStore();
+  const { loggedIn, user, isWorker } = useStore();
 
   const initials = () => {
     if (Object.keys(user).length === 0) return "";
@@ -34,6 +34,7 @@ function TopBar() {
       <div className="flex justify-center items-center">
         {loggedIn ? (
           <>
+            {isWorker && <h1 className="text-white mr-5 neon-green">Worker Mode</h1>}
             <Link href="/notifications">
               <NotificationOffIcon
                 color="#FFFFFF"

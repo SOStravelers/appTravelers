@@ -14,13 +14,18 @@ body {
 
 .rdp {
   --rdp-cell-size: 40px !important;
-  --rdp-accent-color: #00A0D5 !important;
+  --rdp-accent-color: #00a0d5 !important;
   --rdp-background-color: #e7edff !important;
   /* Switch to dark colors for dark themes */
-  --rdp-accent-color-dark: #00A0D5 !important;
+  --rdp-accent-color-dark: #00a0d5 !important;
   --rdp-background-color-dark: #0063d5 !important;
   /* Outline border for focused elements */
   --rdp-outline: 2px solid var(--rdp-accent-color) !important;
   /* Outline border for focused and selected elements */
   --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75) !important;
+}
+
+.neon-green {
+  color: #00a0d5;
+  text-shadow: 0 0 10px #00a0d5, 0 0 1px #00a0d5;
 }

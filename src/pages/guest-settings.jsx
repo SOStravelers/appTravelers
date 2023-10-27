@@ -1,4 +1,5 @@
-import { useRouter, useState } from "next/router";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";

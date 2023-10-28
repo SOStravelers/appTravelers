@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
+import { register } from "swiper/element/bundle";
+
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
@@ -9,13 +10,51 @@ import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
 
+register();
+
 export default function Home({}) {
   const [services, setServices] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const { setService } = useStore();
   useEffect(() => {
     getData();
+    setBookings([
+      {
+        id: 1,
+        direction: "124 street Miro Hotel, Ubud",
+        date: "4 Aug, 2023 | 04:30 PM",
+      },
+      {
+        id: 2,
+        direction: "124 street Miro Hotel, Ubud",
+        date: "4 Aug, 2023 | 04:30 PM",
+      },
+      {
+        id: 3,
+        direction: "124 street Miro Hotel, Ubud",
+        date: "4 Aug, 2023 | 04:30 PM",
+      },
+    ]);
     //setService(null);
   }, []);
+
+  useEffect(() => {
+    const swiperEl = document.querySelector("swiper-container");
+    const swiperParams = {
+      slidesPerView: 1,
+      pagination: true,
+      navigation: false,
+      spaceBetween: 10,
+      rewind: true,
+      injectStyles: [
+        ".swiper-pagination-bullet-active{ background-color: #5B78C7;}",
+        ".swiper-button-next{ color: #5B78C7;}",
+        ".swiper-button-prev{ color: #5B78C7;}",
+      ],
+    };
+    Object.assign(swiperEl, swiperParams);
+    if (bookings?.length > 0) swiperEl.initialize();
+  }, [bookings]);
 
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
@@ -25,7 +64,18 @@ export default function Home({}) {
 
   return (
     <main className="flex flex-col w-full bg-white py-28 px-5 md:pl-80">
-      <BookingCard />
+      <div className="w-full max-w-lg ">
+        <swiper-container init="false">
+          {bookings?.map((booking) => (
+            <swiper-slide key={booking?.id} className="flex justify-center">
+              <BookingCard
+                direction={booking?.direction}
+                date={booking?.date}
+              />
+            </swiper-slide>
+          ))}
+        </swiper-container>
+      </div>
 
       <section>
         <h1

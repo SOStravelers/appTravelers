@@ -1,14 +1,56 @@
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import WorkerCardFavorite from "@/components/utils/cards/WorkerCardFavorite";
 
 export default function Favorites() {
+  const [open, setOpen] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    const user = Cookies.get("auth.user");
+    if (user) {
+      setFavorites([
+        {
+          name: "John Doe",
+          service: "Barber",
+          score: 5,
+          link: "/1",
+        },
+        {
+          name: "John Doe",
+          service: "Barber",
+          score: 5,
+          link: "/1",
+        },
+        {
+          name: "John Doe",
+          service: "Barber",
+          score: 5,
+          link: "/1",
+        },
+      ]);
+    } else {
+      setOpen(true);
+    }
+  }, []);
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-28 px-5 md:pl-80">
-      <WorkerCardFavorite
-        name={"Juan Perez"}
-        service={"Barber"}
-        score={5}
-        link={"/worker/" + 1}
-      />
+      {favorites.length === 0 && (
+        <p className="text-center text-greyText max-w-lg my-10">
+          No favorites yet
+        </p>
+      )}
+      {favorites.map((favorite, index) => (
+        <WorkerCardFavorite
+          key={index}
+          name={favorite.name}
+          service={favorite.service}
+          score={favorite.score}
+          link={favorite.link}
+        />
+      ))}
+      <LoginFormModal open={open} setOpen={setOpen} title="Login to continue" />
     </div>
   );
 }

@@ -4,7 +4,6 @@ import UserService from "@/services/UserService";
 import { EditIcon, CheckIconBlack } from "@/constants/icons";
 
 function AboutEdit({ about }) {
-  console.log("perro", about);
   const [isEditing, setIsEditing] = useState(false);
   const [editedAbout, setEditedAbout] = useState(about); // Agregar un estado para el valor editado
   const { user, setUser } = useStore();

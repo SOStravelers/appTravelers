@@ -35,8 +35,6 @@ function LoginForm() {
 
       setUser(response.data.user);
       setLoggedIn(true);
-      console.log("gato");
-      console.log("perro", service);
       if (service && Object.keys(service).length > 0) {
         router.push(`/summary`);
       } else {

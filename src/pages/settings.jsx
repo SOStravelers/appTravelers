@@ -2,11 +2,13 @@ import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 export default function Settings() {
   const { setWorker, isWorker } = useStore();
+  const router = useRouter();
 
   const onFunction = () => {
     console.log("On");
@@ -59,14 +61,14 @@ export async function getServerSideProps({ req }) {
   if (!userId) return redirect;
 
   let user = null;
-  try {
-    const response = await UserService.get(userId);
-    user = response.data;
-    if (!user) return redirect;
-  } catch (error) {
-    console.error(error);
-    return redirect;
-  }
+  // try {
+  //   const response = await UserService.get(userId);
+  //   user = response.data;
+  //   if (!user) return redirect;
+  // } catch (error) {
+  //   console.error(error);
+  //   return redirect;
+  // }
 
   return {
     props: {

@@ -31,10 +31,7 @@ function Layout({ children }) {
       try {
         UserService.get(storageUser).then((response) => {
           console.log("response.data", response.data);
-          localStorage.setItem("auth.user_id", response.data._id);
-          localStorage.setItem("auth.user", response.data);
-          Cookies.set("auth.user_id", response.data._id);
-          Cookies.set("auth.user", response.data);
+    c
           setUser(response.data);
           setLoggedIn(true);
         });

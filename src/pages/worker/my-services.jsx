@@ -49,7 +49,7 @@ export default function MyServices() {
             />
           ))}
           <OutlinedButton
-            text="Edit services"
+            text="Edit/Add services"
             onClick={() => setAddingService(true)}
           />
         </>

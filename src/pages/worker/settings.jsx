@@ -4,11 +4,13 @@ import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import TextModal from "@/components/utils/modal/TextModal";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 export default function WorkerSettings() {
   const { setWorker, isWorker } = useStore();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
   const [isOnNotifications, setIsOnNotifications] = useState(false);
@@ -22,23 +24,44 @@ export default function WorkerSettings() {
   };
 
   const workerModeOn = () => {
+    console.log("dialogo worker");
+    setIsOnWorker(false);
     setOpen(true);
   };
 
   const workerModeOff = () => {
-    setOpen(false);
+    console.log("dialogo user");
+    setIsOnWorker(true);
+    setOpen(true);
   };
 
   const confirmChangeWorkerMode = async () => {
-    setWorker(true);
-    setOpen(false);
-    setIsOnWorker(true);
+    console.log("confirmachageWorkerMode");
+    if (isOnWorker) {
+      setWorker(false);
+      setOpen(false);
+      setIsOnWorker(false);
+      router.push("/");
+    } else {
+      setWorker(true);
+      setOpen(false);
+      setIsOnWorker(true);
+      router.push("/worker/home");
+    }
   };
 
   const cancelChangeWorkerMode = async () => {
-    setWorker(false);
-    setOpen(false);
-    setIsOnWorker(false);
+    if (!isOnWorker) {
+      setWorker(false);
+      setOpen(false);
+      setIsOnWorker(false);
+      router.push("/");
+    } else {
+      setWorker(true);
+      setOpen(false);
+      setIsOnWorker(true);
+      router.push("/worker/home");
+    }
   };
 
   return (
@@ -74,7 +97,7 @@ export default function WorkerSettings() {
         <OutlinedButton text="Delete Account" secondary />
       </div>
       <TextModal
-        title="Worker Mode"
+        title={`Activates ${isOnWorker === false ? "Worker" : "User"} Mode`}
         text="Are you sure you want to activate worker mode?"
         buttonText="Accept"
         open={open}

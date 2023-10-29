@@ -14,7 +14,7 @@ function TopBar() {
   const { loggedIn, user, isWorker } = useStore();
 
   const initials = () => {
-    if (Object.keys(user).length === 0) return "";
+    if (user && Object.keys(user).length === 0) return "";
     const { first, last } = user?.personalData?.name;
     const str = `${first.charAt(0)}${last ? last.charAt(0) : ""}`.toUpperCase();
     return str;
@@ -34,7 +34,9 @@ function TopBar() {
       <div className="flex justify-center items-center">
         {loggedIn ? (
           <>
-            {isWorker && <h1 className="text-white mr-5 neon-green">Worker Mode</h1>}
+            {isWorker && (
+              <h1 className="text-white mr-5 neon-green">Worker Mode</h1>
+            )}
             <Link href="/notifications">
               <NotificationOffIcon
                 color="#FFFFFF"

@@ -4,11 +4,13 @@ import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import TextModal from "@/components/utils/modal/TextModal";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 export default function Settings() {
   const { setWorker, isWorker } = useStore();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
   const [isOnNotifications, setIsOnNotifications] = useState(false);
@@ -22,23 +24,44 @@ export default function Settings() {
   };
 
   const workerModeOn = () => {
+    console.log("dialogo worker");
+    setIsOnWorker(false);
     setOpen(true);
   };
 
   const workerModeOff = () => {
-    setOpen(false);
+    console.log("dialogo user");
+    setIsOnWorker(true);
+    setOpen(true);
   };
 
   const confirmChangeWorkerMode = async () => {
-    setWorker(true);
-    setOpen(false);
-    setIsOnWorker(true);
+    console.log("confirmachageWorkerMode");
+    if (isOnWorker) {
+      setWorker(false);
+      setOpen(false);
+      setIsOnWorker(false);
+      router.push("/");
+    } else {
+      setWorker(true);
+      setOpen(false);
+      setIsOnWorker(true);
+      router.push("/worker/home");
+    }
   };
 
   const cancelChangeWorkerMode = async () => {
-    setWorker(false);
-    setOpen(false);
-    setIsOnWorker(false);
+    if (!isOnWorker) {
+      setWorker(false);
+      setOpen(false);
+      setIsOnWorker(false);
+      router.push("/");
+    } else {
+      setWorker(true);
+      setOpen(false);
+      setIsOnWorker(true);
+      router.push("/worker/home");
+    }
   };
 
   return (
@@ -67,9 +90,9 @@ export default function Settings() {
         <OutlinedButton text="Delete Account" secondary />
       </div>
       <TextModal
-        title="Estas seguro que quieres habilitar el modo worker????"
-        text="Take a moment to add missing details, update your skills, and showcase your best work. Don't wait for opportunities to pass you by finish your worker profile today and unlock your full potential!"
-        buttonText="I Understand"
+        title={`Activates ${isOnWorker === false ? "Worker" : "User"} Mode`}
+        text="Are you sure you want to activate worker mode?"
+        buttonText="Accept"
         open={open}
         setOpen={setOpen}
         onAccept={confirmChangeWorkerMode}
@@ -90,14 +113,14 @@ export async function getServerSideProps({ req }) {
   if (!userId) return redirect;
 
   let user = null;
-  try {
-    const response = await UserService.get(userId);
-    user = response.data;
-    if (!user) return redirect;
-  } catch (error) {
-    console.error(error);
-    return redirect;
-  }
+  // try {
+  //   const response = await UserService.get(userId);
+  //   user = response.data;
+  //   if (!user) return redirect;
+  // } catch (error) {
+  //   console.error(error);
+  //   return redirect;
+  // }
 
   return {
     props: {

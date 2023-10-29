@@ -6,7 +6,7 @@ import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 function DaySection({ weekDays, selectedDay, setSelectedDay }) {
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
-    const user = Cookies.get("auth.user");
+    const user = Cookies.get("auth.user_id");
     if (user) {
       setBookings([
         {
@@ -44,11 +44,9 @@ function DaySection({ weekDays, selectedDay, setSelectedDay }) {
       <h1 className="text-center max-w-lg text-xl my-3">My next Commitments</h1>
 
       <div className="flex flex-col">
-        {bookings.length === 0 && (
-          <p className="text-center text-greyText max-w-lg my-10">
-            No bookings yet
-          </p>
-        )}
+        <p className="text-center text-greyText max-w-lg my-10">
+          No bookings yet
+        </p>
         {bookings.map((booking, index) => (
           <WorkerCardBooking
             key={index}

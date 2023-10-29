@@ -21,6 +21,7 @@ for (let i = 1; i <= 6; i++) {
 
 export default function WorkerBooking() {
   const [actualView, setActualView] = useState(SECTION_ONE);
+  const user = Cookies.get("auth.user_id");
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
   return (
     <div className="py-28 px-5 md:pl-80">
@@ -50,6 +51,14 @@ export default function WorkerBooking() {
       ) : actualView === SECTION_FOUR ? (
         <MonthSection />
       ) : null}
+
+      {!user && (
+        <LoginFormModal
+          open={open}
+          setOpen={setOpen}
+          title="Login to continue"
+        />
+      )}
     </div>
   );
 }

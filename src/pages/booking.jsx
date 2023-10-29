@@ -9,6 +9,8 @@ import { SECTION_ONE } from "@/constants";
 
 const weekDays = [];
 const today = dayjs();
+const user = Cookies.get("auth.user_id");
+
 weekDays.push({ day: today.format("ddd"), number: today.format("D") });
 for (let i = 1; i <= 6; i++) {
   const day = today.add(i, "day");
@@ -21,7 +23,6 @@ export default function Booking() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const user = Cookies.get("auth.user");
     if (!user) {
       setOpen(true);
     }
@@ -44,7 +45,13 @@ export default function Booking() {
       ) : (
         <MonthSection />
       )}
-      <LoginFormModal open={open} setOpen={setOpen} title="Login to continue" />
+      {!user && (
+        <LoginFormModal
+          open={open}
+          setOpen={setOpen}
+          title="Login to continue"
+        />
+      )}
     </div>
   );
 }

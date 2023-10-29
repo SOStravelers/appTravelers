@@ -6,9 +6,9 @@ import WorkerCardFavorite from "@/components/utils/cards/WorkerCardFavorite";
 export default function Favorites() {
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const user = Cookies.get("auth.user_id");
 
   useEffect(() => {
-    const user = Cookies.get("auth.user");
     if (user) {
       setFavorites([
         {
@@ -36,11 +36,9 @@ export default function Favorites() {
   }, []);
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-28 px-5 md:pl-80">
-      {favorites.length === 0 && (
-        <p className="text-center text-greyText max-w-lg my-10">
-          No favorites yet
-        </p>
-      )}
+      <p className="text-center text-greyText max-w-lg my-10">
+        No favorites yet
+      </p>
       {favorites.map((favorite, index) => (
         <WorkerCardFavorite
           key={index}
@@ -50,7 +48,13 @@ export default function Favorites() {
           link={favorite.link}
         />
       ))}
-      <LoginFormModal open={open} setOpen={setOpen} title="Login to continue" />
+      {!user && (
+        <LoginFormModal
+          open={open}
+          setOpen={setOpen}
+          title="Login to continue"
+        />
+      )}
     </div>
   );
 }

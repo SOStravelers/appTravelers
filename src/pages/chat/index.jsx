@@ -6,9 +6,9 @@ import WorkerCardChat from "@/components/utils/cards/WorkerCardChat";
 export default function Chat() {
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
+  const user = Cookies.get("auth.user_id");
 
   useEffect(() => {
-    const user = Cookies.get("auth.user");
     if (user) {
       setChats([
         {
@@ -36,9 +36,7 @@ export default function Chat() {
   }, []);
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-28 px-5 md:pl-80">
-      {chats.length === 0 && (
-        <p className="text-center text-greyText max-w-lg my-10">No chats yet</p>
-      )}
+      <p className="text-center text-greyText max-w-lg my-10">No chats yet</p>
       {chats.map((chat, index) => (
         <WorkerCardChat
           key={index}
@@ -48,7 +46,13 @@ export default function Chat() {
           link={chat.link}
         />
       ))}
-      <LoginFormModal open={open} setOpen={setOpen} title="Login to continue" />
+      {!user && (
+        <LoginFormModal
+          open={open}
+          setOpen={setOpen}
+          title="Login to continue"
+        />
+      )}
     </div>
   );
 }

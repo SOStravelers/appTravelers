@@ -5,7 +5,7 @@ import {
   ArrowUpIcon,
 } from "@/constants/icons";
 
-const ComboBox = ({
+const ComboBoxEditable = ({
   service,
   selectedOptions,
   setSelectedOptions,
@@ -35,9 +35,11 @@ const ComboBox = ({
             >
               <h1>{subservice?.name}</h1>
               {selectedOptions.includes(subservice?.id) ? (
-                <CheckOptionChecked />
+                <CheckOptionChecked
+                  onClick={() => handleChange(subservice?.id)}
+                />
               ) : (
-                <CheckOption />
+                <CheckOption onClick={() => handleChange(subservice?.id)} />
               )}
             </div>
           ))}
@@ -46,4 +48,4 @@ const ComboBox = ({
   );
 };
 
-export default ComboBox;
+export default ComboBoxEditable;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import TextModal from "@/components/utils/modal/TextModal";
 import ComboBox from "@/components/utils/combobox/ComboBox";
+import ComboBoxEditable from "@/components/utils/combobox/ComboBoxEditable";
 import { SERVICES_OPTIONS } from "@/constants";
 
 export default function MyServices() {
@@ -56,7 +57,7 @@ export default function MyServices() {
       {addingService && (
         <>
           {SERVICES_OPTIONS?.map((service) => (
-            <ComboBox
+            <ComboBoxEditable
               key={service?.id}
               service={service}
               selectedOptions={selectedOptions}

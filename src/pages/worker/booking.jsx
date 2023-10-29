@@ -4,6 +4,7 @@ import MultiSwitchButtons from "@/components/utils/buttons/MultiSwitchButtons";
 import DaySection from "@/components/bookingWorker/DaySection";
 import ListSection from "@/components/bookingWorker/ListSection";
 import MonthSection from "@/components/bookingWorker/MonthSection";
+import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import {
   SECTION_ONE,
   SECTION_TWO,

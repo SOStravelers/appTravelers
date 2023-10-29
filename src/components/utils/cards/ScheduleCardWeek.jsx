@@ -6,6 +6,7 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
   const [isOpen, setIsOpen] = useState(false);
   const [startTime, setStartTime] = useState("08:00");
   const [endTime, setEndTime] = useState("10:00");
+  const [isOn, setIsOn] = useState(false);
 
   const openCard = () => setIsOpen(true);
   const closeCard = () => setIsOpen(false);
@@ -26,7 +27,12 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
     <div className="border-blueBorder border-2 py-1 px-4 rounded-2xl flex flex-col items-center my-3">
       <div className="flex w-full justify-between items-center">
         <p>{day.name}</p>
-        <OptionSwitch onFunction={openCard} offFunction={closeCard} />
+        <OptionSwitch
+          onFunction={openCard}
+          offFunction={closeCard}
+          isOn={isOn}
+          setIsOn={setIsOn}
+        />
       </div>
       {isOpen &&
         horario?.intervals?.map((interval, index) => (

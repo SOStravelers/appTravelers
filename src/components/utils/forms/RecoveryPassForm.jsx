@@ -2,14 +2,10 @@ import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import { LockIcon } from "@/constants/icons";
 
-function ChangePassForm() {
+function RecoveryPassForm() {
   return (
     <form className="w-full flex flex-col max-w-lg">
-      <OutlinedInput
-        placeholder="Current Password"
-        type="password"
-        icon={LockIcon}
-      />
+     
       <OutlinedInput
         placeholder="New Password"
         type="password"
@@ -25,4 +21,4 @@ function ChangePassForm() {
   );
 }
 
-export default ChangePassForm;
+export default RecoveryPassForm;

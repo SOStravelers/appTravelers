@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import OptionCard from "@/components/utils/cards/OptionCard";
@@ -7,6 +8,7 @@ import { WorldIcon, MailIcon } from "@/constants/icons";
 
 export default function GuestSettings() {
   const router = useRouter();
+  const [isOnUbication, setIsOnUbication] = useState(false);
 
   const onFunction = () => {
     console.log("On");
@@ -25,6 +27,8 @@ export default function GuestSettings() {
           title="Activate Ubication"
           onFunction={onFunction}
           offFunction={offFunction}
+          isOn={isOnUbication}
+          setIsOn={setIsOnUbication}
         />
       </div>
       <div className="flex items-center justify-center my-5 max-w-lg">

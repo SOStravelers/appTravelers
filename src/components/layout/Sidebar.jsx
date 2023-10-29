@@ -53,17 +53,22 @@ function Sidebar() {
           <p className={clsx("text-xl ml-3 text-white")}>Chat</p>
         </button>
       </Link>
-      <Link className="my-2" href={isWorker ? "/worker/favorites" : "/favorites"}>
-        <button
-          className={clsx(
-            "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/favorites" && "bg-lightBlue"
-          )}
+      {!isWorker && (
+        <Link
+          className="my-2"
+          href={isWorker ? "/worker/favorites" : "/favorites"}
         >
-          <FavoriteIcon color="white" />
-          <p className={clsx("text-xl ml-3 text-white")}>Favorites</p>
-        </button>
-      </Link>
+          <button
+            className={clsx(
+              "flex items-center pl-5 h-10 w-48 rounded-xl",
+              router.pathname === "/favorites" && "bg-lightBlue"
+            )}
+          >
+            <FavoriteIcon color="white" />
+            <p className={clsx("text-xl ml-3 text-white")}>Favorites</p>
+          </button>
+        </Link>
+      )}
 
       <Link className="my-2" href={isWorker ? "/worker/profile" : "/profile"}>
         <button

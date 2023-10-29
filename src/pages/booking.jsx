@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import DaySection from "@/components/booking/DaySection";
 import MonthSection from "@/components/booking/MonthSection";
+import LoginFormModal from "@/components/utils/modal/LoginFormModal";
+import Cookies from "js-cookie";
 import { SECTION_ONE } from "@/constants";
 
 const weekDays = [];
@@ -16,6 +18,14 @@ for (let i = 1; i <= 6; i++) {
 export default function Booking() {
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const user = Cookies.get("auth.user");
+    if (!user) {
+      setOpen(true);
+    }
+  }, []);
 
   return (
     <div className="w-full min-h-screen py-28 px-5 md:pl-80 bg-white text-black">
@@ -34,6 +44,7 @@ export default function Booking() {
       ) : (
         <MonthSection />
       )}
+      <LoginFormModal open={open} setOpen={setOpen} title="Login to continue" />
     </div>
   );
 }

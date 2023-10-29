@@ -1,28 +1,18 @@
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import SolidButton from "@/components/utils/buttons/SolidButton";
-import { LockIcon } from "@/constants/icons";
+import { MailIcon } from "@/constants/icons";
 
-function ChangePassForm() {
+function ForgotPassForm() {
   return (
     <form className="w-full flex flex-col max-w-lg">
       <OutlinedInput
-        placeholder="Current Password"
-        type="password"
-        icon={LockIcon}
-      />
-      <OutlinedInput
-        placeholder="New Password"
-        type="password"
-        icon={LockIcon}
-      />
-      <OutlinedInput
         placeholder="Confirm Password"
         type="password"
-        icon={LockIcon}
+        icon={MailIcon}
       />
       <SolidButton text="Change Password" mt={5} />
     </form>
   );
 }
 
-export default ChangePassForm;
+export default ForgotPassForm;

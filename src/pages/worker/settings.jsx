@@ -1,13 +1,19 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import TextModal from "@/components/utils/modal/TextModal";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 export default function WorkerSettings() {
   const { setWorker, isWorker } = useStore();
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isOnWorker, setIsOnWorker] = useState(false);
+  const [isOnNotifications, setIsOnNotifications] = useState(false);
 
   const onFunction = () => {
     console.log("On");
@@ -18,13 +24,46 @@ export default function WorkerSettings() {
   };
 
   const workerModeOn = () => {
-    setWorker(true);
-    
+    console.log("dialogo worker");
+    setIsOnWorker(false);
+    setOpen(true);
   };
 
   const workerModeOff = () => {
-    setWorker(false);
+    console.log("dialogo user");
+    setIsOnWorker(true);
+    setOpen(true);
   };
+
+  const confirmChangeWorkerMode = async () => {
+    console.log("confirmachageWorkerMode");
+    if (isOnWorker) {
+      setWorker(false);
+      setOpen(false);
+      setIsOnWorker(false);
+      router.push("/");
+    } else {
+      setWorker(true);
+      setOpen(false);
+      setIsOnWorker(true);
+      router.push("/worker/home");
+    }
+  };
+
+  const cancelChangeWorkerMode = async () => {
+    if (!isOnWorker) {
+      setWorker(false);
+      setOpen(false);
+      setIsOnWorker(false);
+      router.push("/");
+    } else {
+      setWorker(true);
+      setOpen(false);
+      setIsOnWorker(true);
+      router.push("/worker/home");
+    }
+  };
+
   return (
     <div className="flex flex-col py-28 px-5 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
@@ -35,22 +74,37 @@ export default function WorkerSettings() {
           onFunction={workerModeOn}
           offFunction={workerModeOff}
           initialState={isWorker}
+          isOn={isOnWorker}
+          setIsOn={setIsOnWorker}
         />
         <OptionSwitch
           title="Activate Notifications"
           onFunction={onFunction}
           offFunction={offFunction}
+          isOn={isOnNotifications}
+          setIsOn={setIsOnNotifications}
         />
         <OptionSwitch
           title="Inactive Mode"
           onFunction={onFunction}
           offFunction={offFunction}
+          isOn={isOnNotifications}
+          setIsOn={setIsOnNotifications}
         />
       </div>
       <div className="mt-40 flex flex-col">
         <OutlinedButton text="Save Changes" />
         <OutlinedButton text="Delete Account" secondary />
       </div>
+      <TextModal
+        title={`Activates ${isOnWorker === false ? "Worker" : "User"} Mode`}
+        text="Are you sure you want to activate worker mode?"
+        buttonText="Accept"
+        open={open}
+        setOpen={setOpen}
+        onAccept={confirmChangeWorkerMode}
+        onCancel={cancelChangeWorkerMode}
+      />
     </div>
   );
 }

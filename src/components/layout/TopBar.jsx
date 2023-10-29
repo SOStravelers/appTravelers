@@ -1,4 +1,9 @@
-import { AvatarIcon, NotificationIcon, LogoWhite } from "@/constants/icons";
+import {
+  AvatarIcon,
+  NotificationIcon,
+  NotificationOffIcon,
+  LogoWhite,
+} from "@/constants/icons";
 import { useEffect } from "react";
 
 import Link from "next/link";
@@ -6,10 +11,10 @@ import Link from "next/link";
 import { useStore } from "@/store";
 
 function TopBar() {
-  const { loggedIn, user } = useStore();
+  const { loggedIn, user, isWorker } = useStore();
 
   const initials = () => {
-    if (Object.keys(user).length === 0) return "";
+    if (user && Object.keys(user).length === 0) return "";
     const { first, last } = user?.personalData?.name;
     const str = `${first.charAt(0)}${last ? last.charAt(0) : ""}`.toUpperCase();
     return str;
@@ -29,7 +34,16 @@ function TopBar() {
       <div className="flex justify-center items-center">
         {loggedIn ? (
           <>
-            <NotificationIcon color="#FFFFFF" active={true} className="mr-3" />
+            {isWorker && (
+              <h1 className="text-white mr-5 neon-green">Worker Mode</h1>
+            )}
+            <Link href="/notifications">
+              <NotificationOffIcon
+                color="#FFFFFF"
+                active={true}
+                className="mr-3 cursor-pointer"
+              />
+            </Link>
 
             {user.img && user.img.imgUrl ? (
               <Link

@@ -1,13 +1,13 @@
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import FavButton from "../buttons/FavButton";
 import { StarIcon, FavIconBorder } from "@/constants/icons";
 
-function WorkerCardFavorite({ link, name, service, score, showArrow = true }) {
+function WorkerCardFavorite({ link, name, service, score }) {
+  const [isFav, setIsFav] = useState(false);
   return (
-    <div
-      className="flex py-4 w-full max-w-lg rounded-lg justify-around my-2 items-center"
-      style={{ boxShadow: "2px 2px 24px 0px rgba(0, 0, 0, 0.15)" }}
-    >
+    <div className="flex py-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-around my-2 items-center">
       <Link href={link}>
         <div className="flex">
           <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
@@ -28,15 +28,9 @@ function WorkerCardFavorite({ link, name, service, score, showArrow = true }) {
           </div>
         </div>
       </Link>
-      {showArrow ? (
-        <Link href={"/summary"}>
-          <div className="w-10 h-10 flex items-center justify-center">
-            <FavIconBorder color={"#5B78C7"} className="ml-1" />
-          </div>
-        </Link>
-      ) : (
-        <div className="w-10"></div>
-      )}
+      <div className="w-10 h-10 flex items-center justify-center">
+        <FavButton fav={isFav} setFav={setIsFav} />
+      </div>
     </div>
   );
 }

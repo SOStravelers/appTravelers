@@ -19,6 +19,7 @@ function Layout({ children }) {
   const router = useRouter();
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
   useEffect(() => {
+    console.log("layout");
     if (!user || Object.keys(user).length == 0) {
       obtenerInformacionUsuario();
     }
@@ -26,12 +27,12 @@ function Layout({ children }) {
 
   async function obtenerInformacionUsuario() {
     let storageUser = localStorage.getItem("auth.user_id");
-    if (storageUser && Object.keys(storageUser).length > 0) {
+    if (storageUser) {
       console.log("loguando");
       try {
         UserService.get(storageUser).then((response) => {
           console.log("response.data", response.data);
-    c
+
           setUser(response.data);
           setLoggedIn(true);
         });

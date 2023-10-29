@@ -7,8 +7,8 @@ export default function ChangePassword() {
         Forgot you password?
       </h1>
       <p className="text-center mb-5 max-w-lg">
-        Enter your email address below and we'll send you a link to reset your
-        password.
+        Enter your email address below and we&apos;ll send you a link to reset
+        your password.
       </p>
       <ForgotPassForm />
     </div>

@@ -18,6 +18,7 @@ function TopBarSubMenu() {
   const isServiceHistoy = actualURL.includes("service-history");
   const isSettings = actualURL.includes("settings");
   const isNotifications = actualURL.includes("notifications");
+  const isWorkerServices = actualURL.includes("my-services");
 
   useEffect(() => {
     handleUrl();
@@ -42,6 +43,8 @@ function TopBarSubMenu() {
       setTitulo("Settings");
     } else if (isNotifications) {
       setTitulo("Notifications");
+    } else if (isWorkerServices) {
+      setTitulo("My Services");
     }
   };
 

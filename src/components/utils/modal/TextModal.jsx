@@ -8,8 +8,8 @@ const TextModal = ({
   buttonText,
   open,
   setOpen,
-  onAccept,
-  onCancel,
+  onAccept = false,
+  onCancel = false,
 }) => {
   return (
     <>
@@ -27,8 +27,8 @@ const TextModal = ({
                 <h1 className="text-2xl text-center mb-5">{title}</h1>
                 <p className="text-center">{text}</p>
               </div>
-              <SolidButton text={buttonText} onClick={onAccept} />
-              <OutlinedButton text="Cancel" onClick={onCancel} secondary />
+              {onAccept && <SolidButton text={buttonText} onClick={onAccept} />}
+              {onCancel && <OutlinedButton text="Cancel" onClick={onCancel} />}
             </div>
           </div>
         </div>

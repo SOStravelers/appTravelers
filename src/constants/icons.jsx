@@ -239,7 +239,7 @@ export const StarIcon = ({ color = "#FFA011", ...props }) => (
   </svg>
 );
 
-export const ArrowRightIcon = ({ color, ...props }) => (
+export const ArrowRightIcon = ({ color = "white", ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="23"
@@ -250,8 +250,25 @@ export const ArrowRightIcon = ({ color, ...props }) => (
   >
     <path
       d="M8.72393 17.0493L14.2739 11.4993L8.72393 5.94932"
-      stroke="white"
+      stroke={color}
       strokeWidth="2"
+    />
+  </svg>
+);
+
+export const ArrowUpIcon = ({ color = "white", ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="23"
+    height="23"
+    viewBox="0 0 23 23"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M17.0493 14.2756L11.4993 8.72559L5.94932 14.2756"
+      stroke={color}
+      stroke-width="2"
     />
   </svg>
 );
@@ -741,6 +758,42 @@ export const ServicesIcon = ({ ...props }) => (
       stroke="#00A0D5"
       strokeLinecap="round"
       strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const CheckOption = ({ ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="35"
+    height="35"
+    viewBox="0 0 35 35"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M17.5001 29.4001C10.9201 29.4001 5.6001 24.0801 5.6001 17.5001C5.6001 10.9201 10.9201 5.6001 17.5001 5.6001C24.0801 5.6001 29.4001 10.9201 29.4001 17.5001C29.4001 24.0801 24.0801 29.4001 17.5001 29.4001ZM17.5001 7.0001C11.6901 7.0001 7.0001 11.6901 7.0001 17.5001C7.0001 23.3101 11.6901 28.0001 17.5001 28.0001C23.3101 28.0001 28.0001 23.3101 28.0001 17.5001C28.0001 11.6901 23.3101 7.0001 17.5001 7.0001Z"
+      fill="#00A0D5"
+    />
+  </svg>
+);
+
+export const CheckOptionChecked = ({ ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="35"
+    height="35"
+    viewBox="0 0 35 35"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M17.5001 29.4001C10.9201 29.4001 5.6001 24.0801 5.6001 17.5001C5.6001 10.9201 10.9201 5.6001 17.5001 5.6001C24.0801 5.6001 29.4001 10.9201 29.4001 17.5001C29.4001 24.0801 24.0801 29.4001 17.5001 29.4001ZM17.5001 7.0001C11.6901 7.0001 7.0001 11.6901 7.0001 17.5001C7.0001 23.3101 11.6901 28.0001 17.5001 28.0001C23.3101 28.0001 28.0001 23.3101 28.0001 17.5001C28.0001 11.6901 23.3101 7.0001 17.5001 7.0001Z"
+      fill="#00A0D5"
+    />
+    <path
+      d="M16.0998 22.6801L10.0098 16.5901L10.9898 15.6101L16.0998 20.7201L24.0098 12.8101L24.9898 13.7901L16.0998 22.6801Z"
+      fill="#00A0D5"
     />
   </svg>
 );

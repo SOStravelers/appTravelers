@@ -12,6 +12,7 @@ module.exports = {
       blueBorder: "#00A0D5",
       dotBlue: "#1CDAE5",
       blueButton: "#ECF8FC",
+      blackButton: "#001C25",
       transparentBlue: "rgba(91, 120, 199, 0.21)",
       blackText: "#2e2e2e",
       white: "#FFFFFF",

@@ -5,9 +5,9 @@ import SolidButton from "../buttons/SolidButton";
 function WorkerProfileCardChat({ name, service, score }) {
   return (
     <div className="flex py-4 w-full rounded-lg my-2 items-center">
-      <div className="w-36 h-36 p-1 border border-black rounded-2xl mr-2">
+      <div className="w-36 h-36 rounded-2xl mr-2">
         <div className="bg-lightBlue w-full h-full rounded-2xl relative">
-        <Image
+          <Image
             src={"/assets/proovedor.png"}
             fill
             alt="otro alt"
@@ -29,7 +29,7 @@ function WorkerProfileCardChat({ name, service, score }) {
           <ClockIcon color={"#5B78C7"} className="mr-1" />
           <p className="text-blackText text-sm">8 Aug, 2023 | 04:30 PM</p>
         </div>
-        <SolidButton color="grey" text={"Service Resume"} py={2} />
+        <SolidButton color="black" text={"Service Resume"} py={2} />
       </div>
     </div>
   );

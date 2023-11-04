@@ -3,12 +3,12 @@ import { useStore } from "../store/index";
 
 export default class UserService {
   static resource = "users";
-  static resourceAuth = "usersAuth";
+  static resourceAuth = "auth";
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${UserService.resource}`;
   }
-  static get baseUrlAuth() {
+  static get authUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${UserService.resourceAuth}`;
   }
@@ -20,7 +20,7 @@ export default class UserService {
     };
   }
   static async register(name, email, password) {
-    return axios.post(`${this.baseUrl}/register`, {
+    return axios.post(`${this.authUrl}/register`, {
       name: name,
       email: email,
       password: password,
@@ -28,10 +28,9 @@ export default class UserService {
       refreshTime: "30min",
     });
   }
-
   static async login(email, password) {
     console.log("login email");
-    return axios.post(`${this.baseUrl}/loginEmail`, {
+    return axios.post(`${this.authUrl}/loginEmail`, {
       email: email,
       password: password,
       accessTime: "15min",
@@ -40,22 +39,20 @@ export default class UserService {
   }
   static async loginGoogle(name, email, image) {
     console.log("la imagen", image);
-    return axios.post(`${this.baseUrl}/loginGoogle`, {
+    return axios.post(`${this.authUrl}/loginGoogle`, {
       name: name,
       email: email,
       image: image,
     });
   }
-
   static async get(id) {
     console.log("isd", id);
-    return axios.get(`${this.baseUrl}/${id}`);
+    return axios.get(`${this.authUrl}/${id}`);
   }
-
   static async updateUser(user) {
     console.log("el userr", user);
     return axios.put(
-      `${this.baseUrlAuth}/${user._id}`,
+      `${this.baseUrl}/${user._id}`,
       {
         user,
       },
@@ -64,26 +61,20 @@ export default class UserService {
       }
     );
   }
-
   static async changeProfileImg(file) {
     console.log("fotito", this.getHeaders());
     const formData = new FormData();
     formData.append("file", file);
-    return axios.post(`${this.baseUrlAuth}/profile/photo`, formData, {
+    return axios.post(`${this.baseUrl}/profile/photo`, formData, {
       headers: this.getHeaders(),
     });
   }
-
   static async updateGalley(file, number) {
     console.log("fotitos", this.getHeaders());
     const formData = new FormData();
     formData.append("file", file);
-    return axios.post(
-      `${this.baseUrlAuth}/profile/gallery/${number}`,
-      formData,
-      {
-        headers: this.getHeaders(),
-      }
-    );
+    return axios.post(`${this.baseUrl}/profile/gallery/${number}`, formData, {
+      headers: this.getHeaders(),
+    });
   }
 }

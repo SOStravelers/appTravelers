@@ -17,7 +17,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col items-center relative">
+    <div className="flex flex-col items-center relative border-2 border-grey rounded-xl">
       <div class="chat">
         {messages.map((message, index) => (
           <div
@@ -29,7 +29,7 @@ const Chat = () => {
         ))}
       </div>
       <div
-        className="flex items-center fixed w-screen px-5 bg-white bottom-16 pt-3"
+        className="flex items-center fixed w-full md:w-[80vw] px-5 bottom-[3.6rem] py-2 bg-white"
         style={{
           boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
         }}

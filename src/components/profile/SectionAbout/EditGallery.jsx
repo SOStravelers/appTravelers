@@ -1,5 +1,5 @@
 import React from "react";
-
+import UserService from "@/services/UserService";
 import { useState } from "react";
 
 function EditGallery({ images }) {
@@ -19,9 +19,28 @@ function EditGallery({ images }) {
 
   const handleImageChange = (event) => {
     const files = event.target.files;
+    const reader = new FileReader();
     const images = [];
     for (let i = 0; i < files.length && i < 6; i++) {
-      images.push(URL.createObjectURL(files[i]));
+      //images.push(URL.createObjectURL(files[i]));
+      reader.readAsDataURL(files[i]);
+      reader.onloadend = async () => {
+        console.log(reader.result);
+        try {
+          const response = await UserService.updateGalley(
+            reader.result,
+            i.toString()
+          );
+          if (response.data.img) {
+            //user.img = response.data.img;
+            //setUser(user);
+          }
+
+          console.log("foto guardada", response.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
     }
     setSelectedImages(images);
   };

@@ -15,19 +15,19 @@ export default function Chat() {
           name: "John Doe",
           service: "Barber",
           score: 5,
-          link: "/1",
+          link: "/chat/1",
         },
         {
           name: "John Doe",
           service: "Barber",
           score: 5,
-          link: "/1",
+          link: "/chat/1",
         },
         {
           name: "John Doe",
           service: "Barber",
           score: 5,
-          link: "/1",
+          link: "/chat/1",
         },
       ]);
     } else {

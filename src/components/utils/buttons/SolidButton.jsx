@@ -13,6 +13,8 @@ function SolidButton({ text, color = "lightBlue", py = 3, mt = 0, ...props }) {
           ? "bg-red"
           : color === "verde"
           ? "bg-green"
+          : color === "black"
+          ? "bg-black"
           : "bg-lightBlue"
       )}
       {...props}

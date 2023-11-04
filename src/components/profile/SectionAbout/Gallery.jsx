@@ -14,6 +14,21 @@ function Gallery({ images }) {
     setShowModal(false);
     setSelectedImage(null);
   };
+
+  const handlePrevImage = () => {
+    const index = images.indexOf(selectedImage);
+    if (index > 0) {
+      setSelectedImage(images[index - 1]);
+    }
+  };
+
+  const handleNextImage = () => {
+    const index = images.indexOf(selectedImage);
+    if (index < images.length - 1) {
+      setSelectedImage(images[index + 1]);
+    }
+  };
+
   return (
     <div className="my-5">
       <h1
@@ -49,6 +64,19 @@ function Gallery({ images }) {
               onClick={handleCloseModal}
             >
               &times;
+            </button>
+            <button
+              className="absolute top-40 left-0 m-4 text-white text-2xl"
+              onClick={() => handlePrevImage()}
+            >
+              prev
+            </button>
+
+            <button
+              className="absolute top-40 right-0 m-4 text-white text-2xl"
+              onClick={() => handleNextImage()}
+            >
+              next
             </button>
             <img
               src={selectedImage}

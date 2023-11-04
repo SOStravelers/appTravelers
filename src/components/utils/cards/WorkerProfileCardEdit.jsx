@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@/store";
 import Image from "next/image";
 import { StarIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
+import ServiceService from "@/services/ServiceService";
 
 function WorkerProfileCard({ name, service, score, avatar, lastName }) {
   const [isInputHidden, setIsInputHidden] = useState(true);
   const [newAvatar, setNewAvatar] = useState(null);
   const { user, setUser } = useStore();
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    console.log(services);
+  }, [services]);
 
   const handleImageClick = () => {
     setIsInputHidden(false);
@@ -37,6 +47,21 @@ function WorkerProfileCard({ name, service, score, avatar, lastName }) {
     };
   };
 
+  const getData = async () => {
+    ServiceService.list({ isActive: true, page: 1 }).then((response) => {
+      setServices(response.data.docs);
+    });
+  };
+
+  const renameServices = (servicesIds) => {
+    const servicesArray = servicesIds.split(", ");
+    const servicesNames = servicesArray.map((id) => {
+      const service = services.find((s) => s._id === id);
+      return service?.name;
+    });
+    return servicesNames.join(", ");
+  };
+
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">
       <div className="w-36 h-32 rounded-2xl mr-2 relative">
@@ -52,7 +77,7 @@ function WorkerProfileCard({ name, service, score, avatar, lastName }) {
           </button>
         )}
         <div
-          className="bg-lightBlue w-full h-full rounded-2xl relative cursor-pointer"
+          className="bg-lightBlue w-28 h-28 rounded-2xl relative cursor-pointer"
           onClick={handleImageClick}
         >
           <Image
@@ -71,13 +96,13 @@ function WorkerProfileCard({ name, service, score, avatar, lastName }) {
           />
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col -mt-4">
         <h1 className="font-semibold">
           {name} {lastName}
         </h1>
         <p className="text-blackText my-2">
           {service?.length > 0
-            ? service?.map((s) => s.name).join(", ")
+            ? renameServices(service?.map((s) => s.id).join(", "))
             : "No services yet"}
         </p>
         <div className="flex items-center">

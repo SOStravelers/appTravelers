@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
-import {
-  CheckOption,
-  CheckOptionChecked,
-  ArrowUpIcon,
-} from "@/constants/icons";
+import SubserviceService from "@/services/SubserviceService";
+import { CheckOptionChecked, ArrowUpIcon } from "@/constants/icons";
 
-const ComboBox = ({
-  service,
-  selectedOptions,
-  setSelectedOptions,
-  handleChange,
-}) => {
+const ComboBox = ({ service, title }) => {
   const [open, setOpen] = useState(false);
+  const [subservices, setSubservices] = useState([]);
+
+  useEffect(() => {
+    getSubSservices();
+  }, [service]);
+
+  const getSubSservices = async () => {
+    const id = service?.id;
+    SubserviceService.list({ id: id }).then((response) => {
+      setSubservices(response.data.docs);
+    });
+  };
 
   return (
     <div className="w-full max-w-lg">
@@ -20,7 +24,7 @@ const ComboBox = ({
           className="text-black border border-greyText rounded-lg px-2 py-2 my-5 flex justify-between items-center cursor-pointer"
           onClick={() => setOpen(!open)}
         >
-          <h1>{service?.servicio}</h1>
+          <h1>{title}</h1>
           <ArrowUpIcon
             color={"#5B78C7"}
             onClick={() => setOpen(!open)}
@@ -28,17 +32,13 @@ const ComboBox = ({
           />
         </div>
         {open &&
-          service?.subservicios.map((subservice) => (
+          subservices?.map((subservice) => (
             <div
               key={subservice?.id}
               className="text-black flex justify-between px-5"
             >
               <h1>{subservice?.name}</h1>
-              {selectedOptions.includes(subservice?.id) ? (
-                <CheckOptionChecked />
-              ) : (
-                <CheckOption />
-              )}
+              <CheckOptionChecked />
             </div>
           ))}
       </>

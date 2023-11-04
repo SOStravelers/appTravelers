@@ -268,7 +268,7 @@ export const ArrowUpIcon = ({ color = "white", ...props }) => (
     <path
       d="M17.0493 14.2756L11.4993 8.72559L5.94932 14.2756"
       stroke={color}
-      stroke-width="2"
+      strokeWidth="2"
     />
   </svg>
 );

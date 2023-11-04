@@ -21,7 +21,7 @@ function TopBar() {
   };
 
   return (
-    <div className="w-screen z-20 flex items-center justify-between bg-darkBlue h-24 px-5 fixed top-0">
+    <div className="w-screen z-20 flex items-center justify-between  h-24 px-5 fixed top-0">
       <div className="flex items-center">
         <Link href="/" className="mr-2">
           <LogoWhite color={"white"} />

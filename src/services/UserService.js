@@ -73,4 +73,17 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
+
+  static async updateGalley(file, number) {
+    console.log("fotitos", this.getHeaders());
+    const formData = new FormData();
+    formData.append("file", file);
+    return axios.post(
+      `${this.baseUrlAuth}/profile/gallery/${number}`,
+      formData,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
 }

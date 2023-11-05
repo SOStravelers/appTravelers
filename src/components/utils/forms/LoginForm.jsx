@@ -22,6 +22,7 @@ function LoginForm() {
     try {
       console.log("--login--");
       const response = await UserService.login(values.email, values.password);
+      console.log("wena");
       console.log(response);
       localStorage.setItem("auth.access_token", response.data.access_token);
       localStorage.setItem("auth.refresh_token", response.data.refresh_token);
@@ -41,11 +42,12 @@ function LoginForm() {
         router.push("/");
       }
     } catch (error) {
+      console.log("wena", error);
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.message;
       else if (error?.response?.status === 400)
-        message = error?.response?.data?.result;
+        message = error?.response?.data?.message;
       else if (error?.response?.status === 401)
         message = error?.response?.data?.message;
       toast.error(message);

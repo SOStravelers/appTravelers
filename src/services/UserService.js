@@ -47,7 +47,7 @@ export default class UserService {
   }
   static async get(id) {
     console.log("isd", id);
-    return axios.get(`${this.authUrl}/${id}`);
+    return axios.get(`${this.authUrl}/user/${id}`);
   }
   static async updateUser(user) {
     console.log("el userr", user);

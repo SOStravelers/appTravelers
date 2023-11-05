@@ -6,16 +6,16 @@ export default class HostelService {
   static resourceAuth = "auth";
   static get baseUrl() {
     const { api } = useStore.getState().urls;
-    return `${api}${UserService.resource}`;
+    return `${api}${HostelService.resource}`;
   }
   static get authUrl() {
     const { api } = useStore.getState().urls;
-    return `${api}${UserService.resourceAuth}`;
+    return `${api}${HostelService.resourceAuth}`;
   }
 
   static async list() {
     let query = "isActive=true&page=1&type=business";
-    return axios.get(`${this.authUrl}/all?${query}`);
+    return axios.get(`${this.baseUrl}/all?${query}`);
   }
   static async get(id) {
     return axios.get(`${this.baseUrl}/${id}`);

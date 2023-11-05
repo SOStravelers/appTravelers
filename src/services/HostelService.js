@@ -18,6 +18,6 @@ export default class HostelService {
     return axios.get(`${this.authUrl}/all?${query}`);
   }
   static async get(id) {
-    return axios.get(`${this.authUrl}/${id}`);
+    return axios.get(`${this.authUrl}/user/${id}`);
   }
 }

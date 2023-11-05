@@ -31,7 +31,7 @@ export default function WorkerHome({ user }) {
         date: "4 Aug, 2023 | 04:30 PM",
       },
     ]);
-    //setService(null);
+    setService(null);
   }, []);
   useEffect(() => {
     const swiperEl = document.querySelector("swiper-container");

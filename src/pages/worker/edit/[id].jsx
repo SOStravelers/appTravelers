@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 import WorkerProfileCardEdit from "@/components/utils/cards/WorkerProfileCardEdit";
 import SectionAboutEdit from "@/components/profile/SectionAbout/SectionAboutEdit";
 import UserService from "@/services/UserService";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useStore } from "@/store";
 
 export default function WorkerEdit() {

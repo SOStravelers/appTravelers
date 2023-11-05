@@ -40,7 +40,6 @@ function TopBar() {
             <Link href="/notifications">
               <NotificationOffIcon
                 color="#FFFFFF"
-                active={true}
                 className="mr-3 cursor-pointer"
               />
             </Link>

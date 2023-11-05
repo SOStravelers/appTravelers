@@ -1,29 +1,60 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import UserService from "@/services/UserService";
-import { useState } from "react";
+import { useStore } from "@/store";
 
 function EditGallery({ images }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
+  const { user, setUser } = useStore();
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
-    setShowModal(true);
-  };
+  useEffect(() => {
+    if (user?.img?.gallery?.length > 0) {
+      console.log("gallery", user.img.gallery);
+      setSelectedImages(user.img.gallery);
+    }
+  }, [user]);
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedImage(null);
+  useEffect(() => {
+    if (images?.length > 0) {
+      setSelectedImages(images);
+    }
+  }, [images]);
+
+  const handlechangeImage = (index) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = async (event) => {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        console.log(reader.result);
+        try {
+          const response = await UserService.updateGalley(
+            reader.result,
+            index.toString()
+          );
+          if (response.data.img) {
+            const images = [...selectedImages];
+            images.splice(index, 1, response.data.img);
+            setSelectedImages(images);
+          }
+
+          console.log("foto guardada", response.data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
   };
 
   const handleImageChange = (event) => {
     const files = event.target.files;
-    const reader = new FileReader();
-    const images = [];
     for (let i = 0; i < files.length && i < 6; i++) {
-      //images.push(URL.createObjectURL(files[i]));
-      reader.readAsDataURL(files[i]);
+      const reader = new FileReader();
       reader.onloadend = async () => {
         console.log(reader.result);
         try {
@@ -32,8 +63,8 @@ function EditGallery({ images }) {
             i.toString()
           );
           if (response.data.img) {
-            //user.img = response.data.img;
-            //setUser(user);
+            user.img.gallery.splice(i, 1, response.data.img);
+            setUser(user);
           }
 
           console.log("foto guardada", response.data);
@@ -41,8 +72,8 @@ function EditGallery({ images }) {
           console.log(err);
         }
       };
+      reader.readAsDataURL(files[i]);
     }
-    setSelectedImages(images);
   };
 
   return (
@@ -54,71 +85,41 @@ function EditGallery({ images }) {
         Gallery
       </h1>
       <div className="grid grid-cols-2 gap-1">
-        {images?.length > 0 ? (
-          images?.map((image, index) => (
-            <img
+        <label
+          htmlFor="image-upload"
+          className="w-full flex justify-center items-center h-28 rounded-xl bg-grey text-white text-3xl cursor-pointer"
+        >
+          +
+        </label>
+        <input
+          id="image-upload"
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleImageChange}
+          className="hidden"
+        />
+        {selectedImages.length > 0 &&
+          selectedImages.map((image, index) => (
+            <div
               key={index}
-              src={image}
-              alt={image.alt || "fotoo"}
-              className="w-full h-28 rounded-xl bg-transparentBlue cursor-pointer"
-              onClick={() => handleImageClick(image)}
-            />
-          ))
-        ) : (
-          <>
-            <label
-              htmlFor="image-upload"
-              className="w-full flex justify-center items-center h-28 rounded-xl bg-grey text-white text-3xl cursor-pointer"
+              className="w-full h-28 rounded-xl bg-cover bg-center relative cursor-pointer"
+              style={{ backgroundImage: `url(${image})` }}
+              onClick={() => handlechangeImage(index)}
             >
-              +
-            </label>
-            <input
-              id="image-upload"
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImageChange}
-              className="hidden"
-            />
-            {selectedImages.length > 0 &&
-              selectedImages.map((image, index) => (
-                <div
-                  key={index}
-                  className="w-full h-28 rounded-xl bg-cover bg-center relative"
-                  style={{ backgroundImage: `url(${image})` }}
-                >
-                  <button
-                    className="absolute top-0 right-0 h-8 w-8 flex justify-center items-center m-1 rounded-full bg-white text-black text-2xl"
-                    onClick={() => {
-                      const images = [...selectedImages];
-                      images.splice(index, 1);
-                      setSelectedImages(images);
-                    }}
-                  >
-                    &times;
-                  </button>
-                </div>
-              ))}
-          </>
-        )}
+              <button
+                className="absolute top-0 right-0 h-8 w-8 flex justify-center items-center m-1 rounded-full bg-white text-black text-2xl"
+                onClick={() => {
+                  const images = [...selectedImages];
+                  images.splice(index, 1);
+                  setSelectedImages(images);
+                }}
+              >
+                &times;
+              </button>
+            </div>
+          ))}
       </div>
-      {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="relative">
-            <button
-              className="absolute top-0 right-0 m-4 text-white text-2xl"
-              onClick={handleCloseModal}
-            >
-              &times;
-            </button>
-            <img
-              src={selectedImage}
-              alt={selectedImage.alt}
-              className="max-w-full max-h-full"
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

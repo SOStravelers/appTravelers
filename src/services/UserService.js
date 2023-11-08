@@ -38,7 +38,6 @@ export default class UserService {
     });
   }
   static async loginGoogle(name, email, image) {
-    console.log("la imagen", image);
     return axios.post(`${this.authUrl}/loginGoogle`, {
       name: name,
       email: email,

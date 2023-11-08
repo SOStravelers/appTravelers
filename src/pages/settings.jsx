@@ -86,7 +86,7 @@ export default function Settings() {
         />
       </div>
       <div className="mt-40 flex flex-col">
-        <OutlinedButton text="Save Changes" />
+        {/* <OutlinedButton text="Save Changes" /> */}
         <OutlinedButton text="Delete Account" secondary />
       </div>
       <TextModal

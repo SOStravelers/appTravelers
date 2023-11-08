@@ -17,14 +17,13 @@ export default function Login() {
   }, []);
 
   async function obtenerInformacionUsuario() {
-    console.log("obtener Informacion");
     let storageUser = localStorage.getItem("auth.user");
     if (storageUser && Object.keys(storageUser).length > 0) {
       setUser(storageUser);
       setLoggedIn(true);
     }
     try {
-      console.log("intentando");
+      console.log("google search");
       const result = await fetch("/api/getUserInfo");
       if (result.ok) {
         localStorage.setItem("auth.google", true);

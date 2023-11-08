@@ -13,7 +13,6 @@ import { useEffect } from "react";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-  console.log("app");
   const renderNavbar = () => {
     if (
       router.pathname !== "/login" &&

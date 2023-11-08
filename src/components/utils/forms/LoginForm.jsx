@@ -17,23 +17,19 @@ import Cookies from "js-cookie";
 function LoginForm() {
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
-  console.log("login form");
   const login = async (values) => {
     try {
-      console.log("--login--");
+      console.log("--login email--");
       const response = await UserService.login(values.email, values.password);
-      console.log("wena");
-      console.log(response);
       localStorage.setItem("auth.access_token", response.data.access_token);
       localStorage.setItem("auth.refresh_token", response.data.refresh_token);
       localStorage.setItem("auth.user_id", response.data.user._id);
-      localStorage.setItem("auth.user", response.data.user);
+      localStorage.setItem("auth.user", JSON.stringify(response.data.user));
 
       Cookies.set("auth.access_token", response.data.access_token);
       Cookies.set("auth.refresh_token", response.data.refresh_token);
       Cookies.set("auth.user_id", response.data.user._id);
-      Cookies.set("auth.user", response.data.user);
-
+      Cookies.set("auth.user", JSON.stringify(response.data.user));
       setUser(response.data.user);
       setLoggedIn(true);
       if (service && Object.keys(service).length > 0) {
@@ -42,7 +38,6 @@ function LoginForm() {
         router.push("/");
       }
     } catch (error) {
-      console.log("wena", error);
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.message;

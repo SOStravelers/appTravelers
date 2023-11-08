@@ -19,49 +19,45 @@ export default function Login() {
   async function obtenerInformacionUsuario() {
     console.log("obtener Informacion");
     let storageUser = localStorage.getItem("auth.user");
-    console.log("el auth", storageUser);
     if (storageUser && Object.keys(storageUser).length > 0) {
       setUser(storageUser);
       setLoggedIn(true);
-    } else {
-      try {
-        console.log("intentando");
-        const result = await fetch("/api/getUserInfo");
-        console.log(result); // Reemplaza esto con la URL correcta de tu API
-        if (result.ok) {
-          const userInfo = await result.json();
-          const response = await UserService.loginGoogle(
-            userInfo.name,
-            userInfo.email,
-            userInfo.image
+    }
+    try {
+      console.log("intentando");
+      const result = await fetch("/api/getUserInfo");
+      if (result.ok) {
+        localStorage.setItem("auth.google", true);
+        const userInfo = await result.json();
+        const response = await UserService.loginGoogle(
+          userInfo.name,
+          userInfo.email,
+          userInfo.image
+        );
+        if (response) {
+          localStorage.setItem("auth.access_token", response.data.access_token);
+          localStorage.setItem(
+            "auth.refresh_token",
+            response.data.refresh_token
           );
-          if (response) {
-            localStorage.setItem(
-              "auth.access_token",
-              response.data.access_token
-            );
-            localStorage.setItem(
-              "auth.refresh_token",
-              response.data.refresh_token
-            );
-            localStorage.setItem("auth.user_id", response.data.user._id);
-            localStorage.setItem("auth.user", response.data.user.toString());
-            Cookies.set("auth.access_token", response.data.access_token);
-            Cookies.set("auth.refresh_token", response.data.refresh_token);
-            Cookies.set("auth.user_id", response.data.user._id);
-            setUser(response.data.user);
-            setLoggedIn(true);
-            if (service && Object.keys(service).length > 0)
-              router.push(`/summary`);
-            else router.push("/");
-          }
-        } else {
-          setLoggedIn(false);
-          //console.error('Error al obtener la información del usuario:', response.statusText);
+          localStorage.setItem("auth.user_id", response.data.user._id);
+          localStorage.setItem("auth.user", JSON.stringify(response.data.user));
+          Cookies.set("auth.access_token", response.data.access_token);
+
+          Cookies.set("auth.refresh_token", response.data.refresh_token);
+          Cookies.set("auth.user_id", response.data.user._id);
+          setUser(response.data.user);
+          setLoggedIn(true);
+          if (service && Object.keys(service).length > 0)
+            router.push(`/summary`);
+          else router.push("/");
         }
-      } catch (error) {
-        console.error("Error al obtener la información del usuario:", error);
+      } else {
+        setLoggedIn(false);
+        //console.error('Error al obtener la información del usuario:', response.statusText);
       }
+    } catch (error) {
+      //console.error("Error al obtener la información del usuario:", error);
     }
   }
 

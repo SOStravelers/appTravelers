@@ -15,9 +15,7 @@ export const useStore = create((set) => {
     let final = null;
     let env = process.env.NODE_ENV;
     if (typeof window != "undefined") {
-      console.log("buenaa");
       let storage = localStorage.getItem("apiUrl");
-      console.log(storage);
       storage
         ? (final = SetLocalStorage(storage))
         : (final = SetLocalStorage(env));

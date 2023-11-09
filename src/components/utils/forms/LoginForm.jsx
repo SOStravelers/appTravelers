@@ -21,6 +21,10 @@ function LoginForm() {
     try {
       console.log("--login email--");
       const response = await UserService.login(values.email, values.password);
+      if (response.data.user.type && response.data.user.type != "personal") {
+        localStorage.setItem("type", response.data.user.type);
+      }
+      delete response.data.user.type;
       localStorage.setItem("auth.access_token", response.data.access_token);
       localStorage.setItem("auth.refresh_token", response.data.refresh_token);
       localStorage.setItem("auth.user_id", response.data.user._id);

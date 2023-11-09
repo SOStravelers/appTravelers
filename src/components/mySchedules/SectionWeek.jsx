@@ -2,11 +2,29 @@ import { useState, useEffect } from "react";
 import ScheduleCardWeek from "@/components/utils/cards/ScheduleCardWeek";
 import dayjs from "dayjs";
 import { WEEK_DAYS } from "@/constants";
+import ScheduleService from "@/services/ScheduleService";
 import { toast } from "react-toastify";
 
 function SectionWeek() {
   const [horario, setHorario] = useState([]);
   const [save, setSave] = useState(false);
+
+  const getData = async () => {
+    try {
+      console.log("el getData");
+      const response = await ScheduleService.getScheduleUser();
+      console.log("la data", response.data);
+      setHorario(response.data.schedules);
+    } catch (err) {
+      toast.error("Hubo un error inicial", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   useEffect(() => {
     console.log("Estado de horario actualizado:", horario);
@@ -47,15 +65,6 @@ function SectionWeek() {
       setHorario(newHorario);
     }
   };
-  const saveArray = () => {
-    console.log("guardando en db...");
-    console.log(horario);
-    toast.info("Horario guardado", {
-      position: toast.POSITION.BOTTOM_CENTER,
-      autoClose: 1200,
-    });
-  };
-
   const deleteInterval = (dayId, index) => {
     console.log("deleteInterval");
     const dayIndex = horario.findIndex((day) => day.day === dayId);
@@ -68,6 +77,22 @@ function SectionWeek() {
       newHorario[dayIndex].intervals.splice(index + 1, 1);
     }
     setHorario(newHorario);
+  };
+  const saveArray = async () => {
+    console.log("guardando en db...");
+    try {
+      let schedules = { schedules: horario };
+      const response = await ScheduleService.save(schedules);
+      toast.info("Horario guardado", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1200,
+      });
+    } catch (err) {
+      toast.error("Hubo un error", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    }
   };
 
   return (

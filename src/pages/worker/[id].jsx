@@ -8,6 +8,7 @@ import UserService from "@/services/UserService";
 
 export default function Worker({ user }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
+  console.log("wena");
   return (
     <div className="py-28 px-5 md:pl-80">
       <WorkerProfileCard

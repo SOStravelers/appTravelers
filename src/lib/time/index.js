@@ -16,7 +16,6 @@ export const addTime = (horaInicial, horasASumar) => {
 
   return horaFormateada;
 };
-
 export const esMenorQueLas22 = (hora) => {
   // Parsea la hora en "hh:mm" a horas y minutos
   const partesHora = hora.split(":");
@@ -48,7 +47,6 @@ export const compararHoras = (hora1, hora2) => {
     return 0; // hora1 es igual a hora2
   }
 };
-
 export const horaEnRango = (hora) => {
   // Parsea la hora en formato "HH:mm"
   const parts = hora.split(":");

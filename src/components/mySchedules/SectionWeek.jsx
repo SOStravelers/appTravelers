@@ -6,16 +6,24 @@ import { toast } from "react-toastify";
 
 function SectionWeek() {
   const [horario, setHorario] = useState([]);
+  const [save, setSave] = useState(false);
 
-  const addIntervalandVerify = (dayID, interval) => {
+  useEffect(() => {
+    console.log("Estado de horario actualizado:", horario);
+    console.log(save);
+    if (save) {
+      saveArray();
+      setSave(false);
+    }
+  }, [horario]);
+
+  const addIntervalandVerify = async (dayID, interval, save = false) => {
     console.log("addIntervalVerify", dayID, interval);
-    console.log(horario);
+    setSave(save);
     const dayExists = horario.some((day) => day.day === dayID);
     if (dayExists) {
-      console.log("dayExists", dayExists);
       const newHorario = horario.map((day) => {
         if (day.day === dayID) {
-          console.log("wena", day.intervals);
           const intervalCollides = day.intervals.some(
             (i) =>
               i.startTime <= interval.startTime &&
@@ -23,7 +31,6 @@ function SectionWeek() {
               interval.startTime <= interval.startTime
           );
           if (intervalCollides || day.intervals.length == 0) {
-            console.log("bien");
             day.intervals.push(interval);
           } else {
             console.log("interval collides");
@@ -32,22 +39,27 @@ function SectionWeek() {
         return day;
       });
       setHorario(newHorario);
-      console.log(newHorario);
     } else {
-      console.log("day no exisst");
-      console.log({ day: dayID, intervals: [interval] });
-      setHorario([...horario, { day: dayID, intervals: [interval] }]);
+      console.log("dia nuevo");
+      // Crear una copia de horario y agregar un nuevo objeto
+      let newHorario = [...horario];
+      newHorario.push({ day: dayID, intervals: [interval] });
+      setHorario(newHorario);
     }
+  };
+  const saveArray = () => {
+    console.log("guardando en db...");
+    console.log(horario);
+    toast.info("Horario guardado", {
+      position: toast.POSITION.BOTTOM_CENTER,
+      autoClose: 1200,
+    });
   };
 
   const deleteInterval = (dayId, index) => {
     console.log("deleteInterval");
     const dayIndex = horario.findIndex((day) => day.day === dayId);
-
     const newHorario = [...horario];
-    console.log("wena0", newHorario);
-    console.log("wena1", newHorario[dayIndex].intervals[index]);
-    console.log("wena2", newHorario[dayIndex].intervals[index + 1]);
     if (index + 1 == newHorario[dayIndex].intervals.length) {
       newHorario[dayIndex].intervals.splice(index, 1);
     } else {
@@ -67,7 +79,7 @@ function SectionWeek() {
           index={index}
           addInterval={addIntervalandVerify}
           deleteInterval={deleteInterval}
-          horario={horario.filter((d) => d.day === day.id)[0]}
+          horario={horario?.filter((d) => d.day === day.id)[0]}
         />
       ))}
     </section>

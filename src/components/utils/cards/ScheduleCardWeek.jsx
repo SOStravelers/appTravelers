@@ -68,12 +68,8 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
     let fail = await validador();
     console.log("fail", fail);
     if (!fail) {
+      await addInterval(day.id, { startTime, endTime }, true);
       setIsSaved(true);
-      toast.info("Horario guardado", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1200,
-      });
-      await addInterval(day.id, { startTime, endTime });
     }
   };
   const edit = async () => {
@@ -88,8 +84,8 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
     deleteInterval(day.id, index);
     if (index == horario?.intervals.length) {
       setStartTime(start);
+      // setEndTime(end);
     }
-    // setEndTime(end);
   };
 
   return (

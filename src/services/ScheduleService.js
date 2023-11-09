@@ -27,12 +27,4 @@ export default class ScheduleService {
       headers: this.getHeaders(),
     });
   }
-
-  static getHeaders() {
-    return {
-      Authorization: localStorage.getItem("auth.access_token")
-        ? localStorage.getItem("auth.access_token")
-        : {},
-    };
-  }
 }

@@ -7,6 +7,7 @@ import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
+import WorkerService from "@/services/WorkerService";
 
 export default function Settings() {
   const { setWorker, isWorker } = useStore();
@@ -43,10 +44,16 @@ export default function Settings() {
       setIsOnWorker(false);
       router.push("/");
     } else {
-      setWorker(true);
-      setOpen(false);
-      setIsOnWorker(true);
-      router.push("/worker/home");
+      try {
+        let workerData = await WorkerService.setWorker();
+        console.log("el worker", workerData);
+        setWorker(true);
+        setOpen(false);
+        setIsOnWorker(true);
+        router.push("/worker/home");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -90,7 +97,7 @@ export default function Settings() {
         <OutlinedButton text="Delete Account" secondary />
       </div>
       <TextModal
-        title={`Activates ${isOnWorker === false ? "Worker" : "User"} Mode`}
+        title={`Activate ${isOnWorker === false ? "Worker" : "User"} Mode`}
         text="Are you sure you want to activate worker mode?"
         buttonText="Accept"
         open={open}

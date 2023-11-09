@@ -9,7 +9,7 @@ import { ClockIcon, ChangeIcon } from "@/constants/icons";
 
 import { useStore } from "@/store";
 import HostelService from "@/services/HostelService";
-import WorkerService from "@/services/WokerService";
+import WorkerService from "@/services/WorkerService";
 
 export default function Summary() {
   const { loggedIn, service } = useStore();

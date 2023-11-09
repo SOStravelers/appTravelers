@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import WorkerCard from "@/components/utils/cards/WorkerCard";
-import WorkerService from "@/services/WokerService";
+import WorkerService from "@/services/WorkerService";
 
 import { useStore } from "@/store";
 

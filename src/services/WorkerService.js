@@ -12,6 +12,13 @@ export default class WorkerService {
     const { api } = useStore.getState().urls;
     return `${api}${WorkerService.resourceAuth}`;
   }
+  static getHeaders() {
+    return {
+      Authorization: localStorage.getItem("auth.access_token")
+        ? localStorage.getItem("auth.access_token")
+        : {},
+    };
+  }
 
   static async list() {
     let query = "isActive=true&page=1&type=worker";
@@ -20,5 +27,11 @@ export default class WorkerService {
 
   static async get(id) {
     return axios.get(`${this.authUrl}/user/${id}`);
+  }
+
+  static async setWorker() {
+    return axios.get(`${this.baseUrl}/setworker`, {
+      headers: this.getHeaders(),
+    });
   }
 }

@@ -97,7 +97,7 @@ export default function WorkerSettings() {
         <OutlinedButton text="Delete Account" secondary />
       </div>
       <TextModal
-        title={`Activates ${isOnWorker === false ? "Worker" : "User"} Mode`}
+        title={`Activate ${isOnWorker === false ? "Worker" : "User"} Mode`}
         text="Are you sure you want to activate worker mode?"
         buttonText="Accept"
         open={open}

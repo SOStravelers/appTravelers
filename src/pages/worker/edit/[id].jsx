@@ -8,8 +8,19 @@ import { useStore } from "@/store";
 export default function WorkerEdit() {
   const router = useRouter();
   const { user, setUser } = useStore();
-  useEffect(() => {}, []);
-  console.log("userabout", user.about);
+  const id = router.query.id;
+  const getData = async () => {
+    try {
+      const response = await UserService.get(id);
+      console.log(response.data);
+      if (response) {
+        setUser(response.data);
+      }
+    } catch (err) {}
+  };
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="py-28 px-5 md:pl-80">

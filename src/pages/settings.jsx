@@ -47,6 +47,7 @@ export default function Settings() {
       try {
         let workerData = await WorkerService.setWorker();
         console.log("el worker", workerData);
+        localStorage.setItem("type", "worker");
         setWorker(true);
         setOpen(false);
         setIsOnWorker(true);

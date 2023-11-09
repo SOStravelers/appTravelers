@@ -38,6 +38,7 @@ export default function WorkerSettings() {
   const confirmChangeWorkerMode = async () => {
     console.log("confirmachageWorkerMode");
     if (isOnWorker) {
+      localStorage.removeItem("type");
       setWorker(false);
       setOpen(false);
       setIsOnWorker(false);

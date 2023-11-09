@@ -18,6 +18,7 @@ const poppins = Poppins({
 
 function Layout({ children }) {
   const router = useRouter();
+  const { setWorker, isWorker } = useStore();
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
   useEffect(() => {
     console.log("layout");
@@ -30,6 +31,10 @@ function Layout({ children }) {
     try {
       let user = JSON.parse(localStorage.getItem("auth.user"));
       let idUser = localStorage.getItem("auth.user_id");
+      let type = localStorage.getItem("type");
+      if (type && type == "worker") {
+        setWorker(true);
+      }
       if (user) {
         console.log("sesion activa");
         setUser(user);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import OptionSwitch from "../switch/OptionSwitch";
 import { CloseIcon } from "@/constants/icons";
+import { ToastContainer, toast } from "react-toastify";
 
 function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,16 +15,33 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
   const closeCard = () => setIsOpen(false);
 
   const handleAddBreak = async () => {
-    await addInterval(day.id, { startTime, endTime });
-    console.log("new");
-    let newTime = addTime(endTime, 2);
-    setStartTime(endTime);
-    setEndTime(newTime);
+    let hora1 = horaEnRango(startTime);
+    let hora2 = horaEnRango(endTime);
+    let comparar = compararHoras(startTime, endTime);
+    if (!hora1 || !hora2) {
+      toast.warn("las horas deben estar entre 8 AM y 10 PM");
+    } else if (comparar == 1) {
+      toast.warn("hora final debe ser mayor a inicial");
+    } else {
+      await addInterval(day.id, { startTime, endTime });
+      let newTime = addTime(endTime, 2);
+      setStartTime(endTime);
+      setEndTime(newTime);
+    }
   };
   const saveChanges = async () => {
-    setIsSaved(true);
+    let hora1 = horaEnRango(startTime);
+    let hora2 = horaEnRango(endTime);
+    let comparar = compararHoras(startTime, endTime);
+    if (!hora1 || !hora2) {
+      toast.warn("las horas deben estar entre 8 AM y 10 PM");
+    } else if (comparar == 1) {
+      toast.warn("hora final debe ser mayor a inicial");
+    } else {
+      setIsSaved(true);
 
-    await addInterval(day.id, { startTime, endTime });
+      await addInterval(day.id, { startTime, endTime });
+    }
   };
   const edit = async () => {
     setIsSaved(false);
@@ -78,6 +96,49 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
     // Compara la hora proporcionada con la hora límite
     return horaProporcionada < horaLimite;
   }
+  function compararHoras(hora1, hora2) {
+    // Parsea las horas en "hh:mm" a objetos Date
+    const dateHora1 = new Date(
+      0,
+      0,
+      0,
+      hora1.split(":")[0],
+      hora1.split(":")[1]
+    );
+    const dateHora2 = new Date(
+      0,
+      0,
+      0,
+      hora2.split(":")[0],
+      hora2.split(":")[1]
+    );
+
+    // Compara las dos horas
+    if (dateHora1 < dateHora2) {
+      return -1; // hora1 es menor que hora2
+    } else if (dateHora1 > dateHora2) {
+      return 1; // hora1 es mayor que hora2
+    } else {
+      return 0; // hora1 es igual a hora2
+    }
+  }
+
+  function horaEnRango(hora) {
+    // Parsea la hora en formato "HH:mm"
+    const parts = hora.split(":");
+    const hour = parseInt(parts[0], 10);
+    const minute = parseInt(parts[1], 10);
+
+    // Verifica si la hora está en el rango de 08:00 a 22:00
+    if (hour >= 8 && hour <= 22) {
+      return true;
+    } else if (hour === 22 && minute === 0) {
+      // Considera 22:00 como dentro del rango
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <div className="border-blueBorder border-2 py-1 px-4 rounded-2xl flex flex-col items-center my-3">
@@ -129,6 +190,8 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
               </label>
               <input
                 type="time"
+                min="08:00"
+                max="22:00"
                 id="startTime"
                 name="startTime"
                 value={startTime}
@@ -142,6 +205,9 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
               </label>
               <input
                 type="time"
+                min="08:00"
+                max="22:00"
+                required
                 id="endTime"
                 name="endTime"
                 value={endTime}

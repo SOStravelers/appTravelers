@@ -2,38 +2,11 @@ import { useState, useEffect } from "react";
 import ScheduleCardWeek from "@/components/utils/cards/ScheduleCardWeek";
 import dayjs from "dayjs";
 import { WEEK_DAYS } from "@/constants";
+import { toast } from "react-toastify";
 
 function SectionWeek() {
   const [horario, setHorario] = useState([]);
 
-  function convertToValidTimeFormat(value) {
-    return dayjs(value).format("HH:mm");
-  }
-
-  const addInterval = (dayID, interval) => {
-    console.log("addInterval");
-    const dayExists = horario.some((day) => day.day === dayID);
-    if (dayExists) {
-      const newHorario = horario.map((day) => {
-        if (day.day === dayID) {
-          const intervalExists = day.intervals.some(
-            (i) =>
-              i.startTime === interval.startTime &&
-              i.endTime === interval.endTime
-          );
-          if (!intervalExists) {
-            day.intervals.push(interval);
-          } else {
-            console.log("interval repeated");
-          }
-        }
-        return day;
-      });
-      setHorario(newHorario);
-    } else {
-      setHorario([...horario, { day: dayID, intervals: [interval] }]);
-    }
-  };
   const addIntervalandVerify = (dayID, interval) => {
     console.log("addIntervalVerify", dayID, interval);
     console.log(horario);

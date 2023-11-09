@@ -20,21 +20,44 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
   };
   const closeCard = () => setIsOpen(false);
 
-  const handleAddBreak = async () => {
+  const validador = async () => {
+    console.log("validador");
+    var fail = false;
     let hora1 = horaEnRango(startTime);
     let hora2 = horaEnRango(endTime);
-    let comparar = compararHoras(startTime, endTime);
-    if (!hora1 || !hora2) {
+    let difHoras = compararHoras(startTime, endTime);
+    let index = horario?.intervals.length;
+    let compararAnterior = -1;
+    if (index > 0) {
+      var anterior = horario?.intervals[index - 1].endTime;
+      compararAnterior = compararHoras(anterior, startTime);
+    }
+    if (compararAnterior == 1) {
+      fail = true;
+      toast.warn("Las inicial debe ser mayor que la anterior", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1800,
+      });
+    } else if (!hora1 || !hora2) {
+      fail = true;
       toast.warn("Las horas deben estar entre 8 AM y 10 PM", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1800,
       });
-    } else if (comparar == 1) {
+    } else if (difHoras == 1) {
+      fail = true;
       toast.warn("Hora final debe ser mayor a inicial", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1800,
       });
-    } else {
+    }
+    return fail;
+  };
+
+  const handleAddBreak = async () => {
+    let fail = await validador();
+    console.log("fail", fail);
+    if (!fail) {
       await addInterval(day.id, { startTime, endTime });
       let newTime = addTime(endTime, 2);
       setStartTime(endTime);
@@ -42,20 +65,9 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
     }
   };
   const saveChanges = async () => {
-    let hora1 = horaEnRango(startTime);
-    let hora2 = horaEnRango(endTime);
-    let comparar = compararHoras(startTime, endTime);
-    if (!hora1 || !hora2) {
-      toast.warn("Las horas deben estar entre 8 AM y 10 PM", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1800,
-      });
-    } else if (comparar == 1) {
-      toast.warn("Hora final debe ser mayor a inicial", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1800,
-      });
-    } else {
+    let fail = await validador();
+    console.log("fail", fail);
+    if (!fail) {
       setIsSaved(true);
       toast.info("Horario guardado", {
         position: toast.POSITION.BOTTOM_CENTER,

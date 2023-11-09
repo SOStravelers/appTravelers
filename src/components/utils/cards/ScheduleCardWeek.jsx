@@ -128,7 +128,7 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
                 className="bg-blueBorder text-sm text-white rounded-full w-40 my-3"
                 onClick={() => handleDeleteBreak(index)}
               >
-                Delete Break
+                Merge Block
               </button>
             )}
           </div>
@@ -174,14 +174,14 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
                 className="bg-blueBorder text-sm text-white rounded-full w-40 my-3 mx-2"
                 onClick={() => handleAddBreak()}
               >
-                Add Breaks
+                Add Block
               </button>
             )}
             <button
               className="bg-blueBorder text-sm text-white rounded-full w-40 my-3 mx-2"
               onClick={() => saveChanges()}
             >
-              Guardar Cambios
+              Save changes
             </button>
           </div>
         </>
@@ -191,7 +191,7 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
           className="bg-blueBorder text-sm text-white rounded-full w-40 my-3 mx-2"
           onClick={() => edit()}
         >
-          Editar
+          Edit Blocks
         </button>
       )}
     </div>

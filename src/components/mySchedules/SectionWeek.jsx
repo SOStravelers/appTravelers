@@ -14,7 +14,10 @@ function SectionWeek() {
       console.log("el getData");
       const response = await ScheduleService.getScheduleUser();
       console.log("la data", response.data);
-      setHorario(response.data.schedules);
+      if (response) {
+        console.log("wenino", response.data.schedules);
+        setHorario(response.data.schedules);
+      }
     } catch (err) {
       toast.error("Hubo un error inicial", {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -35,7 +38,25 @@ function SectionWeek() {
     }
   }, [horario]);
 
-  const addIntervalandVerify = async (dayID, interval, save = false) => {
+  const enableDay = async (day, active) => {
+    console.log("perro", day.id);
+    console.log(horario);
+    const index = horario.findIndex((item) => item.day == day.id);
+    console.log(index);
+    if (index != -1) {
+      setSave(true);
+      const newHorario = [...horario];
+      newHorario[index].isActive = active;
+      setHorario(newHorario);
+    }
+  };
+
+  const addIntervalandVerify = async (
+    dayID,
+    isActive = true,
+    interval,
+    save = false
+  ) => {
     console.log("addIntervalVerify", dayID, interval);
     setSave(save);
     const dayExists = horario.some((day) => day.day === dayID);
@@ -50,6 +71,7 @@ function SectionWeek() {
           );
           if (intervalCollides || day.intervals.length == 0) {
             day.intervals.push(interval);
+            day.isActive = isActive;
           } else {
             console.log("interval collides");
           }
@@ -61,7 +83,11 @@ function SectionWeek() {
       console.log("dia nuevo");
       // Crear una copia de horario y agregar un nuevo objeto
       let newHorario = [...horario];
-      newHorario.push({ day: dayID, intervals: [interval] });
+      newHorario.push({
+        day: dayID,
+        intervals: [interval],
+        isActive: isActive,
+      });
       setHorario(newHorario);
     }
   };
@@ -103,6 +129,7 @@ function SectionWeek() {
           day={day}
           index={index}
           addInterval={addIntervalandVerify}
+          enableDay={enableDay}
           deleteInterval={deleteInterval}
           horario={horario?.filter((d) => d.day === day.id)[0]}
         />

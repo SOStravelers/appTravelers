@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import OptionSwitch from "../switch/OptionSwitch";
 import { CloseIcon } from "@/constants/icons";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,16 +9,55 @@ import {
   horaEnRango,
 } from "@/lib/time";
 
-function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
+function ScheduleCardWeek({
+  day,
+  addInterval,
+  deleteInterval,
+  enableDay,
+  horario,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [saved, setIsSaved] = useState(false);
   const [startTime, setStartTime] = useState("08:00");
   const [endTime, setEndTime] = useState("10:00");
   const [isOn, setIsOn] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+
+  const activeDay = () => {
+    if (!isEdit) {
+      setIsSaved(true);
+    }
+    setIsEdit(false);
+    console.log("wewewe", horario);
+    if (horario && typeof horario === "object" && "isActive" in horario) {
+      setIsOn(horario.isActive);
+      if (horario.isActive) {
+        setIsOpen(true);
+        let largo = horario.intervals.length;
+        console.log("lasrgogodg", horario.intervals[largo - 1]);
+        let newTime = addTime(horario.intervals[largo - 1].endTime, 2);
+        setStartTime(horario.intervals[largo - 1].endTime);
+        setEndTime(newTime);
+      }
+    }
+  };
+
+  useEffect(() => {
+    activeDay();
+  }, [horario]);
   const openCard = () => {
+    console.log("habilitar dia", day);
+    if ((horario = [])) {
+      setIsSaved(false);
+    }
+    enableDay(day, true);
     setIsOpen(true);
   };
-  const closeCard = () => setIsOpen(false);
+  const closeCard = () => {
+    console.log("cancelar dia", day);
+    enableDay(day, false);
+    setIsOpen(false);
+  };
 
   const validador = async () => {
     console.log("validador");
@@ -56,9 +95,9 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
 
   const handleAddBreak = async () => {
     let fail = await validador();
-    console.log("fail", fail);
     if (!fail) {
-      await addInterval(day.id, { startTime, endTime });
+      setIsEdit(true);
+      await addInterval(day.id, true, { startTime, endTime }, false);
       let newTime = addTime(endTime, 2);
       setStartTime(endTime);
       setEndTime(newTime);
@@ -68,7 +107,7 @@ function ScheduleCardWeek({ day, addInterval, deleteInterval, horario }) {
     let fail = await validador();
     console.log("fail", fail);
     if (!fail) {
-      await addInterval(day.id, { startTime, endTime }, true);
+      await addInterval(day.id, true, { startTime, endTime }, true);
       setIsSaved(true);
     }
   };

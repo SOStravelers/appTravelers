@@ -231,7 +231,7 @@ function ScheduleCardWeek({
                 className="bg-blueBorder text-sm text-white rounded-full w-40 mt-3"
                 onClick={() => mergeBlock(index)}
               >
-                Merge Block
+                Merge Blocks
               </button>
             )}
           </div>

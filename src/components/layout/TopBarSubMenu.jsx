@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ReturnArrowIcon } from "@/constants/icons";
 import { useRouter } from "next/router";
+import { LogoWhite } from "@/constants/icons";
 import clsx from "clsx";
 
 function TopBarSubMenu() {
@@ -70,16 +71,21 @@ function TopBarSubMenu() {
         "bg-darkBlue"
       )}
     >
-      <div
+      {/* <div
         className={clsx(
           " border-2 rounded-full p-2 border-white cursor-pointer"
         )}
         onClick={() => router.back()}
       >
         <ReturnArrowIcon color={clsx("#fff")} />
+      </div> */}
+      <div style={{ fontSize: "1000px" }}>
+        <ReturnArrowIcon color="#fff" size="35" />
       </div>
       <h1 className={clsx(" text-xl", "text-white")}>{titulo}</h1>
-      <div className="w-5"></div>
+      <div className="">
+        <LogoWhite color={"white"} />
+      </div>
     </div>
   );
 }

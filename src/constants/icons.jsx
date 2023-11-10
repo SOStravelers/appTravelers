@@ -341,11 +341,11 @@ export const FavIconFill = ({ ...props }) => (
   </svg>
 );
 
-export const ReturnArrowIcon = ({ color, ...props }) => (
+export const ReturnArrowIcon = ({ color, size, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="23"
-    height="23"
+    width={size || "23"}
+    height={size || "23"}
     viewBox="0 0 23 23"
     fill="none"
     {...props}
@@ -357,7 +357,6 @@ export const ReturnArrowIcon = ({ color, ...props }) => (
     />
   </svg>
 );
-
 export const FBIcon = ({ ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

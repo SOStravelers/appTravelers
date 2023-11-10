@@ -216,8 +216,11 @@ function ScheduleCardWeek({
                 <p>{interval.endTime}</p>
               </div>
               {((isOpen && !saved) || (isOpen && !longIntervals)) && (
-                <div className="w-full flex flex-col w-1/6">
-                  <button onClick={() => deleteBlock(index)}>
+                <div className=" flex flex-col w-1/8 ">
+                  <button
+                    onClick={() => deleteBlock(index)}
+                    style={{ marginLeft: "-30px" }}
+                  >
                     <span>X</span>
                   </button>
                 </div>
@@ -225,7 +228,7 @@ function ScheduleCardWeek({
             </div>
             {((isOpen && !saved) || (isOpen && !longIntervals)) && (
               <button
-                className="bg-blueBorder text-sm text-white rounded-full w-40 my-3"
+                className="bg-blueBorder text-sm text-white rounded-full w-40 mt-3"
                 onClick={() => mergeBlock(index)}
               >
                 Merge Block

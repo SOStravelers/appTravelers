@@ -31,7 +31,6 @@ function SectionWeek() {
 
   useEffect(() => {
     console.log("Estado de horario actualizado:", horario);
-    console.log(save);
     if (save) {
       saveArray();
       setSave(false);
@@ -39,14 +38,28 @@ function SectionWeek() {
   }, [horario]);
 
   const enableDay = async (day, active) => {
-    console.log("perro", day.id);
-    console.log(horario);
-    const index = horario.findIndex((item) => item.day == day.id);
-    console.log(index);
-    if (index != -1) {
-      setSave(true);
-      const newHorario = [...horario];
-      newHorario[index].isActive = active;
+    console.log("enable day");
+    const dayExists = horario.some((item) => item.day === day.id);
+    if (dayExists) {
+      console.log("dia existe");
+      const index = horario.findIndex((item) => item.day == day.id);
+      console.log(index);
+      if (index != -1) {
+        const newHorario = [...horario];
+        if (active == false || newHorario[index].intervals.length > 0) {
+          setSave(true);
+        }
+        newHorario[index].isActive = active;
+        setHorario(newHorario);
+      }
+    } else {
+      console.log("dia nuevo");
+      // Crear una copia de horario y agregar un nuevo objeto
+      let newHorario = [...horario];
+      newHorario.push({
+        day: day.id,
+        intervals: [],
+      });
       setHorario(newHorario);
     }
   };
@@ -91,17 +104,27 @@ function SectionWeek() {
       setHorario(newHorario);
     }
   };
+  const deleteOneBlock = (dayId, index) => {
+    const dayIndex = horario.findIndex((day) => day.day === dayId);
+    const newHorario = [...horario];
+    newHorario[dayIndex].intervals.splice(index, 1);
+    console.log("aqui");
+    setHorario(newHorario);
+  };
   const deleteInterval = (dayId, index) => {
-    console.log("deleteInterval");
+    console.log("deleteInterval", dayId, index);
     const dayIndex = horario.findIndex((day) => day.day === dayId);
     const newHorario = [...horario];
     if (index + 1 == newHorario[dayIndex].intervals.length) {
+      console.log("caso1");
       newHorario[dayIndex].intervals.splice(index, 1);
     } else {
+      console.log("caso2");
       newHorario[dayIndex].intervals[index].endTime =
         newHorario[dayIndex].intervals[index + 1].endTime;
       newHorario[dayIndex].intervals.splice(index + 1, 1);
     }
+    console.log("el horario", newHorario);
     setHorario(newHorario);
   };
   const saveArray = async () => {
@@ -131,6 +154,7 @@ function SectionWeek() {
           addInterval={addIntervalandVerify}
           enableDay={enableDay}
           deleteInterval={deleteInterval}
+          deleteOneBlock={deleteOneBlock}
           horario={horario?.filter((d) => d.day === day.id)[0]}
         />
       ))}

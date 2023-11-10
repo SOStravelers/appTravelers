@@ -13,6 +13,7 @@ function ScheduleCardWeek({
   day,
   addInterval,
   deleteInterval,
+  deleteOneBlock,
   enableDay,
   horario,
 }) {
@@ -22,40 +23,66 @@ function ScheduleCardWeek({
   const [endTime, setEndTime] = useState("10:00");
   const [isOn, setIsOn] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [longIntervals, setLongIntervals] = useState(false);
 
   const activeDay = () => {
+    console.log("active day");
+    //Validador que ve si el cambio del array horario fue por la función addBlock() o saveChanges()
     if (!isEdit) {
+      //Cambia botones y sólo deja visible boton Edit Block
       setIsSaved(true);
     }
     setIsEdit(false);
-    console.log("wewewe", horario);
     if (horario && typeof horario === "object" && "isActive" in horario) {
+      //Cambia valor del botón switch
       setIsOn(horario.isActive);
       if (horario.isActive) {
+        //muestra o esconde componentes internos (misma condición que para el valor del switch)
         setIsOpen(true);
         let largo = horario.intervals.length;
-        console.log("lasrgogodg", horario.intervals[largo - 1]);
-        let newTime = addTime(horario.intervals[largo - 1].endTime, 2);
-        setStartTime(horario.intervals[largo - 1].endTime);
-        setEndTime(newTime);
+        //Ve si el array tiene valores o no, en caso de tener utiliza ultimo objeto para setear valores de bloque de edición
+        if (horario.intervals.length > 0) {
+          setLongIntervals(true);
+          let newTime = addTime(horario.intervals[largo - 1].endTime, 2);
+          setStartTime(horario.intervals[largo - 1].endTime);
+          setEndTime(newTime);
+        } else {
+          setLongIntervals(false);
+        }
       }
     }
   };
 
   useEffect(() => {
+    //Función que se activa cada vez que el objeto de horario es modificado
     activeDay();
   }, [horario]);
-  const openCard = () => {
-    console.log("habilitar dia", day);
-    if ((horario = [])) {
+
+  const openCard = async () => {
+    console.log("habilitar dia");
+
+    if (horario == []) {
+      //setea para que aparezcan botones add block y saveChanges
       setIsSaved(false);
     }
-    enableDay(day, true);
+    let largo = horario ? horario.intervals.length : 0;
+    console.log("largo", largo);
+    if (largo > 0) {
+      let newTime = addTime(horario.intervals[largo - 1].endTime, 2);
+      setStartTime(horario.intervals[largo - 1].endTime);
+      setEndTime(newTime);
+    }
+    //Despliega componentes internos y muestra todos los horarios
     setIsOpen(true);
+    //guarda el día como activo
+    await enableDay(day, true);
   };
+
   const closeCard = () => {
-    console.log("cancelar dia", day);
+    console.log("deshabilitar dia");
+    //guarda el día como desactivado en BD
     enableDay(day, false);
+    //Esconde componentes de internos de todos los horarios
     setIsOpen(false);
   };
 
@@ -93,31 +120,61 @@ function ScheduleCardWeek({
     return fail;
   };
 
-  const handleAddBreak = async () => {
+  const addBlock = async () => {
+    //validador de los diferentes formatos posibles de las horas a setear con respuesta de errores
     let fail = await validador();
     if (!fail) {
+      //variable para que no se cambien los botones de add block y save changes a edit block (cuando se activa activeDay())
       setIsEdit(true);
+      //añade intervalo al array de horario (dayID, isActive,interval,save) y no guarda en BD
       await addInterval(day.id, true, { startTime, endTime }, false);
+      //setea horas de próximo bloque de edición utilizando el último bloque del array
       let newTime = addTime(endTime, 2);
       setStartTime(endTime);
       setEndTime(newTime);
     }
   };
+
   const saveChanges = async () => {
+    //validador de los diferentes formatos posibles de las horas a setear con respuesta de errores
     let fail = await validador();
-    console.log("fail", fail);
     if (!fail) {
+      //añade intervalo al array de horario (dayID, isActive,interval,save) y guarda en BD
       await addInterval(day.id, true, { startTime, endTime }, true);
+      //Cambia botones y sólo deja visible boton Edit Block
       setIsSaved(true);
+      console.log("wenaza", isOpen, saved, longIntervals);
+      if (horario.intervals.length > 0) {
+        setLongIntervals(true);
+      } else {
+        setLongIntervals(false);
+      }
     }
   };
+
   const edit = async () => {
-    setIsSaved(false);
     const indexFinal = horario?.intervals.length - 1;
+    //se setea en bloque de edición con los ultimos valores del array
+    console.log("bla", horario.intervals, indexFinal);
+    if (horario.intervals.length > 1) {
+      console.log(horario.intervals[indexFinal]);
+      let newTime = addTime(horario.intervals[indexFinal].endTime, 2);
+      setStartTime(horario.intervals[indexFinal].endTime);
+      setEndTime(newTime);
+    } else if (horario.intervals.length == 1) {
+      setStartTime(horario.intervals[indexFinal].startTime);
+      setEndTime(horario.intervals[indexFinal].endTime);
+    }
+    //Elimina ultimo objeto del array del horario, para usar ese valor como edición. No guarda en BD
     await deleteInterval(day.id, indexFinal);
+    //Cambia botones de Edit block a Add Block con Save changes
+    setIsSaved(false);
   };
-  const handleDeleteBreak = (index) => {
-    console.log("delete", index, horario?.intervals[index]);
+  const deleteBlock = async (index) => {
+    console.log("delete", horario.intervals[index]);
+    deleteOneBlock(day.id, index);
+  };
+  const mergeBlock = (index) => {
     const indexFinal = horario?.intervals.length;
     const start = horario?.intervals[indexFinal - 1].startTime;
     deleteInterval(day.id, index);
@@ -145,33 +202,40 @@ function ScheduleCardWeek({
               className="flex justify-between w-full items-center border border-blueBorder rounded-lg p-2"
               key={interval.day}
             >
-              <div className="w-full flex flex-col">
+              <div className="w-full flex flex-col w-1/2 ml-5">
                 <label htmlFor="startTime" className="text-greyText text-sm">
                   From
                 </label>
                 <p>{interval.startTime}</p>
               </div>
-              <div className="w-full flex flex-col">
+              <div className="w-full flex flex-col w-1/2">
                 <label htmlFor="endTime" className="text-greyText text-sm">
                   To
                 </label>
                 <p>{interval.endTime}</p>
               </div>
+              {((isOpen && !saved) || (isOpen && !longIntervals)) && (
+                <div className="w-full flex flex-col w-1/6">
+                  <button onClick={() => deleteBlock(index)}>
+                    <span>X</span>
+                  </button>
+                </div>
+              )}
             </div>
-            {!saved && (
+            {((isOpen && !saved) || (isOpen && !longIntervals)) && (
               <button
                 className="bg-blueBorder text-sm text-white rounded-full w-40 my-3"
-                onClick={() => handleDeleteBreak(index)}
+                onClick={() => mergeBlock(index)}
               >
                 Merge Block
               </button>
             )}
           </div>
         ))}
-      {isOpen && !saved && (
+      {((isOpen && !saved) || (isOpen && !longIntervals)) && (
         <>
           <div className="flex justify-between w-full items-center border border-blueBorder rounded-lg p-2 mb-4">
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-col w-1/2 ml-5">
               <label htmlFor="startTime" className="text-greyText text-sm">
                 From
               </label>
@@ -186,7 +250,7 @@ function ScheduleCardWeek({
                 className="w-20"
               />
             </div>
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-col w-1/2" sty>
               <label htmlFor="endTime" className="text-greyText text-sm">
                 To
               </label>
@@ -207,7 +271,7 @@ function ScheduleCardWeek({
             {esMenorQueLas22(endTime) && (
               <button
                 className="bg-blueBorder text-sm text-white rounded-full w-40 my-3 mx-2"
-                onClick={() => handleAddBreak()}
+                onClick={() => addBlock()}
               >
                 Add Block
               </button>
@@ -221,7 +285,7 @@ function ScheduleCardWeek({
           </div>
         </>
       )}
-      {isOpen && saved && (
+      {isOpen && saved && longIntervals && (
         <button
           className="bg-blueBorder text-sm text-white rounded-full w-40 my-3 mx-2"
           onClick={() => edit()}

@@ -9,11 +9,13 @@ function CalendarSchedule() {
   const [range, setRange] = useState(undefined);
 
   const handleSelection = () => {
+    console.log("seleccion");
     setDisabledDays([...disabledDays, range]);
     setRange(undefined);
   };
 
   const handleCancel = (range) => {
+    console.log("cancel");
     const newDisabledDays = disabledDays.filter(
       (day) => day.from !== range.from && day.to !== range.to
     );

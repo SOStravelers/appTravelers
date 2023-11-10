@@ -26,8 +26,6 @@ function ScheduleCardWeek({
   const [longIntervals, setLongIntervals] = useState(false);
 
   const activeDay = () => {
-    console.log("active day");
-    console.log(day, horario);
     //Validador que ve si el cambio del array horario fue por la función addBlock() o saveChanges()
     if (!isEdit) {
       //Cambia botones y sólo deja visible boton Edit Block
@@ -60,14 +58,11 @@ function ScheduleCardWeek({
   }, [horario]);
 
   const openCard = async () => {
-    console.log("habilitar dia");
-
     if (horario == []) {
       //setea para que aparezcan botones add block y saveChanges
       setIsSaved(false);
     }
     let largo = horario ? horario.intervals.length : 0;
-    console.log("largo", largo);
     if (largo > 0) {
       let newTime = addTime(horario.intervals[largo - 1].endTime, 2);
       setStartTime(horario.intervals[largo - 1].endTime);
@@ -80,7 +75,6 @@ function ScheduleCardWeek({
   };
 
   const closeCard = () => {
-    console.log("deshabilitar dia");
     //guarda el día como desactivado en BD
     enableDay(day, false);
     //Esconde componentes de internos de todos los horarios
@@ -88,7 +82,6 @@ function ScheduleCardWeek({
   };
 
   const validador = async () => {
-    console.log("validador");
     var fail = false;
     let hora1 = horaEnRango(startTime);
     let hora2 = horaEnRango(endTime);
@@ -144,7 +137,6 @@ function ScheduleCardWeek({
       await addInterval(day.id, true, { startTime, endTime }, true);
       //Cambia botones y sólo deja visible boton Edit Block
       setIsSaved(true);
-      console.log("wenaza", isOpen, saved, longIntervals);
       if (horario.intervals.length > 0) {
         setLongIntervals(true);
       } else {
@@ -156,9 +148,7 @@ function ScheduleCardWeek({
   const edit = async () => {
     const indexFinal = horario?.intervals.length - 1;
     //se setea en bloque de edición con los ultimos valores del array
-    console.log("bla", horario.intervals, indexFinal);
     if (horario.intervals.length > 1) {
-      console.log(horario.intervals[indexFinal]);
       let newTime = addTime(horario.intervals[indexFinal].endTime, 2);
       setStartTime(horario.intervals[indexFinal].endTime);
       setEndTime(newTime);
@@ -172,7 +162,6 @@ function ScheduleCardWeek({
     setIsSaved(false);
   };
   const deleteBlock = async (index) => {
-    console.log("delete", horario.intervals[index]);
     deleteOneBlock(day.id, index);
   };
   const mergeBlock = (index) => {

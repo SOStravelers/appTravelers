@@ -3,6 +3,7 @@ import { ReturnArrowIcon } from "@/constants/icons";
 import { useRouter } from "next/router";
 import { LogoWhite } from "@/constants/icons";
 import clsx from "clsx";
+import Link from "next/link";
 
 function TopBarSubMenu() {
   const [titulo, setTitulo] = useState("");

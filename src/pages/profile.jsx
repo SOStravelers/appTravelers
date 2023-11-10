@@ -15,6 +15,7 @@ export default function Profile({ user }) {
     localStorage.removeItem("auth.user_id");
     localStorage.removeItem("auth.user");
     localStorage.removeItem("service");
+    localStorage.removeItem("type");
     localStorage.removeItem("next-auth.session-token");
 
     Cookies.remove("auth.access_token");

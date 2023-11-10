@@ -4,10 +4,12 @@ import { useRouter } from "next/router";
 import { LogoWhite } from "@/constants/icons";
 import clsx from "clsx";
 import Link from "next/link";
+import { useStore } from "@/store";
 
 function TopBarSubMenu() {
   const [titulo, setTitulo] = useState("");
   const router = useRouter();
+  const { isWorker } = useStore();
 
   const actualURL = router.pathname;
 

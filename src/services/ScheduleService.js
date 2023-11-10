@@ -16,8 +16,6 @@ export default class ScheduleService {
   }
 
   static async save(params) {
-    console.log("wena");
-    console.log("parametros save", params);
     return axios.post(`${this.baseUrl}/add`, params, {
       headers: this.getHeaders(),
     });

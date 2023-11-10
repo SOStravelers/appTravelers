@@ -1,12 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
+import moment from "moment";
 import ScheduleCardCalendar from "../cards/ScheduleCardCalendar";
 import "react-day-picker/dist/style.css";
 
 function CalendarSchedule() {
   const [disabledDays, setDisabledDays] = useState([]);
   const [range, setRange] = useState(undefined);
+  const [selected, setSelected] = useState("");
+  const [fromDate, setFromDate] = useState();
+  const [toDate, setToDate] = useState();
+
+  useEffect(() => {
+    initialize();
+  }, []);
+  const initialize = (dateString = "") => {
+    const now = moment();
+    if (dateString === now.format("YYYY-MM-DD") || selected === "") {
+      if (!selected) setSelected(now.toDate());
+      setFromDate(now.toDate());
+      setToDate(now.add(6, "months").toDate());
+    }
+  };
 
   const handleSelection = () => {
     console.log("seleccion");
@@ -42,6 +58,8 @@ function CalendarSchedule() {
         mode="range"
         selected={range}
         onSelect={setRange}
+        fromDate={fromDate}
+        toDate={toDate}
         footer={footer}
         disabled={disabledDays}
       />

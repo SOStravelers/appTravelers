@@ -10,8 +10,8 @@ export default function MySchedules() {
   return (
     <section className="flex flex-col items-center md:items-start py-28 px-5 md:pl-80">
       <SwitchButtons
-        titleOne={"Week"}
-        titleTwo={"Calendar"}
+        titleOne={"My Schedule"}
+        titleTwo={"Holidays"}
         setActualView={setActualView}
         actualView={actualView}
       />

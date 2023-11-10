@@ -23,7 +23,7 @@ function CalendarSchedule({ saveData }) {
     try {
       const response = await HollidayService.getHollidayUser();
       console.log("response", response.data);
-      if (response && response.data) {
+      if (response && response.data && response.data.length > 0) {
         const formattedDisabledDays = response.data.map((item) => ({
           from: parseISO(item.from),
           to: parseISO(item.to),

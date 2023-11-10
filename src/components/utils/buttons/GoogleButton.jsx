@@ -17,7 +17,6 @@ function GoogleButton() {
       console.error("Error al iniciar sesión:", result.error);
     } else {
       router.push("/login");
-      console.log("todo bien");
     }
   };
   return (

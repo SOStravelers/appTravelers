@@ -9,7 +9,7 @@ export const WEEK_DAYS = [
   { id: 4, name: "Thursday" },
   { id: 5, name: "Friday" },
   { id: 6, name: "Saturday" },
-  { id: 7, name: "Sunday" },
+  { id: 0, name: "Sunday" },
 ];
 
 export const SERVICES_OPTIONS = [

@@ -27,6 +27,7 @@ function ScheduleCardWeek({
 
   const activeDay = () => {
     console.log("active day");
+    console.log(day, horario);
     //Validador que ve si el cambio del array horario fue por la función addBlock() o saveChanges()
     if (!isEdit) {
       //Cambia botones y sólo deja visible boton Edit Block

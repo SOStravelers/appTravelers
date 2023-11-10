@@ -79,7 +79,7 @@ function TopBarSubMenu() {
       >
         <ReturnArrowIcon color={clsx("#fff")} />
       </div> */}
-      <div style={{ fontSize: "1000px" }}>
+      <div onClick={() => router.back()}>
         <ReturnArrowIcon color="#fff" size="35" />
       </div>
       <h1 className={clsx(" text-xl", "text-white")}>{titulo}</h1>

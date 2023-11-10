@@ -84,7 +84,7 @@ function TopBarSubMenu() {
         <ReturnArrowIcon color="#fff" size="35" />
       </div>
       <h1 className={clsx(" text-xl", "text-white")}>{titulo}</h1>
-      <Link href="/">
+      <Link href={isWorker ? "/worker/home" : "/"}>
         <LogoWhite color={"white"} />
       </Link>
     </div>

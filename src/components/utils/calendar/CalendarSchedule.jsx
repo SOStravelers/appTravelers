@@ -4,6 +4,9 @@ import { DayPicker } from "react-day-picker";
 import moment from "moment";
 import ScheduleCardCalendar from "../cards/ScheduleCardCalendar";
 import "react-day-picker/dist/style.css";
+import HollidayService from "@/services/HollidayService";
+import { toast } from "react-toastify";
+import { parseISO } from "date-fns";
 
 function CalendarSchedule({ saveData }) {
   const [disabledDays, setDisabledDays] = useState([]);
@@ -11,13 +14,32 @@ function CalendarSchedule({ saveData }) {
   const [selected, setSelected] = useState("");
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
-
   useEffect(() => {
     initialize();
+    getData();
   }, []);
-  useEffect(() => {
-    console.log("perro", disabledDays);
-  }, [disabledDays]);
+
+  const getData = async () => {
+    try {
+      const response = await HollidayService.getHollidayUser();
+      console.log("response", response.data);
+      if (response && response.data) {
+        const formattedDisabledDays = response.data.map((item) => ({
+          from: parseISO(item.from),
+          to: parseISO(item.to),
+        }));
+        console.log(formattedDisabledDays);
+        setDisabledDays(formattedDisabledDays);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Hubo un error inicial", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    }
+  };
+
   const initialize = (dateString = "") => {
     const now = moment();
     if (dateString === now.format("YYYY-MM-DD") || selected === "") {
@@ -65,13 +87,13 @@ function CalendarSchedule({ saveData }) {
   };
 
   const handleCancel = async (range) => {
-    console.log("cancel");
-    const newDisabledDays = disabledDays.filter(
+    let totalDays = [...disabledDays];
+    console.log("cancel", totalDays);
+    const newDisabledDays = totalDays.filter(
       (day) => day.from !== range.from && day.to !== range.to
     );
     await saveData(newDisabledDays);
     setDisabledDays(newDisabledDays);
-    console.log("disableDay", disabledDays);
   };
 
   let footer = <p className="my-5 text-center">Please pick a day.</p>;
@@ -99,13 +121,21 @@ function CalendarSchedule({ saveData }) {
         footer={footer}
         disabled={disabledDays}
       />
-      {disabledDays.map((day, index) => (
-        <ScheduleCardCalendar
-          key={index}
-          text={`${format(day.from, "PP")}–${format(day.to, "PP")}`}
-          cancel={() => handleCancel(day)}
-        />
-      ))}
+      {disabledDays && disabledDays.length > 0
+        ? disabledDays.map((item, index) => (
+            <ScheduleCardCalendar
+              key={index}
+              text={`${
+                item.from && item.to
+                  ? format(new Date(item.from), "PP") +
+                    "–" +
+                    format(new Date(item.to), "PP")
+                  : "Invalid Date Range"
+              }`}
+              cancel={() => handleCancel(item)}
+            />
+          ))
+        : null}
     </>
   );
 }

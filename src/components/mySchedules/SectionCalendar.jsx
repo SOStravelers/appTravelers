@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CalendarSchedule from "@/components/utils/calendar/CalendarSchedule";
 import { toast } from "react-toastify";
+import HollidayService from "@/services/HollidayService";
 
 function SectionCalendar() {
   console.log("inicio");
@@ -10,10 +11,11 @@ function SectionCalendar() {
     console.log("seleccionado");
     setSelectedDate(date);
   }
-  function saveData(data) {
+  async function saveData(data) {
     console.log("wenazo", data);
-    // let schedules = { schedules: horario };
-    // const response = await ScheduleService.save(schedules);
+    let hollidays = { range: data };
+    console.log("perrooo", hollidays);
+    const response = await HollidayService.save(hollidays);
     try {
       toast.info("Saved", {
         position: toast.POSITION.BOTTOM_CENTER,

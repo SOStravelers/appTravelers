@@ -93,14 +93,14 @@ export default function Settings() {
           setIsOn={setIsOnNotifications}
         />
       </div>
-      <div className="mt-40 flex flex-col">
+      <div className="mt-10 flex flex-col">
         {/* <OutlinedButton text="Save Changes" /> */}
-        <OutlinedButton text="Delete Account" secondary />
+        <OutlinedButton text="Deactivate Account" error />
       </div>
       <TextModal
-        title={`Activate ${isOnWorker === false ? "Worker" : "User"} Mode`}
-        text="Are you sure you want to activate worker mode?"
-        buttonText="Accept"
+        title={`Activate Worker Mode`}
+        text={["Are you sure you want to activate worker mode?"]}
+        buttonText="Let's go"
         open={open}
         setOpen={setOpen}
         onAccept={confirmChangeWorkerMode}

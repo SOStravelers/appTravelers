@@ -19,6 +19,11 @@ function TopBarSubMenu() {
   const isSettings = actualURL.includes("settings");
   const isNotifications = actualURL.includes("notifications");
   const isWorkerServices = actualURL.includes("my-services");
+  const isProfile = actualURL.includes("profile");
+  const isPersonalProfile = actualURL.includes("personal-details");
+  const isWorkerProfile = actualURL.includes("worker/profile-config");
+  const isMyschedules = actualURL.includes("my-schedules");
+  const isAboutMe = actualURL.includes("worker/edit");
 
   useEffect(() => {
     handleUrl();
@@ -45,6 +50,16 @@ function TopBarSubMenu() {
       setTitulo("Notifications");
     } else if (isWorkerServices) {
       setTitulo("My Services");
+    } else if (isPersonalProfile) {
+      setTitulo("Personal Details");
+    } else if (isWorkerProfile) {
+      setTitulo("My Worker Profile");
+    } else if (isMyschedules) {
+      setTitulo("My Schedule");
+    } else if (isProfile) {
+      setTitulo("My Profile");
+    } else if (isAboutMe) {
+      setTitulo("About Me");
     }
   };
 

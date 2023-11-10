@@ -35,7 +35,7 @@ function TopBar() {
         {loggedIn ? (
           <>
             {isWorker && (
-              <h1 className="text-white mr-5 neon-green">Worker Mode</h1>
+              <h1 className="text-white mr-4 neon-green">Worker Mode</h1>
             )}
             <Link href="/notifications">
               <NotificationOffIcon

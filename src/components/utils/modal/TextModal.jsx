@@ -2,15 +2,15 @@ import React from "react";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 
-const TextModal = ({
+function TextModal({
   title,
   text,
   buttonText,
   open,
   setOpen,
-  onAccept = false,
-  onCancel = false,
-}) => {
+  onAccept,
+  onCancel,
+}) {
   return (
     <>
       {open && (
@@ -25,7 +25,15 @@ const TextModal = ({
             <div className="bg-white rounded-2xl w-[90vw] md:w-96 px-10 py-5">
               <div className="p-5">
                 <h1 className="text-2xl text-center mb-5">{title}</h1>
-                <p className="text-center">{text}</p>
+                <div className="text-justify text-center">
+                  {text.map((line, index) => (
+                    <React.Fragment key={index}>
+                      {line && <p>{line}</p>}
+                      {index < text.length - 1 && <br />}{" "}
+                      {/* Agrega un <br /> excepto después de la última línea */}
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
               {onAccept && <SolidButton text={buttonText} onClick={onAccept} />}
               {onCancel && <OutlinedButton text="Cancel" onClick={onCancel} />}
@@ -35,6 +43,6 @@ const TextModal = ({
       )}
     </>
   );
-};
+}
 
 export default TextModal;

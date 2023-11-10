@@ -12,7 +12,9 @@ export default function WorkerSettings() {
   const { setWorker, isWorker } = useStore();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [openInactive, setOpenInactive] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
+  const [isOnInactive, setIsInactive] = useState(false);
   const [isOnNotifications, setIsOnNotifications] = useState(false);
 
   const onFunction = () => {
@@ -23,46 +25,40 @@ export default function WorkerSettings() {
     console.log("Off");
   };
 
-  const workerModeOn = () => {
-    console.log("dialogo worker");
-    setIsOnWorker(false);
-    setOpen(true);
-  };
-
   const workerModeOff = () => {
     console.log("dialogo user");
     setIsOnWorker(true);
     setOpen(true);
   };
-
   const confirmChangeWorkerMode = async () => {
     console.log("confirmachageWorkerMode");
-    if (isOnWorker) {
-      localStorage.removeItem("type");
-      setWorker(false);
-      setOpen(false);
-      setIsOnWorker(false);
-      router.push("/");
-    } else {
-      setWorker(true);
-      setOpen(false);
-      setIsOnWorker(true);
-      router.push("/worker/home");
-    }
+    localStorage.removeItem("type");
+    setWorker(false);
+    setOpen(false);
+    setIsOnWorker(false);
+    router.push("/");
+  };
+  const cancelChangeWorkerMode = async () => {
+    setOpen(false);
   };
 
-  const cancelChangeWorkerMode = async () => {
-    if (!isOnWorker) {
-      setWorker(false);
-      setOpen(false);
-      setIsOnWorker(false);
-      router.push("/");
-    } else {
-      setWorker(true);
-      setOpen(false);
-      setIsOnWorker(true);
-      router.push("/worker/home");
-    }
+  const inactiveModeOn = () => {
+    console.log("dialogo inactive1");
+    setOpenInactive(true);
+    setIsInactive(false);
+  };
+  const inactiveModeOff = () => {
+    console.log("dialogo inactive2");
+    setIsInactive();
+  };
+  const confirmInactiveMode = async () => {
+    console.log("confirmInactiveMode");
+    setOpenInactive(false);
+    setIsInactive(true);
+  };
+  const cancelInactiveMode = async () => {
+    console.log("cancelInactiveMode");
+    setOpenInactive(false);
   };
 
   return (
@@ -72,7 +68,7 @@ export default function WorkerSettings() {
       <div className="flex flex-col my-4">
         <OptionSwitch
           title="Activate Worker Mode"
-          onFunction={workerModeOn}
+          onFunction={workerModeOff}
           offFunction={workerModeOff}
           initialState={isWorker}
           isOn={isOnWorker}
@@ -87,24 +83,39 @@ export default function WorkerSettings() {
         />
         <OptionSwitch
           title="Inactive Mode"
-          onFunction={onFunction}
-          offFunction={offFunction}
-          isOn={isOnNotifications}
-          setIsOn={setIsOnNotifications}
+          onFunction={inactiveModeOn}
+          offFunction={inactiveModeOff}
+          isOn={isOnInactive}
+          setIsOn={setIsInactive}
         />
       </div>
       <div className="mt-10 flex flex-col">
         {/* <OutlinedButton text="Save Changes" /> */}
-        <OutlinedButton text="Delete Account" error />
+        <OutlinedButton text="Deactivate Account" error />
       </div>
       <TextModal
-        title={`Activate ${isOnWorker === false ? "Worker" : "User"} Mode`}
-        text="Are you sure you want to activate worker mode?"
-        buttonText="Accept"
+        title={`Activate User Mode`}
+        text={["Are you sure you want to activate user mode?"]}
+        buttonText="Let's go"
         open={open}
         setOpen={setOpen}
         onAccept={confirmChangeWorkerMode}
         onCancel={cancelChangeWorkerMode}
+      />
+      <TextModal
+        title={`Hide my worker account`}
+        text={[
+          "Are you sure you want to inactive your account?",
+          "",
+          "You will not receive job offers or notifications of new opportunities.",
+          "",
+          "You can change this option at any time.",
+        ]}
+        buttonText="Accept"
+        open={openInactive}
+        setOpen={setOpenInactive}
+        onAccept={confirmInactiveMode}
+        onCancel={cancelInactiveMode}
       />
     </div>
   );

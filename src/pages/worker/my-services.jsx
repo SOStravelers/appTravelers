@@ -197,7 +197,8 @@ export default function MyServices() {
       <TextModal
         open={open}
         setOpen={setOpen}
-        title="An administrator can modify enrolled services, including the ability to add or remove services or subservices."
+        title={`An administrator can modify enrolled services, including the ability to add or remove services or subservices.`}
+        text={[]}
         buttonText="Continue"
         onAccept={() => setOpen(false)}
       />

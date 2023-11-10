@@ -22,7 +22,6 @@ function CalendarSchedule({ saveData }) {
   const getData = async () => {
     try {
       const response = await HollidayService.getHollidayUser();
-      console.log("response", response.data);
       if (response && response.data && response.data.length > 0) {
         const formattedDisabledDays = response.data.map((item) => ({
           from: parseISO(item.from),
@@ -33,7 +32,7 @@ function CalendarSchedule({ saveData }) {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Hubo un error inicial", {
+      toast.error("Internal Server Error. Please try again later.", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
       });

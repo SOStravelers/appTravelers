@@ -16,7 +16,7 @@ function SectionWeek() {
         setHorario(response.data.schedules);
       }
     } catch (err) {
-      toast.error("Hubo un error inicial", {
+      toast.error("Internal Server Error. Please try again later.", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
       });

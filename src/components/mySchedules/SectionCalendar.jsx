@@ -4,17 +4,13 @@ import { toast } from "react-toastify";
 import HollidayService from "@/services/HollidayService";
 
 function SectionCalendar() {
-  console.log("inicio");
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   function handleDateChange(date) {
-    console.log("seleccionado");
     setSelectedDate(date);
   }
   async function saveData(data) {
-    console.log("wenazo", data);
     let hollidays = { range: data };
-    console.log("perrooo", hollidays);
     const response = await HollidayService.save(hollidays);
     try {
       toast.info("Saved", {

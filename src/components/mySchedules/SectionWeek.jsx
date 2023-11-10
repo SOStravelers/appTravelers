@@ -132,12 +132,12 @@ function SectionWeek() {
     try {
       let schedules = { schedules: horario };
       const response = await ScheduleService.save(schedules);
-      toast.info("Horario guardado", {
+      toast.info("Saved", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1200,
       });
     } catch (err) {
-      toast.error("Hubo un error", {
+      toast.error("Save failed.", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
       });

@@ -101,19 +101,19 @@ function ScheduleCardWeek({
     }
     if (compararAnterior == 1) {
       fail = true;
-      toast.warn("Las inicial debe ser mayor que la anterior", {
+      toast.warn("The start time must be later than the previous one.", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1800,
       });
     } else if (!hora1 || !hora2) {
       fail = true;
-      toast.warn("Las horas deben estar entre 8 AM y 10 PM", {
+      toast.warn("Time ranges only from 8 to 10 PM.", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1800,
       });
     } else if (difHoras == 1) {
       fail = true;
-      toast.warn("Hora final debe ser mayor a inicial", {
+      toast.warn("End time must be after start time.", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1800,
       });

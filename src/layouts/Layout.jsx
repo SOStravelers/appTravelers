@@ -95,9 +95,13 @@ function Layout({ children }) {
 
   const arePrincipalPages =
     router.pathname === "/booking" ||
+    router.pathname === "/worker/booking" ||
     router.pathname === "/chat" ||
+    router.pathname === "/worker/chat" ||
     router.pathname === "/favorites" ||
+    router.pathname === "/worker/favorites" ||
     router.pathname === "/profile" ||
+    router.pathname === "/workerProfile" ||
     router.pathname === "/" ||
     router.pathname === "/worker/home" ||
     router.pathname === "/worker/booking";

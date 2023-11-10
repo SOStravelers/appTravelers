@@ -55,7 +55,7 @@ function CalendarSchedule({ saveData }) {
         .slice()
         .sort((a, b) => new Date(a.from) - new Date(b.from));
       setDisabledDays(rangosOrdenados);
-      await saveData(nuevoRango);
+      await saveData(rangosOrdenados);
     } else {
       const nuevoRango = [range];
       setDisabledDays(nuevoRango);

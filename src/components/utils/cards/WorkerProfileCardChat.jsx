@@ -2,7 +2,7 @@ import Image from "next/image";
 import { StarIcon, FavIconBorder, ClockIcon } from "@/constants/icons";
 import SolidButton from "../buttons/SolidButton";
 
-function WorkerCardChat({ name, service, score }) {
+function WorkerProfileCardChat({ name, service, score }) {
   return (
     <div className="flex py-4 w-full rounded-lg my-2 items-center">
       <div className="w-36 h-36 rounded-2xl mr-2">

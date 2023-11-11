@@ -33,12 +33,12 @@ function RegisterForm() {
       localStorage.setItem("auth.access_token", response.data.access_token);
       localStorage.setItem("auth.refresh_token", response.data.refresh_token);
       localStorage.setItem("auth.user_id", response.data.user._id);
-      localStorage.setItem("auth.user", response.data.user);
+      localStorage.setItem("auth.user", JSON.stringify(response.data.user));
 
       Cookies.set("auth.access_token", response.data.access_token);
       Cookies.set("auth.refresh_token", response.data.refresh_token);
       Cookies.set("auth.user_id", response.data.user._id);
-      Cookies.set("auth.user", response.data.user);
+      Cookies.set("auth.user", JSON.stringify(response.data.user));
       setUser(response.data.user);
       setLoggedIn(true);
 

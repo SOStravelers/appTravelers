@@ -21,7 +21,6 @@ function Layout({ children }) {
   const { setWorker, isWorker } = useStore();
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
   useEffect(() => {
-    console.log("layout", router.path);
     if (!user || Object.keys(user).length == 0) {
       obtenerInformacionUsuario();
     }

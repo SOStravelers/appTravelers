@@ -21,7 +21,7 @@ function Layout({ children }) {
   const { setWorker, isWorker } = useStore();
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
   useEffect(() => {
-    console.log("layout");
+    console.log("layout", router.path);
     if (!user || Object.keys(user).length == 0) {
       obtenerInformacionUsuario();
     }
@@ -93,18 +93,17 @@ function Layout({ children }) {
     router.pathname === "/register" ||
     router.pathname === "/alternative-login";
 
+  console.log("wena", router.pathname);
   const arePrincipalPages =
-    router.pathname === "/booking" ||
     router.pathname === "/worker/booking" ||
-    router.pathname === "/chat" ||
-    router.pathname === "/worker/chat" ||
-    router.pathname === "/favorites" ||
+    router.pathname === "/worker/profile" ||
+    router.pathname === "/worker/home";
+  router.pathname === "/worker/chat" ||
     router.pathname === "/worker/favorites" ||
-    router.pathname === "/profile" ||
-    router.pathname === "/workerProfile" ||
-    router.pathname === "/" ||
-    router.pathname === "/worker/home" ||
-    router.pathname === "/worker/booking";
+    router.pathname === "/booking" ||
+    router.pathname === "/chat" ||
+    router.pathname === "/favorites" ||
+    router.pathname === "/profile";
 
   const isIntro = router.pathname === "/intro";
 

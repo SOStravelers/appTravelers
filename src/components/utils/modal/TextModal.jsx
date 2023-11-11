@@ -1,6 +1,6 @@
-import React from "react";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import React, { useState, useEffect } from "react";
 
 function TextModal({
   title,
@@ -10,7 +10,21 @@ function TextModal({
   setOpen,
   onAccept,
   onCancel,
+  selectOptions,
 }) {
+  const [selectedOption, setSelectedOption] = useState();
+
+  useEffect(() => {
+    if (selectOptions && selectOptions.length > 0) {
+      setSelectedOption(selectOptions[0]);
+    }
+  }, [selectOptions]);
+
+  const handleAccept = () => {
+    onAccept(selectedOption);
+    setOpen(false);
+  };
+
   return (
     <>
       {open && (
@@ -30,13 +44,34 @@ function TextModal({
                     <React.Fragment key={index}>
                       {line && <p>{line}</p>}
                       {index < text.length - 1 && <br />}{" "}
-                      {/* Agrega un <br /> excepto después de la última línea */}
                     </React.Fragment>
                   ))}
                 </div>
+                {selectOptions && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Select an option:
+                    </label>
+                    <select
+                      className="mt-1 block w-full p-2 border rounded-md"
+                      value={selectedOption}
+                      onChange={(e) => setSelectedOption(e.target.value)}
+                    >
+                      {selectOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
-              {onAccept && <SolidButton text={buttonText} onClick={onAccept} />}
-              {onCancel && <OutlinedButton text="Cancel" onClick={onCancel} />}
+              {onAccept && (
+                <SolidButton text={buttonText} onClick={handleAccept} />
+              )}
+              {onCancel && (
+                <OutlinedButton text="Cancel" onClick={() => onCancel()} />
+              )}
             </div>
           </div>
         </div>

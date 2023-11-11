@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-function SolidButton({ text, color = "lightBlue", py = 3, mt = 0, ...props }) {
+function SolidButton({ text, color, py = 3, mt = 0, ...props }) {
   return (
     <button
       className={clsx(
@@ -15,7 +15,7 @@ function SolidButton({ text, color = "lightBlue", py = 3, mt = 0, ...props }) {
           ? "bg-green"
           : color === "black"
           ? "bg-black"
-          : "bg-lightBlue"
+          : "bg-blueBorder"
       )}
       {...props}
     >

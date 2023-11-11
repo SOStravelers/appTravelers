@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -11,19 +11,20 @@ import UserService from "@/services/UserService";
 export default function WorkerSettings() {
   const { setWorker, isWorker } = useStore();
   const router = useRouter();
+
   const [open, setOpen] = useState(false);
   const [openInactive, setOpenInactive] = useState(false);
+
   const [isOnWorker, setIsOnWorker] = useState(false);
   const [isOnInactive, setIsInactive] = useState(false);
-  const [isOnNotifications, setIsOnNotifications] = useState(false);
 
-  const onFunction = () => {
-    console.log("On");
-  };
+  const [openNotification, setOpenNotification] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isOnNotification, setIsOnNotification] = useState(true);
 
-  const offFunction = () => {
-    console.log("Off");
-  };
+  useEffect(() => {
+    setIsOnNotification(true);
+  }, []);
 
   const workerModeOff = () => {
     console.log("dialogo user");
@@ -61,13 +62,33 @@ export default function WorkerSettings() {
     setOpenInactive(false);
   };
 
+  const notificationModeOn = () => {
+    setIsOnNotification(true);
+  };
+  const notificationModeOff = () => {
+    console.log("dialogo notification");
+    setOpenNotification(true);
+    setIsOnNotification(true);
+  };
+  const confirmNotification = async (option) => {
+    console.log("confirmNotification");
+    setOpenNotification(false);
+    setIsOnNotification(false);
+    console.log("Selected Option in MainPage:", option);
+    setSelectedOption(option);
+  };
+  const cancelNotification = async () => {
+    console.log("cancelInactiveMode");
+    setOpenNotification(false);
+  };
+
   return (
     <div className="flex flex-col py-28 px-5 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
       <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
       <div className="flex flex-col my-4">
         <OptionSwitch
-          title="Activate Worker Mode"
+          title="Worker Mode"
           onFunction={workerModeOff}
           offFunction={workerModeOff}
           initialState={isWorker}
@@ -75,11 +96,11 @@ export default function WorkerSettings() {
           setIsOn={setIsOnWorker}
         />
         <OptionSwitch
-          title="Activate Notifications"
-          onFunction={onFunction}
-          offFunction={offFunction}
-          isOn={isOnNotifications}
-          setIsOn={setIsOnNotifications}
+          title="Notifications"
+          onFunction={notificationModeOn}
+          offFunction={notificationModeOff}
+          isOn={isOnNotification}
+          setIsOn={setIsOnNotification}
         />
         <OptionSwitch
           title="Inactive Mode"
@@ -106,16 +127,31 @@ export default function WorkerSettings() {
         title={`Hide my worker account`}
         text={[
           "Are you sure you want to inactive your account?",
-          "",
           "You will not receive job offers or notifications of new opportunities.",
-          "",
           "You can change this option at any time.",
+          "",
         ]}
         buttonText="Accept"
         open={openInactive}
         setOpen={setOpenInactive}
         onAccept={confirmInactiveMode}
         onCancel={cancelInactiveMode}
+      />
+      <TextModal
+        title={`Disable notifications`}
+        text={["Which notifications would you like to deactivate?", ""]}
+        buttonText="Accept"
+        open={openNotification}
+        selectOptions={[
+          "Email notifications",
+          "Push notifications",
+          "WhatsApp notifications",
+          "SOS team notifications",
+          "All",
+        ]}
+        setOpen={setOpenNotification}
+        onAccept={confirmNotification}
+        onCancel={cancelNotification}
       />
     </div>
   );

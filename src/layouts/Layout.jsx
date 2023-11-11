@@ -103,7 +103,8 @@ function Layout({ children }) {
     router.pathname === "/booking" ||
     router.pathname === "/chat" ||
     router.pathname === "/favorites" ||
-    router.pathname === "/profile";
+    router.pathname === "/profile" ||
+    router.pathname === "/guest-settings";
 
   const isIntro = router.pathname === "/intro";
 

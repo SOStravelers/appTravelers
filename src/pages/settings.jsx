@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -14,15 +14,14 @@ export default function Settings() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
-  const [isOnNotifications, setIsOnNotifications] = useState(false);
 
-  const onFunction = () => {
-    console.log("On");
-  };
+  const [openNotification, setOpenNotification] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isOnNotification, setIsOnNotification] = useState(true);
 
-  const offFunction = () => {
-    console.log("Off");
-  };
+  useEffect(() => {
+    setIsOnNotification(true);
+  }, []);
 
   const workerModeOn = () => {
     console.log("dialogo worker");
@@ -31,45 +30,48 @@ export default function Settings() {
   };
 
   const workerModeOff = () => {
-    console.log("dialogo user");
     setIsOnWorker(true);
     setOpen(true);
   };
 
   const confirmChangeWorkerMode = async () => {
     console.log("confirmachageWorkerMode");
-    if (isOnWorker) {
-      setWorker(false);
-      setOpen(false);
-      setIsOnWorker(false);
-      router.push("/");
-    } else {
-      try {
-        let workerData = await WorkerService.setWorker();
-        console.log("el worker", workerData);
-        localStorage.setItem("type", "worker");
-        setWorker(true);
-        setOpen(false);
-        setIsOnWorker(true);
-        router.push("/worker/home");
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-
-  const cancelChangeWorkerMode = async () => {
-    if (!isOnWorker) {
-      setWorker(false);
-      setOpen(false);
-      setIsOnWorker(false);
-      router.push("/");
-    } else {
+    try {
+      let workerData = await WorkerService.setWorker();
+      console.log("el worker", workerData);
+      localStorage.setItem("type", "worker");
       setWorker(true);
       setOpen(false);
       setIsOnWorker(true);
       router.push("/worker/home");
+    } catch (err) {
+      console.log(err);
     }
+  };
+
+  const cancelChangeWorkerMode = async () => {
+    setOpen(false);
+  };
+
+  // Notification Functions
+  const notificationModeOn = () => {
+    setIsOnNotification(true);
+  };
+  const notificationModeOff = () => {
+    console.log("dialogo notification");
+    setOpenNotification(true);
+    setIsOnNotification(true);
+  };
+  const confirmNotification = async (option) => {
+    console.log("confirmNotification");
+    setOpenNotification(false);
+    setIsOnNotification(false);
+    console.log("Selected Option in MainPage:", option);
+    setSelectedOption(option);
+  };
+  const cancelNotification = async () => {
+    console.log("cancelInactiveMode");
+    setOpenNotification(false);
   };
 
   return (
@@ -78,7 +80,7 @@ export default function Settings() {
       <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
       <div className="flex flex-col my-4">
         <OptionSwitch
-          title="Activate Worker Mode"
+          title="Worker Mode"
           onFunction={workerModeOn}
           offFunction={workerModeOff}
           initialState={isWorker}
@@ -86,11 +88,11 @@ export default function Settings() {
           setIsOn={setIsOnWorker}
         />
         <OptionSwitch
-          title="Activate Notifications"
-          onFunction={onFunction}
-          offFunction={offFunction}
-          isOn={isOnNotifications}
-          setIsOn={setIsOnNotifications}
+          title="Notifications"
+          onFunction={notificationModeOn}
+          offFunction={notificationModeOff}
+          isOn={isOnNotification}
+          setIsOn={setIsOnNotification}
         />
       </div>
       <div className="mt-10 flex flex-col">
@@ -105,6 +107,22 @@ export default function Settings() {
         setOpen={setOpen}
         onAccept={confirmChangeWorkerMode}
         onCancel={cancelChangeWorkerMode}
+      />
+      <TextModal
+        title={`Disable notifications`}
+        text={["Which notifications would you like to deactivate?", ""]}
+        buttonText="Accept"
+        open={openNotification}
+        selectOptions={[
+          "Email notifications",
+          "Push notifications",
+          "WhatsApp notifications",
+          "SOS team notifications",
+          "All",
+        ]}
+        setOpen={setOpenNotification}
+        onAccept={confirmNotification}
+        onCancel={cancelNotification}
       />
     </div>
   );

@@ -32,7 +32,8 @@ export default function WorkersFound() {
   };
 
   const fullName = ({ first, last }) => {
-    return first + (last ?? "");
+    console.log(first, last);
+    return first + " " + (last ?? "");
   };
 
   return (

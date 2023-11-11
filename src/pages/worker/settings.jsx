@@ -4,6 +4,7 @@ import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import TextModal from "@/components/utils/modal/TextModal";
 import { useStore } from "@/store";
+import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
@@ -43,24 +44,48 @@ export default function WorkerSettings() {
     setOpen(false);
   };
   // Inactive Functions
-  const inactiveModeOn = () => {
+  const inactiveModeOn = async () => {
     console.log("dialogo inactive1");
     setOpenInactive(true);
     setIsInactive(false);
   };
-  const inactiveModeOff = () => {
+  const inactiveModeOff = async () => {
     console.log("dialogo inactive2");
-    setIsInactive();
+
+    try {
+      const response = await UserService.inactiveMode(true);
+      if (response.data) {
+        setIsInactive(false);
+        toast.info("Saved.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1500,
+        });
+      }
+    } catch (err) {
+      toast.error("Internal Server Error. Please try again later.", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1800,
+      });
+    }
   };
   const confirmInactiveMode = async () => {
     console.log("confirmInactiveMode");
     try {
       const response = await UserService.inactiveMode(false);
       if (response.data) {
+        setOpenInactive(false);
+        setIsInactive(true);
+        toast.info("Saved.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1500,
+        });
       }
-    } catch (err) {}
-    setOpenInactive(false);
-    setIsInactive(true);
+    } catch (err) {
+      toast.error("Internal Server Error. Please try again later.", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1800,
+      });
+    }
   };
   const cancelInactiveMode = async () => {
     console.log("cancelInactiveMode");

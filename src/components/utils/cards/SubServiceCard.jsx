@@ -11,7 +11,7 @@ function SubServiceCard({ id, link, icon, name }) {
   return (
     <Link href={link} onClick={select}>
       <div className="text-black flex flex-col items-center justify-center bg-white w-40 h-40 m-2 rounded-xl cursor-pointer">
-        <div className="w-24 h-24 rounded-full bg-blueBorder relative flex items-center justify-center">
+        <div className="w-24 h-24 rounded-full bg-blueButton relative flex items-center justify-center">
           <Image
             src={"/assets/subservice.png"}
             fill

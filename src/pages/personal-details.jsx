@@ -2,10 +2,13 @@ import { useRouter } from "next/router";
 import SelectCard from "@/components/utils/cards/SelectCard";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+import { toast } from "react-toastify";
 import { UserIcon, MailIcon, HouseIcon, LockIcon } from "@/constants/icons";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useStore } from "@/store";
+import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
+import UserService from "@/services/UserService";
 
 export default function PersonalDetails() {
   const router = useRouter();
@@ -29,6 +32,20 @@ export default function PersonalDetails() {
       setEmailTrun(truncarNumero(user.email));
     }
   }, [user]);
+  function separarNombre(nombre) {
+    const nombreSinEspacios = nombre.trim();
+    const indicePrimerEspacio = nombreSinEspacios.indexOf(" ");
+    const primerNombre = nombreSinEspacios.slice(0, indicePrimerEspacio);
+    const segundoNombre = nombreSinEspacios.slice(indicePrimerEspacio + 1);
+    return [primerNombre, segundoNombre];
+  }
+  function capitalizeFirstLetter(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+  const truncarNumero = (word) => {
+    const truncatedValue = word.length > 17 ? word.slice(0, 17) + "..." : word;
+    return truncatedValue;
+  };
 
   const handleNameClick = () => {
     setNameInput(true);
@@ -40,19 +57,40 @@ export default function PersonalDetails() {
     setNameInput(false);
     setSave(true);
   };
-  const saveAll = () => {
+  function setTheName(name) {
+    setName(name);
+    setNameTrun(truncarNumero(name));
+  }
+
+  const saveAll = async () => {
+    const newUser = { ...user };
+    console.log("el name", name);
+    const arrayName = separarNombre(name);
+    if (nameInput == true) {
+      try {
+        newUser.personalData.name.first = arrayName[0];
+        newUser.personalData.name.last = arrayName[1];
+        const response = await UserService.updateUser(newUser);
+        if (response.data) {
+          localStorage.setItem("auth.user", JSON.stringify(response.data.user));
+          Cookies.set("auth.user", JSON.stringify(response.data.user));
+          toast.info("Saved.", {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 1500,
+          });
+        }
+      } catch (err) {
+        toast.error("Internal Server Error. Please try again later.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1800,
+        });
+      }
+    }
     setNameInput(false);
     setEmailInput(false);
     setSave(false);
   };
 
-  function capitalizeFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }
-  const truncarNumero = (word) => {
-    const truncatedValue = word.length > 17 ? word.slice(0, 17) + "..." : word;
-    return truncatedValue;
-  };
   return (
     <div className="flex flex-col justify-center py-28 px-5 md:pl-80">
       {!nameInput ? (
@@ -69,7 +107,7 @@ export default function PersonalDetails() {
           icon={UserIcon}
           value={name}
           // onBlur={onBlur}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setTheName(e.target.value)}
         />
       )}
       {!emailInput ? (

@@ -92,7 +92,6 @@ function Layout({ children }) {
     router.pathname === "/register" ||
     router.pathname === "/alternative-login";
 
-  console.log("wena", router.pathname);
   const arePrincipalPages =
     router.pathname === "/worker/booking" ||
     router.pathname === "/worker/profile" ||

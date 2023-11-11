@@ -118,9 +118,13 @@ function RegisterForm() {
           </Field>
           <Field
             name="password"
-            onChangeValidate={z.string().refine((val) => val, {
-              message: "Required field",
-            })}
+            onChangeValidate={async (val, form) => {
+              if (!val) throw "Required field";
+              if (val.length < 6) throw "Minimum 6 characters";
+              if (!/(?=.*[0-9])(?=.*[a-zA-Z])/.test(val))
+                throw "Must include both numbers and letters";
+              return true;
+            }}
           >
             {({ value, setValue, onBlur, errors }) => {
               return (
@@ -146,9 +150,9 @@ function RegisterForm() {
             name="passwordConfirm"
             onChangeValidate={async (val, form) => {
               if (!val) throw "Required field";
-              if (form.getFieldValue("password")?.value !== val)
-                throw "Passwords don't match";
-
+              if (val.length < 6) throw "Minimum 6 characters";
+              if (!/(?=.*[0-9])(?=.*[a-zA-Z])/.test(val))
+                throw "Must include both numbers and letters";
               return true;
             }}
           >

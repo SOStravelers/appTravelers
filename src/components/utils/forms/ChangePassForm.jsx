@@ -1,4 +1,5 @@
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+import Link from "next/link";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import { LockIcon } from "@/constants/icons";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -150,6 +151,11 @@ function ChangePassForm() {
               );
             }}
           </Field>
+          <Link href="/">
+            <p className="text-blackText mt-1 mb-2 text-right">
+              Forgot password?
+            </p>
+          </Link>
           <OutlinedButton
             style={{ marginTop: "25px" }}
             text="Change Password"

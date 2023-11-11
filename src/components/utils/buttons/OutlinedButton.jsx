@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
-function OutlinedButton({ text, secondary, error, ...props }) {
+function OutlinedButton({ text, secondary, error, disabled, ...props }) {
   return (
     <button
       className={clsx(
@@ -10,8 +10,14 @@ function OutlinedButton({ text, secondary, error, ...props }) {
           ? "text-grey border-grey"
           : error
           ? "text-red border-red"
-          : "border-blueBorder text-blackText bg-blueButton"
+          : "border-blueBorder text-blackText bg-blueButton",
+        {
+          "opacity-50 cursor-not-allowed": disabled,
+          "bg-gray-300": disabled,
+          "text-gray-500": disabled,
+        } // Estilos cuando está desactivado
       )}
+      disabled={disabled} // Establece el atributo disabled basado en la prop
       {...props}
     >
       {text}

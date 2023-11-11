@@ -44,6 +44,13 @@ export default class UserService {
       image: image,
     });
   }
+  static async createPassword(password, id) {
+    console.log("perro");
+    console.log("casa", password, id);
+    return axios.post(`${this.authUrl}/createpass/${id}`, {
+      password: password,
+    });
+  }
   static async get(id) {
     console.log("isd", id);
     return axios.get(`${this.authUrl}/user/${id}`);

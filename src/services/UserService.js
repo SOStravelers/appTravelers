@@ -61,6 +61,17 @@ export default class UserService {
       }
     );
   }
+  static async inactiveMode(value) {
+    return axios.post(
+      `${this.baseUrl}/inactivemode`,
+      {
+        isActive: value,
+      },
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
   static async get(id) {
     console.log("isd", id);
     return axios.get(`${this.authUrl}/user/${id}`);

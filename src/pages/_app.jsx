@@ -27,7 +27,13 @@ export default function App({ Component, pageProps }) {
       router.pathname !== "/paypal" &&
       router.pathname !== "/worker/my-schedules" &&
       router.pathname !== "/worker/settings" &&
-      router.pathname !== "/settings"
+      router.pathname !== "/settings" &&
+      router.pathname !== "/personal-details" &&
+      router.pathname !== "/personal-details" &&
+      router.pathname !== "/change-password" &&
+      router.pathname !== "/create-password" &&
+      router.pathname !== "/worker/profile-config" &&
+      router.pathname !== "/worker/my-services"
     ) {
       return <Navbar />;
     }

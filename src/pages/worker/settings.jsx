@@ -25,7 +25,7 @@ export default function WorkerSettings() {
   useEffect(() => {
     setIsOnNotification(true);
   }, []);
-
+  //Worker Functions
   const workerModeOff = () => {
     console.log("dialogo user");
     setIsOnWorker(true);
@@ -42,7 +42,7 @@ export default function WorkerSettings() {
   const cancelChangeWorkerMode = async () => {
     setOpen(false);
   };
-
+  // Inactive Functions
   const inactiveModeOn = () => {
     console.log("dialogo inactive1");
     setOpenInactive(true);
@@ -54,6 +54,11 @@ export default function WorkerSettings() {
   };
   const confirmInactiveMode = async () => {
     console.log("confirmInactiveMode");
+    try {
+      const response = await UserService.inactiveMode(false);
+      if (response.data) {
+      }
+    } catch (err) {}
     setOpenInactive(false);
     setIsInactive(true);
   };
@@ -61,7 +66,7 @@ export default function WorkerSettings() {
     console.log("cancelInactiveMode");
     setOpenInactive(false);
   };
-
+  // Notification Functions
   const notificationModeOn = () => {
     setIsOnNotification(true);
   };
@@ -81,7 +86,6 @@ export default function WorkerSettings() {
     console.log("cancelInactiveMode");
     setOpenNotification(false);
   };
-
   return (
     <div className="flex flex-col py-28 px-5 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
@@ -129,7 +133,6 @@ export default function WorkerSettings() {
           "Are you sure you want to inactive your account?",
           "You will not receive job offers or notifications of new opportunities.",
           "You can change this option at any time.",
-          "",
         ]}
         buttonText="Accept"
         open={openInactive}

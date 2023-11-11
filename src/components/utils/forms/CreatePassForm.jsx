@@ -11,7 +11,6 @@ function CreatePassForm() {
   const { user, setUser, setLoggedIn } = useStore();
 
   const createPass = async (values) => {
-    console.log("wena", values);
     try {
       const id = user._id;
       const response = await UserService.createPassword(values.password, id);
@@ -21,8 +20,8 @@ function CreatePassForm() {
         }
         delete response.data.user.type;
         setUser(response.data.user);
-        localStorage.setItem("auth.user", response.data.user);
-        Cookies.set("auth.user", response.data.user);
+        localStorage.setItem("auth.user", JSON.stringify(response.data.user));
+        Cookies.set("auth.user", JSON.stringify(response.data.user));
         setUser(response.data.user);
         toast.success("Password successfully changed.", {
           position: toast.POSITION.BOTTOM_CENTER,
@@ -30,11 +29,19 @@ function CreatePassForm() {
         });
       }
     } catch (err) {
-      console.log(err);
-      toast.error("Internal Server Error. Please try again later.", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1500,
-      });
+      console.log("perooo");
+      console.log(err.response.data.message);
+      if (err.response && err.response.data) {
+        toast.error(err.response.data.message, {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1500,
+        });
+      } else {
+        toast.error("Internal Server Error. Please try again later.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1500,
+        });
+      }
     }
   };
 

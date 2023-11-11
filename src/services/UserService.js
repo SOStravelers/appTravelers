@@ -45,11 +45,21 @@ export default class UserService {
     });
   }
   static async createPassword(password, id) {
-    console.log("perro");
-    console.log("casa", password, id);
     return axios.post(`${this.authUrl}/createpass/${id}`, {
       password: password,
     });
+  }
+  static async changePassword(currentPassword, newPassword) {
+    return axios.post(
+      `${this.baseUrl}/changepass`,
+      {
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      },
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
   static async get(id) {
     console.log("isd", id);

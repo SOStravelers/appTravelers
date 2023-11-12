@@ -24,10 +24,7 @@ export default function Worker({ user }) {
         titleTwo={"Services"}
       />
       {actualView === SECTION_ONE ? (
-        <SectionAbout
-          description={user?.about}
-          gallery={[user?.img?.imgUrl, user?.img?.imgUrl]}
-        />
+        <SectionAbout description={user?.about} gallery={user?.img?.gallery} />
       ) : (
         <SectionServices
           services={"Services"}

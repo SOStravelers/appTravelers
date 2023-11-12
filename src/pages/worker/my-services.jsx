@@ -16,8 +16,9 @@ export default function MyServices() {
   const { user, setUser } = useStore();
 
   useEffect(() => {
-    if (user?.businessDate?.services?.length > 0) {
-      setSelectedOptions(user?.businessDate?.services);
+    console.log(user);
+    if (user?.workerData?.services?.length > 0) {
+      setSelectedOptions(user?.workerData?.services);
     }
     getData();
   }, [user]);
@@ -34,8 +35,10 @@ export default function MyServices() {
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
       setServices(response.data.docs);
+      console.log(response.data.docs);
     });
   };
+
   /* Sugerencia de codigo
   const handleChange = (
     serviceId,
@@ -167,7 +170,6 @@ export default function MyServices() {
               service={service}
               title={services?.filter((s) => s?.id === service?.id)[0]?.name}
               selectedOptions={selectedOptions}
-              handleChange={handleChange}
             />
           ))}
           <OutlinedButton

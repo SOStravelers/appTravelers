@@ -44,7 +44,6 @@ export async function getServerSideProps({ params }) {
     },
   };
   const userId = params.id;
-  console.log(userId);
   if (!userId) return redirect;
 
   let user = null;

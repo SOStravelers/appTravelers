@@ -4,7 +4,7 @@ import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import SectionAbout from "@/components/profile/SectionAbout/SectionAbout";
 import SectionServices from "@/components/profile/SectionServices/SectionServices";
 import { SECTION_ONE } from "@/constants";
-import UserService from "@/services/UserService";
+import HostelService from "@/services/HostelService";
 
 export default function Hostel({ hostel }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
@@ -46,15 +46,13 @@ export async function getServerSideProps({ params }) {
       permanent: false,
     },
   };
-  const userId = params.id;
-  console.log(userId);
-  if (!userId) return redirect;
+  const hostelId = params.id;
+  if (!hostelId) return redirect;
 
   let hostel = null;
   try {
-    const response = await UserService.get(userId);
+    const response = await HostelService.getBusiness(hostelId);
     hostel = response.data;
-    console.log(hostel);
   } catch (error) {
     console.error(error);
   }

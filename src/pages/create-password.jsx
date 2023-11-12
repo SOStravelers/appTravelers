@@ -44,7 +44,7 @@ export default function CreatePassword() {
       ) : (
         <div className="flex flex-col items-center justify-center max-w-lg my-5">
           <h1 className="text-2xl font-bold mb-5">
-            You don't have a password yet
+            You don`&apos;`t have a password yet
           </h1>
 
           {codeSend ? (

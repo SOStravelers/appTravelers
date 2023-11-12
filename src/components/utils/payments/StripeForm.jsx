@@ -8,7 +8,7 @@ const stripePromise = loadStripe(stripePublicKey);
 
 export default function StripeForm({ clientSecret }) {
   const appearance = {
-    theme: "dark",
+    theme: "stripe",
     size: "desktop",
     variables: {
       fontFamily: "Sohne, system-ui, sans-serif",

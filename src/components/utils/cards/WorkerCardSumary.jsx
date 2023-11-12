@@ -8,19 +8,21 @@ function WorkerCardSumary({ link, name, service, score, img, hostelId }) {
       <div className="flex">
         <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
           <Link href={link}>
-            <Image
-              src={img}
-              alt="altss"
-              fill
-              className="object-cover rounded-xl"
-            />
+            {img ? (
+              <Image
+                src={img}
+                fill
+                alt="imagenWorker"
+                className="object-cover rounded-xl"
+              />
+            ) : null}
           </Link>
         </div>
         <div className="flex flex-col">
           <h1 className="font-semibold">{name}</h1>
           <p className="text-blackText text-sm">{service}</p>
           <div className="flex items-center">
-            <StarIcon color={"#1CDAE5"} className="mr-1" />
+            <StarIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText">{score}</p>
           </div>
         </div>

@@ -3,11 +3,11 @@ import { useStore } from "@/store";
 import Link from "next/link";
 import clsx from "clsx";
 import {
-  HomeIcon,
-  BookingIcon,
-  ChatIcon,
-  FavoriteIcon,
-  ProfileIcon,
+  HomeIconOutlined,
+  BookingIconOutlined,
+  ChatIconOutlined,
+  FavoriteIconOutlined,
+  ProfileIconOutlined,
 } from "@/constants/icons";
 
 function Sidebar() {
@@ -26,7 +26,7 @@ function Sidebar() {
             router.pathname === "/" && "bg-lightBlue"
           )}
         >
-          <HomeIcon color="white" />
+          <HomeIconOutlined color="white" />
           <p className={clsx("text-xl ml-3 text-white")}>Home</p>
         </button>
       </Link>
@@ -38,7 +38,7 @@ function Sidebar() {
             router.pathname === "/booking" && "bg-lightBlue"
           )}
         >
-          <BookingIcon color="#FFFFFF" />
+          <BookingIconOutlined color="#FFFFFF" />
           <p className={clsx("text-xl ml-3 text-white")}>Bookings</p>
         </button>
       </Link>
@@ -49,7 +49,7 @@ function Sidebar() {
             router.pathname === "/chat" && "bg-lightBlue"
           )}
         >
-          <ChatIcon color="white" />
+          <ChatIconOutlined color="white" />
           <p className={clsx("text-xl ml-3 text-white")}>Chat</p>
         </button>
       </Link>
@@ -64,7 +64,7 @@ function Sidebar() {
               router.pathname === "/favorites" && "bg-lightBlue"
             )}
           >
-            <FavoriteIcon color="white" />
+            <FavoriteIconOutlined color="white" />
             <p className={clsx("text-xl ml-3 text-white")}>Favorites</p>
           </button>
         </Link>
@@ -77,7 +77,7 @@ function Sidebar() {
             router.pathname === "/profile" && "bg-lightBlue"
           )}
         >
-          <ProfileIcon color="white" />
+          <ProfileIconOutlined color="white" />
           <p className={clsx("text-xl ml-3 text-white")}>Profile</p>
         </button>
       </Link>

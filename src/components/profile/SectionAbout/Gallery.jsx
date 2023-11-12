@@ -66,17 +66,17 @@ function Gallery({ images }) {
               &times;
             </button>
             <button
-              className="absolute top-40 left-0 m-4 text-white text-2xl"
+              className="absolute top-48 left-0 m-4 text-white text-7xl"
               onClick={() => handlePrevImage()}
             >
-              prev
+              {"<"}
             </button>
 
             <button
-              className="absolute top-40 right-0 m-4 text-white text-2xl"
+              className="absolute top-48 right-0 m-4 text-white text-7xl"
               onClick={() => handleNextImage()}
             >
-              next
+              {">"}
             </button>
             <img
               src={selectedImage}

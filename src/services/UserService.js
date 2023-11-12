@@ -92,6 +92,7 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
+
   static async updateGalley(file, number) {
     console.log("fotitos", this.getHeaders());
     const formData = new FormData();
@@ -99,5 +100,29 @@ export default class UserService {
     return axios.post(`${this.baseUrl}/profile/gallery/${number}`, formData, {
       headers: this.getHeaders(),
     });
+  }
+
+  static async sendCodeEmail(userId, type) {
+    return axios.get(
+      `${this.authUrl}/sendcode/template?id=${userId}&email=${type}`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async verifyCodeEmail(userId, code) {
+    let data = { code: Number(code) };
+    return axios.post(`${this.authUrl}/verifycode/${userId}/`, data, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async verifyEmail(email) {
+    return axios.post(`${this.authUrl}/verifyEmail`, { email: email });
+  }
+
+  static async findByEmail(email) {
+    return axios.post(`${this.authUrl}/findemail`, { email: email });
   }
 }

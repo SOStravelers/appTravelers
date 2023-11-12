@@ -16,14 +16,13 @@ export default function MyServices() {
   const { user, setUser } = useStore();
 
   useEffect(() => {
-    if (user?.businessDate?.services?.length > 0) {
-      setSelectedOptions(user?.businessDate?.services);
+    if (user?.workerData?.services?.length > 0) {
+      setSelectedOptions(user?.workerData?.services);
     }
     getData();
   }, [user]);
 
   useEffect(() => {
-    console.log(selectedOptions);
     selectedOptions?.map((s) => {
       if (s?.subServices?.length === 0) {
         setSelectedOptions(selectedOptions?.filter((ss) => ss?.id !== s?.id));
@@ -36,60 +35,6 @@ export default function MyServices() {
       setServices(response.data.docs);
     });
   };
-  /* Sugerencia de codigo
-  const handleChange = (
-    serviceId,
-    serviceName,
-    subserviceId,
-    subserviceName
-  ) => {
-    const serviceExists = selectedOptions?.find(
-      (s) => s?.serviceId === serviceId
-    );
-    if (serviceExists) {
-      const subserviceExists = serviceExists?.subServices?.find(
-        (s) => s?.subserviceId === subserviceId
-      );
-      if (subserviceExists) {
-        const newSelectedOptions = selectedOptions?.map((s) => {
-          if (s?.serviceId === serviceId) {
-            const newSubservices = s?.subServices?.filter(
-              (ss) => ss?.subserviceId !== subserviceId
-            );
-            return { ...s, subServices: newSubservices };
-          } else {
-            return s;
-          }
-        });
-        setSelectedOptions(newSelectedOptions);
-      } else {
-        const newSelectedOptions = selectedOptions?.map((s) => {
-          if (s?.serviceId === serviceId) {
-            const newSubservices = [
-              ...s?.subServices,
-              { subserviceId: subserviceId, subserviceName: subserviceName },
-            ];
-            return { ...s, subServices: newSubservices };
-          } else {
-            return s;
-          }
-        });
-        setSelectedOptions(newSelectedOptions);
-      }
-    } else {
-      setSelectedOptions([
-        ...selectedOptions,
-        {
-          serviceId: serviceId,
-          serviceName: serviceName,
-          subServices: [
-            { subserviceId: subserviceId, subserviceName: subserviceName },
-          ],
-        },
-      ]);
-    }
-  };
-*/
 
   const handleChange = (serviceId, subserviceId) => {
     const serviceExists = selectedOptions?.find((s) => s?.id === serviceId);
@@ -103,7 +48,7 @@ export default function MyServices() {
             const newSubservices = s?.subServices?.filter(
               (ss) => ss !== subserviceId
             );
-            return { ...s, subServices: newSubservices };
+            return { ...s, subServices: newSubservices, gallery: [] };
           } else {
             return s;
           }
@@ -113,7 +58,7 @@ export default function MyServices() {
         const newSelectedOptions = selectedOptions?.map((s) => {
           if (s?.id === serviceId) {
             const newSubservices = [...s?.subServices, subserviceId];
-            return { ...s, subServices: newSubservices };
+            return { ...s, subServices: newSubservices, gallery: [] };
           } else {
             return s;
           }
@@ -124,6 +69,7 @@ export default function MyServices() {
       const newService = {
         id: serviceId,
         subServices: [subserviceId],
+        gallery: [],
       };
       setSelectedOptions([...selectedOptions, newService]);
     }
@@ -131,14 +77,10 @@ export default function MyServices() {
 
   const handleSaveSelection = async () => {
     user.workerData.services = selectedOptions;
-    console.log(user);
     const response = await UserService.updateUser(user);
-    console.log("weno", user);
     if (response.data) {
-      console.log("respesta", response.data);
       setUser(response.data);
     }
-    console.log(user);
     setUser(response.data);
     setAddingService(false);
   };
@@ -167,7 +109,6 @@ export default function MyServices() {
               service={service}
               title={services?.filter((s) => s?.id === service?.id)[0]?.name}
               selectedOptions={selectedOptions}
-              handleChange={handleChange}
             />
           ))}
           <OutlinedButton

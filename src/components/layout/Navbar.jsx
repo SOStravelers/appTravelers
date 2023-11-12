@@ -2,10 +2,15 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 import {
   HomeIcon,
+  HomeIconOutlined,
   BookingIcon,
+  BookingIconOutlined,
   ChatIcon,
+  ChatIconOutlined,
   FavoriteIcon,
+  FavoriteIconOutlined,
   ProfileIcon,
+  ProfileIconOutlined,
 } from "@/constants/icons";
 import { useStore } from "@/store";
 import Link from "next/link";
@@ -21,13 +26,17 @@ function Navbar() {
     >
       <Link href={isWorker ? "/worker/home" : "/"}>
         <button className="flex flex-col items-center">
-          <HomeIcon
-            color={clsx(router.pathname === "/" ? "#3498db" : "#D9D9D9")}
-          />
+          {router.pathname === "/" || router.pathname === "/worker/home" ? (
+            <HomeIcon color="#3498db" />
+          ) : (
+            <HomeIconOutlined color="black" />
+          )}
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/" ? "text-lightBlue" : "text-greyText"
+              router.pathname === "/" || router.pathname === "/worker/home"
+                ? "text-lightBlue"
+                : "text-greyText"
             )}
           >
             Home
@@ -37,14 +46,16 @@ function Navbar() {
 
       <Link href={isWorker ? "/worker/booking" : "/booking"}>
         <button className="flex flex-col items-center">
-          {" "}
-          <BookingIcon
-            color={clsx(router.pathname === "/booking" ? "#3498db" : "#D9D9D9")}
-          />
+          {router.pathname.includes("booking") ? (
+            <BookingIcon color="#3498db" />
+          ) : (
+            <BookingIconOutlined color="black" />
+          )}
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/booking"
+              router.pathname === "/booking" ||
+                router.pathname === "/worker/booking"
                 ? "text-lightBlue"
                 : "text-greyText"
             )}
@@ -55,14 +66,17 @@ function Navbar() {
       </Link>
       <Link href={isWorker ? "/worker/chat" : "/chat"}>
         <button className="flex flex-col items-center">
-          {" "}
-          <ChatIcon
-            color={clsx(router.pathname === "/chat" ? "#3498db" : "#D9D9D9")}
-          />
+          {router.pathname.includes("chat") ? (
+            <ChatIcon color="#3498db" />
+          ) : (
+            <ChatIconOutlined color="black" />
+          )}
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/chat" ? "text-lightBlue" : "text-greyText"
+              router.pathname.includes("chat")
+                ? "text-lightBlue"
+                : "text-greyText"
             )}
           >
             Chat
@@ -71,16 +85,16 @@ function Navbar() {
       </Link>
       <Link href={isWorker ? "/worker/favorites" : "/favorites"}>
         <button className="flex flex-col items-center">
-          {" "}
-          <FavoriteIcon
-            color={clsx(
-              router.pathname === "/favorites" ? "#3498db" : "#D9D9D9"
-            )}
-          />
+          {router.pathname.includes("favorites") ? (
+            <FavoriteIcon color="#3498db" />
+          ) : (
+            <FavoriteIconOutlined color="black" />
+          )}
+
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/favorites"
+              router.pathname.includes("favorites")
                 ? "text-lightBlue"
                 : "text-greyText"
             )}
@@ -92,14 +106,16 @@ function Navbar() {
 
       <Link href={isWorker ? "/worker/profile" : "/profile"}>
         <button className="flex flex-col items-center">
-          {" "}
-          <ProfileIcon
-            color={clsx(router.pathname === "/profile" ? "#3498db" : "#D9D9D9")}
-          />
+          {router.pathname.includes("profile") ? (
+            <ProfileIcon color="#3498db" />
+          ) : (
+            <ProfileIconOutlined color="black" />
+          )}
+
           <p
             className={clsx(
               "text-sm",
-              router.pathname === "/profile"
+              router.pathname.includes("profile")
                 ? "text-lightBlue"
                 : "text-greyText"
             )}

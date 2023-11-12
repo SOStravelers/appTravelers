@@ -1,16 +1,62 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
+import UserService from "@/services/UserService";
 import ForgotPassForm from "@/components/utils/forms/ForgotPassForm";
+import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+import SolidButton from "@/components/utils/buttons/SolidButton";
 
 export default function ChangePassword() {
+  const [codeSend, setCodeSend] = useState(false);
+  const [code, setCode] = useState("");
+  const [userId, setUserId] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
+
+  const handleVerifyCode = async () => {
+    console.log(code);
+    try {
+      const response = await UserService.verifyCodeEmail(userId, code);
+      console.log(response);
+      if (response.status === 200) {
+        console.log("ypui");
+        router.push({
+          pathname: "/recovery-password",
+          query: { userId: response?.data?._id },
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      setErrorMsg(err?.response?.data?.message);
+    }
+  };
+
   return (
     <div className="px-5 py-28 md:pl-80">
-      <h1 className="text-black text-center text-xl font-semibold mb-5 max-w-lg">
-        Forgot you password?
-      </h1>
-      <p className="text-center mb-5 max-w-lg">
-        Enter your email address below and we&apos;ll send you a link to reset
-        your password.
-      </p>
-      <ForgotPassForm />
+      {codeSend ? (
+        <div className="max-w-lg">
+          <p className="text-center text-gray-500 mb-5">
+            Please check your email for the verification code so you can reset
+            your password.
+          </p>
+          <OutlinedInput
+            placeholder="Verification code"
+            onChange={(e) => setCode(e.target.value)}
+          />
+          <p className="text-red text-center my-2">{errorMsg}</p>
+          <SolidButton mt={5} text="Verify" onClick={handleVerifyCode} />
+        </div>
+      ) : (
+        <>
+          <h1 className="text-black text-center text-xl font-semibold mb-5 max-w-lg">
+            Forgot you password?
+          </h1>
+          <p className="text-center mb-5 max-w-lg">
+            Enter your email address below and we&apos;ll send you a code to
+            reset your password.
+          </p>
+          <ForgotPassForm setCodeSend={setCodeSend} setUserId={setUserId} />
+        </>
+      )}
     </div>
   );
 }

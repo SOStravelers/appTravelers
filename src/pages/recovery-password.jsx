@@ -1,6 +1,15 @@
+import { useRouter } from "next/router";
 import RecoveryPassForm from "@/components/utils/forms/RecoveryPassForm";
 
 export default function RecoveryPassword() {
+  const router = useRouter();
+
+  if (!router.query.userId) {
+    console.log("no hay query");
+  } else {
+    console.log(router.query.userId);
+  }
+
   return (
     <div className="px-5 py-28 md:pl-80">
       <h1 className="text-black text-center text-xl font-semibold mb-5 max-w-lg">
@@ -9,7 +18,7 @@ export default function RecoveryPassword() {
       <p className="text-center mb-5 max-w-lg">
         Enter your new password and confirm it.
       </p>
-      <RecoveryPassForm />
+      <RecoveryPassForm userId={router?.query?.userId} />
     </div>
   );
 }

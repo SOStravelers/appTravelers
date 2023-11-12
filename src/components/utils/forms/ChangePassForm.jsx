@@ -53,7 +53,7 @@ function ChangePassForm() {
     >
       {({ isValid, submit }) => (
         <form
-          className="w-full flex flex-col"
+          className="w-full flex flex-col max-w-lg"
           onSubmit={(e) => {
             e.preventDefault();
             submit();
@@ -151,11 +151,7 @@ function ChangePassForm() {
               );
             }}
           </Field>
-          <Link href="/">
-            <p className="text-blackText mt-1 mb-2 text-right">
-              Forgot password?
-            </p>
-          </Link>
+
           <OutlinedButton
             style={{ marginTop: "25px" }}
             text="Change Password"

@@ -53,7 +53,7 @@ function ChangePassForm() {
     >
       {({ isValid, submit }) => (
         <form
-          className="w-full flex flex-col"
+          className="w-full flex flex-col max-w-lg"
           onSubmit={(e) => {
             e.preventDefault();
             submit();

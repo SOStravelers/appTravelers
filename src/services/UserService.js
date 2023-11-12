@@ -101,4 +101,20 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
+
+  static async sendCodeEmail(userId, type) {
+    return axios.get(
+      `${this.authUrl}/sendcode/template?id=${userId}&email=${type}`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async verifyCodeEmail(userId, code) {
+    let data = { code: Number(code) };
+    return axios.post(`${this.authUrl}/verifycode/${userId}/`, data, {
+      headers: this.getHeaders(),
+    });
+  }
 }

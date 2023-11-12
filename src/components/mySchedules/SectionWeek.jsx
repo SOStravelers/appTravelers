@@ -56,6 +56,31 @@ function SectionWeek() {
     }
   };
 
+  const formatData = (value) => {
+    const currentDate = new Date();
+    const [hours, minutes] = value.split(":");
+    const startTime = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate(),
+      hours,
+      minutes
+    );
+
+    // Formatear manualmente la hora
+    const tiempoFormateado =
+      startTime.getFullYear() +
+      "-" +
+      (startTime.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      startTime.getDate().toString().padStart(2, "0") +
+      "T" +
+      startTime.getHours().toString().padStart(2, "0") +
+      ":" +
+      startTime.getMinutes().toString().padStart(2, "0");
+
+    return tiempoFormateado;
+  };
   const addIntervalandVerify = async (
     dayID,
     isActive = true,
@@ -64,6 +89,10 @@ function SectionWeek() {
   ) => {
     setSave(save);
     const dayExists = horario.some((day) => day.day === dayID);
+    interval["formatStartTime"] = await formatData(interval.startTime);
+    interval["formatEndTime"] = await formatData(interval.endTime);
+    console.log("interval", interval);
+
     if (dayExists) {
       const newHorario = horario.map((day) => {
         if (day.day === dayID) {

@@ -14,23 +14,30 @@ import WorkerService from "@/services/WorkerService";
 export default function Summary() {
   const { loggedIn, service } = useStore();
   const router = useRouter();
-  const { hour, date } = service;
+  const [theHour, setHour] = useState(null);
+  const [theDate, setDate] = useState(null);
+  const [IdHostel, setIdHostel] = useState(null);
   const [worker, setWorker] = useState(null);
   const [hostel, setHostel] = useState(null);
   const [subServiceId, setSubservice] = useState(null);
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
+    console.log("el servicios", service);
     getData();
   }, []);
 
   const getData = async () => {
-    const { hostelId, workerId, subServiceId } = service;
+    const { hostelId, hour, date, workerId, subServiceId } = service;
     setSubservice(subServiceId);
 
     if (!hostelId || !workerId) router.push("/");
+    setIdHostel(hostelId);
+    setHour(hour);
+    setDate(date);
 
     HostelService.getBusiness(hostelId).then((response) => {
+      console.log(response.data);
       setHostel(response.data);
     });
     WorkerService.getWorker(workerId).then((response) => {
@@ -74,17 +81,18 @@ export default function Summary() {
         hostelId={hostel?.id}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
-      <div className="flex justify-between w-72 pr-5 my-5">
-        <div className="flex ">
-          <ClockIcon />
-          {/* <p className="ml-2">
-            {date} | {hour}
-          </p> */}
+
+      {service && (
+        <div className="flex justify-between w-full max-w-lg pr-1 my-5">
+          <div className="flex  ">
+            <ClockIcon />
+            <p className="ml-2">{`${theDate || ""} | ${theHour || ""}`}</p>
+          </div>
+          <Link className="flex " href={`/reservation/${IdHostel}`}>
+            <ChangeIcon />
+          </Link>
         </div>
-        {/* <Link href={`/reservation/${service?.hostelId}`}>
-          <ChangeIcon />
-        </Link> */}
-      </div>
+      )}
       <div className="flex items-center w-full max-w-lg my-2">
         <input
           type="checkbox"

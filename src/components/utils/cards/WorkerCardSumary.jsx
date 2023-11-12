@@ -22,7 +22,7 @@ function WorkerCardSumary({ link, name, service, score, img, hostelId }) {
           <h1 className="font-semibold">{name}</h1>
           <p className="text-blackText text-sm">{service}</p>
           <div className="flex items-center">
-            <StarIcon color={"#1CDAE5"} className="mr-1" />
+            <StarIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText">{score}</p>
           </div>
         </div>

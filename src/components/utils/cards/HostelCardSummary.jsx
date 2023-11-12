@@ -17,17 +17,19 @@ function HostelCardSummary({ subserviceId, link, name, location, image }) {
           )}
         </div>
         <div className="flex justify-between">
-          <div className="flex flex-col p-2 my-3">
-            <h1 className="font-regukar">{name}</h1>
+          <div className="flex flex-col my-3">
+            <h1 className="font-semibold ml-1">
+              {name ? name : "No disponible"}
+            </h1>
             <div className="flex items-center mt-1">
-              <PinIcon color={"#5B78C7"} className="mr-1" />
+              <PinIcon color={"#00A0D5"} className="mr-1" />
               <p className="text-blackText text-sm">
                 {location ? location : "No disponible"}
               </p>
             </div>
           </div>
           <Link
-            className="w-8 h-20 flex items-center justify-center rounded-r-2xl cursor-pointer"
+            className="w-8 h-20 flex items-center justify-center pr-1 rounded-r-2xl cursor-pointer"
             href={`/select-hostel/${subserviceId}`}
           >
             <ChangeIcon className="ml-1" />

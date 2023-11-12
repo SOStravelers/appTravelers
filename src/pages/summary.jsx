@@ -52,7 +52,6 @@ export default function Summary() {
   };
 
   const hireNow = () => {
-    console.log("perro");
     console.log(loggedIn);
     if (!loggedIn) router.push("login");
     else router.push("/payment");
@@ -115,7 +114,11 @@ export default function Summary() {
         <p className="text-blackText font-semibold">Total Service Fee</p>
         <p className="text-blackBlue font-semibold text-2xl">$ 100.00</p>
       </div>
-      <OutlinedButton text={"Hire Now"} onClick={hireNow} />
+      <OutlinedButton
+        disabled={!selected}
+        text={"Hire Now"}
+        onClick={hireNow}
+      />
     </div>
   );
 }

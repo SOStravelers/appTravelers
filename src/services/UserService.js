@@ -117,4 +117,12 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
+
+  static async verifyEmail(email) {
+    return axios.post(`${this.authUrl}/verifyEmail`, { email: email });
+  }
+
+  static async findByEmail(email) {
+    return axios.post(`${this.authUrl}/findemail`, { email: email });
+  }
 }

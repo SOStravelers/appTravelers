@@ -151,11 +151,7 @@ function ChangePassForm() {
               );
             }}
           </Field>
-          <Link href="/">
-            <p className="text-blackText mt-1 mb-2 text-right">
-              Forgot password?
-            </p>
-          </Link>
+
           <OutlinedButton
             style={{ marginTop: "25px" }}
             text="Change Password"

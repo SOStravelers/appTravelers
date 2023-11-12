@@ -28,6 +28,9 @@ export default class WorkerService {
   static async get(id) {
     return axios.get(`${this.authUrl}/user/${id}`);
   }
+  static async getWorker(id) {
+    return axios.get(`${this.authUrl}/user/worker/${id}`);
+  }
 
   static async setWorker() {
     return axios.get(`${this.baseUrl}/setworker`, {

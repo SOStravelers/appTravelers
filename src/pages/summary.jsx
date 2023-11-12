@@ -17,6 +17,7 @@ export default function Summary() {
   const { hour, date } = service;
   const [worker, setWorker] = useState(null);
   const [hostel, setHostel] = useState(null);
+  const [subServiceId, setSubservice] = useState(null);
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
@@ -25,14 +26,14 @@ export default function Summary() {
 
   const getData = async () => {
     const { hostelId, workerId, subServiceId } = service;
+    setSubservice(subServiceId);
 
     if (!hostelId || !workerId) router.push("/");
 
-    console.log(service);
-    HostelService.get(hostelId).then((response) => {
+    HostelService.getBusiness(hostelId).then((response) => {
       setHostel(response.data);
     });
-    WorkerService.get(workerId).then((response) => {
+    WorkerService.getWorker(workerId).then((response) => {
       setWorker(response.data);
     });
   };
@@ -60,7 +61,7 @@ export default function Summary() {
         name={hostel?.businessData?.name}
         location={hostel?.businessData?.location?.city}
         link={"/hostel/" + 1}
-        subserviceId={service?.subServiceId}
+        subserviceId={subServiceId}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
       <WorkerCardSumary
@@ -76,13 +77,13 @@ export default function Summary() {
       <div className="flex justify-between w-72 pr-5 my-5">
         <div className="flex ">
           <ClockIcon />
-          <p className="ml-2">
+          {/* <p className="ml-2">
             {date} | {hour}
-          </p>
+          </p> */}
         </div>
-        <Link href={`/reservation/${service?.hostelId}`}>
+        {/* <Link href={`/reservation/${service?.hostelId}`}>
           <ChangeIcon />
-        </Link>
+        </Link> */}
       </div>
       <div className="flex items-center w-full max-w-lg my-2">
         <input

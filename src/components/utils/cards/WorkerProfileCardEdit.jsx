@@ -3,21 +3,11 @@ import { useStore } from "@/store";
 import Image from "next/image";
 import { StarIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
-import ServiceService from "@/services/ServiceService";
 
-function WorkerProfileCard({ name, service, score, avatar, lastName }) {
+function WorkerProfileCard({ name, services, score, avatar, lastName }) {
   const [isInputHidden, setIsInputHidden] = useState(true);
   const [newAvatar, setNewAvatar] = useState(null);
   const { user, setUser } = useStore();
-  const [services, setServices] = useState([]);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    console.log(services);
-  }, [services]);
 
   const handleImageClick = () => {
     setIsInputHidden(false);
@@ -31,7 +21,6 @@ function WorkerProfileCard({ name, service, score, avatar, lastName }) {
     reader.onloadend = async () => {
       // Do something with the uploaded image
       setNewAvatar(reader.result);
-      console.log(reader.result);
       try {
         const response = await UserService.changeProfileImg(reader.result);
         if (response.data.img) {
@@ -45,21 +34,6 @@ function WorkerProfileCard({ name, service, score, avatar, lastName }) {
         console.log(err);
       }
     };
-  };
-
-  const getData = async () => {
-    ServiceService.list({ isActive: true, page: 1 }).then((response) => {
-      setServices(response.data.docs);
-    });
-  };
-
-  const renameServices = (servicesIds) => {
-    const servicesArray = servicesIds.split(", ");
-    const servicesNames = servicesArray.map((id) => {
-      const service = services.find((s) => s._id === id);
-      return service?.name;
-    });
-    return servicesNames.join(", ");
   };
 
   return (
@@ -101,8 +75,8 @@ function WorkerProfileCard({ name, service, score, avatar, lastName }) {
           {name} {lastName}
         </h1>
         <p className="text-blackText my-2">
-          {service?.length > 0
-            ? renameServices(service?.map((s) => s.id).join(", "))
+          {services?.length > 0
+            ? services?.map((service) => service.id.name).join(", ")
             : "No services yet"}
         </p>
         <div className="flex items-center">

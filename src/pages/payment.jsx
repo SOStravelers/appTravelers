@@ -1,12 +1,13 @@
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { LockIcon } from "@/constants/icons";
 import Image from "next/image";
 
 export default function Payment() {
   const router = useRouter();
 
-  const [paymentType, setPaymentType] = useState("stripe");
+  const [paymentType, setPaymentType] = useState(null);
 
   const pay = async () => {
     let url = "/";
@@ -22,13 +23,13 @@ export default function Payment() {
   };
 
   return (
-    <div className="flex flex-col items-center md:items-start justify-between py-28 px-5 md:pl-80 min-h-[70vh]">
-      <div className="flex flex-col w-full max-w-lg">
-        <div className="flex justify-between items-center">
-          <div
-            className="flex items-center my-3"
-            onClick={() => setPaymentType("stripe")}
-          >
+    <div className="flex flex-col items-center md:items-start  pt-28 px-8 md:pl-80 min-h-[70vh]">
+      <div className="flex flex-col w-full max-w-lg pb-10">
+        <div
+          className="flex justify-between items-center"
+          onClick={() => setPaymentType("stripe")}
+        >
+          <div className="flex items-center my-3">
             <Image
               src={"/icons/visa.svg"}
               width={50}
@@ -46,11 +47,11 @@ export default function Payment() {
             checked={paymentType === "stripe"}
           />
         </div>
-        <div className="flex justify-between items-center">
-          <div
-            className="flex items-center my-3"
-            onClick={() => setPaymentType("paypal")}
-          >
+        <div
+          className="flex justify-between items-center"
+          onClick={() => setPaymentType("paypal")}
+        >
+          <div className="flex items-center my-3">
             <Image
               src={"/icons/paypal.svg"}
               width={50}
@@ -68,8 +69,30 @@ export default function Payment() {
             checked={paymentType === "paypal"}
           />
         </div>
+        <div className="flex mt-3 justify-between items-center">
+          <div className="flex items-center my-3">
+            <div className="ml-2">
+              <LockIcon />
+            </div>
+            <p className="ml-8">{"Cash (Comming Soon)"}</p>
+          </div>
+          <input
+            type="radio"
+            disabled
+            name="payment"
+            id="cash"
+            value="cash"
+            onChange={(event) => setPaymentType(event.target.value)}
+            checked={paymentType === "cash"}
+          />
+        </div>
       </div>
-      <OutlinedButton text="Continue" color="lightBlue" onClick={pay} />
+      <OutlinedButton
+        disabled={paymentType == null}
+        text="Continue"
+        color="lightBlue"
+        onClick={pay}
+      />
     </div>
   );
 }

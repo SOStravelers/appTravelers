@@ -11,18 +11,11 @@ const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
   const [subservices, setSubservices] = useState([]);
 
   useEffect(() => {
-    getSubSservices();
+    setSubservices(service?.subservices);
   }, [service]);
 
-  const getSubSservices = async () => {
-    const id = service?.id;
-    SubserviceService.list({ id: id }).then((response) => {
-      setSubservices(response.data.docs);
-    });
-  };
-
-  const subserviceExist = (subserviceId) => {
-    const serviceExists = selectedOptions?.find((s) => s?.id === service?.id);
+  const subserviceExist = (serviceId, subserviceId) => {
+    const serviceExists = selectedOptions?.find((s) => s?.id === serviceId);
     if (serviceExists) {
       const subserviceExists = serviceExists?.subServices?.find(
         (s) => s === subserviceId
@@ -55,19 +48,19 @@ const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
           subservices?.length > 0 &&
           subservices.map((subservice) => (
             <div
-              key={subservice?.id}
+              key={subservice?._id}
               className="text-black flex justify-between px-5"
             >
               <h1>{subservice?.name}</h1>
-              {subserviceExist(subservice?.id) ? (
+              {subserviceExist(service?._id, subservice?._id) ? (
                 <CheckOptionChecked
                   className="cursor-pointer"
-                  onClick={() => handleChange(service?.id, subservice?.id)}
+                  onClick={() => handleChange(service?._id, subservice?._id)}
                 />
               ) : (
                 <CheckOption
                   className="cursor-pointer"
-                  onClick={() => handleChange(service?.id, subservice?.id)}
+                  onClick={() => handleChange(service?._id, subservice?._id)}
                 />
               )}
             </div>

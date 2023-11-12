@@ -1,11 +1,19 @@
 import React from "react";
 import clsx from "clsx";
 
-function OutlinedButton({ text, secondary, error, disabled, ...props }) {
+function OutlinedButton({
+  text,
+  secondary,
+  error,
+  disabled,
+  margin = "my-2",
+  ...props
+}) {
   return (
     <button
       className={clsx(
-        "border-2 border-solid max-w-lg text-lg py-3 w-full rounded-xl my-2 cursor-pointer",
+        "border-2 border-solid max-w-lg text-lg py-3 w-full rounded-xl cursor-pointer",
+        margin,
         secondary
           ? "text-grey border-grey"
           : error

@@ -2,10 +2,17 @@ import axios from "axios";
 import { useStore } from "../store/index";
 
 export default class ServiceService {
-  static resource = "services/get";
+  static resource = "services";
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${ServiceService.resource}`;
+  }
+  static getHeaders() {
+    return {
+      Authorization: localStorage.getItem("auth.access_token")
+        ? localStorage.getItem("auth.access_token")
+        : {},
+    };
   }
 
   static async list(params = {}) {
@@ -14,6 +21,12 @@ export default class ServiceService {
       query += `${key}=${params[key]}&`;
     });
 
-    return axios.get(`${this.baseUrl}/all?${query}`);
+    return axios.get(`${this.baseUrl}/get/all?${query}`);
+  }
+
+  static async listServices() {
+    return axios.get(`${this.baseUrl}/all/andsubservices`, {
+      headers: this.getHeaders(),
+    });
   }
 }

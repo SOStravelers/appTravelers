@@ -31,8 +31,8 @@ export default function MyServices() {
   }, [selectedOptions]);
 
   const getData = async () => {
-    ServiceService.list({ isActive: true, page: 1 }).then((response) => {
-      setServices(response.data.docs);
+    ServiceService.listServices().then((response) => {
+      setServices(response.data);
     });
   };
 
@@ -107,7 +107,7 @@ export default function MyServices() {
             <ComboBox
               key={service?.id}
               service={service}
-              title={services?.filter((s) => s?.id === service?.id)[0]?.name}
+              title={services?.filter((s) => s?._id === service?.id)[0]?.name}
               selectedOptions={selectedOptions}
             />
           ))}
@@ -125,13 +125,13 @@ export default function MyServices() {
                 key={service?.id}
                 service={service}
                 selectedOptions={selectedOptions}
-                setSelectedOptions={setSelectedOptions}
                 handleChange={handleChange}
               />
             ))}
           <OutlinedButton
             text="Save Selection"
             onClick={() => handleSaveSelection()}
+            margin="my-10"
           />
         </>
       )}

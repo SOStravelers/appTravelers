@@ -12,7 +12,6 @@ export default function WorkerEdit() {
   const getData = async () => {
     try {
       const response = await UserService.get(id);
-      console.log(response.data);
       if (response) {
         setUser(response.data);
       }
@@ -27,7 +26,7 @@ export default function WorkerEdit() {
       <WorkerProfileCardEdit
         name={user?.personalData?.name?.first}
         lastName={user?.personalData?.name?.last}
-        service={user?.workerData?.services}
+        services={user?.workerData?.services}
         score={5}
         avatar={user?.img?.imgUrl}
       />

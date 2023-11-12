@@ -5,22 +5,10 @@ import { CheckOptionChecked, ArrowUpIcon } from "@/constants/icons";
 const ComboBox = ({ service, title }) => {
   const [open, setOpen] = useState(false);
   const [subservices, setSubservices] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
 
   useEffect(() => {
     getSubSservices();
   }, [service]);
-
-  useEffect(() => {
-    service?.subServices?.map((ss) => {
-      const subserviceExists = subservices?.find(
-        (s) => s?.id === ss?.subserviceId
-      );
-      if (subserviceExists) {
-        setSelectedOptions([...selectedOptions, subserviceExists]);
-      }
-    });
-  }, [subservices]);
 
   const getSubSservices = async () => {
     const id = service?.id;

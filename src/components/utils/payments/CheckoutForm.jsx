@@ -1,19 +1,17 @@
 import { useState } from "react";
-
 import {
   PaymentElement,
+  AddressElement,
+  LinkAuthenticationElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-
 import SolidButton from "../buttons/SolidButton";
-
 import { toast } from "react-toastify";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -39,9 +37,18 @@ export default function CheckoutForm() {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="mb-2 text-lg">Billing Details</div>
+      <LinkAuthenticationElement />
+      <AddressElement
+        options={{
+          mode: "shipping",
+        }}
+      />
+      <div className="mt-4 mb-2 text-lg">Payment Method</div>
+
       <PaymentElement />
       <SolidButton
-        text={isProcessing ? "Precessing..." : "Pay now"}
+        text={isProcessing ? "Processing..." : "Pay now"}
         disabled={!stripe || isProcessing}
       ></SolidButton>
     </form>

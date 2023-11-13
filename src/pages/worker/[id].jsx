@@ -13,7 +13,7 @@ export default function Worker({ user }) {
     <div className="py-28 px-5 md:pl-80">
       <WorkerProfileCard
         name={user?.personalData?.name?.first}
-        service={user?.workerData?.services}
+        services={user?.workerData?.services}
         score={5}
         avatar={user?.img?.imgUrl}
       />
@@ -44,7 +44,6 @@ export async function getServerSideProps({ params }) {
     },
   };
   const userId = params.id;
-  console.log(userId);
   if (!userId) return redirect;
 
   let user = null;

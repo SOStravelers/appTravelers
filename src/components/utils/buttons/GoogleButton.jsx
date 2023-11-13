@@ -26,7 +26,9 @@ function GoogleButton() {
       onClick={login}
     >
       <GoogleIcon />
-      <p className="ml-5 md:text-sm">Continue with Google</p>
+      <p className="ml-3 sm:ml-5 md:text-sm lg:text-base">
+        Continue with Google
+      </p>
     </button>
   );
 }

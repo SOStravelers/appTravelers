@@ -16,7 +16,10 @@ const LoginFormModal = ({
   return (
     <>
       {open && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+        <div
+          style={{ zIndex: 1000 }}
+          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
+        >
           <div className="relative">
             <Link href="/">
               <button className="absolute top-0 right-0 m-4 text-black text-2xl">

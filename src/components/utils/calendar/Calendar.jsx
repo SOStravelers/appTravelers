@@ -51,7 +51,7 @@ function Calendar({ id }) {
   }, [selected]);
 
   const select = () => {
-    const dateStr = moment(selected).format('YYYY-MM-DD')
+    const dateStr = moment(selected).format("YYYY-MM-DD");
     setService({
       date: dateStr,
       hour: time,

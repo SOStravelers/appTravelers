@@ -2,9 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import LoginForm from "@/components/utils/forms/LoginForm";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { getSession } from "next-auth/react";
+// import { getSession } from "next-auth/react";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 

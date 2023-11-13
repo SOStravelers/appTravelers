@@ -20,7 +20,6 @@ export default function App({ Component, pageProps }) {
       router.pathname !== "/alternative-login" &&
       router.pathname !== "/intro" &&
       router.pathname !== "/terms-of-service" &&
-      router.pathname !== "/guest-settings" &&
       router.pathname !== "/payment" &&
       router.pathname !== "/stripe" &&
       router.pathname !== "/paypal" &&

@@ -121,7 +121,6 @@ function EditGallery({ images }) {
       newLoading[index] = true;
       return newLoading;
     });
-    console.log("wena");
     const file = event.target.files[0];
     const reader = new FileReader();
 

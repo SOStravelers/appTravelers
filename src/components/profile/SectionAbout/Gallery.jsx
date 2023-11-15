@@ -17,14 +17,22 @@ function Gallery({ images }) {
 
   const handlePrevImage = () => {
     const index = images.indexOf(selectedImage);
-    if (index > 0) {
+    const lastIndex = images.length - 1;
+
+    if (index === 0) {
+      setSelectedImage(images[lastIndex]);
+    } else {
       setSelectedImage(images[index - 1]);
     }
   };
 
   const handleNextImage = () => {
     const index = images.indexOf(selectedImage);
-    if (index < images.length - 1) {
+    const lastIndex = images.length - 1;
+
+    if (index === lastIndex) {
+      setSelectedImage(images[0]);
+    } else {
       setSelectedImage(images[index + 1]);
     }
   };
@@ -61,12 +69,14 @@ function Gallery({ images }) {
           <div className="relative">
             <button
               className="absolute top-0 right-0 m-4 text-white text-2xl"
+              style={{ color: "#00A0D5" }}
               onClick={handleCloseModal}
             >
               &times;
             </button>
             <button
               className="absolute top-48 left-0 m-4 text-white text-7xl"
+              style={{ color: "#00A0D5" }}
               onClick={() => handlePrevImage()}
             >
               {"<"}
@@ -74,6 +84,7 @@ function Gallery({ images }) {
 
             <button
               className="absolute top-48 right-0 m-4 text-white text-7xl"
+              style={{ color: "#00A0D5" }}
               onClick={() => handleNextImage()}
             >
               {">"}

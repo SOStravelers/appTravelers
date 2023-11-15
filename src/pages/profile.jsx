@@ -48,6 +48,7 @@ export default function Profile({ user }) {
 }
 
 export async function getServerSideProps({ req }) {
+  console.log("weando");
   const redirect = {
     redirect: {
       destination: "/guest-settings",

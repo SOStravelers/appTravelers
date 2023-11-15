@@ -8,7 +8,8 @@ import UserService from "@/services/UserService";
 
 export default function Worker({ user }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
-  console.log("wena");
+  console.log(user);
+  let galleryFilter = user.img.gallery.filter((image) => image !== null);
   return (
     <div className="py-28 px-5 md:pl-80">
       <WorkerProfileCard
@@ -24,7 +25,7 @@ export default function Worker({ user }) {
         titleTwo={"Services"}
       />
       {actualView === SECTION_ONE ? (
-        <SectionAbout description={user?.about} gallery={user?.img?.gallery} />
+        <SectionAbout description={user?.about} gallery={galleryFilter} />
       ) : (
         <SectionServices
           services={"Services"}

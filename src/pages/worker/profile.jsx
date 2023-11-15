@@ -52,6 +52,7 @@ export default function WorkerProfile({ user }) {
 }
 
 export async function getServerSideProps({ req }) {
+  console.log("weando2");
   const redirect = {
     redirect: {
       destination: "/guest-settings",

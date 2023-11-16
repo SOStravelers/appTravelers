@@ -19,7 +19,7 @@ export default function GuestSettings() {
   };
 
   return (
-    <div className="flex flex-col py-28 px-10 md:pl-80">
+    <div className="flex flex-col py-20 px-10 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
       <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
       <div className="flex flex-col my-4">

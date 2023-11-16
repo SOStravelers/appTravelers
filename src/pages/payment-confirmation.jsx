@@ -52,7 +52,7 @@ export default function PaymentConfirmation() {
         Payment made and your booking has been made successfully.
       </p>
       <Link className="w-full" href="/">
-        <SolidButton text="Back to home" color="lightBlue" />
+        <SolidButton text="Back to see booking" color="blueBorder" />
       </Link>
     </div>
   );

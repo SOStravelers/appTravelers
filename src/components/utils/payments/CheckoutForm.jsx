@@ -39,11 +39,11 @@ export default function CheckoutForm() {
     <form onSubmit={handleSubmit}>
       <div className="mb-2 text-center  text-md">Billing Details</div>
       <LinkAuthenticationElement />
-      <AddressElement
+      {/* <AddressElement
         options={{
           mode: "shipping",
         }}
-      />
+      /> */}
       <div className="mt-4 text-center mb-2 text-md">Payment Method</div>
 
       <PaymentElement />

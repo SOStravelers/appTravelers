@@ -6,6 +6,7 @@ import { ThreeDots } from "react-loader-spinner";
 import React from "react";
 
 function EditGallery({ images }) {
+  console.log("wena");
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -64,7 +65,7 @@ function EditGallery({ images }) {
         console.log(reader.result);
         try {
           console.log("el index", index);
-          const response = await UserService.updateGalley(
+          const response = await UserService.updatePhotoGallery(
             reader.result,
             index.toString()
           );
@@ -109,10 +110,13 @@ function EditGallery({ images }) {
       input.click();
     });
   };
-  const deleteImage = (index) => {
+  const deleteImage = async (index) => {
     const images = [...selectedImages];
-    images.splice(index, 1);
-    setSelectedImages(images);
+    images[index] = null;
+    try {
+      await UserService.updateGallery(images);
+      setSelectedImages(images);
+    } catch (err) {}
   };
   const setImageInput = async (event, index) => {
     console.log("el index", index);
@@ -137,7 +141,7 @@ function EditGallery({ images }) {
 
       console.log(reader.result);
       try {
-        const response = await UserService.updateGalley(
+        const response = await UserService.updatePhotoGallery(
           reader.result,
           index.toString()
         );
@@ -188,7 +192,8 @@ function EditGallery({ images }) {
                 <button
                   className="absolute top-0 right-0 h-8 w-8 flex justify-center items-center m-1 rounded-full bg-white text-white text-2xl"
                   style={{ backgroundColor: "#00A0D5" }}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation(); // Detener la propagación del evento
                     deleteImage(index);
                   }}
                 >

@@ -55,7 +55,7 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
           onClick={handleImageClick}
         >
           <Image
-            src={newAvatar ?? avatar ?? null}
+            src={newAvatar ?? avatar ?? ""}
             fill
             className="object-cover rounded-2xl hover:opacity-50 transition-opacity duration-300"
             alt="Worker avatar"

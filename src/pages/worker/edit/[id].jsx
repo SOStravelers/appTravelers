@@ -8,6 +8,7 @@ import { useStore } from "@/store";
 export default function WorkerEdit() {
   const router = useRouter();
   const { user, setUser } = useStore();
+  console.log(user);
   const id = router.query.id;
   const getData = async () => {
     try {

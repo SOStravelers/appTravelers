@@ -93,11 +93,19 @@ export default class UserService {
     });
   }
 
-  static async updateGalley(file, number) {
-    console.log("fotitos", this.getHeaders());
+  static async updateoPhotoGallery(file, number) {
+    console.log("update photo gallery", this.getHeaders());
     const formData = new FormData();
     formData.append("file", file);
     return axios.post(`${this.baseUrl}/profile/gallery/${number}`, formData, {
+      headers: this.getHeaders(),
+    });
+  }
+  static async updateGallery(data) {
+    console.log("update array Gallery", this.getHeaders());
+    const array = { array: data };
+    console.log(array);
+    return axios.put(`${this.baseUrl}/profile/updateGallery`, array, {
       headers: this.getHeaders(),
     });
   }

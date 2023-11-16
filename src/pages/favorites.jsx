@@ -9,6 +9,7 @@ export default function Favorites() {
   const user = Cookies.get("auth.user_id");
 
   useEffect(() => {
+    document.title = "SOS Travelers - My favorites";
     if (user) {
       setFavorites([
         {

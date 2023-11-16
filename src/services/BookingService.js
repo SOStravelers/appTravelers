@@ -9,10 +9,10 @@ export default class BookingService {
   }
 
   static async create(params) {
-    return axios.post(`${baseUrl}`, params, {
-      headers: {
-        Authorization: getHeaders(),
-      },
+    console.log("...creando");
+    console.log("this.get");
+    return axios.post(`${this.baseUrl}`, params, {
+      headers: this.getHeaders(),
     });
   }
 

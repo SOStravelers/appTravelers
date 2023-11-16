@@ -11,7 +11,15 @@ import Link from "next/link";
 
 import { useStore } from "@/store";
 function TopBar() {
-  const { loggedIn, user, isWorker } = useStore();
+  const { loggedIn, user, isWorker, setUser } = useStore();
+
+  useEffect(() => {
+    if (user && user.img) {
+      let newUser = { ...user };
+      newUser.img.imgUrl = user.img.imgUrl + "?hola=" + random();
+      setUser[newUser];
+    }
+  }, [user]);
 
   const initials = () => {
     if (user && Object.keys(user).length === 0) return "";
@@ -65,7 +73,7 @@ function TopBar() {
                 style={{ width: "40px", height: "40px", overflow: "hidden" }}
               >
                 <img
-                  src={user.img.imgUrl + "?hola=" + random()}
+                  src={user.img.imgUrl}
                   alt="Descripción de la imagen"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import MultiSwitchButtons from "@/components/utils/buttons/MultiSwitchButtons";
 import DaySection from "@/components/bookingWorker/DaySection";
@@ -21,6 +21,10 @@ for (let i = 1; i <= 6; i++) {
 }
 
 export default function WorkerBooking() {
+  useEffect(() => {
+    document.title = "Worker Booking - SOS Travelers";
+  }, []);
+
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
   return (

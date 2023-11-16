@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 
 import Cookies from "js-cookie";
+import { useEffect } from "react";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -10,6 +11,9 @@ export default function WorkerProfile({ user }) {
   document.title = "Worker Profile - SOS Travelers";
   const router = useRouter();
   const { setUser, setLoggedIn } = useStore();
+  useEffect(() => {
+    document.title = "Profile - SOS Travelers";
+  }, []);
 
   const logout = async () => {
     localStorage.removeItem("auth.access_token");

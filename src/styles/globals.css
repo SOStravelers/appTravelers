@@ -51,6 +51,7 @@ body {
   margin-bottom: 2px;
 }
 
+
 .msg.sent {
   border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
   background: #0057ff;

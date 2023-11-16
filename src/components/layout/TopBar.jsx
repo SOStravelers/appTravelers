@@ -21,10 +21,22 @@ function TopBar() {
   };
 
   return (
-    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-24 px-2 fixed top-0">
+    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-20 lg:h-20 xl:h-20 px-2 fixed top-0">
       <div className="flex items-center">
-        <Link href="/" className="mr-2">
-          <LogoWhite color={"white"} />
+        <Link
+          href="/"
+          style={{ textDecoration: "none", color: "inherit" }}
+          className="mr-2"
+        >
+          <LogoWhite
+            href="/"
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              "&:focus": { outline: "none" },
+            }}
+            color={"white"}
+          />
         </Link>
         <div>
           <p className="text-white font-semibold text-xl">SOS</p>

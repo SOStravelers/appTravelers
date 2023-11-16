@@ -21,7 +21,7 @@ function GoogleButton() {
   };
   return (
     <button
-      className="bg-greyButton border-2 border-darkBlue text-black py-3 w-full rounded-xl my-2 flex items-center px-5"
+      className="bg-greyButton border-2 border-darkBlue text-black py-3 w-full rounded-xl my-2 flex items-center px-3"
       type="button"
       onClick={login}
     >

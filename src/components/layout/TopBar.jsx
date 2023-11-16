@@ -21,7 +21,7 @@ function TopBar() {
   };
 
   return (
-    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-20 lg:h-20 xl:h-20 px-2 fixed top-0">
+    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-20 lg:h-20 xl:h-20 px-3 fixed top-0">
       <div className="flex items-center">
         <Link
           href="/"

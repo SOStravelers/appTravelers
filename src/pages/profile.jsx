@@ -2,11 +2,14 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
+import { useEffect } from "react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { signOut } from "next-auth/react";
 
 export default function Profile({ user }) {
-  document.title = "SOS Travelers - Profile";
+  useEffect(() => {
+    document.title = "SOS Travelers - Profile";
+  }, []);
   const router = useRouter();
   const { setUser, setLoggedIn } = useStore();
 

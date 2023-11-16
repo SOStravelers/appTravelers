@@ -15,14 +15,14 @@ function HostelProfileCard({ name, location, score, avatar }) {
         </div>
       </div>
       <div className="flex flex-col">
-        <h1 className="font-semibold">{name}</h1>
+        <h1 className="font-semibold ml-2">{name}</h1>
         <div className="flex items-center my-2">
-          <PinIcon color={"#0057FF"} className="mr-1" />
-          <p className="text-blackText">{location}</p>
+          <PinIcon color={"#00A0D5"} className="pl-1" />
+          <p className="text-blackText ml-3">{location}</p>
         </div>
-        <div className="flex items-center">
-          <StarIcon color={"#1CDAE5"} className="mr-1" />
-          <p className="text-blackText">{score}</p>
+        <div className="flex items-center ml-1">
+          <StarIcon color={"#00A0D5"} />
+          <p className="text-blackText ml-3">{score}</p>
           <p className="text-blackText">{`(50)`}</p>
         </div>
       </div>

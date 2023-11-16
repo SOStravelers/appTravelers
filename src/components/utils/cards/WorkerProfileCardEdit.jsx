@@ -12,13 +12,15 @@ const random = () => {
 };
 
 function WorkerProfileCard({ name, services, score, avatar, lastName }) {
-  const [newAvatar, setNewAvatar] = useState(
-    avatar ? avatar + "?hola=" + random() : null
-  );
+  const [newAvatar, setNewAvatar] = useState(null);
+
+  useEffect(() => {
+    if (avatar) {
+      setNewAvatar(avatar + "?hola=" + random());
+    }
+  }, [avatar]);
   const { user, setUser } = useStore();
   const [loading, setLoading] = useState(false);
-  console.log("el new avatar", newAvatar, avatar);
-  [avatar, newAvatar];
 
   const setImageInput = async (event) => {
     setLoading(true);
@@ -50,10 +52,7 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
 
         setLoading(false);
       } catch (err) {
-        loading(() => {
-          setLoading(false);
-          return loading;
-        });
+        setLoading(false);
         console.log(err);
       }
     };
@@ -113,7 +112,7 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
       input.click();
     });
   };
-
+  console.log(newAvatar);
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">
       <div className="w-36 h-32 rounded-2xl mr-2 relative">

@@ -30,14 +30,8 @@ function EditGallery({ images }) {
     } else {
       const emptyArray = Array.from({ length: 10 }, () => null);
       setSelectedImages(emptyArray);
-      console.log("el user", user);
     }
   }, [user]);
-  useEffect(() => {
-    if (images?.length > 0) {
-      setSelectedImages(images);
-    }
-  }, [images]);
 
   const changeImageInput = async (event, index) => {
     try {

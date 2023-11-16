@@ -2,12 +2,9 @@ import { useState } from "react";
 import Image from "next/image";
 import FavButton from "@/components/utils/buttons/FavButton";
 import { StarIcon } from "@/constants/icons";
+import { random } from "@/lib/utils";
 
 function WorkerProfileCard({ name, services, score, avatar }) {
-  const random = () => {
-    const randomQueryParam = Math.round(Math.random() * 100000);
-    return randomQueryParam.toString();
-  };
   const [fav, setFav] = useState(false);
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">

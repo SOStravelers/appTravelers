@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import HostelCard from "@/components/utils/cards/HostelCard";
-
+import { random } from "@/lib/utils";
 import HostelService from "@/services/HostelService";
 
 export default function SelectHostel() {
@@ -18,8 +18,15 @@ export default function SelectHostel() {
   const getData = async () => {
     const id = router.query.id;
     HostelService.list({ id: id }).then((response) => {
-      console.log(response.data);
-      setHostels(response.data.docs);
+      console.log("hostel", response.data);
+      let final = [];
+      for (let item of response.data.docs) {
+        if (item.img.imgUrl != null) {
+          item.img.imgUrl = item.img.imgUrl + "?hola=" + random();
+        }
+        final.push(item);
+      }
+      setHostels(final);
     });
   };
 

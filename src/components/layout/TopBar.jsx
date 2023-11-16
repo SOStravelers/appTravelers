@@ -5,14 +5,11 @@ import {
   LogoWhite,
 } from "@/constants/icons";
 import { useEffect } from "react";
+import { random } from "@/lib/utils";
 
 import Link from "next/link";
 
 import { useStore } from "@/store";
-const random = () => {
-  const randomQueryParam = Math.round(Math.random() * 100000);
-  return randomQueryParam.toString();
-};
 function TopBar() {
   const { loggedIn, user, isWorker } = useStore();
 

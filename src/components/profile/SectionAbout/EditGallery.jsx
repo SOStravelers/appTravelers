@@ -2,18 +2,12 @@ import { useState, useEffect } from "react";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import { ThreeDots } from "react-loader-spinner";
+import { random } from "@/lib/utils";
 
 import React from "react";
 
 function EditGallery({ images }) {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-
   const [selectedImages, setSelectedImages] = useState([null]);
-  const random = () => {
-    const randomQueryParam = Math.round(Math.random() * 100000);
-    return randomQueryParam.toString();
-  };
 
   const [loading, setLoading] = useState(
     new Array(selectedImages.length).fill(false)

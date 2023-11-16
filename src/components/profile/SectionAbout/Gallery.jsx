@@ -1,9 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
-const random = () => {
-  const randomQueryParam = Math.round(Math.random() * 100000);
-  return randomQueryParam.toString();
-};
+import { random } from "@/lib/utils";
+
 function Gallery({ images }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);

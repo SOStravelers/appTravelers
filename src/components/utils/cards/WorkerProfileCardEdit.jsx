@@ -6,10 +6,7 @@ import UserService from "@/services/UserService";
 import { ThreeDots } from "react-loader-spinner";
 import { ChangeIcon, ReturnArrowIcon } from "@/constants/icons";
 import React from "react";
-const random = () => {
-  const randomQueryParam = Math.round(Math.random() * 100000);
-  return randomQueryParam.toString();
-};
+import { random } from "@/lib/utils";
 
 function WorkerProfileCard({ name, services, score, avatar, lastName }) {
   const [newAvatar, setNewAvatar] = useState(null);

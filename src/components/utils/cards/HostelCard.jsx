@@ -33,7 +33,7 @@ function HostelCard({ id, link, name, location, img }) {
         <div className="flex flex-col p-2">
           <h1 className="font-semibold">{name}</h1>
           <div className="flex items-center">
-            <PinIcon color={"#0057FF"} className="mr-1" />
+            <PinIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText">{location.city}</p>
           </div>
         </div>

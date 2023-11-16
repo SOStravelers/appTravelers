@@ -54,7 +54,7 @@ body {
 
 .msg.sent {
   border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
-  background: #0057ff;
+  background: #001C25;
   color: #fff;
   /* moves it to the right */
   margin-left: auto;
@@ -62,7 +62,7 @@ body {
 
 .msg.rcvd {
   border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
-  background: #1cdae5;
+  background: #00A0D5;
   color: #fff;
   /* moves it to the left */
   margin-right: auto;

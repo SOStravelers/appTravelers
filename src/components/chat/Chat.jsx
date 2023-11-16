@@ -35,7 +35,7 @@ const Chat = () => {
         }}
       >
         <textarea
-          className="border border-black rounded-xl w-full m-h-10 p-2"
+          className="border border-black rounded-xl w-full m-h-6 p-2"
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Type a message..."

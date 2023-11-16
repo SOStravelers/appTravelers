@@ -19,7 +19,7 @@ function WorkerCardChat({ link, name, service, showArrow = true }) {
             <h1 className="font-semibold">{name}</h1>
             <p className="text-blackText">{service}</p>
             <div className="flex items-center">
-              <ClockIcon color={"#5B78C7"} className="mr-1" />
+              <ClockIcon color={"#00A0D5"} className="mr-1" />
               <p className="text-blackText text-sm">8 Aug, 2023 | 04:30 PM</p>
             </div>
           </div>
@@ -27,7 +27,7 @@ function WorkerCardChat({ link, name, service, showArrow = true }) {
       </Link>
       {showArrow ? (
         <Link href={link}>
-          <div className="w-3 h-3 flex items-center justify-center rounded-full bg-lightBlue"></div>
+          <div className="w-3 h-3 flex items-center justify-center rounded-full bg-blueBorder"></div>
         </Link>
       ) : (
         <div className="w-10"></div>

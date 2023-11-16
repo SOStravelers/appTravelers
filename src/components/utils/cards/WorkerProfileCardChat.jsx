@@ -4,9 +4,9 @@ import SolidButton from "../buttons/SolidButton";
 
 function WorkerProfileCardChat({ name, service, score }) {
   return (
-    <div className="flex py-4 w-full rounded-lg my-2 items-center">
-      <div className="w-36 h-36 rounded-2xl mr-2">
-        <div className="bg-lightBlue w-full h-full rounded-2xl relative">
+    <div className="flex py-2 w-full rounded-lg  items-center">
+      <div className="w-28 h-28 rounded-2xl mr-2">
+        <div className="bg-lightBlue w-24 h-24 rounded-2xl relative">
           <Image
             src={"/assets/proovedor.png"}
             fill
@@ -22,11 +22,11 @@ function WorkerProfileCardChat({ name, service, score }) {
         </div>
         <p className="text-blackText">{service}</p>
         <div className="flex items-center">
-          <StarIcon color={"#5B78C7"} className="mr-1" />
+          <StarIcon color={"#00A0D5"} className="mr-1" />
           <p className="text-blackText">{score}</p>
         </div>
         <div className="flex items-center">
-          <ClockIcon color={"#5B78C7"} className="mr-1" />
+          <ClockIcon color={"#00A0D5"} className="mr-1" />
           <p className="text-blackText text-sm">8 Aug, 2023 | 04:30 PM</p>
         </div>
         <SolidButton color="black" text={"Service Resume"} py={2} />

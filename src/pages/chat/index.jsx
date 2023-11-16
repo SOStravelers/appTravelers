@@ -36,7 +36,9 @@ export default function Chat() {
   }, []);
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
-      <p className="text-center text-greyText max-w-lg my-10">No chats yet</p>
+      <p className="text-center text-greyText max-w-lg mt-10 mb-2">
+        No chats yet
+      </p>
       {chats.map((chat, index) => (
         <WorkerCardChat
           key={index}

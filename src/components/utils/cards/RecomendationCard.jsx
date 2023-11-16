@@ -12,8 +12,8 @@ function RecomendationCard() {
         />
       </div>
       <div className="px-1 sm:px-2">
-        <h1 className="font-semibold mt-2">Nombre Servicio</h1>
-        <p className="text-blackText text-sm">Nombre proveedor</p>
+        <h1 className="font-semibold mt-2">Hair + Bear Cut</h1>
+        <p className="text-blackText text-sm">Emmanuel Baroski</p>
       </div>
     </div>
   );

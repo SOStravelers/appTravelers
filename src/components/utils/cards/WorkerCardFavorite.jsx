@@ -7,7 +7,7 @@ import { StarIcon, FavIconBorder } from "@/constants/icons";
 function WorkerCardFavorite({ link, name, service, score }) {
   const [isFav, setIsFav] = useState(false);
   return (
-    <div className="flex py-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-around my-2 items-center">
+    <div className="flex py-4 px-5 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center">
       <Link href={link}>
         <div className="flex">
           <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
@@ -22,7 +22,7 @@ function WorkerCardFavorite({ link, name, service, score }) {
             <h1 className="font-semibold">{name}</h1>
             <p className="text-blackText">{service}</p>
             <div className="flex items-center">
-              <StarIcon color={"#5B78C7"} className="mr-1" />
+              <StarIcon color={"#00A0D5"} className="mr-1" />
               <p className="text-blackText">{score}</p>
             </div>
           </div>

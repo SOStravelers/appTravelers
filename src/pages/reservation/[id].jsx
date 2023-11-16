@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { AlertIcon } from "@/constants/icons";
 import Calendar from "@/components/utils/calendar/Calendar";
@@ -7,7 +8,6 @@ export default function Reservation() {
   const router = useRouter();
   useEffect(() => {
     document.title = "Reservation - SOS Travelers";
-    getData();
   }, []);
 
   return (

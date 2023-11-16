@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import awsmobile from "@/aws-exports";
 import { Amplify } from "aws-amplify";
 import { useEffect } from "react";
-import { LogoSosBlack } from "@/constants/icons";
+import { LogoSosRelleno } from "@/constants/icons";
 // Importa las funciones necesarias para renderizar el SVG a cadena
 import { renderToString } from "react-dom/server";
 
@@ -52,7 +52,7 @@ export default function App({ Component, pageProps }) {
     }
   };
   // Convierte el componente SVG a cadena
-  const svgString = renderToString(<LogoSosBlack />);
+  const svgString = renderToString(<LogoSosRelleno />);
 
   return (
     <>

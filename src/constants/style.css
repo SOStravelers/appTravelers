@@ -1,0 +1,16 @@
+
+
+/* Estilo predeterminado para el logo */
+svg {
+  fill: #fff;       /* Interior blanco */
+  stroke: #000;     /* Borde negro */
+  stroke-width: 2;   /* Grosor del borde */
+}
+
+/* Ajuste para dispositivos móviles */
+@media only screen and (max-width: 600px) {
+  svg {
+    fill: #000;     /* Interior negro */
+    stroke: #fff;   /* Borde blanco */
+  }
+}

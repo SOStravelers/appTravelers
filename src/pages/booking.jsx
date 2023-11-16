@@ -23,7 +23,7 @@ export default function Booking() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    document.title = "SOS Travelers - Booking"; // Establece el título específico de esta página
+    document.title = "SOS Travelers - Booking";
     if (!user) {
       setOpen(true);
     }

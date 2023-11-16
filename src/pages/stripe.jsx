@@ -9,6 +9,7 @@ export default function Stripe() {
   const initialized = useRef(false);
 
   useEffect(() => {
+    document.title = "SOS Travelers - Your Payment";
     if (!initialized.current) {
       initialized.current = true;
       createPaymentIntent();

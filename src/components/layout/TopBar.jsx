@@ -21,7 +21,7 @@ function TopBar() {
   };
 
   return (
-    <div className="w-screen z-20 flex items-center justify-between bg-darkBlue h-24 px-5 fixed top-0">
+    <div className="w-screen z-20 flex items-center justify-between bg-darkBlue h-24 px-4 fixed top-0">
       <div className="flex items-center">
         <Link href="/" className="mr-2">
           <LogoWhite color={"white"} />
@@ -35,7 +35,7 @@ function TopBar() {
         {loggedIn ? (
           <>
             {isWorker && (
-              <h1 className="text-white mr-2 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
+              <h1 className="text-white mr-1 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
                 Worker Mode
               </h1>
             )}

@@ -55,7 +55,7 @@ function EditGallery({ images }) {
 
       const reader = new FileReader();
       reader.onloadend = async () => {
-        console.log(reader.result);
+        // console.log(reader.result);
         try {
           console.log("el index", index);
           const response = await UserService.updatePhotoGallery(
@@ -132,7 +132,7 @@ function EditGallery({ images }) {
         return;
       }
 
-      console.log(reader.result);
+      // console.log(reader.result);
       try {
         const response = await UserService.updatePhotoGallery(
           reader.result,

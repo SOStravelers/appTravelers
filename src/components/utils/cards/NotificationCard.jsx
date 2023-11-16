@@ -7,7 +7,7 @@ function NotificationCard({ day, text, link }) {
       href={link}
       className="flex p-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder my-2 items-center"
     >
-      <div className="bg-lightBlue p-2 rounded-full mr-2">
+      <div className="bg-blueBorder p-2 rounded-full mr-2">
         <NotificationIcon color={"#ffffff"} />
       </div>
       <div>

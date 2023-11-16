@@ -19,7 +19,7 @@ export default function GuestSettings() {
   };
 
   return (
-    <div className="flex flex-col py-20 px-10 md:pl-80">
+    <div className="flex flex-col py-22 px-10 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
       <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
       <div className="flex flex-col my-4">
@@ -31,7 +31,7 @@ export default function GuestSettings() {
           setIsOn={setIsOnUbication}
         />
       </div>
-      <div className="flex items-center justify-center my-5 max-w-lg">
+      <div className="flex items-center justify-center mb-4 mt-3 max-w-lg">
         <Image
           src="/icons/LogoCompleto.svg"
           width={120}

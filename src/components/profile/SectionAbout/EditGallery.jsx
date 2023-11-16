@@ -26,10 +26,21 @@ function EditGallery({ images }) {
         { length: 10 },
         (_, index) => user.img.gallery[index] || null
       );
-      setSelectedImages(filledArray);
+      console.log("caso1", filledArray);
+      let final = [];
+      for (let image of filledArray) {
+        let cacheImg = null;
+        if (image != null) {
+          cacheImg = image + "?hola=" + random();
+        }
+        final.push(cacheImg);
+      }
+      console.log(final);
+      setSelectedImages(final);
     } else {
       const emptyArray = Array.from({ length: 10 }, () => null);
       setSelectedImages(emptyArray);
+      console.log("caso2", emptyArray);
     }
   }, [user]);
 
@@ -179,7 +190,9 @@ function EditGallery({ images }) {
             {image && (
               <div
                 className="w-full h-28 rounded-xl bg-cover bg-center relative cursor-pointer"
-                style={{ backgroundImage: `url(${image})` }}
+                style={{
+                  backgroundImage: `url(${image}) `,
+                }}
                 onClick={(e) => changeImageInput(e, index)}
               >
                 <button

@@ -16,6 +16,7 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
 
   useEffect(() => {
     if (avatar) {
+      console.log("el avatar", avatar);
       setNewAvatar(avatar + "?hola=" + random());
     }
   }, [avatar]);

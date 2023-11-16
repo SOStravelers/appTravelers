@@ -35,7 +35,7 @@ function TopBar() {
         {loggedIn ? (
           <>
             {isWorker && (
-              <h1 className="text-white mr-4 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
+              <h1 className="text-white mr-2 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
                 Worker Mode
               </h1>
             )}

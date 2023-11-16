@@ -4,13 +4,17 @@ import FavButton from "@/components/utils/buttons/FavButton";
 import { StarIcon } from "@/constants/icons";
 
 function WorkerProfileCard({ name, services, score, avatar }) {
+  const random = () => {
+    const randomQueryParam = Math.round(Math.random() * 100000);
+    return randomQueryParam.toString();
+  };
   const [fav, setFav] = useState(false);
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">
       <div className="w-36 h-32 rounded-2xl mr-2">
         <div className="bg-lightBlue w-full h-full rounded-2xl relative">
           <Image
-            src={avatar ?? "/assets/proovedor.png"}
+            src={avatar + "?hola=" + random() ?? "/assets/proovedor.png"}
             fill
             alt="nuevo"
             className="object-cover rounded-2xl"
@@ -26,7 +30,7 @@ function WorkerProfileCard({ name, services, score, avatar }) {
           {services?.map((service) => service.id.name).join(", ")}
         </p>
         <div className="flex items-center">
-          <StarIcon color={"#5B78C7"} className="mr-1" />
+          <StarIcon color={"#00A0D5"} className="mr-1" />
           <p className="text-blackText">{score}</p>
           <p className="text-blackText">{`(50)`}</p>
         </div>

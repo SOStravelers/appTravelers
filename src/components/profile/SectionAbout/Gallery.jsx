@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
-
+const random = () => {
+  const randomQueryParam = Math.round(Math.random() * 100000);
+  return randomQueryParam.toString();
+};
 function Gallery({ images }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -51,7 +54,7 @@ function Gallery({ images }) {
             <div key={index} className="w-36 h-32 rounded-2xl mr-2 relative">
               <div className="bg-lightBlue w-full h-full rounded-2xl relative">
                 <Image
-                  src={image}
+                  src={image + "?hola=" + random()}
                   fill
                   className="object-cover rounded-2xl hover:opacity-50 transition-opacity duration-300 cursor-pointer"
                   alt="Worker avatar"

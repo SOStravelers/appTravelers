@@ -9,7 +9,10 @@ import { useEffect } from "react";
 import Link from "next/link";
 
 import { useStore } from "@/store";
-
+const random = () => {
+  const randomQueryParam = Math.round(Math.random() * 100000);
+  return randomQueryParam.toString();
+};
 function TopBar() {
   const { loggedIn, user, isWorker } = useStore();
 
@@ -53,7 +56,7 @@ function TopBar() {
                 style={{ width: "40px", height: "40px", overflow: "hidden" }}
               >
                 <img
-                  src={user.img.imgUrl}
+                  src={user.img.imgUrl + "?hola=" + random()}
                   alt="Descripción de la imagen"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />

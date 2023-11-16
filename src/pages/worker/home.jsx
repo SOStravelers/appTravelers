@@ -42,9 +42,9 @@ export default function WorkerHome({ user }) {
       spaceBetween: 10,
       rewind: true,
       injectStyles: [
-        ".swiper-pagination-bullet-active{ background-color: #5B78C7;}",
-        ".swiper-button-next{ color: #5B78C7;}",
-        ".swiper-button-prev{ color: #5B78C7;}",
+        ".swiper-pagination-bullet-active{ background-color: #00A0D5;}",
+        ".swiper-button-next{ color: #00A0D5;}",
+        ".swiper-button-prev{ color: #00A0D5;}",
       ],
     };
     Object.assign(swiperEl, swiperParams);
@@ -56,7 +56,7 @@ export default function WorkerHome({ user }) {
   };
 
   return (
-    <main className="flex flex-col bg-white py-28 px-5 md:pl-80">
+    <main className="flex flex-col bg-white  py-20 px-4 md:pl-80">
       {/* <BookingCard /> */}
 
       <div className="w-full max-w-lg ">
@@ -72,7 +72,7 @@ export default function WorkerHome({ user }) {
         </swiper-container>
       </div>
 
-      <section className="py-5">
+      <section className="mt-2 mb-5">
         <OutlinedButton
           text="Book a service"
           onClick={() => goTo("/worker/booking")}

@@ -47,9 +47,9 @@ export default function Home({}) {
       spaceBetween: 10,
       rewind: true,
       injectStyles: [
-        ".swiper-pagination-bullet-active{ background-color: #5B78C7;}",
-        ".swiper-button-next{ color: #5B78C7;}",
-        ".swiper-button-prev{ color: #5B78C7;}",
+        ".swiper-pagination-bullet-active{ background-color: #00A0D5;}",
+        ".swiper-button-next{ color: #00A0D5;}",
+        ".swiper-button-prev{ color: #00A0D5;}",
       ],
     };
     Object.assign(swiperEl, swiperParams);
@@ -63,7 +63,7 @@ export default function Home({}) {
   };
 
   return (
-    <main className="flex flex-col w-full bg-white py-28 px-5 md:pl-80">
+    <main className="flex flex-col w-full bg-white py-20 px-4 md:pl-80">
       <div className="w-full max-w-lg ">
         <swiper-container init="false">
           {bookings?.map((booking) => (
@@ -79,11 +79,11 @@ export default function Home({}) {
 
       <section>
         <h1
-          className={`text-black text-xl font-semibold mt-10 mb-5 ${mazzard.className}`}
+          className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
         >
           Services
         </h1>
-        <div className="w-[90vw] md:w-full flex overflow-x-auto pb-5">
+        <div className="w-[90vw] md:w-full flex overflow-x-auto mb-5">
           {services?.map((s) => (
             <ServiceCard
               key={s.id}
@@ -96,7 +96,7 @@ export default function Home({}) {
 
       <section>
         <h1
-          className={`text-black text-xl font-semibold mb-5 ${mazzard.className}`}
+          className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
         >
           Recommended for you
         </h1>

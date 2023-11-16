@@ -93,7 +93,7 @@ export default class UserService {
     });
   }
 
-  static async updateoPhotoGallery(file, number) {
+  static async updatePhotoGallery(file, number) {
     console.log("update photo gallery", this.getHeaders());
     const formData = new FormData();
     formData.append("file", file);

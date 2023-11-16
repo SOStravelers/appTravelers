@@ -6,7 +6,6 @@ import { ThreeDots } from "react-loader-spinner";
 import React from "react";
 
 function EditGallery({ images }) {
-  console.log("wena");
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 

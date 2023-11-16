@@ -12,7 +12,7 @@ export default function ChangePassword() {
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
   useEffect(() => {
-    document.title = "SOS Travelers - Recovery password";
+    document.title = "Recovery Pass - SOS Travelers";
   }, []);
   const handleVerifyCode = async () => {
     console.log(code);

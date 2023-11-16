@@ -10,7 +10,7 @@ export default function Registro() {
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
   useEffect(() => {
-    document.title = "SOS Travelers - Register";
+    document.title = "Register - SOS Travelers";
     obtenerInformacionUsuario();
   }, []);
   async function obtenerInformacionUsuario() {

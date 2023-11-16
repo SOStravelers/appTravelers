@@ -10,10 +10,10 @@ export default function Worker({ user }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
   useEffect(() => {
     document.title =
-      "SOS Travelers - Worker: " +
       user?.personalData?.name?.first +
       " " +
-      user?.personalData?.name?.last;
+      user?.personalData?.name?.last +
+      " - SOS Travelers";
   }, []);
 
   console.log(user);

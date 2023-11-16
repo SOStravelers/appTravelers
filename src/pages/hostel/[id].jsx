@@ -10,7 +10,7 @@ export default function Hostel({ hostel }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
   useEffect(() => {
     console.log(hostel);
-    document.title = "SOS Travelers - " + hostel?.businessData?.name;
+    document.title = hostel?.businessData?.name + " - SOS Travelers";
   }, []);
   return (
     <div className="mb-20 py-28 px-5 md:pl-80">

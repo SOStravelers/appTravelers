@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Payment() {
   const router = useRouter();
   useEffect(() => {
-    document.title = "SOS Travelers - Payment Method";
+    document.title = "Payment - SOS Travelers";
   }, []);
 
   const [paymentType, setPaymentType] = useState(null);

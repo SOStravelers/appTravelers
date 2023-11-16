@@ -9,7 +9,7 @@ export default function Chat() {
   const user = Cookies.get("auth.user_id");
 
   useEffect(() => {
-    document.title = "SOS Travelers - My chats";
+    document.title = "My chats - SOS Travelers";
     if (user) {
       setChats([
         {

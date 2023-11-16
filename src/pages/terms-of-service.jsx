@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export default function TermsOfService() {
   const router = useRouter();
   useEffect(() => {
-    document.title = "SOS Travelers - Terms of service";
+    document.title = "Terms of service - SOS Travelers";
   }, []);
   return (
     <section className="m-2 py-32 mb-16  xl:px-32 xl:ml-32">

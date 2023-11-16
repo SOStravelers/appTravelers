@@ -17,7 +17,7 @@ export default function Home({}) {
   const [bookings, setBookings] = useState([]);
   const { setService } = useStore();
   useEffect(() => {
-    document.title = "SOS Travelers - Home";
+    document.title = "Home - SOS Travelers";
     getData();
     setBookings([
       {

@@ -13,7 +13,7 @@ export default function WorkersFound() {
   const [wokers, setWorkers] = useState([]);
 
   useEffect(() => {
-    document.title = "SOS Travelers - Select Worker";
+    document.title = "Select Worker - SOS Travelers";
     getData();
   }, []);
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import OptionCard from "@/components/utils/cards/OptionCard";
@@ -7,6 +7,9 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 
 export default function GuestSettings() {
+  useEffect(() => {
+    document.title = "Settings - SOS Travelers";
+  }, []);
   const router = useRouter();
   const [isOnUbication, setIsOnUbication] = useState(false);
 

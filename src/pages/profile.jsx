@@ -8,7 +8,7 @@ import { signOut } from "next-auth/react";
 
 export default function Profile({ user }) {
   useEffect(() => {
-    document.title = "SOS Travelers - Profile";
+    document.title = "Profile - SOS Travelers";
   }, []);
   const router = useRouter();
   const { setUser, setLoggedIn } = useStore();

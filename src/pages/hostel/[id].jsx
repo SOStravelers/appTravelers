@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HostelProfileCard from "@/components/utils/cards/HostelProfileCard";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import SectionAbout from "@/components/profile/SectionAbout/SectionAbout";
@@ -8,7 +8,10 @@ import HostelService from "@/services/HostelService";
 
 export default function Hostel({ hostel }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
-
+  useEffect(() => {
+    console.log(hostel);
+    document.title = "SOS Travelers - " + hostel?.businessData?.name;
+  }, []);
   return (
     <div className="mb-20 py-28 px-5 md:pl-80">
       <HostelProfileCard

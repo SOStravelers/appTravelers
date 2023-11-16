@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WorkerProfileCard from "@/components/utils/cards/WorkerProfileCard";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import SectionAbout from "@/components/profile/SectionAbout/SectionAbout";
@@ -8,6 +8,14 @@ import UserService from "@/services/UserService";
 
 export default function Worker({ user }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
+  useEffect(() => {
+    document.title =
+      "SOS Travelers - Worker: " +
+      user?.personalData?.name?.first +
+      " " +
+      user?.personalData?.name?.last;
+  }, []);
+
   console.log(user);
   let galleryFilter = user.img.gallery.filter((image) => image !== null);
   return (

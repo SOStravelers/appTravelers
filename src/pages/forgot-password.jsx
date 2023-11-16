@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import UserService from "@/services/UserService";
 import ForgotPassForm from "@/components/utils/forms/ForgotPassForm";
@@ -11,7 +11,9 @@ export default function ChangePassword() {
   const [userId, setUserId] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
-
+  useEffect(() => {
+    document.title = "SOS Travelers - Recovery password";
+  }, []);
   const handleVerifyCode = async () => {
     console.log(code);
     try {

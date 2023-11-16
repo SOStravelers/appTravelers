@@ -1,11 +1,14 @@
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { LockIcon } from "@/constants/icons";
 import Image from "next/image";
 
 export default function Payment() {
   const router = useRouter();
+  useEffect(() => {
+    document.title = "SOS Travelers - Payment Method";
+  }, []);
 
   const [paymentType, setPaymentType] = useState(null);
 

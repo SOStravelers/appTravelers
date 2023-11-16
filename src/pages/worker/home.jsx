@@ -14,6 +14,7 @@ export default function WorkerHome({ user }) {
   const { setService } = useStore();
   const { setUser, setLoggedIn } = useStore();
   useEffect(() => {
+    document.title = "SOS Travelers - Worker Home";
     setBookings([
       {
         id: 1,

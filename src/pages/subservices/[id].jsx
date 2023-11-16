@@ -11,7 +11,7 @@ export default function Subservices() {
   const [subServices, setSubservices] = useState([]);
 
   useEffect(() => {
-    console.log("vamos");
+    document.title = "SOS Travelers - Choose subservice";
     getData();
   }, []);
 

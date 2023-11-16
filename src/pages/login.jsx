@@ -13,6 +13,7 @@ export default function Login() {
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
   useEffect(() => {
+    document.title = "SOS Travelers - Login";
     obtenerInformacionUsuario();
   }, []);
 

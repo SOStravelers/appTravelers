@@ -27,6 +27,7 @@ function TopBarSubMenu() {
   const isWorkerProfile = actualURL.includes("worker/profile-config");
   const isMyschedules = actualURL.includes("my-schedules");
   const isAboutMe = actualURL.includes("worker/edit");
+  const terms = actualURL.includes("terms-of-service");
 
   useEffect(() => {
     handleUrl();
@@ -61,6 +62,8 @@ function TopBarSubMenu() {
       setTitulo("My Schedule");
     } else if (isAboutMe) {
       setTitulo("About Me");
+    } else if (terms) {
+      setTitulo("Terms of service");
     }
   };
 

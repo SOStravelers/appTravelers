@@ -23,7 +23,7 @@ export default function Summary() {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-    console.log("el servicios", service);
+    document.title = "SOS Travelers - Summary";
     getData();
   }, []);
 

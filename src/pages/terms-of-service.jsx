@@ -1,11 +1,14 @@
 import React from "react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useRouter } from "next/router";
-
+import { useEffect } from "react";
 export default function TermsOfService() {
   const router = useRouter();
+  useEffect(() => {
+    document.title = "SOS Travelers - Terms of service";
+  }, []);
   return (
-    <section className="m-2 mb-16">
+    <section className="m-2 py-32 mb-16  xl:px-32 xl:ml-32">
       <h1 className="mb-2 font-bold text-2xl">
         SOS Travelers Terms of Service
       </h1>

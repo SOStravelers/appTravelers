@@ -26,8 +26,8 @@ const LoginFormModal = ({
                 &times;
               </button>
             </Link>
-            <div className="bg-white rounded-2xl w-[90vw] md:w-96 px-10 py-5">
-              <div className="p-5">
+            <div className="bg-white rounded-2xl w-[90vw] md:w-96 px-8 py-5">
+              <div className="px-5 py-5 pb-1">
                 <h1 className="text-2xl text-center mb-5">{title}</h1>
                 <p className="text-center">{text}</p>
               </div>

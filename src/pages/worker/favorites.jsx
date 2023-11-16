@@ -35,7 +35,7 @@ export default function Favorites() {
     }
   }, []);
   return (
-    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-28 px-5 md:pl-80">
+    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
       <p className="text-center text-greyText max-w-lg my-10">
         No favorites yet
       </p>

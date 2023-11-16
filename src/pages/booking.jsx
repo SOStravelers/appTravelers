@@ -29,7 +29,7 @@ export default function Booking() {
   }, []);
 
   return (
-    <div className="w-full min-h-screen py-28 px-5 md:pl-80 bg-white text-black">
+    <div className="w-full min-h-screen py-20 px-3 md:pl-80 bg-white text-black">
       <SwitchButtons
         actualView={actualView}
         setActualView={setActualView}

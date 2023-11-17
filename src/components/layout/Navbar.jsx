@@ -44,7 +44,7 @@ function Navbar() {
         ) : (
           <HomeIconOutlined color="black" />
         )}
-        <p
+        <span
           className={clsx(
             "text-sm",
             router.pathname === "/" || router.pathname === "/worker/home"
@@ -53,7 +53,7 @@ function Navbar() {
           )}
         >
           Home
-        </p>
+        </span>
       </div>
 
       <div
@@ -65,7 +65,7 @@ function Navbar() {
         ) : (
           <BookingIconOutlined color="black" />
         )}
-        <p
+        <span
           className={clsx(
             "text-sm",
             router.pathname === "/booking" ||
@@ -75,7 +75,7 @@ function Navbar() {
           )}
         >
           Bookings
-        </p>
+        </span>
       </div>
 
       <div
@@ -87,7 +87,7 @@ function Navbar() {
         ) : (
           <ChatIconOutlined color="black" />
         )}
-        <p
+        <span
           className={clsx(
             "text-sm",
             router.pathname.includes("chat")
@@ -96,7 +96,7 @@ function Navbar() {
           )}
         >
           Chat
-        </p>
+        </span>
       </div>
       <div
         className="flex flex-col items-center justify-center"
@@ -108,7 +108,7 @@ function Navbar() {
           <FavoriteIconOutlined color="black" />
         )}
 
-        <p
+        <span
           className={clsx(
             "text-sm",
             router.pathname.includes("favorites")
@@ -117,7 +117,7 @@ function Navbar() {
           )}
         >
           Favorites
-        </p>
+        </span>
       </div>
 
       <div
@@ -130,7 +130,7 @@ function Navbar() {
           <ProfileIconOutlined color="black" />
         )}
 
-        <p
+        <span
           className={clsx(
             "text-sm",
             router.pathname.includes("profile")
@@ -139,7 +139,7 @@ function Navbar() {
           )}
         >
           Profile
-        </p>
+        </span>
       </div>
     </div>
   );

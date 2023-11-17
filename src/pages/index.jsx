@@ -50,7 +50,7 @@ export default function Home({}) {
       if (swiper) {
         swiper.slideNext();
       }
-    }, 4500);
+    }, 5000);
 
     return () => {
       clearInterval(timer);

@@ -9,7 +9,7 @@ export default function UsePolicy() {
   }, []);
   return (
     <section className="m-2 py-32 mb-16  xl:px-36 xl:ml-32">
-      {/* <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
+      <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
       <p className="mb-5 text-sm">
         <b className="mr-1">Last update: </b> September 2023
       </p>
@@ -28,7 +28,7 @@ export default function UsePolicy() {
         Information: To facilitate transactions, we collect financial
         information necessary for processing payments for services.
       </p>
-      <h2 className="mb-2 font-bold text-lg">2. Use of Information.</h2>
+      {/* <h2 className="mb-2 font-bold text-lg">2. Use of Information.</h2>
       <p className="mb-2">
         Service Provision: We use the information to facilitate the connection
         between establishments, workers, and users, enabling service provision

@@ -9,7 +9,7 @@ export default function UsePolicy() {
   }, []);
   return (
     <section className="m-2 py-32 mb-16  xl:px-36 xl:ml-32">
-      <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
+      {/* <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
       <p className="mb-5 text-sm">
         <b className="mr-1">Last update: </b> September 2023
       </p>
@@ -79,7 +79,7 @@ export default function UsePolicy() {
         parental consent. By using SOS Travelers' services, users agree to this
         Privacy Policy. For privacy-related questions or concerns, users can
         contact our support team via the email provided in the terms of service.
-      </p>
+      </p> */}
 
       <OutlinedButton text="Return" onClick={() => router.push("/login")} />
     </section>

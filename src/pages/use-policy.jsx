@@ -19,7 +19,7 @@ export default function UsePolicy() {
         outlines how we collect, use, and protect the personal information
         provided by those who use our services.
       </p>
-      <h2 className="mb-2 font-bold text-lg">1. Collected Information.</h2>
+      {/* <h2 className="mb-2 font-bold text-lg">1. Collected Information.</h2>
       <p className="mb-2">
         User Data: We collect personal information during the registration
         process, such as names, email addresses, and contact details. Profile
@@ -28,7 +28,7 @@ export default function UsePolicy() {
         Information: To facilitate transactions, we collect financial
         information necessary for processing payments for services.
       </p>
-      {/* <h2 className="mb-2 font-bold text-lg">2. Use of Information.</h2>
+      <h2 className="mb-2 font-bold text-lg">2. Use of Information.</h2>
       <p className="mb-2">
         Service Provision: We use the information to facilitate the connection
         between establishments, workers, and users, enabling service provision

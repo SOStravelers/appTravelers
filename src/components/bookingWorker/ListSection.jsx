@@ -12,7 +12,7 @@ function ListSection({ weekDays, selectedDay, setSelectedDay }) {
           location={"124 street Miro Hotel, Ubud"}
           showArrow={false}
         />
-        <h1 className="text-center max-w-lg text-xl my-5">Today</h1>
+        <h1 className="text-center max-w-lg text-xl my-5">Next Days</h1>
         <WorkerCardBooking
           link={"/"}
           name={"John Doe"}

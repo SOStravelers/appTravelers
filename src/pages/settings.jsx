@@ -97,7 +97,7 @@ export default function Settings() {
       </div>
       <div className="mt-10 flex flex-col">
         {/* <OutlinedButton text="Save Changes" /> */}
-        <OutlinedButton text="Deactivate Account" error />
+        <OutlinedButton text="Delete Account" error />
       </div>
       <TextModal
         title={`Activate Worker Mode`}

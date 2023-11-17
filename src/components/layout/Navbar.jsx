@@ -56,7 +56,7 @@ function Navbar() {
               "text-sm",
               router.pathname === "/booking" ||
                 router.pathname === "/worker/booking"
-                ? "text-red"
+                ? "text-lightBlue"
                 : "text-greyText"
             )}
           >

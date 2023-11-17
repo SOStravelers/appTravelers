@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import clsx from "clsx";
 import {
@@ -14,16 +15,21 @@ import {
   ProfileIconOutlined,
 } from "@/constants/icons";
 import { useStore } from "@/store";
-
 function Navbar() {
   const router = useRouter();
+  const [id, setId] = useState([]);
+
+  useEffect(() => {
+    // Código que se ejecuta después de que el componente se monta
+    setId[localStorage.getItem("auth.user_id")];
+  }, []);
+
   const { isWorker } = useStore();
   const goTo = (ruta) => {
     router.push(ruta);
   };
   const goProfile = () => {
-    const userId = req.cookies["auth.user_id"];
-    if (!userId) {
+    if (!id) {
       router.push("/guest-settings");
     } else {
       goTo(isWorker ? "/worker/profile" : "/profile");
@@ -35,8 +41,9 @@ function Navbar() {
       className="w-screen h-12 fixed bottom-0 left-0 z-10 bg-white flex justify-around items-center md:hidden"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
     >
-      <div
-        className="flex flex-col mt-1 items-center justify-center"
+      <button
+        style={{}}
+        className=" customButton flex flex-col mt-1 items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/home" : "/")}
       >
         {router.pathname === "/" || router.pathname === "/worker/home" ? (
@@ -55,9 +62,9 @@ function Navbar() {
         >
           Home
         </span>
-      </div>
+      </button>
 
-      <div
+      <button
         className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/booking" : "/booking")}
       >
@@ -78,9 +85,9 @@ function Navbar() {
         >
           Bookings
         </span>
-      </div>
+      </button>
 
-      <div
+      <button
         className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/chat" : "/chat")}
       >
@@ -100,8 +107,8 @@ function Navbar() {
         >
           Chat
         </span>
-      </div>
-      <div
+      </button>
+      <button
         className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
       >
@@ -122,9 +129,9 @@ function Navbar() {
         >
           Favorites
         </span>
-      </div>
+      </button>
 
-      <div
+      <button
         className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goProfile()}
       >
@@ -145,7 +152,7 @@ function Navbar() {
         >
           Profile
         </span>
-      </div>
+      </button>
     </div>
   );
 }

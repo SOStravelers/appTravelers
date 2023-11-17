@@ -14,3 +14,17 @@ svg {
     stroke: #fff;   /* Borde blanco */
   }
 }
+
+
+
+
+.customButton {
+  /* Estilos personalizados para el botón */
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+}

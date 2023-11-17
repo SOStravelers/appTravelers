@@ -29,7 +29,7 @@ export default function Profile({ user }) {
     Cookies.remove("service");
     Cookies.remove("next-auth.session-token");
 
-    setUser({});
+    setUser(null);
     setLoggedIn(false);
     await signOut({ redirect: false });
     router.push("/");

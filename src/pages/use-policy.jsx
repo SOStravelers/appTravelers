@@ -10,7 +10,7 @@ export default function UsePolicy() {
   return (
     <section className="m-2 py-32 mb-16  xl:px-36 xl:ml-32">
       <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
-      <p className="mb-5 text-sm">
+      {/* <p className="mb-5 text-sm">
         <b className="mr-1">Last update: </b> September 2023
       </p>
       <p>
@@ -19,7 +19,7 @@ export default function UsePolicy() {
         outlines how we collect, use, and protect the personal information
         provided by those who use our services.
       </p>
-      {/* <h2 className="mb-2 font-bold text-lg">1. Collected Information.</h2>
+      <h2 className="mb-2 font-bold text-lg">1. Collected Information.</h2>
       <p className="mb-2">
         User Data: We collect personal information during the registration
         process, such as names, email addresses, and contact details. Profile

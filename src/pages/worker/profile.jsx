@@ -8,7 +8,6 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { signOut } from "next-auth/react";
 
 export default function WorkerProfile({ user }) {
-  document.title = "Worker Profile - SOS Travelers";
   const router = useRouter();
   const { setUser, setLoggedIn } = useStore();
   useEffect(() => {

@@ -45,6 +45,7 @@ function Navbar() {
           <HomeIconOutlined color="black" />
         )}
         <span
+          role="presentation"
           className={clsx(
             "text-sm",
             router.pathname === "/" || router.pathname === "/worker/home"
@@ -66,6 +67,7 @@ function Navbar() {
           <BookingIconOutlined color="black" />
         )}
         <span
+          role="presentation"
           className={clsx(
             "text-sm",
             router.pathname === "/booking" ||
@@ -88,6 +90,7 @@ function Navbar() {
           <ChatIconOutlined color="black" />
         )}
         <span
+          role="presentation"
           className={clsx(
             "text-sm",
             router.pathname.includes("chat")
@@ -109,6 +112,7 @@ function Navbar() {
         )}
 
         <span
+          role="presentation"
           className={clsx(
             "text-sm",
             router.pathname.includes("favorites")
@@ -131,6 +135,7 @@ function Navbar() {
         )}
 
         <span
+          role="presentation"
           className={clsx(
             "text-sm",
             router.pathname.includes("profile")

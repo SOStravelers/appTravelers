@@ -92,7 +92,7 @@ export default function PersonalDetails() {
   };
 
   return (
-    <div className="flex flex-col justify-center py-28 px-5 md:pl-80">
+    <div className="flex flex-col justify-center py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       {!nameInput ? (
         <SelectCard
           title="Name"

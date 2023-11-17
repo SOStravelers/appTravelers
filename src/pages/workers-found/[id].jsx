@@ -46,7 +46,7 @@ export default function WorkersFound() {
   };
 
   return (
-    <div className="flex flex-col items-center md:items-start py-28 px-5 md:pl-80">
+    <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <h1 className="my-5 text-grey text-center max-w-lg">
         These are the available workers, select the one that best suits your
         needs.

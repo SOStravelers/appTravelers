@@ -36,7 +36,7 @@ export default function SelectHostel() {
   };
 
   return (
-    <div className="p-10 pb-20 flex flex-col py-28 px-5 md:pl-80">
+    <div className="p-10 pb-20 flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <OutlinedInput placeholder={"Search here"} />
       <h1 className="my-2 font-semibold text-center max-w-lg">Nearby You</h1>
       <div className="flex flex-col items-center">

@@ -58,7 +58,7 @@ export default function Summary() {
   };
 
   return (
-    <div className="flex flex-col items-center md:items-start py-28 px-10 md:pl-80">
+    <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-10 md:pl-80">
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
         Read all the points carefully and make sure that it is what you need.
       </h1>

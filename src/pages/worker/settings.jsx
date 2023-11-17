@@ -112,7 +112,7 @@ export default function WorkerSettings() {
     setOpenNotification(false);
   };
   return (
-    <div className="flex flex-col py-28 px-5 md:pl-80">
+    <div className="flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
       <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
       <div className="flex flex-col my-4">

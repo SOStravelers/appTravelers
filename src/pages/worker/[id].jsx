@@ -19,7 +19,7 @@ export default function Worker({ user }) {
   console.log(user);
   let galleryFilter = user.img.gallery.filter((image) => image !== null);
   return (
-    <div className="py-28 px-5 md:pl-80">
+    <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <WorkerProfileCard
         name={user?.personalData?.name?.first}
         services={user?.workerData?.services}

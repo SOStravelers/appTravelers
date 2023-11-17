@@ -20,7 +20,7 @@ export default function WorkerProfile() {
   const router = useRouter();
 
   return (
-    <div className="bg-white h-full w-screen py-28 px-5 md:pl-80">
+    <div className="bg-white h-full w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <OptionCard
         title="My Services"
         subtitle="Abilities and skills"

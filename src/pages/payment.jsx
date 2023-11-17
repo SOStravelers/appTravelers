@@ -26,7 +26,7 @@ export default function Payment() {
   };
 
   return (
-    <div className="flex flex-col items-center md:items-start  pt-28 px-8 md:pl-80 min-h-[70vh]">
+    <div className="flex flex-col items-center md:items-start  py-20 lg:py-24 xl:py-24 px-8 md:pl-80 min-h-[70vh]">
       <div className="flex flex-col w-full max-w-lg pb-10">
         <div
           className="flex justify-between items-center"

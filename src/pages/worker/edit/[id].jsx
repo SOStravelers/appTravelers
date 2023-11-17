@@ -22,7 +22,7 @@ export default function WorkerEdit() {
   }, []);
 
   return (
-    <div className="py-28 px-5 md:pl-80">
+    <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <WorkerProfileCardEdit
         name={user?.personalData?.name?.first}
         lastName={user?.personalData?.name?.last}

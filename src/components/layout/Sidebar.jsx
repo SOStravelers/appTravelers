@@ -23,7 +23,7 @@ function Sidebar() {
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/" && "bg-lightBlue"
+            router.pathname === "/" || router.pathname === "/worker/home" && "bg-lightBlue"
           )}
         >
           <HomeIconOutlined color="white" />
@@ -35,7 +35,7 @@ function Sidebar() {
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/booking" && "bg-lightBlue"
+            router.pathname === "/booking" || router.pathname === "/worker/booking" && "bg-lightBlue"
           )}
         >
           <BookingIconOutlined color="#FFFFFF" />
@@ -46,7 +46,7 @@ function Sidebar() {
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/chat" && "bg-lightBlue"
+            router.pathname === "/chat" || router.pathname === "/worker/chat" && "bg-lightBlue"
           )}
         >
           <ChatIconOutlined color="white" />
@@ -74,7 +74,7 @@ function Sidebar() {
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/profile" && "bg-lightBlue"
+            router.pathname === "/profile" || router.pathname === "/worker/profile" && "bg-lightBlue"
           )}
         >
           <ProfileIconOutlined color="white" />

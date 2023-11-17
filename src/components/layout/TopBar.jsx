@@ -29,12 +29,12 @@ function TopBar() {
   };
 
   return (
-    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-20 lg:h-20 xl:h-20 px-3 fixed top-0">
+    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-18 lg:h-20 xl:h-20 px-3 fixed top-0">
       <div className="flex items-center">
         <Link
           href="/"
           style={{ textDecoration: "none", color: "inherit" }}
-          className="mr-2"
+          className="mr-2 my-2"
         >
           <LogoWhite
             href="/"
@@ -42,13 +42,19 @@ function TopBar() {
               textDecoration: "none",
               color: "inherit",
               "&:focus": { outline: "none" },
+              fontSize: "0.6rem", // Ajusta el tamaño del texto según tus necesidades
             }}
             color={"white"}
           />
         </Link>
         <div>
-          <p className="text-white font-semibold text-xl">SOS</p>
-          <p className="text-white font-semibold text-xl">Travelers</p>
+          <p className="text-white font-semibold text-lg">SOS</p>
+          <p
+            style={{ marginTop: "-12px" }}
+            className="text-white font-semibold text-lg"
+          >
+            Travelers
+          </p>
         </div>
       </div>
       <div className="flex justify-center items-center">
@@ -61,6 +67,12 @@ function TopBar() {
             )}
             <Link href="/notifications">
               <NotificationOffIcon
+                style={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  "&:focus": { outline: "none" },
+                  fontSize: "0.5rem", // Ajusta el tamaño del texto según tus necesidades
+                }}
                 color="#FFFFFF"
                 className="mr-3 cursor-pointer"
               />

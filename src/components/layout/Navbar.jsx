@@ -36,7 +36,7 @@ function Navbar() {
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
     >
       <div
-        className="flex flex-col items-center justify-center"
+        className="flex flex-col mt-1 items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/home" : "/")}
       >
         {router.pathname === "/" || router.pathname === "/worker/home" ? (
@@ -57,7 +57,7 @@ function Navbar() {
       </div>
 
       <div
-        className="flex flex-col items-center justify-center"
+        className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/booking" : "/booking")}
       >
         {router.pathname.includes("booking") ? (
@@ -79,7 +79,7 @@ function Navbar() {
       </div>
 
       <div
-        className="flex flex-col items-center justify-center"
+        className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/chat" : "/chat")}
       >
         {router.pathname.includes("chat") ? (
@@ -99,7 +99,7 @@ function Navbar() {
         </span>
       </div>
       <div
-        className="flex flex-col items-center justify-center"
+        className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
       >
         {router.pathname.includes("favorites") ? (
@@ -121,7 +121,7 @@ function Navbar() {
       </div>
 
       <div
-        className="flex flex-col items-center justify-center"
+        className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goProfile()}
       >
         {router.pathname.includes("profile") ? (

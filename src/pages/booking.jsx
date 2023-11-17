@@ -5,7 +5,6 @@ import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import DaySection from "@/components/booking/DaySection";
 import MonthSection from "@/components/booking/MonthSection";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
-import Cookies from "js-cookie";
 import { SECTION_ONE } from "@/constants";
 
 const weekDays = [];

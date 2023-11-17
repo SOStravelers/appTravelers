@@ -17,7 +17,7 @@ function OutlinedButton({
         secondary
           ? "text-grey border-grey"
           : error
-          ? "text-red border-red"
+          ? "text-greyText border-lightGrey"
           : "border-blueBorder text-blackText bg-blueButton",
         {
           "opacity-50 cursor-not-allowed": disabled,

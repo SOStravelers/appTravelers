@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import clsx from "clsx";
 import {
@@ -17,19 +16,13 @@ import {
 import { useStore } from "@/store";
 function Navbar() {
   const router = useRouter();
-  const [id, setId] = useState([]);
 
-  useEffect(() => {
-    // Código que se ejecuta después de que el componente se monta
-    setId[localStorage.getItem("auth.user_id")];
-  }, []);
-
-  const { isWorker } = useStore();
+  const { isWorker, user } = useStore();
   const goTo = (ruta) => {
     router.push(ruta);
   };
   const goProfile = () => {
-    if (!id) {
+    if (!user) {
       router.push("/guest-settings");
     } else {
       goTo(isWorker ? "/worker/profile" : "/profile");

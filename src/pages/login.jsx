@@ -95,7 +95,7 @@ export default function Login() {
             Terms of Service &nbsp;
           </Link>
           and our{" "}
-          <Link href={"user-policy"} className="font-bold text-blackText">
+          <Link href={"use-policy"} className="font-bold text-blackText">
             Use Policy.
           </Link>
         </p>

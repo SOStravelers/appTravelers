@@ -36,7 +36,8 @@ export default function App({ Component, pageProps }) {
       router.pathname !== "/create-password" &&
       router.pathname !== "/worker/profile-config" &&
       router.pathname !== "/worker/my-services" &&
-      !router.pathname.includes("chat/")
+      !router.pathname.includes("chat/") &&
+      router.pathname !== "/use-policy"
     ) {
       return <Navbar />;
     }

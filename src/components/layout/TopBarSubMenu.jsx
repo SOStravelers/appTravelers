@@ -28,6 +28,7 @@ function TopBarSubMenu() {
   const isMyschedules = actualURL.includes("my-schedules");
   const isAboutMe = actualURL.includes("worker/edit");
   const terms = actualURL.includes("terms-of-service");
+  const policy = actualURL.includes("use-policy");
 
   useEffect(() => {
     handleUrl();
@@ -64,6 +65,8 @@ function TopBarSubMenu() {
       setTitulo("About Me");
     } else if (terms) {
       setTitulo("Terms of service");
+    } else if (policy) {
+      setTitulo("Use Policy");
     }
   };
 

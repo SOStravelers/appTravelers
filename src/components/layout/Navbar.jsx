@@ -19,10 +19,8 @@ function Navbar() {
   const router = useRouter();
   const { isWorker } = useStore();
   const goTo = (ruta) => {
-    console.log("wenas", ruta);
     router.push(ruta);
   };
-  console.log("el path", router.pathname, router.pathname.includes("booking"));
 
   return (
     <div

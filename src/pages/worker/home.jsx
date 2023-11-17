@@ -57,7 +57,7 @@ export default function WorkerHome({ user }) {
   };
 
   return (
-    <main className="flex flex-col bg-white  py-16 px-4 md:pl-80">
+    <main className="flex flex-col bg-white  py-16 lg:mt-5 xl:mt-5 px-4 md:pl-80">
       {/* <BookingCard /> */}
 
       <div className="w-full max-w-lg ">

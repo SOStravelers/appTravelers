@@ -10,6 +10,8 @@ module.exports = {
       lightBlue: "#5B78C7",
       darkBlue: "#001C25",
       blueBorder: "#00A0D5",
+      newBlue: "#3498db",
+
       dotBlue: "#1CDAE5",
       blueButton: "#ECF8FC",
       blackButton: "#001C25",

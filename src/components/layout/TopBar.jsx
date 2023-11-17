@@ -65,7 +65,7 @@ function TopBar() {
                 Worker Mode
               </h1>
             )}
-            <Link href="/notifications">
+            <Link href="/notifications" className="lg:mx-5 xl:mx-5">
               <NotificationOffIcon
                 style={{
                   textDecoration: "none",

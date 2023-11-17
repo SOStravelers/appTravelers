@@ -26,7 +26,7 @@ function Sidebar() {
         className={clsx(
           "flex items-center pl-5 h-10 w-48 rounded-xl transition-all duration-300 ease-in-out",
           router.pathname === "/" || router.pathname === "/worker/home"
-            ? "bg-lightBlue"
+            ? "bg-newBlue"
             : "bg-someOtherColor"
         )}
         onClick={handleClick}
@@ -40,7 +40,9 @@ function Sidebar() {
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
             router.pathname === "/booking" ||
-              (router.pathname === "/worker/booking" && "bg-lightBlue")
+              router.pathname === "/worker/booking"
+              ? "bg-newBlue"
+              : "bg-someOtherColor"
           )}
         >
           <BookingIconOutlined color="#FFFFFF" />
@@ -51,8 +53,9 @@ function Sidebar() {
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/chat" ||
-              (router.pathname === "/worker/chat" && "bg-lightBlue")
+            router.pathname === "/chat" || router.pathname === "/worker/chat"
+              ? "bg-newBlue"
+              : "bg-someOtherColor"
           )}
         >
           <ChatIconOutlined color="white" />
@@ -67,7 +70,9 @@ function Sidebar() {
           <button
             className={clsx(
               "flex items-center pl-5 h-10 w-48 rounded-xl",
-              router.pathname === "/favorites" && "bg-lightBlue"
+              router.pathname === "/favorites"
+                ? "bg-newBlue"
+                : "bg-someOtherColor"
             )}
           >
             <FavoriteIconOutlined color="white" />
@@ -81,7 +86,9 @@ function Sidebar() {
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
             router.pathname === "/profile" ||
-              (router.pathname === "/worker/profile" && "bg-lightBlue")
+              router.pathname === "/worker/profile"
+              ? "bg-newBlue"
+              : "bg-someOtherColor"
           )}
         >
           <ProfileIconOutlined color="white" />

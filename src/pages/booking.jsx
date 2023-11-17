@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import Cookies from "js-cookie";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import DaySection from "@/components/booking/DaySection";
 import MonthSection from "@/components/booking/MonthSection";
@@ -21,6 +22,7 @@ export default function Booking() {
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
   const [open, setOpen] = useState(false);
+  const user = Cookies.get("auth.user_id");
 
   useEffect(() => {
     document.title = "Booking - SOS Travelers";

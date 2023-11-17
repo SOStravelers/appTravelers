@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { register } from "swiper/element/bundle";
+import { Swiper, SwiperSlide } from "swiper/react";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import WorkerCardBookingWorker from "@/components/utils/cards/WorkerCardBookingWorker";
 
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
-register();
+
+import "swiper/swiper-bundle.css";
+import SwiperCore, { Pagination, Navigation } from "swiper";
+SwiperCore.use([Pagination, Navigation]);
+
 export default function WorkerHome({ user }) {
   const router = useRouter();
   const [bookings, setBookings] = useState([]);
   const { setService } = useStore();
-  const { setUser, setLoggedIn } = useStore();
+  const [swiper, setSwiper] = useState(null);
+
   useEffect(() => {
     document.title = "Worker Home - SOS Travelers";
     setBookings([
@@ -31,26 +36,26 @@ export default function WorkerHome({ user }) {
         direction: "124 street Miro Hotel, Ubud",
         date: "4 Aug, 2023 | 04:30 PM",
       },
+      // {
+      //   id: 4,
+      //   direction: "124 street Miro Hotel, Ubud",
+      //   date: "4 Aug, 2023 | 04:30 PM",
+      // },
     ]);
     setService(null);
   }, []);
+
   useEffect(() => {
-    const swiperEl = document.querySelector("swiper-container");
-    const swiperParams = {
-      slidesPerView: 1,
-      pagination: true,
-      navigation: false,
-      spaceBetween: 10,
-      rewind: true,
-      injectStyles: [
-        ".swiper-pagination-bullet-active{ background-color: #00A0D5;}",
-        ".swiper-button-next{ color: #00A0D5;}",
-        ".swiper-button-prev{ color: #00A0D5;}",
-      ],
+    const timer = setInterval(() => {
+      if (swiper) {
+        swiper.slideNext();
+      }
+    }, 3500);
+
+    return () => {
+      clearInterval(timer);
     };
-    Object.assign(swiperEl, swiperParams);
-    if (bookings?.length > 0) swiperEl.initialize();
-  }, [bookings]);
+  }, [swiper]);
 
   const goTo = (path) => {
     router.push(path);
@@ -58,22 +63,30 @@ export default function WorkerHome({ user }) {
 
   return (
     <main className="flex flex-col bg-white  py-16 lg:mt-5 xl:mt-5 px-4 md:pl-80">
-      {/* <BookingCard /> */}
-
       <div className="w-full max-w-lg ">
-        <swiper-container init="false">
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={1}
+          onSwiper={(s) => setSwiper(s)}
+          loop={true}
+          pagination={{ clickable: true }}
+          style={{
+            "--swiper-pagination-color": "#00A0D5",
+            "--swiper-pagination-bullet-active-color": "#1111",
+          }}
+        >
           {bookings?.map((booking) => (
-            <swiper-slide key={booking?.id} className="flex justify-center">
+            <SwiperSlide key={booking?.id}>
               <BookingCard
                 direction={booking?.direction}
                 date={booking?.date}
               />
-            </swiper-slide>
+            </SwiperSlide>
           ))}
-        </swiper-container>
+        </Swiper>
       </div>
 
-      <section className="mt-2 mb-5">
+      <section className="mt-20 mb-5">
         <OutlinedButton
           text="Book a service"
           onClick={() => goTo("/worker/booking")}

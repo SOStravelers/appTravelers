@@ -73,7 +73,7 @@ function TopBarSubMenu() {
   return (
     <div
       className={clsx(
-        "w-screen flex items-center justify-between h-20 lg:h-20 xl:h-20 px-5 shadow-xl fixed top-0 z-20",
+        "w-screen flex items-center justify-between h-18 lg:h-20 xl:h-20 px-5 shadow-xl fixed top-0 z-20",
         "bg-darkBlue"
       )}
     >
@@ -89,8 +89,16 @@ function TopBarSubMenu() {
         <ReturnArrowIcon color="#fff" size="35" />
       </div>
       <h1 className={clsx(" text-xl", "text-white")}>{titulo}</h1>
-      <Link href={isWorker ? "/worker/home" : "/"}>
-        <LogoWhite color={"white"} />
+      <Link className="my-2" href={isWorker ? "/worker/home" : "/"}>
+        <LogoWhite
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            "&:focus": { outline: "none" },
+            fontSize: "0.5rem", // Ajusta el tamaño del texto según tus necesidades
+          }}
+          color={"white"}
+        />
       </Link>
     </div>
   );

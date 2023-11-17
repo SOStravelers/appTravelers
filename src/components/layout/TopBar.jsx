@@ -29,7 +29,7 @@ function TopBar() {
   };
 
   return (
-    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-18 lg:h-20 xl:h-20 px-3 fixed top-0">
+    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-18   lg:h-20 xl:h-20 px-3 fixed top-0">
       <div className="flex items-center">
         <Link
           href="/"
@@ -42,7 +42,7 @@ function TopBar() {
               textDecoration: "none",
               color: "inherit",
               "&:focus": { outline: "none" },
-              fontSize: "0.6rem", // Ajusta el tamaño del texto según tus necesidades
+              fontSize: "0.5rem", // Ajusta el tamaño del texto según tus necesidades
             }}
             color={"white"}
           />

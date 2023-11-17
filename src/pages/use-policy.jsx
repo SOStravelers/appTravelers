@@ -5,13 +5,11 @@ import { useEffect } from "react";
 export default function TermsOfService() {
   const router = useRouter();
   useEffect(() => {
-    document.title = "Terms of service - SOS Travelers";
+    document.title = "Use Policy - SOS Travelers";
   }, []);
   return (
     <section className="m-2 py-32 mb-16  xl:px-36 xl:ml-32">
-      <h1 className="mb-2 font-bold text-2xl">
-        SOS Travelers Terms of Service
-      </h1>
+      <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
       <p className="mb-5 text-sm">
         <b className="mr-1">Last update: </b> September 2023
       </p>

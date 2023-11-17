@@ -78,10 +78,14 @@ export default function Registro() {
             Login
           </Link>{" "}
         </p>
-        <p className="text-xs mt-3">
+        <p className="text-xs mt-5">
           By joining, you agree to our{" "}
           <Link href={"terms-of-service"} className="font-bold text-blackText">
-            Terms of Service.
+            Terms of Service &nbsp;
+          </Link>
+          and our{" "}
+          <Link href={"user-policy"} className="font-bold text-blackText">
+            Use Policy.
           </Link>
         </p>
         <Link href="/">

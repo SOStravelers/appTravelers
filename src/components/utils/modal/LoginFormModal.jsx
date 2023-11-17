@@ -48,7 +48,14 @@ const LoginFormModal = ({
                     href={"terms-of-service"}
                     className="font-bold text-blackText"
                   >
-                    Terms of Service.
+                    Terms of Service &nbsp;
+                  </Link>
+                  and our{" "}
+                  <Link
+                    href={"user-policy"}
+                    className="font-bold text-blackText"
+                  >
+                    Use Policy.
                   </Link>
                 </p>
               </div>

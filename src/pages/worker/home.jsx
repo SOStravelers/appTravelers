@@ -86,7 +86,7 @@ export default function WorkerHome({ user }) {
         </Swiper>
       </div>
 
-      <section className="mt-20 mb-5">
+      <section className=" mb-5">
         <OutlinedButton
           text="Book a service"
           onClick={() => goTo("/worker/booking")}

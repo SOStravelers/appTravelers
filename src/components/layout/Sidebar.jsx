@@ -13,29 +13,34 @@ import {
 function Sidebar() {
   const router = useRouter();
   const { isWorker } = useStore();
+  const handleClick = () => {
+    router.push(isWorker ? "/worker/home" : "/");
+  };
 
   return (
     <div
       className="h-full w-60 pt-32 fixed bottom-0 left-0 z-10 bg-darkBlue items-center hidden md:flex flex-col"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.35)" }}
     >
-      <Link className="my-2" href={isWorker ? "/worker/home" : "/"}>
-        <button
-          className={clsx(
-            "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/" || router.pathname === "/worker/home" && "bg-lightBlue"
-          )}
-        >
-          <HomeIconOutlined color="white" />
-          <p className={clsx("text-xl ml-3 text-white")}>Home</p>
-        </button>
-      </Link>
+      <button
+        className={clsx(
+          "flex items-center pl-5 h-10 w-48 rounded-xl transition-all duration-300 ease-in-out",
+          router.pathname === "/" || router.pathname === "/worker/home"
+            ? "bg-lightBlue"
+            : "bg-someOtherColor"
+        )}
+        onClick={handleClick}
+      >
+        <HomeIconOutlined color="white" />
+        <p className={clsx("text-xl ml-3 text-white")}>Home</p>
+      </button>
 
       <Link className="my-2" href={isWorker ? "/worker/booking" : "/booking"}>
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/booking" || router.pathname === "/worker/booking" && "bg-lightBlue"
+            router.pathname === "/booking" ||
+              (router.pathname === "/worker/booking" && "bg-lightBlue")
           )}
         >
           <BookingIconOutlined color="#FFFFFF" />
@@ -46,7 +51,8 @@ function Sidebar() {
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/chat" || router.pathname === "/worker/chat" && "bg-lightBlue"
+            router.pathname === "/chat" ||
+              (router.pathname === "/worker/chat" && "bg-lightBlue")
           )}
         >
           <ChatIconOutlined color="white" />
@@ -74,7 +80,8 @@ function Sidebar() {
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
-            router.pathname === "/profile" || router.pathname === "/worker/profile" && "bg-lightBlue"
+            router.pathname === "/profile" ||
+              (router.pathname === "/worker/profile" && "bg-lightBlue")
           )}
         >
           <ProfileIconOutlined color="white" />

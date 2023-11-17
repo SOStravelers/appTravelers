@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 import clsx from "clsx";
 import {
   HomeIcon,
@@ -13,13 +14,20 @@ import {
   ProfileIconOutlined,
 } from "@/constants/icons";
 import { useStore } from "@/store";
-import Link from "next/link";
 
 function Navbar() {
   const router = useRouter();
   const { isWorker } = useStore();
   const goTo = (ruta) => {
     router.push(ruta);
+  };
+  const goProfile = () => {
+    const userId = req.cookies["auth.user_id"];
+    if (!userId) {
+      router.push("/guest-settings");
+    } else {
+      goTo(isWorker ? "/worker/profile" : "/profile");
+    }
   };
 
   return (
@@ -114,7 +122,7 @@ function Navbar() {
 
       <div
         className="flex flex-col items-center justify-center"
-        onClick={() => goTo(isWorker ? "/worker/profile" : "/profile")}
+        onClick={() => goProfile()}
       >
         {router.pathname.includes("profile") ? (
           <ProfileIcon color="#3498db" />

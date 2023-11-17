@@ -17,10 +17,12 @@ const poppins = Poppins({
 });
 
 function Layout({ children }) {
+  console.log("layout");
   const router = useRouter();
   const { setWorker, isWorker } = useStore();
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
   useEffect(() => {
+    console.log("userlayout", user);
     if (!user || Object.keys(user).length == 0) {
       obtenerInformacionUsuario();
     }
@@ -37,6 +39,7 @@ function Layout({ children }) {
       if (user) {
         console.log("sesion activa");
         setUser(user);
+        console.log("useractivo", user);
         setLoggedIn(true);
       } else if (idUser) {
         console.log("recuperando sesion");

@@ -50,7 +50,7 @@ export default function WorkerHome({ user }) {
       if (swiper) {
         swiper.slideNext();
       }
-    }, 4500);
+    }, 5000);
 
     return () => {
       clearInterval(timer);

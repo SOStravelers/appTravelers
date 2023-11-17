@@ -2,24 +2,27 @@ import React from "react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
 export default function UsePolicy() {
   const router = useRouter();
+
   useEffect(() => {
     document.title = "Use Policy - SOS Travelers";
   }, []);
+
   return (
-    <section className="m-2 py-32 mb-16  xl:px-36 xl:ml-32">
+    <section className="m-2 py-32 mb-16 xl:px-36 xl:ml-32">
       <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
       <p className="mb-5 text-sm">
         <b className="mr-1">Last update: </b> September 2023
       </p>
       <p>
         At SOS Travelers, we acknowledge the importance of safeguarding the
-        privacy and security of our users' information. This Privacy Policy
+        privacy and security of our users&apos; information. This Privacy Policy
         outlines how we collect, use, and protect the personal information
         provided by those who use our services.
       </p>
-      {/* <h2 className="mb-2 font-bold text-lg">1. Collected Information.</h2>
+      <h2 className="mb-2 font-bold text-lg">1. Collected Information.</h2>
       <p className="mb-2">
         User Data: We collect personal information during the registration
         process, such as names, email addresses, and contact details. Profile
@@ -76,10 +79,11 @@ export default function UsePolicy() {
       <p className="mb-2">
         Our services are not directed at individuals under 18 years old. We do
         not knowingly collect information from minors without verifiable
-        parental consent. By using SOS Travelers' services, users agree to this
-        Privacy Policy. For privacy-related questions or concerns, users can
-        contact our support team via the email provided in the terms of service.
-      </p> */}
+        parental consent. By using SOS Travelers&apos; services, users agree to
+        this Privacy Policy. For privacy-related questions or concerns, users
+        can contact our support team via the email provided in the terms of
+        service.
+      </p>
 
       <OutlinedButton text="Return" onClick={() => router.push("/login")} />
     </section>

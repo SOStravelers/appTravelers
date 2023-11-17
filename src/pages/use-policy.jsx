@@ -2,7 +2,7 @@ import React from "react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-export default function TermsOfService() {
+export default function UsePolicy() {
   const router = useRouter();
   useEffect(() => {
     document.title = "Use Policy - SOS Travelers";

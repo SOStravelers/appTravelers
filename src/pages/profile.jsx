@@ -11,7 +11,7 @@ export default function Profile({ user }) {
     document.title = "Profile - SOS Travelers";
   }, []);
   const router = useRouter();
-  const { setUser, setLoggedIn } = useStore();
+  const { setUser, setLoggedIn, setWorker } = useStore();
 
   const logout = async () => {
     localStorage.removeItem("auth.access_token");
@@ -28,6 +28,9 @@ export default function Profile({ user }) {
     Cookies.remove("auth.user");
     Cookies.remove("service");
     Cookies.remove("next-auth.session-token");
+
+    localStorage.removeItem("type");
+    setWorker(false);
 
     setUser(null);
     setLoggedIn(false);

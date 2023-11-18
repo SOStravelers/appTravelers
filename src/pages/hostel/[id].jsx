@@ -43,12 +43,6 @@ export default function Hostel({ hostel }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const redirect = {
-    redirect: {
-      destination: "/guest-settings",
-      permanent: false,
-    },
-  };
   const hostelId = params.id;
   if (!hostelId) return redirect;
 

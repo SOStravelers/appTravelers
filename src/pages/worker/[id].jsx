@@ -46,12 +46,6 @@ export default function Worker({ user }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const redirect = {
-    redirect: {
-      destination: "/guest-settings",
-      permanent: false,
-    },
-  };
   const userId = params.id;
   if (!userId) return redirect;
 

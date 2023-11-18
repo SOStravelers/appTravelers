@@ -25,16 +25,11 @@ function Layout({ children }) {
   // Definir useCustomMiddleware fuera del useEffect
 
   useEffect(() => {
-    console.log("userlayout", user);
-    async function fetchData() {
-      if (!user || Object.keys(user).length === 0) {
-        await obtenerInformacionUsuario();
-      }
-      // Llamamos al hook de middleware personalizado después de obtener la información del usuario
+    if (!user || Object.keys(user).length === 0) {
+      obtenerInformacionUsuario();
+    } else {
       useCustomMiddleware();
     }
-
-    fetchData();
   }, []);
 
   async function obtenerInformacionUsuario() {
@@ -66,6 +61,7 @@ function Layout({ children }) {
         setUser(null);
         setLoggedIn(false);
       }
+      useCustomMiddleware();
     } catch (err) {
       console.log("deslogueando por error");
       console.error("Error al obtener la información del usuario:", err);

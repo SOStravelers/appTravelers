@@ -18,9 +18,9 @@ function ChangePassForm() {
         values.password
       );
       if (response.data) {
-        if (response.data.user.type && response.data.user.type != "personal") {
-          localStorage.setItem("type", response.data.user.type);
-        }
+        // if (response.data.user.type && response.data.user.type != "personal") {
+        //   localStorage.setItem("type", response.data.user.type);
+        // }
         delete response.data.user.type;
         setUser(response.data.user);
         localStorage.setItem("auth.user", JSON.stringify(response.data.user));

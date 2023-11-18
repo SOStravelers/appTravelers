@@ -26,6 +26,7 @@ function Layout({ children }) {
     if (!user || Object.keys(user).length == 0) {
       obtenerInformacionUsuario();
     }
+    useCustomMiddleware();
   }, []);
 
   async function obtenerInformacionUsuario() {
@@ -65,30 +66,25 @@ function Layout({ children }) {
     }
   }
 
-  // async function loginGoogle() {
-  //   try {
-  //     const result = await fetch("/api/getUserInfo");
-  //     console.log(result); // Reemplaza esto con la URL correcta de tu API
-  //     const userInfo = await result.json();
-  //     const response = await UserService.loginGoogle(
-  //       userInfo.name,
-  //       userInfo.email,
-  //       userInfo.image
-  //     );
-  //     if (response) {
-  //       setUser(response.data.user);
-  //       setLoggedIn(true);
-  //       localStorage.setItem("auth.access_token", response.data.access_token);
-  //       localStorage.setItem("auth.refresh_token", response.data.refresh_token);
-  //       localStorage.setItem("auth.user_id", response.data.user._id);
-  //       localStorage.setItem("auth.user", JSON.stringify(response.data.user));
-  //       Cookies.set("auth.access_token", response.data.access_token);
-  //       Cookies.set("auth.refresh_token", response.data.refresh_token);
-  //       Cookies.set("auth.user_id", response.data.user._id);
-  //       Cookies.set("auth.user", JSON.stringify(response.data.user));
-  //     }
-  //   } catch (err) {}
-  // }
+  async function useCustomMiddleware() {
+    var shouldRedirect = true;
+    if (router.pathname.includes("worker") && !isWorker) {
+      shouldRedirect = false;
+    }
+    if (
+      !user &&
+      (router.pathname == "/profile" ||
+        router.pathname == "/personal-details" ||
+        router.pathname == "/settings" ||
+        router.pathname == "/payment" ||
+        router.pathname == "/stripe")
+    ) {
+      shouldRedirect = false;
+    }
+    if (!shouldRedirect) {
+      router.push("/");
+    }
+  }
 
   const isLoginPage =
     router.pathname === "/login" ||

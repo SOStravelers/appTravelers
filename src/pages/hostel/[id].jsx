@@ -42,27 +42,27 @@ export default function Hostel({ hostel }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
-  const redirect = {
-    redirect: {
-      destination: "/guest-settings",
-      permanent: false,
-    },
-  };
-  const hostelId = params.id;
-  if (!hostelId) return redirect;
+// export async function getServerSideProps({ params }) {
+//   const redirect = {
+//     redirect: {
+//       destination: "/guest-settings",
+//       permanent: false,
+//     },
+//   };
+//   const hostelId = params.id;
+//   if (!hostelId) return redirect;
 
-  let hostel = null;
-  try {
-    const response = await HostelService.getBusiness(hostelId);
-    hostel = response.data;
-  } catch (error) {
-    console.error(error);
-  }
+//   let hostel = null;
+//   try {
+//     const response = await HostelService.getBusiness(hostelId);
+//     hostel = response.data;
+//   } catch (error) {
+//     console.error(error);
+//   }
 
-  return {
-    props: {
-      hostel: hostel,
-    },
-  };
-}
+//   return {
+//     props: {
+//       hostel: hostel,
+//     },
+//   };
+// }

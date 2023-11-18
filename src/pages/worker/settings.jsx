@@ -185,29 +185,29 @@ export default function WorkerSettings() {
   );
 }
 
-export async function getServerSideProps({ req }) {
-  const redirect = {
-    redirect: {
-      destination: "/login",
-      permanent: false,
-    },
-  };
-  const userId = req.cookies["auth.user_id"];
-  if (!userId) return redirect;
+// export async function getServerSideProps({ req }) {
+//   const redirect = {
+//     redirect: {
+//       destination: "/login",
+//       permanent: false,
+//     },
+//   };
+//   const userId = req.cookies["auth.user_id"];
+//   if (!userId) return redirect;
 
-  let user = null;
-  try {
-    const response = await UserService.get(userId);
-    user = response.data;
-    if (!user) return redirect;
-  } catch (error) {
-    console.error(error);
-    return redirect;
-  }
+//   let user = null;
+//   try {
+//     const response = await UserService.get(userId);
+//     user = response.data;
+//     if (!user) return redirect;
+//   } catch (error) {
+//     console.error(error);
+//     return redirect;
+//   }
 
-  return {
-    props: {
-      user: user,
-    },
-  };
-}
+//   return {
+//     props: {
+//       user: user,
+//     },
+//   };
+// }

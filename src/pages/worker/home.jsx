@@ -113,20 +113,20 @@ export default function WorkerHome({ user }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
-  const userId = req.cookies["auth.user_id"];
-  let user = null;
-  if (userId) {
-    try {
-      const response = await UserService.get(userId);
-      user = response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  return {
-    props: {
-      user: user,
-    },
-  };
-}
+// export async function getServerSideProps({ req }) {
+//   const userId = req.cookies["auth.user_id"];
+//   let user = null;
+//   if (userId) {
+//     try {
+//       const response = await UserService.get(userId);
+//       user = response.data;
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
+//   return {
+//     props: {
+//       user: user,
+//     },
+//   };
+// }

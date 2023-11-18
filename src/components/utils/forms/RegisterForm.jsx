@@ -25,9 +25,9 @@ function RegisterForm() {
         values.email,
         values.password
       );
-      if (response.data.user.type && response.data.user.type != "personal") {
-        localStorage.setItem("type", response.data.user.type);
-      }
+      // if (response.data.user.type && response.data.user.type != "personal") {
+      //   localStorage.setItem("type", response.data.user.type);
+      // }
       delete response.data.user.type;
 
       localStorage.setItem("auth.access_token", response.data.access_token);

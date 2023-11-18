@@ -45,27 +45,27 @@ export default function Worker({ user }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
-  const redirect = {
-    redirect: {
-      destination: "/guest-settings",
-      permanent: false,
-    },
-  };
-  const userId = params.id;
-  if (!userId) return redirect;
+// export async function getServerSideProps({ params }) {
+//   const redirect = {
+//     redirect: {
+//       destination: "/guest-settings",
+//       permanent: false,
+//     },
+//   };
+//   const userId = params.id;
+//   if (!userId) return redirect;
 
-  let user = null;
-  try {
-    const response = await UserService.get(userId);
-    user = response.data;
-  } catch (error) {
-    console.error(error);
-  }
+//   let user = null;
+//   try {
+//     const response = await UserService.get(userId);
+//     user = response.data;
+//   } catch (error) {
+//     console.error(error);
+//   }
 
-  return {
-    props: {
-      user: user,
-    },
-  };
-}
+//   return {
+//     props: {
+//       user: user,
+//     },
+//   };
+// }

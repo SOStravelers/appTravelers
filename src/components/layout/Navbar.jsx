@@ -15,7 +15,6 @@ import {
 } from "@/constants/icons";
 import { useStore } from "@/store";
 function Navbar() {
-  console.log("buenooo");
   const router = useRouter();
 
   const { isWorker, user } = useStore();
@@ -24,7 +23,8 @@ function Navbar() {
   };
   const goProfile = () => {
     console.log("el user", user);
-    if (!user) {
+    console.log(user == {});
+    if (!user || Object.keys(user).length === 0) {
       router.push("/guest-settings");
     } else {
       goTo(isWorker ? "/worker/profile" : "/profile");

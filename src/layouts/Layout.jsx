@@ -30,7 +30,7 @@ function Layout({ children }) {
     if (!user || Object.keys(user).length == 0) {
       await obtenerInformacionUsuario();
     }
-    useCustomMiddleware();
+    MiddlewareRoutes();
   }
 
   async function obtenerInformacionUsuario() {
@@ -70,7 +70,7 @@ function Layout({ children }) {
     }
   }
 
-  async function useCustomMiddleware() {
+  async function MiddlewareRoutes() {
     var shouldRedirect = true;
     if (router.pathname.includes("worker") && !isWorker) {
       shouldRedirect = false;

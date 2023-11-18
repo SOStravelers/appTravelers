@@ -105,8 +105,7 @@ function Navbar() {
       </button>
       <button
         className="flex mt-1 flex-col items-center justify-center"
-        // onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
-        onClick={() => goTo(user ? "/profile" : "/guest-settings")}
+        onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
       >
         {router.pathname.includes("favorites") ? (
           <FavoriteIcon color="#3498db" />

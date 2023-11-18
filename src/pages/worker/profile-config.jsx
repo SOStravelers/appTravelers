@@ -4,18 +4,6 @@ import { UserIcon, ListIcon, LockIcon, ServicesIcon } from "@/constants/icons";
 import { useStore } from "@/store";
 
 export default function WorkerProfile() {
-  // const getCookieValue = (name) => {
-  //   const cookies = document.cookie.split("; ");
-  //   for (const cookie of cookies) {
-  //     const [cookieName, cookieValue] = cookie.split("=");
-  //     if (cookieName === name) {
-  //       return cookieValue;
-  //     }
-  //   }
-  //   return null;
-  // };
-
-  // const userId = getCookieValue("auth.user_id");
   const { user } = useStore();
   const router = useRouter();
 

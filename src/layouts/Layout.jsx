@@ -25,9 +25,10 @@ function Layout({ children }) {
   useEffect(() => {
     if (!user || Object.keys(user).length === 0) {
       obtenerInformacionUsuario();
-    } else {
-      useCustomMiddleware();
     }
+    // else {
+    //   useCustomMiddleware();
+    // }
   }, []);
 
   async function obtenerInformacionUsuario() {

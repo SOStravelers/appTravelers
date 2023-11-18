@@ -21,8 +21,29 @@ function Layout({ children }) {
   const router = useRouter();
   const { setWorker, isWorker } = useStore();
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
+  // Definir useCustomMiddleware fuera del useEffect
+
   useEffect(() => {
     console.log("userlayout", user);
+    const useCustomMiddleware = () => {
+      var shouldRedirect = true;
+      if (router.pathname.includes("worker") && !isWorker) {
+        shouldRedirect = false;
+      }
+      if (
+        !user &&
+        (router.pathname == "/profile" ||
+          router.pathname == "/personal-details" ||
+          router.pathname == "/settings" ||
+          router.pathname == "/payment" ||
+          router.pathname == "/stripe")
+      ) {
+        shouldRedirect = false;
+      }
+      if (!shouldRedirect) {
+        router.push("/");
+      }
+    };
     if (!user || Object.keys(user).length == 0) {
       obtenerInformacionUsuario();
     }
@@ -63,26 +84,6 @@ function Layout({ children }) {
       console.error("Error al obtener la información del usuario:", err);
       setUser(null);
       setLoggedIn(false);
-    }
-  }
-
-  async function useCustomMiddleware() {
-    var shouldRedirect = true;
-    if (router.pathname.includes("worker") && !isWorker) {
-      shouldRedirect = false;
-    }
-    if (
-      !user &&
-      (router.pathname == "/profile" ||
-        router.pathname == "/personal-details" ||
-        router.pathname == "/settings" ||
-        router.pathname == "/payment" ||
-        router.pathname == "/stripe")
-    ) {
-      shouldRedirect = false;
-    }
-    if (!shouldRedirect) {
-      router.push("/");
     }
   }
 

@@ -10,8 +10,8 @@ import { mazzard } from "@/utils/mazzardFont";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import SwiperCore, { Pagination, Navigation } from "swiper";
-SwiperCore.use([Pagination, Navigation]);
+// import SwiperCore, { Pagination, Navigation } from "swiper";
+// SwiperCore.use([Pagination, Navigation]);
 
 register();
 

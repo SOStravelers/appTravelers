@@ -23,10 +23,15 @@ function Layout({ children }) {
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
   useEffect(() => {
     console.log("userlayout", user);
-    if (!user || Object.keys(user).length == 0) {
-      obtenerInformacionUsuario();
-    }
+    transicion();
   }, []);
+
+  async function transicion() {
+    if (!user || Object.keys(user).length == 0) {
+      await obtenerInformacionUsuario();
+    }
+    useCustomMiddleware();
+  }
 
   async function obtenerInformacionUsuario() {
     try {
@@ -62,6 +67,26 @@ function Layout({ children }) {
       console.error("Error al obtener la información del usuario:", err);
       setUser(null);
       setLoggedIn(false);
+    }
+  }
+
+  async function useCustomMiddleware() {
+    var shouldRedirect = true;
+    if (router.pathname.includes("worker") && !isWorker) {
+      shouldRedirect = false;
+    }
+    if (
+      !user &&
+      (router.pathname == "/profile" ||
+        router.pathname == "/personal-details" ||
+        router.pathname == "/settings" ||
+        router.pathname == "/payment" ||
+        router.pathname == "/stripe")
+    ) {
+      shouldRedirect = false;
+    }
+    if (!shouldRedirect) {
+      router.push("/");
     }
   }
 

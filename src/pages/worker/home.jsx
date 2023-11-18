@@ -9,8 +9,8 @@ import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 
 import "swiper/swiper-bundle.css";
-import SwiperCore, { Pagination, Navigation } from "swiper";
-SwiperCore.use([Pagination, Navigation]);
+// import SwiperCore, { Pagination, Navigation } from "swiper";
+// SwiperCore.use([Pagination, Navigation]);
 
 export default function WorkerHome({ user }) {
   const router = useRouter();

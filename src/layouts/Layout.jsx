@@ -9,7 +9,6 @@ import clsx from "clsx";
 import UserService from "@/services/UserService";
 import Cookies from "js-cookie";
 import { Poppins } from "next/font/google";
-// import { useCustomMiddleware } from "@/middleware";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -22,7 +21,6 @@ function Layout({ children }) {
   const router = useRouter();
   const { setWorker, isWorker } = useStore();
   const { loggedIn, user, setUser, setLoggedIn } = useStore();
-  // Definir useCustomMiddleware fuera del useEffect
 
   useEffect(() => {
     if (!user || Object.keys(user).length === 0) {
@@ -69,7 +67,7 @@ function Layout({ children }) {
       setLoggedIn(false);
     }
   }
-  const useCustomMiddleware = () => {
+  async function useCustomMiddleware() {
     var shouldRedirect = true;
     if (router.pathname.includes("worker") && !isWorker) {
       shouldRedirect = false;
@@ -87,7 +85,7 @@ function Layout({ children }) {
     if (!shouldRedirect) {
       router.push("/");
     }
-  };
+  }
 
   const isLoginPage =
     router.pathname === "/login" ||

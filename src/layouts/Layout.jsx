@@ -9,6 +9,7 @@ import clsx from "clsx";
 import UserService from "@/services/UserService";
 import Cookies from "js-cookie";
 import { Poppins } from "next/font/google";
+// import { useCustomMiddleware } from "@/middleware";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -25,29 +26,15 @@ function Layout({ children }) {
 
   useEffect(() => {
     console.log("userlayout", user);
-    const useCustomMiddleware = () => {
-      var shouldRedirect = true;
-      if (router.pathname.includes("worker") && !isWorker) {
-        shouldRedirect = false;
+    async function fetchData() {
+      if (!user || Object.keys(user).length === 0) {
+        await obtenerInformacionUsuario();
       }
-      if (
-        !user &&
-        (router.pathname == "/profile" ||
-          router.pathname == "/personal-details" ||
-          router.pathname == "/settings" ||
-          router.pathname == "/payment" ||
-          router.pathname == "/stripe")
-      ) {
-        shouldRedirect = false;
-      }
-      if (!shouldRedirect) {
-        router.push("/");
-      }
-    };
-    if (!user || Object.keys(user).length == 0) {
-      obtenerInformacionUsuario();
+      // Llamamos al hook de middleware personalizado después de obtener la información del usuario
+      useCustomMiddleware();
     }
-    useCustomMiddleware();
+
+    fetchData();
   }, []);
 
   async function obtenerInformacionUsuario() {
@@ -86,6 +73,25 @@ function Layout({ children }) {
       setLoggedIn(false);
     }
   }
+  const useCustomMiddleware = () => {
+    var shouldRedirect = true;
+    if (router.pathname.includes("worker") && !isWorker) {
+      shouldRedirect = false;
+    }
+    if (
+      !user &&
+      (router.pathname == "/profile" ||
+        router.pathname == "/personal-details" ||
+        router.pathname == "/settings" ||
+        router.pathname == "/payment" ||
+        router.pathname == "/stripe")
+    ) {
+      shouldRedirect = false;
+    }
+    if (!shouldRedirect) {
+      router.push("/");
+    }
+  };
 
   const isLoginPage =
     router.pathname === "/login" ||

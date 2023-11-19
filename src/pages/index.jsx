@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
-import Head from "next/head";
 
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
@@ -70,14 +69,6 @@ export default function Home({}) {
 
   return (
     <main className="flex flex-col w-full bg-white py-16 lg:py-20 xl:py-20 px-4 md:pl-80">
-      <Head>
-        {/* Metadatos para el título, descripción y logo */}
-        <title>Sos Travelers</title>
-        <meta name="description" content="Facilita tu viaje" />
-        <meta property="og:title" content="SOS Travelers" />
-        <meta property="og:description" content="Facilita tu viaje" />
-        <meta property="og:image" content="/assets/logoSos.png" />
-      </Head>
       <div className="w-full max-w-lg ">
         <Swiper
           spaceBetween={10}

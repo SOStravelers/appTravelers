@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-
+import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
@@ -44,6 +44,14 @@ function Layout({ children }) {
     <>
       <div className={clsx("relative", poppins.className)}>
         <CustomMiddlewareComponent />
+
+        <Head>
+          <title>Sos Travelers</title>
+          <meta name="description" content="Facilita tu viaje" />
+          <meta property="og:title" content="SOS Travelers" />
+          <meta property="og:description" content="Facilita tu viaje" />
+          <meta property="og:image" content="/assets/logoSos.png" />
+        </Head>
 
         {isLoginPage ? (
           <WaveBar />

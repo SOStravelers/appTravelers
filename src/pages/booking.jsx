@@ -28,12 +28,15 @@ export default function Booking() {
   useEffect(() => {
     document.title = "Booking - SOS Travelers";
     const user = Cookies.get("auth.user_id");
+    console.log("user booking", user);
+    console.log("login modal booking", loginModal);
     if (loginModal) {
       setOpen(false);
       setLoginModal(false);
       router.push("/");
     }
     if (!user) {
+      console.log("entro al open");
       setOpen(true);
     }
   }, [loginModal]);

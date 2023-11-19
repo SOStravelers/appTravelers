@@ -38,7 +38,7 @@ function Navbar() {
     >
       <button
         style={{}}
-        className=" customButton flex flex-col mt-1 items-center justify-center"
+        className=" customButton flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/home" : "/")}
       >
         {router.pathname === "/" || router.pathname === "/worker/home" ? (
@@ -49,7 +49,7 @@ function Navbar() {
         <span
           role="presentation"
           className={clsx(
-            "text-sm",
+            "text-sm", 
             router.pathname === "/" || router.pathname === "/worker/home"
               ? "text-blueBorder"
               : "text-greyText"

@@ -17,7 +17,7 @@ import { useStore } from "@/store";
 function Navbar() {
   const router = useRouter();
 
-  const { isWorker, user } = useStore();
+  const { isWorker, isHostel, user } = useStore();
   const goTo = (ruta) => {
     router.push(ruta);
   };
@@ -25,7 +25,9 @@ function Navbar() {
     if (!user || Object.keys(user).length === 0) {
       router.push("/guest-settings");
     } else {
-      goTo(isWorker ? "/worker/profile" : "/profile");
+      goTo(
+        isWorker ? "/worker/profile" : isHostel ? "/hostel/profile" : "/profile"
+      );
     }
   };
 
@@ -37,9 +39,13 @@ function Navbar() {
       <button
         style={{}}
         className=" customButton flex mt-1 flex-col items-center justify-center"
-        onClick={() => goTo(isWorker ? "/worker/home" : "/")}
+        onClick={() =>
+          goTo(isWorker ? "/worker/home" : isHostel ? "/hostel/home" : "/")
+        }
       >
-        {router.pathname === "/" || router.pathname === "/worker/home" ? (
+        {router.pathname === "/" ||
+        router.pathname === "/worker/home" ||
+        router.pathname === "/hostel/home" ? (
           <HomeIcon color="#3498db" />
         ) : (
           <HomeIconOutlined color="black" />
@@ -48,7 +54,9 @@ function Navbar() {
           role="presentation"
           className={clsx(
             "text-sm",
-            router.pathname === "/" || router.pathname === "/worker/home"
+            router.pathname === "/" ||
+              router.pathname === "/worker/home" ||
+              router.pathname === "/hostel/home"
               ? "text-blueBorder"
               : "text-greyText"
           )}
@@ -59,7 +67,15 @@ function Navbar() {
 
       <button
         className="flex mt-1 flex-col items-center justify-center"
-        onClick={() => goTo(isWorker ? "/worker/booking" : "/booking")}
+        onClick={() =>
+          goTo(
+            isWorker
+              ? "/worker/booking"
+              : isHostel
+              ? "/hostel/booking"
+              : "/booking"
+          )
+        }
       >
         {router.pathname.includes("booking") ? (
           <BookingIcon color="#3498db" />
@@ -71,7 +87,8 @@ function Navbar() {
           className={clsx(
             "text-sm",
             router.pathname === "/booking" ||
-              router.pathname === "/worker/booking"
+              router.pathname === "/worker/booking" ||
+              router.pathname === "/hostel/booking"
               ? "text-blueBorder"
               : "text-greyText"
           )}
@@ -80,49 +97,53 @@ function Navbar() {
         </span>
       </button>
 
-      <button
-        className="flex mt-1 flex-col items-center justify-center"
-        onClick={() => goTo(isWorker ? "/worker/chat" : "/chat")}
-      >
-        {router.pathname.includes("chat") ? (
-          <ChatIcon color="#3498db" />
-        ) : (
-          <ChatIconOutlined color="black" />
-        )}
-        <span
-          role="presentation"
-          className={clsx(
-            "text-sm",
-            router.pathname.includes("chat")
-              ? "text-lightBlue"
-              : "text-greyText"
-          )}
+      {!isHostel && (
+        <button
+          className="flex mt-1 flex-col items-center justify-center"
+          onClick={() => goTo(isWorker ? "/worker/chat" : "/chat")}
         >
-          Chat
-        </span>
-      </button>
-      <button
-        className="flex mt-1 flex-col items-center justify-center"
-        onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
-      >
-        {router.pathname.includes("favorites") ? (
-          <FavoriteIcon color="#3498db" />
-        ) : (
-          <FavoriteIconOutlined color="black" />
-        )}
+          {router.pathname.includes("chat") ? (
+            <ChatIcon color="#3498db" />
+          ) : (
+            <ChatIconOutlined color="black" />
+          )}
+          <span
+            role="presentation"
+            className={clsx(
+              "text-sm",
+              router.pathname.includes("chat")
+                ? "text-lightBlue"
+                : "text-greyText"
+            )}
+          >
+            Chat
+          </span>
+        </button>
+      )}
+      {!isWorker && !isHostel && (
+        <button
+          className="flex mt-1 flex-col items-center justify-center"
+          onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
+        >
+          {router.pathname.includes("favorites") ? (
+            <FavoriteIcon color="#3498db" />
+          ) : (
+            <FavoriteIconOutlined color="black" />
+          )}
 
-        <span
-          role="presentation"
-          className={clsx(
-            "text-sm",
-            router.pathname.includes("favorites")
-              ? "text-lightBlue"
-              : "text-greyText"
-          )}
-        >
-          Favorites
-        </span>
-      </button>
+          <span
+            role="presentation"
+            className={clsx(
+              "text-sm",
+              router.pathname.includes("favorites")
+                ? "text-lightBlue"
+                : "text-greyText"
+            )}
+          >
+            Favorites
+          </span>
+        </button>
+      )}
 
       <button
         className="flex mt-1 flex-col items-center justify-center"

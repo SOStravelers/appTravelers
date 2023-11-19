@@ -18,4 +18,8 @@ export default NextAuth({
       clientSecret: "f1c9b9607d40ea9a3b67a3d2f3d01385",
     }),
   ],
+  cookies: {
+    secure: true, // Ajusta según el entorno
+    sameSite: "strict",
+  },
 });

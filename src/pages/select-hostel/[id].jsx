@@ -19,7 +19,7 @@ export default function SelectHostel() {
   const getData = async () => {
     const id = router.query.id;
     HostelService.list({ id: id }).then((response) => {
-      console.log("hostel", response.data);
+      // console.log("hostel", response.data);
       let final = [];
       for (let item of response.data.docs) {
         if (item.img.imgUrl != null) {

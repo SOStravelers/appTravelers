@@ -15,8 +15,6 @@ function GoogleButton() {
     // Puedes manejar el resultado de la autenticación aquí
     if (result && result.error) {
       console.error("Error al iniciar sesión:", result.error);
-    } else {
-      router.push("/login");
     }
   };
   return (

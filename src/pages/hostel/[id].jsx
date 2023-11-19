@@ -5,6 +5,7 @@ import SectionAbout from "@/components/profile/SectionAbout/SectionAbout";
 import SectionServices from "@/components/profile/SectionServices/SectionServices";
 import { SECTION_ONE } from "@/constants";
 import HostelService from "@/services/HostelService";
+import Head from "next/head";
 
 export default function Hostel({ hostel }) {
   const [actualView, setActualView] = useState(SECTION_ONE);
@@ -14,6 +15,14 @@ export default function Hostel({ hostel }) {
   }, []);
   return (
     <div className="mb-20 py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <Head>
+        <title>Sos Travelers</title>
+        <meta name="description" content="Facilita tu viaje" />
+        <meta property="og:title" content="SOS Travelers" />
+        <meta property="og:description" content={hostel?.businessData?.name} />
+        <meta property="og:image" content={hostel?.img?.imgUrl} />
+      </Head>
+
       <HostelProfileCard
         name={hostel?.businessData?.name}
         location={`${hostel?.businessData?.location?.city} , ${hostel?.businessData?.location?.country}`}

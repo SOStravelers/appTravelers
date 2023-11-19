@@ -35,6 +35,8 @@ export const useStore = create((set) => {
     isWorker: false,
     isHostel: true,
     services: [],
+    loginModal: false,
+    setLoginModal: (loginModal) => set({ loginModal: loginModal }),
     setUser: (user) => set({ user: { ...user } }),
     setLoggedIn: (loggedIn) => set({ loggedIn: loggedIn }),
     setServices: (services) => set({ services: services }),

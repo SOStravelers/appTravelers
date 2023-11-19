@@ -5,7 +5,6 @@ import { useStore } from "@/store";
 function SubServiceCard({ id, link, icon, name }) {
   const { setService } = useStore();
   const select = () => {
-    console.log(id);
     setService({ subServiceId: id });
   };
   return (

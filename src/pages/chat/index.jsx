@@ -1,15 +1,26 @@
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import WorkerCardChat from "@/components/utils/cards/WorkerCardChat";
+import { useStore } from "@/store";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export default function Chat() {
+  const store = useStore();
+  const router = useRouter();
+  const { loginModal, setLoginModal } = store;
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
-  const user = Cookies.get("auth.user_id");
+  var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
     document.title = "My chats - SOS Travelers";
+    if (loginModal) {
+      console.log("entrando");
+      setOpen(false);
+      setLoginModal(false);
+      router.push("/");
+    }
     if (user) {
       setChats([
         {
@@ -34,7 +45,7 @@ export default function Chat() {
     } else {
       setOpen(true);
     }
-  }, []);
+  }, [loginModal]);
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
       <p className="text-center text-greyText max-w-lg lg:my-4 xl:my-4">

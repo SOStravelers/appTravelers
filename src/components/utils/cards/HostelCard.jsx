@@ -23,6 +23,7 @@ function HostelCard({ id, link, name, location, img }) {
         <Link href={`/hostel/${id}`}>
           <div className="w-20 h-20 rounded-xl relative">
             <Image
+              unoptimized
               src={img}
               fill
               className="object-cover rounded-xl"

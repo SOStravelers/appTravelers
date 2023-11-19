@@ -65,15 +65,12 @@ export const CustomMiddlewareComponent = () => {
     try {
       console.log("cagazo");
       const session = await getSession();
-      console.log(session);
-      const result = await fetch("/api/getUserInfo");
-      console.log(result);
-      if (result.ok || session) {
-        const userInfo = await result.json();
+      console.log("sesion", session);
+      if (session) {
         const response = await UserService.loginGoogle(
-          userInfo.name,
-          userInfo.email,
-          userInfo.image
+          session.user.name,
+          session.user.email,
+          session.user.image
         );
         if (response) {
           console.log(response);

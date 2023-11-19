@@ -5,6 +5,7 @@ import { useStore } from "@/store";
 
 export default function HostelProfile() {
   const { user } = useStore();
+  console.log(user);
   const router = useRouter();
 
   return (

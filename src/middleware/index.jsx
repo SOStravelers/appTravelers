@@ -7,7 +7,7 @@ import { useStore } from "@/store";
 export const CustomMiddlewareComponent = () => {
   const router = useRouter();
   const store = useStore();
-  const { user, setUser, setLoggedIn, service } = store;
+  const { user, setUser, setLoggedIn, service, isWorker } = store;
 
   useEffect(() => {
     const fetchData = async () => {

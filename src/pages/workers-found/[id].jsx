@@ -19,7 +19,6 @@ export default function WorkersFound() {
 
   const getData = async () => {
     WorkerService.list().then((response) => {
-      console.log("response", response.data);
       let final = [];
       for (let item of response.data.docs) {
         const itemNuevo = { ...item };

@@ -47,7 +47,6 @@ export const CustomMiddlewareComponent = () => {
       setLoggedIn(true);
     }
     try {
-      console.log("google search");
       const result = await fetch("/api/getUserInfo");
       if (result.ok) {
         localStorage.setItem("auth.google", true);
@@ -58,7 +57,6 @@ export const CustomMiddlewareComponent = () => {
           userInfo.image
         );
         if (response) {
-          console.log("la respuestaaaa", response.data);
           delete response.data.user.type;
           localStorage.setItem("auth.access_token", response.data.access_token);
           localStorage.setItem(

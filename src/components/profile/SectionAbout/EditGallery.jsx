@@ -4,7 +4,7 @@ import { useStore } from "@/store";
 import { ThreeDots } from "react-loader-spinner";
 import { random } from "@/lib/utils";
 
-function EditGallery({ images }) {
+function EditGallery() {
   const [selectedImages, setSelectedImages] = useState([null]);
 
   const [loading, setLoading] = useState(

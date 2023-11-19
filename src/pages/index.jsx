@@ -23,8 +23,6 @@ export default function Home({}) {
   const [swiper, setSwiper] = useState(null);
   useEffect(() => {
     document.title = "Home - SOS Travelers";
-    console.log("perr");
-    console.log(services, "wenasas");
     if (!services || Object.keys(services).length == 0) {
       getData();
     }

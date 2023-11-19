@@ -22,8 +22,6 @@ function Navbar() {
     router.push(ruta);
   };
   const goProfile = () => {
-    console.log("el user", user);
-    console.log(user == {});
     if (!user || Object.keys(user).length === 0) {
       router.push("/guest-settings");
     } else {
@@ -49,7 +47,7 @@ function Navbar() {
         <span
           role="presentation"
           className={clsx(
-            "text-sm", 
+            "text-sm",
             router.pathname === "/" || router.pathname === "/worker/home"
               ? "text-blueBorder"
               : "text-greyText"

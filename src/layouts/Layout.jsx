@@ -15,7 +15,6 @@ const poppins = Poppins({
 });
 
 function Layout({ children }) {
-  console.log("layout");
   const router = useRouter();
 
   const isLoginPage =

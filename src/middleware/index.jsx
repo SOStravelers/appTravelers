@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
+import { getSession } from "next-auth/react";
 
 export const CustomMiddlewareComponent = () => {
   const router = useRouter();
@@ -62,9 +63,12 @@ export const CustomMiddlewareComponent = () => {
       setLoggedIn(true);
     }
     try {
+      console.log("cagazo");
+      const session = await getSession();
+      console.log(session);
       const result = await fetch("/api/getUserInfo");
       console.log(result);
-      if (result.ok) {
+      if (result.ok || session) {
         const userInfo = await result.json();
         const response = await UserService.loginGoogle(
           userInfo.name,

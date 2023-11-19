@@ -63,8 +63,8 @@ export const CustomMiddlewareComponent = () => {
     }
     try {
       const result = await fetch("/api/getUserInfo");
+      console.log(result);
       if (result.ok) {
-        localStorage.setItem("auth.google", true);
         const userInfo = await result.json();
         const response = await UserService.loginGoogle(
           userInfo.name,

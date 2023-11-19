@@ -73,13 +73,10 @@ export default function Home({}) {
       <Head>
         {/* Metadatos para el título, descripción y logo */}
         <title>Sos Travelers</title>
-        <meta name="description" content="Tu descripción aquí." />
-        <meta property="og:title" content="Título para compartir en WhatsApp" />
-        <meta
-          property="og:description"
-          content="Descripción para compartir en WhatsApp."
-        />
-        <meta property="og:image" content="/public/assets/logoSos.png" />
+        <meta name="description" content="Facilita tu viaje" />
+        <meta property="og:title" content="SOS Travelers" />
+        <meta property="og:description" content="Facilita tu viaje" />
+        <meta property="og:image" content="/assets/logoSos.png" />
       </Head>
       <div className="w-full max-w-lg ">
         <Swiper

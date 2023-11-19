@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
+import Head from "next/head";
 
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
@@ -16,11 +17,11 @@ import { useStore } from "@/store";
 register();
 
 export default function Home({}) {
-  // const [services, setServices] = useState([]);
   const store = useStore();
   const { services, setServices } = store;
   const [bookings, setBookings] = useState([]);
   const [swiper, setSwiper] = useState(null);
+
   useEffect(() => {
     document.title = "Home - SOS Travelers";
     if (!services || Object.keys(services).length == 0) {
@@ -69,6 +70,17 @@ export default function Home({}) {
 
   return (
     <main className="flex flex-col w-full bg-white py-16 lg:py-20 xl:py-20 px-4 md:pl-80">
+      <Head>
+        {/* Metadatos para el título, descripción y logo */}
+        <title>Sos Travelers</title>
+        <meta name="description" content="Tu descripción aquí." />
+        <meta property="og:title" content="Título para compartir en WhatsApp" />
+        <meta
+          property="og:description"
+          content="Descripción para compartir en WhatsApp."
+        />
+        <meta property="og:image" content="/public/assets/logoSos.png" />
+      </Head>
       <div className="w-full max-w-lg ">
         <Swiper
           spaceBetween={10}

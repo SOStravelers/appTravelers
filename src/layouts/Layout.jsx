@@ -21,12 +21,16 @@ function Layout({ children }) {
     router.pathname === "/login" ||
     router.pathname === "/register" ||
     router.pathname === "/create-user-password" ||
-    router.pathname === "/alternative-login";
+    router.pathname === "/alternative-login" ||
+    router.pathname === "/hostel/login";
 
   const arePrincipalPages =
     router.pathname === "/worker/booking" ||
     router.pathname === "/worker/profile" ||
     router.pathname === "/worker/home" ||
+    router.pathname === "/hostel/home" ||
+    router.pathname === "/hostel/booking" ||
+    router.pathname === "/hostel/profile" ||
     router.pathname === "/" ||
     router.pathname === "/worker/chat" ||
     router.pathname === "/worker/favorites" ||

@@ -24,6 +24,7 @@ export default function App({ Component, pageProps }) {
       router.pathname !== "/register" &&
       router.pathname !== "/create-user-password" &&
       router.pathname !== "/alternative-login" &&
+      router.pathname !== "/hostel/login" &&
       router.pathname !== "/validate-email" &&
       router.pathname !== "/intro" &&
       router.pathname !== "/terms-of-service" &&
@@ -51,6 +52,7 @@ export default function App({ Component, pageProps }) {
       router.pathname !== "/register" &&
       router.pathname !== "/alternative-login" &&
       router.pathname !== "/create-user-password" &&
+      router.pathname !== "/hostel/login" &&
       router.pathname !== "/validate-email" &&
       router.pathname !== "/intro"
     ) {

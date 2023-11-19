@@ -33,6 +33,7 @@ export const useStore = create((set) => {
     loggedIn: false,
     service: service,
     isWorker: false,
+    isHostel: true,
     services: [],
     setUser: (user) => set({ user: { ...user } }),
     setLoggedIn: (loggedIn) => set({ loggedIn: loggedIn }),

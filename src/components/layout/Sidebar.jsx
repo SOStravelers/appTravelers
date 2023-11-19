@@ -40,11 +40,21 @@ function Sidebar() {
         </button>
       </Link>
 
-      <Link className="my-2" href={isWorker ? "/worker/booking" : "/booking"}>
+      <Link
+        className="my-2"
+        href={
+          isWorker
+            ? "/worker/booking"
+            : isHostel
+            ? "/hostel/booking"
+            : "/booking"
+        }
+      >
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
             router.pathname === "/booking" ||
+              router.pathname === "/hostel/booking" ||
               router.pathname === "/worker/booking"
               ? "bg-newBlue"
               : "bg-someOtherColor"
@@ -88,11 +98,21 @@ function Sidebar() {
         </Link>
       )}
 
-      <Link className="my-2" href={isWorker ? "/worker/profile" : "/profile"}>
+      <Link
+        className="my-2"
+        href={
+          isWorker
+            ? "/worker/profile"
+            : isHostel
+            ? "/hostel/profile"
+            : "/profile"
+        }
+      >
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
             router.pathname === "/profile" ||
+              router.pathname === "/hostel/profile" ||
               router.pathname === "/worker/profile"
               ? "bg-newBlue"
               : "bg-someOtherColor"

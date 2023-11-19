@@ -3,7 +3,13 @@ import SelectCard from "@/components/utils/cards/SelectCard";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import { toast } from "react-toastify";
-import { UserIcon, MailIcon, HouseIcon, LockIcon, CurrencyIcon } from "@/constants/icons";
+import {
+  UserIcon,
+  MailIcon,
+  HouseIcon,
+  LockIcon,
+  CurrencyIcon,
+} from "@/constants/icons";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useStore } from "@/store";
 import Cookies from "js-cookie";
@@ -20,6 +26,7 @@ export default function ReseidencyDetails() {
   const [emailInput, setEmailInput] = useState(false);
   const [email, setEmail] = useState(false);
   const [save, setSave] = useState(false);
+  console.log("el user", user);
   useEffect(() => {
     if (user) {
       const name =

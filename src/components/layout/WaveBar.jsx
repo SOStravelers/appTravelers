@@ -16,7 +16,6 @@ function WaveBar() {
           fill="#001C25"
         />
       </svg>
-
       <LogoWhite
         className="my-auto absolute"
         height={100}

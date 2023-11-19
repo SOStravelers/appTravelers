@@ -2,14 +2,23 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import WorkerCardFavorite from "@/components/utils/cards/WorkerCardFavorite";
-
+import { useStore } from "@/store";
+import { useRouter } from "next/router";
 export default function Favorites() {
+  const store = useStore();
+  const router = useRouter();
+  const { loginModal, setLoginModal } = store;
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  const user = Cookies.get("auth.user_id");
+  var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
     document.title = "My favorites - SOS Travelers";
+    if (loginModal) {
+      setOpen(false);
+      setLoginModal(false);
+      router.push("/");
+    }
     if (user) {
       setFavorites([
         {
@@ -34,7 +43,7 @@ export default function Favorites() {
     } else {
       setOpen(true);
     }
-  }, []);
+  }, [loginModal]);
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
       <p className="text-center text-greyText max-w-lg  lg:my-4 xl:my-4 mb-2">

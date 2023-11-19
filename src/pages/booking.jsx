@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import Cookies from "js-cookie";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import DaySection from "@/components/booking/DaySection";
 import MonthSection from "@/components/booking/MonthSection";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import { SECTION_ONE } from "@/constants";
-
+import Cookies from "js-cookie";
+import { useStore } from "@/store";
+import { useRouter } from "next/router";
 const weekDays = [];
 const today = dayjs();
-const user = Cookies.get("auth.user_id");
 
 weekDays.push({ day: today.format("ddd"), number: today.format("D") });
 for (let i = 1; i <= 6; i++) {
@@ -18,17 +18,25 @@ for (let i = 1; i <= 6; i++) {
 }
 
 export default function Booking() {
+  const store = useStore();
+  const { loginModal, setLoginModal } = store;
+  const router = useRouter();
+  var user = Cookies.get("auth.user_id");
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
   const [open, setOpen] = useState(false);
-  const user = Cookies.get("auth.user_id");
-
   useEffect(() => {
     document.title = "Booking - SOS Travelers";
+    const user = Cookies.get("auth.user_id");
+    if (loginModal) {
+      setOpen(false);
+      setLoginModal(false);
+      router.push("/");
+    }
     if (!user) {
       setOpen(true);
     }
-  }, []);
+  }, [loginModal]);
 
   return (
     <div className="w-full min-h-screen py-20 lg:py-24 xl:py-24 px-3 md:pl-80 bg-white text-black">

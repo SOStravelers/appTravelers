@@ -7,7 +7,15 @@ import { useStore } from "@/store";
 export const CustomMiddlewareComponent = () => {
   const router = useRouter();
   const store = useStore();
-  const { user, setUser, setLoggedIn, service, isWorker } = store;
+  const {
+    user,
+    setUser,
+    setLoggedIn,
+    service,
+    isWorker,
+    loginModal,
+    setLoginModal,
+  } = store;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +29,7 @@ export const CustomMiddlewareComponent = () => {
   }, [router.pathname]);
 
   const routeValidation = async () => {
+    console.log("validar");
     var shouldRedirect = true;
     if (
       router.pathname.includes("worker") &&
@@ -39,12 +48,14 @@ export const CustomMiddlewareComponent = () => {
     ) {
       shouldRedirect = false;
     }
+    console.log("el login modal", loginModal);
     if (!shouldRedirect) {
       router.push("/");
     }
   };
 
   const obtenerInformacionUsuario = async () => {
+    console.log("obtener informacion");
     let storageUser = localStorage.getItem("auth.user");
     if (storageUser && Object.keys(storageUser).length > 0) {
       setUser(storageUser);
@@ -61,6 +72,7 @@ export const CustomMiddlewareComponent = () => {
           userInfo.image
         );
         if (response) {
+          console.log(response);
           delete response.data.user.type;
           localStorage.setItem("auth.access_token", response.data.access_token);
           localStorage.setItem(
@@ -74,19 +86,12 @@ export const CustomMiddlewareComponent = () => {
           Cookies.set("auth.user_id", response.data.user._id);
           setUser(response.data.user);
           setLoggedIn(true);
+          setLoginModal(true);
           if (router.pathname == "/login" || router.pathname == "/register") {
             if (service && Object.keys(service).length > 0)
               router.push(`/summary`);
             else router.push("/");
           }
-          // else if (
-          //   (router.pathname =
-          //     "/booking" ||
-          //     router.pathname == "/favorites" ||
-          //     router.pathname == "/chat")
-          // ) {
-          //   router.push("/");
-          // }
         }
       } else {
         setLoggedIn(false);

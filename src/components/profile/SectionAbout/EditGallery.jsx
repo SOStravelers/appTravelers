@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import { ThreeDots } from "react-loader-spinner";
 import { random } from "@/lib/utils";
-
-import React from "react";
 
 function EditGallery({ images }) {
   const [selectedImages, setSelectedImages] = useState([null]);

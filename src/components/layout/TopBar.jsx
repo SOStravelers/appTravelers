@@ -23,7 +23,9 @@ function TopBar() {
 
   const initials = () => {
     if (user && Object.keys(user).length === 0) return "";
-    const { first, last } = user?.personalData?.name;
+    const name = user?.personalData?.name;
+    if (!name) return "";
+    const { first, last } = name;
     const str = `${first.charAt(0)}${last ? last.charAt(0) : ""}`.toUpperCase();
     return str;
   };
@@ -78,7 +80,7 @@ function TopBar() {
               />
             </Link>
 
-            {user.img && user.img.imgUrl ? (
+            {user?.img && user?.img.imgUrl ? (
               <Link
                 className="rounded-xl"
                 href="/profile"

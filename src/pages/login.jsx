@@ -1,73 +1,14 @@
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import LoginForm from "@/components/utils/forms/LoginForm";
 import { useEffect } from "react";
-import Cookies from "js-cookie";
 // import { getSession } from "next-auth/react";
-import UserService from "@/services/UserService";
-import { useStore } from "@/store";
 
 export default function Login() {
   console.log("login");
-  const { setUser, setLoggedIn, service } = useStore();
-  const router = useRouter();
   useEffect(() => {
     document.title = "Login - SOS Travelers";
-    obtenerInformacionUsuario();
   }, []);
-
-  async function obtenerInformacionUsuario() {
-    let storageUser = localStorage.getItem("auth.user");
-    if (storageUser && Object.keys(storageUser).length > 0) {
-      setUser(storageUser);
-      setLoggedIn(true);
-    }
-    try {
-      console.log("google search");
-      const result = await fetch("/api/getUserInfo");
-      if (result.ok) {
-        localStorage.setItem("auth.google", true);
-        const userInfo = await result.json();
-        const response = await UserService.loginGoogle(
-          userInfo.name,
-          userInfo.email,
-          userInfo.image
-        );
-        if (response) {
-          console.log("la respuestaaaa", response.data);
-          // if (
-          //   response.data.user.type &&
-          //   response.data.user.type != "personal"
-          // ) {
-          //   localStorage.setItem("type", response.data.user.type);
-          // }
-          delete response.data.user.type;
-          localStorage.setItem("auth.access_token", response.data.access_token);
-          localStorage.setItem(
-            "auth.refresh_token",
-            response.data.refresh_token
-          );
-          localStorage.setItem("auth.user_id", response.data.user._id);
-          localStorage.setItem("auth.user", JSON.stringify(response.data.user));
-          Cookies.set("auth.access_token", response.data.access_token);
-
-          Cookies.set("auth.refresh_token", response.data.refresh_token);
-          Cookies.set("auth.user_id", response.data.user._id);
-          setUser(response.data.user);
-          setLoggedIn(true);
-          if (service && Object.keys(service).length > 0)
-            router.push(`/summary`);
-          else router.push("/");
-        }
-      } else {
-        setLoggedIn(false);
-        //console.error('Error al obtener la información del usuario:', response.statusText);
-      }
-    } catch (error) {
-      //console.error("Error al obtener la información del usuario:", error);
-    }
-  }
 
   return (
     <div className="bg-white h-full w-full flex flex-col md:items-center px-10">

@@ -33,8 +33,10 @@ export const useStore = create((set) => {
     loggedIn: false,
     service: service,
     isWorker: false,
+    dialogLogin: false,
     setUser: (user) => set({ user: { ...user } }),
     setLoggedIn: (loggedIn) => set({ loggedIn: loggedIn }),
+    setDialogLogin: (loggedIn) => set({ loggedIn: loggedIn }),
     setWorker: (isWorker) => set({ isWorker: isWorker }),
     setService: (service) =>
       set((state) => {

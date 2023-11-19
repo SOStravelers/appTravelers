@@ -12,16 +12,22 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 // import SwiperCore, { Pagination, Navigation } from "swiper";
 // SwiperCore.use([Pagination, Navigation]);
-
+import { useStore } from "@/store";
 register();
 
 export default function Home({}) {
-  const [services, setServices] = useState([]);
+  // const [services, setServices] = useState([]);
+  const store = useStore();
+  const { services, setServices } = store;
   const [bookings, setBookings] = useState([]);
   const [swiper, setSwiper] = useState(null);
   useEffect(() => {
     document.title = "Home - SOS Travelers";
-    getData();
+    console.log("perr");
+    console.log(services, "wenasas");
+    if (!services || Object.keys(services).length == 0) {
+      getData();
+    }
     setBookings([
       {
         id: 1,

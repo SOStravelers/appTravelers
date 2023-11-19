@@ -20,10 +20,7 @@ export default function Hostel({ hostel }) {
         <meta name="description" content="Facilita tu viaje" />
         <meta property="og:title" content="SOS Travelers" />
         <meta property="og:description" content={hostel?.businessData?.name} />
-        <meta
-          property="og:image"
-          content={hostel?.img?.imgUrl || "/assets/logoSos.png"}
-        />
+        <meta property="og:image" content={hostel?.img?.imgUrl} />
       </Head>
 
       <HostelProfileCard

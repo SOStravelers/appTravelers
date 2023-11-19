@@ -22,7 +22,11 @@ export const CustomMiddlewareComponent = () => {
 
   const routeValidation = async () => {
     var shouldRedirect = true;
-    if (router.pathname.includes("worker") && !isWorker) {
+    if (
+      router.pathname.includes("worker") &&
+      !isWorker &&
+      router.pathname == "/workers-found"
+    ) {
       shouldRedirect = false;
     }
     if (
@@ -74,14 +78,15 @@ export const CustomMiddlewareComponent = () => {
             if (service && Object.keys(service).length > 0)
               router.push(`/summary`);
             else router.push("/");
-          } else if (
-            (router.pathname =
-              "/booking" ||
-              router.pathname == "/favorites" ||
-              router.pathname == "/chat")
-          ) {
-            router.push("/");
           }
+          // else if (
+          //   (router.pathname =
+          //     "/booking" ||
+          //     router.pathname == "/favorites" ||
+          //     router.pathname == "/chat")
+          // ) {
+          //   router.push("/");
+          // }
         }
       } else {
         setLoggedIn(false);

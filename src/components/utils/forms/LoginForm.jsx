@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
@@ -13,11 +14,14 @@ import { UserIcon, LockIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 import Cookies from "js-cookie";
+import { set } from "date-fns";
 
 function LoginForm() {
+  const [email, setEmail] = useState("");
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
   const login = async (values) => {
+    setEmail(values.email);
     try {
       console.log("--login email--");
       const response = await UserService.login(values.email, values.password);
@@ -45,9 +49,25 @@ function LoginForm() {
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.message;
-      else if (error?.response?.status === 400)
-        message = error?.response?.data?.message;
-      else if (error?.response?.status === 401)
+      else if (error?.response?.status === 400) {
+        try {
+          const response = await UserService.findByEmail(email);
+          if (response?.data?.isActive && response?.data?.isValidate) {
+            const res = await UserService.sendCodeEmail(
+              response.data._id,
+              "createPass"
+            );
+            if (res.status === 200) {
+              router.push({
+                pathname: "/validate-email",
+                query: { userId: response?.data?._id },
+              });
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      } else if (error?.response?.status === 401)
         message = error?.response?.data?.message;
       toast.error(message);
     }

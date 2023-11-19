@@ -20,6 +20,7 @@ function Layout({ children }) {
   const isLoginPage =
     router.pathname === "/login" ||
     router.pathname === "/register" ||
+    router.pathname === "/create-user-password" ||
     router.pathname === "/alternative-login";
 
   const arePrincipalPages =

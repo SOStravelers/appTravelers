@@ -33,17 +33,16 @@ export const CustomMiddlewareComponent = () => {
   const routeValidation = async () => {
     console.log(
       "validar",
-      !isWorker,
       router.pathname.includes("worker"),
-      router.pathname != "/workers-found"
+      !isWorker,
+      router.pathname.includes("workers-found")
     );
     var shouldRedirect = true;
     if (
       router.pathname.includes("worker") &&
       !isWorker &&
-      router.pathname != "/workers-found"
+      !router.pathname.includes("workers-found")
     ) {
-      console.log("perro1");
       shouldRedirect = false;
     }
     if (

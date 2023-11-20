@@ -14,6 +14,7 @@ export const CustomMiddlewareComponent = () => {
     setLoggedIn,
     service,
     isWorker,
+    setWorker,
     loginModal,
     setLoginModal,
   } = store;
@@ -27,16 +28,22 @@ export const CustomMiddlewareComponent = () => {
     };
 
     fetchData();
-  }, [router.pathname]);
+  }, [router.pathname, user]);
 
   const routeValidation = async () => {
-    console.log("validar");
+    console.log(
+      "validar",
+      !isWorker,
+      router.pathname.includes("worker"),
+      router.pathname != "/workers-found"
+    );
     var shouldRedirect = true;
     if (
       router.pathname.includes("worker") &&
       !isWorker &&
       router.pathname != "/workers-found"
     ) {
+      console.log("perro1");
       shouldRedirect = false;
     }
     if (
@@ -47,58 +54,74 @@ export const CustomMiddlewareComponent = () => {
         router.pathname == "/payment" ||
         router.pathname == "/stripe")
     ) {
+      console.log("perro2");
       shouldRedirect = false;
     }
-    console.log("el login modal", loginModal);
     if (!shouldRedirect) {
+      console.log("revalidar");
       router.push("/");
     }
   };
 
   const obtenerInformacionUsuario = async () => {
-    console.log("obtener informacion");
+    console.log("obtener informacion", isWorker);
     let storageUser = localStorage.getItem("auth.user");
+    let storageType = localStorage.getItem("type");
     if (storageUser && Object.keys(storageUser).length > 0) {
-      setUser(storageUser);
+      console.log("entrando 1");
+      console.log(storageType);
+      console.log(JSON.parse(storageUser));
+      setUser(JSON.parse(storageUser));
       setLoggedIn(true);
-    }
-    try {
-      console.log("cagazo");
-      const session = await getSession();
-      console.log("sesion", session);
-      if (session) {
-        const response = await UserService.loginGoogle(
-          session.user.name,
-          session.user.email,
-          session.user.image
-        );
-        if (response) {
-          console.log(response);
-          delete response.data.user.type;
-          localStorage.setItem("auth.access_token", response.data.access_token);
-          localStorage.setItem(
-            "auth.refresh_token",
-            response.data.refresh_token
-          );
-          localStorage.setItem("auth.user_id", response.data.user._id);
-          localStorage.setItem("auth.user", JSON.stringify(response.data.user));
-          Cookies.set("auth.access_token", response.data.access_token);
-          Cookies.set("auth.refresh_token", response.data.refresh_token);
-          Cookies.set("auth.user_id", response.data.user._id);
-          setUser(response.data.user);
-          setLoggedIn(true);
-          setLoginModal(true);
-          if (router.pathname == "/login" || router.pathname == "/register") {
-            if (service && Object.keys(service).length > 0)
-              router.push(`/summary`);
-            else router.push("/");
-          }
-        }
-      } else {
-        setLoggedIn(false);
+      if (storageType && storageType == "worker") {
+        console.log("entradn");
+        setWorker(true);
       }
-    } catch (error) {
-      console.error("Error al obtener la información del usuario:", error);
+    } else {
+      try {
+        console.log("cagazo");
+        const session = await getSession();
+        console.log("sesion", session);
+        if (session) {
+          const response = await UserService.loginGoogle(
+            session.user.name,
+            session.user.email,
+            session.user.image
+          );
+          if (response) {
+            console.log(response);
+            delete response.data.user.type;
+            localStorage.setItem(
+              "auth.access_token",
+              response.data.access_token
+            );
+            localStorage.setItem(
+              "auth.refresh_token",
+              response.data.refresh_token
+            );
+            localStorage.setItem("auth.user_id", response.data.user._id);
+            localStorage.setItem(
+              "auth.user",
+              JSON.stringify(response.data.user)
+            );
+            Cookies.set("auth.access_token", response.data.access_token);
+            Cookies.set("auth.refresh_token", response.data.refresh_token);
+            Cookies.set("auth.user_id", response.data.user._id);
+            setUser(response.data.user);
+            setLoggedIn(true);
+            setLoginModal(true);
+            if (router.pathname == "/login" || router.pathname == "/register") {
+              if (service && Object.keys(service).length > 0)
+                router.push(`/summary`);
+              else router.push("/");
+            }
+          }
+        } else {
+          setLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error al obtener la información del usuario:", error);
+      }
     }
   };
 

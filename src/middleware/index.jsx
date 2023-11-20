@@ -35,7 +35,7 @@ export const CustomMiddlewareComponent = () => {
     if (
       router.pathname.includes("worker") &&
       !isWorker &&
-      router.pathname == "/workers-found"
+      router.pathname != "/workers-found"
     ) {
       shouldRedirect = false;
     }

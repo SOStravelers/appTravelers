@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import TextModal from "@/components/utils/modal/TextModal";
-import ComboBox from "@/components/utils/combobox/ComboBox";
+import ComboBoxService from "@/components/utils/combobox/ComboBoxService";
 import ComboBoxServiceEditable from "@/components/utils/combobox/ComboBoxServiceEditable";
 import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
-import { set } from "date-fns";
+
 
 export default function MyServices() {
   const [services, setServices] = useState([]);
@@ -88,7 +88,7 @@ export default function MyServices() {
       {user?.businessData?.services?.length > 0 && !addingService && (
         <>
           {user?.businessData?.services?.map((service) => (
-            <ComboBox
+            <ComboBoxService
               key={service?.id}
               service={service}
               title={services?.filter((s) => s?._id === service?.id)[0]?.name}

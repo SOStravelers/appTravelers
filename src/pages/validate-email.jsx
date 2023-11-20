@@ -32,8 +32,8 @@ export default function ChangePassword() {
     <div className="px-5 py-28 md:pl-80">
       <div className="max-w-lg">
         <p className="text-center text-gray-500 mb-5">
-          Please check your email for the verification code so you can reset
-          your password.
+          You don&apos;t have a password yet. Please check your email for the
+          verification code so you can create your password.
         </p>
         <OutlinedInput
           placeholder="Verification code"

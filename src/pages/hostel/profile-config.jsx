@@ -25,18 +25,18 @@ export default function HostelProfile() {
         onClick={() => router.push(`/hostel/edit/${user._id}`)}
       />
       <OptionCard
-        title="My Schedules"
-        subtitle="Set your calendar"
-        icon={ListIcon}
-        check
-        onClick={() => router.push("/hostel/my-schedules")}
-      />
-      <OptionCard
-        title="My Workplaces"
-        subtitle="Establishments"
+        title="My Workers"
+        subtitle="Specialists"
         icon={LockIcon}
         check
         onClick={() => router.push("/hostel/my-workplaces")}
+      />
+      <OptionCard
+        title="My Hollydays"
+        subtitle="Set your calendar"
+        icon={ListIcon}
+        check
+        onClick={() => router.push("/hostel/my-hollidays")}
       />
     </div>
   );

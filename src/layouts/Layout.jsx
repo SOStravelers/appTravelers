@@ -64,8 +64,10 @@ function Layout({ children, lang }) {
         <Head>
           <title>Sos Travelers</title>
           <meta name="description" content={metaDescription} />
+          {/* Redes sociales */}
           <meta property="og:title" content="SOS Travelers" />
-          <meta property="og:description" content="Facilita tu viaje" />
+          <meta property="og:description" content={metaDescription} />
+
           <meta property="og:image" content="/assets/logoSos.png" />
         </Head>
 

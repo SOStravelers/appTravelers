@@ -14,8 +14,24 @@ const poppins = Poppins({
   display: "swap",
 });
 
-function Layout({ children }) {
+function Layout({ children, lang }) {
   const router = useRouter();
+
+  let metaDescription = "";
+
+  if (lang === "fr") {
+    metaDescription =
+      "Découvrez un bien-être personnalisé : choisissez votre hostel, choisissez l'heure et trouvez des professionnels d'élite dans notre application conviviale. Des travailleurs soigneusement sélectionnés pour une expérience inégalée. Votre confort est notre priorité !";
+  } else if (lang === "pt") {
+    metaDescription =
+      "Descubra o bem-estar personalizado: escolha seu hostel, escolha o horário e encontre profissionais de elite em nosso amigável aplicativo. Trabalhadores cuidadosamente selecionados para uma experiência incomparável. Seu conforto é nossa prioridade!";
+  } else if (lang === "es") {
+    metaDescription =
+      "Descubre el bienestar personalizado: elige tu hostel, elige el horario y encuentra profesionales de élite en nuestra amigable aplicación. Trabajadores cuidadosamente seleccionados para una experiencia inigualable. ¡Su comodidad es nuestra prioridad!";
+  } else {
+    metaDescription =
+      "Discover personalized well-being: choose your hostel, pick the time, and find elite professionals in our friendly app. Carefully selected workers for an unparalleled experience. Your comfort is our priority!";
+  }
 
   const isLoginPage =
     router.pathname === "/login" ||
@@ -47,7 +63,7 @@ function Layout({ children }) {
 
         <Head>
           <title>Sos Travelers</title>
-          <meta name="description" content="Facilita tu viaje" />
+          <meta name="description" content={metaDescription} />
           <meta property="og:title" content="SOS Travelers" />
           <meta property="og:description" content="Facilita tu viaje" />
           <meta property="og:image" content="/assets/logoSos.png" />

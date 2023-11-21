@@ -108,9 +108,9 @@ export const CustomMiddlewareComponent = () => {
             Cookies.set("auth.access_token", response.data.access_token);
             Cookies.set("auth.refresh_token", response.data.refresh_token);
             Cookies.set("auth.user_id", response.data.user._id);
-            setUser(response.data.user);
             setLoggedIn(true);
             setLoginModal(true);
+            setUser(response.data.user);
             if (router.pathname == "/login" || router.pathname == "/register") {
               if (service && Object.keys(service).length > 0)
                 router.push(`/summary`);

@@ -28,13 +28,14 @@ export default function Profile({ user }) {
     Cookies.remove("auth.user");
     Cookies.remove("service");
     Cookies.remove("next-auth.session-token");
+    Cookies.remove("nextauth.message");
 
     localStorage.removeItem("type");
     setWorker(false);
-
-    setUser(null);
     setLoggedIn(false);
     await signOut({ redirect: false });
+
+    setUser(null);
     router.push("/");
   };
 

@@ -19,7 +19,7 @@ export default function Chat() {
       console.log("entrando");
       setOpen(false);
       setLoginModal(false);
-      router.push("/");
+      // router.push("/");
     }
     if (user) {
       setChats([

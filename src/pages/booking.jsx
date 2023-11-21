@@ -33,7 +33,7 @@ export default function Booking() {
     if (loginModal) {
       setOpen(false);
       setLoginModal(false);
-      router.push("/");
+      // router.push("/");
     }
     if (!user) {
       console.log("entro al open");

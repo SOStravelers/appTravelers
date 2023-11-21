@@ -17,7 +17,6 @@ export default function Favorites() {
     if (loginModal) {
       setOpen(false);
       setLoginModal(false);
-      // router.push("/");
     }
     if (user) {
       setFavorites([

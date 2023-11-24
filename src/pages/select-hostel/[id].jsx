@@ -27,6 +27,7 @@ export default function SelectHostel() {
         }
         final.push(item);
       }
+      console.log("hostel", final);
       setHostels(final);
     });
   };

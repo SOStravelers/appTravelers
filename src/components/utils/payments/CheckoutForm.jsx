@@ -4,12 +4,15 @@ import {
   AddressElement,
   LinkAuthenticationElement,
   useElements,
+  CardElement,
   useStripe,
 } from "@stripe/react-stripe-js";
 import SolidButton from "../buttons/SolidButton";
 import { toast } from "react-toastify";
 
-export default function CheckoutForm() {
+export default function CheckoutForm(clientSecret) {
+  console.log("wena", clientSecret.clientSecret);
+  const secretClient = clientSecret.clientSecret;
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);

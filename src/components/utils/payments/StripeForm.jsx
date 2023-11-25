@@ -39,12 +39,11 @@ export default function StripeForm({ clientSecret }) {
 
   const options = {
     clientSecret: clientSecret,
-    appearance,
   };
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <CheckoutForm />
+      <CheckoutForm clientSecret={clientSecret} />
     </Elements>
   );
 }

@@ -101,28 +101,31 @@ function Navbar() {
           Chat
         </span>
       </button>
-      <button
-        className="flex mt-1 flex-col items-center justify-center"
-        onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
-      >
-        {router.pathname.includes("favorites") ? (
-          <FavoriteIcon color="#3498db" />
-        ) : (
-          <FavoriteIconOutlined color="black" />
-        )}
 
-        <span
-          role="presentation"
-          className={clsx(
-            "text-sm",
-            router.pathname.includes("favorites")
-              ? "text-lightBlue"
-              : "text-greyText"
-          )}
+      {!isWorker && (
+        <button
+          className="flex mt-1 flex-col items-center justify-center"
+          onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
         >
-          Favorites
-        </span>
-      </button>
+          {router.pathname.includes("favorites") ? (
+            <FavoriteIcon color="#3498db" />
+          ) : (
+            <FavoriteIconOutlined color="black" />
+          )}
+
+          <span
+            role="presentation"
+            className={clsx(
+              "text-sm",
+              router.pathname.includes("favorites")
+                ? "text-lightBlue"
+                : "text-greyText"
+            )}
+          >
+            Favorites
+          </span>
+        </button>
+      )}
 
       <button
         className="flex mt-1 flex-col items-center justify-center"

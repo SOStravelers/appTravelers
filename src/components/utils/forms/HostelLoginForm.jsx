@@ -14,9 +14,8 @@ import { UserIcon, LockIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 import Cookies from "js-cookie";
-import { set } from "date-fns";
 
-function LoginForm() {
+function HostelLoginForm() {
   const [email, setEmail] = useState("");
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
@@ -142,12 +141,10 @@ function LoginForm() {
             </p>
           </Link>
           <OutlinedButton text="Login" disabled={!isValid} />
-
-          <GoogleButton />
         </form>
       )}
     </Form>
   );
 }
 
-export default LoginForm;
+export default HostelLoginForm;

@@ -22,7 +22,10 @@ export default function App({ Component, pageProps }) {
     if (
       router.pathname !== "/login" &&
       router.pathname !== "/register" &&
+      router.pathname !== "/create-user-password" &&
       router.pathname !== "/alternative-login" &&
+      router.pathname !== "/hostel/login" &&
+      router.pathname !== "/validate-email" &&
       router.pathname !== "/intro" &&
       router.pathname !== "/terms-of-service" &&
       router.pathname !== "/payment" &&
@@ -48,6 +51,9 @@ export default function App({ Component, pageProps }) {
       router.pathname !== "/login" &&
       router.pathname !== "/register" &&
       router.pathname !== "/alternative-login" &&
+      router.pathname !== "/create-user-password" &&
+      router.pathname !== "/hostel/login" &&
+      router.pathname !== "/validate-email" &&
       router.pathname !== "/intro"
     ) {
       return <Sidebar />;

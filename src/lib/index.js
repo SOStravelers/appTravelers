@@ -1,5 +1,5 @@
 const apis = new Map();
-apis.set("local", "http://localhost:4000/");
+apis.set("local", "http://localhost:9000/");
 apis.set("dev", "https://www.apidev.sostvl.com/");
 const fronts = new Map();
 fronts.set("local", "https://dev.sostvl.com/");
@@ -16,4 +16,3 @@ const api = apis.get(env.trim());
 const front = apis.get(env.trim());
 
 export default { api, front };
-

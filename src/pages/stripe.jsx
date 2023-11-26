@@ -19,8 +19,8 @@ export default function Stripe() {
 
   const createPaymentIntent = async () => {
     StripeService.createPaymentIntent({
-      amount: 1500,
-      data: "usd",
+      amount: 1575,
+      currency: "usd",
     }).then((response) => {
       console.log(response.data);
       setClientSecret(response.data.clientSecret);

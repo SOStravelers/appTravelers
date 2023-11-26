@@ -33,7 +33,6 @@ export const useStore = create((set) => {
     loggedIn: false,
     service: service,
     isWorker: false,
-    isHostel: true,
     services: [],
     loginModal: false,
     setLoginModal: (loginModal) => set({ loginModal: loginModal }),

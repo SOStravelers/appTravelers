@@ -12,7 +12,7 @@ import {
 
 function Sidebar() {
   const router = useRouter();
-  const { isWorker, isHostel } = useStore();
+  const { isWorker } = useStore();
   const handleClick = () => {
     router.push(isWorker ? "/worker/home" : "/");
   };
@@ -22,10 +22,7 @@ function Sidebar() {
       className="h-full w-60 pt-32 fixed bottom-0 left-0 z-10 bg-darkBlue items-center hidden md:flex flex-col"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.35)" }}
     >
-      <Link
-        className="my-2"
-        href={isWorker ? "/worker/home" : isHostel ? "/hostel/home" : "/"}
-      >
+      <Link className="my-2" href={isWorker ? "/worker/home" : "/"}>
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl transition-all duration-300 ease-in-out",
@@ -40,21 +37,11 @@ function Sidebar() {
         </button>
       </Link>
 
-      <Link
-        className="my-2"
-        href={
-          isWorker
-            ? "/worker/booking"
-            : isHostel
-            ? "/hostel/booking"
-            : "/booking"
-        }
-      >
+      <Link className="my-2" href={isWorker ? "/worker/booking" : "/booking"}>
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
             router.pathname === "/booking" ||
-              router.pathname === "/hostel/booking" ||
               router.pathname === "/worker/booking"
               ? "bg-newBlue"
               : "bg-someOtherColor"
@@ -64,22 +51,22 @@ function Sidebar() {
           <p className={clsx("text-xl ml-3 text-white")}>Bookings</p>
         </button>
       </Link>
-      {!isHostel && (
-        <Link className="my-2" href={isWorker ? "/worker/chat" : "/chat"}>
-          <button
-            className={clsx(
-              "flex items-center pl-5 h-10 w-48 rounded-xl",
-              router.pathname === "/chat" || router.pathname === "/worker/chat"
-                ? "bg-newBlue"
-                : "bg-someOtherColor"
-            )}
-          >
-            <ChatIconOutlined color="white" />
-            <p className={clsx("text-xl ml-3 text-white")}>Chat</p>
-          </button>
-        </Link>
-      )}
-      {!isWorker && !isHostel && (
+
+      <Link className="my-2" href={isWorker ? "/worker/chat" : "/chat"}>
+        <button
+          className={clsx(
+            "flex items-center pl-5 h-10 w-48 rounded-xl",
+            router.pathname === "/chat" || router.pathname === "/worker/chat"
+              ? "bg-newBlue"
+              : "bg-someOtherColor"
+          )}
+        >
+          <ChatIconOutlined color="white" />
+          <p className={clsx("text-xl ml-3 text-white")}>Chat</p>
+        </button>
+      </Link>
+
+      {!isWorker && (
         <Link
           className="my-2"
           href={isWorker ? "/worker/favorites" : "/favorites"}
@@ -98,21 +85,11 @@ function Sidebar() {
         </Link>
       )}
 
-      <Link
-        className="my-2"
-        href={
-          isWorker
-            ? "/worker/profile"
-            : isHostel
-            ? "/hostel/profile"
-            : "/profile"
-        }
-      >
+      <Link className="my-2" href={isWorker ? "/worker/profile" : "/profile"}>
         <button
           className={clsx(
             "flex items-center pl-5 h-10 w-48 rounded-xl",
             router.pathname === "/profile" ||
-              router.pathname === "/hostel/profile" ||
               router.pathname === "/worker/profile"
               ? "bg-newBlue"
               : "bg-someOtherColor"

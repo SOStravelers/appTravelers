@@ -14,7 +14,7 @@ export default function UsePolicy() {
     <section className="m-2 py-32 mb-16 xl:px-36 xl:ml-32">
       <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
       <p className="mb-5 text-sm">
-        <b className="mr-1">Last update: </b> September 2023
+        <b className="mr-1">Last update: </b> November 2023
       </p>
       <p>
         At SOS Travelers, we acknowledge the importance of safeguarding the
@@ -85,7 +85,12 @@ export default function UsePolicy() {
         service.
       </p>
 
-      <OutlinedButton text="Return" onClick={() => router.push("/login")} />
+      <div className="bg-white h-full flex flex-col w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <OutlinedButton
+        text="Return"
+        onClick={() => router.back()}
+      />
+      </div>
     </section>
   );
 }

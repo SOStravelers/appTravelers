@@ -100,14 +100,14 @@ export default function Summary() {
           onChange={() => setSelected(!selected)}
         />
         <p className="text-greyText">
-          Accept{" "}
-          <Link
-            href="/terms-of-service"
-            className="font-medium text-blue-600 dark:text-blue-500 underline"
-          >
-            terms & conditions
-          </Link>{" "}
-          of SOS
+          Accept our{" "}
+          <Link href={"terms-of-service"} className="underline">
+            Terms of Service &nbsp;
+          </Link>
+          and our{" "}
+          <Link href={"use-policy"} className="underline">
+            Use Policy.
+          </Link>
         </p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg my-5">

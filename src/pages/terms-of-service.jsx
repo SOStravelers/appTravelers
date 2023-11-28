@@ -33,7 +33,7 @@ export default function TermsOfService() {
 
 <h3 className="mb-2 font-bold text-sm">2.2 Workers:</h3>
 <p className="mb-2">
-  Workers are individuals who provide specific services within the establishments provided by the hosts. Workers can include, for example, tour guides, chefs, massage therapists, or anyone offering a hospitality and tourism-related service. It's important to note that workers are independently contracted and are not employees of SOS Travelers.
+  Workers are individuals who provide specific services within the establishments provided by the hosts. Workers can include, for example, tour guides, chefs, massage therapists, or anyone offering a hospitality and tourism-related service. Its important to note that workers are independently contracted and are not employees of SOS Travelers.
 </p>
 
 <h3 className="mb-2 font-bold text-sm">2.3 Users:</h3>
@@ -53,7 +53,7 @@ export default function TermsOfService() {
 
 <h3 className="mb-2 font-bold text-sm">3.2. Secure Environment:</h3>
 <p className="mb-2">
-  We are committed to providing a secure environment for user interaction. We implement security measures, such as identity verifications, to help ensure the platform's reliability.
+  We are committed to providing a secure environment for user interaction. We implement security measures, such as identity verifications, to help ensure the platforms reliability.
 </p>
 
 <h3 className="mb-2 font-bold text-sm">3.3. Assistance and Support:</h3>

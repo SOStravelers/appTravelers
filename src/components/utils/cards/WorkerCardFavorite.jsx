@@ -2,37 +2,51 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import FavButton from "../buttons/FavButton";
-import { StarIcon, FavIconBorder } from "@/constants/icons";
+import { StarIcon, ArrowRightIcon } from "@/constants/icons";
 import FavoriteService from "@/services/FavoriteService";
 
-function WorkerCardFavorite({ link, name, service, score, image, handleDeleteFav }) {
- 
-
+function WorkerCardFavorite({
+  link,
+  name,
+  service,
+  score,
+  image,
+  showArrow = true,
+  id,
+}) {
   return (
-    <div className="flex py-4 px-5 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center">
-      <Link href={link}>
-        <div className="flex">
-          <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
-            <Image
-              src={image}
-              fill
-              alt="leon"
-              className="object-cover rounded-xl"
-            />
-          </div>
-          <div className="flex flex-col">
-            <h1 className="font-semibold">{name}</h1>
-            <p className="text-blackText">{service}</p>
-            <div className="flex items-center">
-              <StarIcon color={"#00A0D5"} className="mr-1" />
-              <p className="text-blackText">{score}</p>
-            </div>
+    <div className="flex w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center">
+      <div className="flex">
+        <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 ml-3 relative">
+          <Link href={link}>
+            {image && (
+              <Image
+                src={image}
+                alt="gato"
+                fill
+                className="object-cover rounded-xl"
+              />
+            )}
+          </Link>
+        </div>
+        <div className="flex flex-col">
+          <h1 className="font-semibold">{name}</h1>
+          <p className="text-blackText">{service}</p>
+          <div className="flex items-center">
+            <StarIcon color={"#1CDAE5"} className="mr-1" />
+            <p className="text-blackText">{score}</p>
           </div>
         </div>
-      </Link>
-      <div className="w-10 h-10 flex items-center justify-center">
-        <FavButton isFavorite={true} handleDeleteFav={handleDeleteFav} />
       </div>
+      {showArrow ? (
+        <Link href={`/services/${id}`} className="h-full">
+          <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
+            <ArrowRightIcon className="ml-1" />
+          </div>
+        </Link>
+      ) : (
+        <div className="w-10"></div>
+      )}
     </div>
   );
 }

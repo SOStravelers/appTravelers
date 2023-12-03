@@ -56,6 +56,7 @@ export default function Favorites() {
         favorites.map((favorite) => (
           <WorkerCardFavorite
             key={favorite._id}
+            id={favorite.receptor._id}
             name={
               favorite.receptor.personalData.name.first +
               " " +

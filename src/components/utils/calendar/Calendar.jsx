@@ -27,7 +27,7 @@ const HOURS = [
 
 function Calendar({ id }) {
   const router = useRouter();
-  const { setService } = useStore();
+  const { setService, isWorker } = useStore();
 
   const [selected, setSelected] = useState("");
   const [time, setTime] = useState();
@@ -56,7 +56,8 @@ function Calendar({ id }) {
       date: dateStr,
       hour: time,
     });
-    router.push(`/workers-found/${id}`);
+    if (isWorker) router.push(`/assign-client`);
+    else router.push(`/workers-found/${id}`);
   };
 
   const initialize = (dateString = "") => {

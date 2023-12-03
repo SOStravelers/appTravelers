@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import WorkerCardFavorite from "@/components/utils/cards/WorkerCardFavorite";
+import FavoriteService from "@/services/FavoriteService";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
+
 export default function Favorites() {
   const store = useStore();
   const router = useRouter();
@@ -19,44 +21,60 @@ export default function Favorites() {
       setLoginModal(false);
     }
     if (user) {
-      setFavorites([
-        {
-          name: "John Doe",
-          service: "Barber",
-          score: 5,
-          link: "/1",
-        },
-        {
-          name: "John Doe",
-          service: "Barber",
-          score: 5,
-          link: "/1",
-        },
-        {
-          name: "John Doe",
-          service: "Barber",
-          score: 5,
-          link: "/1",
-        },
-      ]);
+      getFavorites();
     } else {
       setOpen(true);
     }
   }, [loginModal]);
+
+  const getFavorites = async () => {
+    try {
+      const response = await FavoriteService.listFavorites();
+      console.log(response);
+      if (response?.data?.length > 0) {
+        setFavorites(response?.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteFav = async (id) => {
+    try {
+      const response = await FavoriteService.deleteFavorite(id);
+      console.log(response);
+      if (response?.status === 200) {
+        setFavorites(favorites.filter((favorite) => favorite.receptor._id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
-      <p className="text-center text-greyText max-w-lg  lg:my-4 xl:my-4 mb-2">
-        No favorites yet
-      </p>
-      {favorites.map((favorite, index) => (
-        <WorkerCardFavorite
-          key={index}
-          name={favorite.name}
-          service={favorite.service}
-          score={favorite.score}
-          link={favorite.link}
-        />
-      ))}
+      {favorites?.length > 0 ? (
+        favorites.map((favorite) => (
+          <WorkerCardFavorite
+            key={favorite._id}
+            name={
+              favorite.receptor.personalData.name.first +
+              " " +
+              favorite.receptor.personalData.name.last
+            }
+            image={favorite.receptor.img.imgUrl}
+            service={favorite?.receptor?.workerData?.services[0]?.id?.name}
+            score={5}
+            link={`/worker/${favorite.receptor._id}`}
+            handleDeleteFav={() => {
+              handleDeleteFav(favorite.receptor._id);
+            }}
+          />
+        ))
+      ) : (
+        <p className="text-center text-greyText max-w-lg  lg:my-4 xl:my-4 mb-2">
+          No favorites yet
+        </p>
+      )}
       {!user && (
         <LoginFormModal
           open={open}

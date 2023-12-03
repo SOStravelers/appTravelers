@@ -1,17 +1,17 @@
 import { FavIconBorder, FavIconFill } from "@/constants/icons";
 
-function FavButton({ fav, setFav }) {
+function FavButton({ isFavorite, handleSetFav, handleDeleteFav }) {
   return (
     <div>
-      {fav ? (
+      {isFavorite ? (
         <FavIconFill
-          onClick={() => setFav(!fav)}
+          onClick={handleDeleteFav}
           className="cursor-pointer"
           color={"#5B78C7"}
         />
       ) : (
         <FavIconBorder
-          onClick={() => setFav(!fav)}
+          onClick={handleSetFav}
           className="cursor-pointer"
           color={"#5B78C7"}
         />

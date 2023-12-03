@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import Link from "next/link";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -24,7 +25,11 @@ export default function GuestSettings() {
   return (
     <div className="flex flex-col py-24 px-10 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
-      <OptionCard title="Support" subtitle="Contact us" icon={MailIcon} />
+      
+      <Link href="support" className="block">
+        <OptionCard title="Support" subtitle="Contact us" icon={MailIcon}>
+        </OptionCard>
+      </Link>
       <div className="flex flex-col my-4">
         <OptionSwitch
           title="Activate Ubication"

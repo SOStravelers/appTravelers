@@ -18,7 +18,7 @@ export default function Services() {
 
   const getData = async () => {
     const id = router.query.id;
-    ServiceService.list({ id: id }).then((response) => {
+    ServiceService.list(id).then((response) => {
       setServices(response.data.docs);
     });
   };

@@ -28,6 +28,7 @@ const HOURS = [
 function Calendar({ id }) {
   const router = useRouter();
   const { setService, isWorker } = useStore();
+  const fromFavorite = localStorage.getItem("fromFavorite");
 
   const [selected, setSelected] = useState("");
   const [time, setTime] = useState();
@@ -56,7 +57,7 @@ function Calendar({ id }) {
       date: dateStr,
       hour: time,
     });
-    if (isWorker) router.push(`/assign-client`);
+    if (fromFavorite) router.push(`/assign-client`);
     else router.push(`/workers-found/${id}`);
   };
 

@@ -15,6 +15,12 @@ export default class ServiceService {
     };
   }
 
+  static async listByUser(id) {
+    return axios.get(`${this.baseUrl}/byuser/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   static async list(params = {}) {
     let query = "";
     Object.keys(params).forEach((key) => {

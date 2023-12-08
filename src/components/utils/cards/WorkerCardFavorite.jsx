@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import FavButton from "../buttons/FavButton";
+import { useStore } from "@/store";
 import { StarIcon, ArrowRightIcon } from "@/constants/icons";
 import FavoriteService from "@/services/FavoriteService";
+import local from "next/font/local";
 
 function WorkerCardFavorite({
   link,
@@ -14,6 +17,13 @@ function WorkerCardFavorite({
   showArrow = true,
   id,
 }) {
+  const { setService } = useStore();
+  const router = useRouter();
+  const handleWorkerSelection = () => {
+    setService({ workerId: id });
+    localStorage.setItem("fromFavorite", true);
+    router.push(`/services/${id}`);
+  };
   return (
     <div className="flex w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center">
       <div className="flex">
@@ -39,11 +49,12 @@ function WorkerCardFavorite({
         </div>
       </div>
       {showArrow ? (
-        <Link href={`/services/${id}`} className="h-full">
-          <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
-            <ArrowRightIcon className="ml-1" />
-          </div>
-        </Link>
+        <div
+          onClick={handleWorkerSelection}
+          className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
+        >
+          <ArrowRightIcon className="ml-1" />
+        </div>
       ) : (
         <div className="w-10"></div>
       )}

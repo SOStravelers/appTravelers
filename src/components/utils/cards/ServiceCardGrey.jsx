@@ -6,7 +6,7 @@ import { mazzard } from "@/utils/mazzardFont";
 function ServiceCardGrey({ id, link, icon, name }) {
   const { setService } = useStore();
   const select = () => {
-    setService({ subServiceId: id });
+    setService({ serviceId: id });
   };
   return (
     <Link href={link} onClick={select}>

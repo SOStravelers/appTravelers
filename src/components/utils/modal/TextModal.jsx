@@ -39,8 +39,8 @@ function TextModal({
             <div className="bg-white rounded-2xl w-[90vw] md:w-96 px-10 py-5">
               <div className="p-5">
                 <h1 className="text-2xl text-center mb-5">{title}</h1>
-                <div className="text-justify text-center">
-                  {text.map((line, index) => (
+                <div className="text-center">
+                  {text?.map((line, index) => (
                     <React.Fragment key={index}>
                       {line && <p>{line}</p>}
                       {index < text.length - 1 && <br />}{" "}

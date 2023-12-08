@@ -12,10 +12,10 @@ import "swiper/swiper-bundle.css";
 // import SwiperCore, { Pagination, Navigation } from "swiper";
 // SwiperCore.use([Pagination, Navigation]);
 
-export default function WorkerHome({ user }) {
+export default function WorkerHome() {
   const router = useRouter();
   const [bookings, setBookings] = useState([]);
-  const { setService } = useStore();
+  const { setService, user } = useStore();
   const [swiper, setSwiper] = useState(null);
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export default function WorkerHome({ user }) {
       <section className=" mb-5">
         <OutlinedButton
           text="Book a service"
-          onClick={() => goTo("/worker/booking")}
+          onClick={() => goTo(`/services/${user?._id}`)}
         />
       </section>
 

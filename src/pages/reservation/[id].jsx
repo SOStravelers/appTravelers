@@ -20,3 +20,16 @@ export default function Reservation() {
     </div>
   );
 }
+
+export async function getStaticProps({ params }) {
+  return {
+    props: { params },
+  };
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+}

@@ -12,187 +12,182 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 
 export default function SupportPage() {
-    const router = useRouter();
-    const {user, loggedIn, isWorker } = useStore();
-    const id = router.query.id;
-  
-    const supportEmail = async (values) => {
-      try {
-        console.log(values.email)
-        // Lógica de envío del formulario
-        const response = await UserService.supportEmail(
-          values.name,
-          values.email,
-          values.subject,
-          values.body,
-          values.isworker
-        );
-  
-        delete response.data.user.type; //falla
-        toast.success('Message sent Successfully', {           
-            position: "top-right",
-          // Configuración de la notificación de éxito
-        });
-      } catch (error) {
-        // Manejo de errores
-        let message = "Error sending message";
-        if (error?.response?.status === 409)
-          message = error?.response?.data?.message;
-        else if (error?.response?.status === 400)
-          message = error?.response?.data?.result;
-  
-        toast.error(message, {
-            position: "top-right",
-          // Configuración de la notificación de error
-        });
-      }
-    };
-  
-    return (
-      <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-        <Form
-        initialValues={{
-          name: loggedIn ? user.name : '',
-          email: loggedIn ? user.email : '',
-          subject: '',
-          body: '',
-          type: user.type,
+  const router = useRouter();
+  const { user, loggedIn } = useStore();
+  const id = router.query.id;
+
+  const supportEmail = async (values) => {
+    try {
+      const data = {
+        name: values.name,
+        email: values.email,
+        subject: values.subject,
+        body: values.body,
+        id: user && user._id ? user._id : "",
+      };
+      // Lógica de envío del formulario
+      const response = await UserService.supportEmail(data);
+
+      delete response.data.user.type; //falla
+      toast.success("Message sent Successfully", {
+        position: "top-right",
+        // Configuración de la notificación de éxito
+      });
+    } catch (error) {
+      // Manejo de errores
+      let message = "Error sending message";
+      if (error?.response?.status === 409)
+        message = error?.response?.data?.message;
+      else if (error?.response?.status === 400)
+        message = error?.response?.data?.result;
+
+      toast.error(message, {
+        position: "top-right",
+        // Configuración de la notificación de error
+      });
+    }
+  };
+
+  return (
+    <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <Form
+        onSubmit={(values) => {
+          supportEmail(values);
         }}
-          onSubmit={(values) => {
-            supportEmail(values);
-          }}
-        >
-          {({ isValid, submit }) => (
-            <form
-              className="w-full flex flex-col"
-              onSubmit={(e) => {
-                e.preventDefault();
-                submit();
-              }}
-            >
-              {!loggedIn && (
-                <>
-                  <div className="mb-3">
-                    <p>Full Name</p>
-                    <Field
-                      name="name"
-                      onBlurValidate={z.string().refine((val) => {
+      >
+        {({ isValid, submit }) => (
+          <form
+            className="w-full flex flex-col"
+            onSubmit={(e) => {
+              e.preventDefault();
+              submit();
+            }}
+          >
+            {!loggedIn && (
+              <>
+                <div className="mb-3">
+                  <p>Full Name</p>
+                  <Field
+                    name="name"
+                    onBlurValidate={z.string().refine(
+                      (val) => {
                         // Verificar que el texto tenga más de 5 caracteres y no contenga números
                         return val.length > 5 && !/\d/.test(val);
-                      }, {
+                      },
+                      {
                         message: "Invalid Name",
-                      })}
+                      }
+                    )}
+                  >
+                    {({ value, setValue, onBlur, errors }) => {
+                      return (
+                        <div>
+                          <OutlinedInput
+                            placeholder="Enter Name"
+                            value={value}
+                            onBlur={onBlur}
+                            onChange={(e) => setValue(e.target.value)}
+                          />
+                          {errors.map((error) => (
+                            <p key={error} className="text-red">
+                              {error}
+                            </p>
+                          ))}
+                        </div>
+                      );
+                    }}
+                  </Field>
+                </div>
+
+                <div className="mb-3">
+                  <p>Email Address</p>
+                  <Field
+                    name="email"
+                    onBlurValidate={z.string().email("Invalid email")}
+                  >
+                    {({ value, setValue, onBlur, errors }) => {
+                      return (
+                        <div>
+                          <OutlinedInput
+                            placeholder="Enter email"
+                            value={value}
+                            onBlur={onBlur}
+                            onChange={(e) => setValue(e.target.value)}
+                          />
+                          {errors.map((error) => (
+                            <p key={error} className="text-red">
+                              {error}
+                            </p>
+                          ))}
+                        </div>
+                      );
+                    }}
+                  </Field>
+                </div>
+              </>
+            )}
+
+            <div className="mb-3">
+              <p>Choose a subject</p>
+              <Field
+                name="subject"
+                onBlurValidate={z.string().refine((val) => val, {
+                  message: "You must choose an option",
+                })}
+              >
+                {({ value, setValue, onBlur, errors }) => (
+                  <div>
+                    <select
+                      className="border-grey border w-full max-w-lg rounded-xl p-3 my-1"
+                      value={value}
+                      onBlur={onBlur}
+                      onChange={(e) => setValue(e.target.value)}
                     >
-                      {({ value, setValue, onBlur, errors }) => {
-                        return (
-                          <div>
-                            <OutlinedInput
-                              placeholder="Enter Name"
-                              value={value}
-                              onBlur={onBlur}
-                              onChange={(e) => setValue(e.target.value)}
-                            />
-                            {errors.map((error) => (
-                              <p key={error} className="text-red">
-                                {error}
-                              </p>
-                            ))}
-                          </div>
-                        );
-                      }}
-                    </Field>
+                      <option value="">Choose an option</option>
+                      <option value="opcion1">Option 1</option>
+                      <option value="opcion2">Option 2</option>
+                    </select>
+                    {errors.map((error) => (
+                      <p key={error} className="text-red">
+                        {error}
+                      </p>
+                    ))}
                   </div>
-  
-                  <div className="mb-3">
-                    <p>Email Address</p>
-                    <Field
-                      name="email"
-                      onBlurValidate={z.string().email("Invalid email")}
-                    >
-                      {({ value, setValue, onBlur, errors }) => {
-                        return (
-                          <div>
-                            <OutlinedInput
-                              placeholder="Enter email"
-                              value={value}
-                              onBlur={onBlur}
-                              onChange={(e) => setValue(e.target.value)}
-                            />
-                            {errors.map((error) => (
-                              <p key={error} className="text-red">
-                                {error}
-                              </p>
-                            ))}
-                          </div>
-                        );
-                      }}
-                    </Field>
-                  </div>
-                </>
-              )}
-  
-              <div className="mb-3">
-                <p>Choose a subject</p>
-                <Field
-                  name="subject"
-                  onBlurValidate={z.string().refine((val) => val, {
-                    message: "You must choose an option",
-                  })}
-                >
-                  {({ value, setValue, onBlur, errors }) => (
+                )}
+              </Field>
+            </div>
+
+            <div className="mb-3">
+              <p>Message</p>
+              <Field
+                name="body"
+                onBlurValidate={z.string().refine((val) => val, {
+                  message: "You must enter a message",
+                })}
+              >
+                {({ value, setValue, onBlur, errors }) => {
+                  return (
                     <div>
-                      <select
-                        className="border-grey border w-full max-w-lg rounded-xl p-3 my-1"
+                      <OutlinedTextArea
+                        placeholder="Enter Message"
                         value={value}
                         onBlur={onBlur}
                         onChange={(e) => setValue(e.target.value)}
-                      >
-                        <option value="">choose an option</option>
-                        <option value="opcion1">Option 1</option>
-                        <option value="opcion2">Option 2</option>
-                      
-                      </select>
+                      />
                       {errors.map((error) => (
                         <p key={error} className="text-red">
                           {error}
                         </p>
                       ))}
                     </div>
-                  )}
-                </Field>
-              </div>
-  
-              <div className="mb-3">
-                <p>Message</p>
-                <Field
-                  name="body"
-                  onBlurValidate={z.string().refine((val) => val, {
-                    message: "You must enter a message",
-                  })}
-                >
-                  {({ value, setValue, onBlur, errors }) => {
-                    return (
-                      <div>
-                        <OutlinedTextArea
-                          placeholder="Enter Message"
-                          value={value}
-                          onBlur={onBlur}
-                          onChange={(e) => setValue(e.target.value)}
-                        />
-                        {errors.map((error) => (
-                          <p key={error} className="text-red">
-                            {error}
-                          </p>
-                        ))}
-                      </div>
-                    );
-                  }}
-                </Field>
-              </div>
-              <OutlinedButton text="Send Message" disabled={!isValid} />
-            </form>
-          )}
-        </Form>
-      </div>
-    );
-  }
+                  );
+                }}
+              </Field>
+            </div>
+            <OutlinedButton text="Send Message" disabled={!isValid} />
+          </form>
+        )}
+      </Form>
+    </div>
+  );
+}

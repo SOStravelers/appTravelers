@@ -79,10 +79,14 @@ export default function Settings() {
     <div className="flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
 
-      <Link href="support" className="block">
-        <OptionCard title="Support" subtitle="Contact us" icon={MailIcon}>
-        </OptionCard>
+      <Link href="/support" className="block">
+        <OptionCard
+          title="Support"
+          subtitle="Contact us"
+          icon={MailIcon}
+        ></OptionCard>
       </Link>
+
       <div className="flex flex-col my-4">
         <OptionSwitch
           title="Worker Mode"

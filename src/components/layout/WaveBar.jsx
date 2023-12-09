@@ -7,7 +7,7 @@ function WaveBar() {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="100vw"
-        height="auto"
+        height="100%"
         viewBox="0 0 390 218"
         fill="none"
       >

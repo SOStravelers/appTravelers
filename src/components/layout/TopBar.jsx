@@ -1,9 +1,4 @@
-import {
-  AvatarIcon,
-  NotificationIcon,
-  NotificationOffIcon,
-  LogoWhite,
-} from "@/constants/icons";
+import { NotificationOffIcon, LogoWhite } from "@/constants/icons";
 import { useEffect } from "react";
 import { random } from "@/lib/utils";
 

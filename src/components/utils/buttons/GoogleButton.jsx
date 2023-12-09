@@ -1,11 +1,9 @@
 import React from "react";
 import { useStore } from "/src/store/index";
+import clsx from "clsx";
 import { useRouter } from "next/router";
-import { Auth } from "aws-amplify";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth";
 import { GoogleIcon } from "@/constants/icons";
-import { ca } from "date-fns/locale";
 
 function GoogleButton() {
   const router = useRouter();
@@ -19,12 +17,12 @@ function GoogleButton() {
   };
   return (
     <button
-      className="bg-greyButton border-2 border-darkBlue text-black py-3 w-full rounded-xl my-2 flex items-center px-3"
+      className="border-2 border-solid max-w-lg text-lg rounded-xl py-3 w-full cursor-pointer bg-greyButton border-darkBlue text-black rounded-xl my-2 flex justify-center items-center px-3"
       type="button"
       onClick={login}
     >
       <GoogleIcon />
-      <p className="ml-1 md:ml-6  sm:ml-5  md:text-sm xs:text-sm lg:text-base">
+      <p className="ml-1 md:ml-6 sm:ml-5 md:text-sm xs:text-sm lg:text-base">
         Continue with Google
       </p>
     </button>

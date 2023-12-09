@@ -17,14 +17,12 @@ function GoogleButton() {
   };
   return (
     <button
-      className="border-2 border-solid max-w-lg text-lg rounded-xl py-3 w-full cursor-pointer bg-greyButton border-darkBlue text-black rounded-xl my-2 flex justify-center items-center px-3"
+      className="border-2 border-solid max-w-lg text-lg lg:text-lg rounded-xl py-3 w-full cursor-pointer bg-greyButton border-darkBlue text-black rounded-xl my-2 flex justify-center items-center px-3"
       type="button"
       onClick={login}
     >
       <GoogleIcon />
-      <p className="ml-1 md:ml-6 sm:ml-5 md:text-sm xs:text-sm lg:text-base">
-        Continue with Google
-      </p>
+      <p className="ml-1  text-base ">Continue with Google</p>
     </button>
   );
 }

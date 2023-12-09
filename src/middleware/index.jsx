@@ -31,13 +31,7 @@ export const CustomMiddlewareComponent = () => {
   }, [router.pathname, user]);
 
   const routeValidation = async () => {
-    console.log(
-      "validar",
-      router.pathname.includes("worker"),
-      !isWorker,
-      router.pathname.includes("workers-found")
-    );
-    console.log(router.pathname);
+    console.log("validar");
     var shouldRedirect = true;
     if (
       router.pathname.includes("worker") &&
@@ -55,35 +49,41 @@ export const CustomMiddlewareComponent = () => {
         router.pathname == "/payment" ||
         router.pathname == "/stripe")
     ) {
-      console.log("perro2");
       shouldRedirect = false;
     }
     if (!shouldRedirect) {
-      console.log("revalidar");
       router.push("/");
     }
   };
 
   const obtenerInformacionUsuario = async () => {
-    console.log("obtener informacion", isWorker);
-    let storageUser = localStorage.getItem("auth.user");
-    let storageType = localStorage.getItem("type");
-    if (storageUser && Object.keys(storageUser).length > 0) {
-      console.log("entrando 1");
-      console.log(storageType);
-      console.log(JSON.parse(storageUser));
-      setUser(JSON.parse(storageUser));
-      setLoggedIn(true);
-      if (storageType && storageType == "worker") {
-        console.log("entradn");
-        setWorker(true);
+    console.log("get Info");
+    if (user) {
+      console.log("ya hay usuario");
+      return;
+    }
+    let cookieAccessToken = Cookies.get("auth.access_token");
+    let typeWorker = localStorage.getItem("type");
+    if (cookieAccessToken) {
+      console.log("set user back");
+      const user = await UserService.getUserById();
+      if (user) {
+        Cookies.set("auth.user_id", user.data._id);
+        localStorage.setItem("type", user.data.type);
+        setUser(user.data);
+        setLoggedIn(true);
+        typeWorker && typeWorker == "worker"
+          ? setWorker(true)
+          : setWorker(false);
+      } else {
+        setLoggedIn(false);
+        return;
       }
     } else {
       try {
-        console.log("cagazo");
         const session = await getSession();
-        console.log("sesion", session);
         if (session) {
+          console.log("hay sesion google");
           const response = await UserService.loginGoogle(
             session.user.name,
             session.user.email,
@@ -91,40 +91,24 @@ export const CustomMiddlewareComponent = () => {
           );
           if (response) {
             console.log(response);
-            delete response.data.user.type;
-            localStorage.setItem(
-              "auth.access_token",
-              response.data.access_token
-            );
-            localStorage.setItem(
-              "auth.refresh_token",
-              response.data.refresh_token
-            );
-            localStorage.setItem("auth.user_id", response.data.user._id);
-            localStorage.setItem(
-              "auth.user",
-              JSON.stringify(response.data.user)
-            );
             Cookies.set("auth.access_token", response.data.access_token);
             Cookies.set("auth.refresh_token", response.data.refresh_token);
             Cookies.set("auth.user_id", response.data.user._id);
             setLoggedIn(true);
             setLoginModal(true);
             setUser(response.data.user);
-            if (router.pathname == "/login" || router.pathname == "/register") {
-              if (service && Object.keys(service).length > 0)
-                router.push(`/summary`);
-              else router.push("/");
-            }
           }
         } else {
+          console.log("no hay nada");
           setLoggedIn(false);
+          return;
         }
       } catch (error) {
-        console.error("Error al obtener la información del usuario:", error);
+        console.error("Eno hay usuario");
+        return;
       }
     }
   };
 
-  return null; // Este componente no renderiza nada
+  return null; //Este componente no renderiza nada
 };

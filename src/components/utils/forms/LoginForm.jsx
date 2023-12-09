@@ -25,19 +25,14 @@ function LoginForm() {
     try {
       console.log("--login email--");
       const response = await UserService.login(values.email, values.password);
-      // if (response.data.user.type && response.data.user.type != "personal") {
-      //   localStorage.setItem("type", response.data.user.type);
-      // }
+      if (response.data.user.type && response.data.user.type != "personal") {
+        localStorage.setItem("type", response.data.user.type);
+      }
       delete response.data.user.type;
-      // localStorage.setItem("auth.access_token", response.data.access_token);
-      // localStorage.setItem("auth.refresh_token", response.data.refresh_token);
-      // localStorage.setItem("auth.user_id", response.data.user._id);
-      // localStorage.setItem("auth.user", JSON.stringify(response.data.user));
 
       Cookies.set("auth.access_token", response.data.access_token);
       Cookies.set("auth.refresh_token", response.data.refresh_token);
       Cookies.set("auth.user_id", response.data.user._id);
-      // Cookies.set("auth.user", JSON.stringify(response.data.user));
       setUser(response.data.user);
       setLoggedIn(true);
       if (service && Object.keys(service).length > 0) {

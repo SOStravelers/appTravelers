@@ -51,14 +51,20 @@ export const CustomMiddlewareComponent = () => {
     ) {
       shouldRedirect = false;
     }
+    if (
+      user &&
+      (router.pathname == "/login" || router.pathname == "/register")
+    ) {
+      shouldRedirect = false;
+    }
     if (!shouldRedirect) {
       router.push("/");
     }
   };
 
   const obtenerInformacionUsuario = async () => {
-    console.log("get Info");
-    if (user) {
+    console.log("get Info", user);
+    if (user && Object.keys(user).length > 0) {
       console.log("ya hay usuario");
       return;
     }
@@ -72,6 +78,7 @@ export const CustomMiddlewareComponent = () => {
         localStorage.setItem("type", user.data.type);
         setUser(user.data);
         setLoggedIn(true);
+        setLoginModal(true);
         typeWorker && typeWorker == "worker"
           ? setWorker(true)
           : setWorker(false);
@@ -90,13 +97,17 @@ export const CustomMiddlewareComponent = () => {
             session.user.image
           );
           if (response) {
-            console.log(response);
+            console.log("erna", response);
             Cookies.set("auth.access_token", response.data.access_token);
             Cookies.set("auth.refresh_token", response.data.refresh_token);
             Cookies.set("auth.user_id", response.data.user._id);
+            typeWorker && typeWorker == "worker"
+              ? setWorker(true)
+              : setWorker(false);
             setLoggedIn(true);
             setLoginModal(true);
             setUser(response.data.user);
+            router.push("/");
           }
         } else {
           console.log("no hay nada");

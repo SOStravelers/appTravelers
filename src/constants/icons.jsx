@@ -2007,3 +2007,44 @@ export const CurrencyIcon = ({ ...props }) => (
     />
   </svg>
 );
+
+export const CircleCheckIcon = ({ ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="15"
+    height="15"
+    viewBox="0 0 15 15"
+    fill="none"
+    {...props}
+  >
+    <g clip-path="url(#clip0_771_10315)">
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M0 7.5C0 5.51088 0.790176 3.60322 2.1967 2.1967C3.60322 0.790176 5.51088 0 7.5 0C9.48912 0 11.3968 0.790176 12.8033 2.1967C14.2098 3.60322 15 5.51088 15 7.5C15 9.48912 14.2098 11.3968 12.8033 12.8033C11.3968 14.2098 9.48912 15 7.5 15C5.51088 15 3.60322 14.2098 2.1967 12.8033C0.790176 11.3968 0 9.48912 0 7.5ZM7.072 10.71L11.39 5.312L10.61 4.688L6.928 9.289L4.32 7.116L3.68 7.884L7.072 10.711V10.71Z"
+        fill="white"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_771_10315">
+        <rect width="15" height="15" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+
+export const ChatButtonIcon = ({ ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    {...props}
+  >
+    <path
+      d="M6 14H14V12H6V14ZM6 11H18V9H6V11ZM6 8H18V6H6V8ZM2 22V4C2 3.45 2.196 2.979 2.588 2.587C2.98 2.195 3.45067 1.99934 4 2H20C20.55 2 21.021 2.196 21.413 2.588C21.805 2.98 22.0007 3.45067 22 4V16C22 16.55 21.804 17.021 21.412 17.413C21.02 17.805 20.5493 18.0007 20 18H6L2 22ZM5.15 16H20V4H4V17.125L5.15 16Z"
+      fill="black"
+    />
+  </svg>
+);

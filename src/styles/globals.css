@@ -37,11 +37,17 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  max-height: 300px;
-  min-height: 370px;
+  max-height: 550px;
+  min-height: 550px;
   width: 100%;
   margin: auto;
   overflow: auto;
+  border-radius: 8px;
+  border: 2px solid #00a0d5;
+  @media (max-width: 768px) {
+    max-height: 420px;
+    min-height: 420px;
+  }
 }
 
 .msg {
@@ -51,10 +57,9 @@ body {
   margin-bottom: 2px;
 }
 
-
 .msg.sent {
   border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
-  background: #001C25;
+  background: #001c25;
   color: #fff;
   /* moves it to the right */
   margin-left: auto;
@@ -62,7 +67,7 @@ body {
 
 .msg.rcvd {
   border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
-  background: #00A0D5;
+  background: #00a0d5;
   color: #fff;
   /* moves it to the left */
   margin-right: auto;

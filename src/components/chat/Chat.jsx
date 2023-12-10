@@ -17,7 +17,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
+    <div className="bg-white h-full w-full flex flex-col items-center md:items-start mt-5 px-3">
       <div className="chat">
         {messages.map((message, index) => (
           <div
@@ -29,7 +29,7 @@ const Chat = () => {
         ))}
       </div>
       <div
-        className="flex items-center fixed w-full md:w-[80vw] px-5 bottom-[0.5rem] py-2 bg-white"
+        className="flex items-center fixed w-full md:w-[78%] px-5 bottom-[0.5rem] py-2 bg-white"
         style={{
           boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
         }}

@@ -13,17 +13,17 @@ function DaySection({ weekDays, selectedDay, setSelectedDay }) {
         {
           name: "John Doe",
           location: "124 street Miro Hotel, Ubud",
-          link: "/",
+          link: "/service-details",
         },
         {
           name: "John Doe",
           location: "124 street Miro Hotel, Ubud",
-          link: "/",
+          link: "/service-details",
         },
         {
           name: "John Doe",
           location: "124 street Miro Hotel, Ubud",
-          link: "/",
+          link: "/service-details",
         },
       ]);
     }

@@ -65,7 +65,7 @@ function RegisterForm() {
           <Field
             name="name"
             onBlurValidate={z.string().refine((val) => val, {
-              message: "Campo requerido",
+              message: "Required Field",
             })}
           >
             {({ value, setValue, onBlur, errors }) => {

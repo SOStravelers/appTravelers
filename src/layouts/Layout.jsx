@@ -1,4 +1,6 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useStore } from "@/store";
 import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";

@@ -15,4 +15,4 @@ console.warn("env -> ", env);
 const api = apis.get(env.trim());
 const front = apis.get(env.trim());
 
-export default { api, front };
+export default { api, front, env };

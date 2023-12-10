@@ -5,6 +5,15 @@ import Cookies from "js-cookie";
 export default class UserService {
   static resource = "users";
   static resourceAuth = "auth";
+
+  //----metal
+  static resourceSupport = "support";
+  static get suppUrl() {
+    const { api } = useStore.getState().urls;
+    return `${api}${UserService.resourceSupport}`;
+  }
+
+  //----metal
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${UserService.resource}`;
@@ -134,5 +143,11 @@ export default class UserService {
 
   static async findByEmail(email) {
     return axios.post(`${this.authUrl}/findemail`, { email: email });
+  }
+
+  // metal
+
+  static async supportEmail(data) {
+    return axios.post(`${this.suppUrl}/supportEmail`, data);
   }
 }

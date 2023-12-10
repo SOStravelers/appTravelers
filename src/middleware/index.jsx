@@ -8,16 +8,8 @@ import { getSession } from "next-auth/react";
 export const CustomMiddlewareComponent = () => {
   const router = useRouter();
   const store = useStore();
-  const {
-    user,
-    setUser,
-    setLoggedIn,
-    service,
-    isWorker,
-    setWorker,
-    loginModal,
-    setLoginModal,
-  } = store;
+  const { user, setUser, setLoggedIn, isWorker, setWorker, setLoginModal } =
+    store;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,33 +23,44 @@ export const CustomMiddlewareComponent = () => {
   }, [router.pathname, user]);
 
   const routeValidation = async () => {
-    console.log("validar");
-    var shouldRedirect = true;
+    console.log("validar", isWorker);
+
     if (
       router.pathname.includes("worker") &&
       !isWorker &&
       router.pathname != "/workers-found/[id]" &&
       router.pathname != "/worker/[id]"
     ) {
-      shouldRedirect = false;
-    }
-    if (
+      router.push("/");
+    } else if (
       !user &&
       (router.pathname == "/profile" ||
+        router.pathname == "/personal-details" ||
+        router.pathname == "/payment-confirmation" ||
+        router.pathname == "/settings" ||
+        router.pathname == "/payment" ||
+        router.pathname == "/stripe")
+    ) {
+      router.push("/");
+    } else if (
+      user &&
+      Object.keys(user).length > 0 &&
+      isWorker &&
+      (router.pathname == "/" ||
+        router.pathname == "/profile" ||
+        router.pathname == "/chat" ||
+        router.pathname == "/favorites" ||
         router.pathname == "/personal-details" ||
         router.pathname == "/settings" ||
         router.pathname == "/payment" ||
         router.pathname == "/stripe")
     ) {
-      shouldRedirect = false;
-    }
-    if (
+      router.push("/worker/home");
+    } else if (
       user &&
+      Object.keys(user).length > 0 &&
       (router.pathname == "/login" || router.pathname == "/register")
     ) {
-      shouldRedirect = false;
-    }
-    if (!shouldRedirect) {
       router.push("/");
     }
   };
@@ -75,13 +78,15 @@ export const CustomMiddlewareComponent = () => {
       const user = await UserService.getUserById();
       if (user) {
         Cookies.set("auth.user_id", user.data._id);
-        localStorage.setItem("type", user.data.type);
+        // if (process.env.NODE_ENV == "production" || typeWorker) {
+        //   localStorage.setItem("type", user.data.type);
+        //   typeWorker && typeWorker == "worker"
+        //     ? setWorker(true)
+        //     : setWorker(false);
+        // }
         setUser(user.data);
         setLoggedIn(true);
         setLoginModal(true);
-        typeWorker && typeWorker == "worker"
-          ? setWorker(true)
-          : setWorker(false);
       } else {
         setLoggedIn(false);
         return;
@@ -97,13 +102,16 @@ export const CustomMiddlewareComponent = () => {
             session.user.image
           );
           if (response) {
-            console.log("erna", response);
             Cookies.set("auth.access_token", response.data.access_token);
             Cookies.set("auth.refresh_token", response.data.refresh_token);
             Cookies.set("auth.user_id", response.data.user._id);
-            typeWorker && typeWorker == "worker"
-              ? setWorker(true)
-              : setWorker(false);
+
+            // if (process.env.NODE_ENV === "production" || typeWorker) {
+            //   localStorage.setItem("type", user.data.type);
+            //   typeWorker && typeWorker == "worker"
+            //     ? setWorker(true)
+            //     : setWorker(false);
+            // }
             setLoggedIn(true);
             setLoginModal(true);
             setUser(response.data.user);

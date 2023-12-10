@@ -15,7 +15,7 @@ function TopBar() {
       setUser[newUser];
     }
   }, [user]);
-
+  const profileUrl = isWorker ? "/worker/profile" : "/profile";
   const initials = () => {
     if (user && Object.keys(user).length === 0) return "";
     const name = user?.personalData?.name;
@@ -78,7 +78,7 @@ function TopBar() {
             {user?.img && user?.img.imgUrl ? (
               <Link
                 className="rounded-xl"
-                href="/profile"
+                href={profileUrl}
                 style={{ width: "40px", height: "40px", overflow: "hidden" }}
               >
                 <img

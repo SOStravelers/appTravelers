@@ -5,6 +5,7 @@ import WorkerCardFavorite from "@/components/utils/cards/WorkerCardFavorite";
 import FavoriteService from "@/services/FavoriteService";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
+import { BarberIcon } from "@/constants/icons";
 
 export default function Favorites() {
   const store = useStore();
@@ -74,9 +75,14 @@ export default function Favorites() {
           />
         ))
       ) : (
-        <p className="text-center text-greyText max-w-lg  lg:my-4 xl:my-4 mb-2">
-          No favorites yet
-        </p>
+        <div>
+          <p className="text-center text-greyText max-w-lg  lg:my-4 xl:my-4 mb-2">
+            No favorites yet
+          </p>
+          <div className="max-w-lg text-xl my-3 flex justify-center">
+            <BarberIcon />
+          </div>
+        </div>
       )}
       {!user && (
         <LoginFormModal

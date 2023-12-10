@@ -8,8 +8,9 @@ import { getSession } from "next-auth/react";
 export const CustomMiddlewareComponent = () => {
   const router = useRouter();
   const store = useStore();
-  const user = Cookies.get("auth.user");
-  const { setUser, setLoggedIn, isWorker, setWorker, setLoginModal } = store;
+  // const user = Cookies.get("auth.user");
+  const { user, setUser, setLoggedIn, isWorker, setWorker, setLoginModal } =
+    store;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +24,7 @@ export const CustomMiddlewareComponent = () => {
   }, [router.pathname, user]);
 
   const routeValidation = async () => {
-    console.log("validar", isWorker);
+    console.log("validar", isWorker, user);
 
     if (
       router.pathname.includes("worker") &&
@@ -31,9 +32,10 @@ export const CustomMiddlewareComponent = () => {
       router.pathname != "/workers-found/[id]" &&
       router.pathname != "/worker/[id]"
     ) {
+      console.log("caso1");
       router.push("/");
     } else if (
-      !user &&
+      (!user || Object.keys(user).length == 0) &&
       (router.pathname == "/profile" ||
         router.pathname == "/personal-details" ||
         router.pathname == "/payment-confirmation" ||
@@ -41,6 +43,7 @@ export const CustomMiddlewareComponent = () => {
         router.pathname == "/payment" ||
         router.pathname == "/stripe")
     ) {
+      console.log("caso2");
       router.push("/");
     } else if (
       user &&
@@ -55,12 +58,14 @@ export const CustomMiddlewareComponent = () => {
         router.pathname == "/payment" ||
         router.pathname == "/stripe")
     ) {
+      console.log("caso3");
       router.push("/worker/home");
     } else if (
       user &&
       Object.keys(user).length > 0 &&
       (router.pathname == "/login" || router.pathname == "/register")
     ) {
+      console.log("caso4");
       router.push("/");
     }
   };
@@ -75,18 +80,25 @@ export const CustomMiddlewareComponent = () => {
     let typeWorker = localStorage.getItem("type");
     if (cookieAccessToken) {
       console.log("set user back");
-      const user = await UserService.getUserById();
-      if (user) {
-        Cookies.set("auth.user_id", user.data._id);
-        // if (process.env.NODE_ENV == "production" || typeWorker) {
-        //   localStorage.setItem("type", user.data.type);
-        //   typeWorker && typeWorker == "worker"
-        //     ? setWorker(true)
-        //     : setWorker(false);
-        // }
-        setUser(user.data);
-        setLoggedIn(true);
-        setLoginModal(true);
+      const response = await UserService.getUserById();
+      if (response) {
+        return new Promise((resolve) => {
+          console.log("seteando", response.data);
+
+          Cookies.set("auth.user_id", response.data._id);
+
+          setUser(response.data);
+          setLoggedIn(true);
+          setLoginModal(true);
+          if (typeWorker) {
+            localStorage.setItem("type", response.data.type);
+            typeWorker && typeWorker == "worker"
+              ? setWorker(true)
+              : setWorker(false);
+          }
+          // router.push("/");
+          resolve(); // Resuelve la promesa para indicar que setUser ha completado su ejecución
+        });
       } else {
         setLoggedIn(false);
         return;

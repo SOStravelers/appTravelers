@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import WorkerCardChat from "@/components/utils/cards/WorkerCardChat";
+import { ChatDraw } from "@/constants/icons";
 
 export default function Chat() {
   const [open, setOpen] = useState(false);
@@ -40,6 +41,9 @@ export default function Chat() {
       <p className="text-center text-greyText max-w-lg lg:my-4 xl:my-4">
         No chats yet
       </p>
+      <div className="max-w-lg text-xl my-3 flex justify-center">
+        <ChatDraw />
+      </div>
       {chats.map((chat, index) => (
         <WorkerCardChat
           key={index}

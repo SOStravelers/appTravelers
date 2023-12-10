@@ -1,4 +1,5 @@
 import NotificationCard from "@/components/utils/cards/NotificationCard";
+import { NotificationDraw } from "@/constants/icons";
 
 export default function Notifications() {
   return (
@@ -9,6 +10,9 @@ export default function Notifications() {
         link="/worker/booking"
       />
       <p className="text-center max-w-lg mt-10">No more notifications</p>
+      <div className="max-w-lg text-xl my-3 flex justify-center">
+        <NotificationDraw />
+      </div>
     </div>
   );
 }

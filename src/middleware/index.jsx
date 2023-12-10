@@ -44,6 +44,7 @@ export const CustomMiddlewareComponent = () => {
       router.push("/");
     } else if (
       user &&
+      Object.keys(user).length > 0 &&
       isWorker &&
       (router.pathname == "/" ||
         router.pathname == "/profile" ||
@@ -57,6 +58,7 @@ export const CustomMiddlewareComponent = () => {
       router.push("/worker/home");
     } else if (
       user &&
+      Object.keys(user).length > 0 &&
       (router.pathname == "/login" || router.pathname == "/register")
     ) {
       router.push("/");

@@ -48,6 +48,7 @@ export const CustomMiddlewareComponent = () => {
       (router.pathname == "/" ||
         router.pathname == "/profile" ||
         router.pathname == "/chat" ||
+        router.pathname == "/favorites" ||
         router.pathname == "/personal-details" ||
         router.pathname == "/settings" ||
         router.pathname == "/payment" ||
@@ -74,9 +75,9 @@ export const CustomMiddlewareComponent = () => {
       console.log("set user back");
       const user = await UserService.getUserById();
       if (user) {
-        localStorage.setItem("type", user.data.type);
         Cookies.set("auth.user_id", user.data._id);
         if (process.env.NODE_ENV == "production" || typeWorker) {
+          localStorage.setItem("type", user.data.type);
           typeWorker && typeWorker == "worker"
             ? setWorker(true)
             : setWorker(false);
@@ -104,6 +105,7 @@ export const CustomMiddlewareComponent = () => {
             Cookies.set("auth.user_id", response.data.user._id);
 
             if (process.env.NODE_ENV === "production" || typeWorker) {
+              localStorage.setItem("type", user.data.type);
               typeWorker && typeWorker == "worker"
                 ? setWorker(true)
                 : setWorker(false);

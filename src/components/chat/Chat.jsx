@@ -17,7 +17,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col items-center relative border-2 border-grey rounded-xl">
+    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
       <div className="chat">
         {messages.map((message, index) => (
           <div

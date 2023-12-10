@@ -8,8 +8,8 @@ import { getSession } from "next-auth/react";
 export const CustomMiddlewareComponent = () => {
   const router = useRouter();
   const store = useStore();
-  const { user, setUser, setLoggedIn, isWorker, setWorker, setLoginModal } =
-    store;
+  const user = Cookies.get("auth.user");
+  const { setUser, setLoggedIn, isWorker, setWorker, setLoginModal } = store;
 
   useEffect(() => {
     const fetchData = async () => {

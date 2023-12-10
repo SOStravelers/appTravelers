@@ -9,10 +9,15 @@ function ServiceCardGrey({ id, link, icon, name, subServices }) {
 
   const select = () => {
     setService({ serviceId: id });
-    router.push({
-      pathname: link,
-      query: { subservices: JSON.stringify(subServices) },
-    });
+    const fromFavorite = localStorage.getItem("fromFavorite");
+    if (fromFavorite === true) {
+      router.push({
+        pathname: link,
+        query: { subservices: JSON.stringify(subServices) },
+      });
+    } else {
+      router.push(link);
+    }
   };
 
   return (

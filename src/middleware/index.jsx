@@ -5,7 +5,7 @@ import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import { getSession } from "next-auth/react";
 
-export const CustomMiddlewareComponent = () => {
+export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const router = useRouter();
   const store = useStore();
   // const user = Cookies.get("auth.user");
@@ -18,13 +18,17 @@ export const CustomMiddlewareComponent = () => {
         await obtenerInformacionUsuario();
       }
       routeValidation();
+      onMiddlewareComplete();
     };
 
     fetchData();
-  }, [router.pathname, user]);
+  }, [onMiddlewareComplete]);
 
   const routeValidation = async () => {
     console.log("validar", isWorker, user);
+    if (user == undefined) {
+      return;
+    }
 
     if (
       router.pathname.includes("worker") &&
@@ -82,23 +86,20 @@ export const CustomMiddlewareComponent = () => {
       console.log("set user back");
       const response = await UserService.getUserById();
       if (response) {
-        return new Promise((resolve) => {
-          console.log("seteando", response.data);
+        console.log("seteando", response.data);
 
-          Cookies.set("auth.user_id", response.data._id);
+        Cookies.set("auth.user_id", response.data._id);
 
-          setUser(response.data);
-          setLoggedIn(true);
-          setLoginModal(true);
-          if (typeWorker) {
-            localStorage.setItem("type", response.data.type);
-            typeWorker && typeWorker == "worker"
-              ? setWorker(true)
-              : setWorker(false);
-          }
-          // router.push("/");
-          resolve(); // Resuelve la promesa para indicar que setUser ha completado su ejecución
-        });
+        setUser(response.data);
+        setLoggedIn(true);
+        setLoginModal(true);
+        if (typeWorker) {
+          localStorage.setItem("type", response.data.type);
+          typeWorker && typeWorker == "worker"
+            ? setWorker(true)
+            : setWorker(false);
+        }
+        // router.push("/");
       } else {
         setLoggedIn(false);
         return;

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@/store";
 import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
@@ -18,6 +18,12 @@ const poppins = Poppins({
 
 function Layout({ children, lang }) {
   const router = useRouter();
+  const [middlewareCompleted, setMiddlewareCompleted] = useState(false);
+  const handleMiddlewareComplete = () => {
+    // Esta función se llamará desde CustomMiddlewareComponent
+    // cuando sus funciones hayan terminado.
+    setMiddlewareCompleted(true);
+  };
 
   let metaDescription = "";
 
@@ -62,27 +68,32 @@ function Layout({ children, lang }) {
   return (
     <>
       <div className={clsx("relative", poppins.className)}>
-        <CustomMiddlewareComponent />
+        <CustomMiddlewareComponent
+          onMiddlewareComplete={handleMiddlewareComplete}
+        />
+        {middlewareCompleted && (
+          <>
+            <Head>
+              <title>Sos Travelers</title>
+              <meta name="description" content={metaDescription} />
 
-        <Head>
-          <title>Sos Travelers</title>
-          <meta name="description" content={metaDescription} />
+              {/* Redes sociales */}
+              <meta property="og:title" content="SOS Travelers" />
+              <meta property="og:description" content={metaDescription} />
 
-          {/* Redes sociales */}
-          <meta property="og:title" content="SOS Travelers" />
-          <meta property="og:description" content={metaDescription} />
+              <meta property="og:image" content="/assets/logoSos.png" />
+            </Head>
 
-          <meta property="og:image" content="/assets/logoSos.png" />
-        </Head>
-
-        {isLoginPage ? (
-          <WaveBar />
-        ) : arePrincipalPages ? (
-          <TopBar />
-        ) : (
-          !isIntro && !isPaymentConfirm && <TopBarSubMenu />
+            {isLoginPage ? (
+              <WaveBar />
+            ) : arePrincipalPages ? (
+              <TopBar />
+            ) : (
+              !isIntro && !isPaymentConfirm && <TopBarSubMenu />
+            )}
+            {children}
+          </>
         )}
-        {children}
       </div>
     </>
   );

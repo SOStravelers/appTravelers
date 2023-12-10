@@ -78,12 +78,12 @@ export const CustomMiddlewareComponent = () => {
       const user = await UserService.getUserById();
       if (user) {
         Cookies.set("auth.user_id", user.data._id);
-        if (process.env.NODE_ENV == "production" || typeWorker) {
-          localStorage.setItem("type", user.data.type);
-          typeWorker && typeWorker == "worker"
-            ? setWorker(true)
-            : setWorker(false);
-        }
+        // if (process.env.NODE_ENV == "production" || typeWorker) {
+        //   localStorage.setItem("type", user.data.type);
+        //   typeWorker && typeWorker == "worker"
+        //     ? setWorker(true)
+        //     : setWorker(false);
+        // }
         setUser(user.data);
         setLoggedIn(true);
         setLoginModal(true);
@@ -106,12 +106,12 @@ export const CustomMiddlewareComponent = () => {
             Cookies.set("auth.refresh_token", response.data.refresh_token);
             Cookies.set("auth.user_id", response.data.user._id);
 
-            if (process.env.NODE_ENV === "production" || typeWorker) {
-              localStorage.setItem("type", user.data.type);
-              typeWorker && typeWorker == "worker"
-                ? setWorker(true)
-                : setWorker(false);
-            }
+            // if (process.env.NODE_ENV === "production" || typeWorker) {
+            //   localStorage.setItem("type", user.data.type);
+            //   typeWorker && typeWorker == "worker"
+            //     ? setWorker(true)
+            //     : setWorker(false);
+            // }
             setLoggedIn(true);
             setLoginModal(true);
             setUser(response.data.user);

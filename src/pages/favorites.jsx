@@ -44,7 +44,9 @@ export default function Favorites() {
       const response = await FavoriteService.deleteFavorite(id);
       console.log(response);
       if (response?.status === 200) {
-        setFavorites(favorites.filter((favorite) => favorite.receptor._id !== id));
+        setFavorites(
+          favorites.filter((favorite) => favorite.receptor._id !== id)
+        );
       }
     } catch (error) {
       console.error(error);
@@ -63,7 +65,7 @@ export default function Favorites() {
               favorite.receptor.personalData.name.last
             }
             image={favorite.receptor.img.imgUrl}
-            service={favorite?.receptor?.workerData?.services[0]?.id?.name}
+            services={favorite?.receptor?.workerData?.services}
             score={5}
             link={`/worker/${favorite.receptor._id}`}
             handleDeleteFav={() => {

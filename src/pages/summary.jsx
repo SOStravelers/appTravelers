@@ -24,6 +24,7 @@ export default function Summary() {
 
   useEffect(() => {
     document.title = "Summary - SOS Travelers";
+    localStorage.removeItem("fromFavorite");
     getData();
   }, []);
 

@@ -21,13 +21,8 @@ export default class ServiceService {
     });
   }
 
-  static async list(params = {}) {
-    let query = "";
-    Object.keys(params).forEach((key) => {
-      query += `${key}=${params[key]}&`;
-    });
-
-    return axios.get(`${this.baseUrl}/get/all?${query}`);
+  static async list(id) {
+    return axios.get(`${this.baseUrl}/get/all?${id}`);
   }
 
   static async listServices() {

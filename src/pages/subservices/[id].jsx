@@ -10,9 +10,16 @@ export default function Subservices() {
 
   const [subServices, setSubservices] = useState([]);
 
+  console.log(subServices);
+
   useEffect(() => {
     document.title = "Choose subservice - SOS Travelers";
-    getData();
+    const fromFavorite = localStorage.getItem("fromFavorite");
+    if (fromFavorite === true) {
+      getDataFav();
+    } else {
+      getData();
+    }
   }, []);
 
   const getData = async () => {
@@ -20,6 +27,11 @@ export default function Subservices() {
     SubserviceService.list({ id: id }).then((response) => {
       setSubservices(response.data.docs);
     });
+  };
+
+  const getDataFav = async () => {
+    const subServices = JSON.parse(router.query.subservices);
+    setSubservices(subServices);
   };
 
   return (
@@ -30,6 +42,7 @@ export default function Subservices() {
           id={s.id}
           link={`/select-hostel/${s.id}`}
           name={s.name}
+          icon={s.coverImg}
         />
       ))}
     </div>

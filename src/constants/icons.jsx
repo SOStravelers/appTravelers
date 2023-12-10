@@ -944,7 +944,7 @@ export const ChatPicture = ({ ...props }) => (
     xmlns="http://www.w3.org/2000/svg"
     data-name="Layer 1"
     width="auto"
-    height="200"
+    height="180"
     viewBox="0 0 941.73911 688"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >

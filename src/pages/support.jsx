@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"; //useState: variables locales --- useEffect: variable auxiliar/observador
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
+import UserService from "@/services/UserService";
 import Link from "next/link";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
@@ -12,23 +13,35 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 
 export default function SupportPage() {
+  const [formKey, setFormKey] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { user, loggedIn } = useStore();
   const id = router.query.id;
 
   const supportEmail = async (values) => {
     try {
+      if (isSubmitting) {
+        // Si el formulario ya se está enviando, evita enviar múltiples veces
+        return;
+      }
+
+      setIsSubmitting(true);
+
       const data = {
+        subject: values.subject,
+        message: values.message,
         name: values.name,
         email: values.email,
-        subject: values.subject,
-        body: values.body,
-        id: user && user._id ? user._id : "",
+        user: user && user._id ? user._id : null,
       };
+
       // Lógica de envío del formulario
       const response = await UserService.supportEmail(data);
 
-      delete response.data.user.type; //falla
+      console.log(response.data);
+      setFormKey((prevKey) => prevKey + 1);
+
       toast.success("Message sent Successfully", {
         position: "top-right",
         // Configuración de la notificación de éxito
@@ -45,12 +58,20 @@ export default function SupportPage() {
         position: "top-right",
         // Configuración de la notificación de error
       });
+    } finally {
+      setIsSubmitting(false); // Establece el estado de envío del formulario a false después de finalizar
     }
   };
+
+  useEffect(() => {
+    // Este efecto se ejecutará cada vez que la clave del formulario cambie
+    // Puedes realizar cualquier otra lógica necesaria aquí
+  }, [formKey]);
 
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <Form
+        key={formKey}
         onSubmit={(values) => {
           supportEmail(values);
         }}
@@ -160,7 +181,7 @@ export default function SupportPage() {
             <div className="mb-3">
               <p>Message</p>
               <Field
-                name="body"
+                name="message"
                 onBlurValidate={z.string().refine((val) => val, {
                   message: "You must enter a message",
                 })}
@@ -184,7 +205,10 @@ export default function SupportPage() {
                 }}
               </Field>
             </div>
-            <OutlinedButton text="Send Message" disabled={!isValid} />
+            <OutlinedButton
+              text="Send Message"
+              disabled={!isValid || isSubmitting}
+            />
           </form>
         )}
       </Form>

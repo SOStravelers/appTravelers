@@ -14,21 +14,13 @@ export default function Profile({ user }) {
   const { setUser, setLoggedIn, setWorker } = useStore();
 
   const logout = async () => {
-    localStorage.removeItem("auth.access_token");
-    localStorage.removeItem("auth.refresh_token");
-    localStorage.removeItem("auth.user_id");
-    localStorage.removeItem("auth.user");
     localStorage.removeItem("service");
     localStorage.removeItem("type");
-    localStorage.removeItem("next-auth.session-token");
 
     Cookies.remove("auth.access_token");
     Cookies.remove("auth.refresh_token");
     Cookies.remove("auth.user_id");
-    Cookies.remove("auth.user");
     Cookies.remove("service");
-    Cookies.remove("next-auth.session-token");
-    Cookies.remove("nextauth.message");
 
     localStorage.removeItem("type");
     setWorker(false);

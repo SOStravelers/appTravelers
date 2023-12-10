@@ -5,7 +5,6 @@ import { useEffect } from "react";
 // import { getSession } from "next-auth/react";
 
 export default function Login() {
-  console.log("login");
   useEffect(() => {
     document.title = "Login - SOS Travelers";
   }, []);

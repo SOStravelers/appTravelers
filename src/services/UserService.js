@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useStore } from "../store/index";
+import Cookies from "js-cookie";
 
 export default class UserService {
   static resource = "users";
@@ -22,10 +23,9 @@ export default class UserService {
     return `${api}${UserService.resourceAuth}`;
   }
   static getHeaders() {
+    let access_token = Cookies.get("auth.access_token");
     return {
-      Authorization: localStorage.getItem("auth.access_token")
-        ? localStorage.getItem("auth.access_token")
-        : {},
+      Authorization: access_token ? access_token : {},
     };
   }
   static async register(name, email, password) {
@@ -101,7 +101,6 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
-
   static async updatePhotoGallery(file, number) {
     console.log("update photo gallery", this.getHeaders());
     const formData = new FormData();
@@ -118,7 +117,6 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
-
   static async sendCodeEmail(userId, type) {
     return axios.get(
       `${this.authUrl}/sendcode/template?id=${userId}&email=${type}`,
@@ -127,10 +125,14 @@ export default class UserService {
       }
     );
   }
-
   static async verifyCodeEmail(userId, code) {
     let data = { code: Number(code) };
     return axios.post(`${this.authUrl}/verifycode/${userId}/`, data, {
+      headers: this.getHeaders(),
+    });
+  }
+  static async getUserById() {
+    return axios.get(`${this.baseUrl}/findUserToken`, {
       headers: this.getHeaders(),
     });
   }

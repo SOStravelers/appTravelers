@@ -22,4 +22,11 @@ export default NextAuth({
     secure: true, // Ajusta según el entorno
     sameSite: "strict",
   },
+  callbacks: {
+    // async session(session, token) {
+    //   // Session callback
+    //   session.user.id = token.id;
+    //   return session;
+    // },
+  },
 });

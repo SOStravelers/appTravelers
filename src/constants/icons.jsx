@@ -170,11 +170,11 @@ export const CompleteGirlIcon = ({ ...props }) => (
   </svg>
 );
 
-export const BarberIcon = ({ ...props }) => (
+export const BarberPicture = ({ ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     data-name="Layer 1"
-    width="500"
+    width="auto"
     height="200"
     viewBox="0 0 1144 714.9"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -939,11 +939,11 @@ export const NotificationDraw = ({ ...props }) => (
     />
   </svg>
 );
-export const ChatDraw = ({ ...props }) => (
+export const ChatPicture = ({ ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     data-name="Layer 1"
-    width="400"
+    width="auto"
     height="200"
     viewBox="0 0 941.73911 688"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -1104,7 +1104,7 @@ export const ReservationIcon = ({ ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     data-name="Layer 1"
-    width="353.11745"
+    width="auto"
     height="165"
     viewBox="0 0 853.11745 565"
     xmlnsXlink="http://www.w3.org/1999/xlink"

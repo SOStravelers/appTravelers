@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import WorkerCardChat from "@/components/utils/cards/WorkerCardChat";
-import { ChatDraw } from "@/constants/icons";
+import { ChatPicture } from "@/constants/icons";
 
 export default function Chat() {
   const [open, setOpen] = useState(false);
@@ -38,11 +38,11 @@ export default function Chat() {
   }, []);
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
-      <p className="text-center text-greyText max-w-lg lg:my-4 xl:my-4">
+      <p className="text-center text-greyText max-w-lg mb-4 lg:my-4 xl:my-4">
         No chats yet
       </p>
       <div className="max-w-lg text-xl my-3 flex justify-center">
-        <ChatDraw />
+        <ChatPicture />
       </div>
       {chats.map((chat, index) => (
         <WorkerCardChat

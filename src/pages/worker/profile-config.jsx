@@ -13,14 +13,37 @@ import listByUser from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { useState, useEffect } from "react";
 import { images } from "../../../next.config";
+import schedule from "@/services/ScheduleService";
 
 export default function WorkerProfile() {
   const { user, setUser } = useStore();
   const router = useRouter();
+
+  let mScheCheck;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        mScheCheck = away(schedule.getScheduleUser()).data.schedules.some(
+          (item) => item.isActive === true
+        );
+        const response = await UserService.getUserById();
+        const userData = response.data;
+
+        // Actualiza la información del usuario en el estado global
+        setUser(userData);
+      } catch (error) {
+        console.error("Error getting user: ", error);
+      }
+    };
+
+    // Llama a la función cuando el componente se monta
+    fetchUser();
+  }, []);
+
   let mServCheck;
   let mProfCheck;
-  let mScheCheck;
-  let lGallery = user?.img?.gallery.some((item) => item !== null);
+  let lGallery = user?.img?.gallery.filter((item) => item !== null).length >= 3;
 
   if (user?.workerData?.services?.length > 0) {
     mServCheck = true;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@/store";
 import UserService from "@/services/UserService";
 import { EditIcon, CheckIconBlack } from "@/constants/icons";
@@ -7,6 +7,10 @@ function AboutEdit({ about }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedAbout, setEditedAbout] = useState(about); // Agregar un estado para el valor editado
   const { user, setUser } = useStore();
+
+  useEffect(() => {
+    setEditedAbout(about);
+  }, [about]);
 
   const handleEdit = async () => {
     console.log("editando", editedAbout); // Accede a editedAbout en lugar de about
@@ -46,7 +50,7 @@ function AboutEdit({ about }) {
         />
       ) : (
         <p className="text-blackText" style={{ whiteSpace: "pre-wrap" }}>
-          {editedAbout?.length > 0 ? editedAbout : "No description yet"}
+          {about ? about : "Without description"}
         </p>
       )}
     </div>

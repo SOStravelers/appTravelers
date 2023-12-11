@@ -1,4 +1,4 @@
-'useClient'
+"useClient";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -29,16 +29,18 @@ const HOURS = [
 function Calendar({ id }) {
   const router = useRouter();
   const { setService, isWorker } = useStore();
-  const fromFavorite = localStorage.getItem("fromFavorite");
-
   const [selected, setSelected] = useState("");
   const [time, setTime] = useState();
+  const [fromFavorite, setFromFavorite] = useState(false);
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
   const [hours, setHours] = useState();
 
   useEffect(() => {
     initialize();
+    if (localStorage.getItem("fromFavorite")) {
+      setFromFavorite(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -58,8 +60,13 @@ function Calendar({ id }) {
       date: dateStr,
       hour: time,
     });
-    if (fromFavorite) router.push(`/assign-client`);
-    else router.push(`/workers-found/${id}`);
+    if (fromFavorite === true) {
+      router.push(`/summary`);
+    } else if (isWorker) {
+      router.push(`/assign-client`);
+    } else if (fromFavorite === false) {
+      router.push(`/workers-found/${id}`);
+    }
   };
 
   const initialize = (dateString = "") => {

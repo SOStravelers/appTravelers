@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import WorkerCardFavorite from "@/components/utils/cards/WorkerCardFavorite";
+import { BarberPicture } from "@/constants/icons";
 
 export default function Favorites() {
   const [open, setOpen] = useState(false);
@@ -39,6 +40,9 @@ export default function Favorites() {
       <p className="text-center text-greyText max-w-lg lg:my-4 xl:my-4">
         No favorites yet
       </p>
+      <div className="max-w-lg text-xl my-3 flex justify-center">
+        <BarberPicture />
+      </div>
       {favorites.map((favorite, index) => (
         <WorkerCardFavorite
           key={index}

@@ -4,6 +4,7 @@ import WorkerCardChat from "@/components/utils/cards/WorkerCardChat";
 import { useStore } from "@/store";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { ChatPicture } from "@/constants/icons";
 
 export default function Chat() {
   const store = useStore();
@@ -51,6 +52,10 @@ export default function Chat() {
       <p className="text-center text-greyText max-w-lg lg:my-4 xl:my-4">
         No chats yet
       </p>
+      <div className="max-w-lg text-xl my-3 flex justify-center">
+        <ChatPicture />
+      </div>
+
       {chats.map((chat, index) => (
         <WorkerCardChat
           key={index}

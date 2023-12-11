@@ -1,10 +1,10 @@
 import clsx from "clsx";
 
-function SolidButton({ text, color, py = 3, mt = 0, ...props }) {
+function SolidButton({ text, color, py = 3, mt = 0, icon, ...props }) {
   return (
     <button
       className={clsx(
-        `border border-solid text-white py-${py} mt-${mt} w-full rounded-xl my-2`,
+        `border border-solid text-white py-${py} mt-${mt} w-full rounded-xl my-2 flex items-center justify-center`,
         color === "lightBlue"
           ? "bg-lightBlue"
           : color === "grey"
@@ -19,6 +19,7 @@ function SolidButton({ text, color, py = 3, mt = 0, ...props }) {
       )}
       {...props}
     >
+      {icon && icon}
       {text}
     </button>
   );

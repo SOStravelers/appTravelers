@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import DayButton from "@/components/utils/buttons/DayButton";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
+import { ReservationIcon } from "@/constants/icons";
 
 function DaySection({ weekDays, selectedDay, setSelectedDay }) {
   const [bookings, setBookings] = useState([]);
@@ -12,17 +13,17 @@ function DaySection({ weekDays, selectedDay, setSelectedDay }) {
         {
           name: "John Doe",
           location: "124 street Miro Hotel, Ubud",
-          link: "/",
+          link: "/service-details",
         },
         {
           name: "John Doe",
           location: "124 street Miro Hotel, Ubud",
-          link: "/",
+          link: "/service-details",
         },
         {
           name: "John Doe",
           location: "124 street Miro Hotel, Ubud",
-          link: "/",
+          link: "/service-details",
         },
       ]);
     }
@@ -47,6 +48,10 @@ function DaySection({ weekDays, selectedDay, setSelectedDay }) {
         <p className="text-center text-greyText max-w-lg my-10">
           No bookings yet
         </p>
+        <div className="max-w-lg text-xl my-3 flex justify-center">
+          <ReservationIcon />
+        </div>
+
         {bookings.map((booking, index) => (
           <WorkerCardBooking
             key={index}

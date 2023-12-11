@@ -16,7 +16,7 @@ export default class ScheduleService {
   }
 
   static async save(params) {
-    return axios.post(`${this.baseUrl}/add`, params, {
+    return axios.post(`${this.baseUrl}/addWorker`, params, {
       headers: this.getHeaders(),
     });
   }

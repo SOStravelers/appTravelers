@@ -11,7 +11,7 @@ import local from "next/font/local";
 function WorkerCardFavorite({
   link,
   name,
-  service,
+  services,
   score,
   image,
   showArrow = true,
@@ -19,11 +19,28 @@ function WorkerCardFavorite({
 }) {
   const { setService } = useStore();
   const router = useRouter();
+
   const handleWorkerSelection = () => {
     setService({ workerId: id });
     localStorage.setItem("fromFavorite", true);
-    router.push(`/services/${id}`);
+    router.push({
+      pathname: `/services/${id}`,
+      query: { services: JSON.stringify(services) },
+    });
   };
+
+  const getServices = () => {
+    let servicesString = "";
+    services?.forEach((service, index) => {
+      if (index === 0) {
+        servicesString += service.id.name;
+      } else {
+        servicesString += ", " + service.id.name;
+      }
+    });
+    return servicesString;
+  };
+
   return (
     <div className="flex w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center">
       <div className="flex">
@@ -41,7 +58,7 @@ function WorkerCardFavorite({
         </div>
         <div className="flex flex-col">
           <h1 className="font-semibold">{name}</h1>
-          <p className="text-blackText">{service}</p>
+          <p className="text-blackText">{getServices()}</p>
           <div className="flex items-center">
             <StarIcon color={"#1CDAE5"} className="mr-1" />
             <p className="text-blackText">{score}</p>

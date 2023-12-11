@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import { FinishLogo } from "@/constants/icons";
+import { FinishLogo, CompleteGirlIcon } from "@/constants/icons";
 
 import SolidButton from "@/components/utils/buttons/SolidButton";
 
@@ -47,18 +47,22 @@ export default function PaymentConfirmation() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center my-4 px-10 min-h-screen">
-      <Image
+    <div className="flex flex-col max-w-lg items-center justify-center my-4 px-5 md:ml-80 min-h-screen">
+      <CompleteGirlIcon />
+      {/* <Image
         alt="fotoFinal"
         src={"/assets/bgPayment.png"}
         width={250}
         height={250}
-      />
+      /> */}
+
       <p className="text-blackText text-center mt-10 mb-18 w-3/4 text-lg">
         Payment made and your booking has been made successfully.
       </p>
       <Link className="w-full" href="/">
-        <SolidButton text="Back to see booking" color="blueBorder" />
+        <div className="mx-20">
+          <SolidButton text="Back to see booking" color="blueBorder" />
+        </div>
       </Link>
       <FinishLogo />
     </div>

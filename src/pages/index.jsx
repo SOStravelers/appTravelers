@@ -115,7 +115,7 @@ export default function Home({}) {
         >
           Recommended for you
         </h1>
-        <div className="flex overflow-x-auto pb-10">
+        <div className="flex justify-center lg:justify-start xl:justify-start md:justify-start pb-10">
           <RecomendationCard />
           <RecomendationCard />
         </div>

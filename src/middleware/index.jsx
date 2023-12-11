@@ -5,19 +5,12 @@ import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import { getSession } from "next-auth/react";
 
-export const CustomMiddlewareComponent = () => {
+export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const router = useRouter();
   const store = useStore();
-  const {
-    user,
-    setUser,
-    setLoggedIn,
-    service,
-    isWorker,
-    setWorker,
-    loginModal,
-    setLoginModal,
-  } = store;
+  // const user = Cookies.get("auth.user");
+  const { user, setUser, setLoggedIn, isWorker, setWorker, setLoginModal } =
+    store;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,39 +18,58 @@ export const CustomMiddlewareComponent = () => {
         await obtenerInformacionUsuario();
       }
       routeValidation();
+      onMiddlewareComplete();
     };
 
     fetchData();
-  }, [router.pathname, user]);
+  }, [onMiddlewareComplete]);
 
   const routeValidation = async () => {
-    console.log("validar");
-    var shouldRedirect = true;
+    console.log("validar", isWorker, user);
+    if (user == undefined) {
+      return;
+    }
+
     if (
       router.pathname.includes("worker") &&
       !isWorker &&
       router.pathname != "/workers-found/[id]" &&
       router.pathname != "/worker/[id]"
     ) {
-      shouldRedirect = false;
-    }
-    if (
-      !user &&
+      console.log("caso1");
+      router.push("/");
+    } else if (
+      (!user || Object.keys(user).length == 0) &&
       (router.pathname == "/profile" ||
+        router.pathname == "/personal-details" ||
+        router.pathname == "/payment-confirmation" ||
+        router.pathname == "/settings" ||
+        router.pathname == "/payment" ||
+        router.pathname == "/stripe")
+    ) {
+      console.log("caso2");
+      router.push("/");
+    } else if (
+      user &&
+      Object.keys(user).length > 0 &&
+      isWorker &&
+      (router.pathname == "/" ||
+        router.pathname == "/profile" ||
+        router.pathname == "/chat" ||
+        router.pathname == "/favorites" ||
         router.pathname == "/personal-details" ||
         router.pathname == "/settings" ||
         router.pathname == "/payment" ||
         router.pathname == "/stripe")
     ) {
-      shouldRedirect = false;
-    }
-    if (
+      console.log("caso3");
+      router.push("/worker/home");
+    } else if (
       user &&
+      Object.keys(user).length > 0 &&
       (router.pathname == "/login" || router.pathname == "/register")
     ) {
-      shouldRedirect = false;
-    }
-    if (!shouldRedirect) {
+      console.log("caso4");
       router.push("/");
     }
   };
@@ -72,16 +84,22 @@ export const CustomMiddlewareComponent = () => {
     let typeWorker = localStorage.getItem("type");
     if (cookieAccessToken) {
       console.log("set user back");
-      const user = await UserService.getUserById();
-      if (user) {
-        Cookies.set("auth.user_id", user.data._id);
-        localStorage.setItem("type", user.data.type);
-        setUser(user.data);
+      const response = await UserService.getUserById();
+      if (response) {
+        console.log("seteando", response.data);
+
+        Cookies.set("auth.user_id", response.data._id);
+
+        setUser(response.data);
         setLoggedIn(true);
         setLoginModal(true);
-        typeWorker && typeWorker == "worker"
-          ? setWorker(true)
-          : setWorker(false);
+        if (typeWorker) {
+          localStorage.setItem("type", response.data.type);
+          typeWorker && typeWorker == "worker"
+            ? setWorker(true)
+            : setWorker(false);
+        }
+        // router.push("/");
       } else {
         setLoggedIn(false);
         return;
@@ -97,13 +115,16 @@ export const CustomMiddlewareComponent = () => {
             session.user.image
           );
           if (response) {
-            console.log("erna", response);
             Cookies.set("auth.access_token", response.data.access_token);
             Cookies.set("auth.refresh_token", response.data.refresh_token);
             Cookies.set("auth.user_id", response.data.user._id);
-            typeWorker && typeWorker == "worker"
-              ? setWorker(true)
-              : setWorker(false);
+
+            // if (process.env.NODE_ENV === "production" || typeWorker) {
+            //   localStorage.setItem("type", user.data.type);
+            //   typeWorker && typeWorker == "worker"
+            //     ? setWorker(true)
+            //     : setWorker(false);
+            // }
             setLoggedIn(true);
             setLoginModal(true);
             setUser(response.data.user);

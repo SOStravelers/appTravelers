@@ -38,7 +38,7 @@ function CalendarBooking({ id }) {
   let footer = <p className="my-5">Please pick a day.</p>;
   if (selected) {
     footer = (
-      <div className="w-80 mt-14">
+      <div className="w-full mt-14">
         <Link href={`/service-history`}>
           <OutlinedButton text={"See all my records"} />
         </Link>

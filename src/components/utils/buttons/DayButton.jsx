@@ -5,7 +5,7 @@ function DayButton({ day, number, selectedDay, setSelectedDay }) {
     <div
       className={clsx(
         "cursor-pointer rounded-xl w-14 p-2 h-20 flex flex-col justify-between items-center",
-        selectedDay === number ? "bg-darkBlue" : "bg-white"
+        selectedDay === number ? "bg-blueBorder" : "bg-white"
       )}
       onClick={() => setSelectedDay(number)}
     >
@@ -18,7 +18,12 @@ function DayButton({ day, number, selectedDay, setSelectedDay }) {
         {day}
       </p>
       <div className="flex flex-col items-center">
-        <div className="h-2 w-2 bg-dotBlue rounded-full"></div>
+        <div
+          className={clsx(
+            " h-2 w-2  rounded-full",
+            selectedDay === number ? "bg-white" : "bg-black"
+          )}
+        ></div>
         <p
           className={clsx(
             "text-center",

@@ -3,7 +3,7 @@ import { NotificationDraw } from "@/constants/icons";
 
 export default function Notifications() {
   return (
-    <div className="py-28 px-5 md:pl-80">
+    <div className="py-20 px-5 md:pl-80">
       <NotificationCard
         day="Today"
         text="You have a new booking"

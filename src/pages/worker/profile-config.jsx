@@ -19,17 +19,18 @@ export default function WorkerProfile() {
   const { user, setUser } = useStore();
   const router = useRouter();
 
-  let mScheCheck;
+  const [mScheCheck, setMScheCheck] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        mScheCheck = away(schedule.getScheduleUser()).data.schedules.some(
+        const schedulesResponse = await schedule.getScheduleUser();
+        const hasActiveSchedules = schedulesResponse.data.schedules.some(
           (item) => item.isActive === true
         );
+        setMScheCheck(hasActiveSchedules);
         const response = await UserService.getUserById();
         const userData = response.data;
-
         // Actualiza la información del usuario en el estado global
         setUser(userData);
       } catch (error) {
@@ -39,7 +40,7 @@ export default function WorkerProfile() {
 
     // Llama a la función cuando el componente se monta
     fetchUser();
-  }, []);
+  }, [mScheCheck]);
 
   let mServCheck;
   let mProfCheck;

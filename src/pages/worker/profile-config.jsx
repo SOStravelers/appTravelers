@@ -9,10 +9,8 @@ import {
   CertificationPicture,
 } from "@/constants/icons";
 import { useStore } from "@/store";
-import listByUser from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { useState, useEffect } from "react";
-import { images } from "../../../next.config";
 import schedule from "@/services/ScheduleService";
 
 export default function WorkerProfile() {
@@ -20,31 +18,13 @@ export default function WorkerProfile() {
   const router = useRouter();
 
   const [mScheCheck, setMScheCheck] = useState(false);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const schedulesResponse = await schedule.getScheduleUser();
-        const hasActiveSchedules = schedulesResponse.data.schedules.some(
-          (item) => item.isActive === true
-        );
-        setMScheCheck(hasActiveSchedules);
-        const response = await UserService.getUserById();
-        const userData = response.data;
-        // Actualiza la información del usuario en el estado global
-        setUser(userData);
-      } catch (error) {
-        console.error("Error getting user: ", error);
-      }
-    };
-
-    // Llama a la función cuando el componente se monta
-    fetchUser();
-  }, [mScheCheck]);
+  console.log("userrrrr: ", user);
 
   let mServCheck;
   let mProfCheck;
+  let isWorkerCheck = false;
   let lGallery = user?.img?.gallery.filter((item) => item !== null).length >= 3;
+  console.log("largo galeria: ", lGallery);
 
   if (user?.workerData?.services?.length > 0) {
     mServCheck = true;
@@ -56,6 +36,42 @@ export default function WorkerProfile() {
   } else {
     mProfCheck = false;
   }
+  console.log("variables 1ra: ", mProfCheck, mServCheck, mScheCheck);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const schedulesResponse = await schedule.getScheduleUser();
+        const hasActiveSchedules = schedulesResponse.data.schedules.some(
+          (item) => item.isActive === true
+        );
+        setMScheCheck(hasActiveSchedules);
+        isWorkerCheck = mProfCheck && mServCheck && hasActiveSchedules;
+        const newUser = { ...user };
+        console.log("el name", newUser);
+        if (isWorkerCheck == true) {
+          newUser.workerData.isCheck = true;
+          const response = await UserService.updateUser(newUser);
+          setUser(response.data);
+          console.log("después de actualizar el estado:", response.data);
+
+          //  console.log("ischeck:", response.workerData.isCheck);
+        } else {
+          newUser.workerData.isCheck = false;
+          const response = await UserService.updateUser(newUser);
+          setUser(response.data);
+          console.log("después de actualizar el estado:", response.data);
+        }
+        // Actualiza la información del usuario en el estado global
+      } catch (error) {
+        console.error("Error getting user: ", error);
+      }
+    };
+
+    // Llama a la función cuando el componente se monta
+    fetchUser();
+    console.log("variables 2da: ", mProfCheck, mServCheck, mScheCheck);
+  }, [mProfCheck, mServCheck, mScheCheck]);
 
   return (
     <div className="bg-white h-full w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">

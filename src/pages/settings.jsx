@@ -15,6 +15,7 @@ export default function Settings() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
+  const [isCheckWorker, setisCheckWorker] = useState(false);
 
   const [openNotification, setOpenNotification] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -28,6 +29,12 @@ export default function Settings() {
     console.log("dialogo worker");
     setIsOnWorker(false);
     setOpen(true);
+  };
+
+  const isWorkerCheck = () => {
+    console.log("Cheked Worker", isWorkerCheck);
+
+    isWorkerCheck(false) ? setOpen(true) : setOpen(false);
   };
 
   const workerModeOff = () => {

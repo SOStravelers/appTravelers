@@ -5,6 +5,7 @@ import ComboBox from "@/components/utils/combobox/ComboBox";
 import ComboBoxEditable from "@/components/utils/combobox/ComboBoxEditable";
 import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
+import WorkerService from "@/services/WorkerService";
 import { useStore } from "@/store";
 
 export default function MyServices() {
@@ -16,18 +17,26 @@ export default function MyServices() {
   const { user, setUser } = useStore();
 
   useEffect(() => {
-    if (user?.workerData?.services?.length > 0) {
-      setSelectedOptions(user?.workerData?.services);
-    }
     getData();
+    getUserData();
   }, [user]);
 
   useEffect(() => {
-    selectedOptions?.map((s) => {
+    console.log("services", services);
+    /*selectedOptions?.map((s) => {
       if (s?.subServices?.length === 0) {
         setSelectedOptions(selectedOptions?.filter((ss) => ss?.id !== s?.id));
       }
-    });
+    });*/
+  }, [services]);
+
+  useEffect(() => {
+    console.log("selectedOptions", selectedOptions);
+    /*selectedOptions?.map((s) => {
+      if (s?.subServices?.length === 0) {
+        setSelectedOptions(selectedOptions?.filter((ss) => ss?.id !== s?.id));
+      }
+    });*/
   }, [selectedOptions]);
 
   const getData = async () => {
@@ -36,17 +45,28 @@ export default function MyServices() {
     });
   };
 
-  const handleChange = (serviceId, subserviceId) => {
-    const serviceExists = selectedOptions?.find((s) => s?.id === serviceId);
+  const getUserData = async () => {
+    const response = await WorkerService.getWorkerServices();
+    if (response?.data) {
+      console.log("response", response.data);
+      setSelectedOptions(response.data);
+    }
+  };
+
+  const handleChange = (service, subservice) => {
+    console.log("service", service);
+    const serviceExists = selectedOptions?.find(
+      (s) => s?.id?._id === service._id
+    );
     if (serviceExists) {
       const subserviceExists = serviceExists?.subServices?.find(
-        (s) => s === subserviceId
+        (s) => s._id === subservice._id
       );
       if (subserviceExists) {
         const newSelectedOptions = selectedOptions?.map((s) => {
-          if (s?.id === serviceId) {
+          if (s?.id?._id === service._id) {
             const newSubservices = s?.subServices?.filter(
-              (ss) => ss !== subserviceId
+              (ss) => ss._id !== subservice._id
             );
             return { ...s, subServices: newSubservices, gallery: [] };
           } else {
@@ -56,8 +76,8 @@ export default function MyServices() {
         setSelectedOptions(newSelectedOptions);
       } else {
         const newSelectedOptions = selectedOptions?.map((s) => {
-          if (s?.id === serviceId) {
-            const newSubservices = [...s?.subServices, subserviceId];
+          if (s?.id?._id === service._id) {
+            const newSubservices = [...s?.subServices, subservice];
             return { ...s, subServices: newSubservices, gallery: [] };
           } else {
             return s;
@@ -67,8 +87,31 @@ export default function MyServices() {
       }
     } else {
       const newService = {
-        id: serviceId,
-        subServices: [subserviceId],
+        id: {
+          _id: service?._id,
+          name: service?.name,
+        },
+        subServices: [subservice],
+        gallery: [],
+      };
+
+      const popo = {
+        id: {
+          _id: "6534042da77bbf1f725d10d0",
+          name: "Yoga",
+        },
+        subServices: [
+          {
+            _id: "655643be411be60a8b8deb8a",
+            name: "Hatha",
+            price: {
+              value: "$ 25",
+              lastValue: "$ 0",
+              number: 25,
+              lastNumber: 0,
+            },
+          },
+        ],
         gallery: [],
       };
       setSelectedOptions([...selectedOptions, newService]);
@@ -92,7 +135,7 @@ export default function MyServices() {
 
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      {user?.workerData?.services?.length === 0 && !addingService && (
+      {selectedOptions?.length === 0 && !addingService && (
         <>
           <p className="py-20 text-center max-w-lg">No services register yet</p>
           <OutlinedButton
@@ -101,13 +144,12 @@ export default function MyServices() {
           />
         </>
       )}
-      {user?.workerData?.services?.length > 0 && !addingService && (
+      {selectedOptions?.length > 0 && !addingService && (
         <>
-          {user?.workerData?.services?.map((service) => (
+          {selectedOptions?.map((service) => (
             <ComboBox
-              key={service?.id}
+              key={service?.id?._id}
               service={service}
-              title={services?.filter((s) => s?._id === service?.id)[0]?.name}
               selectedOptions={selectedOptions}
             />
           ))}

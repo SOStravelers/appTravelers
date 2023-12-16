@@ -22,6 +22,11 @@ export default function Home({}) {
   const [swiper, setSwiper] = useState(null);
 
   useEffect(() => {
+    localStorage.removeItem("service");
+    localStorage.removeItem("fromFavorite");
+  }, []);
+
+  useEffect(() => {
     document.title = "Home - SOS Travelers";
     if (!services || Object.keys(services).length == 0) {
       getData();

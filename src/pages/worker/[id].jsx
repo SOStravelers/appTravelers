@@ -6,8 +6,14 @@ import SectionServices from "@/components/profile/SectionServices/SectionService
 import { SECTION_ONE } from "@/constants";
 import UserService from "@/services/UserService";
 
-export default function Worker({ user }) {
+export default function Worker() {
   const [actualView, setActualView] = useState(SECTION_ONE);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   useEffect(() => {
     document.title =
       user?.personalData?.name?.first +
@@ -15,6 +21,13 @@ export default function Worker({ user }) {
       user?.personalData?.name?.last +
       " - SOS Travelers";
   }, [user]);
+
+  const getUserData = async () => {
+    const response = await UserService.getUserById();
+    if (response?.data) {
+      setUser(response.data);
+    }
+  };
 
   console.log(user);
   let galleryFilter = user?.img?.gallery.filter((image) => image !== null);
@@ -43,23 +56,4 @@ export default function Worker({ user }) {
       )}
     </div>
   );
-}
-
-export async function getServerSideProps({ params }) {
-  const userId = params.id;
-  if (!userId) return redirect;
-
-  /*   let user = null;
-  try {
-    const response = await UserService.getUserById();
-    user = response.data;
-  } catch (error) {
-    console.error(error);
-  }
-
-  return {
-    props: {
-      user: user,
-    },
-  }; */
 }

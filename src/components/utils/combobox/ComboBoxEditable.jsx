@@ -7,7 +7,7 @@ import {
 } from "@/constants/icons";
 
 const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [subservices, setSubservices] = useState([]);
 
   useEffect(() => {

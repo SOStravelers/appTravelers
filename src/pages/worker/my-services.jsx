@@ -95,25 +95,6 @@ export default function MyServices() {
         gallery: [],
       };
 
-      const popo = {
-        id: {
-          _id: "6534042da77bbf1f725d10d0",
-          name: "Yoga",
-        },
-        subServices: [
-          {
-            _id: "655643be411be60a8b8deb8a",
-            name: "Hatha",
-            price: {
-              value: "$ 25",
-              lastValue: "$ 0",
-              number: 25,
-              lastNumber: 0,
-            },
-          },
-        ],
-        gallery: [],
-      };
       setSelectedOptions([...selectedOptions, newService]);
     }
   };

@@ -3,7 +3,7 @@ import SubserviceService from "@/services/SubserviceService";
 import { CheckOptionChecked, ArrowUpIcon } from "@/constants/icons";
 
 const ComboBox = ({ service }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [subservices, setSubservices] = useState([]);
   console.log("servicio", service);
 

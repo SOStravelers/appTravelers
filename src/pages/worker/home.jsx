@@ -9,6 +9,7 @@ import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 
 import "swiper/swiper-bundle.css";
+import { set } from "date-fns";
 // import SwiperCore, { Pagination, Navigation } from "swiper";
 // SwiperCore.use([Pagination, Navigation]);
 
@@ -57,6 +58,13 @@ export default function WorkerHome() {
     };
   }, [swiper]);
 
+  const handleBookService = () => {
+    setService({
+      workerId: user?._id,
+    });
+    goTo(`/services/${user?._id}`)
+  };
+
   const goTo = (path) => {
     router.push(path);
   };
@@ -89,7 +97,7 @@ export default function WorkerHome() {
       <section className=" mb-5">
         <OutlinedButton
           text="Book a service"
-          onClick={() => goTo(`/services/${user?._id}`)}
+          onClick={handleBookService}
         />
       </section>
 

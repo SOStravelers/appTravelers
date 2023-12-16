@@ -93,8 +93,8 @@ function SectionWeek() {
   ) => {
     setSave(save);
     const dayExists = horario.some((day) => day.day === dayID);
-    interval["formatStartTime"] = await formatData(interval.startTime);
-    interval["formatEndTime"] = await formatData(interval.endTime);
+    interval["startTimeIso"] = await formatData(interval.startTime);
+    interval["endTimeIso"] = await formatData(interval.endTime);
     console.log("interval", interval);
 
     if (dayExists) {

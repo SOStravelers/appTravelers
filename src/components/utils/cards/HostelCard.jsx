@@ -10,11 +10,16 @@ function HostelCard({ id, link, name, location, img }) {
   const { setService } = useStore();
 
   const select = () => {
+    const editing = localStorage.getItem("editing");
     setService({
       hostelId: id,
       location: location.city,
     });
-    router.push(link);
+    if (editing) {
+      router.push("/summary");
+    } else {
+      router.push(link);
+    }
   };
 
   return (

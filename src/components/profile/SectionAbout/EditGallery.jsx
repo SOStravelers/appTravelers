@@ -112,8 +112,16 @@ function EditGallery() {
     try {
       await UserService.updateGallery(images);
       setSelectedImages(images);
+
+      // setUser agregado por metal
+      if (user.img) {
+        const updatedUser = { ...user };
+        updatedUser.img.gallery = images;
+        setUser(updatedUser);
+      }
     } catch (err) {}
   };
+
   const setImageInput = async (event, index) => {
     console.log("el index", index);
     setLoading((prevLoading) => {

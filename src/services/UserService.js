@@ -77,6 +77,7 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
+
   static async get(id) {
     console.log("isd", id);
     return axios.get(`${this.authUrl}/user/${id}`);

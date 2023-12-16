@@ -14,7 +14,7 @@ export default function Worker({ user }) {
       " " +
       user?.personalData?.name?.last +
       " - SOS Travelers";
-  }, []);
+  }, [user]);
 
   console.log(user);
   let galleryFilter = user?.img?.gallery.filter((image) => image !== null);
@@ -49,9 +49,9 @@ export async function getServerSideProps({ params }) {
   const userId = params.id;
   if (!userId) return redirect;
 
-  let user = null;
+  /*   let user = null;
   try {
-    const response = await UserService.get(userId);
+    const response = await UserService.getUserById();
     user = response.data;
   } catch (error) {
     console.error(error);
@@ -61,5 +61,5 @@ export async function getServerSideProps({ params }) {
     props: {
       user: user,
     },
-  };
+  }; */
 }

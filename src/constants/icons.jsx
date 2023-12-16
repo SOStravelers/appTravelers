@@ -2431,14 +2431,15 @@ export const ServicesIcon = ({ ...props }) => (
   </svg>
 );
 
-export const CheckOption = ({ ...props }) => (
+export const CheckOption = ({ className, onClick }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="35"
     height="35"
     viewBox="0 0 35 35"
     fill="none"
-    {...props}
+    className={className}
+    onClick={onClick}
   >
     <path
       d="M17.5001 29.4001C10.9201 29.4001 5.6001 24.0801 5.6001 17.5001C5.6001 10.9201 10.9201 5.6001 17.5001 5.6001C24.0801 5.6001 29.4001 10.9201 29.4001 17.5001C29.4001 24.0801 24.0801 29.4001 17.5001 29.4001ZM17.5001 7.0001C11.6901 7.0001 7.0001 11.6901 7.0001 17.5001C7.0001 23.3101 11.6901 28.0001 17.5001 28.0001C23.3101 28.0001 28.0001 23.3101 28.0001 17.5001C28.0001 11.6901 23.3101 7.0001 17.5001 7.0001Z"
@@ -2447,14 +2448,15 @@ export const CheckOption = ({ ...props }) => (
   </svg>
 );
 
-export const CheckOptionChecked = ({ ...props }) => (
+export const CheckOptionChecked = ({ className, onClick }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="35"
     height="35"
     viewBox="0 0 35 35"
     fill="none"
-    {...props}
+    className={className}
+    onClick={onClick}
   >
     <path
       d="M17.5001 29.4001C10.9201 29.4001 5.6001 24.0801 5.6001 17.5001C5.6001 10.9201 10.9201 5.6001 17.5001 5.6001C24.0801 5.6001 29.4001 10.9201 29.4001 17.5001C29.4001 24.0801 24.0801 29.4001 17.5001 29.4001ZM17.5001 7.0001C11.6901 7.0001 7.0001 11.6901 7.0001 17.5001C7.0001 23.3101 11.6901 28.0001 17.5001 28.0001C23.3101 28.0001 28.0001 23.3101 28.0001 17.5001C28.0001 11.6901 23.3101 7.0001 17.5001 7.0001Z"

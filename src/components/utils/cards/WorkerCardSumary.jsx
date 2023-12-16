@@ -1,8 +1,24 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { StarIcon, ChangeIcon } from "@/constants/icons";
 
-function WorkerCardSumary({ link, name, service, score, img, hostelId }) {
+function WorkerCardSumary({
+  link,
+  name,
+  service,
+  score,
+  img,
+  showEdit = true,
+}) {
+  const router = useRouter();
+
+  const handleEditWorker = () => {
+    const service = JSON.parse(localStorage.getItem("service"));
+    localStorage.setItem("editing", true);
+    router.push(`/workers-found/${service.service.hostelId}`);
+  };
+
   return (
     <div className="flex py-4 w-full max-w-lg rounded-lg justify-between my-2 items-center">
       <div className="flex">
@@ -28,11 +44,14 @@ function WorkerCardSumary({ link, name, service, score, img, hostelId }) {
         </div>
       </div>
 
-      <Link href={`/workers-found/${hostelId}`} className="h-full">
-        <div className="w-8 h-20 flex items-center justify-centerrounded-r-2xl cursor-pointer">
+      {showEdit && (
+        <div
+          className="w-8 h-20 flex items-center justify-centerrounded-r-2xl cursor-pointer"
+          onClick={handleEditWorker}
+        >
           <ChangeIcon className="ml-1" />
         </div>
-      </Link>
+      )}
     </div>
   );
 }

@@ -11,8 +11,50 @@ import {
 import { useStore } from "@/store";
 
 export default function WorkerProfile() {
-  const { user } = useStore();
+  const { user, setUser } = useStore();
   const router = useRouter();
+
+  let mServCheck = user?.workerData?.isMyServicesOk;
+  let mProfCheck = user?.workerData?.isAboutmeOk;
+  let mScheCheck = user?.workerData?.isMySchedulesOk;
+  let mPlacCheck = user?.workerData?.isMyWorkplacesOk; //true por defecto, se debe corregir
+
+  console.log("variables 1ra: ", mProfCheck, mServCheck, mScheCheck);
+  /* 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const schedulesResponse = await schedule.getScheduleUser();
+        const hasActiveSchedules = schedulesResponse.data.schedules.some(
+          (item) => item.isActive === true
+        );
+        setMScheCheck(hasActiveSchedules);
+        isWorkerCheck = mProfCheck && mServCheck && hasActiveSchedules;
+        const newUser = { ...user };
+        console.log("el name", newUser);
+        if (isWorkerCheck == true) {
+          newUser.workerData.isCheck = true;
+          const response = await UserService.updateUser(newUser);
+          setUser(response.data);
+          console.log("después de actualizar el estado:", response.data);
+
+          //  console.log("ischeck:", response.workerData.isCheck);
+        } else {
+          newUser.workerData.isCheck = false;
+          const response = await UserService.updateUser(newUser);
+          setUser(response.data);
+          console.log("después de actualizar el estado:", response.data);
+        }
+        // Actualiza la información del usuario en el estado global
+      } catch (error) {
+        console.error("Error getting user: ", error);
+      }
+    };
+
+    // Llama a la función cuando el componente se monta
+    fetchUser();
+    console.log("variables 2da: ", mProfCheck, mServCheck, mScheCheck);
+  }, [mProfCheck, mServCheck, mScheCheck]); */
 
   return (
     <div className="bg-white h-full w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
@@ -20,28 +62,28 @@ export default function WorkerProfile() {
         title="My Services"
         subtitle="Abilities and skills"
         icon={ServicesIcon}
-        check
+        check={mServCheck}
         onClick={() => router.push("/worker/my-services")}
       />
       <OptionCard
         title="About Me"
         subtitle="Gallery and description"
         icon={UserIcon}
-        check
+        check={mProfCheck}
         onClick={() => router.push(`/worker/edit/${user._id}`)}
       />
       <OptionCard
         title="My Schedules"
         subtitle="Set your calendar"
         icon={ListIcon}
-        check
-        onClick={() => router.push("/worker/my-schedules")}
+        check={mScheCheck}
+        onClick={() => router.push("/worker/my-schedules") && console.log()}
       />
       <OptionCard
         title="My Workplaces"
         subtitle="Establishments"
         icon={LockIcon}
-        check
+        check={mPlacCheck}
         onClick={() => router.push("/worker/my-workplaces")}
       />
       <div className="max-w-lg text-center text-xl my-5 flex flex-col justify-center">

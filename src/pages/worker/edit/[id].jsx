@@ -21,6 +21,20 @@ export default function WorkerEdit() {
     getData();
   }, []);
 
+  // checkea si el campo esta completo y actualiza la base
+  const fetchUser = async () => {
+    const newuser = user;
+    let lGallery =
+      user?.img?.gallery.filter((item) => item !== null).length >= 3;
+    if (user?.about !== "" && lGallery) {
+      newuser.workerData.isAboutmeOk = true;
+    } else {
+      newuser.workerData.isAboutmeOk = false;
+    }
+    UserService.updateUser(newuser);
+  };
+  fetchUser();
+
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <WorkerProfileCardEdit

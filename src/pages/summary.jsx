@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
+import { useStore } from "@/store";
 import WorkerCardSumary from "@/components/utils/cards/WorkerCardSumary";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import Link from "next/link";
 import { ClockIcon, ChangeIcon } from "@/constants/icons";
 
-import { useStore } from "@/store";
 import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WorkerService";
+import { is } from "date-fns/locale";
 
 export default function Summary() {
-  const { loggedIn, service } = useStore();
+  const { isWorker } = useStore();
   const router = useRouter();
+  const { loggedIn, service } = useStore();
   const [theHour, setHour] = useState(null);
   const [theDate, setDate] = useState(null);
   const [IdHostel, setIdHostel] = useState(null);
@@ -24,7 +25,8 @@ export default function Summary() {
 
   useEffect(() => {
     document.title = "Summary - SOS Travelers";
-    localStorage.removeItem("fromFavorite");
+    //localStorage.removeItem("fromFavorite");
+    localStorage.removeItem("editing");
     getData();
   }, []);
 
@@ -38,10 +40,11 @@ export default function Summary() {
     setDate(date);
 
     HostelService.getBusiness(hostelId).then((response) => {
-      console.log(response.data);
+      console.log("hostel", response.data);
       setHostel(response.data);
     });
     WorkerService.getWorker(workerId).then((response) => {
+      console.log("worker", response.data);
       setWorker(response.data);
     });
   };
@@ -53,9 +56,16 @@ export default function Summary() {
   };
 
   const hireNow = () => {
-    console.log(loggedIn);
+    localStorage.removeItem("service");
+    localStorage.removeItem("editing");
+    localStorage.removeItem("fromFavorite");
     if (!loggedIn) router.push("login");
     else router.push("/payment");
+  };
+
+  const validateEdit = () => {
+    if (isWorker) return false;
+    if (localStorage.getItem("fromFavorite")) return false;
   };
 
   return (
@@ -67,7 +77,7 @@ export default function Summary() {
         image={hostel?.img?.imgUrl}
         name={hostel?.businessData?.name}
         location={hostel?.businessData?.location?.city}
-        link={"/hostel/" + 1}
+        link={`/hostel/${hostel?._id}`}
         subserviceId={subServiceId}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
@@ -75,10 +85,9 @@ export default function Summary() {
         name={fullName(worker?.personalData?.name)}
         service={"Barbero"}
         score={5}
-        link={"/worker/" + 1}
+        link={`/worker/${worker?._id}`}
         img={worker?.img?.imgUrl}
-        showArrow={false}
-        hostelId={hostel?.id}
+        showEdit={validateEdit()}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
 

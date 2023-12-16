@@ -38,4 +38,10 @@ export default class WorkerService {
       headers: this.getHeaders(),
     });
   }
+
+  static async getWorkerServices() {
+    return axios.get(`${this.baseUrl}/worker/services`, {
+      headers: this.getHeaders(),
+    });
+  }
 }

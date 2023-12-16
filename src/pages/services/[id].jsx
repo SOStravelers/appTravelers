@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import ServiceCardGrey from "@/components/utils/cards/ServiceCardGrey";
 import { useStore } from "@/store";
 import ServiceService from "@/services/ServiceService";
-import { set } from "date-fns";
 
 export default function Services() {
   const router = useRouter();
@@ -25,6 +24,7 @@ export default function Services() {
   }, []);
 
   const getDataFav = async () => {
+    console.log("query", router.query);
     const services = JSON.parse(router.query.services);
     setServices(services);
   };

@@ -48,7 +48,7 @@ function DaySection({ weekDays, selectedDay, setSelectedDay }) {
         <p className="text-center text-greyText max-w-lg my-10">
           No bookings yet
         </p>
-        <div className="max-w-lg text-xl my-3 flex justify-center">
+        <div className="max-w-lg text-xl ml-2 my-3 flex justify-center">
           <ReservationIcon />
         </div>
 

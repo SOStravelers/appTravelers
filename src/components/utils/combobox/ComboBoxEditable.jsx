@@ -15,10 +15,13 @@ const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
   }, [service]);
 
   const subserviceExist = (serviceId, subserviceId) => {
-    const serviceExists = selectedOptions?.find((s) => s?.id === serviceId);
+    console.log("serviceId, subserviceId", serviceId, subserviceId);
+    const serviceExists = selectedOptions?.find(
+      (s) => s?.id?._id === serviceId
+    );
     if (serviceExists) {
       const subserviceExists = serviceExists?.subServices?.find(
-        (s) => s === subserviceId
+        (s) => s?._id === subserviceId
       );
       if (subserviceExists) {
         return true;
@@ -55,12 +58,12 @@ const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
               {subserviceExist(service?._id, subservice?._id) ? (
                 <CheckOptionChecked
                   className="cursor-pointer"
-                  onClick={() => handleChange(service?._id, subservice?._id)}
+                  onClick={() => handleChange(service, subservice)}
                 />
               ) : (
                 <CheckOption
                   className="cursor-pointer"
-                  onClick={() => handleChange(service?._id, subservice?._id)}
+                  onClick={() => handleChange(service, subservice)}
                 />
               )}
             </div>

@@ -57,7 +57,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
         router.pathname == "/profile" ||
         router.pathname == "/chat" ||
         router.pathname == "/favorites" ||
-        router.pathname == "/personal-details" ||
         router.pathname == "/settings" ||
         router.pathname == "/payment" ||
         router.pathname == "/stripe")

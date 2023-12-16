@@ -9,35 +9,18 @@ import {
   CertificationPicture,
 } from "@/constants/icons";
 import { useStore } from "@/store";
-import UserService from "@/services/UserService";
-import { useState, useEffect } from "react";
-import schedule from "@/services/ScheduleService";
 
 export default function WorkerProfile() {
   const { user, setUser } = useStore();
   const router = useRouter();
 
-  const [mScheCheck, setMScheCheck] = useState(false);
-  console.log("userrrrr: ", user);
+  let mServCheck = user?.workerData?.isMyServicesOk;
+  let mProfCheck = user?.workerData?.isAboutmeOk;
+  let mScheCheck = user?.workerData?.isMySchedulesOk;
+  let mPlacCheck = user?.workerData?.isMyWorkplacesOk; //true por defecto, se debe corregir
 
-  let mServCheck;
-  let mProfCheck;
-  let isWorkerCheck = false;
-  let lGallery = user?.img?.gallery.filter((item) => item !== null).length >= 3;
-  console.log("largo galeria: ", lGallery);
-
-  if (user?.workerData?.services?.length > 0) {
-    mServCheck = true;
-  } else {
-    mServCheck = false;
-  }
-  if (user?.about !== "" && lGallery) {
-    mProfCheck = true;
-  } else {
-    mProfCheck = false;
-  }
   console.log("variables 1ra: ", mProfCheck, mServCheck, mScheCheck);
-
+  /* 
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -71,7 +54,7 @@ export default function WorkerProfile() {
     // Llama a la función cuando el componente se monta
     fetchUser();
     console.log("variables 2da: ", mProfCheck, mServCheck, mScheCheck);
-  }, [mProfCheck, mServCheck, mScheCheck]);
+  }, [mProfCheck, mServCheck, mScheCheck]); */
 
   return (
     <div className="bg-white h-full w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
@@ -100,7 +83,7 @@ export default function WorkerProfile() {
         title="My Workplaces"
         subtitle="Establishments"
         icon={LockIcon}
-        check
+        check={mPlacCheck}
         onClick={() => router.push("/worker/my-workplaces")}
       />
       <div className="max-w-lg text-center text-xl my-5 flex flex-col justify-center">

@@ -71,6 +71,7 @@ export default function PersonalDetails() {
         newUser.personalData.name.first = arrayName[0];
         newUser.personalData.name.last = arrayName[1];
         const response = await UserService.updateUser(newUser);
+
         if (response.data) {
           localStorage.setItem("auth.user", JSON.stringify(response.data.user));
           Cookies.set("auth.user", JSON.stringify(response.data.user));

@@ -101,6 +101,16 @@ export default function MyServices() {
 
   const handleSaveSelection = async () => {
     user.workerData.services = selectedOptions;
+    // chekeo array de subservicios para actualizar base de datos
+    if (
+      user.workerData.services.some(
+        (services) => services.subServices.length > 0
+      )
+    ) {
+      user.workerData.isMyServicesOk = true;
+    } else {
+      user.workerData.isMyServicesOk = false;
+    }
     const response = await UserService.updateUser(user);
     if (response.data) {
       setUser(response.data);

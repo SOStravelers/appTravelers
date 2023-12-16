@@ -4,8 +4,12 @@ import dayjs from "dayjs";
 import { WEEK_DAYS } from "@/constants";
 import ScheduleService from "@/services/ScheduleService";
 import { toast } from "react-toastify";
+import schedule from "@/services/ScheduleService";
+import { useStore } from "@/store";
+import UserService from "@/services/UserService";
 
 function SectionWeek() {
+  const { user, setUser } = useStore();
   const [horario, setHorario] = useState([]);
   const [save, setSave] = useState(false);
 
@@ -157,6 +161,26 @@ function SectionWeek() {
       });
     }
   };
+
+  // useEffect(() => {
+  const fetchUser = async () => {
+    console.log("hola mundo", user);
+    const newuser = user;
+    const schedulesResponse = await schedule.getScheduleUser();
+
+    let check = schedulesResponse.data.schedules.some(
+      (item) => item.isActive === true
+    );
+    if (check) {
+      newuser.workerData.isMySchedulesOk = true;
+    } else {
+      newuser.workerData.isMySchedulesOk = false;
+    }
+    UserService.updateUser(newuser);
+    // Realiza las operaciones que necesitas con el usuario aquí
+  };
+  fetchUser();
+  // }, []);
 
   return (
     <section className="w-full max-w-lg">

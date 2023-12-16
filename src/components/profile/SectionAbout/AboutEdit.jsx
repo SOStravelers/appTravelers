@@ -17,6 +17,7 @@ function AboutEdit({ about }) {
     setIsEditing(false);
     user.about = editedAbout;
     console.log("antes de enviar", user);
+
     const response = await UserService.updateUser(user);
     console.log("weno", user);
     if (response.data) {

@@ -22,8 +22,8 @@ function CalendarSchedule({ saveData }) {
   const getData = async () => {
     try {
       const response = await HollidayService.getHollidayUser();
-      if (response && response.data && response.data.length > 0) {
-        const formattedDisabledDays = response.data.map((item) => ({
+      if (response && response.data.range && response.data.range.length > 0) {
+        const formattedDisabledDays = response.data.range.map((item) => ({
           from: parseISO(item.from),
           to: parseISO(item.to),
         }));

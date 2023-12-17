@@ -85,8 +85,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       console.log("set user back");
       const response = await UserService.getUserByToken();
       if (response) {
-        console.log("seteando", response.data);
-
         Cookies.set("auth.user_id", response.data._id);
 
         setUser(response.data);

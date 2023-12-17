@@ -9,7 +9,6 @@ import { useStore } from "@/store";
 export default function WorkersFound() {
   const { setService, service } = useStore();
   const router = useRouter();
-
   const [wokers, setWorkers] = useState([]);
 
   useEffect(() => {
@@ -31,7 +30,22 @@ export default function WorkersFound() {
       // setWorkers(response.data.docs);
     });
   };
+  function getSubserviceNameById(workerData) {
+    const services = workerData?.services || [];
+    const id = service.subServiceId;
+    for (const service of services) {
+      console.log("service", service);
+      console.log("id", id);
+      const subService = service.subServices.find((sub) => sub._id === id);
 
+      if (subService) {
+        return subService.name;
+      }
+    }
+
+    // Devuelve null si no se encuentra el subservicio con el ID dado
+    return null;
+  }
   const selectWorker = (workerId) => {
     const hostelId = router.query.id;
     setService({
@@ -39,6 +53,7 @@ export default function WorkersFound() {
       workerId: workerId,
     });
   };
+  // console.log("wena", service);
 
   const fullName = ({ first, last }) => {
     return first + " " + (last ?? "");
@@ -56,7 +71,14 @@ export default function WorkersFound() {
             <WorkerCard
               key={worker.id}
               name={fullName(worker.personalData?.name)}
-              service={"Corte de cabello"}
+              service={
+                worker?.workerData
+                  ? getSubserviceNameById(
+                      worker.workerData,
+                      service.subserviceId
+                    )
+                  : "hola"
+              }
               score={5}
               img={worker.img?.imgUrl || "/assets/user.png"}
               link={`/worker/${worker.id}`}

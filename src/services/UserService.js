@@ -138,6 +138,7 @@ export default class UserService {
     });
   }
   static async getUserById(id) {
+    console.log("calculando");
     return axios.get(`${this.authUrl}/user/${id}`, {
       headers: this.getHeaders(),
     });

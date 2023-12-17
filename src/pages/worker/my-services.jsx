@@ -125,10 +125,10 @@ export default function MyServices() {
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       {selectedOptions?.length === 0 && !addingService && (
         <>
-          <p className="pb-20 pt-10 text-center max-w-lg">
+          <p className="pb-20  pt-10 text-center max-w-lg">
             No services register yet
           </p>
-          <BarberPicture className="mb-6" />
+          <BarberPicture className="mb-6 px-20" />
           <OutlinedButton
             margin="my-10"
             text="Add services"

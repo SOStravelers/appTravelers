@@ -26,10 +26,11 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
 
   const routeValidation = async () => {
     console.log("validar", isWorker, !!user);
-    // if (user == undefined) {
-    //   setUser({});
-    //   router.push("/");
-    // }
+    if (user == undefined) {
+      // setUser({});
+      // router.push("/");
+      return;
+    }
     if (
       router.pathname.includes("worker") &&
       !isWorker &&

@@ -6,9 +6,11 @@ import { StarIcon } from "@/constants/icons";
 import { toast } from "react-toastify";
 import { random } from "@/lib/utils";
 import FavoriteService from "@/services/FavoriteService";
+import { useStore } from "@/store";
 
 function WorkerProfileCard({ name, services, score, avatar }) {
   const [favorites, setFavorites] = useState([]);
+  const { user } = useStore();
   const [isFavorite, setIsFavorite] = useState(false);
   const router = useRouter();
   const capitalize = (cadena) => {
@@ -16,8 +18,11 @@ function WorkerProfileCard({ name, services, score, avatar }) {
   };
 
   useEffect(() => {
-    getFavorites();
-  }, []);
+    console.log("el user", user);
+    if (user && Object.keys(user).length > 0) {
+      getFavorites();
+    }
+  }, [user]);
 
   const getFavorites = async () => {
     try {
@@ -94,11 +99,13 @@ function WorkerProfileCard({ name, services, score, avatar }) {
         <div className="flex items-center">
           <h1 className="font-semibold text-black">{name}</h1>
 
-          <FavButton
-            isFavorite={isFavorite}
-            handleSetFav={handleSetFav}
-            handleDeleteFav={handleDeleteFav}
-          />
+          {user && Object.keys(user).length > 0 ? (
+            <FavButton
+              isFavorite={isFavorite}
+              handleSetFav={handleSetFav}
+              handleDeleteFav={handleDeleteFav}
+            />
+          ) : null}
         </div>
         <p className="text-blackText my-2">
           {services?.map((service) => capitalize(service.id.name)).join(", ")}

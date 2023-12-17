@@ -5,7 +5,6 @@ import { CheckOptionChecked, ArrowUpIcon } from "@/constants/icons";
 const ComboBox = ({ service }) => {
   const [open, setOpen] = useState(true);
   const [subservices, setSubservices] = useState([]);
-  console.log("servicio", service);
 
   useEffect(() => {
     getSubSservices();
@@ -37,11 +36,8 @@ const ComboBox = ({ service }) => {
           />
         </div>
         {open &&
-          service?.subServices?.map((subservice) => (
-            <div
-              key={subservice?.id}
-              className="text-black flex justify-between px-4"
-            >
+          service?.subServices?.map((subservice, index) => (
+            <div key={index} className="text-black flex justify-between px-4">
               <h1>{capitalize(subservice?.name)}</h1>
               <CheckOptionChecked />
             </div>

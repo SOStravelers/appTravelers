@@ -9,7 +9,7 @@ function TopBar() {
   const { loggedIn, user, isWorker, setUser } = useStore();
 
   useEffect(() => {
-    if (!!user.img && !!user?.img?.imgUrl) {
+    if (user != undefined && user.img && user?.img?.imgUrl) {
       let newUser = { ...user };
       newUser.img.imgUrl = user.img.imgUrl + "?hola=" + random();
       setUser[newUser];
@@ -75,7 +75,7 @@ function TopBar() {
               />
             </Link>
 
-            {!!user?.img && !!user?.img.imgUrl ? (
+            {user?.img && user?.img.imgUrl ? (
               <Link
                 className="rounded-xl"
                 href={profileUrl}

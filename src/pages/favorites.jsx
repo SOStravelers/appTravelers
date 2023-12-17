@@ -65,7 +65,7 @@ export default function Favorites() {
               " " +
               favorite.receptor.personalData.name.last
             }
-            image={favorite.receptor.img.imgUrl}
+            image={favorite.receptor.img.imgUrl || "/assets/user.png"}
             services={favorite?.receptor?.workerData?.services}
             score={5}
             link={`/worker/${favorite.receptor._id}`}

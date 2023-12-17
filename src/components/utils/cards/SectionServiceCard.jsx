@@ -2,6 +2,7 @@ import React from "react";
 
 function SectionServiceCard({ title, list }) {
   const capitalize = (cadena) => {
+    if (!cadena) return "";
     return cadena.charAt(0).toUpperCase() + cadena.slice(1);
   };
   return (

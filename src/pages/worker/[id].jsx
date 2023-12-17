@@ -26,18 +26,25 @@ export default function Worker() {
   }, [user]);
 
   const getUserData = async () => {
-    console.log("wena wena wena");
     const response = await UserService.getUserById(id);
     if (response?.data) {
       setUser(response.data);
+      console.log("response", response.data);
     }
+  };
+  const capitalize = (cadena) => {
+    return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+  };
+  const setName = (name) => {
+    if (!name) return "";
+    return capitalize(name?.first) + " " + capitalize(name?.last);
   };
 
   let galleryFilter = user?.img?.gallery.filter((image) => image !== null);
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <WorkerProfileCard
-        name={user?.personalData?.name?.first}
+        name={setName(user?.personalData?.name)}
         services={user?.workerData?.services}
         score={5}
         avatar={user?.img?.imgUrl}
@@ -52,7 +59,7 @@ export default function Worker() {
         <SectionAbout description={user?.about} gallery={galleryFilter} />
       ) : (
         <SectionServices
-          services={"Services"}
+          services={user?.workerData?.services || []}
           price={"Price"}
           schedule={"Schedule"}
         />

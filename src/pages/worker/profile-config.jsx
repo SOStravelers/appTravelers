@@ -9,52 +9,23 @@ import {
   CertificationPicture,
 } from "@/constants/icons";
 import { useStore } from "@/store";
+import { useEffect, useState } from "react";
+import UserService from "@/services/UserService";
 
 export default function WorkerProfile() {
-  const { user, setUser } = useStore();
+  const { user, setUser } = useState(null);
   const router = useRouter();
-
-  let mServCheck = user?.workerData?.isMyServicesOk;
-  let mProfCheck = user?.workerData?.isAboutmeOk;
-  let mScheCheck = user?.workerData?.isMySchedulesOk;
-  let mPlacCheck = user?.workerData?.isMyWorkplacesOk; //true por defecto, se debe corregir
-
-  console.log("variables 1ra: ", mProfCheck, mServCheck, mScheCheck);
-  /* 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const schedulesResponse = await schedule.getScheduleUser();
-        const hasActiveSchedules = schedulesResponse.data.schedules.some(
-          (item) => item.isActive === true
-        );
-        setMScheCheck(hasActiveSchedules);
-        isWorkerCheck = mProfCheck && mServCheck && hasActiveSchedules;
-        const newUser = { ...user };
-        console.log("el name", newUser);
-        if (isWorkerCheck == true) {
-          newUser.workerData.isCheck = true;
-          const response = await UserService.updateUser(newUser);
-          setUser(response.data);
-          console.log("después de actualizar el estado:", response.data);
+    getData();
+  }, []);
 
-          //  console.log("ischeck:", response.workerData.isCheck);
-        } else {
-          newUser.workerData.isCheck = false;
-          const response = await UserService.updateUser(newUser);
-          setUser(response.data);
-          console.log("después de actualizar el estado:", response.data);
-        }
-        // Actualiza la información del usuario en el estado global
-      } catch (error) {
-        console.error("Error getting user: ", error);
-      }
-    };
-
-    // Llama a la función cuando el componente se monta
-    fetchUser();
-    console.log("variables 2da: ", mProfCheck, mServCheck, mScheCheck);
-  }, [mProfCheck, mServCheck, mScheCheck]); */
+  const getData = async () => {
+    const newuser = UserService.getUserById();
+    let mServCheck = user?.workerData?.isMyServicesOk;
+    let mProfCheck = user?.workerData?.isAboutmeOk;
+    let mScheCheck = user?.workerData?.isMySchedulesOk;
+    let mPlacCheck = user?.workerData?.isMyWorkplacesOk; //true por defecto, se debe corregir
+  };
 
   return (
     <div className="bg-white h-full w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">

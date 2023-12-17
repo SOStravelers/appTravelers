@@ -162,9 +162,8 @@ function SectionWeek() {
     }
   };
 
-  // useEffect(() => {
+  //chequeo de que tenga un horario armado
   const fetchUser = async () => {
-    console.log("hola mundo", user);
     const newuser = user;
     const schedulesResponse = await schedule.getScheduleUser();
 
@@ -177,7 +176,6 @@ function SectionWeek() {
       newuser.workerData.isMySchedulesOk = false;
     }
     UserService.updateUser(newuser);
-    // Realiza las operaciones que necesitas con el usuario aquí
   };
   fetchUser();
   // }, []);

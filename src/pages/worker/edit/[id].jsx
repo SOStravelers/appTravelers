@@ -19,6 +19,7 @@ export default function WorkerEdit() {
   };
   useEffect(() => {
     getData();
+    fetchUser();
   }, []);
 
   // checkea si el campo esta completo y actualiza la base
@@ -33,7 +34,6 @@ export default function WorkerEdit() {
     }
     UserService.updateUser(newuser);
   };
-  fetchUser();
 
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">

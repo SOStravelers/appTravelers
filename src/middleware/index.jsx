@@ -83,7 +83,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     let typeWorker = localStorage.getItem("type");
     if (cookieAccessToken) {
       console.log("set user back");
-      const response = await UserService.getUserById();
+      const response = await UserService.getUserByToken();
       if (response) {
         console.log("seteando", response.data);
 

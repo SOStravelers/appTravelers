@@ -8,7 +8,6 @@ const list2 = [
 ];
 
 function SectionServices({ services }) {
-  console.log("los servicios", services, services[0]);
   return (
     <div>
       <SectionServiceCard

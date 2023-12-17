@@ -132,8 +132,13 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
-  static async getUserById() {
+  static async getUserByToken() {
     return axios.get(`${this.baseUrl}/findUserToken`, {
+      headers: this.getHeaders(),
+    });
+  }
+  static async getUserById(id) {
+    return axios.get(`${this.authUrl}/user/${id}`, {
       headers: this.getHeaders(),
     });
   }

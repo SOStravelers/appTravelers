@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Router from "next/router";
 import WorkerProfileCard from "@/components/utils/cards/WorkerProfileCard";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import SectionAbout from "@/components/profile/SectionAbout/SectionAbout";
@@ -9,6 +10,8 @@ import UserService from "@/services/UserService";
 export default function Worker() {
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [user, setUser] = useState(null);
+  const router = Router;
+  const id = router.query.id;
 
   useEffect(() => {
     getUserData();
@@ -23,13 +26,13 @@ export default function Worker() {
   }, [user]);
 
   const getUserData = async () => {
-    const response = await UserService.getUserById();
+    console.log("wena wena wena");
+    const response = await UserService.getUserById(id);
     if (response?.data) {
       setUser(response.data);
     }
   };
 
-  console.log(user);
   let galleryFilter = user?.img?.gallery.filter((image) => image !== null);
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">

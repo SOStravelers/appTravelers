@@ -14,7 +14,6 @@ function WorkerCard({
   const handleSummary = () => {
     if (onClickSummary) onClickSummary();
   };
-  console.log(link);
   return (
     <div className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2 max-w-lg">
       <div className="flex">

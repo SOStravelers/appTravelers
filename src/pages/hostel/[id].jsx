@@ -25,7 +25,6 @@ export default function Hostel() {
     try {
       const response = await HostelService.getBusiness(id);
       setHostel(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -60,23 +59,3 @@ export default function Hostel() {
     </div>
   );
 }
-
-// export async function getServerSideProps({ params }) {
-//   console.log("todo mal");
-//   const hostelId = params.id;
-//   if (!hostelId) return redirect;
-
-//   let hostel = null;
-//   try {
-//     const response = await HostelService.getBusiness(hostelId);
-//     hostel = response.data;
-//   } catch (error) {
-//     console.error(error);
-//   }
-
-//   return {
-//     props: {
-//       hostel: hostel,
-//     },
-//   };
-// }

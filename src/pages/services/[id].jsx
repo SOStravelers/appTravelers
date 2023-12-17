@@ -11,7 +11,6 @@ export default function Services() {
   const { isWorker, user } = useStore();
   const [services, setServices] = useState([]);
 
-  console.log(services);
   useEffect(() => {
     document.title = "Choose subservice - SOS Travelers";
     const isFavorite = localStorage.getItem("fromFavorite");

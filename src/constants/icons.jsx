@@ -171,7 +171,7 @@ export const BarberPicture = ({ ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     data-name="Layer 1"
-    width="auto"
+    width="100%" // Cambiado de "auto" a "100%"
     height="200"
     viewBox="0 0 1144 714.9"
     xmlnsXlink="http://www.w3.org/1999/xlink"

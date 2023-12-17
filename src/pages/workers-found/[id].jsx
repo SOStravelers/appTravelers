@@ -34,8 +34,6 @@ export default function WorkersFound() {
     const services = workerData?.services || [];
     const id = service.subServiceId;
     for (const service of services) {
-      console.log("service", service);
-      console.log("id", id);
       const subService = service.subServices.find((sub) => sub._id === id);
 
       if (subService) {
@@ -53,7 +51,6 @@ export default function WorkersFound() {
       workerId: workerId,
     });
   };
-  // console.log("wena", service);
 
   const fullName = ({ first, last }) => {
     return first + " " + (last ?? "");

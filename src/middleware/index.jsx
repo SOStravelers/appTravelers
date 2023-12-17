@@ -17,19 +17,22 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       if (!user || Object.keys(user).length == 0) {
         await obtenerInformacionUsuario();
       }
-      routeValidation();
-      onMiddlewareComplete();
+      await routeValidation();
+      setTimeout(() => {
+        onMiddlewareComplete();
+      }, 500);
     };
 
     fetchData();
   }, [onMiddlewareComplete]);
 
   const routeValidation = async () => {
-    console.log("validar", isWorker, user);
+    console.log("validar", isWorker, !!user);
     if (user == undefined) {
+      // setUser({});
+      // router.push("/");
       return;
     }
-
     if (
       router.pathname.includes("worker") &&
       !isWorker &&
@@ -57,7 +60,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
         router.pathname == "/profile" ||
         router.pathname == "/chat" ||
         router.pathname == "/favorites" ||
-        router.pathname == "/personal-details" ||
         router.pathname == "/settings" ||
         router.pathname == "/payment" ||
         router.pathname == "/stripe")
@@ -84,10 +86,8 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     let typeWorker = localStorage.getItem("type");
     if (cookieAccessToken) {
       console.log("set user back");
-      const response = await UserService.getUserById();
+      const response = await UserService.getUserByToken();
       if (response) {
-        console.log("seteando", response.data);
-
         Cookies.set("auth.user_id", response.data._id);
 
         setUser(response.data);

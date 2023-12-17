@@ -22,10 +22,7 @@ export default function PersonalDetails() {
   const [save, setSave] = useState(false);
   useEffect(() => {
     if (user) {
-      const name =
-        capitalizeFirstLetter(user.personalData.name.first) +
-        " " +
-        capitalizeFirstLetter(user.personalData.name.last);
+      const name = capitalizeFirstLetter(user?.personalData?.name?.first);
       setName(name);
       setNameTrun(truncarNumero(name));
       setEmail(user.email);

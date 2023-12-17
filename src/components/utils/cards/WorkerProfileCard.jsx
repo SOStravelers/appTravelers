@@ -3,17 +3,26 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import FavButton from "@/components/utils/buttons/FavButton";
 import { StarIcon } from "@/constants/icons";
+import { toast } from "react-toastify";
 import { random } from "@/lib/utils";
 import FavoriteService from "@/services/FavoriteService";
+import { useStore } from "@/store";
 
 function WorkerProfileCard({ name, services, score, avatar }) {
   const [favorites, setFavorites] = useState([]);
+  const { user } = useStore();
   const [isFavorite, setIsFavorite] = useState(false);
   const router = useRouter();
+  const capitalize = (cadena) => {
+    return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+  };
 
   useEffect(() => {
-    getFavorites();
-  }, []);
+    console.log("el user", user);
+    if (user && Object.keys(user).length > 0) {
+      getFavorites();
+    }
+  }, [user]);
 
   const getFavorites = async () => {
     try {
@@ -26,21 +35,29 @@ function WorkerProfileCard({ name, services, score, avatar }) {
         setIsFavorite(isFavorite);
       }
     } catch (error) {
-      console.error(error);
+      toast.error("An error has occurred.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1200,
+      });
     }
   };
 
   const handleSetFav = async () => {
-    console.log(router.query.id);
     try {
       const response = await FavoriteService.addFavorite(router.query.id);
       if (response?.data?.emisor) {
         setIsFavorite(true);
         setFavorites([...favorites, response?.data]);
+        toast.info("Added to favorites", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 1200,
+        });
       }
-      console.log(response);
     } catch (error) {
-      console.error(error);
+      toast.error("An error has occurred.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1200,
+      });
     }
   };
 
@@ -54,35 +71,44 @@ function WorkerProfileCard({ name, services, score, avatar }) {
             (favorite) => favorite.receptor._id !== router.query.id
           )
         );
+        toast.info("Removed from favorites", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 1200,
+        });
       }
-      console.log(response);
     } catch (error) {
-      console.error(error);
+      toast.error("An error has occurred.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1200,
+      });
     }
   };
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">
       <div className="w-36 h-32 rounded-2xl mr-2">
-        <div className="bg-lightBlue w-full h-full rounded-2xl relative">
+        <div className=" w-full h-full rounded-2xl relative">
           <Image
-            src={avatar + "?hola=" + random() ?? "/assets/proovedor.png"}
+            src={avatar ? avatar + "?hola=" + random() : "/assets/user.png"}
             fill
-            alt="nuevo"
+            alt="profileImg"
             className="object-cover rounded-2xl"
           />
         </div>
       </div>
       <div className="flex flex-col">
         <div className="flex items-center">
-          <FavButton
-            isFavorite={isFavorite}
-            handleSetFav={handleSetFav}
-            handleDeleteFav={handleDeleteFav}
-          />
           <h1 className="font-semibold text-black">{name}</h1>
+
+          {user && Object.keys(user).length > 0 ? (
+            <FavButton
+              isFavorite={isFavorite}
+              handleSetFav={handleSetFav}
+              handleDeleteFav={handleDeleteFav}
+            />
+          ) : null}
         </div>
         <p className="text-blackText my-2">
-          {services?.map((service) => service.id.name).join(", ")}
+          {services?.map((service) => capitalize(service.id.name)).join(", ")}
         </p>
         <div className="flex items-center">
           <StarIcon color={"#00A0D5"} className="mr-1" />

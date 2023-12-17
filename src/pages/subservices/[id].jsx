@@ -10,8 +10,6 @@ export default function Subservices() {
 
   const [subServices, setSubservices] = useState([]);
 
-  console.log(subServices);
-
   useEffect(() => {
     document.title = "Choose subservice - SOS Travelers";
     const fromFavorite = localStorage.getItem("fromFavorite");

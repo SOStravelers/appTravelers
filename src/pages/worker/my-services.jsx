@@ -7,6 +7,7 @@ import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import WorkerService from "@/services/WorkerService";
 import { useStore } from "@/store";
+import { BarberPicture } from "@/constants/icons";
 
 export default function MyServices() {
   const [services, setServices] = useState([]);
@@ -22,7 +23,6 @@ export default function MyServices() {
   }, [user]);
 
   useEffect(() => {
-    console.log("services", services);
     /*selectedOptions?.map((s) => {
       if (s?.subServices?.length === 0) {
         setSelectedOptions(selectedOptions?.filter((ss) => ss?.id !== s?.id));
@@ -31,7 +31,6 @@ export default function MyServices() {
   }, [services]);
 
   useEffect(() => {
-    console.log("selectedOptions", selectedOptions);
     /*selectedOptions?.map((s) => {
       if (s?.subServices?.length === 0) {
         setSelectedOptions(selectedOptions?.filter((ss) => ss?.id !== s?.id));
@@ -48,13 +47,11 @@ export default function MyServices() {
   const getUserData = async () => {
     const response = await WorkerService.getWorkerServices();
     if (response?.data) {
-      console.log("response", response.data);
       setSelectedOptions(response.data);
     }
   };
 
   const handleChange = (service, subservice) => {
-    console.log("service", service);
     const serviceExists = selectedOptions?.find(
       (s) => s?.id?._id === service._id
     );
@@ -100,22 +97,23 @@ export default function MyServices() {
   };
 
   const handleSaveSelection = async () => {
-    user.workerData.services = selectedOptions;
-    // chekeo array de subservicios para actualizar base de datos
-    if (
-      user.workerData.services.some(
-        (services) => services.subServices.length > 0
-      )
-    ) {
-      user.workerData.isMyServicesOk = true;
-    } else {
-      user.workerData.isMyServicesOk = false;
-    }
+    // Filtrar los servicios que tienen al menos un subservicio
+    console.log("se guardan");
+    const servicesWithSubservices = selectedOptions.filter(
+      (service) => service.subServices.length > 0
+    );
+
+    user.workerData.services = servicesWithSubservices;
+
+    // Chequear array de subservicios para actualizar la base de datos
+    user.workerData.isMyServicesOk = servicesWithSubservices.length > 0;
+
     const response = await UserService.updateUser(user);
+
     if (response.data) {
       setUser(response.data);
     }
-    setUser(response.data);
+
     setAddingService(false);
   };
 
@@ -128,8 +126,12 @@ export default function MyServices() {
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       {selectedOptions?.length === 0 && !addingService && (
         <>
-          <p className="py-20 text-center max-w-lg">No services register yet</p>
+          <p className="pb-20  pt-10 text-center max-w-lg">
+            No services register yet
+          </p>
+          <BarberPicture className="mb-6 px-20" />
           <OutlinedButton
+            margin="my-10"
             text="Add services"
             onClick={() => handleAddService()}
           />
@@ -137,15 +139,16 @@ export default function MyServices() {
       )}
       {selectedOptions?.length > 0 && !addingService && (
         <>
-          {selectedOptions?.map((service) => (
+          {selectedOptions?.map((service, index) => (
             <ComboBox
-              key={service?.id?._id}
+              key={index}
               service={service}
               selectedOptions={selectedOptions}
             />
           ))}
           <OutlinedButton
             text="Edit/Add services"
+            margin="my-10"
             onClick={() => handleAddService()}
           />
         </>
@@ -153,9 +156,9 @@ export default function MyServices() {
       {addingService && (
         <>
           {services?.length > 0 &&
-            services?.map((service) => (
+            services?.map((service, index) => (
               <ComboBoxEditable
-                key={service?.id}
+                key={index}
                 service={service}
                 selectedOptions={selectedOptions}
                 handleChange={handleChange}

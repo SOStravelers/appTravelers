@@ -44,7 +44,7 @@ function WorkerCardFavorite({
   return (
     <div className="flex w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center">
       <div className="flex">
-        <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 ml-3 relative">
+        <div className="w-20 h-20 rounded-xl  mr-2 ml-3 relative">
           <Link href={link}>
             {image && (
               <Image

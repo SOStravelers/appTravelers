@@ -16,13 +16,11 @@ export default function Profile({ user }) {
   const logout = async () => {
     localStorage.removeItem("service");
     localStorage.removeItem("type");
-
+    localStorage.removeItem("fromFavorite");
     Cookies.remove("auth.access_token");
     Cookies.remove("auth.refresh_token");
     Cookies.remove("auth.user_id");
     Cookies.remove("service");
-
-    localStorage.removeItem("type");
     setWorker(false);
     setLoggedIn(false);
     await signOut({ redirect: false });
@@ -59,15 +57,6 @@ export default function Profile({ user }) {
 //   if (!userId) return redirect;
 
 //   let user = null;
-//   // try {
-//   //   const response = await UserService.get(userId);
-//   //   user = response.data;
-//   //   if (!user) return redirect;
-//   // } catch (error) {
-//   //   console.error(error);
-//   //   return redirect;
-//   // }
-
 //   return {
 //     props: {
 //       user: user,

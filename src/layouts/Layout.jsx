@@ -40,7 +40,7 @@ function Layout({ children, lang }) {
     metaDescription =
       "Discover personalized well-being: choose your hostel, pick the time, and find elite professionals in our friendly app. Carefully selected workers for an unparalleled experience. Your comfort is our priority!";
   }
-  
+
   const isLoginPage =
     router.pathname === "/login" ||
     router.pathname === "/register" ||

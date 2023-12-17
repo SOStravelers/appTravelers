@@ -98,6 +98,7 @@ export default function MyServices() {
 
   const handleSaveSelection = async () => {
     // Filtrar los servicios que tienen al menos un subservicio
+    console.log("se guardan");
     const servicesWithSubservices = selectedOptions.filter(
       (service) => service.subServices.length > 0
     );

@@ -12,8 +12,13 @@ export default function Hostel() {
   const [actualView, setActualView] = useState(SECTION_ONE);
   useEffect(() => {
     getData();
-    document.title = hostel?.businessData?.name + " - SOS Travelers";
   }, []);
+
+  useEffect(() => {
+    document.title =
+      hostel?.businessData?.name + " - SOS Travelers" ||
+      "hotel" + " - SOS Travelers";
+  }, [hostel]);
 
   const getData = async () => {
     const id = router.query.id;
@@ -46,6 +51,7 @@ export default function Hostel() {
         />
       ) : (
         <SectionServices
+          type="business"
           services={hostel?.businessData?.services || []}
           price={"Price"}
           schedule={"Schedule"}

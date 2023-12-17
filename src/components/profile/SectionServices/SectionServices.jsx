@@ -6,15 +6,15 @@ const list2 = [
   { name: "Service 2", price: 200 },
   { name: "Service 3", price: 300 },
 ];
-
-function SectionServices({ services }) {
+function SectionServices({ services, type }) {
   return (
     <div>
       <SectionServiceCard
         title={"Popular"}
+        type={type}
         list={services ? services[0] : {}}
       />
-      <SectionServiceCard title={"Others"} list={services} />
+      <SectionServiceCard type={type} title={"Others"} list={services} />
     </div>
   );
 }

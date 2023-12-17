@@ -8,7 +8,6 @@ import { random } from "@/lib/utils";
 import FavoriteService from "@/services/FavoriteService";
 
 function WorkerProfileCard({ name, services, score, avatar }) {
-  console.log("avatar", avatar);
   const [favorites, setFavorites] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const router = useRouter();

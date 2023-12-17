@@ -13,7 +13,6 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
 
   useEffect(() => {
     if (avatar) {
-      console.log("el avatar", avatar);
       setNewAvatar(avatar + "?hola=" + random());
     }
   }, [avatar]);
@@ -110,7 +109,6 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
       input.click();
     });
   };
-  console.log(newAvatar);
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">
       <div className="w-36 h-32 rounded-2xl mr-2 relative">

@@ -29,7 +29,6 @@ export default function Worker() {
     const response = await UserService.getUserById(id);
     if (response?.data) {
       setUser(response.data);
-      console.log("response", response.data);
     }
   };
   const capitalize = (cadena) => {
@@ -59,6 +58,7 @@ export default function Worker() {
         <SectionAbout description={user?.about} gallery={galleryFilter} />
       ) : (
         <SectionServices
+          type="worker"
           services={user?.workerData?.services || []}
           price={"Price"}
           schedule={"Schedule"}

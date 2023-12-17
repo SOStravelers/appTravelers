@@ -17,7 +17,7 @@ export default function WorkerProfile({ user }) {
   const logout = async () => {
     localStorage.removeItem("service");
     localStorage.removeItem("type");
-
+    localStorage.removeItem("fromFavorite");
     Cookies.remove("auth.access_token");
     Cookies.remove("auth.refresh_token");
     Cookies.remove("auth.user_id");

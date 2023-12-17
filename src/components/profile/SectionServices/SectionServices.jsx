@@ -7,11 +7,15 @@ const list2 = [
   { name: "Service 3", price: 300 },
 ];
 
-function SectionServices() {
+function SectionServices({ services }) {
+  console.log("los servicios", services, services[0]);
   return (
     <div>
-      <SectionServiceCard title={"Popular"} list={list1} />
-      <SectionServiceCard title={"Others"} list={list2} />
+      <SectionServiceCard
+        title={"Popular"}
+        list={services ? services[0] : {}}
+      />
+      <SectionServiceCard title={"Others"} list={services} />
     </div>
   );
 }

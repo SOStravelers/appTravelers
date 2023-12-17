@@ -58,7 +58,7 @@ export default function WorkersFound() {
               name={fullName(worker.personalData?.name)}
               service={"Corte de cabello"}
               score={5}
-              img={worker.img?.imgUrl}
+              img={worker.img?.imgUrl || "/assets/user.png"}
               link={`/worker/${worker.id}`}
               onClickSummary={() => {
                 selectWorker(worker.id);

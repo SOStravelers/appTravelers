@@ -1,6 +1,9 @@
 import React from "react";
 
 function SectionServiceCard({ title, list }) {
+  const capitalize = (cadena) => {
+    return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+  };
   return (
     <div
       className="text-black my-5 p-5 w-full max-w-lg flex flex-col justify-center bg-white rounded-2xl"
@@ -15,11 +18,15 @@ function SectionServiceCard({ title, list }) {
         {title}
       </h1>
       <ul>
-        {list?.map((item, index) => (
-          <li key={index} className="flex justify-between my-1">
-            <span> {item.name}</span>
-          </li>
-        ))}
+        {title != "Popular" ? (
+          list.map((item, index) => (
+            <li key={index} className="flex justify-between my-1">
+              <span>{capitalize(item?.service?.name)}</span>
+            </li>
+          ))
+        ) : (
+          <span>{capitalize(list?.service?.name)}</span>
+        )}
       </ul>
     </div>
   );

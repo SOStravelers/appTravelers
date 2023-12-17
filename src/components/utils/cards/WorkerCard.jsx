@@ -14,15 +14,16 @@ function WorkerCard({
   const handleSummary = () => {
     if (onClickSummary) onClickSummary();
   };
+  console.log(link);
   return (
     <div className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2 max-w-lg">
       <div className="flex">
-        <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 ml-3 relative">
+        <div className="w-20 h-20 rounded-xl  mr-2 ml-3 relative">
           <Link href={link}>
             {img && (
               <Image
                 src={img}
-                alt="gato"
+                alt="workerImg"
                 fill
                 className="object-cover rounded-xl"
               />

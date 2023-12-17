@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 function HostelCard({ id, link, name, location, img }) {
+  console.log("id", id);
   const router = useRouter();
   const { setService } = useStore();
 

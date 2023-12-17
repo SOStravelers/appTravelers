@@ -100,22 +100,23 @@ export default function MyServices() {
   };
 
   const handleSaveSelection = async () => {
-    user.workerData.services = selectedOptions;
-    // chekeo array de subservicios para actualizar base de datos
-    if (
-      user.workerData.services.some(
-        (services) => services.subServices.length > 0
-      )
-    ) {
-      user.workerData.isMyServicesOk = true;
-    } else {
-      user.workerData.isMyServicesOk = false;
-    }
+    console.log("user.workerData.services", user.workerData.services);
+    // Filtrar los servicios que tienen al menos un subservicio
+    const servicesWithSubservices = selectedOptions.filter(
+      (service) => service.subServices.length > 0
+    );
+
+    user.workerData.services = servicesWithSubservices;
+
+    // Chequear array de subservicios para actualizar la base de datos
+    user.workerData.isMyServicesOk = servicesWithSubservices.length > 0;
+
     const response = await UserService.updateUser(user);
+
     if (response.data) {
       setUser(response.data);
     }
-    setUser(response.data);
+
     setAddingService(false);
   };
 

@@ -52,7 +52,7 @@ export default function Summary() {
   const fullName = (data) => {
     if (!data) return "";
     const { first, last } = data;
-    return first + (last ?? "");
+    return first + " " + (last ?? "");
   };
 
   const hireNow = () => {

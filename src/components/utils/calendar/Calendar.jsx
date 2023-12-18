@@ -1,7 +1,6 @@
 "useClient";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
 import { DayPicker } from "react-day-picker";
 import TimeButton from "../buttons/TimeButton";
 import OutlinedButton from "../buttons/OutlinedButton";
@@ -9,8 +8,7 @@ import "react-day-picker/dist/style.css";
 import ScheduleService from "@/services/ScheduleService";
 import { useStore } from "@/store";
 import moment from "moment";
-import { set, setDay, parseISO, formatISO } from "date-fns";
-import { da } from "date-fns/locale";
+import { formatISO } from "date-fns";
 
 function Calendar({ id }) {
   const router = useRouter();
@@ -33,7 +31,6 @@ function Calendar({ id }) {
     const result = schedule ? getDisabledDays(schedule) : "";
     setDays(result);
   }, [schedule]);
-
   useEffect(() => {
     if (selectedDay) {
       const date = new Date(selectedDay);
@@ -49,22 +46,7 @@ function Calendar({ id }) {
     }
   }, [selectedDay]);
 
-  const selectTime = () => {
-    const dateStr = moment(selectedDay).format("YYYY-MM-DD");
-    setService({
-      date: dateStr,
-      hour: time.startTime,
-    });
-    if (fromFavorite === true) {
-      router.push(`/summary`);
-    } else if (isWorker) {
-      router.push(`/assign-client`);
-    } else if (fromFavorite === false) {
-      router.push(`/workers-found/${id}`);
-    }
-    console.log("service", service);
-  };
-
+  //Función que obtiene el schedule del hostel
   const getSchedule = async () => {
     const { serviceId, subServiceId, hostelId } = service;
     const response = await ScheduleService.getScheduleHostel(
@@ -76,7 +58,8 @@ function Calendar({ id }) {
       setSchedule(response.data);
     }
   };
-  function getDisabledDays() {
+  //Función que obtiene los días deshabilitados
+  const getDisabledDays = () => {
     // Ordena el array por la propiedad 'day'
     schedule.sort((a, b) => new Date(a.day) - new Date(b.day));
 
@@ -115,7 +98,23 @@ function Calendar({ id }) {
       lastDate: formattedLastDate,
       disabledDays: disabledDays,
     };
-  }
+  };
+  //Función que setea hora del booking
+  const selectTime = () => {
+    const dateStr = moment(selectedDay).format("YYYY-MM-DD");
+    setService({
+      date: dateStr,
+      hour: time.startTime,
+    });
+    if (fromFavorite === true) {
+      router.push(`/summary`);
+    } else if (isWorker) {
+      router.push(`/assign-client`);
+    } else if (fromFavorite === false) {
+      router.push(`/workers-found/${id}`);
+    }
+    console.log("service", service);
+  };
 
   let footer = <p className="my-5">Please pick a day.</p>;
   if (selectedDay) {

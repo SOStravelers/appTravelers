@@ -37,7 +37,21 @@ function RegisterForm() {
       if (service && Object.keys(service).length > 0) {
         router.push(`/summary`);
       } else {
-        router.push("/");
+        const response = await UserService.findByEmail(values.email);
+        if (response?.data?.isActive && response?.data?.isValidate) {
+          router.push("/");
+        } else if (!response?.data?.isValidate) {
+          const res = await UserService.sendCodeEmail(
+            response.data._id,
+            "validate"
+          );
+          if (res.status === 200) {
+            router.push({
+              pathname: "/verify-account",
+              query: { userId: response?.data?._id },
+            });
+          }
+        }
       }
     } catch (error) {
       let message;

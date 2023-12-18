@@ -14,10 +14,10 @@ body {
 
 .rdp {
   --rdp-cell-size: 40px !important;
-  --rdp-accent-color: #00a0d5 !important;
+  --rdp-accent-color: #1cdae5 !important;
   --rdp-background-color: #e7edff !important;
   /* Switch to dark colors for dark themes */
-  --rdp-accent-color-dark: #00a0d5 !important;
+  --rdp-accent-color-dark: #1cdae5 !important;
   --rdp-background-color-dark: #0063d5 !important;
   /* Outline border for focused elements */
   --rdp-outline: 2px solid var(--rdp-accent-color) !important;
@@ -26,8 +26,8 @@ body {
 }
 
 .neon-green {
-  color: #00a0d5;
-  text-shadow: 0 0 10px #00a0d5, 0 0 1px #00a0d5;
+  color: #1cdae5;
+  text-shadow: 0 0 10px #1cdae5, 0 0 1px #1cdae5;
 }
 
 .chat {
@@ -43,7 +43,7 @@ body {
   margin: auto;
   overflow: auto;
   border-radius: 8px;
-  border: 2px solid #00a0d5;
+  border: 2px solid #1cdae5;
   @media (max-width: 768px) {
     max-height: 420px;
     min-height: 420px;
@@ -58,16 +58,16 @@ body {
 }
 
 .msg.sent {
-  border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
-  background: #001c25;
+  border-radius: var(--rad) var(--rad-sm) var(--rad) var(--rad);
+  background: #0057FF;
   color: #fff;
   /* moves it to the right */
   margin-left: auto;
 }
 
 .msg.rcvd {
-  border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
-  background: #00a0d5;
+  border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad);
+  background: #1cdae5;
   color: #fff;
   /* moves it to the left */
   margin-right: auto;
@@ -77,12 +77,12 @@ body {
 
 .msg.sent:first-child,
 .msg.rcvd + .msg.sent {
-  border-top-right-radius: var(--rad);
+  border-top-right-radius: var(--rad-sm);
 }
 
 .msg.rcvd:first-child,
 .msg.sent + .msg.rcvd {
-  border-top-left-radius: var(--rad);
+  border-top-left-radius: var(--rad-sm);
 }
 
 /* time */

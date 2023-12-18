@@ -29,7 +29,7 @@ function WorkerProfileCardChat({ name, services, score, avatar }) {
             {services?.map((service) => service.id.name).join(", ")}
           </p>
           <div className="flex items-center">
-            <SolidButton text="Service Resume" color="black" />
+            <SolidButton text="Service Resume" color="black" onClick={goToServiceDetails} />
           </div>
         </div>
       </div>

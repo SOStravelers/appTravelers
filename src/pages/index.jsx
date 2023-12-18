@@ -104,9 +104,10 @@ export default function Home({}) {
           Services
         </h1>
         <div className="w-[90vw] md:w-full flex overflow-x-auto mb-5">
-          {services?.map((s) => (
+          {services?.map((s, index) => (
             <ServiceCard
-              key={s.id}
+              key={index}
+              id={s.id}
               link={`/subservices/${s.id}`}
               name={s.name}
             />

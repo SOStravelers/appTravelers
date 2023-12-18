@@ -4,9 +4,14 @@ import Cookies from "js-cookie";
 
 export default class ScheduleService {
   static resource = "schedules";
+  static resourceAuth = "schedules2";
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${ScheduleService.resource}`;
+  }
+  static get authUrl() {
+    const { api } = useStore.getState().urls;
+    return `${api}${ScheduleService.resourceAuth}`;
   }
   static getHeaders() {
     let access_token = Cookies.get("auth.access_token");
@@ -24,5 +29,11 @@ export default class ScheduleService {
     return axios.get(`${this.baseUrl}/get`, {
       headers: this.getHeaders(),
     });
+  }
+
+  static async getScheduleHostel(hostelId, serviceId, subserviceId) {
+    return axios.get(
+      `${this.authUrl}/business/${hostelId}/service/${serviceId}/subservice/${subserviceId}`
+    );
   }
 }

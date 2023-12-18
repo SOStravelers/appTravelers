@@ -6,59 +6,50 @@ import { DayPicker } from "react-day-picker";
 import TimeButton from "../buttons/TimeButton";
 import OutlinedButton from "../buttons/OutlinedButton";
 import "react-day-picker/dist/style.css";
-
+import ScheduleService from "@/services/ScheduleService";
 import { useStore } from "@/store";
 import moment from "moment";
-
-const HOURS = [
-  "9:00 am",
-  "10:00 am",
-  "11:00 am",
-  "12:00 pm",
-  "1:00 pm",
-  "2:00 pm",
-  "3:00 pm",
-  "4:00 pm",
-  "5:00 pm",
-  "6:00 pm",
-  "7:00 pm",
-  "8:00 pm",
-  "9:00 pm",
-];
+import { set, setDay, parseISO, formatISO } from "date-fns";
+import { da } from "date-fns/locale";
 
 function Calendar({ id }) {
   const router = useRouter();
-  const { setService, isWorker } = useStore();
+  const { service, setService, isWorker } = useStore();
   const [selected, setSelected] = useState("");
   const [time, setTime] = useState();
   const [fromFavorite, setFromFavorite] = useState(false);
-  const [fromDate, setFromDate] = useState();
-  const [toDate, setToDate] = useState();
-  const [hours, setHours] = useState();
+  const [data, setData] = useState([]);
+  const [days, setDays] = useState([]);
+  const [intervals, setIntervals] = useState([]);
 
   useEffect(() => {
-    initialize();
     if (localStorage.getItem("fromFavorite")) {
       setFromFavorite(true);
     }
+    getSchedule();
   }, []);
 
   useEffect(() => {
     if (selected) {
-      const dateString = moment({
-        year: selected.getFullYear(),
-        month: selected.getMonth(),
-        day: selected.getDate(),
-      }).format("YYYY-MM-DD");
-      initialize(dateString);
+      const date = new Date(selected);
+      const formattedDate =
+        formatISO(date, { representation: "date" }) + "T00:00:00.000";
+      for (let i = 0; i < data.length; i++) {
+        let cutDate = data[i].day.slice(0, -1);
+        if (cutDate == formattedDate) {
+          setIntervals(data[i].intervals);
+          break;
+        }
+      }
     }
   }, [selected]);
 
-  const select = () => {
+  const selectTime = () => {
+    console.log("selectTimess", selected, time);
     const dateStr = moment(selected).format("YYYY-MM-DD");
     setService({
       date: dateStr,
-      hour: time,
+      hour: time.startTime,
     });
     if (fromFavorite === true) {
       router.push(`/summary`);
@@ -67,27 +58,64 @@ function Calendar({ id }) {
     } else if (fromFavorite === false) {
       router.push(`/workers-found/${id}`);
     }
+    console.log("service", service);
   };
 
-  const initialize = (dateString = "") => {
-    let hours = [];
-    const now = moment();
-    if (dateString === now.format("YYYY-MM-DD") || selected === "") {
-      if (!selected) setSelected(now.toDate());
-      setFromDate(now.toDate());
-      setToDate(now.add(2, "months").toDate());
-      const nhs = now.add(2, "hours").format("hh:mm a");
-      hours = HOURS.filter((h) => {
-        const nh = moment(nhs, "hh:mm a");
-        const mh = moment(h, "hh:mm a");
+  useEffect(() => {
+    if (data.length === 0) return;
+    const result = data ? getDisabledDays(data) : "";
+    setDays(result);
+  }, [data]);
 
-        return mh > nh;
-      });
-    } else {
-      hours = HOURS.slice();
+  const getSchedule = async () => {
+    const { serviceId, subServiceId, hostelId } = service;
+    const response = await ScheduleService.getScheduleHostel(
+      hostelId,
+      serviceId,
+      subServiceId
+    );
+    if (response?.data) {
+      setData(response.data);
     }
-    setHours(hours);
   };
+  function getDisabledDays(data) {
+    // Ordena el array por la propiedad 'day'
+    data.sort((a, b) => new Date(a.day) - new Date(b.day));
+
+    // Extrae la fecha del primer y último objeto
+    const firstDate = new Date(data[0].day);
+    const lastDate = new Date(data[data.length - 1].day);
+
+    let disabledDays = [];
+
+    // Crea un nuevo objeto Date para cada día entre las dos fechas
+    for (
+      let d = new Date(firstDate);
+      d <= lastDate;
+      d.setDate(d.getDate() + 1)
+    ) {
+      // Comprueba si la fecha está en el array original
+      if (!data.some((obj) => new Date(obj.day).getTime() === d.getTime())) {
+        // Formatea la fecha y añádela al array
+        let formattedDate = d.toISOString().split("T")[0] + "T00:00:00.000";
+        disabledDays.push(new Date(formattedDate));
+      }
+    }
+
+    // Formatea firstDate y lastDate para eliminar la 'Z' al final
+    let formattedFirstDate = new Date(
+      firstDate.toISOString().split("T")[0] + "T00:00:00.000"
+    );
+    let formattedLastDate = new Date(
+      lastDate.toISOString().split("T")[0] + "T00:00:00.000"
+    );
+
+    return {
+      firstDate: formattedFirstDate,
+      lastDate: formattedLastDate,
+      disabledDays: disabledDays,
+    };
+  }
 
   let footer = <p className="my-5">Please pick a day.</p>;
   if (selected) {
@@ -96,16 +124,16 @@ function Calendar({ id }) {
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
         <h1 className="font-semibold text-2xl my-3">Time</h1>
         <div className="w-full flex flex-wrap justify-center mb-5">
-          {hours.map((hour) => (
+          {intervals.map((hour, index) => (
             <TimeButton
-              key={hour}
+              key={index}
               onClick={() => setTime(hour)}
-              text={hour}
+              text={hour.startTime}
               selected={time === hour}
             />
           ))}
         </div>
-        {time && <OutlinedButton text={"Next"} onClick={select} />}
+        {time && <OutlinedButton text={"Next"} onClick={selectTime} />}
       </div>
     );
   }
@@ -113,9 +141,10 @@ function Calendar({ id }) {
     <DayPicker
       mode="single"
       selected={selected}
+      disabled={days.disabledDays}
+      fromDate={days.firstDate}
+      toDate={days.lastDate}
       onSelect={setSelected}
-      fromDate={fromDate}
-      toDate={toDate}
       footer={footer}
     />
   );

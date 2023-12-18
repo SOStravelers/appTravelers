@@ -15,11 +15,11 @@ import { da } from "date-fns/locale";
 function Calendar({ id }) {
   const router = useRouter();
   const { service, setService, isWorker } = useStore();
-  const [selected, setSelected] = useState("");
   const [time, setTime] = useState();
   const [fromFavorite, setFromFavorite] = useState(false);
-  const [data, setData] = useState([]);
+  const [schedule, setSchedule] = useState([]);
   const [days, setDays] = useState([]);
+  const [selectedDay, setSelected] = useState("");
   const [intervals, setIntervals] = useState([]);
 
   useEffect(() => {
@@ -28,25 +28,29 @@ function Calendar({ id }) {
     }
     getSchedule();
   }, []);
+  useEffect(() => {
+    if (schedule.length === 0) return;
+    const result = schedule ? getDisabledDays(schedule) : "";
+    setDays(result);
+  }, [schedule]);
 
   useEffect(() => {
-    if (selected) {
-      const date = new Date(selected);
+    if (selectedDay) {
+      const date = new Date(selectedDay);
       const formattedDate =
         formatISO(date, { representation: "date" }) + "T00:00:00.000";
-      for (let i = 0; i < data.length; i++) {
-        let cutDate = data[i].day.slice(0, -1);
+      for (let i = 0; i < schedule.length; i++) {
+        let cutDate = schedule[i].day.slice(0, -1);
         if (cutDate == formattedDate) {
-          setIntervals(data[i].intervals);
+          setIntervals(schedule[i].intervals);
           break;
         }
       }
     }
-  }, [selected]);
+  }, [selectedDay]);
 
   const selectTime = () => {
-    console.log("selectTimess", selected, time);
-    const dateStr = moment(selected).format("YYYY-MM-DD");
+    const dateStr = moment(selectedDay).format("YYYY-MM-DD");
     setService({
       date: dateStr,
       hour: time.startTime,
@@ -61,12 +65,6 @@ function Calendar({ id }) {
     console.log("service", service);
   };
 
-  useEffect(() => {
-    if (data.length === 0) return;
-    const result = data ? getDisabledDays(data) : "";
-    setDays(result);
-  }, [data]);
-
   const getSchedule = async () => {
     const { serviceId, subServiceId, hostelId } = service;
     const response = await ScheduleService.getScheduleHostel(
@@ -75,16 +73,16 @@ function Calendar({ id }) {
       subServiceId
     );
     if (response?.data) {
-      setData(response.data);
+      setSchedule(response.data);
     }
   };
-  function getDisabledDays(data) {
+  function getDisabledDays() {
     // Ordena el array por la propiedad 'day'
-    data.sort((a, b) => new Date(a.day) - new Date(b.day));
+    schedule.sort((a, b) => new Date(a.day) - new Date(b.day));
 
     // Extrae la fecha del primer y último objeto
-    const firstDate = new Date(data[0].day);
-    const lastDate = new Date(data[data.length - 1].day);
+    const firstDate = new Date(schedule[0].day);
+    const lastDate = new Date(schedule[schedule.length - 1].day);
 
     let disabledDays = [];
 
@@ -95,7 +93,9 @@ function Calendar({ id }) {
       d.setDate(d.getDate() + 1)
     ) {
       // Comprueba si la fecha está en el array original
-      if (!data.some((obj) => new Date(obj.day).getTime() === d.getTime())) {
+      if (
+        !schedule.some((obj) => new Date(obj.day).getTime() === d.getTime())
+      ) {
         // Formatea la fecha y añádela al array
         let formattedDate = d.toISOString().split("T")[0] + "T00:00:00.000";
         disabledDays.push(new Date(formattedDate));
@@ -118,7 +118,7 @@ function Calendar({ id }) {
   }
 
   let footer = <p className="my-5">Please pick a day.</p>;
-  if (selected) {
+  if (selectedDay) {
     footer = (
       <div>
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
@@ -140,7 +140,7 @@ function Calendar({ id }) {
   return (
     <DayPicker
       mode="single"
-      selected={selected}
+      selected={selectedDay}
       disabled={days.disabledDays}
       fromDate={days.firstDate}
       toDate={days.lastDate}

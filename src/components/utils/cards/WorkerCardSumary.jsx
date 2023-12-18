@@ -22,7 +22,7 @@ function WorkerCardSumary({
   return (
     <div className="flex py-4 w-full max-w-lg rounded-lg justify-between my-2 items-center">
       <div className="flex">
-        <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
+        <div className="w-20 h-20 rounded-xl  mr-2 relative">
           <Link href={link}>
             {img ? (
               <Image

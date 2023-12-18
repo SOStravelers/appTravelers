@@ -28,6 +28,10 @@ function LoginForm() {
         localStorage.setItem("type", response.data.user.type);
       }
       delete response.data.user.type;
+      toast.info("signin", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1500,
+      });
 
       Cookies.set("auth.access_token", response.data.access_token);
       Cookies.set("auth.refresh_token", response.data.refresh_token);
@@ -56,7 +60,7 @@ function LoginForm() {
     } catch (error) {
       let message;
       if (error?.response?.status === 404)
-        message = error?.response?.data?.message;
+        message = error?.response?.data?.error;
       else if (error?.response?.status === 400) {
         try {
           const response = await UserService.findByEmail(email);
@@ -75,9 +79,13 @@ function LoginForm() {
         } catch (err) {
           console.log(err);
         }
-      } else if (error?.response?.status === 401)
-        message = error?.response?.data?.message;
-      toast.error(message);
+      } else if (error?.response?.status === 401) {
+        message = error?.response?.data?.error;
+      }
+      toast.error(message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1500,
+      });
     }
   };
 

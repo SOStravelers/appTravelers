@@ -86,7 +86,7 @@ export default function Summary() {
         service={"Barbero"}
         score={5}
         link={`/worker/${worker?._id}`}
-        img={worker?.img?.imgUrl}
+        img={worker?.img?.imgUrl || "/assets/user.png"}
         showEdit={validateEdit()}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />

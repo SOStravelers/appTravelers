@@ -5,7 +5,7 @@ import WorkerCardFavorite from "@/components/utils/cards/WorkerCardFavorite";
 import FavoriteService from "@/services/FavoriteService";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
-import { BarberPicture } from "@/constants/icons";
+import { FavoritePicture } from "@/constants/icons";
 
 export default function Favorites() {
   const store = useStore();
@@ -65,7 +65,7 @@ export default function Favorites() {
               " " +
               favorite.receptor.personalData.name.last
             }
-            image={favorite.receptor.img.imgUrl}
+            image={favorite.receptor.img.imgUrl || "/assets/user.png"}
             services={favorite?.receptor?.workerData?.services}
             score={5}
             link={`/worker/${favorite.receptor._id}`}
@@ -80,7 +80,7 @@ export default function Favorites() {
             No favorites yet
           </p>
           <div className="max-w-lg text-xl my-3 flex justify-center">
-            <BarberPicture />
+            <FavoritePicture />
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useStore } from "@/store";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import HostelCard from "@/components/utils/cards/HostelCard";
@@ -8,6 +9,7 @@ import HostelService from "@/services/HostelService";
 
 export default function SelectHostel() {
   const router = useRouter();
+  const { service } = useStore();
 
   const [hostels, setHostels] = useState([]);
 
@@ -17,9 +19,8 @@ export default function SelectHostel() {
   }, []);
 
   const getData = async () => {
-    const id = router.query.id;
-    HostelService.list({ id: id }).then((response) => {
-      // console.log("hostel", response.data);
+    HostelService.getByservice(service.serviceId).then((response) => {
+      console.log("hostel", response.data);
       let final = [];
       for (let item of response.data.docs) {
         if (item.img.imgUrl != null) {

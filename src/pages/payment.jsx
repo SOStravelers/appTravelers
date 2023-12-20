@@ -45,6 +45,7 @@ export default function Payment() {
             type="radio"
             name="payment"
             id="card"
+            className="w-5 h-5"
             value="stripe"
             onChange={(event) => setPaymentType(event.target.value)}
             checked={paymentType === "stripe"}
@@ -61,12 +62,17 @@ export default function Payment() {
               height={50}
               alt="Credit Card Logo"
             />
-            <p className="ml-2">Debit / Credit Card</p>
+            <div>
+              <p className="ml-2">Debit / Credit Card</p>
+              <p className="ml-2">(Comming soon)</p>
+            </div>
           </div>
           <input
             type="radio"
             name="payment"
+            className="w-5 h-5"
             id="paypal"
+            disabled
             value="paypal"
             onChange={(event) => setPaymentType(event.target.value)}
             checked={paymentType === "paypal"}
@@ -77,13 +83,14 @@ export default function Payment() {
             <div className="ml-2">
               <LockIcon />
             </div>
-            <p className="ml-8">{"Cash (Comming Soon)"}</p>
+            <p className="ml-8">{"Cash (Comming soon)"}</p>
           </div>
           <input
             type="radio"
             disabled
             name="payment"
             id="cash"
+            className="w-5 h-5"
             value="cash"
             onChange={(event) => setPaymentType(event.target.value)}
             checked={paymentType === "cash"}

@@ -101,7 +101,7 @@ export default function Summary() {
     var mes = meses[fechaObj.getMonth()];
     var dia = fechaObj.getDate();
     var año = fechaObj.getFullYear();
-    var diaSemana = diasSemana[fechaObj.getDay()];
+    var diaSemana = diasSemana[fechaObj.getUTCDay()];
 
     // Formatear la fecha como "Wednesday, December 20, 2023"
     var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;

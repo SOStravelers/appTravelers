@@ -34,13 +34,13 @@ function WorkerCardSumary({
             ) : null}
           </Link>
         </div>
-        <div className="flex flex-col">
+        <div className="flex mt-2 flex-col">
           <h1 className="font-semibold">{name}</h1>
           <p className="text-blackText text-sm">{service}</p>
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <StarIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText">{score}</p>
-          </div>
+          </div> */}
         </div>
       </div>
 

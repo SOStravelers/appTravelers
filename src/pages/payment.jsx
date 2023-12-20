@@ -1,7 +1,7 @@
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { LockIcon } from "@/constants/icons";
+import { LockIcon, MoneyIcon } from "@/constants/icons";
 import Image from "next/image";
 
 export default function Payment() {
@@ -10,7 +10,7 @@ export default function Payment() {
     document.title = "Payment - SOS Travelers";
   }, []);
 
-  const [paymentType, setPaymentType] = useState(null);
+  const [paymentType, setPaymentType] = useState("stripe");
 
   const pay = async () => {
     let url = "/";
@@ -81,9 +81,9 @@ export default function Payment() {
         <div className="flex mt-3 justify-between items-center">
           <div className="flex items-center my-3">
             <div className="ml-2">
-              <LockIcon />
+              <MoneyIcon />
             </div>
-            <p className="ml-8">{"Cash (Comming soon)"}</p>
+            <p className="ml-2">{"Cash (Comming soon)"}</p>
           </div>
           <input
             type="radio"

@@ -77,7 +77,7 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
           </h1>
           <div className="flex items-center">
             <PinIcon color={"#00A0D5"} className="mr-1 text-xs" />
-            <p className="text-blackText">{location?.city}</p>
+            <p className="text-blackText text-sm">{location?.city}</p>
           </div>
           <div className="flex items-center">
             <p className=" ml-1 text-xs text-blackText">

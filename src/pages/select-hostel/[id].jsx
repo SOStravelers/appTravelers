@@ -46,6 +46,7 @@ export default function SelectHostel() {
             <HostelCard
               id={hostel.id}
               link={`/reservation/${hostel.id}`}
+              services={hostel.businessData.services}
               name={hostel.businessData.name}
               location={hostel?.businessData?.location || "No location"}
               img={hostel?.img?.imgUrl || "/assets/user.png"}

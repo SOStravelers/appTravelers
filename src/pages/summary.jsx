@@ -68,6 +68,55 @@ export default function Summary() {
     if (localStorage.getItem("fromFavorite")) return false;
   };
 
+  function formatearFecha(fechaStr) {
+    // Fecha proporcionada en formato YYYY-MM-DD
+    var fechaObj = new Date(fechaStr);
+
+    // Meses y días de la semana en inglés
+    var meses = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    var diasSemana = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    // Obtener el mes, día y año
+    var mes = meses[fechaObj.getMonth()];
+    var dia = fechaObj.getDate();
+    var año = fechaObj.getFullYear();
+    var diaSemana = diasSemana[fechaObj.getDay()];
+
+    // Formatear la fecha como "Wednesday, December 20, 2023"
+    var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
+
+    return fechaFormateada;
+  }
+  function getServiceNames(data) {
+    // Extraer los nombres de los servicios
+    const serviceNames = data.services.map((service) => service.id.name);
+
+    // Unir los nombres en un solo string con comas
+    const serviceNamesString = serviceNames.join(", ");
+
+    return serviceNamesString;
+  }
   return (
     <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-10 md:pl-80">
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
@@ -83,7 +132,11 @@ export default function Summary() {
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
       <WorkerCardSumary
         name={fullName(worker?.personalData?.name)}
-        service={"Barbero"}
+        service={
+          worker?.workerData
+            ? getServiceNames(worker.workerData)
+            : "No services"
+        }
         score={5}
         link={`/worker/${worker?._id}`}
         img={worker?.img?.imgUrl || "/assets/user.png"}
@@ -95,7 +148,9 @@ export default function Summary() {
         <div className="flex justify-between w-full max-w-lg pr-1 my-5">
           <div className="flex  ">
             <ClockIcon />
-            <p className="ml-2">{`${theDate || ""} | ${theHour || ""}`}</p>
+            <p className="ml-2">{`${formatearFecha(service?.date) || ""} | ${
+              service?.startTime?.stringData + " hrs" || ""
+            }`}</p>
           </div>
           <Link className="flex " href={`/reservation/${IdHostel}`}>
             <ChangeIcon />
@@ -120,9 +175,23 @@ export default function Summary() {
           </Link>
         </p>
       </div>
-      <div className="flex justify-between items-end w-full max-w-lg my-5">
+      <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
+        <p className="text-blackText font-semibold">Service</p>
+        <p className="text-blackBlue font-semibold text-md">
+          {service?.nameSubservice}
+        </p>
+      </div>
+      <div className="flex justify-between items-end w-full max-w-lg my-1">
+        <p className="text-blackText font-semibold">Service duration</p>
+        <p className="text-blackBlue font-semibold text-md">
+          {service?.duration} min
+        </p>
+      </div>
+      <div className="flex justify-between items-end w-full max-w-lg my-1">
         <p className="text-blackText font-semibold">Total Service Fee</p>
-        <p className="text-blackBlue font-semibold text-2xl">$ 100.00</p>
+        <p className="text-blackBlue font-semibold text-xl">
+          {service?.price?.value}
+        </p>
       </div>
       <OutlinedButton
         disabled={!selected}

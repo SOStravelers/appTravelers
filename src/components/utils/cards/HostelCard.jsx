@@ -5,7 +5,7 @@ import { PinIcon, ArrowRightIcon } from "@/constants/icons";
 import Link from "next/link";
 import Image from "next/image";
 
-function HostelCard({ id, link, name, location, img }) {
+function HostelCard({ id, link, name, location, img, services }) {
   const router = useRouter();
   const { setService } = useStore();
 
@@ -21,6 +21,9 @@ function HostelCard({ id, link, name, location, img }) {
       router.push(link);
     }
   };
+  function getServiceNames(services) {
+    return services.map((service) => service.service.name).join(", ");
+  }
 
   return (
     <div className="flex  max-w-lg justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2">
@@ -37,10 +40,13 @@ function HostelCard({ id, link, name, location, img }) {
           </div>
         </Link>
         <div className="flex flex-col p-2">
-          <h1 className="font-semibold">{name}</h1>
+          <h1 className="font-semibold ml-1">{name}</h1>
           <div className="flex items-center">
             <PinIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText">{location?.city}</p>
+          </div>
+          <div className="flex items-center">
+            <p className=" ml-1 text-blackText">{getServiceNames(services)}</p>
           </div>
         </div>
       </div>

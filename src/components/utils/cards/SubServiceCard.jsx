@@ -2,10 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store";
 
-function SubServiceCard({ id, link, icon, name }) {
+function SubServiceCard({ id, link, icon, price, name, duration }) {
   const { setService } = useStore();
   const select = () => {
-    setService({ subServiceId: id });
+    setService({
+      subServiceId: id,
+      price: price,
+      nameSubservice: name,
+      duration: duration,
+    });
   };
   return (
     <Link href={link} onClick={select}>

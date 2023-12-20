@@ -14,7 +14,7 @@ body {
 
 .rdp {
   --rdp-cell-size: 40px !important;
-  --rdp-accent-color: #1cdae5 !important;
+  --rdp-accent-color: #00A0D5 !important;
   --rdp-background-color: #e7edff !important;
   /* Switch to dark colors for dark themes */
   --rdp-accent-color-dark: #1cdae5 !important;
@@ -26,8 +26,8 @@ body {
 }
 
 .neon-green {
-  color: #1cdae5;
-  text-shadow: 0 0 10px #1cdae5, 0 0 1px #1cdae5;
+  color: #00A0D5;
+  text-shadow: 0 0 10px #00A0D5, 0 0 1px #00A0D5;
 }
 
 .chat {
@@ -43,7 +43,7 @@ body {
   margin: auto;
   overflow: auto;
   border-radius: 8px;
-  border: 2px solid #1cdae5;
+  border: 2px solid #00A0D5;
   @media (max-width: 768px) {
     max-height: 420px;
     min-height: 420px;
@@ -67,7 +67,7 @@ body {
 
 .msg.rcvd {
   border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad);
-  background: #1cdae5;
+  background: #00A0D5;
   color: #fff;
   /* moves it to the left */
   margin-right: auto;

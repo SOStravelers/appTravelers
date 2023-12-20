@@ -2173,7 +2173,7 @@ export const LogoSos = ({ ...props }) => (
       >
         <stop stop-color="#0057FF" stop-opacity="0.15" />
         <stop offset="0.07" stop-color="#0056FD" stop-opacity="0.3" />
-        <stop offset="0.51" stop-color="#1CDAE5" stop-opacity="0.9" />
+        <stop offset="0.51" stop-color="#00A0D5" stop-opacity="0.9" />
         <stop offset="0.93" stop-color="#0056FD" stop-opacity="0.3" />
         <stop offset="1" stop-color="#0056FD" stop-opacity="0.15" />
       </linearGradient>
@@ -2207,7 +2207,7 @@ export const LogoSosWhite = ({ ...props }) => (
       >
         <stop stop-color="#0057FF" stop-opacity="0.15" />
         <stop offset="0.07" stop-color="#0056FD" stop-opacity="0.3" />
-        <stop offset="0.51" stop-color="#1CDAE5" stop-opacity="0.9" />
+        <stop offset="0.51" stop-color="#00A0D5" stop-opacity="0.9" />
         <stop offset="0.93" stop-color="#0056FD" stop-opacity="0.3" />
         <stop offset="1" stop-color="#0056FD" stop-opacity="0.15" />
       </linearGradient>
@@ -2240,7 +2240,7 @@ export const LogoSosBlack = ({ ...props }) => (
       >
         <stop stop-color="#0057FF" stop-opacity="0.15" />
         <stop offset="0.07" stop-color="#0056FD" stop-opacity="0.3" />
-        <stop offset="0.51" stop-color="#1CDAE5" stop-opacity="0.9" />
+        <stop offset="0.51" stop-color="#00A0D5" stop-opacity="0.9" />
         <stop offset="0.93" stop-color="#0056FD" stop-opacity="0.3" />
         <stop offset="1" stop-color="#0056FD" stop-opacity="0.15" />
       </linearGradient>
@@ -2559,7 +2559,7 @@ export const CheckIcon = ({ ...props }) => (
         fillRule="evenodd"
         clipRule="evenodd"
         d="M0.5 10C0.5 7.34784 1.55357 4.8043 3.42893 2.92893C5.3043 1.05357 7.84784 0 10.5 0C13.1522 0 15.6957 1.05357 17.5711 2.92893C19.4464 4.8043 20.5 7.34784 20.5 10C20.5 12.6522 19.4464 15.1957 17.5711 17.0711C15.6957 18.9464 13.1522 20 10.5 20C7.84784 20 5.3043 18.9464 3.42893 17.0711C1.55357 15.1957 0.5 12.6522 0.5 10ZM9.92933 14.28L15.6867 7.08267L14.6467 6.25067L9.73733 12.3853L6.26 9.488L5.40667 10.512L9.92933 14.2813V14.28Z"
-        fill="#1CDAE5"
+        fill="#00A0D5"
       />
     </g>
     <defs>

@@ -133,7 +133,8 @@ function Calendar({ id }) {
     footer = (
       <div>
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
-        <h1 className="font-semibold text-2xl my-3">Time</h1>
+        <h1 className="font-semibold text-xl mt-2">Choose de time</h1>
+        <h2 className="font-semibold text-sm mb-1">Brazil time zone (GTM-3)</h2>
         <div className="w-full flex flex-wrap justify-center mb-5">
           {intervals.length > 0 ? (
             intervals.map((hour, index) => (

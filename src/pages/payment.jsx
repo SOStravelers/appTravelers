@@ -34,6 +34,7 @@ export default function Payment() {
         >
           <div className="flex items-center my-3">
             <Image
+              onClick={() => setPaymentType("stripe")}
               src={"/icons/visa.svg"}
               width={50}
               height={50}
@@ -63,7 +64,7 @@ export default function Payment() {
               alt="Credit Card Logo"
             />
             <div>
-              <p className="ml-2">Debit / Credit Card</p>
+              <p className="ml-2">Paypal</p>
               <p className="ml-2">(Comming soon)</p>
             </div>
           </div>
@@ -80,10 +81,13 @@ export default function Payment() {
         </div>
         <div className="flex mt-3 justify-between items-center">
           <div className="flex items-center my-3">
-            <div className="ml-2">
+            <div className="">
               <MoneyIcon />
             </div>
-            <p className="ml-2">{"Cash (Comming soon)"}</p>
+            <div>
+              <p className="ml-2">Cash</p>
+              <p className="ml-2">(Comming soon)</p>
+            </div>
           </div>
           <input
             type="radio"

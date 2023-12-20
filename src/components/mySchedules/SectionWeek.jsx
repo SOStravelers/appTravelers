@@ -29,6 +29,9 @@ function SectionWeek() {
   useEffect(() => {
     getData();
   }, []);
+  useEffect(() => {
+    console.log("cambiando", user.workerData);
+  }, [user]);
 
   useEffect(() => {
     if (save) {
@@ -70,7 +73,7 @@ function SectionWeek() {
       hours,
       minutes
     );
-
+    // console.log("startTime", startTime);
     // Formatear manualmente la hora
     const tiempoFormateado =
       startTime.getFullYear() +
@@ -150,6 +153,20 @@ function SectionWeek() {
     try {
       let schedules = { schedules: horario };
       const response = await ScheduleService.save(schedules);
+      let check = response.data.schedules.some(
+        (item) => item.isActive === true
+      );
+      const newuser = user;
+      if (check) {
+        newuser.workerData.isMySchedulesOk = true;
+      } else {
+        newuser.workerData.isMySchedulesOk = false;
+      }
+      console.log("aqui");
+      const responseUser = await UserService.updateUser(newuser);
+      console.log(responseUser);
+      setUser(responseUser.data);
+
       toast.info("Saved", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1200,
@@ -161,26 +178,6 @@ function SectionWeek() {
       });
     }
   };
-
-  // useEffect(() => {
-  const fetchUser = async () => {
-    console.log("hola mundo", user);
-    const newuser = user;
-    const schedulesResponse = await schedule.getScheduleUser();
-
-    let check = schedulesResponse.data.schedules.some(
-      (item) => item.isActive === true
-    );
-    if (check) {
-      newuser.workerData.isMySchedulesOk = true;
-    } else {
-      newuser.workerData.isMySchedulesOk = false;
-    }
-    UserService.updateUser(newuser);
-    // Realiza las operaciones que necesitas con el usuario aquí
-  };
-  fetchUser();
-  // }, []);
 
   return (
     <section className="w-full max-w-lg">

@@ -6,12 +6,11 @@ import { PinIcon, ArrowRightIcon } from "@/constants/icons";
 import Link from "next/link";
 import Image from "next/image";
 
-function HostelCard({ id, link, name, location, img, services }) {
+function HostelCard({ id, link, name, editing, location, img, services }) {
   const router = useRouter();
   const { setService } = useStore();
-
+  const [newLink, setNewLink] = useState(link);
   const [width, setWidth] = useState(0);
-
   useEffect(() => {
     setWidth(window.innerWidth);
 
@@ -25,19 +24,21 @@ function HostelCard({ id, link, name, location, img, services }) {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    if (editing) {
+      setNewLink("/summary");
+    } else {
+      setNewLink(link);
+    }
+  }, []);
 
   const select = () => {
     console.log("apretando select");
-    const editing = localStorage.getItem("editing");
     setService({
       hostelId: id,
       location: location.city,
     });
-    if (editing) {
-      router.push("/summary");
-    } else {
-      router.push(link);
-    }
+    router.push(newLink);
   };
   function getServiceNames(services) {
     return services.map((service) => service.service.name).join(", ");
@@ -75,11 +76,11 @@ function HostelCard({ id, link, name, location, img, services }) {
             {width < 420 ? truncate(name, 20) : name}
           </h1>
           <div className="flex items-center">
-            <PinIcon color={"#00A0D5"} className="mr-1" />
+            <PinIcon color={"#00A0D5"} className="mr-1 text-xs" />
             <p className="text-blackText">{location?.city}</p>
           </div>
           <div className="flex items-center">
-            <p className=" ml-2 text-xs text-blackText">
+            <p className=" ml-1 text-xs text-blackText">
               {width < 420
                 ? truncate(getServiceNames(services), 26)
                 : getServiceNames(services)}

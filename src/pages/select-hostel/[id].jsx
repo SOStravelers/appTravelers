@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
 
-import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import HostelCard from "@/components/utils/cards/HostelCard";
 import { random } from "@/lib/utils";
 import HostelService from "@/services/HostelService";
@@ -10,7 +9,7 @@ import HostelService from "@/services/HostelService";
 export default function SelectHostel() {
   const router = useRouter();
   const { service } = useStore();
-
+  const editing = localStorage.getItem("editing");
   const [hostels, setHostels] = useState([]);
 
   useEffect(() => {
@@ -45,6 +44,7 @@ export default function SelectHostel() {
           <div className="w-full" key={hostel.id}>
             <HostelCard
               id={hostel.id}
+              editing={editing}
               link={`/reservation/${hostel.id}`}
               services={hostel.businessData.services}
               name={hostel.businessData.name}

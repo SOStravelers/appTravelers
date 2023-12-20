@@ -107,9 +107,17 @@ function Calendar({ id }) {
   //Función que setea hora del booking
   const selectTime = () => {
     const dateStr = moment(selectedDay).format("YYYY-MM-DD");
+    console.log("el tiempo", time);
     setService({
       date: dateStr,
-      hour: time.startTime,
+      startTime: {
+        isoTime: time.startTimeIso,
+        stringData: time.startTime,
+      },
+      endTime: {
+        isoTime: time.endTimeIso,
+        stringData: time.endTime,
+      },
     });
     if (fromFavorite === true) {
       router.push(`/summary`);

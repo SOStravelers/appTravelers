@@ -17,9 +17,16 @@ export default function WorkersFound() {
   }, []);
 
   const getData = async () => {
-    WorkerService.list().then((response) => {
+    const data = {
+      subservice: service.subServiceId,
+      startTime: service.startTime,
+      endTime: service.endTime,
+    };
+    WorkerService.getByAvailability(data).then((response) => {
+      console.log(response);
+      // WorkerService.list().then((response) => {
       let final = [];
-      for (let item of response.data.docs) {
+      for (let item of response.data.allUsers) {
         const itemNuevo = { ...item };
         if (itemNuevo.img.imgUrl != null && itemNuevo.img.imgUrl != "") {
           itemNuevo.img.imgUrl = itemNuevo.img.imgUrl + "?hola=" + random();
@@ -30,20 +37,17 @@ export default function WorkersFound() {
       // setWorkers(response.data.docs);
     });
   };
-  function getSubserviceNameById(workerData) {
-    const services = workerData?.services || [];
-    const id = service.subServiceId;
-    for (const service of services) {
-      const subService = service.subServices.find((sub) => sub._id === id);
 
-      if (subService) {
-        return subService.name;
-      }
-    }
+  function getServiceNames(data) {
+    // Extraer los nombres de los servicios
+    const serviceNames = data.services.map((service) => service.id.name);
 
-    // Devuelve null si no se encuentra el subservicio con el ID dado
-    return null;
+    // Unir los nombres en un solo string con comas
+    const serviceNamesString = serviceNames.join(", ");
+
+    return serviceNamesString;
   }
+
   const selectWorker = (workerId) => {
     const hostelId = router.query.id;
     setService({
@@ -70,11 +74,8 @@ export default function WorkersFound() {
               name={fullName(worker.personalData?.name)}
               service={
                 worker?.workerData
-                  ? getSubserviceNameById(
-                      worker.workerData,
-                      service.subserviceId
-                    )
-                  : "hola"
+                  ? getServiceNames(worker.workerData)
+                  : "No services"
               }
               score={5}
               img={worker.img?.imgUrl || "/assets/user.png"}

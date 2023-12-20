@@ -6,7 +6,7 @@ import StripeService from "@/services/StripeService";
 export default function Stripe() {
   const [clientSecret, setClientSecret] = useState(null);
   const initialized = useRef(false);
-  const { service, setPayment } = useStore();
+  const { service } = useStore();
 
   useEffect(() => {
     document.title = "Your Payment - SOS Travelers";
@@ -24,7 +24,6 @@ export default function Stripe() {
       currency: "brl",
     }).then((response) => {
       console.log(response.data);
-      setPayment(response.data);
       setClientSecret(response.data.clientSecret);
     });
   };

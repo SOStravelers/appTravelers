@@ -14,7 +14,7 @@ import moment from "moment";
 
 export default function PaymentConfirmation() {
   const router = useRouter();
-  const { service, payment, user } = useStore();
+  const { service, user } = useStore();
   const initialized = useRef(false);
 
   useEffect(() => {

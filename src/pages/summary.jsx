@@ -159,7 +159,7 @@ export default function Summary() {
       <div className="flex items-center w-full max-w-lg my-2">
         <input
           type="checkbox"
-          className="mr-2"
+          className="mr-2 w-5 h-5"
           checked={selected}
           onChange={() => setSelected(!selected)}
         />

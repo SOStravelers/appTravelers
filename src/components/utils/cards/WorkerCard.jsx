@@ -66,7 +66,7 @@ function WorkerCard({
             {width < 420 ? truncate(service, 26) : service}
           </p>
           <div className="flex items-center">
-            <StarIcon color={"#1CDAE5"} className="mr-1" />
+            <StarIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText">{score}</p>
           </div>
         </Link>

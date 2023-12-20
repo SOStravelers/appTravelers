@@ -14,36 +14,47 @@ import moment from "moment";
 
 export default function PaymentConfirmation() {
   const router = useRouter();
-  const { service } = useStore();
+  const { service, payment, user } = useStore();
   const initialized = useRef(false);
 
   useEffect(() => {
+    console.log("el servicio", service);
     const paymentIntent = router.query.payment_intent;
     if (paymentIntent && !initialized.current) {
       initialized.current = true;
-      createBooking();
+      createBooking(paymentIntent);
     } else {
       initialized.current = false;
     }
   }, [router.query]);
 
-  const createBooking = async () => {
-    const userId = localStorage.getItem("auth.user_id");
-    const startTime = service.hour.toUpperCase();
-    const endTime = moment(service.hour, "hh:mm a")
-      .add(1, "hour")
-      .format("hh:mm a")
-      .toUpperCase();
+  const createBooking = async (paymentIntent) => {
+    const client = user._id;
     const params = {
-      worker: service.workerId,
-      client: userId,
-      creator: userId,
-      startTime: startTime,
-      endTime: endTime,
-      date: service.date,
+      workerUser: service.workerId,
+      clientUser: client,
+      payment: {
+        paymentId: paymentIntent,
+        price: service.price.number,
+        method: "stripe",
+        status: "pending",
+      },
+      location: service.location,
+      businessUser: service.hostelId,
+      price: service.price.number,
+      startTime: service.startTime,
+      duration: service.duration,
+      endTime: service.endTime,
+      date: {
+        stringData: service.date,
+        isoDate: service.startTime.isoTime,
+      },
+      subservice: service.subServiceId,
+      service: service.serviceId,
     };
     const response = await BookingService.create(params);
     console.log(response);
+    localStorage.removeItem("service");
   };
 
   return (

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import StripeForm from "@/components/utils/payments/StripeForm";
-
+import { useStore } from "@/store";
 import StripeService from "@/services/StripeService";
 
 export default function Stripe() {
   const [clientSecret, setClientSecret] = useState(null);
   const initialized = useRef(false);
+  const { service, setPayment } = useStore();
 
   useEffect(() => {
     document.title = "Your Payment - SOS Travelers";
@@ -19,10 +20,11 @@ export default function Stripe() {
 
   const createPaymentIntent = async () => {
     StripeService.createPaymentIntent({
-      amount: 1575,
-      currency: "usd",
+      amount: service.price.number * 100,
+      currency: "brl",
     }).then((response) => {
       console.log(response.data);
+      setPayment(response.data);
       setClientSecret(response.data.clientSecret);
     });
   };

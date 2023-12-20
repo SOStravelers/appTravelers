@@ -34,12 +34,14 @@ export const useStore = create((set) => {
     service: service,
     isWorker: false,
     services: [],
+    payment: null,
     loginModal: false,
     setLoginModal: (loginModal) => set({ loginModal: loginModal }),
     setUser: (user) => set({ user: { ...user } }),
     setLoggedIn: (loggedIn) => set({ loggedIn: loggedIn }),
     setServices: (services) => set({ services: services }),
     setWorker: (isWorker) => set({ isWorker: isWorker }),
+    setPayment: (payment) => set({ payment: payment }),
     setService: (service) =>
       set((state) => {
         const data = { service: { ...state.service, ...service } };

@@ -102,12 +102,10 @@ export default function MyServices() {
     const servicesWithSubservices = selectedOptions.filter(
       (service) => service.subServices.length > 0
     );
-
     user.workerData.services = servicesWithSubservices;
-
+    user.workerData.isActive = true;
     // Chequear array de subservicios para actualizar la base de datos
     user.workerData.isMyServicesOk = servicesWithSubservices.length > 0;
-
     const response = await UserService.updateUser(user);
 
     if (response.data) {

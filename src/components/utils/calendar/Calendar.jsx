@@ -16,8 +16,12 @@ function Calendar({ id }) {
   const [time, setTime] = useState();
   const [fromFavorite, setFromFavorite] = useState(false);
   const [schedule, setSchedule] = useState([]);
-  const [days, setDays] = useState([]);
-  const [selectedDay, setSelected] = useState("");
+  const [days, setDays] = useState({
+    firstDate: null,
+    lastDate: null,
+    disabledDays: [],
+  });
+  const [selectedDay, setSelected] = useState(new Date());
   const [intervals, setIntervals] = useState([]);
 
   useEffect(() => {
@@ -55,6 +59,7 @@ function Calendar({ id }) {
       subServiceId
     );
     if (response?.data) {
+      console.log("calendario", response.data);
       setSchedule(response.data);
     }
   };
@@ -123,15 +128,20 @@ function Calendar({ id }) {
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
         <h1 className="font-semibold text-2xl my-3">Time</h1>
         <div className="w-full flex flex-wrap justify-center mb-5">
-          {intervals.map((hour, index) => (
-            <TimeButton
-              key={index}
-              onClick={() => setTime(hour)}
-              text={hour.startTime}
-              selected={time === hour}
-            />
-          ))}
+          {intervals.length > 0 ? (
+            intervals.map((hour, index) => (
+              <TimeButton
+                key={index}
+                onClick={() => setTime(hour)}
+                text={hour.startTime}
+                selected={time === hour}
+              />
+            ))
+          ) : (
+            <span>No available time options.</span>
+          )}
         </div>
+
         {time && <OutlinedButton text={"Next"} onClick={selectTime} />}
       </div>
     );
@@ -140,9 +150,12 @@ function Calendar({ id }) {
     <DayPicker
       mode="single"
       selected={selectedDay}
-      disabled={days.disabledDays}
-      fromDate={days.firstDate}
-      toDate={days.lastDate}
+      disabled={days?.disabledDays.length > 0 ? days?.disabledDays : true}
+      fromDate={days?.firstDate || new Date()}
+      toDate={
+        days?.lastDate ||
+        new Date(new Date().setMonth(new Date().getMonth() + 1))
+      }
       onSelect={setSelected}
       footer={footer}
     />

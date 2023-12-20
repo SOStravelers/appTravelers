@@ -38,7 +38,7 @@ export default function SelectHostel() {
   return (
     <div className="p-10 pb-20 flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       {/* <OutlinedInput placeholder={"Search here"} /> */}
-      <h1 className="my-4 font-semibold text-center max-w-lg">Nearby You</h1>
+      <h1 className="my-3 font-semibold text-center max-w-lg">Nearby You</h1>
       <div className="flex flex-col items-center">
         {hostels.map((hostel) => (
           <div className="w-full" key={hostel.id}>

@@ -5,7 +5,7 @@ import WorkerCardSumary from "@/components/utils/cards/WorkerCardSumary";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import Link from "next/link";
-import { ClockIcon, ChangeIcon } from "@/constants/icons";
+import { ClockIcon, ChangeIcon, CheckIcon } from "@/constants/icons";
 
 import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WorkerService";
@@ -157,12 +157,20 @@ export default function Summary() {
         </div>
       )}
       <div className="flex items-center w-full max-w-lg my-2">
-        <input
-          type="checkbox"
-          className="mr-2 w-5 h-5"
-          checked={selected}
-          onChange={() => setSelected(!selected)}
-        />
+        {selected ? (
+          <CheckIcon
+            className="mr-2 w-6 h-6 cursor-pointer"
+            onClick={() => setSelected(false)}
+          />
+        ) : (
+          <input
+            type="checkbox"
+            className="mr-2 w-6 h-6"
+            checked={selected}
+            onChange={() => setSelected(!selected)}
+          />
+        )}
+
         <p className="text-greyText">
           Accept our{" "}
           <Link href={"terms-of-service"} className="underline">

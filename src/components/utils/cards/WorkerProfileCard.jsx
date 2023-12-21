@@ -100,11 +100,13 @@ function WorkerProfileCard({ name, services, score, avatar }) {
           <h1 className="font-semibold text-black">{name}</h1>
 
           {user && Object.keys(user).length > 0 ? (
-            <FavButton
-              isFavorite={isFavorite}
-              handleSetFav={handleSetFav}
-              handleDeleteFav={handleDeleteFav}
-            />
+            <div className="ml-4">
+              <FavButton
+                isFavorite={isFavorite}
+                handleSetFav={handleSetFav}
+                handleDeleteFav={handleDeleteFav}
+              />
+            </div>
           ) : null}
         </div>
         <p className="text-blackText my-2">

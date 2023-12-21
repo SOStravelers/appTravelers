@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 function RecomendationCard(user) {
   console.log("el user", user);
@@ -20,10 +21,13 @@ function RecomendationCard(user) {
     return allSubServices[randomIndex].name;
   }
   return (
-    <div className="text-black flex flex-col bg-white w-40 h-60 mx-2 rounded-2xl border-r-2 border-blueBorder">
+    <Link
+      href={"/worker/" + user?.user._id}
+      className="text-black flex flex-col bg-white w-40 h-60 mx-2 rounded-2xl border-r-2 border-blueBorder"
+    >
       <div className="w-full h-40 rounded-tr-2xl rounded-tl-2xl relative">
         <Image
-          src={user.user.img.imgUrl || "/assets/service.png"}
+          src={user?.user?.img?.imgUrl || "/assets/service.png"}
           fill
           alt="casa"
           className="object-cover rounded-tr-2xl rounded-tl-2xl"
@@ -39,7 +43,7 @@ function RecomendationCard(user) {
             user?.user?.personalData?.name?.last}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
 

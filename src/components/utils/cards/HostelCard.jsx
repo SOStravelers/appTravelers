@@ -70,7 +70,7 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
             />
           </div>
         </Link>
-        <div className="flex flex-col p-2">
+        <div onClick={select} className="flex flex-col p-2">
           <h1 className="font-semibold ml-1">
             {" "}
             {width < 420 ? truncate(name, 20) : name}
@@ -88,7 +88,10 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
           </div>
         </div>
       </div>
-      <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
+      <div
+        onClick={select}
+        className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
+      >
         <ArrowRightIcon className="ml-1" />
       </div>
     </div>

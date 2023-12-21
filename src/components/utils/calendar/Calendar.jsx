@@ -135,7 +135,7 @@ function Calendar({ id }) {
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
         <h1 className="font-semibold text-xl mt-2">Choose de time</h1>
         <h2 className="font-semibold text-sm mb-1">Brazil time zone (GTM-3)</h2>
-        <div className="w-full flex flex-wrap justify-center mb-5">
+        <div className="w-full flex flex-wrap justify-center mb-2 mt-3">
           {intervals.length > 0 ? (
             intervals.map((hour, index) => (
               <TimeButton
@@ -146,7 +146,7 @@ function Calendar({ id }) {
               />
             ))
           ) : (
-            <span>No available time options.</span>
+            <span className="mt-4">No available time options.</span>
           )}
         </div>
 

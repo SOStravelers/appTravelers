@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { random } from "@/lib/utils";
 import FavoriteService from "@/services/FavoriteService";
 import { useStore } from "@/store";
+import SmallButton from "../buttons/SmallButton";
 
 function WorkerProfileCard({ name, services, score, avatar }) {
   const [favorites, setFavorites] = useState([]);
@@ -84,8 +85,8 @@ function WorkerProfileCard({ name, services, score, avatar }) {
     }
   };
   return (
-    <div className="flex py-4 w-80 rounded-lg my-2 items-center">
-      <div className="w-36 h-32 rounded-2xl mr-2">
+    <div className="flex py-4 w-100 rounded-lg my-2 items-center">
+      <div className="w-28 h-28 rounded-2xl mr-2">
         <div className=" w-full h-full rounded-2xl relative">
           <Image
             src={avatar ? avatar + "?hola=" + random() : "/assets/user.png"}
@@ -116,6 +117,7 @@ function WorkerProfileCard({ name, services, score, avatar }) {
           <StarIcon color={"#00A0D5"} className="mr-1" />
           <p className="text-blackText">{score}</p>
           <p className="text-blackText">{`(50)`}</p>
+          <SmallButton py="py-0" w="w-35" px="px-1" text={"Book now!"} />
         </div>
       </div>
     </div>

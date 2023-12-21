@@ -39,7 +39,7 @@ function Gallery({ images }) {
   };
 
   return (
-    <div className="my-5">
+    <div className="my-5 ">
       <h1
         className="mb-5 underline font-semibold underline-offset-8"
         style={{ textDecorationColor: "#00A0D5", textDecorationThickness: 2 }}
@@ -50,7 +50,7 @@ function Gallery({ images }) {
         {images?.length > 0 ? (
           images?.map((image, index) => (
             <div key={index} className="w-36 h-32 rounded-2xl mr-2 relative">
-              <div className="bg-lightBlue w-full h-full rounded-2xl relative">
+              <div className="bg-lightBlue  w-full h-full rounded-2xl relative">
                 <Image
                   src={image + "?hola=" + random()}
                   fill

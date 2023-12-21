@@ -156,6 +156,8 @@ function SectionWeek() {
         (item) => item.isActive === true
       );
       const newuser = user;
+      console.log("antes");
+      console.log(newuser);
       if (check) {
         newuser.workerData.isMySchedulesOk = true;
       } else {

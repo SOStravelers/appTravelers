@@ -11,7 +11,7 @@ if (localStorage && localStorage.getItem("apiUrl")) {
 } else {
   env = process.env.NODE_ENV;
 }
-console.warn("env -> ", env);
+// console.warn("env -> ", env);
 const api = apis.get(env.trim());
 const front = apis.get(env.trim());
 

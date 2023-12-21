@@ -1,7 +1,7 @@
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { LockIcon, MoneyIcon } from "@/constants/icons";
+import { LockIcon, MoneyIcon, CheckIcon } from "@/constants/icons";
 import Image from "next/image";
 
 export default function Payment() {
@@ -42,15 +42,21 @@ export default function Payment() {
             />
             <p className="ml-2">Debit / Credit Card</p>
           </div>
-          <input
-            type="radio"
-            name="payment"
-            id="card"
-            className="w-5 h-5"
-            value="stripe"
-            onChange={(event) => setPaymentType(event.target.value)}
-            checked={paymentType === "stripe"}
-          />
+
+          {paymentType === "stripe" ? (
+            <CheckIcon />
+          ) : (
+            <input
+              type="radio"
+              name="payment"
+              id="card"
+              disabled
+              className="w-5 h-5 "
+              value="stripe"
+              onChange={(event) => setPaymentType(event.target.value)}
+              checked={paymentType === "stripe"}
+            />
+          )}
         </div>
         <div
           className="flex justify-between items-center"
@@ -94,7 +100,7 @@ export default function Payment() {
             disabled
             name="payment"
             id="cash"
-            className="w-5 h-5"
+            className="w-5 h-5 "
             value="cash"
             // onChange={(event) => setPaymentType(event.target.value)}
             checked={paymentType === "cash"}

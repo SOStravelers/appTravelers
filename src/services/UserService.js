@@ -37,6 +37,9 @@ export default class UserService {
       refreshTime: "30min",
     });
   }
+  static async getRandom() {
+    return axios.get(`${this.authUrl}/random/users`);
+  }
   static async login(email, password) {
     console.log("login email");
     return axios.post(`${this.authUrl}/loginEmail`, {

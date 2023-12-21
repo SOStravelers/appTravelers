@@ -6,6 +6,7 @@ import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
 
 import ServiceService from "@/services/ServiceService";
+import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -20,6 +21,7 @@ export default function Home({}) {
   const { services, setServices } = store;
   const [bookings, setBookings] = useState([]);
   const [swiper, setSwiper] = useState(null);
+  const [randomUsers, setRandomUsers] = useState([]);
 
   useEffect(() => {
     localStorage.removeItem("service");
@@ -66,9 +68,19 @@ export default function Home({}) {
     };
   }, [swiper]);
 
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
       setServices(response.data.docs);
+    });
+  };
+  const getUsers = async () => {
+    UserService.getRandom().then((response) => {
+      setRandomUsers(response.data);
+      console.log(response.data);
     });
   };
 
@@ -122,8 +134,9 @@ export default function Home({}) {
           Recommended for you
         </h1>
         <div className="flex justify-center lg:justify-start xl:justify-start md:justify-start pb-10">
-          <RecomendationCard />
-          <RecomendationCard />
+          {randomUsers?.map((s, index) => (
+            <RecomendationCard key={index} user={s} />
+          ))}
         </div>
       </section>
     </main>

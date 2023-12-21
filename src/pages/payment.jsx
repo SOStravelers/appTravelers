@@ -54,7 +54,7 @@ export default function Payment() {
         </div>
         <div
           className="flex justify-between items-center"
-          onClick={() => setPaymentType("paypal")}
+          // onClick={() => setPaymentType("paypal")}
         >
           <div className="flex items-center my-3">
             <Image
@@ -75,7 +75,7 @@ export default function Payment() {
             id="paypal"
             disabled
             value="paypal"
-            onChange={(event) => setPaymentType(event.target.value)}
+            // onChange={(event) => setPaymentType(event.target.value)}
             checked={paymentType === "paypal"}
           />
         </div>
@@ -96,7 +96,7 @@ export default function Payment() {
             id="cash"
             className="w-5 h-5"
             value="cash"
-            onChange={(event) => setPaymentType(event.target.value)}
+            // onChange={(event) => setPaymentType(event.target.value)}
             checked={paymentType === "cash"}
           />
         </div>

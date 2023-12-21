@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function RecomendationCard(user) {
+  const router = useRouter();
   console.log("el user", user);
   function getRandomSubServiceName(user) {
     // Obtén todos los subServices
@@ -20,9 +22,13 @@ function RecomendationCard(user) {
     // Devuelve el nombre del subService en el índice aleatorio
     return allSubServices[randomIndex].name;
   }
+  const setFavorite = (id) => {
+    localStorage.setItem("fromFavorite", true);
+    router.push("/worker/" + id);
+  };
   return (
-    <Link
-      href={"/worker/" + user?.user._id}
+    <div
+      onClick={() => setFavorite(user?.user._id)}
       className="text-black flex flex-col bg-white w-40 h-60 mx-2 rounded-2xl border-r-2 border-blueBorder"
     >
       <div className="w-full h-40 rounded-tr-2xl rounded-tl-2xl relative">
@@ -43,7 +49,7 @@ function RecomendationCard(user) {
             user?.user?.personalData?.name?.last}
         </p>
       </div>
-    </Link>
+    </div>
   );
 }
 

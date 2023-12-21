@@ -81,9 +81,11 @@ export default class UserService {
     });
   }
 
-  static async get(id) {
-    console.log("isd", id);
-    return axios.get(`${this.authUrl}/user/${id}`);
+  static async getById(id) {
+    console.log("id user", id);
+    return axios.get(`${this.baseUrl}/user/${id}`, {
+      headers: this.getHeaders(),
+    });
   }
   static async updateUser(user) {
     console.log("el userr", user);

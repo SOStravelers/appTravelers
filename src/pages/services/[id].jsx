@@ -5,10 +5,12 @@ import ServiceCardGrey from "@/components/utils/cards/ServiceCardGrey";
 import { useStore } from "@/store";
 import ServiceService from "@/services/ServiceService";
 import { QuestionPicture } from "@/constants/icons";
+import UserService from "@/services/UserService";
 
 export default function Services() {
   const router = useRouter();
   const { isWorker, user } = useStore();
+  const { service, setService } = useStore();
   const [services, setServices] = useState([]);
 
   useEffect(() => {
@@ -23,9 +25,15 @@ export default function Services() {
   }, []);
 
   const getDataFav = async () => {
-    console.log("query", router.query);
-    const services = JSON.parse(router.query.services);
-    setServices(services);
+    try {
+      const response = await UserService.getById(router.query.id);
+
+      console.log(response.data);
+      setServices(response?.data?.workerData?.services);
+      setService({ workerId: router.query.id });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

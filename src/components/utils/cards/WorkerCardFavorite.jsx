@@ -25,7 +25,6 @@ function WorkerCardFavorite({
     localStorage.setItem("fromFavorite", true);
     router.push({
       pathname: `/services/${id}`,
-      query: { services: JSON.stringify(services) },
     });
   };
 

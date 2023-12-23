@@ -26,7 +26,7 @@ export default function WorkersFound() {
       console.log(response);
       // WorkerService.list().then((response) => {
       let final = [];
-      for (let item of response.data.allUsers) {
+      for (let item of response.data.workers) {
         const itemNuevo = { ...item };
         if (itemNuevo.img.imgUrl != null && itemNuevo.img.imgUrl != "") {
           itemNuevo.img.imgUrl = itemNuevo.img.imgUrl + "?hola=" + random();

@@ -25,6 +25,7 @@ function Calendar({ id }) {
 
   useEffect(() => {
     if (localStorage.getItem("fromFavorite")) {
+      console.log("entro");
       setFromFavorite(true);
     }
     getSchedule();
@@ -51,8 +52,11 @@ function Calendar({ id }) {
 
   //Función que obtiene el schedule del hostel
   const getSchedule = async () => {
+    console.log(service);
+    const data = localStorage.getItem("fromFavorite");
     const { serviceId, subServiceId, hostelId, workerId } = service;
-    const worker = fromFavorite ? workerId : null;
+    const worker = data ? workerId : null;
+    console.log("worker", worker, "fromFavorite", data);
     const response = await ScheduleService.getScheduleHostel(
       hostelId,
       serviceId,

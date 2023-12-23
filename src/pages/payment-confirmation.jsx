@@ -39,6 +39,7 @@ export default function PaymentConfirmation() {
         method: "stripe",
         status: "pending",
       },
+      creatorUser: user._id,
       location: service.location,
       businessUser: service.hostelId,
       price: service.price.number,

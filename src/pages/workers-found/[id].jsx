@@ -9,7 +9,7 @@ import { useStore } from "@/store";
 export default function WorkersFound() {
   const { setService, service } = useStore();
   const router = useRouter();
-  const [wokers, setWorkers] = useState([]);
+  const [workers, setWorkers] = useState([]);
 
   useEffect(() => {
     document.title = "Select Worker - SOS Travelers";
@@ -67,7 +67,7 @@ export default function WorkersFound() {
         needs.
       </h1>
       <div className="flex flex-col items-center">
-        {wokers.map((worker) => (
+        {workers.map((worker) => (
           <div className="w-[90vw]" key={worker.id}>
             <WorkerCard
               key={worker.id}

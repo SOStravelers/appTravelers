@@ -31,9 +31,9 @@ export default class ScheduleService {
     });
   }
 
-  static async getScheduleHostel(hostelId, serviceId, subserviceId) {
+  static async getScheduleHostel(hostelId, serviceId, subserviceId, worker) {
     return axios.get(
-      `${this.authUrl}/business/${hostelId}/service/${serviceId}/subservice/${subserviceId}`
+      `${this.authUrl}/business/?businesId=${hostelId}&&service=${serviceId}&&subservice=${subserviceId}&&workerId=${worker}`
     );
   }
 }

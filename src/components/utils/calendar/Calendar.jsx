@@ -51,11 +51,13 @@ function Calendar({ id }) {
 
   //Función que obtiene el schedule del hostel
   const getSchedule = async () => {
-    const { serviceId, subServiceId, hostelId } = service;
+    const { serviceId, subServiceId, hostelId, workerId } = service;
+    const worker = fromFavorite ? workerId : null;
     const response = await ScheduleService.getScheduleHostel(
       hostelId,
       serviceId,
-      subServiceId
+      subServiceId,
+      worker
     );
     if (response?.data) {
       console.log("calendario", response.data);

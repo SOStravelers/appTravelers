@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useStore } from "@/store";
 import {
   PaymentElement,
@@ -17,6 +17,7 @@ export default function CheckoutForm(clientSecret) {
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
   const { service } = useStore();
+  const [price, setPrice] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +39,27 @@ export default function CheckoutForm(clientSecret) {
 
     setIsProcessing(false);
   };
+  useEffect(() => {
+    getFinalCost(service, service.currency);
+  }, []);
+  function getFinalCost(service, currency) {
+    console.log(currency);
+    // Busca el objeto de precio con la moneda proporcionada
+    const priceObject = service.price.find(
+      (price) => price.currency === currency
+    );
+    // Si se encontró el objeto de precio, devuelve el costo final
+    if (priceObject) {
+      setPrice(priceObject.finalCost);
+
+      return priceObject.finalCost;
+    }
+
+    // Si no se encontró el objeto de precio, devuelve null
+    setPrice(null);
+
+    return null;
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -56,11 +78,11 @@ export default function CheckoutForm(clientSecret) {
           isProcessing
             ? "Processing..."
             : service.currency == "BRL"
-            ? "Pay now " + "R$ " + service.price[0].finalCost
+            ? "Pay now " + "R$ " + price
             : service.currency == "USD"
-            ? "Pay now " + "USD " + service.price[0].finalCost
+            ? "Pay now " + "USD " + price
             : service.currency == "EUR"
-            ? "Pay now " + service.price[0].finalCost + " EUR"
+            ? "Pay now " + price + " EUR"
             : "null"
         }
         disabled={!stripe || isProcessing}

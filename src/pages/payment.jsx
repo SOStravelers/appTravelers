@@ -3,14 +3,42 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { LockIcon, MoneyIcon, CheckIcon } from "@/constants/icons";
 import Image from "next/image";
+import { useStore } from "@/store";
+import { Field } from "houseform";
+import { set } from "date-fns";
 
 export default function Payment() {
+  const { service, setService } = useStore();
+  const [paymentType, setPaymentType] = useState("stripe");
   const router = useRouter();
+  const [price, setPrice] = useState(service.price[0].finalCost);
+
+  const handleSelectChange = (event) => {
+    setService({ currency: event.target.value });
+    getFinalCost(service, event.target.value);
+  };
+  function getFinalCost(service, currency) {
+    console.log(currency);
+    // Busca el objeto de precio con la moneda proporcionada
+    const priceObject = service.price.find(
+      (price) => price.currency === currency
+    );
+    // Si se encontró el objeto de precio, devuelve el costo final
+    if (priceObject) {
+      setPrice(priceObject.finalCost);
+
+      return priceObject.finalCost;
+    }
+
+    // Si no se encontró el objeto de precio, devuelve null
+    setPrice(null);
+
+    return null;
+  }
+
   useEffect(() => {
     document.title = "Payment - SOS Travelers";
   }, []);
-
-  const [paymentType, setPaymentType] = useState("stripe");
 
   const pay = async () => {
     let url = "/";
@@ -28,6 +56,30 @@ export default function Payment() {
   return (
     <div className="flex flex-col items-center md:items-start  py-20 lg:py-24 xl:py-24 px-8 md:pl-80 min-h-[70vh]">
       <div className="flex flex-col w-full max-w-lg pb-10">
+        <div className="mb-3">
+          <p>Change Currency</p>
+          <select
+            className="border-grey border w-full max-w-lg rounded-xl p-3 my-1"
+            value={service?.currency}
+            onChange={handleSelectChange}
+          >
+            {service?.price?.map((price) => (
+              <option value={price.currency}>{price.currency}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <p className="text-blackBlue font-semibold text-xl">
+            Total service:
+            {service.currency == "BRL"
+              ? "  R$ " + price
+              : service.currency == "USD"
+              ? "  USD " + price
+              : service.currency == "EUR"
+              ? "  " + price + " EUR"
+              : "  Not available"}
+          </p>
+        </div>
         <div
           className="flex justify-between items-center"
           onClick={() => setPaymentType("stripe")}

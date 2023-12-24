@@ -37,8 +37,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  max-height: 550px;
-  min-height: 550px;
+  height: 320px;
   width: 100%;
   margin: auto;
   overflow: auto;

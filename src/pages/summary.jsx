@@ -9,6 +9,7 @@ import { ClockIcon, ChangeIcon, CheckIcon } from "@/constants/icons";
 
 import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WorkerService";
+import SubserviceService from "@/services/SubserviceService";
 import { is } from "date-fns/locale";
 
 export default function Summary() {
@@ -46,6 +47,13 @@ export default function Summary() {
     WorkerService.getWorker(workerId).then((response) => {
       console.log("worker", response.data);
       setWorker(response.data);
+    });
+    SubserviceService.getPrice({
+      businessUser: hostelId,
+      subservice: subServiceId,
+    }).then((response) => {
+      console.log("price", response.data);
+      // setService({ ...service, price: response.data });
     });
   };
 

@@ -15,7 +15,8 @@ import { is } from "date-fns/locale";
 export default function Summary() {
   const { isWorker } = useStore();
   const router = useRouter();
-  const { loggedIn, service } = useStore();
+  const { loggedIn, service, setService } = useStore();
+
   const [theHour, setHour] = useState(null);
   const [theDate, setDate] = useState(null);
   const [IdHostel, setIdHostel] = useState(null);
@@ -53,7 +54,7 @@ export default function Summary() {
       subservice: subServiceId,
     }).then((response) => {
       console.log("price", response.data);
-      // setService({ ...service, price: response.data });
+      setService({ price: response.data.valuesToday, currency: "BRL" });
     });
   };
 
@@ -205,7 +206,7 @@ export default function Summary() {
       <div className="flex justify-between items-end w-full max-w-lg my-1">
         <p className="text-blackText font-semibold">Total Service Fee</p>
         <p className="text-blackBlue font-semibold text-xl">
-          {service?.price?.value}
+          R$ {service?.price[0]?.finalCost}
         </p>
       </div>
       <OutlinedButton

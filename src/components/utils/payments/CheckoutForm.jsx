@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useStore } from "@/store";
 import {
   PaymentElement,
   AddressElement,
@@ -15,6 +16,7 @@ export default function CheckoutForm(clientSecret) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
+  const { service } = useStore();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,7 +52,17 @@ export default function CheckoutForm(clientSecret) {
 
       <PaymentElement />
       <SolidButton
-        text={isProcessing ? "Processing..." : "Pay now"}
+        text={
+          isProcessing
+            ? "Processing..."
+            : service.currency == "BRL"
+            ? "Pay now " + "R$ " + service.price[0].finalCost
+            : service.currency == "USD"
+            ? "Pay now " + "USD " + service.price[0].finalCost
+            : service.currency == "EUR"
+            ? "Pay now " + service.price[0].finalCost + " EUR"
+            : "null"
+        }
         disabled={!stripe || isProcessing}
       ></SolidButton>
     </form>

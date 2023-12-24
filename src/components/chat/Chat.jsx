@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SendIcon } from "@/constants/icons";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -22,6 +27,7 @@ const Chat = () => {
         {messages.map((message, index) => (
           <div
             key={index}
+            ref={scrollRef}
             className={`msg ${index % 3 === 0 ? "sent" : "rcvd"}`}
           >
             {message}

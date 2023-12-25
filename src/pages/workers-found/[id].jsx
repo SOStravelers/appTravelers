@@ -37,7 +37,7 @@ export default function WorkersFound() {
   useEffect(() => {
     document.title = "Select Worker - SOS Travelers";
     getData();
-  }, [getData]);
+  }, []);
   const comeBack = () => {
     router.back();
   };

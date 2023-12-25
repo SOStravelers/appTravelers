@@ -128,7 +128,12 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
             setLoggedIn(true);
             setLoginModal(true);
             setUser(response.data.user);
-            router.push("/");
+
+            if (service && Object.keys(service).length > 0) {
+              router.push(`/summary`);
+            } else {
+              router.push("/");
+            }
           }
         } else {
           console.log("no hay nada");

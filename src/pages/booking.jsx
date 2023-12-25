@@ -26,10 +26,12 @@ export default function Booking() {
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
   const [open, setOpen] = useState(false);
   useEffect(() => {
+    localStorage.removeItem("service");
+    localStorage.removeItem("fromFavorite");
+  }, []);
+  useEffect(() => {
     document.title = "Booking - SOS Travelers";
     const user = Cookies.get("auth.user_id");
-    console.log("user booking", user);
-    console.log("login modal booking", loginModal);
     if (loginModal) {
       setOpen(false);
       setLoginModal(false);

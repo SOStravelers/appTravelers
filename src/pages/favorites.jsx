@@ -31,6 +31,7 @@ export default function Favorites() {
 
   const getFavorites = async () => {
     try {
+      localStorage.removeItem("service");
       const response = await FavoriteService.listFavorites();
       // console.log(response);
       if (response?.data?.length > 0) {

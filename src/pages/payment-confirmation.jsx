@@ -71,9 +71,9 @@ export default function PaymentConfirmation() {
       <p className="text-blackText text-center mt-10 mb-18 w-3/4 text-lg">
         Payment made and your booking has been made successfully.
       </p>
-      <Link className="w-full" href="/">
-        <div className="mx-20">
-          <SolidButton text="Back to see booking" color="blueBorder" />
+      <Link className="w-full" href="/bookings">
+        <div className="mx-16">
+          <SolidButton text="Back to my bookings" color="blueBorder" />
         </div>
       </Link>
       <FinishLogo />

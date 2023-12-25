@@ -12,7 +12,10 @@ export default function Profile({ user }) {
   }, []);
   const router = useRouter();
   const { setUser, setLoggedIn, setWorker } = useStore();
-
+  useEffect(() => {
+    localStorage.removeItem("service");
+    localStorage.removeItem("fromFavorite");
+  }, []);
   const logout = async () => {
     localStorage.removeItem("service");
     localStorage.removeItem("type");

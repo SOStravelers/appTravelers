@@ -15,6 +15,11 @@ export default function Chat() {
   var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
+    localStorage.removeItem("service");
+    localStorage.removeItem("fromFavorite");
+  }, []);
+
+  useEffect(() => {
     document.title = "My chats - SOS Travelers";
     if (loginModal) {
       console.log("entrando");

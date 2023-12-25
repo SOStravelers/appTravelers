@@ -1,11 +1,11 @@
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { LockIcon, MoneyIcon, CheckIcon } from "@/constants/icons";
+import { MoneyIcon, CheckIcon } from "@/constants/icons";
 import Image from "next/image";
 import { useStore } from "@/store";
-import { Field } from "houseform";
-import { set } from "date-fns";
+
+import Select from "react-select";
 
 export default function Payment() {
   const { service, setService } = useStore();
@@ -13,9 +13,10 @@ export default function Payment() {
   const router = useRouter();
   const [price, setPrice] = useState(service.price[0].finalCost);
 
-  const handleSelectChange = (event) => {
-    setService({ currency: event.target.value });
-    getFinalCost(service, event.target.value);
+  const handleSelectChange = (selectedOption) => {
+    console.log(selectedOption);
+    setService({ currency: selectedOption.value });
+    getFinalCost(service, selectedOption.value);
   };
   function getFinalCost(service, currency) {
     // Busca el objeto de precio con la moneda proporcionada
@@ -39,6 +40,11 @@ export default function Payment() {
     document.title = "Payment - SOS Travelers";
   }, []);
 
+  const priceOptions = service?.price?.map((price) => ({
+    value: price.currency,
+    label: price.currency,
+  }));
+
   const pay = async () => {
     let url = "/";
     switch (paymentType) {
@@ -57,17 +63,34 @@ export default function Payment() {
       <div className="flex flex-col w-full max-w-lg pb-10">
         <div className="mb-3">
           <p>Change Currency</p>
-          <select
-            className="border-grey border w-full max-w-lg rounded-xl p-3 my-1"
-            value={service?.currency}
+          <Select
+            options={priceOptions}
+            value={priceOptions.find(
+              (option) => option.value === service?.currency
+            )}
             onChange={handleSelectChange}
-          >
-            {service?.price?.map((price, index) => (
-              <option key={index} value={price.currency}>
-                {price.currency}
-              </option>
-            ))}
-          </select>
+            styles={{
+              control: (provided) => ({
+                ...provided,
+                borderColor: "#00A0D5",
+                borderRadius: "10px",
+                boxShadow: "none",
+                "&:hover": {
+                  borderColor: "#00A0D5",
+                },
+              }),
+              option: (provided, state) => ({
+                ...provided,
+                color: state.isSelected ? "#fff" : "#000",
+                backgroundColor: state.isSelected ? "#00A0D5" : "#fff",
+                borderRadius: "5px",
+                "&:hover": {
+                  color: "#fff",
+                  backgroundColor: "#00A0D5",
+                },
+              }),
+            }}
+          />
         </div>
         <div>
           <p className="text-blackBlue font-semibold text-xl">

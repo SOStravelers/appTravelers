@@ -2297,8 +2297,8 @@ export const ChangeIcon = ({ ...props }) => (
 export const NotificationOffIcon = ({ ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="26"
-    height="29"
+    width="20"
+    height="23"
     viewBox="0 0 26 29"
     fill="none"
     {...props}

@@ -4,7 +4,7 @@ function DayButton({ day, number, selectedDay, setSelectedDay }) {
   return (
     <div
       className={clsx(
-        "cursor-pointer rounded-xl w-14 p-2 h-20 flex flex-col justify-between items-center",
+        "cursor-pointer rounded-xl w-14 p-1 h-20 flex flex-col justify-between items-center",
         selectedDay === number ? "bg-blueBorder" : "bg-white"
       )}
       onClick={() => setSelectedDay(number)}

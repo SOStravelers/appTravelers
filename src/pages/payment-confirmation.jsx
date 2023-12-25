@@ -59,7 +59,7 @@ export default function PaymentConfirmation() {
   };
 
   return (
-    <div className="flex flex-col max-w-lg items-center justify-center my-4 px-3 md:ml-80 min-h-screen">
+    <div className="flex flex-col max-w-lg items-center justify-center my-1 px-3 md:ml-80 min-h-screen">
       <CompleteGirlIcon />
       {/* <Image
         alt="fotoFinal"
@@ -68,11 +68,11 @@ export default function PaymentConfirmation() {
         height={250}
       /> */}
 
-      <p className="text-blackText text-center mt-10 mb-18 w-3/4 text-lg">
+      <p className="text-blackText text-center mb-18 w-3/4 text-lg">
         Payment made and your booking has been made successfully.
       </p>
-      <Link className="w-full" href="/bookings">
-        <div className="mx-16">
+      <Link className="w-full" href="/booking">
+        <div className="mx-12 w-50 px-1">
           <SolidButton text="Back to my bookings" color="blueBorder" />
         </div>
       </Link>

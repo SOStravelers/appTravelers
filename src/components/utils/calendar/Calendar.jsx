@@ -4,6 +4,7 @@ import { DayPicker } from "react-day-picker";
 import TimeButton from "../buttons/TimeButton";
 import OutlinedButton from "../buttons/OutlinedButton";
 import "react-day-picker/dist/style.css";
+import { Rings } from "react-loader-spinner";
 import ScheduleService from "@/services/ScheduleService";
 import { useStore } from "@/store";
 import moment from "moment";
@@ -14,6 +15,7 @@ function Calendar({ id }) {
   const { service, setService, isWorker } = useStore();
   const [time, setTime] = useState();
   const [fromFavorite, setFromFavorite] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [schedule, setSchedule] = useState([]);
   const [days, setDays] = useState({
     firstDate: null,
@@ -69,6 +71,7 @@ function Calendar({ id }) {
       console.log("calendario", response.data);
       setSchedule(response.data);
     }
+    setLoading(false);
   };
   //Función que obtiene los días deshabilitados
   const getDisabledDays = () => {
@@ -135,19 +138,26 @@ function Calendar({ id }) {
     }
     console.log("service", service);
   };
-  const comeback = () => {
-    if (fromFavorite === true) {
-      router.push(`/subservices/${service.serviceId}`);
-    } else {
-      router.push(`/select-hostel/${service.subServiceId}`);
-    }
+  const comeBack = () => {
+    router.back();
   };
-
-  let footer = <p className="my-5">Please pick a day.</p>;
-  if (selectedDay && schedule.length > 0) {
+  let footer = <p className="my-5"></p>;
+  if (loading) {
+    footer = (
+      <div className="max-w-lg  flex flex-col items-center justify-center">
+        <Rings
+          width={100}
+          height={100}
+          color="#00A0D5"
+          ariaLabel="infinity-spin-loading"
+        />
+        <p className="mt-2">Searching...</p>
+      </div>
+    );
+  } else if (selectedDay && schedule.length > 0 && !loading) {
     footer = (
       <div>
-        {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
+        asdad
         <h1 className="font-semibold text-xl mt-2">Choose de time</h1>
         <h2 className="font-semibold text-sm mb-1">Brazil time zone (GTM-3)</h2>
         <div className="w-full flex flex-wrap justify-center mb-2 mt-3">
@@ -164,19 +174,17 @@ function Calendar({ id }) {
             <span className="mt-4">Choose another day.</span>
           )}
         </div>
-
         {time && <OutlinedButton text={"Next"} onClick={selectTime} />}
       </div>
     );
-  } else if (!selectedDay || schedule.length == 0) {
+  } else if (schedule.length == 0 && !loading) {
     footer = (
       <div>
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
         <h1 className="font-semibold text-sm mt-2">
           Not schedule available, choose another hostel.
         </h1>
-
-        <OutlinedButton text={"Back"} onClick={comeback} />
+        <OutlinedButton text={"Back"} onClick={comeBack} />
       </div>
     );
   }

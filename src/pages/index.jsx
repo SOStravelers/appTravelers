@@ -135,7 +135,7 @@ export default function Home({}) {
         </h1>
         <div className="flex justify-center lg:justify-start xl:justify-start md:justify-start pb-10">
           {randomUsers?.map((s, index) => (
-            <RecomendationCard key={index} user={s} />
+            <RecomendationCard key={index} user={{}} />
           ))}
         </div>
       </section>

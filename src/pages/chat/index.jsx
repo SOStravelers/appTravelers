@@ -15,6 +15,11 @@ export default function Chat() {
   var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
+    localStorage.removeItem("service");
+    localStorage.removeItem("fromFavorite");
+  }, []);
+
+  useEffect(() => {
     document.title = "My chats - SOS Travelers";
     if (loginModal) {
       console.log("entrando");
@@ -49,22 +54,25 @@ export default function Chat() {
   }, [loginModal]);
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
-      <p className="text-center text-greyText max-w-lg lg:my-4 xl:my-4">
-        No chats yet
-      </p>
-      <div className="max-w-lg text-xl my-3 flex justify-center">
-        <ChatPicture />
-      </div>
+      {chats?.length > 0 ? (
+        chats.map((chat, index) => (
+          <WorkerCardChat
+            key={index}
+            name={chat.name}
+            service={chat.service}
+            score={chat.score}
+            link={chat.link}
+          />
+        ))
+      ) : (
+        <div className="text-xl my-3 flex flex-col items-center justify-center px-3 md:pl-40">
+          <p className="text-center text-greyText max-w-lg lg:my-4 xl:my-4">
+            No chats yet
+          </p>
+          <ChatPicture />
+        </div>
+      )}
 
-      {chats.map((chat, index) => (
-        <WorkerCardChat
-          key={index}
-          name={chat.name}
-          service={chat.service}
-          score={chat.score}
-          link={chat.link}
-        />
-      ))}
       {!user && (
         <LoginFormModal
           open={open}

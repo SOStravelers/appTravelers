@@ -29,6 +29,9 @@ function SectionWeek() {
   useEffect(() => {
     getData();
   }, []);
+  useEffect(() => {
+    console.log("cambiando", user.workerData);
+  }, [user]);
 
   useEffect(() => {
     if (save) {
@@ -60,31 +63,30 @@ function SectionWeek() {
     }
   };
 
-  const formatData = (value) => {
-    const currentDate = new Date();
-    const [hours, minutes] = value.split(":");
-    const startTime = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-      hours,
-      minutes
+  function formatDateUTC(timeString) {
+    // Obtener la fecha actual
+    var date = new Date();
+
+    // Extraer la hora y los minutos de la cadena de tiempo
+    var [hours, minutes] = timeString.split(":").map(Number);
+
+    // Crear una fecha en UTC con la hora y minutos especificados
+    var utcDate = new Date(
+      Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        hours,
+        minutes
+      )
     );
 
-    // Formatear manualmente la hora
-    const tiempoFormateado =
-      startTime.getFullYear() +
-      "-" +
-      (startTime.getMonth() + 1).toString().padStart(2, "0") +
-      "-" +
-      startTime.getDate().toString().padStart(2, "0") +
-      "T" +
-      startTime.getHours().toString().padStart(2, "0") +
-      ":" +
-      startTime.getMinutes().toString().padStart(2, "0");
+    // Convertir la fecha a una cadena ISO
+    var isoDateTime = utcDate.toISOString();
 
-    return tiempoFormateado;
-  };
+    return isoDateTime;
+  }
+
   const addIntervalandVerify = async (
     dayID,
     isActive = true,
@@ -93,8 +95,8 @@ function SectionWeek() {
   ) => {
     setSave(save);
     const dayExists = horario.some((day) => day.day === dayID);
-    interval["startTimeIso"] = await formatData(interval.startTime);
-    interval["endTimeIso"] = await formatData(interval.endTime);
+    interval["startTimeIso"] = await formatDateUTC(interval.startTime);
+    interval["endTimeIso"] = await formatDateUTC(interval.endTime);
     console.log("interval", interval);
 
     if (dayExists) {
@@ -146,7 +148,7 @@ function SectionWeek() {
     setHorario(newHorario);
   };
   const saveArray = async () => {
-    console.log("guardando en db...");
+    console.log("guardando en db...", horario);
     try {
       let schedules = { schedules: horario };
       const response = await ScheduleService.save(schedules);

@@ -94,7 +94,7 @@ function Navbar() {
           className={clsx(
             "text-sm",
             router.pathname.includes("chat")
-              ? "text-lightBlue"
+              ? "text-blueBorder"
               : "text-greyText"
           )}
         >
@@ -118,7 +118,7 @@ function Navbar() {
             className={clsx(
               "text-sm",
               router.pathname.includes("favorites")
-                ? "text-lightBlue"
+                ? "text-blueBorder"
                 : "text-greyText"
             )}
           >
@@ -142,7 +142,7 @@ function Navbar() {
           className={clsx(
             "text-sm",
             router.pathname.includes("profile")
-              ? "text-lightBlue"
+              ? "text-blueBorder"
               : "text-greyText"
           )}
         >

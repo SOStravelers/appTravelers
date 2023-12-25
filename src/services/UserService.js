@@ -37,6 +37,9 @@ export default class UserService {
       refreshTime: "30min",
     });
   }
+  static async getRandom() {
+    return axios.get(`${this.authUrl}/random/users`);
+  }
   static async login(email, password) {
     console.log("login email");
     return axios.post(`${this.authUrl}/loginEmail`, {
@@ -91,13 +94,15 @@ export default class UserService {
     });
   }
 
-  static async get(id) {
-    console.log("isd", id);
-    return axios.get(`${this.authUrl}/user/${id}`);
+  static async getById(id) {
+    // console.log("id user", id);
+    return axios.get(`${this.baseUrl}/user/${id}`, {
+      headers: this.getHeaders(),
+    });
   }
 
   static async updateUser(user) {
-    console.log("el userr", user);
+    // console.log("el userr", user);
     return axios.put(
       `${this.baseUrl}/${user._id}`,
       {

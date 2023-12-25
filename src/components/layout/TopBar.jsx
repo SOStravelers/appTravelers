@@ -68,7 +68,7 @@ function TopBar() {
                   textDecoration: "none",
                   color: "inherit",
                   "&:focus": { outline: "none" },
-                  fontSize: "0.5rem", // Ajusta el tamaño del texto según tus necesidades
+                  fontSize: "0.1rem", // Ajusta el tamaño del texto según tus necesidades
                 }}
                 color="#FFFFFF"
                 className="mr-3 cursor-pointer"

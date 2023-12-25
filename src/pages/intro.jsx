@@ -12,14 +12,14 @@ export default function Intro() {
         <div
           className={clsx(
             "h-2 w-40 cursor-pointer rounded-xl mr-1",
-            slide === 1 ? "bg-lightBlue" : "bg-lightGrey"
+            slide === 1 ? "bg-blueBorder" : "bg-lightGrey"
           )}
           onClick={() => setSlide(1)}
         ></div>
         <div
           className={clsx(
             "h-2 w-40 cursor-pointer rounded-xl ml-1",
-            slide === 2 ? "bg-lightBlue" : "bg-lightGrey"
+            slide === 2 ? "bg-blueBorder" : "bg-lightGrey"
           )}
           onClick={() => setSlide(2)}
         ></div>

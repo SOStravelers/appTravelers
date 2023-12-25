@@ -24,6 +24,11 @@ export default class WorkerService {
     let query = "isActive=true&page=1&type=worker";
     return axios.get(`${this.authUrl}/all?${query}`);
   }
+  static async getByAvailability(data) {
+    return axios.post(`${this.authUrl}/workerByTimeAndService`, data, {
+      headers: this.getHeaders(),
+    });
+  }
 
   static async get(id) {
     return axios.get(`${this.authUrl}/user/${id}`);

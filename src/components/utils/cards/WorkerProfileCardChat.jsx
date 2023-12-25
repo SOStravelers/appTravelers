@@ -12,7 +12,7 @@ function WorkerProfileCardChat({ name, services, score, avatar }) {
     <div className="flex flex-col">
       <div className="flex py-4 w-80 rounded-lg my-2 items-center">
         <div className="w-36 h-32 rounded-2xl mr-2">
-          <div className="bg-lightBlue w-full h-full rounded-2xl relative">
+          <div className="bg-blueBorder w-full h-full rounded-2xl relative">
             <Image
               src={avatar ?? "/assets/proovedor.png"}
               fill
@@ -29,7 +29,11 @@ function WorkerProfileCardChat({ name, services, score, avatar }) {
             {services?.map((service) => service.id.name).join(", ")}
           </p>
           <div className="flex items-center">
-            <SolidButton text="Service Resume" color="black" />
+            <SolidButton
+              text="Service Resume"
+              color="black"
+              onClick={goToServiceDetails}
+            />
           </div>
         </div>
       </div>

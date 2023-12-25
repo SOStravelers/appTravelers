@@ -1,64 +1,133 @@
-"useClient";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
 import { DayPicker } from "react-day-picker";
 import TimeButton from "../buttons/TimeButton";
 import OutlinedButton from "../buttons/OutlinedButton";
 import "react-day-picker/dist/style.css";
-
+import { Rings } from "react-loader-spinner";
+import ScheduleService from "@/services/ScheduleService";
 import { useStore } from "@/store";
 import moment from "moment";
-
-const HOURS = [
-  "9:00 am",
-  "10:00 am",
-  "11:00 am",
-  "12:00 pm",
-  "1:00 pm",
-  "2:00 pm",
-  "3:00 pm",
-  "4:00 pm",
-  "5:00 pm",
-  "6:00 pm",
-  "7:00 pm",
-  "8:00 pm",
-  "9:00 pm",
-];
+import { formatISO, sub } from "date-fns";
 
 function Calendar({ id }) {
   const router = useRouter();
-  const { setService, isWorker } = useStore();
-  const [selected, setSelected] = useState("");
+  const { service, setService, isWorker } = useStore();
   const [time, setTime] = useState();
   const [fromFavorite, setFromFavorite] = useState(false);
-  const [fromDate, setFromDate] = useState();
-  const [toDate, setToDate] = useState();
-  const [hours, setHours] = useState();
+  const [loading, setLoading] = useState(true);
+  const [schedule, setSchedule] = useState([]);
+  const [days, setDays] = useState({
+    firstDate: null,
+    lastDate: null,
+    disabledDays: [],
+  });
+  const [selectedDay, setSelected] = useState(null);
+  const [intervals, setIntervals] = useState([]);
 
   useEffect(() => {
-    initialize();
     if (localStorage.getItem("fromFavorite")) {
+      console.log("entro");
       setFromFavorite(true);
     }
+    getSchedule();
   }, []);
-
   useEffect(() => {
-    if (selected) {
-      const dateString = moment({
-        year: selected.getFullYear(),
-        month: selected.getMonth(),
-        day: selected.getDate(),
-      }).format("YYYY-MM-DD");
-      initialize(dateString);
+    if (schedule.length === 0) return;
+    const result = schedule ? getDisabledDays(schedule) : "";
+    setDays(result);
+    setSelected(new Date());
+  }, [schedule]);
+  useEffect(() => {
+    console.log("bueno");
+    if (selectedDay) {
+      const date = new Date(selectedDay);
+      const formattedDate =
+        formatISO(date, { representation: "date" }) + "T00:00:00.000";
+      for (let i = 0; i < schedule.length; i++) {
+        let cutDate = schedule[i].day.slice(0, -1);
+        if (cutDate == formattedDate) {
+          setIntervals(schedule[i].intervals);
+          break;
+        }
+      }
     }
-  }, [selected]);
+  }, [selectedDay]);
 
-  const select = () => {
-    const dateStr = moment(selected).format("YYYY-MM-DD");
+  //Función que obtiene el schedule del hostel
+  const getSchedule = async () => {
+    console.log(service);
+    const data = localStorage.getItem("fromFavorite");
+    const { serviceId, subServiceId, hostelId, workerId } = service;
+    const worker = data ? workerId : null;
+    console.log("worker", worker, "fromFavorite", data);
+    const response = await ScheduleService.getScheduleHostel(
+      hostelId,
+      serviceId,
+      subServiceId,
+      worker
+    );
+    if (response?.data) {
+      console.log("calendario", response.data);
+      setSchedule(response.data);
+    }
+    setLoading(false);
+  };
+  //Función que obtiene los días deshabilitados
+  const getDisabledDays = () => {
+    // Ordena el array por la propiedad 'day'
+    schedule.sort((a, b) => new Date(a.day) - new Date(b.day));
+
+    // Extrae la fecha del primer y último objeto
+    const firstDate = new Date(schedule[0].day);
+    const lastDate = new Date(schedule[schedule.length - 1].day);
+
+    let disabledDays = [];
+
+    // Crea un nuevo objeto Date para cada día entre las dos fechas
+    for (
+      let d = new Date(firstDate);
+      d <= lastDate;
+      d.setDate(d.getDate() + 1)
+    ) {
+      // Comprueba si la fecha está en el array original
+      if (
+        !schedule.some((obj) => new Date(obj.day).getTime() === d.getTime())
+      ) {
+        // Formatea la fecha y añádela al array
+        let formattedDate = d.toISOString().split("T")[0] + "T00:00:00.000";
+        disabledDays.push(new Date(formattedDate));
+      }
+    }
+
+    // Formatea firstDate y lastDate para eliminar la 'Z' al final
+    let formattedFirstDate = new Date(
+      firstDate.toISOString().split("T")[0] + "T00:00:00.000"
+    );
+    let formattedLastDate = new Date(
+      lastDate.toISOString().split("T")[0] + "T00:00:00.000"
+    );
+
+    return {
+      firstDate: formattedFirstDate,
+      lastDate: formattedLastDate,
+      disabledDays: disabledDays,
+    };
+  };
+  //Función que setea hora del booking
+  const selectTime = () => {
+    const dateStr = moment(selectedDay).format("YYYY-MM-DD");
+    console.log("el tiempo", time);
     setService({
       date: dateStr,
-      hour: time,
+      startTime: {
+        isoTime: time.startTimeIso,
+        stringData: time.startTime,
+      },
+      endTime: {
+        isoTime: time.endTimeIso,
+        stringData: time.endTime,
+      },
     });
     if (fromFavorite === true) {
       router.push(`/summary`);
@@ -67,55 +136,68 @@ function Calendar({ id }) {
     } else if (fromFavorite === false) {
       router.push(`/workers-found/${id}`);
     }
+    console.log("service", service);
   };
-
-  const initialize = (dateString = "") => {
-    let hours = [];
-    const now = moment();
-    if (dateString === now.format("YYYY-MM-DD") || selected === "") {
-      if (!selected) setSelected(now.toDate());
-      setFromDate(now.toDate());
-      setToDate(now.add(2, "months").toDate());
-      const nhs = now.add(2, "hours").format("hh:mm a");
-      hours = HOURS.filter((h) => {
-        const nh = moment(nhs, "hh:mm a");
-        const mh = moment(h, "hh:mm a");
-
-        return mh > nh;
-      });
-    } else {
-      hours = HOURS.slice();
-    }
-    setHours(hours);
+  const comeBack = () => {
+    router.back();
   };
-
-  let footer = <p className="my-5">Please pick a day.</p>;
-  if (selected) {
+  let footer = <p className="my-5"></p>;
+  if (loading) {
+    footer = (
+      <div className="max-w-lg  flex flex-col items-center justify-center">
+        <Rings
+          width={100}
+          height={100}
+          color="#00A0D5"
+          ariaLabel="infinity-spin-loading"
+        />
+        <p className="mt-2">Searching...</p>
+      </div>
+    );
+  } else if (selectedDay && schedule.length > 0 && !loading) {
+    footer = (
+      <div>
+        <h1 className="font-semibold text-xl mt-2">Choose de time</h1>
+        <h2 className="font-semibold text-sm mb-1">Brazil time zone (GTM-3)</h2>
+        <div className="w-full flex flex-wrap justify-center mb-2 mt-3">
+          {intervals.length > 0 ? (
+            intervals.map((hour, index) => (
+              <TimeButton
+                key={index}
+                onClick={() => setTime(hour)}
+                text={hour.startTime}
+                selected={time === hour}
+              />
+            ))
+          ) : (
+            <span className="mt-4">Choose another day.</span>
+          )}
+        </div>
+        {time && <OutlinedButton text={"Next"} onClick={selectTime} />}
+      </div>
+    );
+  } else if (schedule.length == 0 && !loading) {
     footer = (
       <div>
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
-        <h1 className="font-semibold text-2xl my-3">Time</h1>
-        <div className="w-full flex flex-wrap justify-center mb-5">
-          {hours.map((hour) => (
-            <TimeButton
-              key={hour}
-              onClick={() => setTime(hour)}
-              text={hour}
-              selected={time === hour}
-            />
-          ))}
-        </div>
-        {time && <OutlinedButton text={"Next"} onClick={select} />}
+        <h1 className="font-semibold text-sm mt-2">
+          Not schedule available, choose another hostel.
+        </h1>
+        <OutlinedButton text={"Back"} onClick={comeBack} />
       </div>
     );
   }
   return (
     <DayPicker
       mode="single"
-      selected={selected}
+      selected={selectedDay}
+      disabled={days?.disabledDays.length > 0 ? days?.disabledDays : true}
+      fromDate={days?.firstDate || new Date()}
+      toDate={
+        days?.lastDate ||
+        new Date(new Date().setMonth(new Date().getMonth() + 1))
+      }
       onSelect={setSelected}
-      fromDate={fromDate}
-      toDate={toDate}
       footer={footer}
     />
   );

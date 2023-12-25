@@ -15,4 +15,9 @@ export default class SubserviceService {
     });
     return axios.get(`${this.baseUrl}/byService?${query}`);
   }
+  static async getPrice(data) {
+    return axios.get(
+      `${this.baseUrl}/prices/business/?businessUser=${data.businessUser}&subservice=${data.subservice}`
+    );
+  }
 }

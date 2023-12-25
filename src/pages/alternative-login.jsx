@@ -53,7 +53,7 @@ export default function AlternativeLogin() {
       <div className="flex flex-col items-center justify-center mt-10">
         <p className="text-blackText">
           Don’t have an account?
-          <Link className="text-lightBlue ml-2" href={"/register"}>
+          <Link className="text-blueBorder ml-2" href={"/register"}>
             Register
           </Link>{" "}
         </p>

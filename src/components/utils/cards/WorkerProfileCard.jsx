@@ -7,11 +7,15 @@ import { toast } from "react-toastify";
 import { random } from "@/lib/utils";
 import FavoriteService from "@/services/FavoriteService";
 import { useStore } from "@/store";
+import SmallButton from "../buttons/SmallButton";
+import Link from "next/link";
 
 function WorkerProfileCard({ name, services, score, avatar }) {
   const [favorites, setFavorites] = useState([]);
   const { user } = useStore();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [fromFavorite, setFromFavorite] = useState(false);
+
   const router = useRouter();
   const capitalize = (cadena) => {
     return cadena.charAt(0).toUpperCase() + cadena.slice(1);
@@ -23,6 +27,12 @@ function WorkerProfileCard({ name, services, score, avatar }) {
       getFavorites();
     }
   }, [user]);
+
+  useEffect(() => {
+    if (localStorage.getItem("fromFavorite")) {
+      setFromFavorite(true);
+    }
+  }, []);
 
   const getFavorites = async () => {
     try {
@@ -84,8 +94,8 @@ function WorkerProfileCard({ name, services, score, avatar }) {
     }
   };
   return (
-    <div className="flex py-4 w-80 rounded-lg my-2 items-center">
-      <div className="w-36 h-32 rounded-2xl mr-2">
+    <div className="flex py-4 w-100 rounded-lg my-2 items-center">
+      <div className="w-24 h-24  sm:w-32 sm:h32 lg:w-32 lg:h-32 xl:w-32 xl:h-32 rounded-2xl mr-2">
         <div className=" w-full h-full rounded-2xl relative">
           <Image
             src={avatar ? avatar + "?hola=" + random() : "/assets/user.png"}
@@ -95,25 +105,33 @@ function WorkerProfileCard({ name, services, score, avatar }) {
           />
         </div>
       </div>
-      <div className="flex flex-col">
-        <div className="flex items-center">
+      <div className="flex flex-col  ">
+        <div className="flex items-center justify-">
           <h1 className="font-semibold text-black">{name}</h1>
 
           {user && Object.keys(user).length > 0 ? (
-            <FavButton
-              isFavorite={isFavorite}
-              handleSetFav={handleSetFav}
-              handleDeleteFav={handleDeleteFav}
-            />
+            <div className="ml-4">
+              <FavButton
+                isFavorite={isFavorite}
+                handleSetFav={handleSetFav}
+                handleDeleteFav={handleDeleteFav}
+              />
+            </div>
           ) : null}
         </div>
-        <p className="text-blackText my-2">
+        <p className="text-blackText my-1    text-xs   sm:text-sm ">
           {services?.map((service) => capitalize(service.id.name)).join(", ")}
         </p>
-        <div className="flex items-center">
+        <div className=" flex items-center w-30">
           <StarIcon color={"#00A0D5"} className="mr-1" />
           <p className="text-blackText">{score}</p>
-          <p className="text-blackText">{`(50)`}</p>
+          <p className="text-blackText mr-2">{`(50)`}</p>
+
+          {fromFavorite && (
+            <Link href={"/services/" + router.query.id}>
+              <SmallButton text={"Book now!"} />
+            </Link>
+          )}
         </div>
       </div>
     </div>

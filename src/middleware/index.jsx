@@ -9,8 +9,15 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const router = useRouter();
   const store = useStore();
   // const user = Cookies.get("auth.user");
-  const { user, setUser, setLoggedIn, isWorker, setWorker, setLoginModal } =
-    store;
+  const {
+    user,
+    setUser,
+    setLoggedIn,
+    isWorker,
+    service,
+    setWorker,
+    setLoginModal,
+  } = store;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,7 +84,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   };
 
   const obtenerInformacionUsuario = async () => {
-    console.log("get Info", user);
+    // console.log("get Info", user);
     if (user && Object.keys(user).length > 0) {
       console.log("ya hay usuario");
       return;
@@ -128,7 +135,14 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
             setLoggedIn(true);
             setLoginModal(true);
             setUser(response.data.user);
-            router.push("/");
+            console.log("calabaza");
+            if (service && Object.keys(service).length > 0) {
+              console.log("caso1");
+              router.push(`/summary`);
+            } else {
+              console.log("caso2");
+              router.push("/");
+            }
           }
         } else {
           console.log("no hay nada");

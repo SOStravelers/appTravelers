@@ -17,6 +17,9 @@ export default class HostelService {
     let query = "isActive=true&page=1&type=business";
     return axios.get(`${this.authUrl}/all?${query}`);
   }
+  static async getByservice(service) {
+    return axios.get(`${this.authUrl}/business/?service=${service}`);
+  }
   static async get(id) {
     return axios.get(`${this.authUrl}/user/${id}`);
   }

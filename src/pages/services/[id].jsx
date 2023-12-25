@@ -42,7 +42,9 @@ export default function Services() {
 
   return (
     <div className="p-10 pb-20 flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <h1 className="my-3 font-semibold text-center max-w-lg">Nearby You</h1>
+      <h1 className="my-3 font-semibold text-center max-w-lg">
+        Services availables
+      </h1>
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings
@@ -56,14 +58,16 @@ export default function Services() {
       ) : services && services.length > 0 ? (
         <div className="flex flex-wrap">
           {services.map((s) => (
-            <ServiceCardGrey
-              key={s.id._id}
-              id={s.id._id}
-              link={`/subservices/${s.id._id}`}
-              name={s.id.name}
-              icon={s.id.imgUrl}
-              subServices={s.subServices}
-            />
+            <div className="w-1/2">
+              <ServiceCardGrey
+                key={s.id._id}
+                id={s.id._id}
+                link={`/subservices/${s.id._id}`}
+                name={s.id.name}
+                icon={s.id.imgUrl}
+                subServices={s.subServices}
+              />
+            </div>
           ))}
         </div>
       ) : (

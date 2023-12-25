@@ -81,7 +81,9 @@ export default function PaymentConfirmation() {
         </div>
       ) : complete ? (
         <>
-          <CompleteGirlIcon />
+          <div style={{ marginTop: "-120px" }}>
+            <CompleteGirlIcon />
+          </div>
           <p className="text-blackText text-center mb-18 w-3/4 text-lg">
             Payment made and your booking has been made successfully.
           </p>
@@ -93,7 +95,9 @@ export default function PaymentConfirmation() {
         </>
       ) : (
         <>
-          <BarberPicture />
+          <div style={{ marginTop: "-120px" }}>
+            <BarberPicture />
+          </div>
           <p className="text-blackText text-center mb-18 w-3/4 text-lg">
             Too late, this booking has already been taken.
           </p>

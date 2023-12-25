@@ -150,6 +150,7 @@ function SectionWeek() {
     try {
       let schedules = { schedules: horario };
       const response = await ScheduleService.save(schedules);
+      fetchUser(response);
       toast.info("Saved", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1200,
@@ -162,23 +163,14 @@ function SectionWeek() {
     }
   };
 
-  //chequeo de que tenga un horario armado
-  const fetchUser = async () => {
+  const fetchUser = async (schedulesResponse) => {
     const newuser = user;
-    const schedulesResponse = await schedule.getScheduleUser();
-
     let check = schedulesResponse.data.schedules.some(
       (item) => item.isActive === true
     );
-    if (check) {
-      newuser.workerData.isMySchedulesOk = true;
-    } else {
-      newuser.workerData.isMySchedulesOk = false;
-    }
+    newuser.workerData.isMySchedulesOk = check;
     UserService.updateUser(newuser);
   };
-  fetchUser();
-  // }, []);
 
   return (
     <section className="w-full max-w-lg">

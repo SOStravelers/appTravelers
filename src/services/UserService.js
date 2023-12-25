@@ -70,10 +70,23 @@ export default class UserService {
       }
     );
   }
-  static async inactiveMode(value) {
-    let data = { isActive: value };
-    console.log("la data", data);
-    return axios.post(`${this.baseUrl}/inactivemode`, data, {
+
+  static async readyToWork({
+    isActive,
+    isAboutmeOk,
+    isMyServicesOk,
+    isMySchedulesOk,
+    isMyWorkplacesOk,
+  }) {
+    let data = {
+      isActive: isActive,
+      isAboutmeOk: isAboutmeOk,
+      isMyServicesOk: isMyServicesOk,
+      isMySchedulesOk: isMySchedulesOk,
+      isMyWorkplacesOk: isMyWorkplacesOk,
+    };
+
+    return axios.post(`${this.baseUrl}/readyToWork`, data, {
       headers: this.getHeaders(),
     });
   }
@@ -82,6 +95,7 @@ export default class UserService {
     console.log("isd", id);
     return axios.get(`${this.authUrl}/user/${id}`);
   }
+
   static async updateUser(user) {
     console.log("el userr", user);
     return axios.put(

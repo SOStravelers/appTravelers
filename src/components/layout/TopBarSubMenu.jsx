@@ -34,7 +34,7 @@ function TopBarSubMenu() {
     handleUrl();
   }, [actualURL]);
 
-  const handleUrl = () => {
+  const handleUrl = useCallback(() => {
     if (isSubservices) {
       setTitulo("Select Subservices");
     } else if (isHostelSelection) {
@@ -68,7 +68,7 @@ function TopBarSubMenu() {
     } else if (policy) {
       setTitulo("Use Policy");
     }
-  };
+  }, []);
 
   return (
     <div

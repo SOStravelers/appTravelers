@@ -13,12 +13,10 @@ function TopBar() {
     if (user != undefined && user.img && user.img.imgUrl) {
       let newUser = { ...user };
       newUser.img.imgUrl = user.img.imgUrl + "?hola=" + random();
-      setUser[newUser];
+      setUser(newUser);
     }
   }, [user]);
-  useEffect(() => {
-    // Tu código aquí
-  }, [setUser]);
+
   const profileUrl = isWorker ? "/worker/profile" : "/profile";
   const initials = () => {
     if (user && Object.keys(user).length === 0) return "";

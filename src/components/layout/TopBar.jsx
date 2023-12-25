@@ -1,7 +1,6 @@
 import { NotificationOffIcon, LogoWhite } from "@/constants/icons";
 import { useEffect } from "react";
 import { random } from "@/lib/utils";
-import Image from "next/image";
 
 import Link from "next/link";
 
@@ -13,10 +12,9 @@ function TopBar() {
     if (user != undefined && user.img && user.img.imgUrl) {
       let newUser = { ...user };
       newUser.img.imgUrl = user.img.imgUrl + "?hola=" + random();
-      setUser(newUser);
+      setUser[newUser];
     }
   }, [user]);
-
   const profileUrl = isWorker ? "/worker/profile" : "/profile";
   const initials = () => {
     if (user && Object.keys(user).length === 0) return "";
@@ -83,7 +81,7 @@ function TopBar() {
                 href={profileUrl}
                 style={{ width: "40px", height: "40px", overflow: "hidden" }}
               >
-                <Image
+                <img
                   src={user.img.imgUrl}
                   alt="Descripción de la imagen"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}

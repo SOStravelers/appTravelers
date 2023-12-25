@@ -18,7 +18,6 @@ export default function Payment() {
     getFinalCost(service, event.target.value);
   };
   function getFinalCost(service, currency) {
-    console.log(currency);
     // Busca el objeto de precio con la moneda proporcionada
     const priceObject = service.price.find(
       (price) => price.currency === currency
@@ -63,8 +62,10 @@ export default function Payment() {
             value={service?.currency}
             onChange={handleSelectChange}
           >
-            {service?.price?.map((price) => (
-              <option value={price.currency}>{price.currency}</option>
+            {service?.price?.map((price, index) => (
+              <option key={index} value={price.currency}>
+                {price.currency}
+              </option>
             ))}
           </select>
         </div>

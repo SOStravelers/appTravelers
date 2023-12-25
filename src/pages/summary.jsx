@@ -42,18 +42,18 @@ export default function Summary() {
     setDate(date);
 
     HostelService.getBusiness(hostelId).then((response) => {
-      console.log("hostel", response.data);
+      // console.log("hostel", response.data);
       setHostel(response.data);
     });
     WorkerService.getWorker(workerId).then((response) => {
-      console.log("worker", response.data);
+      // console.log("worker", response.data);
       setWorker(response.data);
     });
     SubserviceService.getPrice({
       businessUser: hostelId,
       subservice: subServiceId,
     }).then((response) => {
-      console.log("price", response.data);
+      // console.log("price", response.data);
       setService({ price: response.data.valuesToday, currency: "BRL" });
     });
   };

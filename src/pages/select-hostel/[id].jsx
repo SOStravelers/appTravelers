@@ -4,6 +4,7 @@ import { useStore } from "@/store";
 import { ThreeDots, InfinitySpin, TailSpin, Rings } from "react-loader-spinner";
 import HostelCard from "@/components/utils/cards/HostelCard";
 import { random } from "@/lib/utils";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import HostelService from "@/services/HostelService";
 
 export default function SelectHostel() {

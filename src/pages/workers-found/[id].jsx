@@ -13,13 +13,6 @@ export default function WorkersFound() {
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    document.title = "Select Worker - SOS Travelers";
-    getData();
-  }, []);
-  const comeBack = () => {
-    router.back();
-  };
   const getData = async () => {
     const data = {
       subservice: service.subServiceId,
@@ -40,6 +33,13 @@ export default function WorkersFound() {
       setWorkers(final);
       setLoading(false);
     });
+  };
+  useEffect(() => {
+    document.title = "Select Worker - SOS Travelers";
+    getData();
+  }, [getData]);
+  const comeBack = () => {
+    router.back();
   };
 
   function getServiceNames(data) {

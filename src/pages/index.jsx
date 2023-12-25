@@ -111,11 +111,11 @@ export default function Home({}) {
 
       <section>
         <h1
-          className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
+          className={`text-black text-xl font-semibold mt-1 mb-3 ${mazzard.className}`}
         >
           Services
         </h1>
-        <div className="w-[90vw] md:w-full flex overflow-x-auto mb-5">
+        <div className="w-[90vw] md:w-full flex overflow-x-auto mb-4">
           {services?.map((s, index) => (
             <ServiceCard
               key={index}

@@ -7,7 +7,7 @@ import "react-day-picker/dist/style.css";
 import ScheduleService from "@/services/ScheduleService";
 import { useStore } from "@/store";
 import moment from "moment";
-import { formatISO } from "date-fns";
+import { formatISO, sub } from "date-fns";
 
 function Calendar({ id }) {
   const router = useRouter();
@@ -20,7 +20,7 @@ function Calendar({ id }) {
     lastDate: null,
     disabledDays: [],
   });
-  const [selectedDay, setSelected] = useState(new Date());
+  const [selectedDay, setSelected] = useState(null);
   const [intervals, setIntervals] = useState([]);
 
   useEffect(() => {
@@ -34,8 +34,10 @@ function Calendar({ id }) {
     if (schedule.length === 0) return;
     const result = schedule ? getDisabledDays(schedule) : "";
     setDays(result);
+    setSelected(new Date());
   }, [schedule]);
   useEffect(() => {
+    console.log("bueno");
     if (selectedDay) {
       const date = new Date(selectedDay);
       const formattedDate =
@@ -133,9 +135,16 @@ function Calendar({ id }) {
     }
     console.log("service", service);
   };
+  const comeback = () => {
+    if (fromFavorite === true) {
+      router.push(`/subservices/${service.serviceId}`);
+    } else {
+      router.push(`/select-hostel/${service.subServiceId}`);
+    }
+  };
 
   let footer = <p className="my-5">Please pick a day.</p>;
-  if (selectedDay) {
+  if (selectedDay && schedule.length > 0) {
     footer = (
       <div>
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
@@ -152,11 +161,22 @@ function Calendar({ id }) {
               />
             ))
           ) : (
-            <span className="mt-4">No available time options.</span>
+            <span className="mt-4">Choose another day.</span>
           )}
         </div>
 
         {time && <OutlinedButton text={"Next"} onClick={selectTime} />}
+      </div>
+    );
+  } else if (!selectedDay || schedule.length == 0) {
+    footer = (
+      <div>
+        {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
+        <h1 className="font-semibold text-sm mt-2">
+          Not schedule available, choose another hostel.
+        </h1>
+
+        <OutlinedButton text={"Back"} onClick={comeback} />
       </div>
     );
   }

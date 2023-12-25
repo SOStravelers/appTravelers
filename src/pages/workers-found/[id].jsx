@@ -39,7 +39,6 @@ export default function WorkersFound() {
       }
       setWorkers(final);
       setLoading(false);
-      // setWorkers(response.data.docs);
     });
   };
 
@@ -68,7 +67,6 @@ export default function WorkersFound() {
   return (
     <div className="p-10 pb-20 flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <h1 className="my-3 font-semibold text-center max-w-lg">Nearby You</h1>
-
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings

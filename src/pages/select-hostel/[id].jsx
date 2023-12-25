@@ -20,7 +20,7 @@ export default function SelectHostel() {
 
   const getData = async () => {
     HostelService.getByservice(service.serviceId).then((response) => {
-      console.log("hostel", response.data);
+      // console.log("hostel", response.data);
       setLoading(false);
       let final = [];
       for (let item of response.data.docs) {

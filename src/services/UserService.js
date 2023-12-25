@@ -75,20 +75,20 @@ export default class UserService {
   }
   static async inactiveMode(value) {
     let data = { isActive: value };
-    console.log("la data", data);
+    // console.log("la data", data);
     return axios.post(`${this.baseUrl}/inactivemode`, data, {
       headers: this.getHeaders(),
     });
   }
 
   static async getById(id) {
-    console.log("id user", id);
+    // console.log("id user", id);
     return axios.get(`${this.baseUrl}/user/${id}`, {
       headers: this.getHeaders(),
     });
   }
   static async updateUser(user) {
-    console.log("el userr", user);
+    // console.log("el userr", user);
     return axios.put(
       `${this.baseUrl}/${user._id}`,
       {

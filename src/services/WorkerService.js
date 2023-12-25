@@ -25,7 +25,6 @@ export default class WorkerService {
     return axios.get(`${this.authUrl}/all?${query}`);
   }
   static async getByAvailability(data) {
-    console.log("buscando por disponibilidad");
     return axios.post(`${this.authUrl}/workerByTimeAndService`, data, {
       headers: this.getHeaders(),
     });

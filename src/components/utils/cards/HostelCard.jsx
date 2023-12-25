@@ -33,7 +33,6 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
   }, []);
 
   const select = () => {
-    console.log("apretando select");
     setService({
       hostelId: id,
       location: location.city,

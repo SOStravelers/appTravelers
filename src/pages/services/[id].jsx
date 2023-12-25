@@ -22,7 +22,7 @@ export default function Services() {
     if (isFavorite) {
       getDataFav();
     } else if (isWorker) {
-      console.log(user?.workerData?.services);
+      // console.log(user?.workerData?.services);
       setServices(user?.workerData?.services);
     }
   }, []);
@@ -31,7 +31,7 @@ export default function Services() {
     try {
       const response = await UserService.getById(router.query.id);
 
-      console.log(response.data);
+      // console.log(response.data);
       setServices(response?.data?.workerData?.services);
       setService({ workerId: router.query.id });
     } catch (err) {
@@ -57,10 +57,9 @@ export default function Services() {
         </div>
       ) : services && services.length > 0 ? (
         <div className="flex flex-wrap">
-          {services.map((s) => (
-            <div className="w-1/2">
+          {services.map((s, index) => (
+            <div className="w-1/2" key={index}>
               <ServiceCardGrey
-                key={s.id._id}
                 id={s.id._id}
                 link={`/subservices/${s.id._id}`}
                 name={s.id.name}

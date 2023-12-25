@@ -77,7 +77,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   };
 
   const obtenerInformacionUsuario = async () => {
-    console.log("get Info", user);
+    // console.log("get Info", user);
     if (user && Object.keys(user).length > 0) {
       console.log("ya hay usuario");
       return;

@@ -14,7 +14,6 @@ export default function Payment() {
   const [price, setPrice] = useState(service.price[0].finalCost);
 
   const handleSelectChange = (selectedOption) => {
-    console.log(selectedOption);
     setService({ currency: selectedOption.value });
     getFinalCost(service, selectedOption.value);
   };
@@ -186,7 +185,7 @@ export default function Payment() {
       <OutlinedButton
         disabled={paymentType == null}
         text="Continue"
-        color="lightBlue"
+        color="blueBorder"
         onClick={pay}
       />
     </div>

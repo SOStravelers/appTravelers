@@ -6,13 +6,14 @@ import FavoriteService from "@/services/FavoriteService";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import { FavoritePicture } from "@/constants/icons";
-
+import { Rings } from "react-loader-spinner";
 export default function Favorites() {
   const store = useStore();
   const router = useRouter();
   const { loginModal, setLoginModal } = store;
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
   var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
@@ -31,19 +32,20 @@ export default function Favorites() {
   const getFavorites = async () => {
     try {
       const response = await FavoriteService.listFavorites();
-      console.log(response);
+      // console.log(response);
       if (response?.data?.length > 0) {
         setFavorites(response?.data);
       }
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
 
   const handleDeleteFav = async (id) => {
     try {
       const response = await FavoriteService.deleteFavorite(id);
-      console.log(response);
+      // console.log(response);
       if (response?.status === 200) {
         setFavorites(
           favorites.filter((favorite) => favorite.receptor._id !== id)
@@ -54,8 +56,19 @@ export default function Favorites() {
     }
   };
   return (
-    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
-      {favorites?.length > 0 ? (
+    <div className="p-10 pb-20 flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-3 font-semibold text-center max-w-lg">My favorites</h1>
+      {loading ? (
+        <div className="max-w-lg flex flex-col items-center justify-center">
+          <Rings
+            width={100}
+            height={100}
+            color="#00A0D5"
+            ariaLabel="infinity-spin-loading"
+          />
+          <p className="mt-2">Searching...</p>
+        </div>
+      ) : favorites?.length > 0 ? (
         favorites.map((favorite) => (
           <WorkerCardFavorite
             key={favorite._id}
@@ -84,6 +97,7 @@ export default function Favorites() {
           </div>
         </div>
       )}
+
       {!user && (
         <LoginFormModal
           open={open}

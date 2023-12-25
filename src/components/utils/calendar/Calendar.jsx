@@ -157,7 +157,6 @@ function Calendar({ id }) {
   } else if (selectedDay && schedule.length > 0 && !loading) {
     footer = (
       <div>
-        asdad
         <h1 className="font-semibold text-xl mt-2">Choose de time</h1>
         <h2 className="font-semibold text-sm mb-1">Brazil time zone (GTM-3)</h2>
         <div className="w-full flex flex-wrap justify-center mb-2 mt-3">

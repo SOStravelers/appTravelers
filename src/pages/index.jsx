@@ -80,7 +80,7 @@ export default function Home({}) {
   const getUsers = async () => {
     UserService.getRandom().then((response) => {
       setRandomUsers(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     });
   };
 

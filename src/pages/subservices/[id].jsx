@@ -51,11 +51,10 @@ export default function Subservices() {
         </div>
       ) : subServices && subServices.length > 0 ? (
         <div className="flex flex-wrap">
-          {subServices?.map((s) => (
-            <div className="w-1/2">
+          {subServices?.map((s, index) => (
+            <div className="w-1/2" key={index}>
               <SubServiceCard
-                key={s.id}
-                id={s.id}
+                id={s._id}
                 duration={s.duration}
                 price={s.price}
                 link={`/select-hostel/${s.id}`}

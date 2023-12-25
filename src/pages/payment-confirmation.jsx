@@ -59,7 +59,7 @@ export default function PaymentConfirmation() {
   };
 
   return (
-    <div className="flex flex-col max-w-lg items-center justify-center my-4 px-5 md:ml-80 min-h-screen">
+    <div className="flex flex-col max-w-lg items-center justify-center my-4 px-3 md:ml-80 min-h-screen">
       <CompleteGirlIcon />
       {/* <Image
         alt="fotoFinal"

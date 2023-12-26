@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import { Rings } from "react-loader-spinner";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import GoogleButton from "@/components/utils/buttons/GoogleButton";
-
+import { useState } from "react";
 import { Field, Form } from "houseform";
 import { z } from "zod";
 import { toast } from "react-toastify";
@@ -13,13 +13,15 @@ import UserService from "@/services/UserService.js";
 
 import Cookies from "js-cookie";
 import { useStore } from "@/store";
+import { set } from "date-fns";
 
 function RegisterForm() {
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
   const register = async (values) => {
     try {
+      setLoading(true);
       const response = await UserService.register(
         values.name,
         values.email,
@@ -47,6 +49,7 @@ function RegisterForm() {
         message = error?.response?.data?.result;
       toast.error(message);
     }
+    setLoading(false);
   };
   return (
     <Form
@@ -172,8 +175,21 @@ function RegisterForm() {
               Forgot password?
             </p>
           </Link>
-          <OutlinedButton text="Register" disabled={!isValid} />
-          <GoogleButton />
+          {loading ? (
+            <div className="max-w-lg flex flex-col items-center justify-center">
+              <Rings
+                width={100}
+                height={100}
+                color="#00A0D5"
+                ariaLabel="infinity-spin-loading"
+              />
+            </div>
+          ) : (
+            <>
+              <OutlinedButton text="Register" disabled={!isValid} />
+              <GoogleButton />
+            </>
+          )}
         </form>
       )}
     </Form>

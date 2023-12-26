@@ -87,6 +87,10 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
+  static async getByIdAuth(id) {
+    // console.log("id user", id);
+    return axios.get(`${this.authUrl}/user/${id}`, {});
+  }
   static async updateUser(user) {
     // console.log("el userr", user);
     return axios.put(

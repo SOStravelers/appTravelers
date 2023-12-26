@@ -50,7 +50,7 @@ export default function Subservices() {
           <p className="mt-2">Searching...</p>
         </div>
       ) : subServices && subServices.length > 0 ? (
-        <div className="flex flex-wrap">
+        <div className="flex max-w-lg flex-wrap">
           {subServices?.map((s, index) => (
             <div className="w-1/2" key={index}>
               <SubServiceCard

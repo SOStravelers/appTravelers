@@ -31,12 +31,15 @@ export default function Worker() {
       setUser(response.data);
     }
   };
-  const capitalize = (cadena) => {
-    return cadena.charAt(0).toUpperCase() + cadena.slice(1);
-  };
+
   const setName = (name) => {
-    if (!name) return "";
-    return capitalize(name?.first) + " " + capitalize(name?.last);
+    const first = name?.first
+      ? name?.first.charAt(0).toUpperCase() + name?.first?.slice(1)
+      : "";
+    const last = name?.last
+      ? name?.last?.charAt(0).toUpperCase() + name?.last?.slice(1)
+      : "";
+    return first + " " + last;
   };
 
   let galleryFilter = user?.img?.gallery.filter((image) => image !== null);

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -22,6 +23,18 @@ function RecomendationCard(user) {
     // Devuelve el nombre del subService en el índice aleatorio
     return allSubServices[randomIndex].name;
   }
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  const formatName = (name) => {
+    const first = name?.first
+      ? name?.first.charAt(0).toUpperCase() + name?.first?.slice(1)
+      : "";
+    const last = name?.last
+      ? name?.last?.charAt(0).toUpperCase() + name?.last?.slice(1)
+      : "";
+    return first + " " + last;
+  };
   const setFavorite = (id) => {
     localStorage.setItem("fromFavorite", true);
     router.push("/worker/" + id);
@@ -29,7 +42,7 @@ function RecomendationCard(user) {
   return (
     <div
       onClick={() => setFavorite(user?.user._id)}
-      className="text-black flex flex-col bg-white w-40 h-60 mx-2 rounded-2xl border-r-2 border-blueBorder cursor-pointer"
+      className="text-black flex flex-col bg-white w-30  h-50  rounded-2xl border-r-2 border-blueBorder cursor-pointer "
     >
       <div className="w-full h-40 rounded-tr-2xl rounded-tl-2xl relative">
         <Image
@@ -44,9 +57,7 @@ function RecomendationCard(user) {
           {getRandomSubServiceName(user.user)}
         </h1>
         <p className="text-blackText text-sm">
-          {user?.user?.personalData?.name?.first +
-            " " +
-            user?.user?.personalData?.name?.last}
+          {formatName(user?.user?.personalData?.name)}
         </p>
       </div>
     </div>

@@ -29,7 +29,7 @@ export default function Services() {
 
   const getDataFav = async () => {
     try {
-      const response = await UserService.getById(router.query.id);
+      const response = await UserService.getByIdAuth(router.query.id);
 
       // console.log(response.data);
       setServices(response?.data?.workerData?.services);
@@ -56,7 +56,7 @@ export default function Services() {
           <p className="mt-2">Searching...</p>
         </div>
       ) : services && services.length > 0 ? (
-        <div className="flex flex-wrap">
+        <div className="flex max-w-lg flex-wrap">
           {services.map((s, index) => (
             <div className="w-1/2" key={index}>
               <ServiceCardGrey
@@ -71,10 +71,12 @@ export default function Services() {
         </div>
       ) : (
         <div>
-          <p className="text-center text-greyText max-w-lg mt-6  lg:my-4 xl:my-4 mb-2">
+          <p className="text-center max-w-lg text-greyText max-w-lg mt-6  lg:my-4 xl:my-4 mb-2">
             No services available
           </p>
-          <QuestionPicture />
+          <div className="text-center max-w-lg">
+            <QuestionPicture />
+          </div>
         </div>
       )}
     </div>

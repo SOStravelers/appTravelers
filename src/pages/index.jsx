@@ -133,7 +133,7 @@ export default function Home({}) {
         >
           Recommended for you
         </h1>
-        <div className="flex justify-center lg:justify-start xl:justify-start md:justify-start pb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
           {randomUsers?.map((s, index) => (
             <RecomendationCard key={index} user={s} />
           ))}

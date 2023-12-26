@@ -11,7 +11,7 @@ module.exports = {
       darkBlue: "#001C25",
       blueBorder: "#00A0D5",
       newBlue: "#3498db",
-
+      blueBorderTransparent: "rgba(0, 160, 213, 0.3)",
       dotBlue: "#1CDAE5",
       blueButton: "#ECF8FC",
       blackButton: "#001C25",

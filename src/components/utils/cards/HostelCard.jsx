@@ -89,7 +89,7 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
       </div>
       <Link
         href={newLink}
-        className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
+        className="w-8 h-28 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
       >
         <ArrowRightIcon className="ml-1" />
       </Link>

@@ -110,6 +110,7 @@ export default function SupportPage() {
                   <p>Full Name</p>
                   <Field
                     name="name"
+                    className="border-blueBorder border w-full max-w-lg rounded-xl p-3 my-1"
                     onBlurValidate={z.string().refine(
                       (val) => {
                         // Verificar que el texto tenga más de 5 caracteres y no contenga números

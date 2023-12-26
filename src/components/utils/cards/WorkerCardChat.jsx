@@ -2,14 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon, ClockIcon } from "@/constants/icons";
 
-function WorkerCardChat({ link, name, service, showArrow = true }) {
+function WorkerCardChat({ onClick, name, service,img, showArrow = true }) {
   return (
-    <div className="flex p-4 w-full max-w-md rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center">
-      <Link href={link}>
+    <div className="flex p-4 cursor-pointer w-full max-w-md rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center" onClick={onClick}>
+     
         <div className="flex">
           <div className="w-20 h-20 rounded-xl bg-blueBorder mr-2 relative">
             <Image
-              src={"/assets/proovedor.png"}
+              src={img}
               fill
               alt="cosa"
               className="object-cover rounded-xl"
@@ -24,11 +24,11 @@ function WorkerCardChat({ link, name, service, showArrow = true }) {
             </div>
           </div>
         </div>
-      </Link>
+     
       {showArrow ? (
-        <Link href={link}>
+       
           <div className="w-3 h-3 flex items-center justify-center rounded-full bg-blueBorder"></div>
-        </Link>
+       
       ) : (
         <div className="w-10"></div>
       )}

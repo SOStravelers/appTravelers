@@ -3,7 +3,7 @@ import Image from "next/image";
 import { StarIcon, FavIconBorder, ClockIcon } from "@/constants/icons";
 import SolidButton from "../buttons/SolidButton";
 
-function WorkerProfileCardChat({ name, services, score, avatar }) {
+function WorkerProfileCardChat({ name, services, avatar }) {
   const router = useRouter();
   const goToServiceDetails = () => {
     router.push("/service-details");

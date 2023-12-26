@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 export default function SupportPage() {
   const [formKey, setFormKey] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sended, setSended] = useState(false);
   const router = useRouter();
   const { user, loggedIn } = useStore();
   const id = router.query.id;
@@ -28,7 +29,6 @@ export default function SupportPage() {
       }
 
       setIsSubmitting(true);
-
       const data = {
         subject: values.subject,
         message: values.message,
@@ -42,7 +42,7 @@ export default function SupportPage() {
 
       console.log(response.data);
       setFormKey((prevKey) => prevKey + 1);
-
+      setSended(true);
       toast.success("Message sent Successfully", {
         position: "top-right",
         // Configuración de la notificación de éxito
@@ -262,10 +262,17 @@ export default function SupportPage() {
                 }}
               </Field>
             </div>
-            <OutlinedButton
-              text="Send Message"
-              disabled={!isValid || isSubmitting}
-            />
+            {!sended ? (
+              <OutlinedButton
+                text="Send Message"
+                disabled={!isValid || isSubmitting}
+              />
+            ) : (
+              <p className="text-sm">
+                We have received your message!!. We will reply to you as soon as
+                possible
+              </p>
+            )}
           </form>
         )}
       </Form>

@@ -52,7 +52,7 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
   return (
     <div
       onClick={select}
-      className="flex  max-w-lg justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2"
+      className="flex  max-w-lg justify-between items-center border-b-2 border-blueBorder rounded-2xl mt-2 mb-3"
     >
       <div className="flex items-center ml-2">
         <Link href={`/hostel/${id}`}>

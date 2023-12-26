@@ -42,8 +42,10 @@ export default function SelectHostel() {
   };
 
   return (
-    <div className="p-10 pb-20 flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <h1 className="my-2 font-semibold text-center max-w-lg">Nearby You</h1>
+    <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-2 font-semibold mt-1 text-center max-w-lg">
+        Nearby You
+      </h1>
       {loading ? (
         <div className="max-w-lg  flex flex-col items-center justify-center">
           <Rings
@@ -76,7 +78,7 @@ export default function SelectHostel() {
         </div>
       ) : (
         <div className="px-4">
-          <h1 className="my-5 text-grey px-2 text-center max-w-lg">
+          <h1 className="my-5 text-grey text-sm px-2 text-center max-w-lg">
             These are not the available worhostelkers, select another subservice
           </h1>
           <OutlinedButton text={"Back"} onClick={comeBack} />

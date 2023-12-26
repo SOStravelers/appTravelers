@@ -65,7 +65,7 @@ export default function WorkersFound() {
   };
 
   return (
-    <div className="p-10 pb-20 flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+    <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
       <h1 className="my-3 font-semibold text-center max-w-lg">Nearby You</h1>
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
@@ -79,7 +79,7 @@ export default function WorkersFound() {
         </div>
       ) : workers.length > 0 ? (
         <>
-          <h1 className="my-5 text-grey px-2 text-center max-w-lg">
+          <h1 className="mt-1 mb-2 text-grey px-1 text-sm text-center max-w-lg">
             These are the available workers, select the one that best suits your
             needs.
           </h1>
@@ -108,7 +108,7 @@ export default function WorkersFound() {
         </>
       ) : (
         <div className="px-4">
-          <h1 className="my-5 text-grey px-2 text-center max-w-lg">
+          <h1 className="mt-1 mb-2 text-grey px-1 text-sm text-center max-w-lg">
             These are not the available workers, select another Date
           </h1>
           <OutlinedButton text={"Back"} onClick={comeBack} />

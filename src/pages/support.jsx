@@ -90,6 +90,9 @@ export default function SupportPage() {
 
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-3 font-semibold text-center max-w-lg">
+        Support: How can we help you?
+      </h1>
       <Form
         key={formKey}
         onSubmit={(values) => {
@@ -110,7 +113,6 @@ export default function SupportPage() {
                   <p>Full Name</p>
                   <Field
                     name="name"
-                    className="border-blueBorder border w-full max-w-lg rounded-xl p-3 my-1"
                     onBlurValidate={z.string().refine(
                       (val) => {
                         // Verificar que el texto tenga más de 5 caracteres y no contenga números

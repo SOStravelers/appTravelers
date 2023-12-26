@@ -4,7 +4,7 @@ function SolidButton({ text, color, py = 3, mt = 0, icon, ...props }) {
   return (
     <button
       className={clsx(
-        `border border-solid text-white py-${py} mt-${mt} w-full rounded-xl my-2 flex items-center justify-center`,
+        `border border-solid text-white py-${py} mt-${mt} max-w-lg w-full rounded-xl my-2 flex items-center justify-center`,
         color === "blueBorder"
           ? "bg-blueBorder"
           : color === "grey"

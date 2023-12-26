@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { random } from "@/lib/utils";
 
 function RecomendationCard(user) {
   const router = useRouter();
@@ -46,7 +47,11 @@ function RecomendationCard(user) {
     >
       <div className="w-full h-40 rounded-tr-2xl rounded-tl-2xl relative">
         <Image
-          src={user?.user?.img?.imgUrl || "/assets/service.png"}
+          src={
+            user?.user?.img?.imgUrl
+              ? user?.user?.img?.imgUrl + "?hola=" + random()
+              : "/assets/service.png"
+          }
           fill
           alt="casa"
           className="object-cover rounded-tr-2xl rounded-tl-2xl"

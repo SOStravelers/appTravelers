@@ -167,17 +167,16 @@ export default function WorkerProfile() {
           <>
             <CertificationPicture className="lg:pl-20 xl:ml-20 " />
 
-            <p className="text-center text-sm italic">
-              To be a validated worker, complete all the fields above
+            <p className="text-center mt-4 text-sm italic">
+              You have been Validated!!, now you are ready to start working,
+              remember to have your profile updated to receive better jobs
             </p>
           </>
         ) : (
           <>
             <CheckBoxesPicture className="" />
-
-            <p className="text-center mt-4 text-sm italic">
-              You have been Validated!!, now you are ready to start working,
-              remember to have your profile updated to receive better jobs
+            <p className="text-center text-sm italic">
+              To be a validated worker, complete all the fields above
             </p>
           </>
         )}

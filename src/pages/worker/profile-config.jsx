@@ -29,21 +29,20 @@ export default function WorkerProfile() {
     setOpenInactive(true);
   };
 
+  const fetchData = async () => {
+    try {
+      const newuser = await UserService.getUserByToken();
+      setUser(newuser.data);
+      const activeVal = newuser.data?.workerData?.isActive;
+      setIsOnWorker(activeVal);
+
+      // Ahora que tenemos el usuario, podemos obtener activeVal
+    } catch (err) {
+      setUser({});
+      setIsOnWorker(false); // Si hay un error, podrías querer establecer esto en un valor por defecto
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const newuser = await UserService.getUserByToken();
-        setUser(newuser.data);
-
-        // Ahora que tenemos el usuario, podemos obtener activeVal
-        const activeVal = newuser.data?.workerData?.isActive;
-        setIsOnWorker(activeVal);
-      } catch (err) {
-        setUser({});
-        setIsOnWorker(false); // Si hay un error, podrías querer establecer esto en un valor por defecto
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -164,7 +163,7 @@ export default function WorkerProfile() {
         onClick={() => router.push("/worker/my-workplaces")}
       />
       <div className="max-w-lg text-center text-xl my-5 flex flex-col justify-center">
-        {user.workerData.isActive ? (
+        {user?.workerData?.isActive ? (
           <>
             <CheckBoxesPicture className="" />
             <p className="text-center text-sm italic">

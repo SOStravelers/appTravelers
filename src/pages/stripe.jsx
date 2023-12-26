@@ -48,19 +48,3 @@ export default function Stripe() {
     </section>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const csp = `default-src 'self'; connect-src 'self' https://api.stripe.com https://errors.stripe.com https://r.stripe.com https://merchant-ui-api.stripe.com;`;
-//   context.res.setHeader("Content-Security-Policy", csp);
-
-//   const response = await StripeService.createPaymentIntent({
-//     amount: 100,
-//   });
-
-//   const clientSecret = response.data.paymentIntent.client_secret;
-//   this.setClientSecret(response.data.clientSecret);
-
-//   return {
-//     props: { clientSecret }, // will be passed to the page component as props
-//   };
-// }

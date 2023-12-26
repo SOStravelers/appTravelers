@@ -9,7 +9,7 @@ function ServiceCard({ link, icon, name, id }) {
   };
   return (
     <Link href={link} onClick={select}>
-      <div className="text-black flex flex-col items-center justify-center mx-2">
+      <div className="text-black flex flex-col items-center justify-center mx-3">
         <div className="w-12 h-12 rounded-full bg-blueBorder flex items-center justify-center">
           <HairCutIcon />
         </div>

@@ -115,7 +115,7 @@ export default function Home({}) {
         >
           Services
         </h1>
-        <div className="w-[90vw] md:w-full flex overflow-x-auto mb-4">
+        <div className="w-[90vw] md:w-full flex justify-center overflow-x-auto mb-2">
           {services?.map((s, index) => (
             <ServiceCard
               key={index}

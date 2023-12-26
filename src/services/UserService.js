@@ -99,6 +99,12 @@ export default class UserService {
       }
     );
   }
+  static async updateDataUser(data) {
+    // console.log("el userr", user);
+    return axios.put(`${this.baseUrl}/data/user`, data, {
+      headers: this.getHeaders(),
+    });
+  }
   static async changeProfileImg(file) {
     console.log("fotito", this.getHeaders());
     const formData = new FormData();

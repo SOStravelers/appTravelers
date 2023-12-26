@@ -67,7 +67,17 @@ export default function Chat() {
   const handleGoToChat = (contact) => {
     router.push({
       pathname: `/chat/${contact._id}`,
-      query: contact,
+      query: {
+        name: `${contact?.personalData?.name?.first} ${
+          contact?.personalData?.name?.last ?? ''
+        }`,
+        avatar:
+          contact.img.imgUrl === ''
+            ? '/assets/proovedor.png'
+            : contact.img.imgUrl,
+        score: contact.rating,
+        services: contact.businessData?.services,
+      },
     })
   }
   return (
@@ -80,7 +90,11 @@ export default function Chat() {
               contact?.personalData?.name?.last ?? ''
             }`}
             service={''}
-            img={contact.img.imgUrl === '' ? '/assets/proovedor.png' : contact.img.imgUrl}
+            img={
+              contact.img.imgUrl === ''
+                ? '/assets/proovedor.png'
+                : contact.img.imgUrl
+            }
             score={contact.rating}
             onClick={() => handleGoToChat(contact)}
           />

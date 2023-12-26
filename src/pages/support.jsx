@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import UserService from "@/services/UserService";
 import Link from "next/link";
+import Select from "react-select";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -62,6 +63,25 @@ export default function SupportPage() {
       setIsSubmitting(false); // Establece el estado de envío del formulario a false después de finalizar
     }
   };
+  const optionsSupport = [
+    "⁠Issues with canceling a reservation",
+    "⁠Problems with scheduling",
+    "⁠Chat-related problems",
+    "⁠Payment or payment method issue",
+    "⁠Double payment has been made",
+    "Problems or dissatisfaction with the service received",
+    "⁠Reporting abuse or misconduct by a worker",
+    "⁠Reporting abuse or misconduct by the facility",
+    "⁠Interested in working with SOS Traveler",
+    "⁠Suggestions for the app",
+    "⁠Suggestions for the service",
+    "⁠Account access or login issue",
+    "Technical difficulties using the platform",
+    "⁠General inquiries about SOS Travelers services",
+  ].map((issue) => ({
+    value: issue,
+    label: issue,
+  }));
 
   useEffect(() => {
     // Este efecto se ejecutará cada vez que la clave del formulario cambie
@@ -158,7 +178,41 @@ export default function SupportPage() {
               >
                 {({ value, setValue, onBlur, errors }) => (
                   <div>
-                    <select
+                    <Select
+                      className="w-full max-w-lg rounded-xl  my-1"
+                      options={optionsSupport}
+                      value={optionsSupport.find(
+                        (option) => option.value === value
+                      )}
+                      onBlur={onBlur}
+                      onChange={(selectedOption) =>
+                        setValue(selectedOption.value)
+                      }
+                      styles={{
+                        control: (provided) => ({
+                          ...provided,
+                          borderColor: "#00A0D5",
+                          borderRadius: "10px",
+                          boxShadow: "none",
+                          "&:hover": {
+                            borderColor: "#00A0D5",
+                          },
+                        }),
+                        option: (provided, state) => ({
+                          ...provided,
+                          color: state.isSelected ? "#fff" : "#000",
+                          backgroundColor: state.isSelected
+                            ? "#00A0D5"
+                            : "#fff",
+                          borderRadius: "5px",
+                          "&:hover": {
+                            color: "#fff",
+                            backgroundColor: "#00A0D5",
+                          },
+                        }),
+                      }}
+                    />
+                    {/* <select
                       className="border-grey border w-full max-w-lg rounded-xl p-3 my-1"
                       value={value}
                       onBlur={onBlur}
@@ -167,7 +221,7 @@ export default function SupportPage() {
                       <option value="">Choose an option</option>
                       <option value="opcion1">Option 1</option>
                       <option value="opcion2">Option 2</option>
-                    </select>
+                    </select> */}
                     {errors.map((error) => (
                       <p key={error} className="text-red">
                         {error}

@@ -8,35 +8,54 @@ import UserService from "@/services/UserService";
 import WorkerService from "@/services/WorkerService";
 import { useStore } from "@/store";
 import { BarberPicture } from "@/constants/icons";
+import { toast } from "react-toastify";
 
 export default function MyServices() {
   const [services, setServices] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [open, setOpen] = useState(true);
   const [addingService, setAddingService] = useState(false);
+  const [isActiveInitial, setIsActiveInitial] = useState(null);
 
-  const { user, setUser } = useStore();
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     getData();
     getUserData();
-  }, [user]);
+  }, []);
 
-  useEffect(() => {
-    /*selectedOptions?.map((s) => {
+  /* useEffect(() => {
+    selectedOptions?.map((s) => {
       if (s?.subServices?.length === 0) {
         setSelectedOptions(selectedOptions?.filter((ss) => ss?.id !== s?.id));
       }
-    });*/
-  }, [services]);
+    });
+  }, [services]); 
 
   useEffect(() => {
-    /*selectedOptions?.map((s) => {
+    selectedOptions?.map((s) => {
       if (s?.subServices?.length === 0) {
         setSelectedOptions(selectedOptions?.filter((ss) => ss?.id !== s?.id));
       }
-    });*/
+    });
   }, [selectedOptions]);
+
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const newUser = await UserService.getUserByToken();
+        setUser(newUser.data);
+
+        // Ahora que tenemos el usuario, podemos obtener activeVal
+        setIsActiveInitial(newUser.data?.workerData?.isActive);
+      } catch (err) {
+        setUser({});
+        setIsActiveInitial(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const getData = async () => {
     ServiceService.listServices().then((response) => {
@@ -97,22 +116,44 @@ export default function MyServices() {
   };
 
   const handleSaveSelection = async () => {
-    // Filtrar los servicios que tienen al menos un subservicio
-    console.log("se guardan");
-    const servicesWithSubservices = selectedOptions.filter(
-      (service) => service.subServices.length > 0
-    );
-    user.workerData.services = servicesWithSubservices;
-    user.workerData.isActive = true;
-    // Chequear array de subservicios para actualizar la base de datos
-    user.workerData.isMyServicesOk = servicesWithSubservices.length > 0;
-    const response = await UserService.updateUser(user);
+    try {
+      // Filtrar los servicios que tienen al menos un subservicio
+      const servicesWithSubservices = selectedOptions.filter(
+        (service) => service.subServices.length > 0
+      );
+      user.workerData.services = servicesWithSubservices;
+      const response = await UserService.updateUser(user);
+      toast.info("Saved.", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
 
-    if (response.data) {
-      setUser(response.data);
+      if (response.data) {
+        setUser(response.data);
+      }
+
+      // Chequear array de subservicios para actualizar la base de datos
+      if (servicesWithSubservices.length > 0 && isActiveInitial) {
+        await UserService.readyToWork({
+          isMyServicesOk: true,
+          isActive: true,
+        });
+      } else if (servicesWithSubservices.length > 0) {
+        await UserService.readyToWork({ isMyServicesOk: true });
+      } else {
+        await UserService.readyToWork({
+          isMyServicesOk: false,
+          isActive: false,
+        });
+      }
+
+      setAddingService(false);
+    } catch (err) {
+      toast.error("Internal Server Error. Please try again later.", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1800,
+      });
     }
-
-    setAddingService(false);
   };
 
   const handleAddService = () => {

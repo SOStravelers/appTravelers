@@ -152,22 +152,7 @@ function SectionWeek() {
     try {
       let schedules = { schedules: horario };
       const response = await ScheduleService.save(schedules);
-      let check = response.data.schedules.some(
-        (item) => item.isActive === true
-      );
-      const newuser = user;
-      console.log("antes");
-      console.log(newuser);
-      if (check) {
-        newuser.workerData.isMySchedulesOk = true;
-      } else {
-        newuser.workerData.isMySchedulesOk = false;
-      }
-      console.log("aqui");
-      const responseUser = await UserService.updateUser(newuser);
-      console.log(responseUser);
-      setUser(responseUser.data);
-
+      fetchUser(response);
       toast.info("Saved", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1200,
@@ -178,6 +163,15 @@ function SectionWeek() {
         autoClose: 1500,
       });
     }
+  };
+
+  const fetchUser = async (schedulesResponse) => {
+    const newuser = user;
+    let check = schedulesResponse.data.schedules.some(
+      (item) => item.isActive === true
+    );
+    newuser.workerData.isMySchedulesOk = check;
+    UserService.updateUser(newuser);
   };
 
   return (

@@ -73,10 +73,23 @@ export default class UserService {
       }
     );
   }
-  static async inactiveMode(value) {
-    let data = { isActive: value };
-    // console.log("la data", data);
-    return axios.post(`${this.baseUrl}/inactivemode`, data, {
+
+  static async readyToWork({
+    isActive,
+    isAboutmeOk,
+    isMyServicesOk,
+    isMySchedulesOk,
+    isMyWorkplacesOk,
+  }) {
+    let data = {
+      isActive: isActive,
+      isAboutmeOk: isAboutmeOk,
+      isMyServicesOk: isMyServicesOk,
+      isMySchedulesOk: isMySchedulesOk,
+      isMyWorkplacesOk: isMyWorkplacesOk,
+    };
+
+    return axios.post(`${this.baseUrl}/readyToWork`, data, {
       headers: this.getHeaders(),
     });
   }
@@ -87,10 +100,14 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
+<<<<<<< HEAD
   static async getByIdAuth(id) {
     // console.log("id user", id);
     return axios.get(`${this.authUrl}/user/${id}`, {});
   }
+=======
+
+>>>>>>> 501aab04ff4d2ce2f7f52d6ef92db1016c057355
   static async updateUser(user) {
     // console.log("el userr", user);
     return axios.put(

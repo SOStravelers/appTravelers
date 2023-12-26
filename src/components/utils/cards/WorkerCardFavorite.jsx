@@ -41,9 +41,15 @@ function WorkerCardFavorite({
   };
 
   return (
-    <div className="flex w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center">
+    <div
+      onClick={handleWorkerSelection}
+      className="flex w-full max-w-lg rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center"
+    >
       <div className="flex">
-        <div className="w-20 h-20 rounded-xl  mr-2 ml-3 relative">
+        <div
+          className="w-20 h-20 rounded-xl   mr-2 ml-3 relative"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Link href={link}>
             {image && (
               <Image
@@ -65,10 +71,7 @@ function WorkerCardFavorite({
         </div>
       </div>
       {showArrow ? (
-        <div
-          onClick={handleWorkerSelection}
-          className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
-        >
+        <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
           <ArrowRightIcon className="ml-1" />
         </div>
       ) : (

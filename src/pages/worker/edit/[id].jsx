@@ -15,7 +15,7 @@ export default function WorkerEdit() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await UserService.get(id);
+        const response = await UserService.getUserById(id);
         if (response) {
           setUser(response.data);
           setIsActiveInitial(response.data?.workerData?.isActive);

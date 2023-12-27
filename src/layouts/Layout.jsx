@@ -6,6 +6,8 @@ import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
 import clsx from "clsx";
+import { ThreeDots } from "react-loader-spinner";
+import { LogoSosBlack } from "@/constants/icons";
 
 import { Poppins } from "next/font/google";
 import { CustomMiddlewareComponent } from "@/middleware";
@@ -71,19 +73,19 @@ function Layout({ children, lang }) {
         <CustomMiddlewareComponent
           onMiddlewareComplete={handleMiddlewareComplete}
         />
-        {middlewareCompleted && (
+
+        <Head>
+          <title>Sos Travelers</title>
+          <meta name="description" content={metaDescription} />
+
+          {/* Redes sociales */}
+          <meta property="og:title" content="SOS Travelers" />
+          <meta property="og:description" content={metaDescription} />
+
+          <meta property="og:image" content="/assets/logoSos.png" />
+        </Head>
+        {middlewareCompleted ? (
           <>
-            <Head>
-              <title>Sos Travelers</title>
-              <meta name="description" content={metaDescription} />
-
-              {/* Redes sociales */}
-              <meta property="og:title" content="SOS Travelers" />
-              <meta property="og:description" content={metaDescription} />
-
-              <meta property="og:image" content="/assets/logoSos.png" />
-            </Head>
-
             {isLoginPage ? (
               <WaveBar />
             ) : arePrincipalPages ? (
@@ -93,6 +95,17 @@ function Layout({ children, lang }) {
             )}
             {children}
           </>
+        ) : (
+          <div className="full flex flex-col h-screen  items-center justify-center">
+            <LogoSosBlack className="animate-heartbeat"></LogoSosBlack>
+
+            <ThreeDots
+              width={100}
+              height={100}
+              color="black"
+              ariaLabel="infinity-spin-loading"
+            />
+          </div>
         )}
       </div>
     </>

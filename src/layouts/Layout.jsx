@@ -7,7 +7,7 @@ import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
 import clsx from "clsx";
 import { ThreeDots } from "react-loader-spinner";
-import { LogoSosBlack } from "@/constants/icons";
+import { LogoSosBlack, LogoSosRelleno } from "@/constants/icons";
 
 import { Poppins } from "next/font/google";
 import { CustomMiddlewareComponent } from "@/middleware";
@@ -82,7 +82,7 @@ function Layout({ children, lang }) {
           <meta property="og:title" content="SOS Travelers" />
           <meta property="og:description" content={metaDescription} />
 
-          <meta property="og:image" content="/assets/logoSos.png" />
+          <meta property="og:image" content="/assets/logoGrandeSOS.png" />
         </Head>
         {middlewareCompleted ? (
           <>
@@ -96,9 +96,8 @@ function Layout({ children, lang }) {
             {children}
           </>
         ) : (
-          <div className="full flex flex-col h-screen  items-center justify-center">
-            <LogoSosBlack className="animate-heartbeat"></LogoSosBlack>
-
+          <div className="w-sreen flex flex-col h-screen  items-center justify-center">
+            <LogoSosRelleno className="animate-heartbeat"></LogoSosRelleno>
             <ThreeDots
               width={100}
               height={100}

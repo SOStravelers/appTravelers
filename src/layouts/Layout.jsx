@@ -97,8 +97,10 @@ function Layout({ children, lang }) {
           </>
         ) : (
           <div className="w-sreen flex flex-col h-screen  items-center justify-center">
-            <LogoSosRelleno className="animate-heartbeat"></LogoSosRelleno>
+            <LogoSosRelleno></LogoSosRelleno>
+            <p className=" font-medium mt-4 text-xl">SOS Travelers</p>
             <ThreeDots
+              wrapperStyle={{ marginTop: "-25px" }}
               width={100}
               height={100}
               color="black"

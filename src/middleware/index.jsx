@@ -95,15 +95,17 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       console.log("set user back");
       const response = await UserService.getUserByToken();
       if (response) {
-        Cookies.set("auth.user_id", response.data._id);
         if (response.data.type == "business") {
+          console.log("es business");
           localStorage.removeItem("access_token");
           Cookies.remove("auth.access_token");
           Cookies.remove("auth.refresh_token");
           Cookies.remove("auth.user_id");
           setUser({});
           router.push("/");
+          return;
         }
+        Cookies.set("auth.user_id", response.data._id);
         setUser(response.data);
         setLoggedIn(true);
         setLoginModal(true);

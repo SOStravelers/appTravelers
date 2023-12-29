@@ -31,12 +31,18 @@ export default function PaymentConfirmation() {
 
   const createBooking = async (paymentIntent) => {
     const client = user._id;
+    console.log("toda la data", service);
+    const priceObject = service.price.find(
+      (price) => price.currency === service.currency
+    );
     const params = {
       workerUser: service.workerId,
       clientUser: client,
       payment: {
         paymentId: paymentIntent,
-        price: service.price.number,
+        currency: service.currency,
+        price: priceObject.finalCost,
+        priceBRL: null,
         method: "stripe",
         status: "pending",
       },

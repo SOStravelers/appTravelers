@@ -42,7 +42,7 @@ export default function Profile({ user }) {
         text="Settings"
         onClick={() => router.push("/settings")}
       />
-      <OutlinedButton text="Invite Friends" />
+      {/* <OutlinedButton text="Invite Friends" /> */}
       <OutlinedButton secondary text="Log Out" onClick={logout} />
     </div>
   );

@@ -22,7 +22,7 @@ function Calendar({ id }) {
     lastDate: null,
     disabledDays: [],
   });
-  const [selectedDay, setSelected] = useState(null);
+  const [selectedDay, setSelected] = useState(new Date());
   const [intervals, setIntervals] = useState([]);
 
   useEffect(() => {
@@ -36,7 +36,6 @@ function Calendar({ id }) {
     if (schedule.length === 0) return;
     const result = schedule ? getDisabledDays(schedule) : "";
     setDays(result);
-    setSelected(new Date());
   }, [schedule]);
   useEffect(() => {
     console.log("bueno");
@@ -70,6 +69,7 @@ function Calendar({ id }) {
     if (response?.data) {
       console.log("calendario", response.data);
       setSchedule(response.data);
+      // setSelected(new Date());
     }
     setLoading(false);
   };

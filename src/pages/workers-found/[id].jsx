@@ -58,6 +58,7 @@ export default function WorkersFound() {
       hostelId: hostelId,
       workerId: workerId,
     });
+    router.push("/summary");
   };
 
   const fullName = ({ first, last }) => {

@@ -128,12 +128,12 @@ export default function PersonalDetails() {
           onChange={(e) => setValue(e.target.value)}
         />
       )}
-      <SelectCard
+      {/* <SelectCard
         title="Address"
         icon={HouseIcon}
         edit={true}
         subtitle="Avenida Atlántica 1234, Copacabana, Rio de Janeiro, Brazil"
-      />
+      /> */}
       {user && user.security && user.security.hasPassword ? (
         // Este componente se mostrará si el usuario está autenticado
         <OptionCard

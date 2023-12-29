@@ -63,6 +63,7 @@ function LoginForm() {
         }
       }
     } catch (error) {
+      setLoading(false);
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.error;

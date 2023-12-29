@@ -82,7 +82,10 @@ function Layout({ children, lang }) {
           <meta property="og:title" content="SOS Travelers" />
           <meta property="og:description" content={metaDescription} />
 
-          <meta property="og:image" content="/assets/logoGrandeSOS.png" />
+          <meta
+            property="og:image"
+            content="https://sostvl.com/assets/logoGrandeSOS.png"
+          />
         </Head>
         {middlewareCompleted ? (
           <>

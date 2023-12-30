@@ -85,6 +85,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
 
   const obtenerInformacionUsuario = async () => {
     let cookieAccessToken = Cookies.get("auth.access_token");
+    const session = await getSession();
     if (user && Object.keys(user).length > 0) {
       console.log("ya hay usuario");
       return;
@@ -93,7 +94,11 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     console.log("route", route, route == "/forgot-password");
     if (route == "/login") {
       console.log("caso login");
-      if (!user || (Object.keys(user).length == 0 && !cookieAccessToken)) {
+      if (
+        (!user || Object.keys(user).length == 0) &&
+        !cookieAccessToken &&
+        !session
+      ) {
         console.log("no hay usuario");
         return;
       } else {
@@ -195,7 +200,10 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
               setLoggedIn(true);
               setLoginModal(true);
               setUser(user.data.user);
-              if (user.data.type == "worker") {
+              console.log("justo antes", user.data.user);
+
+              if (user.data.user.type == "worker") {
+                console.log("es worker");
                 setWorker(true);
                 router.push("/worker/home");
                 return;

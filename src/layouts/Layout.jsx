@@ -28,14 +28,15 @@ function Layout({ children, lang }) {
   };
 
   let metaDescription = "";
-
-  if (lang === "fr") {
+  const language = lang ? lang : "en";
+  console.log(language);
+  if (language.includes("fr")) {
     metaDescription =
       "Découvrez un bien-être personnalisé : choisissez votre hostel, choisissez l'heure et trouvez des professionnels d'élite dans notre application conviviale. Des travailleurs soigneusement sélectionnés pour une expérience inégalée. Votre confort est notre priorité !";
-  } else if (lang === "pt") {
+  } else if (language.includes("pt")) {
     metaDescription =
       "Descubra o bem-estar personalizado: escolha seu hostel, escolha o horário e encontre profissionais de elite em nosso amigável aplicativo. Trabalhadores cuidadosamente selecionados para uma experiência incomparável. Seu conforto é nossa prioridade!";
-  } else if (lang === "es") {
+  } else if (language.includes("es")) {
     metaDescription =
       "Descubre el bienestar personalizado: elige tu hostel, elige el horario y encuentra profesionales de élite en nuestra amigable aplicación. Trabajadores cuidadosamente seleccionados para una experiencia inigualable. ¡Su comodidad es nuestra prioridad!";
   } else {
@@ -73,20 +74,21 @@ function Layout({ children, lang }) {
         <CustomMiddlewareComponent
           onMiddlewareComplete={handleMiddlewareComplete}
         />
+        {router.pathname != "/worker/[id]" && (
+          <Head>
+            <title>Sos Travelers</title>
+            <meta name="description" content={metaDescription} />
 
-        <Head>
-          <title>Sos Travelers</title>
-          <meta name="description" content={metaDescription} />
+            {/* Redes sociales */}
+            <meta property="og:title" content="SOS Travelers" />
+            <meta property="og:description" content={metaDescription} />
 
-          {/* Redes sociales */}
-          <meta property="og:title" content="SOS Travelers" />
-          <meta property="og:description" content={metaDescription} />
-
-          <meta
-            property="og:image"
-            content={`https://sostvl.com/assets/logoRedes.png?random=${Math.random()}`}
-          />
-        </Head>
+            <meta
+              property="og:image"
+              content={`https://sostvl.com/assets/logoRedes.png?random=${Math.random()}`}
+            />
+          </Head>
+        )}
         {middlewareCompleted ? (
           <>
             {isLoginPage ? (

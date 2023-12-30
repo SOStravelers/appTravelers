@@ -61,7 +61,10 @@ export default function App({ Component, pageProps }) {
   };
   // Convierte el componente SVG a cadena
   const svgString = renderToString(<LogoSosRelleno />);
-  const lang = navigator.userLanguage || navigator.language;
+  let lang;
+  if (typeof window !== "undefined") {
+    lang = window.navigator.userLanguage || window.navigator.language;
+  }
   return (
     <>
       <Head>

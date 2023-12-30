@@ -30,7 +30,16 @@ function LoginForm() {
       if (response.data.user.type && response.data.user.type != "personal") {
         localStorage.setItem("type", response.data.user.type);
       }
+      if (response.data.user.type == "worker") {
+        delete response.data.user.type;
+
+        console.log("es worker");
+        setWorker(true);
+        router.push("/worker/home");
+        return;
+      }
       delete response.data.user.type;
+
       toast.info("signin", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 1500,

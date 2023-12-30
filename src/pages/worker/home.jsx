@@ -20,7 +20,7 @@ export default function WorkerHome() {
   const [swiper, setSwiper] = useState(null);
 
   useEffect(() => {
-    document.title = "Worker Home - SOS Travelers";
+    document.title = "Worker Home | SOS Travelers";
     setBookings([
       {
         id: 1,

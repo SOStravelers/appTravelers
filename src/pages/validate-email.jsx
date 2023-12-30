@@ -19,7 +19,7 @@ export default function ChangePassword() {
       if (response.status === 200) {
         router.push({
           pathname: "/recovery-password",
-          query: { userId: response?.data?._id },
+          query: { userId: userId },
         });
       }
     } catch (err) {

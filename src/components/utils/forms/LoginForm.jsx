@@ -77,13 +77,16 @@ function LoginForm() {
       if (error?.response?.status === 404)
         message = error?.response?.data?.error;
       else if (error?.response?.status === 400) {
+        console.log("400");
         try {
-          const response = await UserService.findByEmail(email);
+          const response = await UserService.findByEmail(values.email);
+          console.log("respuesta", response);
           if (response?.data?.isActive && response?.data?.isValidate) {
             const res = await UserService.sendCodeEmail(
               response.data._id,
               "createPass"
             );
+            console.log(res);
             if (res.status === 200) {
               router.push({
                 pathname: "/validate-email",

@@ -143,6 +143,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
             if (user.data.type == "worker") {
               setWorker(true);
               if (
+                !router.pathname.includes("worker") &&
                 router.pathname != "/workers-found/[id]" &&
                 router.pathname != "/worker/[id]"
               ) {

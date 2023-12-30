@@ -339,11 +339,11 @@ function EditGallery() {
                     boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
                   }}
                 >
-                  <h1 className="text-2xl font-semibold mb-5">
+                  <h1 className="text-sm lg:text-xl font-semibold mb-5">
                     Adjust the image for better look
                   </h1>
                   <ReactCrop
-                    className="w-60"
+                    className="w-90"
                     crop={crop}
                     onChange={(c) => setCrop(c)}
                     aspect={16 / 9}
@@ -352,7 +352,11 @@ function EditGallery() {
                   </ReactCrop>
                   <br />
                   <SolidButton text="Crop the image" onClick={cropImageNow} />
-                  <OutlinedButton text="Cancel" onClick={handleCancel} />
+                  <OutlinedButton
+                    margin="my-1"
+                    text="Cancel"
+                    onClick={handleCancel}
+                  />
                   <br />
                 </dialog>
               </>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Router from "next/router";
+import Head from "next/head";
 import WorkerProfileCard from "@/components/utils/cards/WorkerProfileCard";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import SectionAbout from "@/components/profile/SectionAbout/SectionAbout";

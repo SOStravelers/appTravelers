@@ -8,12 +8,17 @@ import SectionServices from "@/components/profile/SectionServices/SectionService
 import { SECTION_ONE } from "@/constants";
 import UserService from "@/services/UserService";
 
-export default function Worker({ user }) {
+export default function Worker() {
   const [actualView, setActualView] = useState(SECTION_ONE);
+  const [user, setUser] = useState(null);
   const [nombre, setNombre] = useState("");
   const [image, setImage] = useState("");
   const router = Router;
   const id = router.query.id;
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   useEffect(() => {
     let nombre =
@@ -22,6 +27,13 @@ export default function Worker({ user }) {
     setNombre(nombre);
     setImage(user?.img?.imgUrl);
   }, [user]);
+
+  const getUserData = async () => {
+    const response = await UserService.getUserById(id);
+    if (response?.data) {
+      setUser(response.data);
+    }
+  };
 
   const setName = (name) => {
     const first = name?.first
@@ -76,16 +88,4 @@ export default function Worker({ user }) {
       )}
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  const id = context.params.id;
-  const response = await UserService.getUserById(id);
-  const user = response?.data;
-
-  return {
-    props: {
-      user,
-    },
-  };
 }

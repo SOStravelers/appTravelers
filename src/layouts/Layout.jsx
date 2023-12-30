@@ -74,21 +74,19 @@ function Layout({ children, lang }) {
         <CustomMiddlewareComponent
           onMiddlewareComplete={handleMiddlewareComplete}
         />
-        {router.pathname != "/worker/[id]" && (
-          <Head>
-            <title>Sos Travelers</title>
-            <meta name="description" content={metaDescription} />
+        <Head>
+          <title>Sos Travelers</title>
+          <meta name="description" content={metaDescription} />
 
-            {/* Redes sociales */}
-            <meta property="og:title" content="SOS Travelers" />
-            <meta property="og:description" content={metaDescription} />
+          {/* Redes sociales */}
+          <meta property="og:title" content="SOS Travelers" />
+          <meta property="og:description" content={metaDescription} />
 
-            <meta
-              property="og:image"
-              content={`https://sostvl.com/assets/logoRedes.png?random=${Math.random()}`}
-            />
-          </Head>
-        )}
+          <meta
+            property="og:image"
+            content={`https://sostvl.com/assets/logoRedes.png?random=${Math.random()}`}
+          />
+        </Head>
         {middlewareCompleted ? (
           <>
             {isLoginPage ? (

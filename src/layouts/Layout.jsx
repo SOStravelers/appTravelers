@@ -84,7 +84,7 @@ function Layout({ children, lang }) {
 
           <meta
             property="og:image"
-            content={`https://sostvl.com/assets/logoGrandeSOS.png?random=${Math.random()}`}
+            content={`https://sostvl.com/assets/logoRedes.png?random=${Math.random()}`}
           />
         </Head>
         {middlewareCompleted ? (

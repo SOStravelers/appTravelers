@@ -36,7 +36,7 @@ export default function Payment() {
   }
 
   useEffect(() => {
-    document.title = "Payment - SOS Travelers";
+    document.title = "Payment | SOS Travelers";
   }, []);
 
   const priceOptions = service?.price?.map((price) => ({

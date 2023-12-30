@@ -29,7 +29,7 @@ export default function Home({}) {
   }, []);
 
   useEffect(() => {
-    document.title = "Home - SOS Travelers";
+    document.title = "Home | SOS Travelers";
     if (!services || Object.keys(services).length == 0) {
       getData();
     }

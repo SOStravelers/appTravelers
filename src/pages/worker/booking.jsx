@@ -22,7 +22,7 @@ for (let i = 1; i <= 6; i++) {
 
 export default function WorkerBooking() {
   useEffect(() => {
-    document.title = "Worker Booking - SOS Travelers";
+    document.title = "Worker Booking | SOS Travelers";
   }, []);
 
   const [actualView, setActualView] = useState(SECTION_ONE);

@@ -23,7 +23,7 @@ export default function Stripe() {
   }
 
   useEffect(() => {
-    document.title = "Your Payment - SOS Travelers";
+    document.title = "Your Payment | SOS Travelers";
     if (!initialized.current) {
       initialized.current = true;
       createPaymentIntent();

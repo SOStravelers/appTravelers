@@ -22,7 +22,7 @@ export default function Worker() {
       user?.personalData?.name?.first +
       " " +
       user?.personalData?.name?.last +
-      " - SOS Travelers";
+      " | SOS Travelers";
   }, [user]);
 
   const getUserData = async () => {

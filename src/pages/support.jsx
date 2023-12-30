@@ -20,7 +20,9 @@ export default function SupportPage() {
   const router = useRouter();
   const { user, loggedIn } = useStore();
   const id = router.query.id;
-
+  useEffect(() => {
+    document.title = "Support | SOS Travelers";
+  }, []);
   const supportEmail = async (values) => {
     try {
       if (isSubmitting) {

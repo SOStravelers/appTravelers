@@ -26,7 +26,7 @@ export default function Summary() {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-    document.title = "Summary - SOS Travelers";
+    document.title = "Summary | SOS Travelers";
     //localStorage.removeItem("fromFavorite");
     localStorage.removeItem("editing");
     getData();

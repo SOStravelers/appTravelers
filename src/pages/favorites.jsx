@@ -17,7 +17,7 @@ export default function Favorites() {
   var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
-    document.title = "My favorites - SOS Travelers";
+    document.title = "My favorites | SOS Travelers";
     if (loginModal) {
       setOpen(false);
       setLoginModal(false);

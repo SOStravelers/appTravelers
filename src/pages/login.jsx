@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export default function Login() {
   useEffect(() => {
-    document.title = "Login - SOS Travelers";
+    document.title = "Login | SOS Travelers";
   }, []);
 
   return (

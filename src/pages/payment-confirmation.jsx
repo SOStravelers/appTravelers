@@ -17,7 +17,9 @@ export default function PaymentConfirmation() {
   const initialized = useRef(false);
   const [complete, setComplete] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  useEffect(() => {
+    document.title = "Confirmation | SOS Travelers";
+  }, []);
   useEffect(() => {
     console.log("el servicio", service);
     const paymentIntent = router.query.payment_intent;

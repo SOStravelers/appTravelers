@@ -10,7 +10,7 @@ export default function VerifyAccount() {
   const router = useRouter();
 
   useEffect(() => {
-    document.title = "Recovery Pass - SOS Travelers";
+    document.title = "Recovery Pass | SOS Travelers";
   }, []);
   const handleVerifyCode = async () => {
     try {

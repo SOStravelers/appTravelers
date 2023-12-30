@@ -7,7 +7,7 @@ import Calendar from "@/components/utils/calendar/Calendar";
 export default function Reservation() {
   const router = useRouter();
   useEffect(() => {
-    document.title = "Reservation - SOS Travelers";
+    document.title = "Reservation | SOS Travelers";
   }, []);
 
   return (

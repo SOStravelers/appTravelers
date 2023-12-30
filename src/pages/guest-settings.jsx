@@ -9,7 +9,7 @@ import { WorldIcon, MailIcon } from "@/constants/icons";
 
 export default function GuestSettings() {
   useEffect(() => {
-    document.title = "Settings - SOS Travelers";
+    document.title = "Settings | SOS Travelers";
   }, []);
   const router = useRouter();
   const [isOnUbication, setIsOnUbication] = useState(false);

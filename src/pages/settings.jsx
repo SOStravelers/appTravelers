@@ -9,7 +9,6 @@ import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 import WorkerService from "@/services/WorkerService";
 import Link from "next/link";
-
 export default function Settings() {
   const { setWorker, isWorker } = useStore();
   const router = useRouter();
@@ -20,7 +19,9 @@ export default function Settings() {
   const [openNotification, setOpenNotification] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOnNotification, setIsOnNotification] = useState(true);
-
+  useEffect(() => {
+    document.title = "Settings | SOS Travelers";
+  }, []);
   useEffect(() => {
     setIsOnNotification(true);
   }, []);

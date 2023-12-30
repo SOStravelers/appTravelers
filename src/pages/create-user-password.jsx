@@ -43,8 +43,8 @@ export default function CreateUserPassword() {
         <CreatePassForm />
       ) : (
         <div className="flex flex-col items-center justify-center max-w-lg my-5">
-          <h1 className="text-2xl font-bold mb-5">
-            You don&apos;t have a password yet
+          <h1 className="text-md f mb-5">
+            You don&apos;t have a password yet. Create a new one
           </h1>
 
           {codeSend ? (

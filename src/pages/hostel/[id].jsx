@@ -16,8 +16,8 @@ export default function Hostel() {
 
   useEffect(() => {
     document.title =
-      hostel?.businessData?.name + " - SOS Travelers" ||
-      "hotel" + " - SOS Travelers";
+      hostel?.businessData?.name + " | SOS Travelers" ||
+      "hotel" + " | SOS Travelers";
   }, [hostel]);
 
   const getData = async () => {

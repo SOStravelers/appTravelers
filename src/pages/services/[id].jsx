@@ -17,7 +17,7 @@ export default function Services() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Choose subservice - SOS Travelers";
+    document.title = "Choose subservice | SOS Travelers";
     const isFavorite = localStorage.getItem("fromFavorite");
     if (isFavorite) {
       getDataFav();

@@ -21,6 +21,9 @@ export default function PersonalDetails() {
   const [email, setEmail] = useState(false);
   const [save, setSave] = useState(false);
   useEffect(() => {
+    document.title = "Personal Details | SOS Travelers";
+  }, []);
+  useEffect(() => {
     if (user) {
       const name =
         capitalizeFirstLetter(user?.personalData?.name?.first) +

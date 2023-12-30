@@ -35,7 +35,7 @@ export default function WorkersFound() {
     });
   };
   useEffect(() => {
-    document.title = "Select Worker - SOS Travelers";
+    document.title = "Select Worker | SOS Travelers";
     getData();
   }, []);
   const comeBack = () => {

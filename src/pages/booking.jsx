@@ -30,7 +30,7 @@ export default function Booking() {
     localStorage.removeItem("fromFavorite");
   }, []);
   useEffect(() => {
-    document.title = "Booking - SOS Travelers";
+    document.title = "Booking | SOS Travelers";
     const user = Cookies.get("auth.user_id");
     if (loginModal) {
       setOpen(false);

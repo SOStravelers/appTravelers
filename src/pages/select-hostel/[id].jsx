@@ -15,7 +15,7 @@ export default function SelectHostel() {
   const [hostels, setHostels] = useState([]);
 
   useEffect(() => {
-    document.title = "Select Hostel - SOS Travelers";
+    document.title = "Select Hostel | SOS Travelers";
     getData();
   }, []);
 

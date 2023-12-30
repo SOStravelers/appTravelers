@@ -8,7 +8,7 @@ import { useStore } from "@/store";
 
 export default function Registro() {
   useEffect(() => {
-    document.title = "Register - SOS Travelers";
+    document.title = "Register | SOS Travelers";
   }, []);
   return (
     <div className="bg-white w-full minh-screen flex flex-col md:items-center px-10">

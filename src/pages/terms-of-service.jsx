@@ -7,7 +7,7 @@ import clsx from "clsx";
 export default function TermsOfService() {
   const router = useRouter();
   useEffect(() => {
-    document.title = "Terms of service - SOS Travelers";
+    document.title = "Terms of service | SOS Travelers";
   }, []);
   return (
     <section className="m-2 py-32 mb-16  xl:px-36 xl:ml-32">

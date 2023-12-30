@@ -91,7 +91,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     }
     let route = router.pathname;
     console.log("route", route, route == "/forgot-password");
-    if (route == "/login" && !cookieAccessToken) {
+    if (route == "/login") {
       console.log("caso login");
       if (!user || (Object.keys(user).length == 0 && !cookieAccessToken)) {
         console.log("no hay usuario");
@@ -167,11 +167,54 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
             return;
           }
         } else {
-          console.log("no hay nada2");
-          setUser({});
-          setLoggedIn(false);
-          router.push("/login");
-          return;
+          if (session) {
+            console.log("hay sesion google");
+            const user = await UserService.loginGoogle(
+              session.user.name,
+              session.user.email,
+              session.user.image
+            );
+            if (user) {
+              if (user.data.type == "business") {
+                console.log("problem business");
+                localStorage.removeItem("access_tokenB");
+                Cookies.remove("auth.access_tokenB");
+                Cookies.remove("auth.refresh_tokenB");
+                Cookies.remove("auth.user_idB");
+                //Por si hay pruebas de cuentas worker o personal
+                Cookies.remove("auth.access_token");
+                Cookies.remove("auth.refresh_token");
+                Cookies.remove("auth.user_id");
+                setUser({});
+                router.push("/login");
+                return;
+              }
+              Cookies.set("auth.access_token", user.data.access_token);
+              Cookies.set("auth.refresh_token", user.data.refresh_token);
+              Cookies.set("auth.user_id", user.data.user._id);
+              setLoggedIn(true);
+              setLoginModal(true);
+              setUser(user.data.user);
+              if (user.data.type == "worker") {
+                setWorker(true);
+                router.push("/worker/home");
+                return;
+              } else {
+                setWorker(false);
+                if (service && Object.keys(service).length > 0) {
+                  console.log("caso1");
+                  router.push(`/summary`);
+                } else {
+                  console.log("caso2");
+                  router.push("/");
+                }
+              }
+            }
+          } else {
+            console.log("no hay nada");
+            setLoggedIn(false);
+            return;
+          }
         }
       }
     }

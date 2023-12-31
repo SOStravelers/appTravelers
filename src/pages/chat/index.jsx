@@ -13,7 +13,6 @@ export default function Chat() {
   const { loginModal, setLoginModal } = store;
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
-  const [contacts, setContacts] = useState([]);
   var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
@@ -30,73 +29,51 @@ export default function Chat() {
       // router.push("/");
     }
     if (user) {
-      getUsersforChat();
-      setChats([
-        {
-          name: "John Doe",
-          service: "Barber",
-          score: 5,
-          link: "/chat/1",
-        },
-        {
-          name: "John Doe",
-          service: "Barber",
-          score: 5,
-          link: "/chat/1",
-        },
-        {
-          name: "John Doe",
-          service: "Barber",
-          score: 5,
-          link: "/chat/1",
-        },
-      ]);
+      getChatRooms();
     } else {
       setOpen(true);
     }
   }, [loginModal]);
 
-  const getUsersforChat = async () => {
-    const response = await ChatService.getAllUsers();
+  const getChatRooms = async () => {
+    const response = await ChatService.getChatRooms();
     if (response) {
       console.log(response.data.docs);
     }
-    setContacts(response.data.docs);
+    setChats(response.data.docs);
   };
 
-  const handleGoToChat = (contact) => {
+  const handleGoToChat = (chat) => {
     router.push({
-      pathname: `/chat/${contact._id}`,
+      pathname: `/chat/${chat._id}`,
       query: {
-        name: `${contact?.personalData?.name?.first} ${
-          contact?.personalData?.name?.last ?? ""
+        name: `${chat?.receptor.personalData?.name?.first} ${
+          chat?.receptor.personalData?.name?.last ?? ""
         }`,
         avatar:
-          contact.img.imgUrl === ""
+          chat.receptor.img.imgUrl === ""
             ? "/assets/proovedor.png"
-            : contact.img.imgUrl,
-        score: contact.rating,
-        services: contact.businessData?.services,
+            : chat.receptor.img.imgUrl,
       },
     });
   };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
-      {contacts?.length > 0 ? (
-        contacts.map((contact, index) => (
+      {chats?.length > 0 ? (
+        chats.map((chat, index) => (
           <WorkerCardChat
             key={index}
-            name={`${contact?.personalData?.name?.first} ${
-              contact?.personalData?.name?.last ?? ""
+            name={`${chat?.receptor.personalData?.name?.first} ${
+              chat?.receptor.personalData?.name?.last ?? ""
             }`}
             service={""}
             img={
-              contact.img.imgUrl === ""
+              chat.receptor.img.imgUrl === ""
                 ? "/assets/proovedor.png"
-                : contact.img.imgUrl
+                : chat.receptor.img.imgUrl
             }
-            score={contact.rating}
-            onClick={() => handleGoToChat(contact)}
+            score={chat.receptor.rating}
+            onClick={() => handleGoToChat(chat)}
           />
         ))
       ) : (

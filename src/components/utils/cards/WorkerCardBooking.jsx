@@ -19,6 +19,7 @@ function WorkerCardBooking({ booking, name, location, avatar, date, hour }) {
         subService: booking.subservice.name,
         idWorker: booking.workerUser._id,
         idBooking: booking.id,
+        idClient: booking.clientUser._id,
       },
     });
   };

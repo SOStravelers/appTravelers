@@ -5,13 +5,20 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedChatButton from "@/components/utils/buttons/OutlinedChatButton";
 import { PinIcon, ClockIcon, CircleCheckIcon } from "@/constants/icons";
 
-function ServiceHistory({
-  name = "Miro One Hotel ",
-  location = "Ubud, Indonesia",
-  theDate = "8 Aug, 2023",
-  theHour = "04:30 PM",
-}) {
+function ServiceHistory() {
   const router = useRouter();
+  const {
+    name,
+    avatar,
+    businessName,
+    location,
+    date,
+    hour,
+    service,
+    subService,
+    idWorker,
+  } = router.query;
+
   const goToChat = () => {
     return () => {
       router.push("/chat/1");
@@ -21,18 +28,14 @@ function ServiceHistory({
   return (
     <div className="flex flex-col py-20 px-5 md:pl-80">
       <WorkerProfileCardDetails
-        name={"Cody Fisher"}
-        services={[
-          { id: { name: "Facial" } },
-          { id: { name: "Corte Cabello" } },
-        ]}
-        score={5}
-        avatar="/assets/proovedor.png"
+        name={name}
+        id={idWorker}
+        avatar={avatar?.length ? avatar : "/assets/proovedor.png"}
       />
       <div className="flex justify-between border-t border-b border-greyText">
         <div className="flex flex-col my-3">
           <h1 className="font-semibold ml-1">
-            {name ? name : "No disponible"}
+            {businessName ? businessName : "No disponible"}
           </h1>
           <div className="flex items-center mt-1">
             <PinIcon color={"#00A0D5"} className="mr-1" />
@@ -45,11 +48,13 @@ function ServiceHistory({
       <div className="flex justify-between w-full max-w-lg pr-1 py-5 border-b border-greyText">
         <div className="flex  ">
           <ClockIcon />
-          <p className="ml-2">{`${theDate || ""} | ${theHour || ""}`}</p>
+          <p className="ml-2">{`${date || ""} | ${hour || ""}`}</p>
         </div>
       </div>
       <div className="flex justify-between items-center w-full max-w-lg my-5">
-        <p className="text-blackText font-semibold w-3/4">Haircut</p>
+        <p className="text-blackText font-semibold w-3/4">
+          {service}: {subService}
+        </p>
         <SolidButton
           text="Payment Done"
           icon={<CircleCheckIcon className="mr-2" />}

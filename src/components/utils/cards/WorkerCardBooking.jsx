@@ -8,7 +8,17 @@ function WorkerCardBooking({ booking, name, location, avatar, date, hour }) {
   const goToDetails = () => {
     router.push({
       pathname: `/service-details/${booking.id}`,
-      query: { booking: booking },
+      query: {
+        name: name,
+        avatar: booking.avatar,
+        businessName: location,
+        location: `${booking.businessUser.businessData.location.city}, ${booking.businessUser.businessData.location.country}`,
+        date: date,
+        hour: hour,
+        service: booking.service.name,
+        subService: booking.subservice.name,
+        idWorker: booking.workerUser._id,
+      },
     });
   };
 

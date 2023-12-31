@@ -1,3 +1,4 @@
+"useClient";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { io } from "socket.io-client";

@@ -63,16 +63,26 @@ export default class BookingService {
     );
   }
 
-  static async getAllBookings() {
-    console.log("...getAllBookings");
-    return axios.get(`${this.baseUrl}/allbusiness?page=1&limit=10`, {
-      headers: this.getHeaders(),
-    });
+  static async getBookingsByMonthWorker(date) {
+    return axios.get(
+      `${this.baseUrl}/worker/month?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
-  static async getBookingsByDate() {
-    console.log("...getBookingsByDate");
-    return axios.get(`${this.baseUrl}/time`, {
+  static async getBookingsByDayWorker(date) {
+    return axios.get(
+      `${this.baseUrl}/worker/day?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getAllBookingsByWorker() {
+    return axios.get(`${this.baseUrl}/worker/allworkers`, {
       headers: this.getHeaders(),
     });
   }

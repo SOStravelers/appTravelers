@@ -45,7 +45,7 @@ export default function Chat() {
 
   const handleGoToChat = (chat) => {
     router.push({
-      pathname: `/chat/${chat._id}`,
+      pathname: `/worker/chat/${chat._id}`,
       query: {
         name: `${chat?.receptor?.personalData?.name?.first} ${
           chat?.receptor?.personalData?.name?.last ?? ""

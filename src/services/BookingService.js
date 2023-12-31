@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 
 export default class BookingService {
   static resource = "bookingAuth";
+
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${BookingService.resource}`;
@@ -22,5 +23,48 @@ export default class BookingService {
     return {
       Authorization: access_token ? access_token : {},
     };
+  }
+
+  // USER BOOKINGS
+
+  static async getBookingsByMonth(date) {
+    return axios.get(
+      `${this.baseUrl}/client/month?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getBookingsByDay(date) {
+    return axios.get(
+      `${this.baseUrl}/client/day?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  // WORKER BOOKINGS
+
+  static async getBookingsByYear(date) {
+    console.log("...getBookingsByYear");
+    return axios.get(`${this.baseUrl}/year?date=${date}&page=1&limit=10`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getAllBookings() {
+    console.log("...getAllBookings");
+    return axios.get(`${this.baseUrl}/allbusiness?page=1&limit=10`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getBookingsByDate() {
+    console.log("...getBookingsByDate");
+    return axios.get(`${this.baseUrl}/time`, {
+      headers: this.getHeaders(),
+    });
   }
 }

@@ -7,7 +7,7 @@ export default function UsePolicy() {
   const router = useRouter();
 
   useEffect(() => {
-    document.title = "Use Policy - SOS Travelers";
+    document.title = "Use Policy | SOS Travelers";
   }, []);
 
   return (
@@ -86,10 +86,7 @@ export default function UsePolicy() {
       </p>
 
       <div className="bg-white h-full flex flex-col w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <OutlinedButton
-        text="Return"
-        onClick={() => router.back()}
-      />
+        <OutlinedButton text="Return" onClick={() => router.back()} />
       </div>
     </section>
   );

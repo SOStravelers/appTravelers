@@ -6,14 +6,14 @@ function OutlinedButton({
   secondary,
   error,
   disabled,
-  margin = "my-2",
+  margin,
   ...props
 }) {
   return (
     <button
       className={clsx(
         "border-2 border-solid max-w-lg text-lg py-3 w-full rounded-xl cursor-pointer",
-        margin,
+        margin ? margin : "my-2",
         secondary
           ? "text-grey border-grey"
           : error

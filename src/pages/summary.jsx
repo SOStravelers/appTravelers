@@ -5,16 +5,18 @@ import WorkerCardSumary from "@/components/utils/cards/WorkerCardSumary";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import Link from "next/link";
-import { ClockIcon, ChangeIcon } from "@/constants/icons";
+import { ClockIcon, ChangeIcon, CheckIcon } from "@/constants/icons";
 
 import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WorkerService";
+import SubserviceService from "@/services/SubserviceService";
 import { is } from "date-fns/locale";
 
 export default function Summary() {
   const { isWorker } = useStore();
   const router = useRouter();
-  const { loggedIn, service } = useStore();
+  const { loggedIn, service, setService } = useStore();
+
   const [theHour, setHour] = useState(null);
   const [theDate, setDate] = useState(null);
   const [IdHostel, setIdHostel] = useState(null);
@@ -24,7 +26,7 @@ export default function Summary() {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-    document.title = "Summary - SOS Travelers";
+    document.title = "Summary | SOS Travelers";
     //localStorage.removeItem("fromFavorite");
     localStorage.removeItem("editing");
     getData();
@@ -40,23 +42,29 @@ export default function Summary() {
     setDate(date);
 
     HostelService.getBusiness(hostelId).then((response) => {
-      console.log("hostel", response.data);
+      // console.log("hostel", response.data);
       setHostel(response.data);
     });
     WorkerService.getWorker(workerId).then((response) => {
-      console.log("worker", response.data);
+      // console.log("worker", response.data);
       setWorker(response.data);
+    });
+    SubserviceService.getPrice({
+      businessUser: hostelId,
+      subservice: subServiceId,
+    }).then((response) => {
+      // console.log("price", response.data);
+      setService({ price: response.data.valuesToday, currency: "BRL" });
     });
   };
 
   const fullName = (data) => {
     if (!data) return "";
     const { first, last } = data;
-    return first + (last ?? "");
+    return first + " " + (last ?? "");
   };
 
   const hireNow = () => {
-    localStorage.removeItem("service");
     localStorage.removeItem("editing");
     localStorage.removeItem("fromFavorite");
     if (!loggedIn) router.push("login");
@@ -68,8 +76,57 @@ export default function Summary() {
     if (localStorage.getItem("fromFavorite")) return false;
   };
 
+  function formatearFecha(fechaStr) {
+    // Fecha proporcionada en formato YYYY-MM-DD
+    var fechaObj = new Date(fechaStr);
+
+    // Meses y días de la semana en inglés
+    var meses = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    var diasSemana = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    // Obtener el mes, día y año
+    var mes = meses[fechaObj.getMonth()];
+    var dia = fechaObj.getDate();
+    var año = fechaObj.getFullYear();
+    var diaSemana = diasSemana[fechaObj.getUTCDay()];
+
+    // Formatear la fecha como "Wednesday, December 20, 2023"
+    var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
+
+    return fechaFormateada;
+  }
+  function getServiceNames(data) {
+    // Extraer los nombres de los servicios
+    const serviceNames = data.services.map((service) => service.id.name);
+
+    // Unir los nombres en un solo string con comas
+    const serviceNamesString = serviceNames.join(", ");
+
+    return serviceNamesString;
+  }
   return (
-    <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-10 md:pl-80">
+    <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-6 md:pl-80">
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
         Read all the points carefully and make sure that it is what you need.
       </h1>
@@ -83,7 +140,11 @@ export default function Summary() {
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
       <WorkerCardSumary
         name={fullName(worker?.personalData?.name)}
-        service={"Barbero"}
+        service={
+          worker?.workerData
+            ? getServiceNames(worker.workerData)
+            : "No services"
+        }
         score={5}
         link={`/worker/${worker?._id}`}
         img={worker?.img?.imgUrl || "/assets/user.png"}
@@ -95,7 +156,9 @@ export default function Summary() {
         <div className="flex justify-between w-full max-w-lg pr-1 my-5">
           <div className="flex  ">
             <ClockIcon />
-            <p className="ml-2">{`${theDate || ""} | ${theHour || ""}`}</p>
+            <p className="ml-2">{`${formatearFecha(service?.date) || ""} | ${
+              service?.startTime?.stringData + " hrs" || ""
+            }`}</p>
           </div>
           <Link className="flex " href={`/reservation/${IdHostel}`}>
             <ChangeIcon />
@@ -103,12 +166,20 @@ export default function Summary() {
         </div>
       )}
       <div className="flex items-center w-full max-w-lg my-2">
-        <input
-          type="checkbox"
-          className="mr-2"
-          checked={selected}
-          onChange={() => setSelected(!selected)}
-        />
+        {selected ? (
+          <CheckIcon
+            className="mr-2 w-6 h-6 cursor-pointer"
+            onClick={() => setSelected(false)}
+          />
+        ) : (
+          <input
+            type="checkbox"
+            className="mr-2 w-6 h-6"
+            checked={selected}
+            onChange={() => setSelected(!selected)}
+          />
+        )}
+
         <p className="text-greyText">
           Accept our{" "}
           <Link href={"terms-of-service"} className="underline">
@@ -120,9 +191,23 @@ export default function Summary() {
           </Link>
         </p>
       </div>
-      <div className="flex justify-between items-end w-full max-w-lg my-5">
+      <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
+        <p className="text-blackText font-semibold">Service</p>
+        <p className="text-blackBlue font-semibold text-md">
+          {service?.nameSubservice}
+        </p>
+      </div>
+      <div className="flex justify-between items-end w-full max-w-lg my-1">
+        <p className="text-blackText font-semibold">Service duration</p>
+        <p className="text-blackBlue font-semibold text-md">
+          {service?.duration} min
+        </p>
+      </div>
+      <div className="flex justify-between items-end w-full max-w-lg my-1">
         <p className="text-blackText font-semibold">Total Service Fee</p>
-        <p className="text-blackBlue font-semibold text-2xl">$ 100.00</p>
+        <p className="text-blackBlue font-semibold text-xl">
+          R$ {service?.price[0]?.finalCost}
+        </p>
       </div>
       <OutlinedButton
         disabled={!selected}

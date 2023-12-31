@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { HairCutIcon } from "@/constants/icons";
 import { mazzard } from "@/utils/mazzardFont";
-
-function ServiceCard({ link, icon, name }) {
+import { useStore } from "@/store";
+function ServiceCard({ link, icon, name, id }) {
+  const { setService } = useStore();
+  const select = () => {
+    setService({ serviceId: id });
+  };
   return (
-    <Link href={link}>
-      <div className="text-black flex flex-col items-center justify-center mx-5">
+    <Link href={link} onClick={select}>
+      <div className="text-black flex flex-col items-center justify-center mx-3">
         <div className="w-14 h-14 rounded-full bg-blueBorder flex items-center justify-center">
           <HairCutIcon />
         </div>

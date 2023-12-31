@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import UserService from "@/services/UserService";
 import Link from "next/link";
+import Select from "react-select";
 
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -15,10 +16,13 @@ import { toast } from "react-toastify";
 export default function SupportPage() {
   const [formKey, setFormKey] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sended, setSended] = useState(false);
   const router = useRouter();
   const { user, loggedIn } = useStore();
   const id = router.query.id;
-
+  useEffect(() => {
+    document.title = "Support | SOS Travelers";
+  }, []);
   const supportEmail = async (values) => {
     try {
       if (isSubmitting) {
@@ -27,7 +31,6 @@ export default function SupportPage() {
       }
 
       setIsSubmitting(true);
-
       const data = {
         subject: values.subject,
         message: values.message,
@@ -41,7 +44,7 @@ export default function SupportPage() {
 
       console.log(response.data);
       setFormKey((prevKey) => prevKey + 1);
-
+      setSended(true);
       toast.success("Message sent Successfully", {
         position: "top-right",
         // Configuración de la notificación de éxito
@@ -62,6 +65,25 @@ export default function SupportPage() {
       setIsSubmitting(false); // Establece el estado de envío del formulario a false después de finalizar
     }
   };
+  const optionsSupport = [
+    "⁠Issues with canceling a reservation",
+    "⁠Problems with scheduling",
+    "⁠Chat-related problems",
+    "⁠Payment or payment method issue",
+    "⁠Double payment has been made",
+    "Problems or dissatisfaction with the service received",
+    "⁠Reporting abuse or misconduct by a worker",
+    "⁠Reporting abuse or misconduct by the facility",
+    "⁠Interested in working with SOS Traveler",
+    "⁠Suggestions for the app",
+    "⁠Suggestions for the service",
+    "⁠Account access or login issue",
+    "Technical difficulties using the platform",
+    "⁠General inquiries about SOS Travelers services",
+  ].map((issue) => ({
+    value: issue,
+    label: issue,
+  }));
 
   useEffect(() => {
     // Este efecto se ejecutará cada vez que la clave del formulario cambie
@@ -70,6 +92,9 @@ export default function SupportPage() {
 
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-3 font-semibold text-center max-w-lg">
+        Support: How can we help you?
+      </h1>
       <Form
         key={formKey}
         onSubmit={(values) => {
@@ -158,7 +183,41 @@ export default function SupportPage() {
               >
                 {({ value, setValue, onBlur, errors }) => (
                   <div>
-                    <select
+                    <Select
+                      className="w-full max-w-lg rounded-xl  my-1"
+                      options={optionsSupport}
+                      value={optionsSupport.find(
+                        (option) => option.value === value
+                      )}
+                      onBlur={onBlur}
+                      onChange={(selectedOption) =>
+                        setValue(selectedOption.value)
+                      }
+                      styles={{
+                        control: (provided) => ({
+                          ...provided,
+                          borderColor: "#00A0D5",
+                          borderRadius: "10px",
+                          boxShadow: "none",
+                          "&:hover": {
+                            borderColor: "#00A0D5",
+                          },
+                        }),
+                        option: (provided, state) => ({
+                          ...provided,
+                          color: state.isSelected ? "#fff" : "#000",
+                          backgroundColor: state.isSelected
+                            ? "#00A0D5"
+                            : "#fff",
+                          borderRadius: "5px",
+                          "&:hover": {
+                            color: "#fff",
+                            backgroundColor: "#00A0D5",
+                          },
+                        }),
+                      }}
+                    />
+                    {/* <select
                       className="border-grey border w-full max-w-lg rounded-xl p-3 my-1"
                       value={value}
                       onBlur={onBlur}
@@ -167,7 +226,7 @@ export default function SupportPage() {
                       <option value="">Choose an option</option>
                       <option value="opcion1">Option 1</option>
                       <option value="opcion2">Option 2</option>
-                    </select>
+                    </select> */}
                     {errors.map((error) => (
                       <p key={error} className="text-red">
                         {error}
@@ -205,10 +264,17 @@ export default function SupportPage() {
                 }}
               </Field>
             </div>
-            <OutlinedButton
-              text="Send Message"
-              disabled={!isValid || isSubmitting}
-            />
+            {!sended ? (
+              <OutlinedButton
+                text="Send Message"
+                disabled={!isValid || isSubmitting}
+              />
+            ) : (
+              <p className="text-sm">
+                We have received your message!!. We will reply to you as soon as
+                possible
+              </p>
+            )}
           </form>
         )}
       </Form>

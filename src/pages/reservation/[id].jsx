@@ -7,29 +7,16 @@ import Calendar from "@/components/utils/calendar/Calendar";
 export default function Reservation() {
   const router = useRouter();
   useEffect(() => {
-    document.title = "Reservation - SOS Travelers";
+    document.title = "Reservation | SOS Travelers";
   }, []);
 
   return (
-    <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <div className="flex items-center my-5">
+    <div className="flex flex-col items-center md:items-start py-20 lg:pb-18 pt-14 xl:py-24 px-5 md:pl-80">
+      <div className="flex items-center mt-5 mb-2">
         <AlertIcon className="mr-1" />
         <h1 className="font-semibold">Select Reservation Date</h1>
       </div>
       <Calendar id={router?.query?.id} />
     </div>
   );
-}
-
-export async function getStaticProps({ params }) {
-  return {
-    props: { params },
-  };
-}
-
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
 }

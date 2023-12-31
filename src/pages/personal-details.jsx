@@ -21,8 +21,14 @@ export default function PersonalDetails() {
   const [email, setEmail] = useState(false);
   const [save, setSave] = useState(false);
   useEffect(() => {
+    document.title = "Personal Details | SOS Travelers";
+  }, []);
+  useEffect(() => {
     if (user) {
-      const name = capitalizeFirstLetter(user?.personalData?.name?.first);
+      const name =
+        capitalizeFirstLetter(user?.personalData?.name?.first) +
+        " " +
+        capitalizeFirstLetter(user?.personalData?.name?.last);
       setName(name);
       setNameTrun(truncarNumero(name));
       setEmail(user.email);
@@ -65,8 +71,8 @@ export default function PersonalDetails() {
     const arrayName = separarNombre(name);
     if (nameInput == true) {
       try {
-        newUser.personalData.name.first = arrayName[0];
-        newUser.personalData.name.last = arrayName[1];
+        newUser.personalData.name.first = capitalizeFirstLetter(arrayName[0]);
+        newUser.personalData.name.last = capitalizeFirstLetter(arrayName[1]);
         const response = await UserService.updateUser(newUser);
 
         if (response.data) {
@@ -125,12 +131,12 @@ export default function PersonalDetails() {
           onChange={(e) => setValue(e.target.value)}
         />
       )}
-      <SelectCard
+      {/* <SelectCard
         title="Address"
         icon={HouseIcon}
         edit={true}
-        subtitle="Miro One Hotel"
-      />
+        subtitle="Avenida Atlántica 1234, Copacabana, Rio de Janeiro, Brazil"
+      /> */}
       {user && user.security && user.security.hasPassword ? (
         // Este componente se mostrará si el usuario está autenticado
         <OptionCard

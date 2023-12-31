@@ -1,14 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import StripeForm from "@/components/utils/payments/StripeForm";
-
+import { useStore } from "@/store";
 import StripeService from "@/services/StripeService";
 
 export default function Stripe() {
   const [clientSecret, setClientSecret] = useState(null);
   const initialized = useRef(false);
+  const { service } = useStore();
+  function getFinalCost(service, currency) {
+    // Busca el objeto de precio con la moneda proporcionada
+    const priceObject = service.price.find(
+      (price) => price.currency === currency
+    );
+
+    // Si se encontró el objeto de precio, devuelve el costo final
+    if (priceObject) {
+      return priceObject.finalCost;
+    }
+
+    // Si no se encontró el objeto de precio, devuelve null
+    return null;
+  }
 
   useEffect(() => {
-    document.title = "Your Payment - SOS Travelers";
+    document.title = "Your Payment | SOS Travelers";
     if (!initialized.current) {
       initialized.current = true;
       createPaymentIntent();
@@ -19,8 +34,8 @@ export default function Stripe() {
 
   const createPaymentIntent = async () => {
     StripeService.createPaymentIntent({
-      amount: 1575,
-      currency: "usd",
+      amount: getFinalCost(service, service.currency) * 100,
+      currency: service.currency.toLowerCase(),
     }).then((response) => {
       console.log(response.data);
       setClientSecret(response.data.clientSecret);
@@ -33,19 +48,3 @@ export default function Stripe() {
     </section>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const csp = `default-src 'self'; connect-src 'self' https://api.stripe.com https://errors.stripe.com https://r.stripe.com https://merchant-ui-api.stripe.com;`;
-//   context.res.setHeader("Content-Security-Policy", csp);
-
-//   const response = await StripeService.createPaymentIntent({
-//     amount: 100,
-//   });
-
-//   const clientSecret = response.data.paymentIntent.client_secret;
-//   this.setClientSecret(response.data.clientSecret);
-
-//   return {
-//     props: { clientSecret }, // will be passed to the page component as props
-//   };
-// }

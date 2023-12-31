@@ -9,7 +9,6 @@ import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 import WorkerService from "@/services/WorkerService";
 import Link from "next/link";
-
 export default function Settings() {
   const { setWorker, isWorker } = useStore();
   const router = useRouter();
@@ -20,7 +19,9 @@ export default function Settings() {
   const [openNotification, setOpenNotification] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOnNotification, setIsOnNotification] = useState(true);
-
+  useEffect(() => {
+    document.title = "Settings | SOS Travelers";
+  }, []);
   useEffect(() => {
     setIsOnNotification(true);
   }, []);
@@ -84,7 +85,7 @@ export default function Settings() {
 
   return (
     <div className="flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
+      {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
 
       <Link href="/support" className="block">
         <OptionCard
@@ -103,13 +104,13 @@ export default function Settings() {
           isOn={isOnWorker}
           setIsOn={setIsOnWorker}
         />
-        <OptionSwitch
+        {/* <OptionSwitch
           title="Notifications"
           onFunction={notificationModeOn}
           offFunction={notificationModeOff}
           isOn={isOnNotification}
           setIsOn={setIsOnNotification}
-        />
+        /> */}
       </div>
       <div className="mt-10 flex flex-col">
         {/* <OutlinedButton text="Save Changes" /> */}

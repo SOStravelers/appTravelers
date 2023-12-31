@@ -17,7 +17,7 @@ export default function ChangePassword() {
 
   const router = useRouter();
   useEffect(() => {
-    document.title = "Recovery Pass - SOS Travelers";
+    document.title = "Recovery Pass | SOS Travelers";
   }, []);
   const handleVerifyCode = async () => {
     console.log(code);

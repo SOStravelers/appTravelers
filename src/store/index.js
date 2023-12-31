@@ -7,10 +7,10 @@ export const useStore = create((set) => {
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : {};
 
-  const user =
-    typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem("auth_user") ?? "{}").service
-      : {};
+  // const user =
+  //   typeof window !== "undefined"
+  //     ? JSON.parse(localStorage.getItem("auth_user") ?? "{}").service
+  //     : {};
   const urls = () => {
     let final = null;
     let env = process.env.NODE_ENV;
@@ -28,7 +28,7 @@ export const useStore = create((set) => {
   const theUrls = urls();
 
   return {
-    user: user,
+    user: {},
     urls: theUrls,
     loggedIn: false,
     service: service,

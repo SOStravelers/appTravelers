@@ -13,18 +13,15 @@ function AboutEdit({ about }) {
   }, [about]);
 
   const handleEdit = async () => {
-    console.log("editando", editedAbout); // Accede a editedAbout en lugar de about
-    setIsEditing(false);
-    user.about = editedAbout;
-    console.log("antes de enviar", user);
+    const data = {
+      about: editedAbout,
+    };
 
-    const response = await UserService.updateUser(user);
-    console.log("weno", user);
+    const response = await UserService.updateDataUser(data);
     if (response.data) {
-      console.log("respesta", response.data);
+      setIsEditing(false);
       setUser(response.data);
     }
-    console.log(user);
   };
 
   return (
@@ -45,7 +42,7 @@ function AboutEdit({ about }) {
 
       {isEditing ? (
         <textarea
-          className="w-full max-w-lg h-40 p-3 rounded-xl bg-transparentBlue"
+          className="w-full max-w-lg h-40 p-3 rounded-xl bg-blueBorderTransparent  border-2 border-newBlue"
           value={editedAbout} // Usar editedAbout para reflejar el valor editado
           onChange={(e) => setEditedAbout(e.target.value)} // Actualizar editedAbout cuando se edite el textarea
         />

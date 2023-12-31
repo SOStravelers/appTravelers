@@ -2,7 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
-
+import { Rings } from "react-loader-spinner";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import GoogleButton from "@/components/utils/buttons/GoogleButton";
@@ -14,12 +14,15 @@ import { UserIcon, LockIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 import Cookies from "js-cookie";
+import { set } from "date-fns";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const login = async (values) => {
+    setLoading(true);
     setEmail(values.email);
     try {
       console.log("--login email--");
@@ -27,22 +30,33 @@ function LoginForm() {
       if (response.data.user.type && response.data.user.type != "personal") {
         localStorage.setItem("type", response.data.user.type);
       }
+      if (response.data.user.type == "worker") {
+        delete response.data.user.type;
+
+        console.log("es worker");
+        setWorker(true);
+        router.push("/worker/home");
+        return;
+      }
       delete response.data.user.type;
+
       toast.info("signin", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 1500,
       });
-
       Cookies.set("auth.access_token", response.data.access_token);
       Cookies.set("auth.refresh_token", response.data.refresh_token);
       Cookies.set("auth.user_id", response.data.user._id);
       setUser(response.data.user);
       setLoggedIn(true);
       if (service && Object.keys(service).length > 0) {
+        setLoading(false);
         router.push(`/summary`);
       } else {
         const response = await UserService.findByEmail(values.email);
         if (response?.data?.isActive && response?.data?.isValidate) {
+          setLoading(false);
+
           router.push("/");
         } else if (!response?.data?.isValidate) {
           const res = await UserService.sendCodeEmail(
@@ -58,17 +72,21 @@ function LoginForm() {
         }
       }
     } catch (error) {
+      setLoading(false);
       let message;
       if (error?.response?.status === 404)
         message = error?.response?.data?.error;
       else if (error?.response?.status === 400) {
+        console.log("400");
         try {
-          const response = await UserService.findByEmail(email);
+          const response = await UserService.findByEmail(values.email);
+          console.log("respuesta", response);
           if (response?.data?.isActive && response?.data?.isValidate) {
             const res = await UserService.sendCodeEmail(
               response.data._id,
               "createPass"
             );
+            console.log(res);
             if (res.status === 200) {
               router.push({
                 pathname: "/validate-email",
@@ -157,9 +175,22 @@ function LoginForm() {
               Forgot password?
             </p>
           </Link>
-          <OutlinedButton text="Login" disabled={!isValid} />
+          {loading ? (
+            <div className="max-w-lg flex flex-col items-center justify-center">
+              <Rings
+                width={100}
+                height={100}
+                color="#00A0D5"
+                ariaLabel="infinity-spin-loading"
+              />
+            </div>
+          ) : (
+            <>
+              <OutlinedButton text="Login" disabled={!isValid} />
 
-          <GoogleButton />
+              <GoogleButton />
+            </>
+          )}
         </form>
       )}
     </Form>

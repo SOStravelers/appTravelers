@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useStore } from "@/store";
 import Image from "next/image";
+import ReactCrop from "react-image-crop";
+import SolidButton from "@/components/utils/buttons/SolidButton";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import "react-image-crop/dist/ReactCrop.css";
 import { StarIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 import { ThreeDots } from "react-loader-spinner";
@@ -11,6 +15,49 @@ import { random } from "@/lib/utils";
 function WorkerProfileCard({ name, services, score, avatar, lastName }) {
   const [newAvatar, setNewAvatar] = useState(null);
 
+  const [src, setSrc] = useState(null);
+  const [crop, setCrop] = useState();
+  const [image, setImage] = useState(null);
+  const [output, setOutput] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [modal, setModal] = useState(false);
+
+  const selectImage = (file) => {
+    setSrc(URL.createObjectURL(file));
+  };
+
+  const cropImageNow = () => {
+    const canvas = document.createElement("canvas");
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+    const ctx = canvas.getContext("2d");
+
+    const pixelRatio = window.devicePixelRatio;
+    canvas.width = crop.width * pixelRatio;
+    canvas.height = crop.height * pixelRatio;
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = "high";
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width,
+      crop.height
+    );
+
+    // Converting to base64
+    const base64Image = canvas.toDataURL("image/jpeg");
+    setOutput(base64Image);
+    setImageInput(base64Image);
+  };
+
   useEffect(() => {
     if (avatar) {
       setNewAvatar(avatar + "?hola=" + random());
@@ -19,41 +66,37 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
   const { user, setUser } = useStore();
   const [loading, setLoading] = useState(false);
 
-  const setImageInput = async (event) => {
+  const setImageInput = async (file) => {
     setLoading(true);
-    console.log("holas", event.target);
-    const file = event.target.files[0];
 
     if (!file) {
       // El usuario canceló la selección
       setLoading(false);
       return;
     }
-    const reader = new FileReader();
 
-    reader.onloadend = async () => {
-      if (event.target.files.length === 0) {
-        // El usuario canceló la selección
-        setLoading(false);
-        return;
+    try {
+      const response = await UserService.changeProfileImg(file);
+
+      if (response.data.img) {
+        let newUser = { ...user };
+        newUser.img.imgUrl = response.data.img.imgUrl + "?hola=" + random();
+        setUser(newUser);
+        setNewAvatar(newUser.img.imgUrl);
       }
-      try {
-        const response = await UserService.changeProfileImg(reader.result);
 
-        if (response.data.img) {
-          let newUser = { ...user };
-          newUser.img.imgUrl = response.data.img.imgUrl + "?hola=" + random();
-          setUser(newUser);
-          setNewAvatar(newUser.img.imgUrl);
-        }
+      setLoading(false);
+      setModal(false);
+      setSrc(null);
+      setCrop(null);
+      setImage(null);
+      setOutput(null);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
+    }
 
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-        console.log(err);
-      }
-    };
-    reader.readAsDataURL(file);
+    //reader.readAsDataURL(file)
   };
   const changeImageInput = async (event) => {
     try {
@@ -70,21 +113,9 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
       const reader = new FileReader();
       reader.onloadend = async () => {
         console.log(reader.result);
-        try {
-          const response = await UserService.changeProfileImg(reader.result);
-          if (response.data.img) {
-            let newUser = { ...user };
-            newUser.img.imgUrl = response.data.img.imgUrl + "?hola=" + random();
-            setUser(newUser);
-            setNewAvatar(newUser.img.imgUrl);
-          }
-
-          setLoading(false);
-        } catch (err) {
-          console.log(err);
-        } finally {
-          setLoading(false);
-        }
+        selectImage(file);
+        setModal(true);
+        setLoading(false);
       };
 
       reader.readAsDataURL(file);
@@ -109,12 +140,21 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
       input.click();
     });
   };
+
+  const handleCancel = () => {
+    setModal(false);
+    setSrc(null);
+    setCrop(null);
+    setImage(null);
+    setOutput(null);
+  };
+
   return (
     <div className="flex py-4 w-80 rounded-lg my-2 items-center">
-      <div className="w-36 h-32 rounded-2xl mr-2 relative">
+      <div className="w-32 h-32 rounded-2xl mr-2 relative">
         {newAvatar && (
           <div
-            className="w-full h-28 rounded-xl bg-cover bg-center relative cursor-pointer"
+            className="w-full h-32 w-32 rounded-xl bg-cover bg-center relative cursor-pointer"
             style={{ backgroundImage: `url(${newAvatar})` }}
             onClick={(e) => changeImageInput(e)}
           >
@@ -157,12 +197,68 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
               id={`image-upload`}
               type="file"
               accept="image/*"
-              onChange={(e) => setImageInput(e)}
+              onChange={(e) => {
+                selectImage(e);
+                setModal(true);
+              }}
               className="hidden"
             />
           </React.Fragment>
         )}
       </div>
+      <center>
+        {modal && src && (
+          <>
+            <div
+              style={{
+                position: "fixed",
+                top: "0",
+                left: "0",
+                width: "100vw",
+                height: "100vh",
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
+                zIndex: "999",
+              }}
+            ></div>
+            <dialog
+              open={modal}
+              className="w-[90vw] h-[90vh]"
+              style={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "#fff",
+                padding: "20px",
+                overflowY: "auto",
+                zIndex: "1000",
+                border: "1px solid #ccc",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <h1 className="text-2xl font-semibold mb-5">
+                Adjust the image for better look
+              </h1>
+              <ReactCrop
+                className="w-60"
+                crop={crop}
+                onChange={(c) => setCrop(c)}
+                aspect={1}
+              >
+                <img src={src} onLoad={(img) => setImage(img.target)} />
+              </ReactCrop>
+              <br />
+              <SolidButton
+                disabled={!crop}
+                text="Crop the image"
+                onClick={cropImageNow}
+              />
+              <OutlinedButton text="Cancel" onClick={handleCancel} />
+              <br />
+            </dialog>
+          </>
+        )}
+      </center>
       <div className="flex flex-col -mt-4">
         <h1 className="font-semibold">
           {name} {lastName}

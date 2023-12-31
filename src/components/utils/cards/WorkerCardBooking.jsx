@@ -7,7 +7,7 @@ function WorkerCardBooking({ link, name, location }) {
     <div className="flex p-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder items-center">
       <Link href={link}>
         <div className="flex">
-          <div className="w-20 h-20 rounded-xl bg-lightBlue mr-2 relative">
+          <div className="w-20 h-20 rounded-xl bg-blueBorder mr-2 relative">
             <Image
               src={"/assets/proovedor.png"}
               fill

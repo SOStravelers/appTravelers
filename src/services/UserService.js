@@ -37,6 +37,9 @@ export default class UserService {
       refreshTime: "30min",
     });
   }
+  static async getRandom() {
+    return axios.get(`${this.authUrl}/random/users`);
+  }
   static async login(email, password) {
     console.log("login email");
     return axios.post(`${this.authUrl}/loginEmail`, {
@@ -70,20 +73,39 @@ export default class UserService {
       }
     );
   }
-  static async inactiveMode(value) {
-    let data = { isActive: value };
-    console.log("la data", data);
-    return axios.post(`${this.baseUrl}/inactivemode`, data, {
+
+  static async readyToWork({
+    isActive,
+    isAboutmeOk,
+    isMyServicesOk,
+    isMySchedulesOk,
+    isMyWorkplacesOk,
+  }) {
+    let data = {
+      isActive: isActive,
+      isAboutmeOk: isAboutmeOk,
+      isMyServicesOk: isMyServicesOk,
+      isMySchedulesOk: isMySchedulesOk,
+      isMyWorkplacesOk: isMyWorkplacesOk,
+    };
+
+    return axios.post(`${this.baseUrl}/readyToWork`, data, {
       headers: this.getHeaders(),
     });
   }
 
-  static async get(id) {
-    console.log("isd", id);
-    return axios.get(`${this.authUrl}/user/${id}`);
+  static async getById(id) {
+    // console.log("id user", id);
+    return axios.get(`${this.baseUrl}/user/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+  static async getByIdAuth(id) {
+    // console.log("id user", id);
+    return axios.get(`${this.authUrl}/user/${id}`, {});
   }
   static async updateUser(user) {
-    console.log("el userr", user);
+    // console.log("el userr", user);
     return axios.put(
       `${this.baseUrl}/${user._id}`,
       {
@@ -93,6 +115,12 @@ export default class UserService {
         headers: this.getHeaders(),
       }
     );
+  }
+  static async updateDataUser(data) {
+    // console.log("el userr", user);
+    return axios.put(`${this.baseUrl}/data/user`, data, {
+      headers: this.getHeaders(),
+    });
   }
   static async changeProfileImg(file) {
     console.log("fotito", this.getHeaders());

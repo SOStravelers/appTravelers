@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 export default function Login() {
   useEffect(() => {
-    document.title = "Login - SOS Travelers";
+    document.title = "Login | SOS Travelers";
   }, []);
 
   return (
@@ -23,12 +23,6 @@ export default function Login() {
             Register Here!
           </Link>
         </p>
-        {/* <Link href="/alternative-login">
-          <p className="text-lightBlue my-5">
-            <span className="text-blackText">Or </span>sign in with other
-            options
-          </p>
-        </Link> */}
         <p className="text-xs mt-5">
           By joining, you agree to our{" "}
           <Link href={"terms-of-service"} className="font-bold text-blackText">

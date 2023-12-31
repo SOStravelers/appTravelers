@@ -6,6 +6,7 @@ import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
 
 import ServiceService from "@/services/ServiceService";
+import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -20,6 +21,7 @@ export default function Home({}) {
   const { services, setServices } = store;
   const [bookings, setBookings] = useState([]);
   const [swiper, setSwiper] = useState(null);
+  const [randomUsers, setRandomUsers] = useState([]);
 
   useEffect(() => {
     localStorage.removeItem("service");
@@ -27,7 +29,7 @@ export default function Home({}) {
   }, []);
 
   useEffect(() => {
-    document.title = "Home - SOS Travelers";
+    document.title = "Home | SOS Travelers";
     if (!services || Object.keys(services).length == 0) {
       getData();
     }
@@ -66,9 +68,19 @@ export default function Home({}) {
     };
   }, [swiper]);
 
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
       setServices(response.data.docs);
+    });
+  };
+  const getUsers = async () => {
+    UserService.getRandom().then((response) => {
+      setRandomUsers(response.data);
+      // console.log(response.data);
     });
   };
 
@@ -99,14 +111,15 @@ export default function Home({}) {
 
       <section>
         <h1
-          className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
+          className={`text-black text-xl font-semibold mt-1 mb-3 ${mazzard.className}`}
         >
           Services
         </h1>
-        <div className="w-[90vw] md:w-full flex overflow-x-auto mb-5">
-          {services?.map((s) => (
+        <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2">
+          {services?.map((s, index) => (
             <ServiceCard
-              key={s.id}
+              key={index}
+              id={s.id}
               link={`/subservices/${s.id}`}
               name={s.name}
             />
@@ -120,9 +133,10 @@ export default function Home({}) {
         >
           Recommended for you
         </h1>
-        <div className="flex justify-center lg:justify-start xl:justify-start md:justify-start pb-10">
-          <RecomendationCard />
-          <RecomendationCard />
+        <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
+          {randomUsers?.map((s, index) => (
+            <RecomendationCard key={index} user={s} />
+          ))}
         </div>
       </section>
     </main>

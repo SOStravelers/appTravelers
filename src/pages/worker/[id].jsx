@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Router from "next/router";
+import Head from "next/head";
 import WorkerProfileCard from "@/components/utils/cards/WorkerProfileCard";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
 import SectionAbout from "@/components/profile/SectionAbout/SectionAbout";
@@ -10,6 +11,8 @@ import UserService from "@/services/UserService";
 export default function Worker() {
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [user, setUser] = useState(null);
+  const [nombre, setNombre] = useState("");
+  const [image, setImage] = useState("");
   const router = Router;
   const id = router.query.id;
 
@@ -18,11 +21,11 @@ export default function Worker() {
   }, []);
 
   useEffect(() => {
-    document.title =
-      user?.personalData?.name?.first +
-      " " +
-      user?.personalData?.name?.last +
-      " - SOS Travelers";
+    let nombre =
+      user?.personalData?.name?.first + " " + user?.personalData?.name?.last;
+    document.title = nombre + " | SOS Travelers";
+    setNombre(nombre);
+    setImage(user?.img?.imgUrl);
   }, [user]);
 
   const getUserData = async () => {
@@ -31,17 +34,36 @@ export default function Worker() {
       setUser(response.data);
     }
   };
-  const capitalize = (cadena) => {
-    return cadena.charAt(0).toUpperCase() + cadena.slice(1);
-  };
+
   const setName = (name) => {
-    if (!name) return "";
-    return capitalize(name?.first) + " " + capitalize(name?.last);
+    const first = name?.first
+      ? name?.first.charAt(0).toUpperCase() + name?.first?.slice(1)
+      : "";
+    const last = name?.last
+      ? name?.last?.charAt(0).toUpperCase() + name?.last?.slice(1)
+      : "";
+    return first + " " + last;
   };
 
   let galleryFilter = user?.img?.gallery.filter((image) => image !== null);
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <Head>
+        <title>Sos Travelers</title>
+        <meta name="description" content={`Visit my profile: ` + nombre} />
+
+        {/* Redes sociales */}
+        <meta property="og:title" content="SOS Travelers" />
+        <meta
+          property="og:description"
+          content={`Visit my profile: ` + nombre}
+        />
+
+        <meta
+          property="og:image"
+          content={image + `?random=${Math.random()}`}
+        />
+      </Head>
       <WorkerProfileCard
         name={setName(user?.personalData?.name)}
         services={user?.workerData?.services}

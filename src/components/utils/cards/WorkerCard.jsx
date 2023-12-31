@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { StarIcon, ArrowRightIcon } from "@/constants/icons";
+import { useState, useEffect } from "react";
 
 function WorkerCard({
   link,
@@ -11,16 +12,41 @@ function WorkerCard({
   showArrow = true,
   onClickSummary,
 }) {
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const handleSummary = () => {
     if (onClickSummary) onClickSummary();
   };
+  function truncate(str, num) {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num) + "...";
+  }
   return (
-    <div className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2 max-w-lg">
+    <div
+      onClick={handleSummary}
+      className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2 max-w-lg"
+    >
       <div className="flex">
         <div className="w-20 h-20 rounded-xl  mr-2 ml-3 relative">
           <Link href={link}>
             {img && (
               <Image
+                onClick={(e) => e.stopPropagation()}
                 src={img}
                 alt="workerImg"
                 fill
@@ -29,27 +55,25 @@ function WorkerCard({
             )}
           </Link>
         </div>
-        <div className="flex flex-col" onClick={handleSummary}>
-          <h1 className="font-semibold">{name}</h1>
-          <p className="text-blackText">{service}</p>
+        <div className="flex flex-col">
+          <h1 className="font-semibold">
+            {" "}
+            {width < 420 ? truncate(name, 20) : name}
+          </h1>
+          <p className="text-blackText text-xs">
+            {width < 420 ? truncate(service, 26) : service}
+          </p>
           <div className="flex items-center">
-            <StarIcon color={"#1CDAE5"} className="mr-1" />
+            <StarIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText">{score}</p>
           </div>
         </div>
       </div>
-      {showArrow ? (
-        <Link href={"/summary"} className="h-full">
-          <div
-            className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
-            onClick={handleSummary}
-          >
-            <ArrowRightIcon className="ml-1" />
-          </div>
-        </Link>
-      ) : (
-        <div className="w-10"></div>
-      )}
+      <Link href={"/summary"} className="h-full">
+        <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
+          <ArrowRightIcon className="ml-1" />
+        </div>
+      </Link>
     </div>
   );
 }

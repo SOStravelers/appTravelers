@@ -11,7 +11,7 @@ export default function WorkerProfile({ user }) {
   const router = useRouter();
   const { setUser, setLoggedIn, setWorker } = useStore();
   useEffect(() => {
-    document.title = "Profile - SOS Travelers";
+    document.title = "Profile | SOS Travelers";
   }, []);
 
   const logout = async () => {

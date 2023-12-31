@@ -8,11 +8,14 @@ import { signOut } from "next-auth/react";
 
 export default function Profile({ user }) {
   useEffect(() => {
-    document.title = "Profile - SOS Travelers";
+    document.title = "Profile | SOS Travelers";
   }, []);
   const router = useRouter();
   const { setUser, setLoggedIn, setWorker } = useStore();
-
+  useEffect(() => {
+    localStorage.removeItem("service");
+    localStorage.removeItem("fromFavorite");
+  }, []);
   const logout = async () => {
     localStorage.removeItem("service");
     localStorage.removeItem("type");
@@ -39,7 +42,7 @@ export default function Profile({ user }) {
         text="Settings"
         onClick={() => router.push("/settings")}
       />
-      <OutlinedButton text="Invite Friends" />
+      {/* <OutlinedButton text="Invite Friends" /> */}
       <OutlinedButton secondary text="Log Out" onClick={logout} />
     </div>
   );

@@ -1,7 +1,10 @@
 import NotificationCard from "@/components/utils/cards/NotificationCard";
 import { NotificationDraw } from "@/constants/icons";
-
+import { useEffect } from "react";
 export default function Notifications() {
+  useEffect(() => {
+    document.title = "Notifications | SOS Travelers";
+  }, []);
   return (
     <div className="py-20 px-5 md:pl-80">
       <NotificationCard

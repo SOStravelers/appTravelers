@@ -6,6 +6,8 @@ import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
 import clsx from "clsx";
+import { ThreeDots } from "react-loader-spinner";
+import { LogoSosBlack, LogoSosRelleno } from "@/constants/icons";
 
 import { Poppins } from "next/font/google";
 import { CustomMiddlewareComponent } from "@/middleware";
@@ -26,14 +28,15 @@ function Layout({ children, lang }) {
   };
 
   let metaDescription = "";
-
-  if (lang === "fr") {
+  const language = lang ? lang : "en";
+  console.log(language);
+  if (language.includes("fr")) {
     metaDescription =
       "Découvrez un bien-être personnalisé : choisissez votre hostel, choisissez l'heure et trouvez des professionnels d'élite dans notre application conviviale. Des travailleurs soigneusement sélectionnés pour une expérience inégalée. Votre confort est notre priorité !";
-  } else if (lang === "pt") {
+  } else if (language.includes("pt")) {
     metaDescription =
       "Descubra o bem-estar personalizado: escolha seu hostel, escolha o horário e encontre profissionais de elite em nosso amigável aplicativo. Trabalhadores cuidadosamente selecionados para uma experiência incomparável. Seu conforto é nossa prioridade!";
-  } else if (lang === "es") {
+  } else if (language.includes("es")) {
     metaDescription =
       "Descubre el bienestar personalizado: elige tu hostel, elige el horario y encuentra profesionales de élite en nuestra amigable aplicación. Trabajadores cuidadosamente seleccionados para una experiencia inigualable. ¡Su comodidad es nuestra prioridad!";
   } else {
@@ -71,19 +74,21 @@ function Layout({ children, lang }) {
         <CustomMiddlewareComponent
           onMiddlewareComplete={handleMiddlewareComplete}
         />
-        {middlewareCompleted && (
+        <Head>
+          <title>Sos Travelers</title>
+          <meta name="description" content={metaDescription} />
+
+          {/* Redes sociales */}
+          <meta property="og:title" content="SOS Travelers" />
+          <meta property="og:description" content={metaDescription} />
+
+          <meta
+            property="og:image"
+            content={`https://sostvl.com/assets/logoRedes.png?random=${Math.random()}`}
+          />
+        </Head>
+        {middlewareCompleted ? (
           <>
-            <Head>
-              <title>Sos Travelers</title>
-              <meta name="description" content={metaDescription} />
-
-              {/* Redes sociales */}
-              <meta property="og:title" content="SOS Travelers" />
-              <meta property="og:description" content={metaDescription} />
-
-              <meta property="og:image" content="/assets/logoSos.png" />
-            </Head>
-
             {isLoginPage ? (
               <WaveBar />
             ) : arePrincipalPages ? (
@@ -93,6 +98,18 @@ function Layout({ children, lang }) {
             )}
             {children}
           </>
+        ) : (
+          <div className="w-sreen flex flex-col h-screen  items-center justify-center">
+            <LogoSosRelleno></LogoSosRelleno>
+            <p className=" font-medium mt-4 text-xl">SOS Travelers</p>
+            <ThreeDots
+              wrapperStyle={{ marginTop: "-25px" }}
+              width={100}
+              height={100}
+              color="black"
+              ariaLabel="infinity-spin-loading"
+            />
+          </div>
         )}
       </div>
     </>

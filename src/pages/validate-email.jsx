@@ -10,7 +10,7 @@ export default function ChangePassword() {
   const router = useRouter();
 
   useEffect(() => {
-    document.title = "Recovery Pass - SOS Travelers";
+    document.title = "Recovery Pass | SOS Travelers";
   }, []);
   const handleVerifyCode = async () => {
     try {
@@ -19,7 +19,7 @@ export default function ChangePassword() {
       if (response.status === 200) {
         router.push({
           pathname: "/recovery-password",
-          query: { userId: response?.data?._id },
+          query: { userId: userId },
         });
       }
     } catch (err) {

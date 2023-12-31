@@ -9,7 +9,7 @@ import { WorldIcon, MailIcon } from "@/constants/icons";
 
 export default function GuestSettings() {
   useEffect(() => {
-    document.title = "Settings - SOS Travelers";
+    document.title = "Settings | SOS Travelers";
   }, []);
   const router = useRouter();
   const [isOnUbication, setIsOnUbication] = useState(false);
@@ -24,13 +24,16 @@ export default function GuestSettings() {
 
   return (
     <div className="flex flex-col py-24 px-10 md:pl-80">
-      <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
-      
+      {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
+
       <Link href="support" className="block">
-        <OptionCard title="Support" subtitle="Contact us" icon={MailIcon}>
-        </OptionCard>
+        <OptionCard
+          title="Support"
+          subtitle="Contact us"
+          icon={MailIcon}
+        ></OptionCard>
       </Link>
-      <div className="flex flex-col my-4">
+      {/* <div className="flex flex-col my-4">
         <OptionSwitch
           title="Activate Ubication"
           onFunction={onFunction}
@@ -38,7 +41,7 @@ export default function GuestSettings() {
           isOn={isOnUbication}
           setIsOn={setIsOnUbication}
         />
-      </div>
+      </div> */}
       <div className="flex items-center justify-center mb-4  max-w-lg">
         <Image
           src="/icons/LogoCompleto.svg"

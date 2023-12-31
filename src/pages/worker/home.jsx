@@ -20,7 +20,7 @@ export default function WorkerHome() {
   const [swiper, setSwiper] = useState(null);
 
   useEffect(() => {
-    document.title = "Worker Home - SOS Travelers";
+    document.title = "Worker Home | SOS Travelers";
     setBookings([
       {
         id: 1,
@@ -47,6 +47,11 @@ export default function WorkerHome() {
   }, []);
 
   useEffect(() => {
+    localStorage.removeItem("service");
+    localStorage.removeItem("fromFavorite");
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       if (swiper) {
         swiper.slideNext();
@@ -62,7 +67,7 @@ export default function WorkerHome() {
     setService({
       workerId: user?._id,
     });
-    goTo(`/services/${user?._id}`)
+    goTo(`/services/${user?._id}`);
   };
 
   const goTo = (path) => {
@@ -95,10 +100,7 @@ export default function WorkerHome() {
       </div>
 
       <section className=" mb-5">
-        <OutlinedButton
-          text="Book a service"
-          onClick={handleBookService}
-        />
+        <OutlinedButton text="Book a service" onClick={handleBookService} />
       </section>
 
       <section className="flex flex-col items-center md:items-start">

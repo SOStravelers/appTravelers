@@ -15,18 +15,28 @@ export default function WorkerSettings() {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
-  const [openInactive, setOpenInactive] = useState(false);
 
   const [isOnWorker, setIsOnWorker] = useState(false);
-  const [isOnInactive, setIsInactive] = useState(false);
 
   const [openNotification, setOpenNotification] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOnNotification, setIsOnNotification] = useState(true);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     setIsOnNotification(true);
+    getData();
   }, []);
+
+  const getData = async () => {
+    try {
+      const newuser = await UserService.getUserByToken();
+      setUser(newuser.data);
+    } catch (err) {
+      setUser({});
+    }
+  };
+
   //Worker Functions
   const workerModeOff = () => {
     console.log("dialogo user");
@@ -45,53 +55,7 @@ export default function WorkerSettings() {
     setOpen(false);
   };
   // Inactive Functions
-  const inactiveModeOn = async () => {
-    console.log("dialogo inactive1");
-    setOpenInactive(true);
-    setIsInactive(false);
-  };
-  const inactiveModeOff = async () => {
-    console.log("dialogo inactive2");
 
-    try {
-      const response = await UserService.inactiveMode(true);
-      if (response.data) {
-        setIsInactive(false);
-        toast.info("Saved.", {
-          position: toast.POSITION.BOTTOM_CENTER,
-          autoClose: 1500,
-        });
-      }
-    } catch (err) {
-      toast.error("Internal Server Error. Please try again later.", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1800,
-      });
-    }
-  };
-  const confirmInactiveMode = async () => {
-    console.log("confirmInactiveMode");
-    try {
-      const response = await UserService.inactiveMode(false);
-      if (response.data) {
-        setOpenInactive(false);
-        setIsInactive(true);
-        toast.info("Saved.", {
-          position: toast.POSITION.BOTTOM_CENTER,
-          autoClose: 1500,
-        });
-      }
-    } catch (err) {
-      toast.error("Internal Server Error. Please try again later.", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1800,
-      });
-    }
-  };
-  const cancelInactiveMode = async () => {
-    console.log("cancelInactiveMode");
-    setOpenInactive(false);
-  };
   // Notification Functions
   const notificationModeOn = () => {
     setIsOnNotification(true);
@@ -114,7 +78,7 @@ export default function WorkerSettings() {
   };
   return (
     <div className="flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} />
+      {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
 
       <Link href="/support" className="block">
         <OptionCard
@@ -133,20 +97,13 @@ export default function WorkerSettings() {
           isOn={isOnWorker}
           setIsOn={setIsOnWorker}
         />
-        <OptionSwitch
+        {/* <OptionSwitch
           title="Notifications"
           onFunction={notificationModeOn}
           offFunction={notificationModeOff}
           isOn={isOnNotification}
           setIsOn={setIsOnNotification}
-        />
-        <OptionSwitch
-          title="Inactive Mode"
-          onFunction={inactiveModeOn}
-          offFunction={inactiveModeOff}
-          isOn={isOnInactive}
-          setIsOn={setIsInactive}
-        />
+        /> */}
       </div>
       <div className="mt-10 flex flex-col">
         {/* <OutlinedButton text="Save Changes" /> */}
@@ -161,19 +118,7 @@ export default function WorkerSettings() {
         onAccept={confirmChangeWorkerMode}
         onCancel={cancelChangeWorkerMode}
       />
-      <TextModal
-        title={`Hide my worker account`}
-        text={[
-          "Are you sure you want to inactive your account?",
-          "You will not receive job offers or notifications of new opportunities.",
-          "You can change this option at any time.",
-        ]}
-        buttonText="Accept"
-        open={openInactive}
-        setOpen={setOpenInactive}
-        onAccept={confirmInactiveMode}
-        onCancel={cancelInactiveMode}
-      />
+
       <TextModal
         title={`Disable notifications`}
         text={["Which notifications would you like to deactivate?", ""]}

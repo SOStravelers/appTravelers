@@ -61,7 +61,10 @@ export default function App({ Component, pageProps }) {
   };
   // Convierte el componente SVG a cadena
   const svgString = renderToString(<LogoSosRelleno />);
-
+  let lang;
+  if (typeof window !== "undefined") {
+    lang = window.navigator.userLanguage || window.navigator.language;
+  }
   return (
     <>
       <Head>
@@ -74,7 +77,7 @@ export default function App({ Component, pageProps }) {
         {/* Establece el título de la página */}
         <title>{router.asPath ? router.asPath : "SOS Travelers"}</title>
       </Head>
-      <Layout>
+      <Layout lang={lang}>
         {renderSidebar()}
         <ToastContainer position="top-center" theme="dark" />
         <Component {...pageProps} />

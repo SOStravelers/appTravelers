@@ -6,7 +6,7 @@ function TimeButton({ text, selected, ...props }) {
       className={clsx(
         "border border-solid py-2 w-20 rounded-lg my-2 mx-1",
         selected
-          ? "bg-darkBlue border-darkBlue text-white"
+          ? "bg-blueBorder border-darkBlue text-white"
           : "bg-white text-blackText border-greyText"
       )}
       {...props}

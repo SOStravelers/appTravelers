@@ -8,7 +8,6 @@ function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
     const user = Cookies.get("auth.user_id");
-    console.log("dayBookings", dayBookings);
     if (user) {
       setBookings(dayBookings);
     }
@@ -23,6 +22,7 @@ function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
             number={day.number}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
+            bookings={bookings?.length}
           />
         ))}
       </div>

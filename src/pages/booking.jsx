@@ -48,7 +48,6 @@ export default function Booking() {
       BookingService.getBookingsByDay(day.date).then((res) => {
         if (res) {
           setBookings(res.data.docs);
-          console.log("res.data.docs", res.data.docs);
         }
       });
     }
@@ -60,10 +59,8 @@ export default function Booking() {
     if (loginModal) {
       setOpen(false);
       setLoginModal(false);
-      // router.push("/");
     }
     if (!user) {
-      console.log("entro al open");
       setOpen(true);
     }
   }, [loginModal]);

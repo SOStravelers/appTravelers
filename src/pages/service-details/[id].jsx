@@ -23,7 +23,7 @@ function ServiceHistory() {
   } = router.query;
 
   const goToChat = () => {
-    ChatService.createChatRoom({ booking: idBooking, user: idClient }).then(
+    ChatService.createChatRoom({ booking: idBooking, user: idWorker }).then(
       (res) => {
         if (res.status === 200) {
           console.log(res.data);

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import MultiSwitchButtons from "@/components/utils/buttons/MultiSwitchButtons";
+import ThreeSwitchButtons from "@/components/utils/buttons/ThreeSwitchButtons";
 import DaySection from "@/components/bookingWorker/DaySection";
 import ListSection from "@/components/bookingWorker/ListSection";
 import MonthSection from "@/components/bookingWorker/MonthSection";
@@ -28,14 +28,13 @@ export default function WorkerBooking() {
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
   return (
-    <div className="py-20 lg:mt-5  px-5 md:pl-80">
-      <MultiSwitchButtons
+    <div className="py-20 lg:mt-5 px-5 md:pl-80">
+      <ThreeSwitchButtons
         actualView={actualView}
         setActualView={setActualView}
         titleOne="List"
         titleTwo="Day"
-        titleThree="Week"
-        titleFour="Month"
+        titleThree="Month"
       />
 
       {actualView === SECTION_ONE ? (

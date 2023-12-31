@@ -53,23 +53,36 @@ export default class BookingService {
 
   // WORKER BOOKINGS
 
-  static async getBookingsByYear(date) {
-    console.log("...getBookingsByYear");
-    return axios.get(`${this.baseUrl}/year?date=${date}&page=1&limit=10`, {
-      headers: this.getHeaders(),
-    });
+  static async getBookingsByList(date) {
+    console.log("...getBookingsByList");
+    return axios.get(
+      `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=3`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
-  static async getAllBookings() {
-    console.log("...getAllBookings");
-    return axios.get(`${this.baseUrl}/allbusiness?page=1&limit=10`, {
-      headers: this.getHeaders(),
-    });
+  static async getBookingsByMonthWorker(date) {
+    return axios.get(
+      `${this.baseUrl}/worker/month?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
-  static async getBookingsByDate() {
-    console.log("...getBookingsByDate");
-    return axios.get(`${this.baseUrl}/time`, {
+  static async getBookingsByDayWorker(date) {
+    return axios.get(
+      `${this.baseUrl}/worker/day?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getAllBookingsByWorker() {
+    return axios.get(`${this.baseUrl}/worker/allworkers`, {
       headers: this.getHeaders(),
     });
   }

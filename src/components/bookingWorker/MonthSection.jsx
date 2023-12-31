@@ -1,4 +1,4 @@
-import CalendarBookingWorker from "@/components/utils/calendar/CalendarBookingWorker";
+import CalendarBookingWorker from "../utils/calendar/CalendarBookingWorker";
 
 function MonthSection() {
   return (

@@ -8,7 +8,7 @@ import WorkerCardBooking from "../cards/WorkerCardBooking";
 
 import moment from "moment";
 
-function CalendarBooking({ id }) {
+function CalendarBooking() {
   const [selected, setSelected] = useState("");
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
@@ -87,19 +87,21 @@ function CalendarBooking({ id }) {
 
   let footer = <p className="my-5">Please pick a day.</p>;
   if (showBookings.length > 0) {
-    footer = <div className="w-full mt-14">
-      {showBookings.map((booking) => (
-        <WorkerCardBooking
-          key={booking._id}
-          booking={booking}
-          avatar={booking.avatar}
-          date={booking.date.stringData}
-          hour={booking.startTime.stringData}
-          name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
-          location={booking.businessUser.businessData.name}
-        />
-      ))}
-    </div>;
+    footer = (
+      <div className="w-full mt-14">
+        {showBookings.map((booking) => (
+          <WorkerCardBooking
+            key={booking._id}
+            booking={booking}
+            avatar={booking.avatar}
+            date={booking.date.stringData}
+            hour={booking.startTime.stringData}
+            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+            location={booking.businessUser.businessData.name}
+          />
+        ))}
+      </div>
+    );
   }
   return (
     <div className="flex flex-col">
@@ -116,7 +118,7 @@ function CalendarBooking({ id }) {
         onMonthChange={setMonth}
       />
       <div className="w-full mt-14">
-        <Link href={`/service-history`}>
+        <Link href={`/worker/service-history`}>
           <OutlinedButton text={"See all my records"} />
         </Link>
       </div>

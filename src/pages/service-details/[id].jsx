@@ -17,12 +17,25 @@ function ServiceHistory() {
     service,
     subService,
     idWorker,
+    idBooking,
   } = router.query;
 
   const goToChat = () => {
-    return () => {
-      router.push("/chat/1");
-    };
+    router.push({
+      pathname: `/chat/${idWorker}`,
+      query: {
+        name: name,
+        avatar: avatar?.length === 0 ? "/assets/proovedor.png" : avatar,
+        service: service,
+        date: date,
+        hour: hour,
+        idWorker: idWorker,
+        businessName: businessName,
+        location: location,
+        subService: subService,
+        idBooking: idBooking,
+      },
+    });
   };
 
   return (
@@ -64,7 +77,7 @@ function ServiceHistory() {
         <OutlinedChatButton
           text="Chat Now"
           color="black"
-          onClick={goToChat()}
+          onClick={() => goToChat()}
         />
         <OutlinedButton text="Cancel Booking" secondary={true} />
       </div>

@@ -59,7 +59,7 @@ function ServiceHistory() {
           />
         ))}
 
-      {bookings.filter((booking) => booking.status === "accepted").length >
+      {bookings.filter((booking) => booking.status === "completed").length >
         0 && (
         <h1 className="text-xl text-center my-8 max-w-lg">Last services</h1>
       )}

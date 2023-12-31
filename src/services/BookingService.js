@@ -45,6 +45,12 @@ export default class BookingService {
     );
   }
 
+  static async getAllBookingsByClient() {
+    return axios.get(`${this.baseUrl}/clients/allclients`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   // WORKER BOOKINGS
 
   static async getBookingsByYear(date) {

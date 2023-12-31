@@ -3,10 +3,36 @@ import Image from "next/image";
 import { StarIcon, FavIconBorder, ClockIcon } from "@/constants/icons";
 import SolidButton from "../buttons/SolidButton";
 
-function WorkerProfileCardChat({ name, services, avatar }) {
+function WorkerProfileCardChat() {
   const router = useRouter();
+  const {
+    name,
+    avatar,
+    businessName,
+    location,
+    date,
+    hour,
+    service,
+    subService,
+    idWorker,
+    idBooking,
+  } = router.query;
   const goToServiceDetails = () => {
-    router.push("/service-details");
+    router.push({
+      pathname: `/service-details/${idBooking}`,
+      query: {
+        name: name,
+        avatar: avatar?.length === 0 ? "/assets/proovedor.png" : avatar,
+        service: service,
+        date: date,
+        hour: hour,
+        idWorker: idWorker,
+        businessName: businessName,
+        location: location,
+        subService: subService,
+        idBooking: idBooking,
+      },
+    });
   };
   return (
     <div className="flex flex-col">
@@ -25,9 +51,7 @@ function WorkerProfileCardChat({ name, services, avatar }) {
           <div className="flex items-center">
             <h1 className="font-semibold text-black">{name}</h1>
           </div>
-          <p className="text-blackText my-2">
-            {services?.map((service) => service.id.name).join(", ")}
-          </p>
+          <p className="text-blackText my-2">{service}</p>
           <div className="flex items-center">
             <SolidButton
               text="Service Resume"
@@ -39,7 +63,9 @@ function WorkerProfileCardChat({ name, services, avatar }) {
       </div>
       <div className="flex items-center">
         <ClockIcon color={"#00A0D5"} className="mr-1" />
-        <p className="text-blackText text-sm">8 Aug, 2023 | 04:30 PM</p>
+        <p className="text-blackText text-sm">
+          {date} | {hour}
+        </p>
       </div>
     </div>
   );

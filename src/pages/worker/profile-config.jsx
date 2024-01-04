@@ -163,7 +163,7 @@ export default function WorkerProfile() {
         onClick={() => router.push("/worker/my-workplaces")}
       />
       <div className="max-w-lg text-center text-xl my-5 flex flex-col justify-center">
-        {user?.workerData?.isActive ? (
+        {IsOnWorker ? (
           <>
             <CertificationPicture className="lg:pl-20 xl:ml-20 " />
 

@@ -9,9 +9,17 @@ import { useStore } from "@/store";
 import UserService from "@/services/UserService";
 
 function SectionWeek() {
-  const { user, setUser } = useStore();
+  const [user, setUser] = useState({});
   const [horario, setHorario] = useState([]);
   const [save, setSave] = useState(false);
+  const [isActiveInitial, setIsActiveInitial] = useState(null);
+  const fetchData = async () => {
+    try {
+      const newuser = await UserService.getUserByToken();
+      setUser(newuser.data);
+      setIsActiveInitial(newuser.data?.workerData?.isActive);
+    } catch (err) {}
+  };
 
   const getData = async () => {
     try {
@@ -27,11 +35,9 @@ function SectionWeek() {
     }
   };
   useEffect(() => {
+    fetchData();
     getData();
   }, []);
-  useEffect(() => {
-    console.log("cambiando", user.workerData);
-  }, [user]);
 
   useEffect(() => {
     if (save) {
@@ -166,12 +172,22 @@ function SectionWeek() {
   };
 
   const fetchUser = async (schedulesResponse) => {
-    const newuser = user;
     let check = schedulesResponse.data.schedules.some(
       (item) => item.isActive === true
     );
-    newuser.workerData.isMySchedulesOk = check;
-    UserService.updateUser(newuser);
+    if (check && isActiveInitial) {
+      await UserService.readyToWork({
+        isMySchedulesOk: true,
+        isActive: true,
+      });
+    } else if (check) {
+      await UserService.readyToWork({ isMySchedulesOk: true });
+    } else {
+      await UserService.readyToWork({
+        isMySchedulesOk: false,
+        isActive: false,
+      });
+    }
   };
 
   return (

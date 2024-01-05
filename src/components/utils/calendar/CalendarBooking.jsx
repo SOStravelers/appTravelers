@@ -118,7 +118,7 @@ function CalendarBooking() {
         onMonthChange={setMonth}
       />
       <div className="w-full mt-14">
-        <Link href={`/worker/service-history`}>
+        <Link href={`/service-history`}>
           <OutlinedButton text={"See all my records"} />
         </Link>
       </div>

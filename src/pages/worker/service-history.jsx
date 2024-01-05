@@ -31,7 +31,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+            name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
@@ -50,7 +50,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+            name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
@@ -69,7 +69,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+            name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}

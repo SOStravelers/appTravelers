@@ -45,6 +45,12 @@ export default class BookingService {
     );
   }
 
+  static async getLastestBookings(date) {
+    return axios.get(`${this.baseUrl}/client/lastdays?date=${date}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   static async getAllBookingsByClient() {
     return axios.get(`${this.baseUrl}/clients/allclients`, {
       headers: this.getHeaders(),

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import BookingService from "@/services/BookingService";
+import dayjs from "dayjs";
 
 function ServiceHistory() {
   const [bookings, setBookings] = useState([]);
@@ -10,7 +11,8 @@ function ServiceHistory() {
   }, []);
 
   const getBookings = () => {
-    BookingService.getAllBookingsByClient().then((res) => {
+    const today = dayjs().format("YYYY-MM-DD");
+    BookingService.getLastestBookings(today).then((res) => {
       if (res) {
         setBookings(res.data.docs);
         console.log(res.data.docs);

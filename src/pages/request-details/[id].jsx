@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import WorkerProfileCardDetails from "@/components/utils/cards/WorkerProfileCardDetails";
+import WorkerProfileCardRequestDetails from "@/components/utils/cards/WorkerProfileCardRequestDetails";
 import { Rings } from "react-loader-spinner";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -72,12 +72,12 @@ function ServiceHistory() {
 
   return (
     <div className="flex flex-col py-20 px-5 md:pl-80">
-      <WorkerProfileCardDetails
+      <WorkerProfileCardRequestDetails
         name={name}
         id={idWorker}
         avatar={avatar?.length ? avatar : "/assets/proovedor.png"}
       />
-      <div className="flex justify-between border-t border-b border-greyText">
+      <div className="flex justify-between border-t border-b border-greyText max-w-lg">
         <div className="flex flex-col my-3">
           <h1 className="font-semibold ml-1">
             {businessName ? businessName : "No disponible"}
@@ -100,16 +100,9 @@ function ServiceHistory() {
         <p className="text-blackText font-semibold w-3/4">
           {service}: {subService}
         </p>
-        <SolidButton
-          text="Request Open"
-          icon={<CircleCheckIcon className="mr-2" />}
-        />
       </div>
       <div className="flex flex-col justify-between items-center w-full max-w-lg mt-20">
-        <AcceptRequestButton
-          text="Accept Request"
-          color="black"
-        />
+        <AcceptRequestButton text="Accept Request" color="black" />
       </div>
     </div>
   );

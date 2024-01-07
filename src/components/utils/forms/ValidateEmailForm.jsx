@@ -14,6 +14,7 @@ function ValidateEmailForm({ email }) {
   }, []);
   const handleVerifyCode = async () => {
     try {
+      // TODO: Change this to the correct userId
       const userId = router?.query?.userId;
       const response = await UserService.verifyCodeEmail(userId, code);
       if (response.status === 200) {

@@ -5,9 +5,12 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedChatButton from "@/components/utils/buttons/OutlinedChatButton";
 import ChatService from "@/services/ChatService";
 import { PinIcon, ClockIcon, CircleCheckIcon } from "@/constants/icons";
+import { useStore } from "@/store";
 
 function ServiceHistory() {
   const router = useRouter();
+  const { isWorker } = useStore();
+  console.log(isWorker);
   const {
     name,
     avatar,
@@ -23,34 +26,32 @@ function ServiceHistory() {
   } = router.query;
 
   const goToChat = () => {
-    ChatService.createChatRoom({ booking: idBooking, user: idWorker }).then(
-      (res) => {
-        if (res.status === 200) {
-          console.log(res.data);
-          const type = localStorage.getItem("type");
-          console.log(type);
-          router.push({
-            pathname:
-              type === "worker"
-                ? `/worker/chat/${res.data._id}`
-                : `/chat/${res.data._id}`,
-            query: {
-              name: name,
-              avatar: avatar?.length === 0 ? "/assets/proovedor.png" : avatar,
-              service: service,
-              date: date,
-              hour: hour,
-              idWorker: idWorker,
-              businessName: businessName,
-              location: location,
-              subService: subService,
-              idBooking: idBooking,
-              idClient: idClient,
-            },
-          });
-        }
+    ChatService.createChatRoom({
+      booking: idBooking,
+      user: isWorker ? idClient : idWorker,
+    }).then((res) => {
+      if (res.status === 200) {
+        console.log(res.data);
+        router.push({
+          pathname: isWorker
+            ? `/worker/chat/${res.data._id}`
+            : `/chat/${res.data._id}`,
+          query: {
+            name: name,
+            avatar: avatar?.length === 0 ? "/assets/proovedor.png" : avatar,
+            service: service,
+            date: date,
+            hour: hour,
+            idWorker: idWorker,
+            businessName: businessName,
+            location: location,
+            subService: subService,
+            idBooking: idBooking,
+            idClient: idClient,
+          },
+        });
       }
-    );
+    });
     /*router.push({
       pathname: `/chat/${idWorker}`,
       query: {

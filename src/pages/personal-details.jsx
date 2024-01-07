@@ -1,13 +1,14 @@
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import SelectCard from "@/components/utils/cards/SelectCard";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+import ChangeEmailForm from "@/components/utils/forms/ChangeEmailForm";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { toast } from "react-toastify";
 import { UserIcon, MailIcon, HouseIcon, LockIcon } from "@/constants/icons";
-import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { useStore } from "@/store";
 import Cookies from "js-cookie";
-import { useState, useEffect } from "react";
 import UserService from "@/services/UserService";
 
 export default function PersonalDetails() {
@@ -56,10 +57,9 @@ export default function PersonalDetails() {
     setSave(true);
   };
   const handleEmailClick = () => {
-    setEmailInput(true);
-    setNameInput(false);
-    setSave(true);
+    router.push("/change-email");
   };
+
   function setTheName(name) {
     setName(name);
     setNameTrun(truncarNumero(name));
@@ -114,23 +114,14 @@ export default function PersonalDetails() {
           onChange={(e) => setTheName(e.target.value)}
         />
       )}
-      {!emailInput ? (
-        <SelectCard
-          title="Email"
-          onClick={handleEmailClick}
-          icon={MailIcon}
-          edit={true}
-          subtitle={emailTrun}
-        />
-      ) : (
-        <OutlinedInput
-          placeholder="Email"
-          icon={MailIcon}
-          value={email}
-          // onBlur={onBlur}
-          onChange={(e) => setValue(e.target.value)}
-        />
-      )}
+      <SelectCard
+        title="Email"
+        onClick={handleEmailClick}
+        icon={MailIcon}
+        edit={true}
+        subtitle={emailTrun}
+      />
+
       {/* <SelectCard
         title="Address"
         icon={HouseIcon}

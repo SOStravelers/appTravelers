@@ -12,7 +12,6 @@ function ChangeEmailForm({ setEmail, setValidatingMail }) {
   const { user, setUser, setLoggedIn } = useStore();
 
   const changeEmail = async (values) => {
-    console.log(user);
     try {
       const response = await UserService.login(
         user.email,
@@ -33,7 +32,6 @@ function ChangeEmailForm({ setEmail, setValidatingMail }) {
   };
 
   const verifyEmail = async () => {
-    console.log("entre al este");
     try {
       const responseValidation = await UserService.sendCodeEmail(
         user._id,

@@ -7,6 +7,7 @@ import BookingService from "@/services/BookingService";
 import WorkerCardBooking from "../cards/WorkerCardBooking";
 
 import moment from "moment";
+import { set } from "date-fns";
 
 function CalendarBookingWorker() {
   const [selected, setSelected] = useState("");
@@ -20,6 +21,7 @@ function CalendarBookingWorker() {
 
   useEffect(() => {
     initialize();
+    setMonth(new Date());
   }, []);
 
   useEffect(() => {

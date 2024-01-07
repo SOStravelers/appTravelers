@@ -37,7 +37,7 @@ function ListSection() {
               avatar={booking.avatar}
               date={booking.date.stringData}
               hour={booking.startTime.stringData}
-              name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+              name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
               location={booking.businessUser.businessData.name}
             />
           ))}
@@ -61,7 +61,7 @@ function ListSection() {
               avatar={booking.avatar}
               date={booking.date.stringData}
               hour={booking.startTime.stringData}
-              name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+              name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
               location={booking.businessUser.businessData.name}
             />
           ))}

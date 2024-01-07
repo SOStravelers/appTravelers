@@ -3,6 +3,7 @@ import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import WorkerCardChat from "@/components/utils/cards/WorkerCardChat";
 import ChatService from "@/services/ChatService";
 import { useStore } from "@/store";
+import { Rings } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { ChatPicture } from "@/constants/icons";
@@ -12,6 +13,7 @@ export default function Chat() {
   const router = useRouter();
   const { loginModal, setLoginModal } = store;
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [chats, setChats] = useState([]);
   var user = Cookies.get("auth.user_id");
 
@@ -36,11 +38,13 @@ export default function Chat() {
   }, [loginModal]);
 
   const getChatRooms = async () => {
+    setLoading(true);
     const response = await ChatService.getChatRooms();
     if (response) {
       console.log(response.data.docs);
+      setChats(response.data.docs);
     }
-    setChats(response.data.docs);
+    setLoading(false);
   };
 
   const handleGoToChat = (chat) => {
@@ -59,6 +63,14 @@ export default function Chat() {
   };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
+      {loading && (
+        <Rings
+          width={100}
+          height={100}
+          color="#00A0D5"
+          ariaLabel="infinity-spin-loading"
+        />
+      )}
       {chats?.length > 0 ? (
         chats.map((chat, index) => (
           <WorkerCardChat

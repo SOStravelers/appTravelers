@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
 import WorkerCardBookingRequest from "@/components/utils/cards/WorkerCardBookingRequest";
 import BookingService from "@/services/BookingService";
+import { Rings } from "react-loader-spinner";
 import dayjs from "dayjs";
 
 function Requests() {
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getBookings();
   }, []);
 
   const getBookings = () => {
+    setLoading(true);
     const today = dayjs().format("YYYY-MM-DD");
     BookingService.getAllBookingsByWorker().then((res) => {
       if (res) {
         setBookings(res.data.docs);
+        setLoading(false);
         console.log(res.data.docs);
       }
     });
@@ -26,6 +30,15 @@ function Requests() {
         <h1 className="text-xl text-center mb-8 max-w-lg">
           Requested services
         </h1>
+      )}
+      {loading && (
+        <Rings
+          width={100}
+          height={100}
+          color="#00A0D5"
+          className="mx-auto"
+          ariaLabel="infinity-spin-loading"
+        />
       )}
       {bookings.map((booking) => (
         <WorkerCardBookingRequest

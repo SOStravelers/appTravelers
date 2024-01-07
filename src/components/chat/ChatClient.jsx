@@ -29,7 +29,7 @@ const ChatClient = ({ socket, initialMessages }) => {
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
-  }, []);
+  }, [socket]);
 
   useEffect(() => {
     if (arrivalMessage) {

@@ -20,6 +20,7 @@ function CalendarBooking() {
 
   useEffect(() => {
     initialize();
+    setMonth(new Date());
   }, []);
 
   useEffect(() => {

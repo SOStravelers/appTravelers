@@ -107,7 +107,12 @@ function WorkerCardBooking({
           {subService && (
             <div className="flex items-center " style={{ marginLeft: "-1px" }}>
               <WorldIcon />
-              <p className="text-blackText text-sm">{subService}</p>
+              <p
+                style={{ marginTop: "2px" }}
+                className="text-blackText text-sm ml-1"
+              >
+                {subService}
+              </p>
             </div>
           )}
         </div>

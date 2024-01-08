@@ -28,6 +28,7 @@ function ServiceHistory() {
       const id = router.query.id;
       const response = await BookingService.getBookingById(id);
       setBooking(response.data);
+
       console.log("booking", response.data);
     } catch (error) {
       console.log(error);
@@ -83,12 +84,12 @@ function ServiceHistory() {
     const { first, last } = data;
     return first + " " + (last ?? "");
   };
-  function formatearFecha(fechaStr) {
+  function formatearFecha(fechaStr, isWorker) {
     // Fecha proporcionada en formato YYYY-MM-DD
     var fechaObj = new Date(fechaStr);
 
     // Meses y días de la semana en inglés
-    var meses = [
+    var mesesIngles = [
       "January",
       "February",
       "March",
@@ -102,7 +103,7 @@ function ServiceHistory() {
       "November",
       "December",
     ];
-    var diasSemana = [
+    var diasSemanaIngles = [
       "Sunday",
       "Monday",
       "Tuesday",
@@ -112,13 +113,42 @@ function ServiceHistory() {
       "Saturday",
     ];
 
+    // Meses y días de la semana en portugués
+    var mesesPortugues = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+    var diasSemanaPortugues = [
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
+    ];
+
+    // Seleccionar los meses y días de la semana correctos
+    var meses = isWorker ? mesesPortugues : mesesIngles;
+    var diasSemana = isWorker ? diasSemanaPortugues : diasSemanaIngles;
+
     // Obtener el mes, día y año
     var mes = meses[fechaObj.getMonth()];
     var dia = fechaObj.getDate();
     var año = fechaObj.getFullYear();
     var diaSemana = diasSemana[fechaObj.getUTCDay()];
 
-    // Formatear la fecha como "Wednesday, December 20, 2023"
+    // Formatear la fecha como "Wednesday, December 20, 2023" o "Quarta-feira, Dezembro 20, 2023"
     var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
 
     return fechaFormateada;
@@ -126,20 +156,24 @@ function ServiceHistory() {
   function StatusChip({ status }) {
     let color;
     let textColor = "white"; // Define textColor here
-
+    let statusPortugues = status;
     switch (status) {
       case "requested":
         color = "grey";
+        statusPortugues = "Solicitado";
         break;
       case "completed":
         color = "green";
+        statusPortugues = "Completado";
         break;
       case "canceled":
         color = "#e77b7b";
+        statusPortugues = "Cancelado";
         break;
       case "confirmed":
         color = "#92ef72";
         textColor = "black";
+        statusPortugues = "Confirmado";
         break;
       default:
         color = "gray";
@@ -157,14 +191,14 @@ function ServiceHistory() {
       backgroundColor: color,
     };
 
-    return <span style={style}>{status}</span>;
+    return <span style={style}>{isWorker ? statusPortugues : status}</span>;
   }
 
   return (
     //p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80 md:items-start
     <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
       <div className="font-semibold text-center max-w-lg mt-2 lg:my-4 xl:my-4 mb-2">
-        Location Service
+        {isWorker ? "Local de serviço" : "Location Service"}
       </div>
       <HostelCardSummary
         image={booking?.businessUser?.img?.imgUrl}
@@ -177,7 +211,7 @@ function ServiceHistory() {
       <hr className="w-full max-w-lg text-grey" />
       <div className="mt-2 flex justify-center max-w-lg">
         <p className="text-left font-semibold">
-          {isWorker ? "My Client" : "My Profesional"}
+          {isWorker ? "Meu cliente" : "My Profesional"}
         </p>
       </div>
       <WorkerCardSumary
@@ -211,7 +245,7 @@ function ServiceHistory() {
           </div>
           <div>
             <p className="ml-2">{`${
-              formatearFecha(booking?.date?.stringData) || ""
+              formatearFecha(booking?.date?.stringData, isWorker) || ""
             } `}</p>
             <p className="ml-2">{`${
               booking?.startTime?.stringData + " hrs" || ""
@@ -230,26 +264,39 @@ function ServiceHistory() {
       </div>
       <hr className="w-full max-w-lg  text-grey" />
       <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
-        <p className="text-blackText font-semibold">Service</p>
+        <p className="text-blackText font-semibold">
+          {isWorker ? "Serviço" : "Service"}
+        </p>
         <p className="text-blackBlue font-semibold text-md">
           {booking?.subservice?.name}
         </p>
       </div>
 
       <div className="flex justify-between items-end w-full max-w-lg my-1">
-        <p className="text-blackText font-semibold">Service duration</p>
+        <p className="text-blackText font-semibold">
+          {isWorker ? "Duração do serviço" : "Service duration"}
+        </p>
         <p className="text-blackBlue font-semibold text-md">
           {booking?.duration} min
         </p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg my-1">
-        <p className="text-blackText font-semibold">Total Service Fee</p>
+        <p className="text-blackText font-semibold">
+          {isWorker ? "Taxa total de serviço" : "Total Service Fee"}
+        </p>
         <p className="text-blackBlue font-semibold text-xl">
           R$ {booking?.payment?.price}
         </p>
       </div>
-      <hr className="w-full max-w-lg text-lightGrey" />
-      <OutlinedButton text="Cancel Booking" secondary={true} />
+      <hr className="w-full mb-4 max-w-lg text-lightGrey" />
+
+      <OutlinedButton
+        text={isWorker ? "Confirmar reserva" : "Confirm Booking"}
+      />
+      <OutlinedButton
+        text={isWorker ? "Cancelar reserva" : "Cancel Booking"}
+        secondary={true}
+      />
     </div>
 
     // <div className="flex flex-col py-20 px-5 md:pl-80">

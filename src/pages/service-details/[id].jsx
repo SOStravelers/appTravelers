@@ -123,6 +123,42 @@ function ServiceHistory() {
 
     return fechaFormateada;
   }
+  function StatusChip({ status }) {
+    let color;
+    let textColor = "white"; // Define textColor here
+
+    switch (status) {
+      case "requested":
+        color = "grey";
+        break;
+      case "completed":
+        color = "green";
+        break;
+      case "canceled":
+        color = "#e77b7b";
+        break;
+      case "confirmed":
+        color = "#92ef72";
+        textColor = "black";
+        break;
+      default:
+        color = "gray";
+    }
+
+    const style = {
+      display: "inline-block",
+      padding: "0.3rem 0.8rem",
+      position: "relative",
+      transform: "translateY(-2px)",
+      borderRadius: "9999px",
+      fontSize: "0.85rem",
+      fontWeight: "550",
+      color: textColor,
+      backgroundColor: color,
+    };
+
+    return <span style={style}>{status}</span>;
+  }
 
   return (
     <div className="flex flex-col items-center md:items-start py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
@@ -159,7 +195,9 @@ function ServiceHistory() {
           booking?.service?.name && !isWorker ? booking?.service?.name : ""
         }
       />
-      <OutlinedChatButton text="Chat Now" onClick={() => goToChat()} />
+      {booking?.status != "confirmed2" && (
+        <OutlinedChatButton text="Chat Now" onClick={() => goToChat()} />
+      )}
       <hr className="w-full mt-4 max-w-lg  text-grey" />
 
       <div className="flex justify-between w-full max-w-lg pr-1 my-5">
@@ -179,12 +217,21 @@ function ServiceHistory() {
       </div>
 
       <hr className="w-full max-w-lg  text-grey" />
+
+      <div className="flex justify-between items-center w-full max-w-lg  mt-4 mb-2">
+        <p className="text-blackText font-semibold text-lg">Status</p>
+        <p className="text-blackBlue font-semibold text-md">
+          <StatusChip status={booking?.status} />
+        </p>
+      </div>
+      <hr className="w-full max-w-lg  text-grey" />
       <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
         <p className="text-blackText font-semibold">Service</p>
         <p className="text-blackBlue font-semibold text-md">
           {booking?.subservice?.name}
         </p>
       </div>
+
       <div className="flex justify-between items-end w-full max-w-lg my-1">
         <p className="text-blackText font-semibold">Service duration</p>
         <p className="text-blackBlue font-semibold text-md">

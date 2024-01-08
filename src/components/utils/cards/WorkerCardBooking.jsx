@@ -52,11 +52,11 @@ function WorkerCardBooking({
 
     const style = {
       display: "inline-block",
-      padding: "0.3rem 0.8rem",
+      padding: "0.2rem 0.6rem",
       position: "relative",
       transform: "translateY(-2px)",
       borderRadius: "9999px",
-      fontSize: "0.85rem",
+      fontSize: "0.80rem",
       fontWeight: "550",
       color: textColor,
       backgroundColor: color,

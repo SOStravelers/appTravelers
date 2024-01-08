@@ -17,14 +17,14 @@ export default function Services() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Choose subservice | SOS Travelers";
+    document.title = "Choose service | SOS Travelers";
     const isFavorite = localStorage.getItem("fromFavorite");
-    if (isFavorite) {
-      getDataFav();
-    } else if (isWorker) {
-      // console.log(user?.workerData?.services);
-      setServices(user?.workerData?.services);
-    }
+    getDataFav();
+    // if (isFavorite) {
+    // } else if (isWorker) {
+    //   // console.log(user?.workerData?.services);
+    //   setServices(user?.workerData?.services);
+    // }
   }, []);
 
   const getDataFav = async () => {
@@ -41,8 +41,8 @@ export default function Services() {
   };
 
   return (
-    <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <h1 className="my-3 font-semibold text-center max-w-lg">
+    <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-2 font-semibold mt-1 text-center max-w-lg">
         Services availables
       </h1>
       {loading ? (

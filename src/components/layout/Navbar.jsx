@@ -78,7 +78,7 @@ function Navbar() {
               : "text-greyText"
           )}
         >
-          Bookings
+          {isWorker ? "Agenda" : "Bookings"}
         </span>
       </button>
 
@@ -147,7 +147,7 @@ function Navbar() {
                 : "text-greyText"
             )}
           >
-            Requests
+            Trabalhos
           </span>
         </button>
       )}
@@ -171,7 +171,7 @@ function Navbar() {
               : "text-greyText"
           )}
         >
-          Profile
+          {isWorker ? "Perfil" : "Profile"}
         </span>
       </button>
     </div>

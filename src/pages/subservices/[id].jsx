@@ -35,8 +35,8 @@ export default function Subservices() {
   };
 
   return (
-    <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <h1 className="my-3 font-semibold text-center max-w-lg">
+    <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-2 font-semibold mt-1 text-center max-w-lg">
         Subservices availables
       </h1>
       {loading ? (

@@ -58,6 +58,7 @@ export default function MyServices() {
   }, []);
 
   const getData = async () => {
+    console.log("se viene");
     ServiceService.listServices().then((response) => {
       setServices(response.data);
     });

@@ -24,34 +24,37 @@ function Requests() {
     });
   };
   return (
-    <div className="flex flex-col py-20 md:py-28 px-5 md:pl-80">
+    <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
       {bookings.filter((booking) => booking.status === "requested").length >
         0 && (
         <h1 className="text-xl text-center mb-8 max-w-lg">
-          Requested services
+          Trabalhos disponíveis
         </h1>
       )}
-      {loading && (
-        <Rings
-          width={100}
-          height={100}
-          color="#00A0D5"
-          className="mx-auto"
-          ariaLabel="infinity-spin-loading"
-        />
+      {loading ? (
+        <div className="max-w-lg flex flex-col items-center justify-center">
+          <Rings
+            width={100}
+            height={100}
+            color="#00A0D5"
+            ariaLabel="infinity-spin-loading"
+          />
+          <p className="mt-2">Searching...</p>
+        </div>
+      ) : (
+        bookings.map((booking) => (
+          <WorkerCardBookingRequest
+            key={booking._id}
+            link={"/"}
+            name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
+            location={booking.businessUser.businessData.name}
+            date={booking.date.stringData}
+            hour={booking.startTime.stringData}
+            showArrow={false}
+            booking={booking}
+          />
+        ))
       )}
-      {bookings.map((booking) => (
-        <WorkerCardBookingRequest
-          key={booking._id}
-          link={"/"}
-          name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
-          location={booking.businessUser.businessData.name}
-          date={booking.date.stringData}
-          hour={booking.startTime.stringData}
-          showArrow={false}
-          booking={booking}
-        />
-      ))}
     </div>
   );
 }

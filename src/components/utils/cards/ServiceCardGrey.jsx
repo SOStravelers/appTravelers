@@ -22,14 +22,14 @@ function ServiceCardGrey({ id, link, icon, name, subServices }) {
 
   return (
     <div
-      className="text-black flex flex-col items-center justify-center bg-white w-32 h-32 m-2 rounded-xl cursor-pointer"
+      className="text-black flex flex-col items-center justify-center bg-white w-full h-full m-2 rounded-xl cursor-pointer"
       onClick={select}
     >
       <div className="w-16 h-16 rounded-full bg-blueButton relative flex items-center justify-center">
         <Image
           src={icon ?? "/assets/subservice.png"}
           fill
-          alt="perro"
+          alt="service"
           className="object-contain ml-1"
         />
       </div>

@@ -9,8 +9,8 @@ export default function AssignClient() {
   const [modal, setModal] = useState(true);
 
   return (
-    <div className="flex flex-col bg-white  py-16 lg:mt-5 xl:mt-5 px-4 md:pl-80">
-      <h1 className="text-blackText font-bold text-2xl mt-5">
+    <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="text-blackText font-semibold text-xl mt-5">
         Register your service
       </h1>
       <h2 className="text-blackText mt-2 mb-5">

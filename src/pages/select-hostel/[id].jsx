@@ -42,12 +42,12 @@ export default function SelectHostel() {
   };
 
   return (
-    <div className="mt-4 p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
-      {/*       <h1 className="my-2 font-semibold mt-1 text-center max-w-lg">
-        Nearby You
-      </h1> */}
+    <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-2 font-semibold mt-1 text-center max-w-lg">
+        Hostels availables
+      </h1>
       {loading ? (
-        <div className="max-w-lg  flex items-center justify-center">
+        <div className="max-w-lg  flex flex-col items-center justify-center">
           <Rings
             width={100}
             height={100}

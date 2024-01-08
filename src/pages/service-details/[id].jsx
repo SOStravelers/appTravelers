@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import WorkerProfileCardDetails from "@/components/utils/cards/WorkerProfileCardDetails";
 import SolidButton from "@/components/utils/buttons/SolidButton";
+import TextModal from "@/components/utils/modal/TextModal";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedChatButton from "@/components/utils/buttons/OutlinedChatButton";
 import ChatService from "@/services/ChatService";
@@ -15,6 +16,7 @@ import { Rings } from "react-loader-spinner";
 function ServiceHistory() {
   const router = useRouter();
   const { isWorker, user } = useStore();
+  const [open, setOpen] = useState(false);
   const [booking, setBooking] = useState(null);
   const [typeUser, setTypeUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -52,6 +54,13 @@ function ServiceHistory() {
       console.log(error);
       setLoading(false);
     }
+  };
+  const confirmChangeWorkerMode = async () => {
+    console.log("confirmachageWorkerMode");
+    setOpen(false);
+  };
+  const cancelChangeWorkerMode = async () => {
+    setOpen(false);
   };
 
   const goToChat = () => {
@@ -231,6 +240,25 @@ function ServiceHistory() {
         </div>
       ) : (
         <>
+          <TextModal
+            title={
+              isWorker
+                ? "Aceitar solicitação e confirmar reserva"
+                : `Activate User Mode`
+            }
+            text={
+              isWorker
+                ? [
+                    "Ao confirmar a reserva, o cliente será notificado da confirmação do serviço",
+                  ]
+                : ["Hola"]
+            }
+            buttonText={isWorker ? "Aceitar e confirmar" : "accept and confirm"}
+            open={open}
+            setOpen={setOpen}
+            onAccept={confirmChangeWorkerMode}
+            onCancel={cancelChangeWorkerMode}
+          />
           <div className="font-semibold text-center max-w-lg mt-2 lg:my-4 xl:my-4 mb-2">
             {isWorker ? "Local de serviço" : "Location Service"}
           </div>
@@ -346,6 +374,7 @@ function ServiceHistory() {
             booking?.status != "confirmed" &&
             booking?.status != "completed" && (
               <OutlinedButton
+                onClick={() => setOpen(true)}
                 text={isWorker ? "Confirmar reserva" : "Confirm Booking"}
               />
             )}

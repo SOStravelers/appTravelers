@@ -47,7 +47,7 @@ export default function SelectHostel() {
         Nearby You
       </h1> */}
       {loading ? (
-        <div className="max-w-lg  flex flex-col items-center justify-center">
+        <div className="max-w-lg  flex items-center justify-center">
           <Rings
             width={100}
             height={100}

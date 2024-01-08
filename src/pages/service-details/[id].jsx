@@ -349,6 +349,10 @@ function ServiceHistory() {
                 text={isWorker ? "Confirmar reserva" : "Confirm Booking"}
               />
             )}
+
+          {typeUser === "worker" && booking?.status === "confirmed" && (
+            <OutlinedButton text={"Terminar o trabalho"} />
+          )}
           {(typeUser === "worker" || typeUser === "client") &&
             booking?.status != "canceled" &&
             booking?.status != "completed" && (

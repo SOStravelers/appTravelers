@@ -6,6 +6,8 @@ import {
   HomeIconOutlined,
   BookingIcon,
   BookingIconOutlined,
+  RequestIcon,
+  RequestIconOutlined,
   ChatIcon,
   ChatIconOutlined,
   FavoriteIcon,
@@ -123,6 +125,29 @@ function Navbar() {
             )}
           >
             Favorites
+          </span>
+        </button>
+      )}
+      {isWorker && (
+        <button
+          className="flex mt-1 flex-col items-center justify-center"
+          onClick={() => goTo("/worker/requests")}
+        >
+          {router.pathname.includes("/worker/requests") ? (
+            <RequestIcon color="#3498db" />
+          ) : (
+            <RequestIconOutlined color="black" />
+          )}
+          <span
+            role="presentation"
+            className={clsx(
+              "text-sm",
+              router.pathname === "/worker/requests"
+                ? "text-blueBorder"
+                : "text-greyText"
+            )}
+          >
+            Requests
           </span>
         </button>
       )}

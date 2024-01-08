@@ -1,10 +1,20 @@
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import DayButton from "@/components/utils/buttons/DayButton";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
+import { ReservationIcon } from "@/constants/icons";
 
-function DaySection({ weekDays, selectedDay, setSelectedDay }) {
+function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
+  const [bookings, setBookings] = useState([]);
+  useEffect(() => {
+    const user = Cookies.get("auth.user_id");
+    if (user) {
+      setBookings(dayBookings);
+    }
+  }, [dayBookings]);
   return (
     <>
-      <div className="flex md:mx-16 my-5">
+      <div className="flex my-5 md:mx-16">
         {weekDays.map((day, index) => (
           <DayButton
             key={index}
@@ -12,31 +22,36 @@ function DaySection({ weekDays, selectedDay, setSelectedDay }) {
             number={day.number}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
+            bookings={bookings?.length}
           />
         ))}
       </div>
 
-      <h1 className="text-center text-xl my-5 max-w-lg"> 1:00pm</h1>
+      <h1 className="text-center max-w-lg text-xl my-3">My next Commitments</h1>
 
       <div className="flex flex-col">
-        <WorkerCardBooking
-          link={"/"}
-          name={"John Doe"}
-          location={"124 street Miro Hotel, Ubud"}
-          showArrow={false}
-        />
-        <WorkerCardBooking
-          link={"/"}
-          name={"John Doe"}
-          location={"124 street Miro Hotel, Ubud"}
-          showArrow={false}
-        />
-        <WorkerCardBooking
-          link={"/"}
-          name={"John Doe"}
-          location={"124 street Miro Hotel, Ubud"}
-          showArrow={false}
-        />
+        {bookings?.length > 0 ? (
+          bookings.map((booking) => (
+            <WorkerCardBooking
+              key={booking._id}
+              booking={booking}
+              avatar={booking.avatar}
+              date={booking.date.stringData}
+              hour={booking.startTime.stringData}
+              name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
+              location={booking.businessUser.businessData.name}
+            />
+          ))
+        ) : (
+          <>
+            <p className="text-center text-greyText max-w-lg my-10">
+              No bookings yet
+            </p>
+            <div className="max-w-lg text-xl ml-2 my-3 flex justify-center">
+              <ReservationIcon />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

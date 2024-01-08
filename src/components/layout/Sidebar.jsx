@@ -7,6 +7,7 @@ import {
   BookingIconOutlined,
   ChatIconOutlined,
   FavoriteIconOutlined,
+  RequestIconOutlined,
   ProfileIconOutlined,
 } from "@/constants/icons";
 
@@ -82,7 +83,20 @@ function Sidebar() {
           <p className={clsx("text-xl ml-3 text-white")}>Favorites</p>
         </button>
       )}
-
+      {isWorker && (
+        <button
+          onClick={() => goTo("/worker/requests")}
+          className={clsx(
+            "flex items-center mb-2 pl-5 h-10 w-48 rounded-xl",
+            router.pathname === "/worker/requests"
+              ? "bg-newBlue"
+              : "bg-someOtherColor"
+          )}
+        >
+          <RequestIconOutlined color="white" />
+          <p className={clsx("text-xl ml-3 text-white")}>Requests</p>
+        </button>
+      )}
       <button
         onClick={() => goProfile()}
         className={clsx(

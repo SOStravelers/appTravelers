@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 
 export default class BookingService {
   static resource = "bookingAuth";
+
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${BookingService.resource}`;
@@ -22,5 +23,73 @@ export default class BookingService {
     return {
       Authorization: access_token ? access_token : {},
     };
+  }
+
+  // USER BOOKINGS
+
+  static async getBookingsByMonth(date) {
+    return axios.get(
+      `${this.baseUrl}/client/month?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getBookingsByDay(date) {
+    return axios.get(
+      `${this.baseUrl}/client/day?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getLastestBookings(date) {
+    return axios.get(`${this.baseUrl}/client/lastdays?date=${date}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getAllBookingsByClient() {
+    return axios.get(`${this.baseUrl}/clients/allclients`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  // WORKER BOOKINGS
+
+  static async getBookingsByList(date) {
+    console.log("...getBookingsByList");
+    return axios.get(
+      `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=3`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getBookingsByMonthWorker(date) {
+    return axios.get(
+      `${this.baseUrl}/worker/month?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getBookingsByDayWorker(date) {
+    return axios.get(
+      `${this.baseUrl}/worker/day?date=${date}&page=1&limit=10`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getAllBookingsByWorker() {
+    return axios.get(`${this.baseUrl}/worker/allworkers`, {
+      headers: this.getHeaders(),
+    });
   }
 }

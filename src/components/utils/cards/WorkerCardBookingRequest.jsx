@@ -2,12 +2,12 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { PinIcon, ClockIcon } from "@/constants/icons";
 
-function WorkerCardBooking({ booking, name, location, avatar, date, hour }) {
+function WorkerCardBookingRequest({ booking, name, location, avatar, date, hour }) {
   const router = useRouter();
 
   const goToDetails = () => {
     router.push({
-      pathname: `/service-details/${booking.id}`,
+      pathname: `/request-details/${booking.id}`,
       query: {
         name: name,
         avatar: booking.avatar,
@@ -56,4 +56,4 @@ function WorkerCardBooking({ booking, name, location, avatar, date, hour }) {
   );
 }
 
-export default WorkerCardBooking;
+export default WorkerCardBookingRequest;

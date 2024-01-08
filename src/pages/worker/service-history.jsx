@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import BookingService from "@/services/BookingService";
-import dayjs from "dayjs";
 
 function ServiceHistory() {
   const [bookings, setBookings] = useState([]);
@@ -11,8 +10,7 @@ function ServiceHistory() {
   }, []);
 
   const getBookings = () => {
-    const today = dayjs().format("YYYY-MM-DD");
-    BookingService.getLastestBookings(today).then((res) => {
+    BookingService.getAllBookingsByWorker().then((res) => {
       if (res) {
         setBookings(res.data.docs);
         console.log(res.data.docs);
@@ -33,7 +31,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+            name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
@@ -52,7 +50,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+            name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
@@ -61,7 +59,7 @@ function ServiceHistory() {
           />
         ))}
 
-      {bookings.filter((booking) => booking.status === "completed").length >
+      {bookings.filter((booking) => booking.status === "accepted").length >
         0 && (
         <h1 className="text-xl text-center my-8 max-w-lg">Last services</h1>
       )}
@@ -71,7 +69,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
+            name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}

@@ -13,8 +13,8 @@ function SubServiceCard({ id, link, icon, price, name, duration }) {
     });
   };
   return (
-    <Link href={link} className="flex justify-center" onClick={select}>
-      <div className="text-black flex flex-col items-center justify-center bg-white w-32 h-32 m-2 rounded-xl cursor-pointer">
+    <Link href={link} onClick={select}>
+      <div className="text-black flex flex-col items-center justify-center bg-white w-full h-full m-2 rounded-xl cursor-pointer">
         <div className="w-16 h-16 rounded-full bg-blueButton relative flex items-center justify-center">
           <Image
             src={icon?.length > 0 ? icon : "/assets/subservice.png"}

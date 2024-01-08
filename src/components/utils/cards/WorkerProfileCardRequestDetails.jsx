@@ -6,7 +6,7 @@ import { PinIcon } from "@/constants/icons";
 import SolidButton from "../buttons/SolidButton";
 import { random } from "@/lib/utils";
 
-function WorkerProfileCardDetails({ name, services, id, avatar }) {
+function WorkerProfileCardRequestDetails({ name, services, id, avatar }) {
   const router = useRouter();
 
   return (
@@ -28,16 +28,9 @@ function WorkerProfileCardDetails({ name, services, id, avatar }) {
         <p className="text-blackText my-2">
           {services?.map((service) => service.id.name).join(", ")}
         </p>
-        <div className="flex items-center">
-          <SolidButton
-            text="View Profile"
-            color="black"
-            onClick={() => router.push({ pathname: `/worker/${id}` })}
-          />
-        </div>
       </div>
     </div>
   );
 }
 
-export default WorkerProfileCardDetails;
+export default WorkerProfileCardRequestDetails;

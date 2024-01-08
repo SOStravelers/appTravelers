@@ -1929,6 +1929,38 @@ export const BookingIconOutlined = ({ color = "black", ...props }) => (
   </svg>
 );
 
+export const RequestIcon = ({ color, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
+    fill="none"
+    {...props}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M22 10.46L19.56 7.68L19.9 4L16.29 3.18L14.4 0L11 1.46L7.6 0L5.71 3.18L2.1 3.99L2.44 7.67L0 10.46L2.44 13.24L2.1 16.93L5.71 17.75L7.6 20.93L11 19.46L14.4 20.92L16.29 17.74L19.9 16.92L19.56 13.24L22 10.46ZM12 15.46H10V13.46H12V15.46ZM12 11.46H10V5.46H12V11.46Z"
+      fill={color}
+    />
+  </svg>
+);
+
+export const RequestIconOutlined = ({ color = "black", ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
+    fill={color}
+    fillOpacity={color === "black" ? "0.44" : "1"}
+    {...props}
+  >
+    <path d="M22 11L19.56 8.22004L19.9 4.54004L16.29 3.72004L14.4 0.540039L11 2.00004L7.6 0.540039L5.71 3.72004L2.1 4.53004L2.44 8.21004L0 11L2.44 13.78L2.1 17.47L5.71 18.29L7.6 21.47L11 20L14.4 21.46L16.29 18.28L19.9 17.46L19.56 13.78L22 11ZM17.49 13.11L17.75 15.9L15.01 16.52L13.58 18.93L11 17.82L8.42 18.93L6.99 16.52L4.25 15.9L4.51 13.1L2.66 11L4.51 8.88004L4.25 6.10004L6.99 5.49004L8.42 3.08004L11 4.18004L13.58 3.07004L15.01 5.48004L17.75 6.10004L17.49 8.89004L19.34 11L17.49 13.11ZM10 14H12V16H10V14ZM10 6.00004H12V12H10V6.00004Z" />
+  </svg>
+);
+
 export const ChatIcon = ({ color, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

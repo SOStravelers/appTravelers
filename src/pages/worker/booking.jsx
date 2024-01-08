@@ -6,6 +6,7 @@ import ListSection from "@/components/bookingWorker/ListSection";
 import MonthSection from "@/components/bookingWorker/MonthSection";
 import BookingService from "@/services/BookingService";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
+import { Rings } from "react-loader-spinner";
 import {
   SECTION_ONE,
   SECTION_TWO,
@@ -40,12 +41,16 @@ export default function WorkerBooking() {
 
   useEffect(() => {
     const day = weekDays.find((day) => day.number === selectedDay);
-
-    BookingService.getBookingsByDayWorker(day.date).then((res) => {
-      if (res) {
-        setBookings(res.data.docs);
-      }
-    });
+    setBookings(null);
+    BookingService.getBookingsByDayWorker(day.date)
+      .then((res) => {
+        if (res) {
+          setBookings(res.data.docs);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [selectedDay]);
 
   return (

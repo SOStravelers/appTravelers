@@ -3,9 +3,16 @@ import Cookies from "js-cookie";
 import DayButton from "@/components/utils/buttons/DayButton";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import { ReservationIcon } from "@/constants/icons";
+import { Rings } from "react-loader-spinner";
 
-function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
-  const [bookings, setBookings] = useState([]);
+function DaySection({
+  weekDays,
+  selectedDay,
+  setSelectedDay,
+  dayBookings,
+  loading,
+}) {
+  const [bookings, setBookings] = useState(null);
   useEffect(() => {
     const user = Cookies.get("auth.user_id");
     if (user) {
@@ -30,7 +37,16 @@ function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
       <h1 className="text-center max-w-lg text-xl my-3">My next Commitments</h1>
 
       <div className="flex flex-col">
-        {bookings?.length > 0 ? (
+        {!bookings ? (
+          <div className="max-w-lg flex flex-col items-center justify-center">
+            <Rings
+              width={100}
+              height={100}
+              color="#00A0D5"
+              ariaLabel="infinity-spin-loading"
+            />
+          </div>
+        ) : bookings?.length > 0 ? (
           bookings.map((booking) => (
             <WorkerCardBooking
               key={booking._id}

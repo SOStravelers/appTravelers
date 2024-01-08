@@ -172,7 +172,7 @@ function ServiceHistory() {
         go={false}
       />
       <hr className="w-full max-w-lg text-grey" />
-      <div className="mt-2 flex justify-start">
+      <div className="mt-2 flex ">
         <p className="text-left font-semibold">
           {isWorker ? "My Client" : "My Profesional"}
         </p>

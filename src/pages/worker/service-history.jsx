@@ -49,17 +49,14 @@ function ServiceHistory() {
             .map((booking) => (
               <WorkerCardBooking
                 key={booking._id}
-                link={"/"}
-                avatar={booking.businessUser?.img?.imgUrl}
-                status={booking.status}
+                booking={booking}
                 subService={booking.subservice.name}
+                status={booking.status}
                 service={booking.service.name}
-                name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
-                location={booking.businessUser.businessData.name}
+                avatar={booking?.businessUser?.img?.imgUrl}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                showArrow={false}
-                booking={booking}
+                name={`${booking?.businessUser?.businessData?.name}`}
               />
             ))}
 

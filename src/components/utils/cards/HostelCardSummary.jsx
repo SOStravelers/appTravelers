@@ -3,7 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-function HostelCardSummary({ subserviceId, link, name, location, image }) {
+function HostelCardSummary({
+  subserviceId,
+  link,
+  name,
+  location,
+  image,
+  go = true,
+}) {
   const router = useRouter();
 
   const handleEditHostel = () => {
@@ -37,12 +44,13 @@ function HostelCardSummary({ subserviceId, link, name, location, image }) {
               </p>
             </div>
           </div>
-          <div
-            className="w-8 h-20 flex items-center justify-center pr-1 rounded-r-2xl cursor-pointer"
-            onClick={handleEditHostel}
-          >
-            <ChangeIcon className="ml-1" />
-          </div>
+          {go && (
+            <Link href={link}>
+              <div className="w-8 h-20 flex items-center justify-center pr-1 rounded-r-2xl cursor-pointer">
+                <ChangeIcon className="ml-1" />
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </div>

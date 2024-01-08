@@ -68,6 +68,7 @@ export default function Booking() {
   return (
     <div className="w-full min-h-screen py-20 lg:py-24 xl:py-24 px-3 md:pl-80 bg-white text-black">
       <SwitchButtons
+        style={{ position: "sticky", top: "10000px" }}
         actualView={actualView}
         setActualView={setActualView}
         titleOne={"Day"}

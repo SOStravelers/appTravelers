@@ -92,4 +92,9 @@ export default class BookingService {
       headers: this.getHeaders(),
     });
   }
+  static async getBookingById(id) {
+    return axios.get(`${this.baseUrl}/byId/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
 }

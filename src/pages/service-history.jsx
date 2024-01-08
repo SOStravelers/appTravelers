@@ -20,10 +20,10 @@ function ServiceHistory() {
     });
   };
   return (
-    <div className="flex flex-col py-20 md:py-28 px-5 md:pl-80">
+    <div className="flex flex-col py-16 md:py-28 px-5 md:pl-80">
       {bookings.filter((booking) => booking.status === "requested").length >
         0 && (
-        <h1 className="text-xl text-center my-8 max-w-lg">
+        <h1 className="text-xl text-center my-2 max-w-lg">
           Requested services
         </h1>
       )}
@@ -32,32 +32,32 @@ function ServiceHistory() {
         .map((booking) => (
           <WorkerCardBooking
             key={booking._id}
-            link={"/"}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
-            location={booking.businessUser.businessData.name}
+            booking={booking}
+            avatar={booking?.workerUser?.img?.imgUrl}
+            status={booking.status}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
-            showArrow={false}
-            booking={booking}
+            name={`${booking.subservice.name}`}
+            location={booking.businessUser.businessData.name}
           />
         ))}
 
       {bookings.filter((booking) => booking.status === "confirmed").length >
         0 && (
-        <h1 className="text-xl text-center my-8 max-w-lg">Incoming services</h1>
+        <h1 className="text-xl text-center my-2 max-w-lg">Incoming services</h1>
       )}
       {bookings
         .filter((booking) => booking.status === "confirmed")
         .map((booking) => (
           <WorkerCardBooking
             key={booking._id}
-            link={"/"}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
-            location={booking.businessUser.businessData.name}
+            booking={booking}
+            avatar={booking?.workerUser?.img?.imgUrl}
+            status={booking.status}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
-            showArrow={false}
-            booking={booking}
+            name={`${booking.subservice.name}`}
+            location={booking.businessUser.businessData.name}
           />
         ))}
 

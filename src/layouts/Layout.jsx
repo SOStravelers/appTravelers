@@ -29,7 +29,6 @@ function Layout({ children, lang }) {
 
   let metaDescription = "";
   const language = lang ? lang : "en";
-  console.log(language);
   if (language.includes("fr")) {
     metaDescription =
       "Découvrez un bien-être personnalisé : choisissez votre hostel, choisissez l'heure et trouvez des professionnels d'élite dans notre application conviviale. Des travailleurs soigneusement sélectionnés pour une expérience inégalée. Votre confort est notre priorité !";

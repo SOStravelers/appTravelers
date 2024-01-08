@@ -10,8 +10,8 @@ function WorkerProfileCardDetails({ name, services, id, avatar }) {
   const router = useRouter();
 
   return (
-    <div className="flex py-4 w-80 rounded-lg my-2 items-center">
-      <div className="w-36 h-32 rounded-2xl mr-2">
+    <div className="flex py-3 w-80 rounded-lg my-2 items-center">
+      <div className="w-24 h-24 rounded-2xl mr-2">
         <div className="bg-blueBorder w-full h-full rounded-2xl relative">
           <Image
             src={avatar + "?hola=" + random() ?? "/assets/proovedor.png"}
@@ -25,7 +25,7 @@ function WorkerProfileCardDetails({ name, services, id, avatar }) {
         <div className="flex items-center">
           <h1 className="font-semibold text-black">{name}</h1>
         </div>
-        <p className="text-blackText my-2">
+        <p className="text-blackText ">
           {services?.map((service) => service.id.name).join(", ")}
         </p>
         <div className="flex items-center">

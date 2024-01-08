@@ -2,11 +2,11 @@ import React from "react";
 import clsx from "clsx";
 import { ChatButtonIcon } from "@/constants/icons";
 
-function OutlinedChatButton({ text, disabled, margin = "my-2", ...props }) {
+function OutlinedChatButton({ text, disabled, margin = "", ...props }) {
   return (
     <button
       className={clsx(
-        "flex justify-center items-center border-2 border-solid max-w-lg text-lg py-3 w-full rounded-xl cursor-pointer bg-lightGrey",
+        "flex justify-center items-center border-1 border-solid max-w-md text-lg py-1 w-48 rounded-lg cursor-pointer bg-lightGrey",
         margin,
         {
           "opacity-50 cursor-not-allowed": disabled,

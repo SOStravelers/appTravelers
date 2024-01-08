@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { PinIcon, ClockIcon } from "@/constants/icons";
 import { WorldIcon } from "@/constants/icons";
+import moment from "moment-timezone";
+import "moment/locale/pt-br"; // without this line it didn't work
 function WorkerCardBooking({
   booking,
   name,
@@ -14,23 +16,11 @@ function WorkerCardBooking({
   status,
 }) {
   const router = useRouter();
+  console.log(date);
 
   const goToDetails = () => {
     router.push({
       pathname: `/service-details/${booking.id}`,
-      query: {
-        name: name,
-        avatar: booking.avatar,
-        businessName: location,
-        location: `${booking.businessUser.businessData.location.city}, ${booking.businessUser.businessData.location.country}`,
-        date: date,
-        hour: hour,
-        service: booking.service.name,
-        subService: booking.subservice.name,
-        idWorker: booking.workerUser._id,
-        idBooking: booking.id,
-        idClient: booking.clientUser._id,
-      },
     });
   };
   function StatusChip({ status }) {
@@ -69,7 +59,14 @@ function WorkerCardBooking({
 
     return <span style={style}>{status}</span>;
   }
+  function getDayOfWeek(date, location) {
+    console.log("location", !!location);
+    const language = !location ? "pt-br" : "en";
+    return moment.tz(date, "America/Sao_Paulo").locale(language).format("dddd");
+  }
 
+  // Uso de la función
+  console.log(getDayOfWeek("2024-01-10")); // Debería imprimir 'quarta-feira'
   return (
     <div
       className="flex p-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
@@ -86,17 +83,23 @@ function WorkerCardBooking({
         </div>
         <div className="flex flex-col">
           <h1 className="font-semibold ml-1">
-            {location} <StatusChip status={status} />
+            {name} <StatusChip status={status} />
           </h1>
 
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {hour} |{" "}
-              {new Date(date).toLocaleDateString("pt-BR", { weekday: "long" })}
+              {hour} | {getDayOfWeek(date, location)}
             </p>
           </div>
-          <div className="flex items-center">
+          {location && (
+            <div className="flex items-center" style={{ marginLeft: "-1px" }}>
+              <PinIcon color={"#00A0D5"} className="ml-1 mr-2" />
+              <p className="text-blackText text-sm">{location}</p>
+            </div>
+          )}
+
+          {/* <div className="flex items-center">
             <Image
               src={"/assets/user.png"}
               width={25}
@@ -104,11 +107,13 @@ function WorkerCardBooking({
               alt="profileImg"
             />
             <p className="text-blackText text-sm">{name}</p>
-          </div>
-          <div className="flex items-center">
-            <WorldIcon />
-            <p className="text-blackText text-sm">{subService}</p>
-          </div>
+          </div> */}
+          {subService && (
+            <div className="flex items-center " style={{ marginLeft: "-1px" }}>
+              <WorldIcon />
+              <p className="text-blackText text-sm">{subService}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

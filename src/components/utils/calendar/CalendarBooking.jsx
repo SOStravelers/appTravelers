@@ -16,7 +16,15 @@ function CalendarBooking() {
   const [bookedDays, setBookedDays] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [showBookings, setShowBookings] = useState([]);
-  const bookedStyle = { border: "2px solid black" };
+  // const bookedStyle = { border: "2px solid black" };
+
+  const bookedStyle = {
+    border: "1px solid black",
+    borderColor: "#00A0D5 ",
+    borderRadius: "50%",
+    padding: "0px",
+    boxSizing: "border-box",
+  };
 
   useEffect(() => {
     initialize();
@@ -86,27 +94,14 @@ function CalendarBooking() {
     }
   };
 
-  let footer = <p className="my-5">Please pick a day.</p>;
+  let footer = <p className="my-2">Please pick a day.</p>;
   if (showBookings.length > 0) {
-    footer = (
-      <div className="w-full mt-14">
-        {showBookings.map((booking) => (
-          <WorkerCardBooking
-            key={booking._id}
-            booking={booking}
-            avatar={booking.avatar}
-            date={booking.date.stringData}
-            hour={booking.startTime.stringData}
-            name={`${booking.workerUser.personalData.name.first} ${booking.workerUser.personalData.name.last}`}
-            location={booking.businessUser.businessData.name}
-          />
-        ))}
-      </div>
-    );
+    footer = <div className="w-full "></div>;
   }
   return (
-    <div className="flex flex-col">
+    <div className="">
       <DayPicker
+        className="flex justify-center"
         mode="single"
         selected={selected}
         onSelect={setSelected}
@@ -118,7 +113,21 @@ function CalendarBooking() {
         onDayClick={handleDayClick}
         onMonthChange={setMonth}
       />
-      <div className="w-full mt-14">
+      <div className="w-full  mt-4 px-1">
+        {showBookings.map((booking) => (
+          <WorkerCardBooking
+            key={booking._id}
+            booking={booking}
+            avatar={booking?.workerUser?.img?.imgUrl}
+            status={booking.status}
+            date={booking.date.stringData}
+            hour={booking.startTime.stringData}
+            name={`${booking.subservice.name}`}
+            location={booking.businessUser.businessData.name}
+          />
+        ))}
+      </div>
+      <div className="w-full mt-14  px-5">
         <Link href={`/service-history`}>
           <OutlinedButton text={"See all my records"} />
         </Link>

@@ -57,8 +57,7 @@ function DaySection({
               avatar={booking?.businessUser?.img?.imgUrl}
               date={booking.date.stringData}
               hour={booking.startTime.stringData}
-              name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
-              location={booking.businessUser.businessData.name}
+              name={`${booking?.businessUser?.businessData?.name}`}
             />
           ))
         ) : (

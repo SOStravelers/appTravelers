@@ -7,6 +7,7 @@ import {
   BookingIconOutlined,
   ChatIconOutlined,
   FavoriteIconOutlined,
+  RequestIconOutlined,
   ProfileIconOutlined,
 } from "@/constants/icons";
 
@@ -92,7 +93,7 @@ function Sidebar() {
               : "bg-someOtherColor"
           )}
         >
-          <BookingIconOutlined color="white" />
+          <RequestIconOutlined color="white" />
           <p className={clsx("text-xl ml-3 text-white")}>Requests</p>
         </button>
       )}

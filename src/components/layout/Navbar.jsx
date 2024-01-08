@@ -6,6 +6,8 @@ import {
   HomeIconOutlined,
   BookingIcon,
   BookingIconOutlined,
+  RequestIcon,
+  RequestIconOutlined,
   ChatIcon,
   ChatIconOutlined,
   FavoriteIcon,
@@ -132,9 +134,9 @@ function Navbar() {
           onClick={() => goTo("/worker/requests")}
         >
           {router.pathname.includes("/worker/requests") ? (
-            <BookingIcon color="#3498db" />
+            <RequestIcon color="#3498db" />
           ) : (
-            <BookingIconOutlined color="black" />
+            <RequestIconOutlined color="black" />
           )}
           <span
             role="presentation"

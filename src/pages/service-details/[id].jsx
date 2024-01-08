@@ -172,7 +172,7 @@ function ServiceHistory() {
       <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
         <p className="text-blackText font-semibold">Service</p>
         <p className="text-blackBlue font-semibold text-md">
-          {booking?.service?.name}
+          {booking?.subservice?.name}
         </p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg my-1">

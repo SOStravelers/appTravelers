@@ -20,18 +20,6 @@ function WorkerProfileCardChat() {
   const goToServiceDetails = () => {
     router.push({
       pathname: `/service-details/${idBooking}`,
-      query: {
-        name: name,
-        avatar: avatar?.length === 0 ? "/assets/proovedor.png" : avatar,
-        service: service,
-        date: date,
-        hour: hour,
-        idWorker: idWorker,
-        businessName: businessName,
-        location: location,
-        subService: subService,
-        idBooking: idBooking,
-      },
     });
   };
   return (

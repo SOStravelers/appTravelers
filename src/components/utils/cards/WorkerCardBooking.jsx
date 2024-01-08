@@ -16,7 +16,6 @@ function WorkerCardBooking({
   status,
 }) {
   const router = useRouter();
-  console.log(date);
 
   const goToDetails = () => {
     router.push({
@@ -60,13 +59,10 @@ function WorkerCardBooking({
     return <span style={style}>{status}</span>;
   }
   function getDayOfWeek(date, location) {
-    console.log("location", !!location);
     const language = !location ? "pt-br" : "en";
     return moment.tz(date, "America/Sao_Paulo").locale(language).format("dddd");
   }
 
-  // Uso de la función
-  console.log(getDayOfWeek("2024-01-10")); // Debería imprimir 'quarta-feira'
   return (
     <div
       className="flex p-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"

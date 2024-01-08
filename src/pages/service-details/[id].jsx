@@ -161,8 +161,11 @@ function ServiceHistory() {
   }
 
   return (
-    <div className="flex flex-col items-center md:items-start py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
-      <div className="my-4 font-semibold">Location Service</div>
+    //p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80 md:items-start
+    <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
+      <div className="font-semibold text-center max-w-lg mt-2 lg:my-4 xl:my-4 mb-2">
+        Location Service
+      </div>
       <HostelCardSummary
         image={booking?.businessUser?.img?.imgUrl}
         name={booking?.businessUser?.businessData?.name}
@@ -172,7 +175,7 @@ function ServiceHistory() {
         go={false}
       />
       <hr className="w-full max-w-lg text-grey" />
-      <div className="mt-2 flex justify-start">
+      <div className="mt-2 flex justify-center max-w-lg">
         <p className="text-left font-semibold">
           {isWorker ? "My Client" : "My Profesional"}
         </p>
@@ -195,11 +198,12 @@ function ServiceHistory() {
           booking?.service?.name && !isWorker ? booking?.service?.name : ""
         }
       />
-      {booking?.status != "confirmed2" && (
-        <OutlinedChatButton text="Chat Now" onClick={() => goToChat()} />
-      )}
-      <hr className="w-full mt-4 max-w-lg  text-grey" />
-
+      <div className="flex flex-col items-center justify-center max-w-lg">
+        {booking?.status != "confirmed2" && (
+          <OutlinedChatButton text="Chat Now" onClick={() => goToChat()} />
+        )}
+        <hr className="w-full mt-4 max-w-lg  text-grey" />
+      </div>
       <div className="flex justify-between w-full max-w-lg pr-1 my-5">
         <div className="flex flex-row">
           <div className="flex justify-center items-center h-full">

@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useStore } from "@/store";
 import Image from "next/image";
 import { PinIcon, ClockIcon } from "@/constants/icons";
 import { WorldIcon } from "@/constants/icons";
@@ -15,6 +16,7 @@ function WorkerCardBooking({
   subService,
   status,
 }) {
+  const { isWorker } = useStore();
   const router = useRouter();
 
   const goToDetails = () => {
@@ -25,20 +27,24 @@ function WorkerCardBooking({
   function StatusChip({ status }) {
     let color;
     let textColor = "white"; // Define textColor here
-
+    let statusPortugues = status;
     switch (status) {
       case "requested":
         color = "grey";
+        statusPortugues = "Solicitado";
         break;
       case "completed":
         color = "green";
+        statusPortugues = "Completado";
         break;
       case "canceled":
         color = "#e77b7b";
+        statusPortugues = "Cancelado";
         break;
       case "confirmed":
         color = "#92ef72";
         textColor = "black";
+        statusPortugues = "Confirmado";
         break;
       default:
         color = "gray";
@@ -46,17 +52,17 @@ function WorkerCardBooking({
 
     const style = {
       display: "inline-block",
-      padding: "0.1rem 0.5rem",
+      padding: "0.3rem 0.8rem",
       position: "relative",
       transform: "translateY(-2px)",
       borderRadius: "9999px",
-      fontSize: "0.75rem",
-      fontWeight: "400",
+      fontSize: "0.85rem",
+      fontWeight: "550",
       color: textColor,
       backgroundColor: color,
     };
 
-    return <span style={style}>{status}</span>;
+    return <span style={style}>{isWorker ? statusPortugues : status}</span>;
   }
   function getDayOfWeek(date, location) {
     const language = !location ? "pt-br" : "en";

@@ -58,9 +58,9 @@ export default function WorkerBooking() {
       <ThreeSwitchButtons
         actualView={actualView}
         setActualView={setActualView}
-        titleOne="List"
-        titleTwo="Day"
-        titleThree="Month"
+        titleOne="Lista"
+        titleTwo="Dia"
+        titleThree="Mês"
       />
 
       {actualView === SECTION_ONE ? (

@@ -25,11 +25,11 @@ function ServiceHistory() {
       });
   };
   return (
-    <div className="flex flex-col py-20 md:py-28 px-5 md:pl-80">
+    <div className="flex flex-col py-16 md:py-28 px-5 md:pl-80">
       {bookings.filter((booking) => booking.status === "requested").length >
         0 && (
         <h1 className="text-xl text-center my-6 max-w-lg">
-          Requested services
+          Serviços solicitados
         </h1>
       )}
       {loading ? (
@@ -40,7 +40,7 @@ function ServiceHistory() {
             color="#00A0D5"
             ariaLabel="infinity-spin-loading"
           />
-          <p className="mt-2">Searching...</p>
+          <p className="mt-2">Pesquisando...</p>
         </div>
       ) : (
         <>
@@ -63,7 +63,7 @@ function ServiceHistory() {
           {bookings.filter((booking) => booking.status === "confirmed").length >
             0 && (
             <h1 className="text-xl text-center my-8 max-w-lg">
-              Incoming services
+              Próximos serviços
             </h1>
           )}
           {bookings
@@ -84,7 +84,9 @@ function ServiceHistory() {
 
           {bookings.filter((booking) => booking.status === "accepted").length >
             0 && (
-            <h1 className="text-xl text-center my-8 max-w-lg">Last services</h1>
+            <h1 className="text-xl text-center my-8 max-w-lg">
+              Últimos serviços
+            </h1>
           )}
           {bookings
             .filter((booking) => booking.status === "completed")

@@ -4,7 +4,7 @@ import DayButton from "@/components/utils/buttons/DayButton";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import { ReservationIcon } from "@/constants/icons";
 import { Rings } from "react-loader-spinner";
-
+import { useStore } from "@/store";
 function DaySection({
   weekDays,
   selectedDay,
@@ -13,6 +13,7 @@ function DaySection({
   loading,
 }) {
   const [bookings, setBookings] = useState(null);
+  const { isWorker, user } = useStore();
   useEffect(() => {
     const user = Cookies.get("auth.user_id");
     if (user) {
@@ -34,7 +35,9 @@ function DaySection({
         ))}
       </div>
 
-      <h1 className="text-center max-w-lg text-xl my-3">My next Commitments</h1>
+      <h1 className="text-center max-w-lg text-xl my-3">
+        {isWorker ? "Próximos compromissos" : "My next Commitments"}
+      </h1>
 
       <div className="flex flex-col">
         {!bookings ? (
@@ -63,7 +66,7 @@ function DaySection({
         ) : (
           <>
             <p className="text-center text-greyText max-w-lg my-10">
-              No bookings yet
+              {isWorker ? "Não há reservas ainda" : "No bookings yet"}
             </p>
             <div className="max-w-lg text-xl ml-2 my-3 flex justify-center">
               <ReservationIcon />

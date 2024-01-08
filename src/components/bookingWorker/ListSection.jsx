@@ -3,10 +3,11 @@ import dayjs from "dayjs";
 import BookingService from "@/services/BookingService";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import { Rings } from "react-loader-spinner";
+import { useStore } from "@/store";
 function ListSection() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { isWorker, user } = useStore();
   useEffect(() => {
     getBookings();
   }, []);
@@ -26,7 +27,9 @@ function ListSection() {
 
   return (
     <div className="mt-10">
-      <h1 className="text-center max-w-lg text-xl my-5">Today</h1>
+      <h1 className="text-center max-w-lg text-xl my-5">
+        {isWorker ? "Hoje" : "Today"}
+      </h1>
       <div className="flex flex-col">
         {loading ? (
           <div className="max-w-lg flex flex-col items-center justify-center">
@@ -63,10 +66,12 @@ function ListSection() {
               booking.date.stringData === dayjs().format("YYYY-MM-DD")
           ).length === 0 && (
             <p className="text-center text-greyText max-w-lg my-10">
-              No bookings for today
+              {isWorker ? "Não há reservas para hoje" : "No bookings for today"}
             </p>
           )}
-        <h1 className="text-center max-w-lg text-xl my-5">Next Days</h1>
+        <h1 className="text-center max-w-lg text-xl my-5">
+          {isWorker ? "Próximos dias" : "Next Days"}
+        </h1>
         {loading ? (
           <div className="max-w-lg flex flex-col items-center justify-center">
             <Rings

@@ -93,7 +93,7 @@ function CalendarBookingWorker() {
     }
   };
 
-  let footer = <p className="my-2">Please pick a day.</p>;
+  let footer = <p className="my-2">Por favor, escolha um dia.</p>;
   if (showBookings.length > 0) {
     footer = <div className="w-full "></div>;
   }
@@ -112,7 +112,7 @@ function CalendarBookingWorker() {
         onDayClick={handleDayClick}
         onMonthChange={setMonth}
       />
-      <div className="w-full  mt-14 px-1">
+      <div className="w-full  mt-4 px-1">
         {showBookings.map((booking) => (
           <WorkerCardBooking
             key={booking._id}
@@ -127,9 +127,9 @@ function CalendarBookingWorker() {
           />
         ))}
       </div>
-      <div className="w-full mt-14 px-5">
+      <div className="w-full mt-6 px-5">
         <Link href={`/worker/service-history`}>
-          <OutlinedButton text={"See all my records"} />
+          <OutlinedButton text={"Ver todos os meus registros"} />
         </Link>
       </div>
     </div>

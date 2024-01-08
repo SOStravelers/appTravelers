@@ -51,6 +51,9 @@ function DaySection({
             <WorkerCardBooking
               key={booking._id}
               booking={booking}
+              subService={booking.subservice.name}
+              status={booking.status}
+              service={booking.service.name}
               avatar={booking?.businessUser?.img?.imgUrl}
               date={booking.date.stringData}
               hour={booking.startTime.stringData}

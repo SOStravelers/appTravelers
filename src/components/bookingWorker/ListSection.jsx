@@ -47,6 +47,9 @@ function ListSection() {
               <WorkerCardBooking
                 key={booking._id}
                 booking={booking}
+                status={booking.status}
+                subService={booking.subservice.name}
+                service={booking.service.name}
                 avatar={booking.businessUser?.img?.imgUrl}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
@@ -84,6 +87,9 @@ function ListSection() {
               <WorkerCardBooking
                 key={booking._id}
                 booking={booking}
+                subService={booking.subservice.name}
+                status={booking.status}
+                service={booking.service.name}
                 avatar={booking.businessUser?.img?.imgUrl}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}

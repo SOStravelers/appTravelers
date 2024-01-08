@@ -117,7 +117,10 @@ function CalendarBookingWorker() {
           <WorkerCardBooking
             key={booking._id}
             booking={booking}
+            status={booking.status}
             avatar={booking.businessUser?.img?.imgUrl}
+            subService={booking.subservice.name}
+            service={booking.service.name}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
             name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}

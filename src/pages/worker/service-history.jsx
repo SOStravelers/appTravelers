@@ -31,6 +31,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
+            avatar={booking.businessUser?.img?.imgUrl}
             name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}
@@ -50,6 +51,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
+            avatar={booking.businessUser?.img?.imgUrl}
             name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}
@@ -69,6 +71,7 @@ function ServiceHistory() {
           <WorkerCardBooking
             key={booking._id}
             link={"/"}
+            avatar={booking.businessUser?.img?.imgUrl}
             name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
             location={booking.businessUser.businessData.name}
             date={booking.date.stringData}

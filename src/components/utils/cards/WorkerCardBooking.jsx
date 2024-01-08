@@ -3,6 +3,7 @@ import Image from "next/image";
 import { PinIcon, ClockIcon } from "@/constants/icons";
 
 function WorkerCardBooking({ booking, name, location, avatar, date, hour }) {
+  console.log("el avatar", avatar);
   const router = useRouter();
 
   const goToDetails = () => {
@@ -39,16 +40,23 @@ function WorkerCardBooking({ booking, name, location, avatar, date, hour }) {
           />
         </div>
         <div className="flex flex-col">
-          <h1 className="font-semibold">{name}</h1>
-          <div className="flex items-center mb-1">
-            <PinIcon color={"#00A0D5"} className="mr-1" />
-            <p className="text-blackText text-sm">{location}</p>
-          </div>
+          <h1 className="font-semibold ml-1">{location}</h1>
+
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {date} | {hour}
+              {hour} |{" "}
+              {new Date(date).toLocaleDateString("pt-BR", { weekday: "long" })}
             </p>
+          </div>
+          <div className="flex items-center">
+            <Image
+              src={"/assets/user.png"}
+              width={25}
+              height={25}
+              alt="profileImg"
+            />
+            <p className="text-blackText text-sm">{name}</p>
           </div>
         </div>
       </div>

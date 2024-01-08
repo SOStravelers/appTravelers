@@ -35,7 +35,7 @@ function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
             <WorkerCardBooking
               key={booking._id}
               booking={booking}
-              avatar={booking.avatar}
+              avatar={booking?.businessUser?.img?.imgUrl}
               date={booking.date.stringData}
               hour={booking.startTime.stringData}
               name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}

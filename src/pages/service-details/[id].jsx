@@ -137,16 +137,26 @@ function ServiceHistory() {
       />
       <hr className="w-full max-w-lg text-grey" />
       <div className="mt-2 flex justify-start">
-        <p className="text-left font-semibold">My Profesional</p>
+        <p className="text-left font-semibold">
+          {isWorker ? "My Client" : "My Profesional"}
+        </p>
       </div>
       <WorkerCardSumary
-        name={fullName(booking?.workerUser?.personalData?.name)}
+        name={
+          !isWorker
+            ? fullName(booking?.workerUser?.personalData?.name)
+            : fullName(booking?.clientUser?.personalData?.name)
+        }
         score={5}
         link={`/worker/${booking?.workerUser?._id}`}
-        img={booking?.workerUser?.img?.imgUrl || "/assets/user.png"}
+        img={
+          !isWorker
+            ? booking?.workerUser?.img?.imgUrl || "/assets/user.png"
+            : booking?.clientUser?.img?.imgUrl || "/assets/user.png"
+        }
         showEdit={false}
         service={
-          booking?.service?.name ? booking?.service?.name : "No services"
+          booking?.service?.name && !isWorker ? booking?.service?.name : ""
         }
       />
       <OutlinedChatButton text="Chat Now" onClick={() => goToChat()} />

@@ -1,7 +1,7 @@
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import Link from "next/link";
 import SolidButton from "@/components/utils/buttons/SolidButton";
-import { LockIcon } from "@/constants/icons";
+import { LockIcon, MailIcon } from "@/constants/icons";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import UserService from "@/services/UserService";
 import Cookies from "js-cookie";
@@ -108,7 +108,7 @@ function ChangeEmailForm({ setEmail, setValidatingMail }) {
                   <OutlinedInput
                     placeholder="New email"
                     value={value}
-                    icon={LockIcon}
+                    icon={MailIcon}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="email"
@@ -141,7 +141,7 @@ function ChangeEmailForm({ setEmail, setValidatingMail }) {
                   <OutlinedInput
                     placeholder="Confirm new email"
                     value={value}
-                    icon={LockIcon}
+                    icon={MailIcon}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="email"

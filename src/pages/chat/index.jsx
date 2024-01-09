@@ -99,7 +99,12 @@ export default function Chat() {
                 : chat.worker.img.imgUrl
             }
             lastMesssage={chat?.lastMessage?.body?.message?.text}
-            showArrow={!chat?.lastMessage?.read}
+            showArrow={
+              chat?.lastMessage?.read === false &&
+              chat?.lastMessage?.body?.sender !== user
+                ? true
+                : false
+            }
             onClick={() => handleGoToChat(chat)}
           />
         ))

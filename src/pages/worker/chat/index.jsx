@@ -55,7 +55,13 @@ export default function Chat() {
     }
   };
 
-  const handleGoToChat = (chat) => {
+  const handleGoToChat = async (chat) => {
+    const body = {
+      markAsRead: true,
+      chatRoom: chat.id,
+    };
+    const response = await ChatService.markAsRead(body);
+    if (response) console.log(response);
     router.push({
       pathname: `/worker/chat/${chat._id}`,
       query: {

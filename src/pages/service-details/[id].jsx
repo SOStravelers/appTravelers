@@ -30,7 +30,6 @@ function ServiceHistory() {
     document.title = "Service Details | SOS Travelers";
     getBooking();
   }, []);
-
   const changeformat = async (booking) => {
     if (user?._id === booking?.workerUser._id && isWorker) {
       console.log("worker");
@@ -45,7 +44,6 @@ function ServiceHistory() {
       router.push("/");
     }
   };
-
   const getBooking = async () => {
     try {
       const id = router.query.id;
@@ -99,11 +97,8 @@ function ServiceHistory() {
     try {
       let response = null;
       console.log("erna", dataModal.state);
-      if (dataModal.state == "confirmed") {
-        response = await BookingService.confirmBookingWorker(booking._id);
-      }
       if (dataModal.state == "completed") {
-        response = await BookingService.completeBookingWorker(booking._id);
+        response = await BookingService.completeBookingUser(booking._id);
       }
       if (dataModal.state == "canceled") {
         response = await BookingService.cancelBookingUser(booking._id);
@@ -133,9 +128,18 @@ function ServiceHistory() {
   const cancelUserModal = async () => {
     setOpenUserModal(false);
   };
-
   const dialogUser = (state) => {
-    if (state == "canceled" && booking?.status == "requested") {
+    if (state == "completed" && booking?.status == "confirmed") {
+      setDataModal({
+        title: "Complete service",
+        text: [
+          "If the service was performed successfully, confirm by pressing accept. the worker will be notified",
+        ],
+        buttonText: "Accept",
+        state: "completed",
+      });
+      setOpenUserModal(true);
+    } else if (state == "canceled" && booking?.status == "requested") {
       setDataModal({
         title: "Cancel booking",
         text: [
@@ -181,7 +185,6 @@ function ServiceHistory() {
       setOpenUserModal(true);
     }
   };
-
   const dialogWorker = (state) => {
     console.log("activando dialogo");
     if (state == "confirmed") {
@@ -218,7 +221,6 @@ function ServiceHistory() {
       setOpenWorkerModal(true);
     }
   };
-
   const goToChat = () => {
     ChatService.createChatRoom({
       booking: booking?._id,
@@ -363,7 +365,6 @@ function ServiceHistory() {
 
     return <span style={style}>{isWorker ? statusPortugues : status}</span>;
   }
-
   return (
     //p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80 md:items-startx
     <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
@@ -525,6 +526,12 @@ function ServiceHistory() {
             <OutlinedButton
               onClick={() => dialogWorker("completed")}
               text={"Terminar o trabalho"}
+            />
+          )}
+          {typeUser != "worker" && booking?.status === "confirmed" && (
+            <OutlinedButton
+              onClick={() => dialogUser("completed")}
+              text={"Completed Service"}
             />
           )}
           {(typeUser === "worker" || typeUser === "client") &&

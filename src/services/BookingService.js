@@ -93,8 +93,36 @@ export default class BookingService {
     });
   }
   static async getBookingById(id) {
+    console.log("el get");
     return axios.get(`${this.baseUrl}/byId/${id}`, {
       headers: this.getHeaders(),
     });
+  }
+  static async confirmBookingWorker(id) {
+    return axios.put(
+      `${this.baseUrl}/confirmWorker/${id}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+  static async completeBookingWorker(id) {
+    return axios.put(
+      `${this.baseUrl}/completeWorker/${id}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+  static async cancelBookingWorker(id) {
+    return axios.put(
+      `${this.baseUrl}/cancelWorker/${id}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 }

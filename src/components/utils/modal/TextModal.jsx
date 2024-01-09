@@ -5,7 +5,9 @@ import React, { useState, useEffect } from "react";
 function TextModal({
   title,
   text,
+  textCancel = "Cancel",
   buttonText,
+  colorAceptButton = "blueBorder",
   open,
   setOpen,
   onAccept,
@@ -68,10 +70,19 @@ function TextModal({
               </div>
               <div className="flex flex-col justify-center items-center">
                 {onAccept && (
-                  <SolidButton text={buttonText} onClick={handleAccept} />
+                  <SolidButton
+                    py={2}
+                    color={colorAceptButton}
+                    text={buttonText}
+                    onClick={handleAccept}
+                  />
                 )}
                 {onCancel && (
-                  <OutlinedButton text="Cancel" onClick={() => onCancel()} />
+                  <OutlinedButton
+                    py={1}
+                    text={textCancel}
+                    onClick={() => onCancel()}
+                  />
                 )}
               </div>
             </div>

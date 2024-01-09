@@ -98,7 +98,8 @@ export default function Chat() {
                 ? "/assets/proovedor.png"
                 : chat.worker.img.imgUrl
             }
-            score={chat.worker.rating}
+            lastMesssage={chat?.lastMessage?.body?.message?.text}
+            showArrow={!chat?.lastMessage?.read}
             onClick={() => handleGoToChat(chat)}
           />
         ))

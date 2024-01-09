@@ -32,7 +32,7 @@ const ChatWorker = ({ socket, initialMessages }) => {
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
-  }, []);
+  }, [socket.current]);
 
   useEffect(() => {
     if (arrivalMessage) {

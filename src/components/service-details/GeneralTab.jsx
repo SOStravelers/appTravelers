@@ -15,7 +15,7 @@ import { Rings } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import { data } from "autoprefixer";
 
-function ServiceHistory() {
+function GeneralTab() {
   const router = useRouter();
   const { isWorker, user } = useStore();
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
@@ -442,4 +442,4 @@ function ServiceHistory() {
   );
 }
 
-export default ServiceHistory;
+export default GeneralTab;

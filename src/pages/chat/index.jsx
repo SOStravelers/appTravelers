@@ -55,8 +55,8 @@ export default function Chat() {
       }
       console.log(unformattedChats);
       setChats(unformattedChats);
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const handleGoToChat = async (chat) => {

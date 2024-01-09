@@ -23,16 +23,20 @@ const ChatWorker = ({ socket, initialMessages }) => {
   }, [initialMessages]);
 
   useEffect(() => {
-    if (socket?.current) {
+    console.log("socket.current", socket.current);
+
+    if (socket.current) {
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
-        setArrivalMessage({ fromSelf: false, message: data.msg });
+        console.log(data);
+        setArrivalMessage({ fromSelf: false, message: data });
       });
     }
-  }, [socket]);
+  }, []);
 
   useEffect(() => {
     if (arrivalMessage) {
+      console.log(arrivalMessage);
       setMessages((prev) => [...prev, arrivalMessage]);
     }
   }, [arrivalMessage]);
@@ -42,11 +46,12 @@ const ChatWorker = ({ socket, initialMessages }) => {
   };
 
   const handleSendClick = () => {
+    console.log("enviando", inputValue);
     if (inputValue.trim() !== "") {
       socket.current.emit("send-msg", {
         from: idWorker,
         to: idClient,
-        inputValue,
+        msg: inputValue,
       });
       ChatService.createMessage({
         from: idWorker,
@@ -66,7 +71,7 @@ const ChatWorker = ({ socket, initialMessages }) => {
     socket.current.emit("send-msg", {
       from: idWorker,
       to: idClient,
-      msg,
+      msg: msg,
     });
     ChatService.createMessage({
       from: idWorker,

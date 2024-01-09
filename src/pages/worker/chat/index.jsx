@@ -38,22 +38,36 @@ export default function Chat() {
   const getChatRooms = async () => {
     const response = await ChatService.getChatRooms();
     if (response) {
-      console.log(response.data.docs);
+      const unformattedChats = response.data.docs;
+      if (unformattedChats?.length > 0) {
+        unformattedChats.map((chat) => {
+          if (chat.receptor === user) {
+            chat.worker = chat.receptor;
+            chat.client = chat.creator;
+          } else {
+            chat.worker = chat.creator;
+            chat.client = chat.receptor;
+          }
+        });
+      }
+      console.log(unformattedChats);
+      setChats(unformattedChats);
     }
-    setChats(response.data.docs);
   };
 
   const handleGoToChat = (chat) => {
     router.push({
       pathname: `/worker/chat/${chat._id}`,
       query: {
-        name: `${chat?.receptor?.personalData?.name?.first} ${
-          chat?.receptor?.personalData?.name?.last ?? ""
+        name: `${chat?.client?.personalData?.name?.first} ${
+          chat?.client?.personalData?.name?.last ?? ""
         }`,
         avatar:
-          chat.receptor?.img.imgUrl === ""
+          chat.client?.img?.imgUrl === ""
             ? "/assets/proovedor.png"
-            : chat.receptor?.img.imgUrl,
+            : chat.client?.img.imgUrl,
+        idClient: chat.client._id,
+        idWorker: chat.worker._id,
       },
     });
   };
@@ -63,16 +77,16 @@ export default function Chat() {
         chats.map((chat, index) => (
           <WorkerCardChat
             key={index}
-            name={`${chat?.receptor?.personalData?.name?.first} ${
-              chat?.receptor?.personalData?.name?.last ?? ""
+            name={`${chat?.client?.personalData?.name?.first} ${
+              chat?.client?.personalData?.name?.last ?? ""
             }`}
             service={""}
             img={
-              chat.receptor?.img.imgUrl === ""
+              chat.client?.img.imgUrl === ""
                 ? "/assets/proovedor.png"
-                : chat.receptor?.img.imgUrl
+                : chat.client?.img.imgUrl
             }
-            score={chat.receptor?.rating}
+            score={chat.client?.rating}
             onClick={() => handleGoToChat(chat)}
           />
         ))

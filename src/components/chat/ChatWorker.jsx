@@ -29,7 +29,7 @@ const ChatWorker = ({ socket, initialMessages }) => {
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
         console.log(data);
-        setArrivalMessage({ fromSelf: false, message: data });
+        setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
   }, []);

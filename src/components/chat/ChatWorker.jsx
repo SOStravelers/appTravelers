@@ -5,7 +5,7 @@ import ChatService from "@/services/ChatService";
 
 const ChatWorker = ({ socket, initialMessages }) => {
   const router = useRouter();
-  const { idWorker, idClient } = router.query;
+  const { idWorker, idClient, chatId } = router.query;
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -56,6 +56,7 @@ const ChatWorker = ({ socket, initialMessages }) => {
       ChatService.createMessage({
         from: idWorker,
         to: idClient,
+        roomChat: chatId,
         message: inputValue,
       }).then((res) => {
         console.log(res.data);
@@ -76,6 +77,7 @@ const ChatWorker = ({ socket, initialMessages }) => {
     ChatService.createMessage({
       from: idWorker,
       to: idClient,
+      roomChat: chatId,
       message: event.target.innerHTML,
     }).then((res) => {
       console.log(res.data);

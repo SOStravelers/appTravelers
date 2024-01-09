@@ -74,6 +74,7 @@ export default function Chat() {
             : chat.client?.img.imgUrl,
         idClient: chat.client._id,
         idWorker: chat.worker._id,
+        chatId: chat._id,
       },
     });
   };

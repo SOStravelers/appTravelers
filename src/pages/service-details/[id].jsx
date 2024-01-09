@@ -25,6 +25,9 @@ function ServiceHistory() {
   const [booking, setBooking] = useState(null);
   const [typeUser, setTypeUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [inTimeWorker, setInTimeWorker] = useState(true);
+  const [inTimeUser, setInTimeUser] = useState(true);
+  const [startTimeBooking, setStartTimeBooking] = useState(true);
 
   useEffect(() => {
     document.title = "Service Details | SOS Travelers";
@@ -52,6 +55,22 @@ function ServiceHistory() {
       setBooking(booking);
       changeformat(booking);
       setLoading(false);
+      const brazilTime = moment().tz("America/Sao_Paulo");
+      var bookingLastTimeWorker = moment(booking.startTime.isoTime).subtract(
+        2,
+        "hours"
+      );
+      var bookingLastTimeUser = moment(booking.startTime.isoTime).subtract(
+        0,
+        "hours"
+      );
+      var bookingStartTimeBooking = moment(booking.startTime.isoTime).add(
+        10,
+        "minutes"
+      );
+      setInTimeWorker(brazilTime._d < bookingLastTimeWorker._d);
+      setInTimeUser(brazilTime._d < bookingLastTimeUser._d);
+      setStartTimeBooking(brazilTime._d > bookingStartTimeBooking._d);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -129,6 +148,11 @@ function ServiceHistory() {
     setOpenUserModal(false);
   };
   const dialogUser = (state) => {
+    const brazilTime = moment().tz("America/Sao_Paulo");
+    var bookingLastTimeUser = moment(booking.startTime.isoTime).subtract(
+      4,
+      "hours"
+    );
     if (state == "completed" && booking?.status == "confirmed") {
       setDataModal({
         title: "Complete service",
@@ -152,15 +176,7 @@ function ServiceHistory() {
 
       setOpenUserModal(true);
     } else if (state == "canceled" && booking?.status == "confirmed") {
-      const brazilTime = moment().tz("America/Sao_Paulo");
-      var bookingStartTime = moment(booking.startTime.isoTime).subtract(
-        4,
-        "hours"
-      );
-      console.log(brazilTime);
-      console.log(bookingStartTime);
-      console.log(brazilTime.isSameOrAfter(bookingStartTime));
-      if (!brazilTime.isSameOrAfter(bookingStartTime)) {
+      if (brazilTime._d < bookingLastTimeUser._d) {
         setDataModal({
           title: "Cancel booking",
           text: [
@@ -186,7 +202,11 @@ function ServiceHistory() {
     }
   };
   const dialogWorker = (state) => {
-    console.log("activando dialogo");
+    const brazilTime = moment().tz("America/Sao_Paulo");
+    var bookingLastTimeWorker = moment(booking.startTime.isoTime).subtract(
+      2,
+      "hours"
+    );
     if (state == "confirmed") {
       setDataModal({
         title: "Aceitar solicitação e confirmar reserva",
@@ -208,17 +228,25 @@ function ServiceHistory() {
       });
 
       setOpenWorkerModal(true);
-    } else {
-      setDataModal({
-        title: "Cancelar reserva",
-        text: [
-          "Ao cancelar a reserva, o cliente será notificado da cancelamento do serviço",
-        ],
-        buttonText: "Cancelar Reserva",
-        colorAceptButton: "rojo",
-        state: "canceled",
-      });
-      setOpenWorkerModal(true);
+    } else if (state == "canceled") {
+      if (brazilTime._d < bookingLastTimeWorker._d) {
+        setDataModal({
+          title: "Cancelar reserva",
+          text: [
+            "Ao cancelar a reserva, o cliente será notificado da cancelamento do serviço",
+          ],
+          buttonText: "Cancelar Reserva",
+          colorAceptButton: "rojo",
+          state: "canceled",
+        });
+        setOpenWorkerModal(true);
+      } else {
+        toast.error("Não é possível cancelar antes de 2 horas ou menos", {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1500,
+          s,
+        });
+      }
     }
   };
   const goToChat = () => {
@@ -512,36 +540,46 @@ function ServiceHistory() {
                 text={isWorker ? "Aceito o trabalho" : "Confirm Booking"}
               />
             )}
-          {typeUser === "worker" &&
-            booking?.status != "canceled" &&
-            booking?.status != "confirmed" &&
-            booking?.status != "completed" && (
-              <OutlinedButton
-                onClick={() => dialogWorker("confirmed")}
-                text={isWorker ? "Confirmar reserva" : "Confirm Booking"}
-              />
-            )}
-
-          {typeUser === "worker" && booking?.status === "confirmed" && (
+          {typeUser === "worker" && booking?.status == "requested" && (
             <OutlinedButton
-              onClick={() => dialogWorker("completed")}
-              text={"Terminar o trabalho"}
+              onClick={() => dialogWorker("confirmed")}
+              text={isWorker ? "Confirmar reserva" : "Confirm Booking"}
             />
           )}
-          {typeUser != "worker" && booking?.status === "confirmed" && (
+
+          {typeUser === "worker" &&
+            booking?.status === "confirmed" &&
+            startTimeBooking && (
+              <OutlinedButton
+                onClick={() => dialogWorker("completed")}
+                text={"Terminar o trabalho"}
+              />
+            )}
+          {/* {typeUser != "worker" && booking?.status === "confirmed" (
             <OutlinedButton
               onClick={() => dialogUser("completed")}
               text={"Completed Service"}
             />
-          )}
-          {(typeUser === "worker" || typeUser === "client") &&
-            booking?.status != "canceled" &&
-            booking?.status != "completed" && (
+          )} */}
+
+          {typeUser === "worker" &&
+            inTimeWorker &&
+            (booking?.status === "confirmed" ||
+              booking?.status === "requested") && (
               <OutlinedButton
-                onClick={() =>
-                  isWorker ? dialogWorker("canceled") : dialogUser("canceled")
-                }
-                text={isWorker ? "Cancelar reserva" : "Cancel Booking"}
+                onClick={() => dialogWorker("canceled")}
+                text={"Cancelar reserva"}
+                secondary={true}
+              />
+            )}
+
+          {typeUser === "client" &&
+            inTimeUser &&
+            (booking?.status == "requested" ||
+              booking?.status == "confirmed") && (
+              <OutlinedButton
+                onClick={() => dialogUser("canceled")}
+                text={"Cancel Booking"}
                 secondary={true}
               />
             )}

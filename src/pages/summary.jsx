@@ -76,12 +76,14 @@ export default function Summary() {
     if (localStorage.getItem("fromFavorite")) return false;
   };
 
-  function formatearFecha(fechaStr) {
-    // Fecha proporcionada en formato YYYY-MM-DD
-    var fechaObj = new Date(fechaStr);
+  function formatearFecha(fechaStr, isWorker) {
+    var [año, mes, dia] = fechaStr.split("-").map(Number);
+
+    // Crear un nuevo objeto Date en el huso horario local
+    var fechaObj = new Date(año, mes - 1, dia);
 
     // Meses y días de la semana en inglés
-    var meses = [
+    var mesesIngles = [
       "January",
       "February",
       "March",
@@ -95,7 +97,7 @@ export default function Summary() {
       "November",
       "December",
     ];
-    var diasSemana = [
+    var diasSemanaIngles = [
       "Sunday",
       "Monday",
       "Tuesday",
@@ -105,13 +107,42 @@ export default function Summary() {
       "Saturday",
     ];
 
+    // Meses y días de la semana en portugués
+    var mesesPortugues = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+    var diasSemanaPortugues = [
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
+    ];
+
+    // Seleccionar los meses y días de la semana correctos
+    var meses = isWorker ? mesesPortugues : mesesIngles;
+    var diasSemana = isWorker ? diasSemanaPortugues : diasSemanaIngles;
+
     // Obtener el mes, día y año
     var mes = meses[fechaObj.getMonth()];
     var dia = fechaObj.getDate();
     var año = fechaObj.getFullYear();
     var diaSemana = diasSemana[fechaObj.getUTCDay()];
 
-    // Formatear la fecha como "Wednesday, December 20, 2023"
+    // Formatear la fecha como "Wednesday, December 20, 2023" o "Quarta-feira, Dezembro 20, 2023"
     var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
 
     return fechaFormateada;
@@ -156,9 +187,9 @@ export default function Summary() {
         <div className="flex justify-between w-full max-w-lg pr-1 my-5">
           <div className="flex  ">
             <ClockIcon />
-            <p className="ml-2">{`${formatearFecha(service?.date) || ""} | ${
-              service?.startTime?.stringData + " hrs" || ""
-            }`}</p>
+            <p className="ml-2">{`${
+              formatearFecha(service?.date, false) || ""
+            } | ${service?.startTime?.stringData + " hrs" || ""}`}</p>
           </div>
           <Link className="flex " href={`/reservation/${IdHostel}`}>
             <ChangeIcon />

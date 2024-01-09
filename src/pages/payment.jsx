@@ -60,7 +60,8 @@ export default function Payment() {
   return (
     <div className="flex flex-col items-center md:items-start  py-20 lg:py-24 xl:py-24 px-8 md:pl-80 min-h-[70vh]">
       <div className="flex flex-col w-full max-w-lg pb-10">
-        <div className="mb-3">
+        {/* CHANGE CURRENCY */}
+        {/* <div className="mb-3">
           <p>Change Currency</p>
           <Select
             options={priceOptions}
@@ -90,7 +91,7 @@ export default function Payment() {
               }),
             }}
           />
-        </div>
+        </div> */}
         <div>
           <p className="text-blackBlue font-semibold text-xl">
             Total service:

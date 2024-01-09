@@ -54,7 +54,7 @@ function WorkerCardFavorite({
             {image && (
               <Image
                 src={image}
-                alt="gato"
+                alt="image"
                 fill
                 className="object-cover rounded-xl"
               />

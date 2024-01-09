@@ -41,23 +41,44 @@ export default function Chat() {
     setLoading(true);
     const response = await ChatService.getChatRooms();
     if (response) {
-      console.log(response.data.docs);
-      setChats(response.data.docs);
+      const unformattedChats = response.data.docs;
+      if (unformattedChats?.length > 0) {
+        unformattedChats.map((chat) => {
+          if (chat.receptor === user) {
+            chat.worker = chat.receptor;
+            chat.client = chat.creator;
+          } else {
+            chat.worker = chat.creator;
+            chat.client = chat.receptor;
+          }
+        });
+      }
+      console.log(unformattedChats);
+      setChats(unformattedChats);
     }
     setLoading(false);
   };
 
-  const handleGoToChat = (chat) => {
+  const handleGoToChat = async (chat) => {
+    const body = {
+      markAsRead: true,
+      chatRoom: chat.id,
+    };
+    const response = await ChatService.markAsRead(body);
+    if (response) console.log(response);
     router.push({
       pathname: `/chat/${chat._id}`,
       query: {
-        name: `${chat?.receptor.personalData?.name?.first} ${
-          chat?.receptor.personalData?.name?.last ?? ""
+        name: `${chat?.worker.personalData?.name?.first} ${
+          chat?.worker.personalData?.name?.last ?? ""
         }`,
         avatar:
-          chat.receptor.img.imgUrl === ""
+          chat.worker.img.imgUrl === ""
             ? "/assets/proovedor.png"
-            : chat.receptor.img.imgUrl,
+            : chat.worker.img.imgUrl,
+        idClient: chat.client._id,
+        idWorker: chat.worker._id,
+        chatId: chat._id,
       },
     });
   };
@@ -75,16 +96,22 @@ export default function Chat() {
         chats.map((chat, index) => (
           <WorkerCardChat
             key={index}
-            name={`${chat?.receptor.personalData?.name?.first} ${
-              chat?.receptor.personalData?.name?.last ?? ""
+            name={`${chat?.worker.personalData?.name?.first} ${
+              chat?.worker.personalData?.name?.last ?? ""
             }`}
             service={""}
             img={
-              chat.receptor.img.imgUrl === ""
+              chat.worker.img.imgUrl === ""
                 ? "/assets/proovedor.png"
-                : chat.receptor.img.imgUrl
+                : chat.worker.img.imgUrl
             }
-            score={chat.receptor.rating}
+            lastMesssage={chat?.lastMessage?.body?.message?.text}
+            showArrow={
+              chat?.lastMessage?.read === false &&
+              chat?.lastMessage?.body?.sender !== user
+                ? true
+                : false
+            }
             onClick={() => handleGoToChat(chat)}
           />
         ))

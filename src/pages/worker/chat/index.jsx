@@ -4,6 +4,7 @@ import WorkerCardChat from "@/components/utils/cards/WorkerCardChat";
 import ChatService from "@/services/ChatService";
 import { useStore } from "@/store";
 import Cookies from "js-cookie";
+import { Rings } from "react-loader-spinner";
 import { useRouter } from "next/router";
 import { ChatPicture } from "@/constants/icons";
 
@@ -13,6 +14,7 @@ export default function Chat() {
   const { loginModal, setLoginModal } = store;
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(false);
   var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
@@ -36,43 +38,80 @@ export default function Chat() {
   }, [loginModal]);
 
   const getChatRooms = async () => {
+    setLoading(true);
     const response = await ChatService.getChatRooms();
     if (response) {
-      console.log(response.data.docs);
+      const unformattedChats = response.data.docs;
+      if (unformattedChats?.length > 0) {
+        unformattedChats.map((chat) => {
+          if (chat.receptor === user) {
+            chat.worker = chat.receptor;
+            chat.client = chat.creator;
+          } else {
+            chat.worker = chat.creator;
+            chat.client = chat.receptor;
+          }
+        });
+      }
+      console.log(unformattedChats);
+      setChats(unformattedChats);
     }
-    setChats(response.data.docs);
+    setLoading(false);
   };
 
-  const handleGoToChat = (chat) => {
+  const handleGoToChat = async (chat) => {
+    const body = {
+      markAsRead: true,
+      chatRoom: chat.id,
+    };
+    const response = await ChatService.markAsRead(body);
+    if (response) console.log(response);
     router.push({
       pathname: `/worker/chat/${chat._id}`,
       query: {
-        name: `${chat?.receptor?.personalData?.name?.first} ${
-          chat?.receptor?.personalData?.name?.last ?? ""
+        name: `${chat?.client?.personalData?.name?.first} ${
+          chat?.client?.personalData?.name?.last ?? ""
         }`,
         avatar:
-          chat.receptor?.img.imgUrl === ""
+          chat.client?.img?.imgUrl === ""
             ? "/assets/proovedor.png"
-            : chat.receptor?.img.imgUrl,
+            : chat.client?.img.imgUrl,
+        idClient: chat.client._id,
+        idWorker: chat.worker._id,
+        chatId: chat._id,
       },
     });
   };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
+      {loading && (
+        <Rings
+          width={100}
+          height={100}
+          color="#00A0D5"
+          ariaLabel="infinity-spin-loading"
+        />
+      )}
       {chats?.length > 0 ? (
         chats.map((chat, index) => (
           <WorkerCardChat
             key={index}
-            name={`${chat?.receptor?.personalData?.name?.first} ${
-              chat?.receptor?.personalData?.name?.last ?? ""
+            name={`${chat?.client?.personalData?.name?.first} ${
+              chat?.client?.personalData?.name?.last ?? ""
             }`}
             service={""}
             img={
-              chat.receptor?.img.imgUrl === ""
+              chat.client?.img.imgUrl === ""
                 ? "/assets/proovedor.png"
-                : chat.receptor?.img.imgUrl
+                : chat.client?.img.imgUrl
             }
-            score={chat.receptor?.rating}
+            lastMesssage={chat?.lastMessage?.body?.message?.text}
+            showArrow={
+              chat?.lastMessage?.read === false &&
+              chat?.lastMessage?.body?.sender !== user
+                ? true
+                : false
+            }
             onClick={() => handleGoToChat(chat)}
           />
         ))

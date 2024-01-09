@@ -35,7 +35,7 @@ export default class ChatService {
   }
 
   static async markAsRead(body) {
-    return axios.post(`${this.baseChatUrl}/markAsRead`, body, {
+    return axios.put(`${this.baseChatUrl}/markAsRead`, body, {
       headers: this.getHeaders(),
     });
   }

@@ -31,7 +31,7 @@ export default function PersonalChat() {
         setInitialMessages(response.data);
       });
     }
-  }, [user]);
+  }, []);
 
   return (
     <div className="bg-white w-screen py-28 px-5 md:pl-80 max-h-screen">

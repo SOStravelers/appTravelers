@@ -5,7 +5,7 @@ import ChatService from "@/services/ChatService";
 
 const ChatClient = ({ socket, initialMessages }) => {
   const router = useRouter();
-  const { idWorker, idClient } = router.query;
+  const { idWorker, idClient, chatId } = router.query;
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -23,16 +23,20 @@ const ChatClient = ({ socket, initialMessages }) => {
   }, [initialMessages]);
 
   useEffect(() => {
-    if (socket?.current) {
+    console.log("socket.current", socket.current);
+
+    if (socket.current) {
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
+        console.log(data);
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
-  }, [socket]);
+  }, [socket.current]);
 
   useEffect(() => {
     if (arrivalMessage) {
+      console.log(arrivalMessage);
       setMessages((prev) => [...prev, arrivalMessage]);
     }
   }, [arrivalMessage]);
@@ -42,22 +46,24 @@ const ChatClient = ({ socket, initialMessages }) => {
   };
 
   const handleSendClick = () => {
+    console.log("enviando", inputValue);
     if (inputValue.trim() !== "") {
       socket.current.emit("send-msg", {
         from: idClient,
         to: idWorker,
-        inputValue,
+        msg: inputValue,
       });
       ChatService.createMessage({
         from: idClient,
         to: idWorker,
+        roomChat: chatId,
         message: inputValue,
       }).then((res) => {
         console.log(res.data);
         const newMessage = { fromSelf: true, message: inputValue };
         setMessages([...messages, newMessage]);
+        setInputValue("");
       });
-      setInputValue("");
     }
   };
 
@@ -66,11 +72,12 @@ const ChatClient = ({ socket, initialMessages }) => {
     socket.current.emit("send-msg", {
       from: idClient,
       to: idWorker,
-      msg,
+      msg: msg,
     });
     ChatService.createMessage({
       from: idClient,
       to: idWorker,
+      roomChat: chatId,
       message: event.target.innerHTML,
     }).then((res) => {
       console.log(res.data);

@@ -125,4 +125,13 @@ export default class BookingService {
       }
     );
   }
+  static async cancelBookingUser(id) {
+    return axios.put(
+      `${this.baseUrl}/cancelUser/${id}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
 }

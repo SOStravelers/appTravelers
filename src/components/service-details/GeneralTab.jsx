@@ -15,7 +15,7 @@ import { Rings } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import { data } from "autoprefixer";
 
-function GeneralTab() {
+function ServiceHistory() {
   const router = useRouter();
   const { isWorker, user } = useStore();
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
@@ -277,9 +277,9 @@ function GeneralTab() {
   }
 
   return (
-    <div>
+    <div className="p-10 pb-20 flex flex-col px-8 py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
       {loading ? (
-        <div className="max-w-lg flex flex-col items-center justify-center">
+        <div>
           <Rings
             width={100}
             height={100}
@@ -301,7 +301,7 @@ function GeneralTab() {
             onAccept={stateBookingWorker}
             onCancel={cancelWorkerModal}
           />
-          <div className="font-semibold text-center max-w-lg lg:my-4 xl:my-4 mb-2">
+          <div className="font-semibold text-center max-w-lg mt-2 lg:my-4 xl:my-4 mb-2">
             {isWorker ? "Local de serviço" : "Location Service"}
           </div>
           <HostelCardSummary
@@ -442,4 +442,4 @@ function GeneralTab() {
   );
 }
 
-export default GeneralTab;
+export default ServiceHistory;

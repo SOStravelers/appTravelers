@@ -80,7 +80,13 @@ export default function PersonalChat() {
             date={booking?.date?.stringData}
             time={booking?.startTime?.stringData}
           />
-          <ChatClient socket={socket} initialMessages={initialMessages} />
+          <ChatClient
+            chatId={booking?._id}
+            idWorker={worker?._id}
+            idClient={booking?.clientUser?._id}
+            socket={socket}
+            initialMessages={initialMessages}
+          />
         </>
       )}
     </div>

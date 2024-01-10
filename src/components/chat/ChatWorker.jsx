@@ -3,9 +3,14 @@ import { useRouter } from "next/router";
 import { SendIcon } from "@/constants/icons";
 import ChatService from "@/services/ChatService";
 
-const ChatWorker = ({ socket, initialMessages }) => {
+const ChatWorker = ({
+  socket,
+  initialMessages,
+  idClient,
+  idWorker,
+  chatId,
+}) => {
   const router = useRouter();
-  const { idWorker, idClient, chatId } = router.query;
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [inputValue, setInputValue] = useState("");

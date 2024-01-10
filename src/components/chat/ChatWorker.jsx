@@ -123,7 +123,7 @@ const ChatWorker = ({ socket, initialMessages }) => {
             className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            I´m in the reception
+            I&apos;m in the reception
           </div>
           <div
             className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"

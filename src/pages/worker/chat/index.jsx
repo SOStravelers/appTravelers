@@ -14,7 +14,7 @@ export default function Chat() {
   const { loginModal, setLoginModal } = store;
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   var userId = Cookies.get("auth.user_id");
 
   useEffect(() => {

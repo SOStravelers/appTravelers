@@ -13,7 +13,7 @@ export default function Chat() {
   const router = useRouter();
   const { loginModal, setLoginModal } = store;
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [chats, setChats] = useState([]);
   var user = Cookies.get("auth.user_id");
 

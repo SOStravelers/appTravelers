@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import WorkerProfileCardChat from "@/components/utils/cards/WorkerProfileCardChat";
 import ChatWorker from "@/components/chat/ChatWorker";
 import ChatService from "@/services/ChatService";
-
+import { Rings } from "react-loader-spinner";
 export default function PersonalChat() {
   const router = useRouter();
   const [initialMessages, setInitialMessages] = useState([]);
@@ -61,23 +61,37 @@ export default function PersonalChat() {
   };
   return (
     <div className="bg-white w-screen  py-16 px-5 lg:mt-8 md:pl-80 max-h-screen">
-      <WorkerProfileCardChat
-        idBooking={booking?._id}
-        avatar={client?.img?.imgUrl}
-        service={booking?.service?.name}
-        subservice={booking?.subservice?.name}
-        name={fullName(client?.personalData?.name)}
-        location={booking?.businessUser?.businessData?.name}
-        date={booking?.date?.stringData}
-        time={booking?.startTime?.stringData}
-      />
-      <ChatWorker
-        chatId={chatId}
-        idWorker={booking.workerUser?._id}
-        idClient={client?._id}
-        socket={socket}
-        initialMessages={initialMessages}
-      />
+      {loading ? (
+        <div className="max-w-lg flex flex-col items-center justify-center">
+          <Rings
+            width={100}
+            height={100}
+            color="#00A0D5"
+            ariaLabel="infinity-spin-loading"
+          />
+          <p>Searching...</p>
+        </div>
+      ) : (
+        <>
+          <WorkerProfileCardChat
+            idBooking={booking?._id}
+            avatar={client?.img?.imgUrl}
+            service={booking?.service?.name}
+            subservice={booking?.subservice?.name}
+            name={fullName(client?.personalData?.name)}
+            location={booking?.businessUser?.businessData?.name}
+            date={booking?.date?.stringData}
+            time={booking?.startTime?.stringData}
+          />
+          <ChatWorker
+            chatId={chatId}
+            idWorker={booking.workerUser?._id}
+            idClient={client?._id}
+            socket={socket}
+            initialMessages={initialMessages}
+          />
+        </>
+      )}
     </div>
   );
 }

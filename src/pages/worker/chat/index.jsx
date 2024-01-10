@@ -77,20 +77,23 @@ export default function Chat() {
   };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
-      {loading && (
-        <Rings
-          width={100}
-          height={100}
-          color="#00A0D5"
-          ariaLabel="infinity-spin-loading"
-        />
-      )}
-      {chats?.length > 0 ? (
+      {loading ? (
+        <div className="max-w-lg flex flex-col items-center justify-center">
+          <Rings
+            width={100}
+            height={100}
+            color="#00A0D5"
+            ariaLabel="infinity-spin-loading"
+          />
+          <p>Searching...</p>
+        </div>
+      ) : chats?.length > 0 ? (
         chats.map((chat, index) => (
           <WorkerCardChat
             key={index}
             name={fullName(chat?.booking?.clientUser?.personalData?.name)}
             service={`${chat?.booking?.service?.name} | ${chat?.booking?.subservice?.name}`}
+            subservice={chat?.booking?.subservice?.name}
             img={
               chat?.booking?.clientUser?.img?.imgUrl || "/assets/proovedor.png"
             }
@@ -99,7 +102,7 @@ export default function Chat() {
             lastMesssage={chat?.lastMessage?.body?.message?.text}
             showArrow={
               chat?.lastMessage?.read === false &&
-              chat?.lastMessage?.body?.sender !== user
+              chat?.lastMessage?.body?.sender !== userId
                 ? true
                 : false
             }

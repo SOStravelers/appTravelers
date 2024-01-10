@@ -34,6 +34,7 @@ const ChatWorker = ({
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
         console.log("nuevito", data);
+        if (data.chatRoom !== chatId) return;
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }

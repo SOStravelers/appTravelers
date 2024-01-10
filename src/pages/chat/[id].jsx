@@ -14,6 +14,7 @@ export default function PersonalChat() {
   const [booking, setBooking] = useState({});
   const [loading, setLoading] = useState(true);
   const [worker, setWorker] = useState({});
+  const [chatId, setChatId] = useState("");
   const socket = useRef();
   var user = Cookies.get("auth.user_id");
 
@@ -24,8 +25,9 @@ export default function PersonalChat() {
       const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
       console.log(host);
       socket.current = io(host);
-      socket.current.emit("add-user", idClient);
+      socket.current.emit("add-user", user);
       const id = router.query.id;
+      setChatId(id);
       fetchData(id);
     }
   }, []);
@@ -82,7 +84,7 @@ export default function PersonalChat() {
             time={booking?.startTime?.stringData}
           />
           <ChatClient
-            chatId={booking?._id}
+            chatId={chatId}
             idWorker={worker?._id}
             idClient={booking?.clientUser?._id}
             socket={socket}

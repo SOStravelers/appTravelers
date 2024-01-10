@@ -33,7 +33,8 @@ const ChatClient = ({
     if (socket.current) {
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
-        console.log(data);
+        if (data.chatRoom !== chatId) return;
+        console.log("llego mensaje nuevo", data);
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
@@ -56,12 +57,13 @@ const ChatClient = ({
       socket.current.emit("send-msg", {
         from: idClient,
         to: idWorker,
+        chatRoom: chatId,
         msg: inputValue,
       });
       ChatService.createMessage({
         from: idClient,
         to: idWorker,
-        roomChat: chatId,
+        chatRoom: chatId,
         message: inputValue,
       }).then((res) => {
         console.log(res.data);
@@ -77,12 +79,13 @@ const ChatClient = ({
     socket.current.emit("send-msg", {
       from: idClient,
       to: idWorker,
+      chatRoom: chatId,
       msg: msg,
     });
     ChatService.createMessage({
       from: idClient,
       to: idWorker,
-      roomChat: chatId,
+      chatRoom: chatId,
       message: event.target.innerHTML,
     }).then((res) => {
       console.log(res.data);

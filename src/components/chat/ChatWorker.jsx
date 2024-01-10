@@ -33,7 +33,7 @@ const ChatWorker = ({
     if (socket.current) {
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
-        console.log(data);
+        console.log("nuevito", data);
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }

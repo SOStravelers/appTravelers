@@ -25,7 +25,7 @@ export default function PersonalChat() {
       const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
       console.log(host);
       socket.current = io(host);
-      socket.current.emit("add-user", idWorker);
+      socket.current.emit("add-user", user);
       const id = router.query.id;
       setChatId(id);
       fetchData(id);

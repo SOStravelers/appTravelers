@@ -53,13 +53,12 @@ function WorkerCardBooking({
     const style = {
       display: "inline-block",
       padding: "0.2rem 0.6rem",
-      position: "relative",
-      transform: "translateY(-2px)",
       borderRadius: "9999px",
       fontSize: "0.80rem",
       fontWeight: "550",
       color: textColor,
       backgroundColor: color,
+      maxHeight: "1.6rem",
     };
 
     return <span style={style}>{isWorker ? statusPortugues : status}</span>;
@@ -71,10 +70,10 @@ function WorkerCardBooking({
 
   return (
     <div
-      className="flex p-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
+      className="flex p-4 rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
       onClick={() => goToDetails()}
     >
-      <div className="flex">
+      <div className="flex w-full flex-row  flex-grow">
         <div className="w-20 h-20 rounded-xl bg-blueBorder mr-2 relative">
           <Image
             src={avatar ?? "/assets/proovedor.png"}
@@ -83,24 +82,26 @@ function WorkerCardBooking({
             className="object-cover rounded-xl"
           />
         </div>
-        <div className="flex flex-col">
-          <h1 className="font-semibold ml-1">
-            {name} <StatusChip status={status} />
-          </h1>
-
-          <div className="flex items-center">
-            <ClockIcon color={"#00A0D5"} className="mr-1" />
-            <p className="text-blackText text-sm">
-              {hour} | {getDayOfWeek(date, location)}
-            </p>
+        <div className="flex flex-col flex-grow">
+          <h1 className="font-semibold  ml-1">{name}</h1>
+          <div className="flex flex-row">
+            <div className="flex items-center">
+              <ClockIcon color={"#00A0D5"} className="mr-1" />
+              <p className="text-blackText text-sm">
+                {hour} | {getDayOfWeek(date, location)}
+              </p>
+            </div>
+            <div className="flex flex-grow justify-end">
+              <StatusChip status={status} />
+            </div>
           </div>
+
           {location && (
             <div className="flex items-center" style={{ marginLeft: "-1px" }}>
               <PinIcon color={"#00A0D5"} className="ml-1 mr-2" />
               <p className="text-blackText text-sm">{location}</p>
             </div>
           )}
-
           {/* <div className="flex items-center">
             <Image
               src={"/assets/user.png"}

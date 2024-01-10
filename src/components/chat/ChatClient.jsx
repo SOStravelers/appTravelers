@@ -111,7 +111,7 @@ const ChatClient = ({ socket, initialMessages }) => {
             className="flex justify-center items-center text-white bg-grey rounded-full py-1 mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            I'm Here
+            I&apos;m Here
           </div>
           <div
             className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
@@ -123,7 +123,7 @@ const ChatClient = ({ socket, initialMessages }) => {
             className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Im in the reception
+            I&apos;m in the reception
           </div>
           <div
             className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"

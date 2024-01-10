@@ -71,6 +71,11 @@ export default function Chat() {
       pathname: `/chat/${chat._id}`,
     });
   };
+  const fullName = (data) => {
+    if (!data) return "";
+    const { first, last } = data;
+    return first + " " + (last ?? "");
+  };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
       {loading && (
@@ -85,16 +90,16 @@ export default function Chat() {
         chats.map((chat, index) => (
           <WorkerCardChat
             key={index}
-            name={`${chat?.worker.personalData?.name?.first} ${
-              chat?.worker.personalData?.name?.last ?? ""
-            }`}
-            service={""}
+            name={fullName(chat?.booking?.workerUser?.personalData?.name)}
+            service={`${chat?.booking?.service?.name} | ${chat?.booking?.subservice?.name}`}
             img={
               chat.worker.img.imgUrl === ""
                 ? "/assets/proovedor.png"
                 : chat.worker.img.imgUrl
             }
             lastMesssage={chat?.lastMessage?.body?.message?.text}
+            date={chat?.booking?.date?.stringData}
+            time={chat?.booking?.startTime?.stringData}
             showArrow={
               chat?.lastMessage?.read === false &&
               chat?.lastMessage?.body?.sender !== user

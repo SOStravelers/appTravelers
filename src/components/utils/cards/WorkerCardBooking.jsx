@@ -70,10 +70,10 @@ function WorkerCardBooking({
 
   return (
     <div
-      className="flex p-4 rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
+      className="flex max-w-lg p-4 rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
       onClick={() => goToDetails()}
     >
-      <div className="flex w-full flex-row  flex-grow">
+      <div className="flex w-full flex-row">
         <div className="w-20 h-20 rounded-xl bg-blueBorder mr-2 relative">
           <Image
             src={avatar ?? "/assets/proovedor.png"}

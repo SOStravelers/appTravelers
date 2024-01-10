@@ -99,7 +99,7 @@ function CalendarBooking() {
     footer = <div className="w-full "></div>;
   }
   return (
-    <div className="">
+    <div className="flex flex-col flex-grow justify-center">
       <DayPicker
         className="flex justify-center"
         mode="single"
@@ -113,7 +113,7 @@ function CalendarBooking() {
         onDayClick={handleDayClick}
         onMonthChange={setMonth}
       />
-      <div className="w-full  mt-4 px-1">
+      <div className="justify-center md:px-10  mt-4 ">
         {showBookings.map((booking) => (
           <WorkerCardBooking
             key={booking._id}
@@ -127,7 +127,7 @@ function CalendarBooking() {
           />
         ))}
       </div>
-      <div className="w-full mt-14  px-5">
+      <div className="justify-center mt-14 px-10 md:px-20 ">
         <Link href={`/service-history`}>
           <OutlinedButton text={"See all my records"} />
         </Link>

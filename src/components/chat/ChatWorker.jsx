@@ -61,7 +61,7 @@ const ChatWorker = ({
       ChatService.createMessage({
         from: idWorker,
         to: idClient,
-        roomChat: chatId,
+        chatRoom: chatId,
         message: inputValue,
       }).then((res) => {
         console.log(res.data);

@@ -3,7 +3,7 @@ import { SECTION_ONE, SECTION_TWO } from "@/constants";
 
 function SwitchButtons({ actualView, setActualView, titleOne, titleTwo }) {
   return (
-    <div className="bg-transparentBlue w-full max-w-lg h-14 flex rounded-xl">
+    <div className="bg-transparentBlue  max-w-lg h-12 flex rounded-xl">
       <button
         className={clsx(
           "w-1/2 h-full font-semibold rounded-xl",

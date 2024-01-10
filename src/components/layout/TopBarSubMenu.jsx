@@ -30,6 +30,7 @@ function TopBarSubMenu() {
   const terms = actualURL.includes("terms-of-service");
   const policy = actualURL.includes("use-policy");
   const serviceDetails = actualURL.includes("service-details");
+  const chat = actualURL.includes("chat");
 
   useEffect(() => {
     handleUrl();
@@ -70,6 +71,8 @@ function TopBarSubMenu() {
       setTitulo("Use Policy");
     } else if (serviceDetails) {
       setTitulo("Booking Details");
+    } else if (chat) {
+      setTitulo("Chat");
     }
   };
 

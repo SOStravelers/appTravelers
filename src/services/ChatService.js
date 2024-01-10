@@ -35,7 +35,7 @@ export default class ChatService {
   }
 
   static async markAsRead(body) {
-    return axios.post(`${this.baseChatUrl}/markAsRead`, body, {
+    return axios.put(`${this.baseChatUrl}/markAsRead`, body, {
       headers: this.getHeaders(),
     });
   }
@@ -48,6 +48,13 @@ export default class ChatService {
 
   static async getChatRooms() {
     return axios.get(`${this.baseChatUrl}/getAll`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getById(id) {
+    console.log("la id", id);
+    return axios.get(`${this.baseChatUrl}/getById/${id}`, {
       headers: this.getHeaders(),
     });
   }

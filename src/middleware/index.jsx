@@ -158,8 +158,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
               if (
                 router.pathname.includes("worker") &&
                 router.pathname != "/workers-found/[id]" &&
-                router.pathname != "/worker/[id]" &&
-                !router.pathname.includes("/service-details/")
+                router.pathname != "/worker/[id]"
               ) {
                 router.push("/");
                 return;

@@ -55,6 +55,7 @@ function Gallery({ images }) {
                   paddingTop: "56.25%", // 16:9 Aspect Ratio
                   backgroundSize: "cover",
                   backgroundPosition: "center",
+                  display: !image ? "none" : "block",
                 }}
                 className="bg-blueBorder  w-full h-full rounded-2xl relative"
               >
@@ -62,7 +63,7 @@ function Gallery({ images }) {
                   src={image + "?hola=" + random()}
                   fill
                   className="object-cover rounded-2xl hover:opacity-50 transition-opacity duration-300 cursor-pointer"
-                  alt="Worker avatar"
+                  alt=" avatar"
                   onClick={() => handleImageClick(image)}
                 />
               </div>

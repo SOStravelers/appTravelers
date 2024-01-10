@@ -17,6 +17,7 @@ export default function PaymentConfirmation() {
   const initialized = useRef(false);
   const [complete, setComplete] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [booking, setBooking] = useState(null);
   useEffect(() => {
     document.title = "Confirmation | SOS Travelers";
   }, []);
@@ -30,6 +31,10 @@ export default function PaymentConfirmation() {
       initialized.current = false;
     }
   }, [router.query]);
+  const goTo = () => {
+    console.log(booking);
+    router.push(`/service-details/${booking._id}`);
+  };
 
   const createBooking = async (paymentIntent) => {
     const client = user._id;
@@ -67,7 +72,7 @@ export default function PaymentConfirmation() {
       console.log("wena");
       if (response.data) {
         console.log("wena1");
-
+        setBooking(response.data.booking);
         localStorage.removeItem("service");
         setComplete(true);
         setLoading(false);
@@ -96,13 +101,18 @@ export default function PaymentConfirmation() {
             <CompleteGirlIcon />
           </div>
           <p className="text-blackText text-center mb-18 w-3/4 text-lg">
-            Payment made and your booking has been made successfully.
+            Reservation completed successfully
           </p>
-          <Link className="w-full" href="/booking">
-            <div className="mx-12 w-50 px-1">
-              <SolidButton text="Back to my bookings" color="blueBorder" />
-            </div>
-          </Link>
+          <p className="text-blackText my-4 text-center mb-18 w-3/4 text-lg">
+            The worker will confirm in the next few hours. Now go relax
+          </p>
+          <div className="mx-12 w-50 px-1" onClick={goTo}>
+            <SolidButton
+              onClick={() => goTo()}
+              text="Go to the booking"
+              color="blueBorder"
+            />
+          </div>
         </>
       ) : (
         <>

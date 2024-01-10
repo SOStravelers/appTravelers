@@ -3,9 +3,14 @@ import { useRouter } from "next/router";
 import { SendIcon } from "@/constants/icons";
 import ChatService from "@/services/ChatService";
 
-const ChatClient = ({ socket, initialMessages }) => {
+const ChatClient = ({
+  socket,
+  initialMessages,
+  idClient,
+  idWorker,
+  chatId,
+}) => {
   const router = useRouter();
-  const { idWorker, idClient } = router.query;
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -23,16 +28,21 @@ const ChatClient = ({ socket, initialMessages }) => {
   }, [initialMessages]);
 
   useEffect(() => {
-    if (socket?.current) {
+    console.log("socket.current", socket.current);
+
+    if (socket.current) {
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
+        if (data.chatRoom !== chatId) return;
+        console.log("llego mensaje nuevo", data);
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
-  }, [socket]);
+  }, [socket.current]);
 
   useEffect(() => {
     if (arrivalMessage) {
+      console.log(arrivalMessage);
       setMessages((prev) => [...prev, arrivalMessage]);
     }
   }, [arrivalMessage]);
@@ -42,22 +52,25 @@ const ChatClient = ({ socket, initialMessages }) => {
   };
 
   const handleSendClick = () => {
+    console.log("enviando", inputValue);
     if (inputValue.trim() !== "") {
       socket.current.emit("send-msg", {
         from: idClient,
         to: idWorker,
-        inputValue,
+        chatRoom: chatId,
+        msg: inputValue,
       });
       ChatService.createMessage({
         from: idClient,
         to: idWorker,
+        chatRoom: chatId,
         message: inputValue,
       }).then((res) => {
         console.log(res.data);
         const newMessage = { fromSelf: true, message: inputValue };
         setMessages([...messages, newMessage]);
+        setInputValue("");
       });
-      setInputValue("");
     }
   };
 
@@ -66,11 +79,13 @@ const ChatClient = ({ socket, initialMessages }) => {
     socket.current.emit("send-msg", {
       from: idClient,
       to: idWorker,
-      msg,
+      chatRoom: chatId,
+      msg: msg,
     });
     ChatService.createMessage({
       from: idClient,
       to: idWorker,
+      chatRoom: chatId,
       message: event.target.innerHTML,
     }).then((res) => {
       console.log(res.data);
@@ -101,40 +116,40 @@ const ChatClient = ({ socket, initialMessages }) => {
       >
         <div className="flex md:w-[80vw] w-[95vw] overflow-x-auto py-3">
           <div
-            className="flex justify-center items-center text-white bg-grey rounded-full p-1 mx-2 min-w-[200px] cursor-pointer"
+            className="flex justify-center items-center text-white bg-grey rounded-full py-1 mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Mensaje predefinido
+            I&apos;m Here
           </div>
           <div
-            className="flex justify-center items-center text-white bg-grey rounded-full p-1 mx-2 min-w-[200px] cursor-pointer"
+            className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Mensaje predefinido
+            Where are you?
           </div>
           <div
-            className="flex justify-center items-center text-white bg-grey rounded-full p-1 mx-2 min-w-[200px] cursor-pointer"
+            className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Mensaje predefinido
+            I&apos;m in the reception
           </div>
           <div
-            className="flex justify-center items-center text-white bg-grey rounded-full p-1 mx-2 min-w-[200px] cursor-pointer"
+            className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Mensaje predefinido
+            Wait a minute
           </div>
         </div>
         <div className="flex items-center w-full">
           <textarea
-            className="border border-black rounded-xl w-[85%] min-h-4 p-2"
+            className="border border-black rounded-xl w-[95%] min-h-4 "
             value={inputValue}
             onChange={handleInputChange}
             placeholder="Type a message..."
           />
 
           <SendIcon
-            className="cursor-pointer h-10 w-10"
+            className="cursor-pointer ml-4 h-10 w-10"
             onClick={handleSendClick}
           />
         </div>

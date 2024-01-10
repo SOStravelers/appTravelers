@@ -1,31 +1,30 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { StarIcon, FavIconBorder, ClockIcon } from "@/constants/icons";
+import { useEffect, useState } from "react";
+import { StarIcon, FavIconBorder, ClockIcon, PinIcon } from "@/constants/icons";
 import SolidButton from "../buttons/SolidButton";
-
-function WorkerProfileCardChat() {
+function WorkerProfileCardChat({
+  avatar,
+  name,
+  location,
+  service,
+  subservice,
+  date,
+  time,
+  idBooking,
+}) {
   const router = useRouter();
-  const {
-    name,
-    avatar,
-    businessName,
-    location,
-    date,
-    hour,
-    service,
-    subService,
-    idWorker,
-    idBooking,
-  } = router.query;
+  const [loading, setLoading] = useState(false);
+
   const goToServiceDetails = () => {
     router.push({
       pathname: `/service-details/${idBooking}`,
     });
   };
   return (
-    <div className="flex flex-col">
-      <div className="flex py-4 w-80 rounded-lg my-2 items-center">
-        <div className="w-36 h-32 rounded-2xl mr-2">
+    <div className="flex flex-col ">
+      <div className="flex py-1 w-80 rounded-lg   items-center">
+        <div className="w-24 h-24 rounded-2xl mr-2">
           <div className="bg-blueBorder w-full h-full rounded-2xl relative">
             <Image
               src={avatar ?? "/assets/proovedor.png"}
@@ -36,23 +35,37 @@ function WorkerProfileCardChat() {
           </div>
         </div>
         <div className="flex flex-col">
-          <div className="flex items-center">
+          <div className="flex items-center ml-1">
             <h1 className="font-semibold text-black">{name}</h1>
           </div>
-          <p className="text-blackText my-2">{service}</p>
+          <div className="flex items-center">
+            <div className="flex items-center mt-1 ml-2">
+              <p className="text-blackText text-sm">
+                {service ? service : "No service"} |{" "}
+                {subservice ? subservice : "No subservice"}
+              </p>
+            </div>
+          </div>
           <div className="flex items-center">
             <SolidButton
-              text="Service Resume"
-              color="black"
+              py={1}
+              text="See Service Details"
+              color="blueBorder"
               onClick={goToServiceDetails}
             />
           </div>
         </div>
       </div>
       <div className="flex items-center">
-        <ClockIcon color={"#00A0D5"} className="mr-1" />
+        <div className="flex items-center mt-1 ">
+          <PinIcon color={"#00A0D5"} className="mr-1" />
+          <p className="text-blackText text-sm">
+            {location ? location : "No disponible"}
+          </p>
+        </div>
+        <ClockIcon color={"#00A0D5"} className="mr-1 ml-4" />
         <p className="text-blackText text-sm">
-          {date} | {hour}
+          {date} | {time}
         </p>
       </div>
     </div>

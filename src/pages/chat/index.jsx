@@ -77,7 +77,8 @@ export default function Chat() {
     return first + " " + (last ?? "");
   };
   return (
-    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
+    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-16 px-3 md:pl-80">
+      <h1 className="my-1   text-center max-w-lg">My chats</h1>
       {loading ? (
         <Rings
           width={100}

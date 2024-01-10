@@ -16,7 +16,7 @@ function WorkerCardChat({
 }) {
   return (
     <div
-      className="flex p-2 cursor-pointer w-full max-w-md rounded-2xl md:mt-4 border-b-2 border-blueBorder justify-between my-2 items-center"
+      className="flex p-1 cursor-pointer w-full max-w-md rounded-2xl md:mt-4 border-b-2 border-blueBorder justify-between my-2 items-center"
       onClick={onClick}
     >
       <div className="flex">

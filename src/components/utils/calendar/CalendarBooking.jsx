@@ -94,7 +94,7 @@ function CalendarBooking() {
     }
   };
 
-  let footer = <p className="my-2">Please pick a day.</p>;
+  let footer = <p className="my-2 text-center">Please pick a day.</p>;
   if (showBookings.length > 0) {
     footer = <div className="w-full "></div>;
   }

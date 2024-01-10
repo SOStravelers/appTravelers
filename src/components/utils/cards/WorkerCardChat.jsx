@@ -6,21 +6,24 @@ function WorkerCardChat({
   onClick,
   name,
   service,
+  location,
+  date,
+  time,
   img,
   lastMesssage,
   showArrow,
 }) {
   return (
     <div
-      className="flex p-4 cursor-pointer w-full max-w-md rounded-2xl border-b-2 border-blueBorder justify-between my-2 items-center"
+      className="flex p-4 cursor-pointer w-full max-w-md rounded-2xl md:mt-4 border-b-2 border-blueBorder justify-between my-2 items-center"
       onClick={onClick}
     >
       <div className="flex">
-        <div className="w-20 h-20 rounded-xl bg-blueBorder mr-2 relative">
+        <div className="w-16 h-16 rounded-xl bg-blueBorder mr-2 relative">
           <Image
             src={img}
             fill
-            alt="cosa"
+            alt="image"
             className="object-cover rounded-xl"
           />
         </div>
@@ -29,7 +32,9 @@ function WorkerCardChat({
           <p className="text-blackText">{service}</p>
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
-            <p className="text-blackText text-sm">8 Aug, 2023 | 04:30 PM</p>
+            <p className="text-blackText text-sm">
+              {date} | {time}
+            </p>
           </div>
           <p className="text-blackText">{lastMesssage}</p>
         </div>

@@ -57,7 +57,7 @@ export default function PersonalChat() {
     return first + " " + (last ?? "");
   };
   return (
-    <div className="bg-white w-screen py-16 px-5 md:pl-80 max-h-screen">
+    <div className="bg-white w-screen  py-16 px-5 lg:mt-8 md:pl-80 max-h-screen">
       <WorkerProfileCardChat
         idBooking={booking?._id}
         avatar={client?.img?.imgUrl}

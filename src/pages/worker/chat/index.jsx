@@ -15,7 +15,7 @@ export default function Chat() {
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
-  var user = Cookies.get("auth.user_id");
+  var userId = Cookies.get("auth.user_id");
 
   useEffect(() => {
     localStorage.removeItem("service");
@@ -30,7 +30,7 @@ export default function Chat() {
       setLoginModal(false);
       // router.push("/");
     }
-    if (user) {
+    if (userId) {
       getChatRooms();
     } else {
       setOpen(true);
@@ -44,7 +44,7 @@ export default function Chat() {
       const unformattedChats = response.data.docs;
       if (unformattedChats?.length > 0) {
         unformattedChats.map((chat) => {
-          if (chat.receptor === user) {
+          if (chat.receptor === userId) {
             chat.worker = chat.receptor;
             chat.client = chat.creator;
           } else {
@@ -68,19 +68,12 @@ export default function Chat() {
     if (response) console.log(response);
     router.push({
       pathname: `/worker/chat/${chat._id}`,
-      query: {
-        name: `${chat?.client?.personalData?.name?.first} ${
-          chat?.client?.personalData?.name?.last ?? ""
-        }`,
-        avatar:
-          chat.client?.img?.imgUrl === ""
-            ? "/assets/proovedor.png"
-            : chat.client?.img.imgUrl,
-        idClient: chat.client._id,
-        idWorker: chat.worker._id,
-        chatId: chat._id,
-      },
     });
+  };
+  const fullName = (data) => {
+    if (!data) return "";
+    const { first, last } = data;
+    return first + " " + (last ?? "");
   };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-20 px-3 md:pl-80">
@@ -96,15 +89,13 @@ export default function Chat() {
         chats.map((chat, index) => (
           <WorkerCardChat
             key={index}
-            name={`${chat?.client?.personalData?.name?.first} ${
-              chat?.client?.personalData?.name?.last ?? ""
-            }`}
-            service={""}
+            name={fullName(chat?.booking?.clientUser?.personalData?.name)}
+            service={`${chat?.booking?.service?.name} | ${chat?.booking?.subservice?.name}`}
             img={
-              chat.client?.img.imgUrl === ""
-                ? "/assets/proovedor.png"
-                : chat.client?.img.imgUrl
+              chat?.booking?.clientUser?.img?.imgUrl || "/assets/proovedor.png"
             }
+            date={chat?.booking?.date?.stringData}
+            time={chat?.booking?.startTime?.stringData}
             lastMesssage={chat?.lastMessage?.body?.message?.text}
             showArrow={
               chat?.lastMessage?.read === false &&
@@ -124,7 +115,7 @@ export default function Chat() {
         </div>
       )}
 
-      {!user && (
+      {!userId && (
         <LoginFormModal
           open={open}
           setOpen={setOpen}

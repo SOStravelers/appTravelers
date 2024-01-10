@@ -82,7 +82,7 @@ const ChatWorker = ({
     ChatService.createMessage({
       from: idWorker,
       to: idClient,
-      roomChat: chatId,
+      chatRoom: chatId,
       message: event.target.innerHTML,
     }).then((res) => {
       console.log(res.data);

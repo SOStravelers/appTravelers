@@ -40,6 +40,7 @@ export default function PersonalChat() {
       const messagesResponse = await ChatService.getMessages({
         from: booking.workerUser._id,
         to: booking.clientUser._id,
+        chatRoom: id,
       });
 
       console.log(messagesResponse.data);

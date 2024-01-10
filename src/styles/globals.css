@@ -37,14 +37,14 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px;
-  height: 320px;
+  height: 500px;
   width: 100%;
   margin: auto;
   overflow: auto;
   border-radius: 8px;
   border: 2px solid #00A0D5;
   @media (max-width: 768px) {
-    max-height: 390px;
+    max-height: 500px;
     min-height: 390px;
   }
 }
@@ -58,7 +58,7 @@ body {
 
 .msg.sent {
   border-radius: var(--rad) var(--rad-sm) var(--rad) var(--rad);
-  background: #0057FF;
+  background: #001C25;
   color: #fff;
   /* moves it to the right */
   margin-left: auto;

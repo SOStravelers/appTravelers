@@ -108,40 +108,40 @@ const ChatWorker = ({ socket, initialMessages }) => {
       >
         <div className="flex md:w-[80vw] w-[95vw] overflow-x-auto py-3">
           <div
-            className="flex justify-center items-center text-white bg-grey rounded-full p-1 mx-2 min-w-[200px] cursor-pointer"
+            className="flex justify-center items-center text-white bg-grey rounded-full py-1 mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Mensaje predefinido
+            I'm Here
           </div>
           <div
-            className="flex justify-center items-center text-white bg-grey rounded-full p-1 mx-2 min-w-[200px] cursor-pointer"
+            className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Mensaje predefinido
+            Where are you?
           </div>
           <div
-            className="flex justify-center items-center text-white bg-grey rounded-full p-1 mx-2 min-w-[200px] cursor-pointer"
+            className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Mensaje predefinido
+            I´m in the reception
           </div>
           <div
-            className="flex justify-center items-center text-white bg-grey rounded-full p-1 mx-2 min-w-[200px] cursor-pointer"
+            className="flex justify-center items-center text-white bg-grey rounded-full  mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
           >
-            Mensaje predefinido
+            Wait a minute
           </div>
         </div>
         <div className="flex items-center w-full">
           <textarea
-            className="border border-black rounded-xl w-[85%] min-h-4 p-2"
+            className="border border-black rounded-xl w-[95%] min-h-4 "
             value={inputValue}
             onChange={handleInputChange}
             placeholder="Type a message..."
           />
 
           <SendIcon
-            className="cursor-pointer h-10 w-10"
+            className="cursor-pointer ml-4 h-10 w-10"
             onClick={handleSendClick}
           />
         </div>

@@ -11,6 +11,9 @@ export default function PersonalChat() {
   const router = useRouter();
   const [initialMessages, setInitialMessages] = useState([]);
   const { idWorker, idClient } = router.query;
+  const [booking, setBooking] = useState({});
+  const [client, setClient] = useState({});
+  const [loading, setLoading] = useState(true);
   const socket = useRef();
   var user = Cookies.get("auth.user_id");
 
@@ -22,20 +25,49 @@ export default function PersonalChat() {
       console.log(host);
       socket.current = io(host);
       socket.current.emit("add-user", idWorker);
-
-      ChatService.getMessages({
-        from: idWorker,
-        to: idClient,
-      }).then((response) => {
-        console.log(response.data);
-        setInitialMessages(response.data);
-      });
+      const id = router.query.id;
+      fetchData(id);
     }
   }, []);
+  async function fetchData(id) {
+    try {
+      const response = await ChatService.getById(id);
+      const booking = response.data.booking;
 
+      setBooking(booking);
+      setClient(booking.clientUser);
+
+      const messagesResponse = await ChatService.getMessages({
+        from: booking.clientUser._id,
+        to: booking.workerUser._id,
+      });
+
+      console.log(messagesResponse.data);
+      setInitialMessages(messagesResponse.data);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  }
+
+  const fullName = (data) => {
+    if (!data) return "";
+    const { first, last } = data;
+    return first + " " + (last ?? "");
+  };
   return (
-    <div className="bg-white w-screen py-28 px-5 md:pl-80 max-h-screen">
-      <WorkerProfileCardChat />
+    <div className="bg-white w-screen py-16 px-5 md:pl-80 max-h-screen">
+      <WorkerProfileCardChat
+        idBooking={booking?._id}
+        avatar={client?.img?.imgUrl}
+        service={booking?.service?.name}
+        subservice={booking?.subservice?.name}
+        name={fullName(client?.personalData?.name)}
+        location={booking?.businessUser?.businessData?.name}
+        date={booking?.date?.stringData}
+        time={booking?.startTime?.stringData}
+      />
       <ChatWorker socket={socket} initialMessages={initialMessages} />
     </div>
   );

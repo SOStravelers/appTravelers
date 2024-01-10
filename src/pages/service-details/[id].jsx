@@ -261,16 +261,8 @@ function ServiceHistory() {
             ? `/worker/chat/${res.data._id}`
             : `/chat/${res.data._id}`,
           query: {
-            name: booking?.workerUser?.personalData?.name,
-            avatar: booking?.workerUser?.img?.imgUrl || "/assets/proovedor.png",
-            service: booking?.service?.name,
-            date: booking?.date?.stringData,
-            hour: booking?.startTime?.stringData,
             idWorker: booking?.workerUser?._id,
-            businessName: booking?.businessUser?.businessData?.name,
-            location: booking?.businessUser?.businessData?.location?.city,
-            subService: booking?.subservice?.name,
-            idBooking: booking?._id,
+
             idClient: booking?.clientUser?._id,
           },
         });

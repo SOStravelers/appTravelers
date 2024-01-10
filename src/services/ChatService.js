@@ -51,4 +51,11 @@ export default class ChatService {
       headers: this.getHeaders(),
     });
   }
+
+  static async getById(id) {
+    console.log("la id", id);
+    return axios.get(`${this.baseChatUrl}/getById/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
 }

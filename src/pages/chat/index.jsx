@@ -42,14 +42,15 @@ export default function Chat() {
     const response = await ChatService.getChatRooms();
     if (response) {
       const unformattedChats = response.data.docs;
+      console.log("hay respuesta");
       if (unformattedChats?.length > 0) {
         unformattedChats.map((chat) => {
-          if (chat.receptor === user) {
-            chat.worker = chat.receptor;
-            chat.client = chat.creator;
-          } else {
-            chat.worker = chat.creator;
+          if (chat.receptor._id === user) {
             chat.client = chat.receptor;
+            chat.worker = chat.creator;
+          } else {
+            chat.client = chat.creator;
+            chat.worker = chat.receptor;
           }
         });
       }
@@ -68,18 +69,6 @@ export default function Chat() {
     if (response) console.log(response);
     router.push({
       pathname: `/chat/${chat._id}`,
-      query: {
-        name: `${chat?.worker.personalData?.name?.first} ${
-          chat?.worker.personalData?.name?.last ?? ""
-        }`,
-        avatar:
-          chat.worker.img.imgUrl === ""
-            ? "/assets/proovedor.png"
-            : chat.worker.img.imgUrl,
-        idClient: chat.client._id,
-        idWorker: chat.worker._id,
-        chatId: chat._id,
-      },
     });
   };
   return (

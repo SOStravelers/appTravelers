@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import Image from "next/image";
-import { PinIcon, ClockIcon } from "@/constants/icons";
-import { WorldIcon } from "@/constants/icons";
+import { PinIcon, ClockIcon, ArrangeIcon } from "@/constants/icons";
 import moment from "moment-timezone";
 import "moment/locale/pt-br"; // without this line it didn't work
 function WorkerCardBooking({
@@ -113,7 +112,7 @@ function WorkerCardBooking({
           </div> */}
           {subService && (
             <div className="flex items-center " style={{ marginLeft: "-1px" }}>
-              <WorldIcon />
+              <ArrangeIcon />
               <p
                 style={{ marginTop: "2px" }}
                 className="text-blackText text-sm ml-1"

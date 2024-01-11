@@ -148,6 +148,7 @@ export default function WorkerHome() {
                   (booking) =>
                     booking.date.stringData === dayjs().format("YYYY-MM-DD")
                 ) */
+              .slice(0, 5)
               .map((booking) => (
                 <WorkerCardBooking
                   key={booking._id}

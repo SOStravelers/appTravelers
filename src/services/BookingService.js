@@ -62,7 +62,7 @@ export default class BookingService {
   static async getBookingsByList(date) {
     console.log("...getBookingsByList");
     return axios.get(
-      `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=3`,
+      `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=4`,
       {
         headers: this.getHeaders(),
       }

@@ -64,7 +64,10 @@ function WorkerCardBooking({
   }
   function getDayOfWeek(date, location) {
     const language = !location ? "pt-br" : "en";
-    return moment.tz(date, "America/Sao_Paulo").locale(language).format("dddd");
+    return moment
+      .tz(date, "America/Sao_Paulo")
+      .locale(language)
+      .format("DD-MM-YYYY");
   }
 
   return (

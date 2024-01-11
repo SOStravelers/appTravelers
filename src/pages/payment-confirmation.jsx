@@ -84,7 +84,7 @@ export default function PaymentConfirmation() {
   };
 
   return (
-    <div className="flex flex-col max-w-lg items-center justify-center my-1 px-3 md:ml-80 min-h-screen md:pt-40">
+    <div className="flex flex-col max-w-lg items-center justify-center my-1 px-3 md:ml-80 min-h-screen md:pt-20">
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings

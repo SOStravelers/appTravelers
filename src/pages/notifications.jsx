@@ -9,8 +9,8 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loading2, setLoading2] = useState(false);
-  const [more, setMore] = useState(false);
   const [page, setPage] = useState(1);
+  const [nextPage, setNextPage] = useState(2);
   const loader = useRef(null);
   useEffect(() => {
     document.title = "Notifications | SOS Travelers";
@@ -28,6 +28,7 @@ export default function Notifications() {
       observer.observe(loader.current);
     }
   }, []);
+
   const formattedDate = (date) => {
     const newDate = formatDistanceToNow(new Date(date), {
       addSuffix: true,
@@ -35,45 +36,60 @@ export default function Notifications() {
     }).replace(/about\s/, "");
     return newDate;
   };
+
   //funcion para obtener las notificaciones del usuario
   const getData = async () => {
     try {
       console.log("getData");
-      const limit = 5;
+      const limit = 20;
       const response = await NotificationService.getAll(page, limit);
-      setNotifications(response.data.docs);
+      setNotifications((prevNotifications) => {
+        const combined = [...prevNotifications, ...response.data.docs];
+        return combined.filter((notification, index) => {
+          return (
+            combined.findIndex((item) => item.id === notification.id) === index
+          );
+        });
+      });
       setLoading(false);
-      setMore(true);
-      console.log(response.data.docs);
+      setPage((prevPage) => prevPage + 1);
+      setNextPage(response.data.nextPage);
     } catch (error) {
       setLoading(false);
     }
   };
+
   const getMoreData = async () => {
-    try {
-      console.log("getMoreData");
-      setLoading2(true);
-      const limit = 5;
-      const response = await NotificationService.getAll(page, limit);
-      const newData = notifications.concat(response.data.docs);
-      setNotifications(newData);
-      setLoading2(false);
-      console.log(response.data.docs);
-    } catch (error) {
-      setLoading2(false);
+    if (page > 1 && nextPage && notifications.length > 0) {
+      try {
+        console.log("getMoreData");
+        setLoading2(true);
+        const limit = 2;
+        const response = await NotificationService.getAll(page, limit);
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          ...response.data.docs,
+        ]);
+        setLoading2(false);
+        setNextPage(response.data.nextPage);
+        setPage((prevPage) => prevPage + 1);
+      } catch (error) {
+        setLoading2(false);
+      }
     }
   };
-  useEffect(() => {
-    console.log("efect more", more, page);
-    // if (more) {
-    getMoreData();
-    // }
-  }, [page]);
 
   const handleObserver = (entities) => {
     const target = entities[0];
     if (target.isIntersecting) {
-      setPage((prev) => prev + 1);
+      console.log("buena");
+      getMoreData();
+      // Verificar si el usuario ha hecho scroll  hasta el final de la lista
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight
+      )
+        return;
     }
   };
   return (
@@ -110,7 +126,8 @@ export default function Notifications() {
       )}
 
       <div className="loading" ref={loader}>
-        {loading2 && (
+        {/* <h4>load more</h4> */}
+        {/* {loading2 && (
           <div className="max-w-lg flex flex-col items-center justify-center">
             <Oval
               width={10}
@@ -119,7 +136,7 @@ export default function Notifications() {
               ariaLabel="infinity-spin-loading"
             />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

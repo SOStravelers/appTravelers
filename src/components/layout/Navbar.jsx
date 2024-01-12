@@ -48,7 +48,7 @@ function Navbar() {
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
     >
       <button
-        className=" customButton flex mt-3 flex-col items-center justify-center"
+        className=" customButton flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/home" : "/")}
       >
         {router.pathname === "/" || router.pathname === "/worker/home" ? (

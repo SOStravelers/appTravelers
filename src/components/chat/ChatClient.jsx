@@ -114,11 +114,11 @@ const ChatClient = ({
 
       <div
         className="flex flex-col items-center fixed w-full md:w-[78%] md:px-0 px-5 bottom-[0.5rem] py-1 bg-white"
-        style={{
-          boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
-        }}
+        // style={{
+        //   boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
+        // }}
       >
-        <div className="flex md:w-[80vw] w-[95vw] overflow-x-auto py-3">
+        <div className="flex md:w-[80vw] w-[95vw] overflow-x-auto my-3">
           <div
             className="flex justify-center items-center text-white bg-grey rounded-full py-1 mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
@@ -159,7 +159,8 @@ const ChatClient = ({
           />
 
           <SendIcon
-            className="cursor-pointer ml-4 h-10 w-10"
+            style={{ transform: "rotate(-20deg)" }}
+            className="cursor-pointer ml- h-10 w-10"
             onClick={handleSendClick}
           />
         </div>

@@ -27,8 +27,8 @@ export default class NotificationService {
     return `${api}${NotificationService.resourceAuth}`;
   }
 
-  static async getAll() {
-    return axios.get(`${this.authUrl}/getAll`, {
+  static async getAll(page, limit) {
+    return axios.get(`${this.authUrl}/getAll/?page=${page}&limit=${limit}`, {
       headers: this.getHeaders(),
     });
   }

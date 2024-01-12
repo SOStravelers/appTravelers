@@ -1,15 +1,30 @@
 import NotificationCard from "@/components/utils/cards/NotificationCard";
 import { NotificationDraw } from "@/constants/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import NotificationService from "@/services/NotificationService";
 import { Rings } from "react-loader-spinner";
 import { formatDistanceToNow } from "date-fns";
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [more, setMore] = useState(false);
+  const [page, setPage] = useState(1);
+  const loader = useRef(null);
   useEffect(() => {
     document.title = "Notifications | SOS Travelers";
     getData();
+  }, []);
+  useEffect(() => {
+    var options = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 1.0,
+    };
+
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (loader.current) {
+      observer.observe(loader.current);
+    }
   }, []);
   const formattedDate = (date) => {
     const newDate = formatDistanceToNow(new Date(date), {
@@ -21,20 +36,41 @@ export default function Notifications() {
   //funcion para obtener las notificaciones del usuario
   const getData = async () => {
     try {
-      const response = await NotificationService.getAll();
+      console.log("getData");
+      const limit = 5;
+      const response = await NotificationService.getAll(page, limit);
       setNotifications(response.data.docs);
+      setLoading(false);
+      setMore(true);
+      console.log(response.data.docs);
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  const getMoreData = async () => {
+    try {
+      console.log("getMoreData");
+      const limit = 5;
+      const response = await NotificationService.getAll(page, limit);
+      const newData = notifications.concat(response.data.docs);
+      setNotifications(newData);
       setLoading(false);
       console.log(response.data.docs);
     } catch (error) {
       setLoading(false);
     }
   };
-  const setIsRead = async (id) => {
-    try {
-      const response = await NotificationService.setIsRead(id);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    console.log("efect more", more, page);
+    // if (more) {
+    getMoreData();
+    // }
+  }, [page]);
+
+  const handleObserver = (entities) => {
+    const target = entities[0];
+    if (target.isIntersecting) {
+      setPage((prev) => prev + 1);
     }
   };
   return (
@@ -69,6 +105,10 @@ export default function Notifications() {
           </div>
         </>
       )}
+
+      <div className="loading" ref={loader}>
+        <h2></h2>
+      </div>
     </div>
   );
 }

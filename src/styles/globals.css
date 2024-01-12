@@ -37,21 +37,16 @@ body {
   display: flex;
   flex-direction: column;
   padding: 5px;
-  height: 100vh; 
+  height: 500px; 
   width: 100%;
   margin: 0;
   overflow: auto;
   border-radius: 6px;
   border: 2px solid #00A0D5;
-  @media (max-width: 768px) {
-    height: 410px;
-  }
-  @media (max-width: 450px) {
-    height: 350px;
-  }
-  @media (max-width: 389px) {
+  @media (max-height: 700px) {
     height: 300px;
   }
+
  
   
   

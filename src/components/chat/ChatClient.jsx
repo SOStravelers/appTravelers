@@ -113,7 +113,7 @@ const ChatClient = ({
       </div>
 
       <div
-        className="flex flex-col items-center fixed w-full md:w-[78%] md:px-0 px-5 bottom-[0.5rem] py-1 bg-white"
+        className="flex flex-col items-center fixed w-full md:w-[78%] md:px-0 bottom-[0.5rem] py-1 bg-white"
         // style={{
         //   boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
         // }}
@@ -144,7 +144,7 @@ const ChatClient = ({
             Wait a minute
           </div>
         </div>
-        <div className="flex items-center w-full">
+        <div className="flex items-center pl-2 pr-1 w-full">
           <textarea
             style={{
               border: "2px solid #00A0D5",

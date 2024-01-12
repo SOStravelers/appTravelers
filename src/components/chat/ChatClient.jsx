@@ -10,6 +10,7 @@ const ChatClient = ({
   idWorker,
   chatId,
 }) => {
+  const textareaRef = useRef();
   const router = useRouter();
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -73,6 +74,7 @@ const ChatClient = ({
         setMessages([...messages, newMessage]);
       });
       setInputValue("");
+      ref = { textareaRef };
     }
   };
 

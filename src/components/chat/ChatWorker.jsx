@@ -16,6 +16,8 @@ const ChatWorker = ({
   const [inputValue, setInputValue] = useState("");
   const scrollRef = useRef();
 
+  const textareaRef = useRef();
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -74,6 +76,7 @@ const ChatWorker = ({
         setMessages([...messages, newMessage]);
       });
       setInputValue("");
+      textareaRef.current.focus();
     }
   };
 
@@ -150,6 +153,7 @@ const ChatWorker = ({
         </div>
         <div className="flex items-center w-full">
           <textarea
+            ref={textareaRef}
             style={{
               border: "2px solid #00A0D5",
               padding: "10px",

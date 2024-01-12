@@ -33,6 +33,8 @@ const ChatClient = ({
     if (socket.current) {
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
+        console.log("nuevitosclient", data);
+        console.log("casa", data.chatRoom, chatId);
         if (data.chatRoom !== chatId) return;
         console.log("llego mensaje nuevo", data);
         setArrivalMessage({ fromSelf: false, message: data.msg });
@@ -69,8 +71,8 @@ const ChatClient = ({
         console.log(res.data);
         const newMessage = { fromSelf: true, message: inputValue };
         setMessages([...messages, newMessage]);
-        setInputValue("");
       });
+      setInputValue("");
     }
   };
 
@@ -142,9 +144,15 @@ const ChatClient = ({
         </div>
         <div className="flex items-center w-full">
           <textarea
-            className="border border-black rounded-xl w-[95%] min-h-4 "
+            style={{
+              border: "2px solid #00A0D5",
+              padding: "10px",
+              outline: "none",
+            }}
+            className="border border-black rounded-xl w-[98%] min-h-4 "
             value={inputValue}
             onChange={handleInputChange}
+            // onKeyDown={handleKeyDown}
             placeholder="Type a message..."
           />
 

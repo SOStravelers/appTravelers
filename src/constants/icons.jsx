@@ -2105,7 +2105,7 @@ export const AvatarIcon = ({ color, ...props }) => (
   </svg>
 );
 
-export const NotificationIcon = ({ color, active, ...props }) => (
+export const NotificationIcon = ({ color, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="25"
@@ -2120,7 +2120,7 @@ export const NotificationIcon = ({ color, active, ...props }) => (
     />
     <path
       d="M26 12C28.2091 12 30 10.2091 30 8C30 5.79086 28.2091 4 26 4C23.7909 4 22 5.79086 22 8C22 10.2091 23.7909 12 26 12Z"
-      fill={active ? "#FF0000" : "#FFFFFF"}
+      fill={"#FF0000"}
     />
   </svg>
 );

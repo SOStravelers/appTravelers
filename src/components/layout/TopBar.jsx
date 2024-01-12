@@ -69,7 +69,7 @@ function TopBar() {
             {haveNotification ? (
               <Link href="/notifications" className="lg:mx-5 xl:mx-5">
                 <NotificationIcon
-                  active={true}
+                  active={"true"}
                   style={{
                     textDecoration: "none",
                     color: "inherit",

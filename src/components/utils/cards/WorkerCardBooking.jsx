@@ -121,6 +121,12 @@ function WorkerCardBooking({
               </p>
             </div>
           )}
+          <div className="flex items-center">
+            <ClockIcon color={"#00A0D5"} className="mr-1" />
+            <p className="text-blackText text-sm">
+              {hour} | {getDayOfWeek(date, location)}
+            </p>
+          </div>
         </div>
       </div>
     </div>

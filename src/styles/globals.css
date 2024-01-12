@@ -44,7 +44,7 @@ body {
   border-radius: 6px;
   border: 2px solid #00A0D5;
   @media (max-height: 750px) {
-    height: 320px;
+    height: 330px;
   }
   @media (max-height: 700px) {
     height: 330px;

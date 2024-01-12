@@ -112,9 +112,9 @@ export default function Notifications() {
       <div className="loading" ref={loader}>
         {loading2 && (
           <div className="max-w-lg flex flex-col items-center justify-center">
-            <Rings
-              width={100}
-              height={100}
+            <Oval
+              width={10}
+              height={10}
               color="#00A0D5"
               ariaLabel="infinity-spin-loading"
             />

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
-
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
 
+import NotificationService from "@/services/NotificationService";
 import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
@@ -77,9 +77,12 @@ export default function Home({}) {
       setServices(response.data.docs);
     });
   };
+
   const getUsers = async () => {
     UserService.getRandom().then((response) => {
       setRandomUsers(response.data);
+      // checkNotification();
+
       // console.log(response.data);
     });
   };

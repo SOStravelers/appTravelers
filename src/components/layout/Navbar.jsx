@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import clsx from "clsx";
+import NotificationService from "@/services/NotificationService";
 import {
   HomeIcon,
   HomeIconOutlined,
@@ -19,7 +20,7 @@ import { useStore } from "@/store";
 function Navbar() {
   const router = useRouter();
 
-  const { isWorker, user } = useStore();
+  const { isWorker, user, setHaveNotification } = useStore();
   const goTo = (ruta) => {
     router.push(ruta);
   };
@@ -30,9 +31,19 @@ function Navbar() {
       goTo(isWorker ? "/worker/profile" : "/profile");
     }
   };
+  const checkNotification = async () => {
+    try {
+      const response = await NotificationService.checkNotification();
+      setHaveNotification(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div
+      onClick={() => checkNotification()}
       className="w-screen h-12 fixed bottom-0 left-0 z-10 bg-white flex justify-around items-center md:hidden"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
     >

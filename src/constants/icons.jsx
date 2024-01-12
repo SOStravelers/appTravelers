@@ -2108,8 +2108,8 @@ export const AvatarIcon = ({ color, ...props }) => (
 export const NotificationIcon = ({ color, active, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="32"
-    height="32"
+    width="25"
+    height="25"
     viewBox="0 0 32 32"
     fill={color}
     {...props}

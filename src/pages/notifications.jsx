@@ -2,11 +2,13 @@ import NotificationCard from "@/components/utils/cards/NotificationCard";
 import { NotificationDraw } from "@/constants/icons";
 import { useEffect, useState, useRef } from "react";
 import NotificationService from "@/services/NotificationService";
-import { Rings } from "react-loader-spinner";
+import { Rings, Oval } from "react-loader-spinner";
 import { formatDistanceToNow } from "date-fns";
+import { set } from "zod";
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loading2, setLoading2] = useState(false);
   const [more, setMore] = useState(false);
   const [page, setPage] = useState(1);
   const loader = useRef(null);
@@ -50,14 +52,15 @@ export default function Notifications() {
   const getMoreData = async () => {
     try {
       console.log("getMoreData");
+      setLoading2(true);
       const limit = 5;
       const response = await NotificationService.getAll(page, limit);
       const newData = notifications.concat(response.data.docs);
       setNotifications(newData);
-      setLoading(false);
+      setLoading2(false);
       console.log(response.data.docs);
     } catch (error) {
-      setLoading(false);
+      setLoading2(false);
     }
   };
   useEffect(() => {
@@ -107,7 +110,16 @@ export default function Notifications() {
       )}
 
       <div className="loading" ref={loader}>
-        <h2></h2>
+        {loading2 && (
+          <div className="max-w-lg flex flex-col items-center justify-center">
+            <Rings
+              width={100}
+              height={100}
+              color="#00A0D5"
+              ariaLabel="infinity-spin-loading"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

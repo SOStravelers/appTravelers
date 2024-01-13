@@ -87,8 +87,8 @@ export default class BookingService {
     );
   }
 
-  static async getAllBookingsByWorker() {
-    return axios.get(`${this.baseUrl}/worker/allworkers`, {
+  static async getAllBookingsAvailable() {
+    return axios.get(`${this.baseUrl}/worker/available`, {
       headers: this.getHeaders(),
     });
   }
@@ -101,6 +101,15 @@ export default class BookingService {
   static async confirmBookingWorker(id) {
     return axios.put(
       `${this.baseUrl}/confirmWorker/${id}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+  static async confirmBookingWorkerExternal(id) {
+    return axios.put(
+      `${this.baseUrl}/confirmWorkerExternal/${id}`,
       {},
       {
         headers: this.getHeaders(),

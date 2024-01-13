@@ -1,35 +1,78 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { PinIcon, ClockIcon } from "@/constants/icons";
-
-function WorkerCardBookingRequest({ booking, name, location, avatar, date, hour }) {
+import { useStore } from "@/store";
+import { PinIcon, ClockIcon, ArrangeIcon } from "@/constants/icons";
+import moment from "moment-timezone";
+import "moment/locale/pt-br"; // without this line it didn't work
+function WorkerCardBookingRequest({
+  booking,
+  name,
+  location,
+  avatar,
+  date,
+  hour,
+  service,
+  subService,
+  status,
+}) {
   const router = useRouter();
+  const { isWorker } = useStore();
 
   const goToDetails = () => {
     router.push({
       pathname: `/request-details/${booking.id}`,
-      query: {
-        name: name,
-        avatar: booking.avatar,
-        businessName: location,
-        location: `${booking.businessUser.businessData.location.city}, ${booking.businessUser.businessData.location.country}`,
-        date: date,
-        hour: hour,
-        service: booking.service.name,
-        subService: booking.subservice.name,
-        idWorker: booking.workerUser._id,
-        idBooking: booking.id,
-        idClient: booking.clientUser._id,
-      },
     });
   };
+  function StatusChip({ status }) {
+    let color;
+    let textColor = "white"; // Define textColor here
+    let statusPortugues = status;
+    switch (status) {
+      case "requested":
+        color = "grey";
+        statusPortugues = "Solicitado";
+        break;
+      case "completed":
+        color = "green";
+        statusPortugues = "Completado";
+        break;
+      case "canceled":
+        color = "#e77b7b";
+        statusPortugues = "Cancelado";
+        break;
+      case "confirmed":
+        color = "#92ef72";
+        textColor = "black";
+        statusPortugues = "Confirmado";
+        break;
+      default:
+        color = "gray";
+    }
+
+    const style = {
+      display: "inline-block",
+      padding: "0.2rem 0.6rem",
+      borderRadius: "9999px",
+      fontSize: "0.80rem",
+      fontWeight: "550",
+      color: textColor,
+      backgroundColor: color,
+      maxHeight: "1.6rem",
+    };
+
+    return <span style={style}>{isWorker ? statusPortugues : status}</span>;
+  }
+  function getDayOfWeek(date, location) {
+    const language = !location ? "pt-br" : "en";
+    return moment.tz(date, "America/Sao_Paulo").locale(language).format("dddd");
+  }
 
   return (
     <div
-      className="flex p-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
+      className="flex max-w-lg p-4 rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
       onClick={() => goToDetails()}
     >
-      <div className="flex">
+      <div className="flex w-full flex-row">
         <div className="w-20 h-20 rounded-xl bg-blueBorder mr-2 relative">
           <Image
             src={avatar ?? "/assets/proovedor.png"}
@@ -38,16 +81,47 @@ function WorkerCardBookingRequest({ booking, name, location, avatar, date, hour 
             className="object-cover rounded-xl"
           />
         </div>
-        <div className="flex flex-col">
-          <h1 className="font-semibold">{name}</h1>
-          <div className="flex items-center mb-1">
-            <PinIcon color={"#00A0D5"} className="mr-1" />
-            <p className="text-blackText text-sm">{location}</p>
+        <div className="flex flex-col flex-grow">
+          <h1 className="font-semibold  ml-1">{name}</h1>
+
+          <div className="flex flex-row">
+            {location && (
+              <div className="flex items-center" style={{ marginLeft: "-1px" }}>
+                <PinIcon color={"#00A0D5"} className="ml-1 mr-2" />
+                <p className="text-blackText text-sm">{location}</p>
+              </div>
+            )}
+            {/* <div className="flex items-center">
+            <Image
+              src={"/assets/user.png"}
+              width={25}
+              height={25}
+              alt="profileImg"
+            />
+            <p className="text-blackText text-sm">{name}</p>
+          </div> */}
+            {subService && (
+              <div
+                className="flex items-center "
+                style={{ marginLeft: "-1px" }}
+              >
+                <ArrangeIcon />
+                <p
+                  style={{ marginTop: "2px" }}
+                  className="text-blackText text-sm ml-1"
+                >
+                  {subService}
+                </p>
+              </div>
+            )}
+            <div className="flex flex-grow justify-end">
+              <StatusChip status={status} />
+            </div>
           </div>
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {date} | {hour}
+              {hour} | {getDayOfWeek(date, location)}
             </p>
           </div>
         </div>

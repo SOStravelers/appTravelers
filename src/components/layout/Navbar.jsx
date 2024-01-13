@@ -22,6 +22,11 @@ function Navbar() {
 
   const { isWorker, user, setHaveNotification } = useStore();
   const goTo = (ruta) => {
+    console.log("ruta", ruta);
+    if (ruta != "/" && ruta != "/worker/home") {
+      console.log("accion");
+      checkNotification();
+    }
     router.push(ruta);
   };
   const goProfile = () => {
@@ -43,7 +48,6 @@ function Navbar() {
 
   return (
     <div
-      onClick={() => checkNotification()}
       className="w-screen h-12 fixed bottom-0 left-0 z-10 bg-white flex justify-around items-center md:hidden"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
     >

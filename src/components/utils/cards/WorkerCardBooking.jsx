@@ -117,7 +117,7 @@ function WorkerCardBooking({
                 style={{ marginTop: "2px" }}
                 className="text-blackText text-sm ml-1"
               >
-                {subService}
+                {service} - {subService}
               </p>
             </div>
           )}

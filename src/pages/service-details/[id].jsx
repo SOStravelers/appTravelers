@@ -436,7 +436,7 @@ function ServiceHistory() {
           <hr className="w-full max-w-lg text-grey" />
           <div className="mt-2 flex justify-center max-w-lg">
             <p className="text-left font-semibold">
-              {isWorker ? "Meu cliente" : "My Profesional"}
+              {isWorker ? "Meu cliente" : "My Professional"}
             </p>
           </div>
           {typeUser != "externalWorker" && (

@@ -93,7 +93,7 @@ export default class BookingService {
     });
   }
   static async getBookingById(id) {
-    console.log("el get");
+    console.log("el get", `${this.baseUrl}/byId/${id}`);
     return axios.get(`${this.baseUrl}/byId/${id}`, {
       headers: this.getHeaders(),
     });

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import clsx from "clsx";
+import NotificationService from "@/services/NotificationService";
 import {
   HomeIcon,
   HomeIconOutlined,
@@ -19,8 +20,13 @@ import { useStore } from "@/store";
 function Navbar() {
   const router = useRouter();
 
-  const { isWorker, user } = useStore();
+  const { isWorker, user, setHaveNotification } = useStore();
   const goTo = (ruta) => {
+    console.log("ruta", ruta);
+    if (ruta != "/" && ruta != "/worker/home") {
+      console.log("accion");
+      checkNotification();
+    }
     router.push(ruta);
   };
   const goProfile = () => {
@@ -30,6 +36,15 @@ function Navbar() {
       goTo(isWorker ? "/worker/profile" : "/profile");
     }
   };
+  const checkNotification = async () => {
+    try {
+      const response = await NotificationService.checkNotification();
+      setHaveNotification(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div
@@ -37,7 +52,7 @@ function Navbar() {
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
     >
       <button
-        className=" customButton flex mt-3 flex-col items-center justify-center"
+        className=" customButton flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/home" : "/")}
       >
         {router.pathname === "/" || router.pathname === "/worker/home" ? (

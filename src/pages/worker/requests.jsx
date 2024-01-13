@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import WorkerCardBookingRequest from "@/components/utils/cards/WorkerCardBookingRequest";
 import BookingService from "@/services/BookingService";
+import { ReservationIcon } from "@/constants/icons";
 import { Rings } from "react-loader-spinner";
 import dayjs from "dayjs";
 
@@ -15,7 +16,7 @@ function Requests() {
   const getBookings = () => {
     setLoading(true);
     const today = dayjs().format("YYYY-MM-DD");
-    BookingService.getAllBookingsByWorker().then((res) => {
+    BookingService.getAllBookingsAvailable().then((res) => {
       if (res) {
         setBookings(res.data.docs);
         setLoading(false);
@@ -41,19 +42,29 @@ function Requests() {
           />
           <p className="mt-2">Searching...</p>
         </div>
-      ) : (
+      ) : bookings?.length > 0 ? (
         bookings.map((booking) => (
           <WorkerCardBookingRequest
             key={booking._id}
-            link={"/"}
-            name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
-            location={booking.businessUser.businessData.name}
+            booking={booking}
+            subService={booking.subservice.name}
+            status={booking.status}
+            service={booking.service.name}
+            avatar={booking?.businessUser?.img?.imgUrl}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
-            showArrow={false}
-            booking={booking}
+            name={`${booking?.businessUser?.businessData?.name}`}
           />
         ))
+      ) : (
+        <>
+          <p className="text-center text-greyText max-w-lg my-10">
+            {"não há trabalhos disponíveis"}
+          </p>
+          <div className="max-w-lg text-xl ml-2 my-3 flex justify-center">
+            <ReservationIcon />
+          </div>
+        </>
       )}
     </div>
   );

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
-
+import NotificationService from "@/services/NotificationService";
 import dayjs from "dayjs";
 import BookingService from "@/services/BookingService";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
@@ -20,12 +20,13 @@ import { set } from "date-fns";
 export default function WorkerHome() {
   const router = useRouter();
   const [slides, setSlides] = useState([]);
-  const { setService, user } = useStore();
+  const { setService, user, setHaveNotification } = useStore();
   const [swiper, setSwiper] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     getBookings();
+    checkNotification();
   }, []);
 
   const getBookings = () => {
@@ -39,6 +40,15 @@ export default function WorkerHome() {
         console.log(error);
         setLoading(false);
       });
+  };
+  const checkNotification = async () => {
+    try {
+      const response = await NotificationService.checkNotification();
+      setHaveNotification(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {

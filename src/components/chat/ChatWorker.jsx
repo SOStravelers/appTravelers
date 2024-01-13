@@ -16,6 +16,8 @@ const ChatWorker = ({
   const [inputValue, setInputValue] = useState("");
   const scrollRef = useRef();
 
+  const textareaRef = useRef();
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -33,8 +35,11 @@ const ChatWorker = ({
     if (socket.current) {
       console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
-        console.log("nuevito", data);
+        console.log("nuevitoworker", data);
+        console.log("casa", data.chatRoom, chatId);
+
         if (data.chatRoom !== chatId) return;
+        console.log("llego mensaje nuevo", data);
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
@@ -57,6 +62,7 @@ const ChatWorker = ({
       socket.current.emit("send-msg", {
         from: idWorker,
         to: idClient,
+        chatRoom: chatId,
         msg: inputValue,
       });
       ChatService.createMessage({
@@ -70,6 +76,7 @@ const ChatWorker = ({
         setMessages([...messages, newMessage]);
       });
       setInputValue("");
+      textareaRef.current.focus();
     }
   };
 
@@ -78,6 +85,7 @@ const ChatWorker = ({
     socket.current.emit("send-msg", {
       from: idWorker,
       to: idClient,
+      chatRoom: chatId,
       msg: msg,
     });
     ChatService.createMessage({
@@ -93,7 +101,7 @@ const ChatWorker = ({
   };
 
   return (
-    <div className="bg-white h-full w-full flex flex-col items-center md:items-start mt-5">
+    <div className="bg-white h-full w-full flex flex-col items-center md:items-start mt-2 px-1">
       <div className="chat">
         {messages.map((message, index) => (
           <div
@@ -101,18 +109,23 @@ const ChatWorker = ({
             ref={scrollRef}
             className={`msg my-1 ${message.fromSelf ? "sent" : "rcvd"}`}
           >
-            {message.message}
+            {message.message.split("\n").map((line, index) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
           </div>
         ))}
       </div>
 
       <div
-        className="flex flex-col items-center fixed w-full md:w-[78%] md:px-0 px-5 bottom-[0.5rem] py-1 bg-white"
-        style={{
-          boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
-        }}
+        className="flex flex-col items-center fixed w-full md:w-[78%] md:px-0  bottom-[0.5rem] py-1 bg-white"
+        // style={{
+        //   boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
+        // }}
       >
-        <div className="flex md:w-[80vw] w-[95vw] overflow-x-auto py-3">
+        <div className="flex md:w-[80vw] w-[95vw] overflow-x-auto mb-3 ">
           <div
             className="flex justify-center items-center text-white bg-grey rounded-full py-1 mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
@@ -138,16 +151,24 @@ const ChatWorker = ({
             Wait a minute
           </div>
         </div>
-        <div className="flex items-center w-full">
+        <div className="flex items-center w-full pl-2 pr-1">
           <textarea
-            className="border border-black rounded-xl w-[95%] min-h-4 "
+            ref={textareaRef}
+            style={{
+              border: "2px solid #00A0D5",
+              padding: "10px",
+              outline: "none",
+            }}
+            className="border border-black rounded-xl w-[98%] min-h-4 "
             value={inputValue}
             onChange={handleInputChange}
+            // onKeyDown={handleKeyDown}
             placeholder="Type a message..."
           />
 
           <SendIcon
-            className="cursor-pointer ml-4 h-10 w-10"
+            style={{ transform: "rotate(-20deg)" }}
+            className="cursor-pointer ml-4 h-10  w-10 "
             onClick={handleSendClick}
           />
         </div>

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
-
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
 
+import NotificationService from "@/services/NotificationService";
 import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
@@ -18,7 +18,7 @@ register();
 
 export default function Home({}) {
   const store = useStore();
-  const { services, setServices } = store;
+  const { services, setServices, setHaveNotification } = store;
   const [bookings, setBookings] = useState([]);
   const [swiper, setSwiper] = useState(null);
   const [randomUsers, setRandomUsers] = useState([]);
@@ -30,6 +30,7 @@ export default function Home({}) {
 
   useEffect(() => {
     document.title = "Home | SOS Travelers";
+    checkNotification();
     if (!services || Object.keys(services).length == 0) {
       getData();
     }
@@ -77,9 +78,21 @@ export default function Home({}) {
       setServices(response.data.docs);
     });
   };
+  const checkNotification = async () => {
+    try {
+      const response = await NotificationService.checkNotification();
+      setHaveNotification(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getUsers = async () => {
     UserService.getRandom().then((response) => {
       setRandomUsers(response.data);
+      // checkNotification();
+
       // console.log(response.data);
     });
   };

@@ -22,10 +22,10 @@ function WorkerProfileCardChat({
     });
   };
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col mx-2 mt-1">
       <div className="flex py-1 w-80 rounded-lg   items-center">
         <div className="w-24 h-24 rounded-2xl mr-2">
-          <div className="bg-blueBorder w-full h-full rounded-2xl relative">
+          <div className="bg-blueBorder w-20 h-20 rounded-2xl relative">
             <Image
               src={avatar ?? "/assets/proovedor.png"}
               fill

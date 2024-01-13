@@ -1,4 +1,8 @@
-import { NotificationOffIcon, LogoWhite } from "@/constants/icons";
+import {
+  NotificationOffIcon,
+  LogoWhite,
+  NotificationIcon,
+} from "@/constants/icons";
 import { useEffect } from "react";
 import { random } from "@/lib/utils";
 
@@ -6,7 +10,7 @@ import Link from "next/link";
 
 import { useStore } from "@/store";
 function TopBar() {
-  const { loggedIn, user, isWorker, setUser } = useStore();
+  const { loggedIn, user, isWorker, setUser, haveNotification } = useStore();
 
   useEffect(() => {
     if (user != undefined && user.img && user.img.imgUrl) {
@@ -62,18 +66,35 @@ function TopBar() {
                 Worker Mode
               </h1>
             )}
-            <Link href="/notifications" className="lg:mx-5 xl:mx-5">
-              <NotificationOffIcon
-                style={{
-                  textDecoration: "none",
-                  color: "inherit",
-                  "&:focus": { outline: "none" },
-                  fontSize: "0.1rem", // Ajusta el tamaño del texto según tus necesidades
-                }}
-                color="#FFFFFF"
-                className="mr-3 cursor-pointer"
-              />
-            </Link>
+            {haveNotification ? (
+              <Link href="/notifications" className="lg:mx-5 xl:mx-5">
+                <NotificationIcon
+                  active={"true"}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    "&:focus": { outline: "none" },
+                    fontSize: "0.1rem", // Ajusta el tamaño del texto según tus necesidades
+                  }}
+                  color="#FFFFFF"
+                  className="mr-3 cursor-pointer"
+                />
+              </Link>
+            ) : (
+              <Link href="/notifications" className="lg:mx-5 xl:mx-5">
+                <NotificationOffIcon
+                  active={true}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    "&:focus": { outline: "none" },
+                    fontSize: "0.1rem", // Ajusta el tamaño del texto según tus necesidades
+                  }}
+                  color="#FFFFFF"
+                  className="mr-3 cursor-pointer"
+                />
+              </Link>
+            )}
 
             {user?.img && user?.img.imgUrl ? (
               <Link

@@ -83,25 +83,15 @@ function WorkerCardBooking({
         </div>
         <div className="flex flex-col flex-grow">
           <h1 className="font-semibold  ml-1">{name}</h1>
-          <div className="flex flex-row">
-            <div className="flex items-center">
-              <ClockIcon color={"#00A0D5"} className="mr-1" />
-              <p className="text-blackText text-sm">
-                {hour} | {getDayOfWeek(date, location)}
-              </p>
-            </div>
-            <div className="flex flex-grow justify-end">
-              <StatusChip status={status} />
-            </div>
-          </div>
 
-          {location && (
-            <div className="flex items-center" style={{ marginLeft: "-1px" }}>
-              <PinIcon color={"#00A0D5"} className="ml-1 mr-2" />
-              <p className="text-blackText text-sm">{location}</p>
-            </div>
-          )}
-          {/* <div className="flex items-center">
+          <div className="flex flex-row">
+            {location && (
+              <div className="flex items-center" style={{ marginLeft: "-1px" }}>
+                <PinIcon color={"#00A0D5"} className="ml-1 mr-2" />
+                <p className="text-blackText text-sm">{location}</p>
+              </div>
+            )}
+            {/* <div className="flex items-center">
             <Image
               src={"/assets/user.png"}
               width={25}
@@ -110,17 +100,30 @@ function WorkerCardBooking({
             />
             <p className="text-blackText text-sm">{name}</p>
           </div> */}
-          {subService && (
-            <div className="flex items-center " style={{ marginLeft: "-1px" }}>
-              <ArrangeIcon />
-              <p
-                style={{ marginTop: "2px" }}
-                className="text-blackText text-sm ml-1"
+            {subService && (
+              <div
+                className="flex items-center "
+                style={{ marginLeft: "-1px" }}
               >
-                {service} - {subService}
-              </p>
+                <ArrangeIcon />
+                <p
+                  style={{ marginTop: "2px" }}
+                  className="text-blackText text-sm ml-1"
+                >
+                  {service} - {subService}
+                </p>
+              </div>
+            )}
+            <div className="flex flex-grow justify-end">
+              <StatusChip status={status} />
             </div>
-          )}
+          </div>
+          <div className="flex items-center">
+            <ClockIcon color={"#00A0D5"} className="mr-1" />
+            <p className="text-blackText text-sm">
+              {hour} | {getDayOfWeek(date, location)}
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -456,8 +456,8 @@ function ServiceHistory() {
                 }
                 showEdit={false}
                 service={
-                  booking?.service?.name && !isWorker
-                    ? booking?.service?.name
+                  booking?.workerUser?.workerData?.services && !isWorker
+                    ? booking?.workerUser?.workerData?.services
                     : ""
                 }
               />

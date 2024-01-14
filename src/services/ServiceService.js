@@ -25,6 +25,12 @@ export default class ServiceService {
     return axios.get(`${this.baseUrl}/get/all?${id}`);
   }
 
+  static async getServicesById(id) {
+    return axios.get(`${this.baseUrl}/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   static async listServices() {
     return axios.get(`${this.baseUrl}/all/andsubservices`, {
       headers: this.getHeaders(),

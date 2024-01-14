@@ -53,7 +53,6 @@ export default class ChatService {
   }
 
   static async getById(id) {
-    console.log("la id", id);
     return axios.get(`${this.baseChatUrl}/getById/${id}`, {
       headers: this.getHeaders(),
     });

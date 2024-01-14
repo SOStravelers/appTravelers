@@ -37,18 +37,30 @@ body {
   display: flex;
   flex-direction: column;
   padding: 5px;
-  height: 500px; 
+  height: 900px; 
   width: 100%;
   margin: 0;
   overflow: auto;
   border-radius: 6px;
   border: 2px solid #00A0D5;
-  @media (max-height: 750px) {
-    height: 340px;
+
+  @media (max-height: 1200px) {
+    height: 650px;
+  }
+
+  @media (max-height: 1000px) {
+    height: 550px;
+  }
+  @media (max-height: 900px) {
+    height: 480px;
+  }
+  @media (max-height: 800px) {
+    height: 410px;
   }
   @media (max-height: 700px) {
-    height: 330px;
+    height: 300px;
   }
+
 
  
   

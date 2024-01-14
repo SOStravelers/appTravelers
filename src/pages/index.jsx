@@ -82,9 +82,9 @@ export default function Home({}) {
     try {
       const response = await NotificationService.checkNotification();
       setHaveNotification(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

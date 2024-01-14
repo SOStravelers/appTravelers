@@ -23,7 +23,7 @@ export default function PersonalChat() {
     if (user) {
       console.log("conect socket chat");
       const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-      console.log(host);
+      // console.log(host);
       socket.current = io(host);
       socket.current.emit("add-user", user);
       const id = router.query.id;
@@ -45,12 +45,12 @@ export default function PersonalChat() {
         chatRoom: id,
       });
 
-      console.log(messagesResponse.data);
+      console.log("los mensajes", messagesResponse.data);
       setInitialMessages(messagesResponse.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.error(error);
+      // console.error(error);
     }
   }
   const fullName = (data) => {

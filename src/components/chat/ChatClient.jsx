@@ -100,7 +100,7 @@ const ChatClient = ({
   };
 
   return (
-    <div className="bg-white max-h-screen w-[98%] sm:w-[90%] flex flex-col items-center md:items-start mt-5">
+    <div className="bg-white max-w-2xl flex flex-col items-center md:items-start mt-5">
       <div className="chat">
         {messages.map((message, index) => (
           <div
@@ -119,12 +119,12 @@ const ChatClient = ({
       </div>
 
       <div
-        className="flex flex-col items-center fixed w-full md:w-[78%] md:px-0 bottom-[0.5rem] py-1 bg-white"
+        className="flex flex-col w-full items-center fixed md:px-0 bottom-[0.5rem] py-1 bg-white"
         // style={{
         //   boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
         // }}
       >
-        <div className="flex w-[98%] sm:w-[90%] overflow-x-auto my-3">
+        <div className="flex w-full overflow-x-auto my-3">
           <div
             className="flex justify-center items-center text-white bg-grey rounded-full py-1 mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
@@ -150,18 +150,21 @@ const ChatClient = ({
             Wait a minute
           </div>
         </div>
-        <div className="flex items-center pl-2 pr-1 w-full">
+        <div className="flex items-center w-full pl-2 pr-1 ">
           <textarea
             ref={textareaRef}
             style={{
               border: "2px solid #00A0D5",
-              padding: "10px",
+              paddingTop: "10px",
+              paddingLeft: "7px",
+              // padding: "10 20 0 0 ",
               outline: "none",
-              height: "50px",
+              height: "35px",
               overflow: "hidden",
               resize: "none",
+              lineHeight: "1", // Añade esto
             }}
-            className="border border-black rounded-xl w-[98%] sm:w-[90%] "
+            className="border border-black rounded-xl w-[98%] sm:w-[60%] "
             value={inputValue}
             onChange={(event) => {
               handleInputChange(event);

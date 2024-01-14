@@ -56,10 +56,10 @@ body {
     height: 350px;
   }
   @media (max-height: 700px) {
-    height: 300px;
+    height: 320px;
   } 
   @media (max-height: 650px) {
-    height: 280px;
+    height: 290px;
   } 
 }
 .msg {

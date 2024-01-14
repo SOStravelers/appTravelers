@@ -72,7 +72,7 @@ const ChatWorker = ({
       // Restablecer la altura del textarea a su valor inicial
       textareaRef.current.focus();
       if (textareaRef.current) {
-        textareaRef.current.style.height = "50px"; // Asegúrate de
+        textareaRef.current.style.height = "40px"; // Asegúrate de
       }
     }
   };
@@ -160,11 +160,14 @@ const ChatWorker = ({
             ref={textareaRef}
             style={{
               border: "2px solid #00A0D5",
-              padding: "10px",
+              paddingTop: "10px",
+              paddingLeft: "7px",
+              // padding: "10 20 0 0 ",
               outline: "none",
-              height: "50px",
+              height: "35px",
               overflow: "hidden",
               resize: "none",
+              lineHeight: "1", // Añade esto
             }}
             className="border border-black rounded-xl w-[98%] sm:w-[60%] "
             value={inputValue}

@@ -126,7 +126,7 @@ export default function Home({}) {
         <h1
           className={`text-black text-xl font-semibold mt-1 mb-3 ${mazzard.className}`}
         >
-          Services
+          Choose a service
         </h1>
         <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2">
           {services?.map((s, index) => (

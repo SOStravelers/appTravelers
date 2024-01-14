@@ -59,7 +59,7 @@ export default function PersonalChat() {
     return first + " " + (last ?? "");
   };
   return (
-    <div className="bg-white w-screen  py-16 px-2 md:pl-80 max-h-screen">
+    <div className="bg-white w-screen  py-16 px-2 md:pl-80 md:mt-8 max-h-screen">
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings

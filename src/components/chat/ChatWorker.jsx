@@ -69,7 +69,18 @@ const ChatWorker = ({
         setMessages([...messages, newMessage]);
       });
       setInputValue("");
+      // Restablecer la altura del textarea a su valor inicial
       textareaRef.current.focus();
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "50px"; // Asegúrate de
+      }
+    }
+  };
+
+  const adjustTextAreaHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "inherit";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
 
@@ -94,7 +105,7 @@ const ChatWorker = ({
   };
 
   return (
-    <div className="bg-white h-full w-[98%] sm:w-[90%] flex flex-col items-center md:items-start mt-5">
+    <div className="bg-white max-w-2xl flex flex-col items-center md:items-start mt-5">
       <div className="chat">
         {messages.map((message, index) => (
           <div
@@ -113,12 +124,12 @@ const ChatWorker = ({
       </div>
 
       <div
-        className="flex flex-col items-center fixed w-full md:w-[78%] md:px-0 bottom-[0.5rem] py-1 bg-white"
+        className="flex flex-col w-full items-center fixed md:px-0 bottom-[0.5rem] py-1 bg-white"
         // style={{
         //   boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
         // }}
       >
-        <div className="flex w-[98%] sm:w-[90%] overflow-x-auto my-3">
+        <div className="flex w-full overflow-x-auto my-3">
           <div
             className="flex justify-center items-center text-white bg-grey rounded-full py-1 mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
@@ -144,20 +155,25 @@ const ChatWorker = ({
             Wait a minute
           </div>
         </div>
-        <div className="flex items-center pl-2 pr-1 w-full">
+        <div className="flex items-center w-full pl-2 pr-1 ">
           <textarea
+            ref={textareaRef}
             style={{
               border: "2px solid #00A0D5",
               padding: "10px",
               outline: "none",
+              height: "50px",
+              overflow: "hidden",
+              resize: "none",
             }}
-            className="border border-black rounded-xl w-[98%] sm:w-[90%] min-h-4 "
+            className="border border-black rounded-xl w-[98%] sm:w-[60%] "
             value={inputValue}
-            onChange={handleInputChange}
-            // onKeyDown={handleKeyDown}
+            onChange={(event) => {
+              handleInputChange(event);
+              adjustTextAreaHeight();
+            }}
             placeholder="Type a message..."
           />
-
           <SendIcon
             // style={{ transform: "rotate(-20deg)" }}
             className="cursor-pointer ml- h-10 w-10"

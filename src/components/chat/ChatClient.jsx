@@ -72,6 +72,12 @@ const ChatClient = ({
       textareaRef.current.focus();
     }
   };
+  const adjustTextAreaHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "inherit";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
 
   const handleSendPredefinedMsg = (event) => {
     const msg = event.target.innerHTML;
@@ -94,7 +100,7 @@ const ChatClient = ({
   };
 
   return (
-    <div className="bg-white h-full w-[98%] sm:w-[90%] flex flex-col items-center md:items-start mt-5">
+    <div className="bg-white max-h-screen w-[98%] sm:w-[90%] flex flex-col items-center md:items-start mt-5">
       <div className="chat">
         {messages.map((message, index) => (
           <div
@@ -146,18 +152,23 @@ const ChatClient = ({
         </div>
         <div className="flex items-center pl-2 pr-1 w-full">
           <textarea
+            ref={textareaRef}
             style={{
               border: "2px solid #00A0D5",
               padding: "10px",
               outline: "none",
+              height: "50px",
+              overflow: "hidden",
+              resize: "none",
             }}
-            className="border border-black rounded-xl w-[98%] sm:w-[90%] min-h-4 "
+            className="border border-black rounded-xl w-[98%] sm:w-[90%] "
             value={inputValue}
-            onChange={handleInputChange}
-            // onKeyDown={handleKeyDown}
+            onChange={(event) => {
+              handleInputChange(event);
+              adjustTextAreaHeight();
+            }}
             placeholder="Type a message..."
           />
-
           <SendIcon
             // style={{ transform: "rotate(-20deg)" }}
             className="cursor-pointer ml- h-10 w-10"

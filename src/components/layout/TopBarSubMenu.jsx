@@ -79,7 +79,7 @@ function TopBarSubMenu() {
   return (
     <div
       className={clsx(
-        "w-screen flex items-center justify-between h-18 lg:px-20 xl:px-20  px-5 shadow-xl fixed top-0 z-20",
+        "w-screen flex items-center justify-between h-18 lg:h-20 xl:h-20 lg:px-20 xl:px-20  px-5 shadow-xl fixed top-0 z-20",
         "bg-darkBlue"
       )}
     >

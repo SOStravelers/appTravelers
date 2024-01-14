@@ -10,7 +10,6 @@ import { Rings } from "react-loader-spinner";
 export default function PersonalChat() {
   const router = useRouter();
   const [initialMessages, setInitialMessages] = useState([]);
-  const { idWorker, idClient } = router.query;
   const [booking, setBooking] = useState({});
   const [loading, setLoading] = useState(true);
   const [worker, setWorker] = useState({});
@@ -45,7 +44,7 @@ export default function PersonalChat() {
         chatRoom: id,
       });
 
-      console.log("los mensajes", messagesResponse.data);
+      // console.log("los mensajes", messagesResponse.data);
       setInitialMessages(messagesResponse.data);
       setLoading(false);
     } catch (error) {
@@ -60,7 +59,7 @@ export default function PersonalChat() {
   };
 
   return (
-    <div className="bg-white w-screen py-16 px-5 md:pl-80 md:mt-10 max-h-screen">
+    <div className="bg-white w-screen py-16 px-5 md:pl-80  max-h-screen">
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings

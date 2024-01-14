@@ -58,8 +58,8 @@ body {
   @media (max-height: 700px) {
     height: 300px;
   } 
-  @media (max-height: 700px) {
-    height: 270px;
+  @media (max-height: 650px) {
+    height: 280px;
   } 
 }
 .msg {

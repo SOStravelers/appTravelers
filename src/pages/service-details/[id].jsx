@@ -504,7 +504,7 @@ function ServiceHistory() {
               {isWorker ? "Serviço" : "Service"}
             </p>
             <p className="text-blackBlue font-semibold text-md">
-              {booking?.subservice?.name}
+              {booking?.service?.name} - {booking?.subservice?.name}
             </p>
           </div>
           <div className="flex justify-between items-end w-full max-w-lg my-1">

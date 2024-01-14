@@ -39,7 +39,7 @@ function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
               status={booking.status}
               date={booking.date.stringData}
               hour={booking.startTime.stringData}
-              name={`${booking.subservice.name}`}
+              name={`${booking.service.name + " - " + booking.subservice.name}`}
               location={booking.businessUser.businessData.name}
             />
           ))

@@ -40,7 +40,7 @@ function Layout({ children, lang }) {
     setOpenWorkerModal(false);
   };
   useEffect(() => {
-    // console.log("socket.current", socket.current);
+    console.log("socket.current", socket);
 
     if (socket && socket.current) {
       console.log("recibiendo desde a chatContainer comp");

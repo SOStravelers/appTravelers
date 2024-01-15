@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import DayButton from "@/components/utils/buttons/DayButton";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import { ReservationIcon } from "@/constants/icons";
+import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
 function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
   const [bookings, setBookings] = useState([]);

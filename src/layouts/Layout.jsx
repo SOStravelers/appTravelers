@@ -20,11 +20,24 @@ const poppins = Poppins({
 
 function Layout({ children, lang }) {
   const router = useRouter();
+  const { socket } = useStore();
+  const [dataModal, setDataModal] = useState({});
+  const [booking, setBooking] = useState({});
+  const [openWorkerModal, setOpenWorkerModal] = useState(false);
+
   const [middlewareCompleted, setMiddlewareCompleted] = useState(false);
   const handleMiddlewareComplete = () => {
     // Esta función se llamará desde CustomMiddlewareComponent
     // cuando sus funciones hayan terminado.
     setMiddlewareCompleted(true);
+  };
+  const stateBookingWorker = async () => {
+    console.log("stateBookingWorker");
+    router.push(`/service-details/${booking._id}`);
+  };
+  const cancelWorkerModal = async () => {
+    console.log("cancelWorkerModal");
+    setOpenWorkerModal(false);
   };
 
   let metaDescription = "";
@@ -88,6 +101,20 @@ function Layout({ children, lang }) {
         </Head>
         {middlewareCompleted ? (
           <>
+            <TextModal
+              title={"Parabéns!!, você tem uma nova reserva"}
+              text={[
+                `Lugar: ${booking?.businessUser?.businessData?.name}`,
+                `Data: ${booking?.date?.stringData} | ${booking?.startTime?.stringData}`,
+              ]}
+              textCancel="Voltar"
+              colorAceptButton={dataModal?.colorAceptButton}
+              buttonText={"Veja a reserva"}
+              open={openWorkerModal}
+              setOpen={setOpenWorkerModal}
+              onAccept={stateBookingWorker}
+              onCancel={cancelWorkerModal}
+            />
             {isLoginPage ? (
               <WaveBar />
             ) : arePrincipalPages ? (

@@ -5,6 +5,7 @@ import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
+import TextModal from "@/components/utils/modals/TextModal";
 import clsx from "clsx";
 import { ThreeDots } from "react-loader-spinner";
 import { LogoSosBlack, LogoSosRelleno } from "@/constants/icons";
@@ -39,6 +40,19 @@ function Layout({ children, lang }) {
     console.log("cancelWorkerModal");
     setOpenWorkerModal(false);
   };
+
+  useEffect(() => {
+    // console.log("socket.current", socket.current);
+
+    if (socket && socket.current) {
+      console.log("recibiendo desde a chatContainer comp");
+      socket.current.on("booking-recieve", (data) => {
+        console.log("booking recibido", data);
+        setBooking(data.data);
+        setOpenWorkerModal(true);
+      });
+    }
+  }, [socket]);
 
   let metaDescription = "";
   const language = lang ? lang : "en";

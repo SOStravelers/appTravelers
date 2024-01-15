@@ -66,6 +66,12 @@ export default class BookingService {
     );
   }
 
+  static async getAllBookingsByWorker(date) {
+    return axios.get(`${this.baseUrl}/worker/allworkers`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   static async getBookingsByMonthWorker(date) {
     return axios.get(
       `${this.baseUrl}/worker/month?date=${date}&page=1&limit=10`,

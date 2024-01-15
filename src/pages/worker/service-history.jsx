@@ -26,12 +26,6 @@ function ServiceHistory() {
   };
   return (
     <div className="flex flex-col py-16 md:py-28 px-5 md:pl-80">
-      {bookings.filter((booking) => booking.status === "requested").length >
-        0 && (
-        <h1 className="text-xl text-center my-6 max-w-lg">
-          Serviços solicitados
-        </h1>
-      )}
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings
@@ -44,6 +38,9 @@ function ServiceHistory() {
         </div>
       ) : (
         <>
+          <h1 className="text-xl text-center my-6 max-w-lg">
+            Serviços solicitados
+          </h1>
           {bookings
             .filter((booking) => booking.status === "requested")
             .map((booking) => (
@@ -59,6 +56,13 @@ function ServiceHistory() {
                 name={`${booking?.businessUser?.businessData?.name}`}
               />
             ))}
+          {!loading &&
+            bookings.filter((booking) => booking.status === "requested")
+              .length === 0 && (
+              <p className="text-center text-greyText max-w-lg my-3">
+                {"Não há reservas para solicitadas"}
+              </p>
+            )}
 
           {bookings.filter((booking) => booking.status === "confirmed").length >
             0 && (
@@ -71,36 +75,43 @@ function ServiceHistory() {
             .map((booking) => (
               <WorkerCardBooking
                 key={booking._id}
-                link={"/"}
-                avatar={booking.businessUser?.img?.imgUrl}
-                name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
-                location={booking.businessUser.businessData.name}
+                booking={booking}
+                subService={booking.subservice.name}
+                status={booking.status}
+                service={booking.service.name}
+                avatar={booking?.businessUser?.img?.imgUrl}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                showArrow={false}
-                booking={booking}
+                name={`${booking?.businessUser?.businessData?.name}`}
               />
             ))}
+          {!loading &&
+            bookings.filter((booking) => booking.status === "confirmed")
+              .length === 0 && (
+              <p className="text-center text-greyText max-w-lg my-3">
+                {"Não há reservas confirmadas"}
+              </p>
+            )}
 
-          {bookings.filter((booking) => booking.status === "accepted").length >
-            0 && (
-            <h1 className="text-xl text-center my-8 max-w-lg">
-              Últimos serviços
-            </h1>
-          )}
+          <h1 className="text-xl text-center my-8 max-w-lg">
+            Últimos serviços
+          </h1>
           {bookings
-            .filter((booking) => booking.status === "completed")
+            .filter(
+              (booking) =>
+                booking.status === "completed" || booking.status === "canceled"
+            )
             .map((booking) => (
               <WorkerCardBooking
                 key={booking._id}
-                link={"/"}
-                avatar={booking.businessUser?.img?.imgUrl}
-                name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
-                location={booking.businessUser.businessData.name}
+                booking={booking}
+                subService={booking.subservice.name}
+                status={booking.status}
+                service={booking.service.name}
+                avatar={booking?.businessUser?.img?.imgUrl}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                showArrow={false}
-                booking={booking}
+                name={`${booking?.businessUser?.businessData?.name}`}
               />
             ))}
         </>

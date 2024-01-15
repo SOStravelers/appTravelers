@@ -19,7 +19,7 @@ function WorkerCardChat({
       className="flex p-1 cursor-pointer w-full max-w-md rounded-2xl md:mt-4 border-b-2 border-blueBorder justify-between my-2 items-center"
       onClick={onClick}
     >
-      <div className="flex">
+      <div className="flex w-full flex-row items-center">
         <div className="w-16 h-16 rounded-xl bg-blueBorder mr-2 relative">
           <Image
             src={img}

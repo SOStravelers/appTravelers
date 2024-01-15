@@ -89,14 +89,17 @@ export default function WorkerSettings() {
       </Link>
 
       <div className="flex flex-col my-4">
-        <OptionSwitch
-          title="Worker Mode"
-          onFunction={workerModeOff}
-          offFunction={workerModeOff}
-          initialState={isWorker}
-          isOn={isOnWorker}
-          setIsOn={setIsOnWorker}
-        />
+        {(process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ||
+          process.env.NODE_ENV === "development") && (
+          <OptionSwitch
+            title="Worker Mode"
+            onFunction={workerModeOff}
+            offFunction={workerModeOff}
+            initialState={isWorker}
+            isOn={isOnWorker}
+            setIsOn={setIsOnWorker}
+          />
+        )}
         {/* <OptionSwitch
           title="Notifications"
           onFunction={notificationModeOn}

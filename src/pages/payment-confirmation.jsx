@@ -69,9 +69,7 @@ export default function PaymentConfirmation() {
     };
     try {
       const response = await BookingService.create(params);
-      console.log("wena");
       if (response.data) {
-        console.log("wena1");
         setBooking(response.data.booking);
         localStorage.removeItem("service");
         setComplete(true);

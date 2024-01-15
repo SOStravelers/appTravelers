@@ -14,7 +14,6 @@ function DaySection({
 }) {
   const [bookings, setBookings] = useState(null);
   const { isWorker, user } = useStore();
-  console.log("wena");
   useEffect(() => {
     const user = Cookies.get("auth.user_id");
     if (user) {

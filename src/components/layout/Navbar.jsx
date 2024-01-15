@@ -21,7 +21,11 @@ function Navbar() {
   const router = useRouter();
 
   const { isWorker, user, setHaveNotification } = useStore();
+  const userId = Cookies.get("auth.user_id");
   const goTo = (ruta) => {
+    if (ruta != "/" && ruta != "/worker/home") {
+      checkNotification();
+    }
     router.push(ruta);
   };
   const goProfile = () => {
@@ -33,9 +37,9 @@ function Navbar() {
   };
   const checkNotification = async () => {
     try {
+      if (!userId) return;
       const response = await NotificationService.checkNotification();
       setHaveNotification(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +47,6 @@ function Navbar() {
 
   return (
     <div
-      onClick={() => checkNotification()}
       className="w-screen h-12 fixed bottom-0 left-0 z-10 bg-white flex justify-around items-center md:hidden"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
     >

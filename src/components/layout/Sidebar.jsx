@@ -94,7 +94,7 @@ function Sidebar() {
           )}
         >
           <RequestIconOutlined color="white" />
-          <p className={clsx("text-xl ml-3 text-white")}>Requests</p>
+          <p className={clsx("text-xl ml-3 text-white")}> Trabalhos</p>
         </button>
       )}
       <button

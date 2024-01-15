@@ -3,15 +3,18 @@ import {
   LogoWhite,
   NotificationIcon,
 } from "@/constants/icons";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { random } from "@/lib/utils";
-
+import { io } from "socket.io-client";
+import Cookies from "js-cookie";
 import Link from "next/link";
 
 import { useStore } from "@/store";
 function TopBar() {
-  const { loggedIn, user, isWorker, setUser, haveNotification } = useStore();
-
+  const { loggedIn, user, isWorker, setUser, haveNotification, setSocket } =
+    useStore();
+  const socket = useRef();
+  var userId = Cookies.get("auth.user_id");
   useEffect(() => {
     if (user != undefined && user.img && user.img.imgUrl) {
       let newUser = { ...user };
@@ -19,6 +22,22 @@ function TopBar() {
       setUser[newUser];
     }
   }, [user]);
+  useEffect(() => {
+    console.log("isWorker", isWorker);
+    if (isWorker) {
+      console.log("conect socket worker");
+      const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
+      // console.log(host);
+      socket.current = io(host);
+      socket.current.emit("add-user", userId);
+      setSocket(socket);
+    }
+    return () => {
+      if (socket.current) {
+        socket.current.disconnect();
+      }
+    };
+  }, [isWorker]);
   const profileUrl = isWorker ? "/worker/profile" : "/profile";
   const initials = () => {
     if (user && Object.keys(user).length === 0) return "";
@@ -83,7 +102,6 @@ function TopBar() {
             ) : (
               <Link href="/notifications" className="lg:mx-5 xl:mx-5">
                 <NotificationOffIcon
-                  active={true}
                   style={{
                     textDecoration: "none",
                     color: "inherit",

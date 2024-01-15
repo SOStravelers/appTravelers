@@ -56,6 +56,7 @@ function CalendarBookingWorker() {
     BookingService.getBookingsByMonthWorker(day).then((res) => {
       if (res) {
         setBookings(res.data.docs);
+        console.log(res.data.docs);
         const bookings = res.data.docs.map((booking) => {
           return new Date(booking.date.isoDate);
         });
@@ -66,7 +67,6 @@ function CalendarBookingWorker() {
 
   const handleDayClick = (day, modifiers) => {
     setShowBookings([]);
-    console.log(day, modifiers.booked);
     if (modifiers.booked) {
       const dateString = moment({
         year: day.getFullYear(),

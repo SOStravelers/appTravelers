@@ -7,7 +7,7 @@ import { Rings } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { ChatPicture } from "@/constants/icons";
-
+import { fullName } from "@/utils/format";
 export default function Chat() {
   const store = useStore();
   const router = useRouter();
@@ -25,7 +25,6 @@ export default function Chat() {
   useEffect(() => {
     document.title = "My chats | SOS Travelers";
     if (loginModal) {
-      console.log("entrando");
       setOpen(false);
       setLoginModal(false);
       // router.push("/");
@@ -42,7 +41,6 @@ export default function Chat() {
     const response = await ChatService.getChatRooms();
     if (response) {
       const unformattedChats = response.data.docs;
-      console.log("hay respuesta");
       if (unformattedChats?.length > 0) {
         unformattedChats.map((chat) => {
           if (chat.receptor._id === user) {
@@ -54,7 +52,6 @@ export default function Chat() {
           }
         });
       }
-      console.log(unformattedChats);
       setChats(unformattedChats);
     }
     setLoading(false);
@@ -71,21 +68,19 @@ export default function Chat() {
       pathname: `/chat/${chat._id}`,
     });
   };
-  const fullName = (data) => {
-    if (!data) return "";
-    const { first, last } = data;
-    return first + " " + (last ?? "");
-  };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-16 px-3 md:pl-80">
       <h1 className="my-1   text-center max-w-lg">My chats</h1>
       {loading ? (
-        <Rings
-          width={100}
-          height={100}
-          color="#00A0D5"
-          ariaLabel="infinity-spin-loading"
-        />
+        <div className="max-w-lg flex flex-col items-center justify-center">
+          <Rings
+            width={100}
+            height={100}
+            color="#00A0D5"
+            ariaLabel="infinity-spin-loading"
+          />
+          <p>Searching...</p>
+        </div>
       ) : chats?.length > 0 ? (
         chats.map((chat, index) => (
           <WorkerCardChat

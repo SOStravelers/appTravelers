@@ -3,12 +3,12 @@ import { register } from "swiper/element/bundle";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
-
+import { Rings } from "react-loader-spinner";
 import NotificationService from "@/services/NotificationService";
 import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
-
+import Cookies from "js-cookie";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 // import SwiperCore, { Pagination, Navigation } from "swiper";
@@ -18,18 +18,25 @@ register();
 
 export default function Home({}) {
   const store = useStore();
-  const { services, setServices } = store;
+  const { services, setServices, setHaveNotification } = store;
   const [bookings, setBookings] = useState([]);
   const [swiper, setSwiper] = useState(null);
   const [randomUsers, setRandomUsers] = useState([]);
-
+  const [loading, setLoading] = useState(true);
+  var userId = Cookies.get("auth.user_id");
   useEffect(() => {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
   }, []);
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   useEffect(() => {
     document.title = "Home | SOS Travelers";
+    if (userId) {
+      checkNotification();
+    }
     if (!services || Object.keys(services).length == 0) {
       getData();
     }
@@ -68,22 +75,27 @@ export default function Home({}) {
     };
   }, [swiper]);
 
-  useEffect(() => {
-    getUsers();
-  }, []);
-
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {
       setServices(response.data.docs);
     });
   };
+  const checkNotification = async () => {
+    try {
+      const response = await NotificationService.checkNotification();
+
+      setHaveNotification(response.data);
+      // console.log(response.data);
+    } catch (error) {
+      // console.error(error);
+    }
+  };
 
   const getUsers = async () => {
+    console.log("getUsers");
     UserService.getRandom().then((response) => {
       setRandomUsers(response.data);
-      // checkNotification();
-
-      // console.log(response.data);
+      setLoading(false);
     });
   };
 
@@ -116,7 +128,7 @@ export default function Home({}) {
         <h1
           className={`text-black text-xl font-semibold mt-1 mb-3 ${mazzard.className}`}
         >
-          Services
+          Choose a service
         </h1>
         <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2">
           {services?.map((s, index) => (
@@ -136,11 +148,23 @@ export default function Home({}) {
         >
           Recommended for you
         </h1>
-        <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
-          {randomUsers?.map((s, index) => (
-            <RecomendationCard key={index} user={s} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="max-w-lg flex flex-col items-center justify-center">
+            <Rings
+              width={100}
+              height={100}
+              color="#00A0D5"
+              ariaLabel="infinity-spin-loading"
+            />
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
+            {randomUsers?.map((s, index) => (
+              <RecomendationCard key={index} user={s} />
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );

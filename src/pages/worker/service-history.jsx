@@ -91,7 +91,7 @@ function ServiceHistory() {
             )}
 
           <h1 className="text-xl text-center my-8 max-w-lg">
-            Últimos serviços
+            Serviços concluídos
           </h1>
           {bookings
             .filter(

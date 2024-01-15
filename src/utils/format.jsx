@@ -47,6 +47,7 @@ export const StatusChip = ({ status, isWorker }) => {
     position: "relative",
     transform: "translateY(-2px)",
     borderRadius: "9999px",
+    height: "30px",
     fontSize: "0.85rem",
     fontWeight: "550",
     color: textColor,

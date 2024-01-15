@@ -84,6 +84,7 @@ export default function Home({}) {
   const checkNotification = async () => {
     try {
       const response = await NotificationService.checkNotification();
+
       setHaveNotification(response.data);
       // console.log(response.data);
     } catch (error) {

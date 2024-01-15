@@ -12,11 +12,10 @@ import TextModal from "@/components/utils/modal/TextModal";
 
 import { useStore } from "@/store";
 function TopBar() {
-  const { loggedIn, user, isWorker, setUser, haveNotification, setSocket } =
-    useStore();
+  const { loggedIn, user, isWorker, setUser, haveNotification } = useStore();
   const [dataModal, setDataModal] = useState({});
   const [booking, setBooking] = useState({});
-  const [openWorkerModal, setOpenWorkerModal] = useState(true);
+  const [openWorkerModal, setOpenWorkerModal] = useState(false);
   const socket = useRef();
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
@@ -31,10 +30,14 @@ function TopBar() {
     if (isWorker) {
       console.log("conect socket worker");
       const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-      // console.log(host);
       socket.current = io(host);
       socket.current.emit("add-user", userId);
-      setSocket(socket);
+
+      socket.current.on("booking-recieve", (data) => {
+        console.log("booking recibido", data);
+        setBooking(data.data);
+        setOpenWorkerModal(true);
+      });
     }
     return () => {
       if (socket.current) {
@@ -43,18 +46,6 @@ function TopBar() {
     };
   }, [isWorker]);
 
-  useEffect(() => {
-    // console.log("socket.current", socket.current);
-
-    if (socket && socket.current) {
-      console.log("recibiendo desde a chatContainer comp");
-      socket.current.on("booking-recieve", (data) => {
-        console.log("booking recibido", data);
-        setBooking(data.data);
-        setOpenWorkerModal(true);
-      });
-    }
-  }, [socket]);
   const stateBookingWorker = async () => {
     console.log("stateBookingWorker");
     router.push(`/service-details/${booking._id}`);

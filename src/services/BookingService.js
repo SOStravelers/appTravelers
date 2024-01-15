@@ -50,7 +50,7 @@ export default class BookingService {
   }
 
   static async getAllBookingsByClient() {
-    return axios.get(`${this.baseUrl}/clients/allclients`, {
+    return axios.get(`${this.baseUrl}/clients/allbookings`, {
       headers: this.getHeaders(),
     });
   }

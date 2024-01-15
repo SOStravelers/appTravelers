@@ -64,12 +64,9 @@ function ServiceHistory() {
               </p>
             )}
 
-          {bookings.filter((booking) => booking.status === "confirmed").length >
-            0 && (
-            <h1 className="text-xl text-center my-8 max-w-lg">
-              Próximos serviços
-            </h1>
-          )}
+          <h1 className="text-xl text-center my-8 max-w-lg">
+            Próximos serviços
+          </h1>
           {bookings
             .filter((booking) => booking.status === "confirmed")
             .map((booking) => (

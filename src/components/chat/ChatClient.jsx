@@ -11,10 +11,11 @@ const ChatClient = ({
   chatId,
 }) => {
   const textareaRef = useRef();
-  const scrollRef = useRef();
+  const router = useRouter();
   const [messages, setMessages] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const scrollRef = useRef();
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -22,17 +23,21 @@ const ChatClient = ({
 
   useEffect(() => {
     if (initialMessages?.length > 0) {
+      console.log(initialMessages);
       setMessages(initialMessages);
     }
   }, [initialMessages]);
 
   useEffect(() => {
-    // console.log("socket.current", socket.current);
+    console.log("socket.current", socket.current);
 
     if (socket.current) {
-      // console.log("recibiendo desde a chatContainer comp");
+      console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
+        console.log("nuevitosclient", data);
+        console.log("casa", data.chatRoom, chatId);
         if (data.chatRoom !== chatId) return;
+        console.log("llego mensaje nuevo", data);
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
@@ -40,6 +45,7 @@ const ChatClient = ({
 
   useEffect(() => {
     if (arrivalMessage) {
+      console.log(arrivalMessage);
       setMessages((prev) => [...prev, arrivalMessage]);
     }
   }, [arrivalMessage]);
@@ -63,19 +69,12 @@ const ChatClient = ({
         chatRoom: chatId,
         message: inputValue,
       }).then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         const newMessage = { fromSelf: true, message: inputValue };
         setMessages([...messages, newMessage]);
       });
       setInputValue("");
-      // ref = { textareaRef };
-      textareaRef.current.focus();
-    }
-  };
-  const adjustTextAreaHeight = () => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "inherit";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      ref = { textareaRef };
     }
   };
 
@@ -100,7 +99,7 @@ const ChatClient = ({
   };
 
   return (
-    <div className="bg-white max-w-2xl flex flex-col items-center md:items-start mt-5">
+    <div className="bg-white h-full w-full flex flex-col items-center md:items-start mt-5">
       <div className="chat">
         {messages.map((message, index) => (
           <div
@@ -108,23 +107,18 @@ const ChatClient = ({
             ref={scrollRef}
             className={`msg my-1 ${message.fromSelf ? "sent" : "rcvd"}`}
           >
-            {message.message.split("\n").map((line, index) => (
-              <span key={index}>
-                {line}
-                <br />
-              </span>
-            ))}
+            {message.message}
           </div>
         ))}
       </div>
 
       <div
-        className="flex flex-col w-full items-center fixed md:px-0 bottom-[0.5rem] py-1 bg-white"
+        className="flex flex-col items-center fixed w-full md:w-[78%] md:px-0 bottom-[0.5rem] py-1 bg-white"
         // style={{
         //   boxShadow: "-2px -1px 10px 14px rgba(255,255,255,0.81)",
         // }}
       >
-        <div className="flex w-full overflow-x-auto my-3">
+        <div className="flex md:w-[80vw] w-[95vw] overflow-x-auto my-3">
           <div
             className="flex justify-center items-center text-white bg-grey rounded-full py-1 mx-1 min-w-[200px] cursor-pointer"
             onClick={handleSendPredefinedMsg}
@@ -150,30 +144,22 @@ const ChatClient = ({
             Wait a minute
           </div>
         </div>
-        <div className="flex items-center w-full pl-2 pr-1 ">
+        <div className="flex items-center pl-2 pr-1 w-full">
           <textarea
-            ref={textareaRef}
             style={{
               border: "2px solid #00A0D5",
-              paddingTop: "10px",
-              paddingLeft: "7px",
-              // padding: "10 20 0 0 ",
+              padding: "10px",
               outline: "none",
-              height: "35px",
-              overflow: "hidden",
-              resize: "none",
-              lineHeight: "1", // Añade esto
             }}
-            className="border border-black rounded-xl w-[98%] sm:w-[60%] "
+            className="border border-black rounded-xl w-[98%] min-h-4 "
             value={inputValue}
-            onChange={(event) => {
-              handleInputChange(event);
-              adjustTextAreaHeight();
-            }}
+            onChange={handleInputChange}
+            // onKeyDown={handleKeyDown}
             placeholder="Type a message..."
           />
+
           <SendIcon
-            // style={{ transform: "rotate(-20deg)" }}
+            style={{ transform: "rotate(-20deg)" }}
             className="cursor-pointer ml- h-10 w-10"
             onClick={handleSendClick}
           />

@@ -7,7 +7,9 @@ import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import { SECTION_ONE } from "@/constants";
 import Cookies from "js-cookie";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 import BookingService from "@/services/BookingService";
+import { set } from "date-fns";
 const weekDays = [];
 const today = dayjs();
 
@@ -28,6 +30,7 @@ for (let i = 1; i <= 6; i++) {
 export default function Booking() {
   const store = useStore();
   const { loginModal, setLoginModal } = store;
+  const router = useRouter();
   var user = Cookies.get("auth.user_id");
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
@@ -37,17 +40,6 @@ export default function Booking() {
   useEffect(() => {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
-  }, []);
-  useEffect(() => {
-    const day = weekDays.find((day) => day.number === selectedDay);
-    console.log(day);
-    if (user) {
-      BookingService.totalNumberWeek(day.date).then((res) => {
-        if (res) {
-          console.log(res.data);
-        }
-      });
-    }
   }, []);
 
   useEffect(() => {

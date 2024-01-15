@@ -43,9 +43,9 @@ function RecomendationCard(user) {
   return (
     <div
       onClick={() => setFavorite(user?.user._id)}
-      className="text-black flex flex-col bg-white mx-5   rounded-2xl border-r-2 border-blueBorder cursor-pointer "
+      className="text-black flex flex-col bg-white w-30  h-50  rounded-2xl border-r-2 border-blueBorder cursor-pointer "
     >
-      <div className="w-full h-28 w-20 rounded-tr-2xl rounded-tl-2xl relative">
+      <div className="w-full h-40 rounded-tr-2xl rounded-tl-2xl relative">
         <Image
           src={
             user?.user?.img?.imgUrl
@@ -57,7 +57,7 @@ function RecomendationCard(user) {
           className="object-cover rounded-tr-2xl rounded-tl-2xl"
         />
       </div>
-      <div className="px-1 flex flex-col sm:px-2">
+      <div className="px-1 sm:px-2">
         <h1 className="font-semibold mt-2">
           {getRandomSubServiceName(user.user)}
         </h1>

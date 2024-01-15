@@ -2228,7 +2228,7 @@ export const AlertIcon = ({ color, ...props }) => (
     </g>
     <defs>
       <clipPath id="clip0_117_2583">
-        <rect width="20" height="20" fill="red" />
+        <rect width="20" height="20" fill="white" />
       </clipPath>
     </defs>
   </svg>

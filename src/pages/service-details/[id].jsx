@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import WorkerProfileCardDetails from "@/components/utils/cards/WorkerProfileCardDetails";
+import SolidButton from "@/components/utils/buttons/SolidButton";
 import TextModal from "@/components/utils/modal/TextModal";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedChatButton from "@/components/utils/buttons/OutlinedChatButton";
@@ -12,22 +14,7 @@ import BookingService from "@/services/BookingService";
 import moment from "moment-timezone";
 import { Rings } from "react-loader-spinner";
 import { toast } from "react-toastify";
-import {
-  format,
-  isToday,
-  isYesterday,
-  isTomorrow,
-  isWithinInterval,
-  addDays,
-} from "date-fns";
-import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
-import { ptBR, enUS } from "date-fns/locale";
-import {
-  fullName,
-  StatusChip,
-  getServiceNames,
-  formatearFecha,
-} from "@/utils/format";
+import { data } from "autoprefixer";
 
 function ServiceHistory() {
   const router = useRouter();
@@ -282,7 +269,122 @@ function ServiceHistory() {
       }
     });
   };
+  const fullName = (data) => {
+    if (!data) return "";
+    const { first, last } = data;
+    return first + " " + (last ?? "");
+  };
+  function formatearFecha(fechaStr, isWorker) {
+    var [año, mes, dia] = fechaStr.split("-").map(Number);
 
+    // Crear un nuevo objeto Date en el huso horario local
+    var fechaObj = new Date(año, mes - 1, dia);
+
+    // Meses y días de la semana en inglés
+    var mesesIngles = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    var diasSemanaIngles = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    // Meses y días de la semana en portugués
+    var mesesPortugues = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+    var diasSemanaPortugues = [
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
+    ];
+
+    // Seleccionar los meses y días de la semana correctos
+    var meses = isWorker ? mesesPortugues : mesesIngles;
+    var diasSemana = isWorker ? diasSemanaPortugues : diasSemanaIngles;
+
+    // Obtener el mes, día y año
+    var mes = meses[fechaObj.getMonth()];
+    var dia = fechaObj.getDate();
+    var año = fechaObj.getFullYear();
+    var diaSemana = diasSemana[fechaObj.getUTCDay()];
+
+    // Formatear la fecha como "Wednesday, December 20, 2023" o "Quarta-feira, Dezembro 20, 2023"
+    var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
+
+    return fechaFormateada;
+  }
+  function StatusChip({ status }) {
+    let color;
+    let textColor = "white"; // Define textColor here
+    let statusPortugues = status;
+    switch (status) {
+      case "requested":
+        color = "grey";
+        statusPortugues = "Solicitado";
+        break;
+      case "completed":
+        color = "green";
+        statusPortugues = "Completado";
+        break;
+      case "canceled":
+        color = "#e77b7b";
+        statusPortugues = "Cancelado";
+        break;
+      case "confirmed":
+        color = "#92ef72";
+        textColor = "black";
+        statusPortugues = "Confirmado";
+        break;
+      default:
+        color = "gray";
+    }
+
+    const style = {
+      display: "inline-block",
+      padding: "0.3rem 0.8rem",
+      position: "relative",
+      transform: "translateY(-2px)",
+      borderRadius: "9999px",
+      fontSize: "0.85rem",
+      fontWeight: "550",
+      color: textColor,
+      backgroundColor: color,
+    };
+
+    return <span style={style}>{isWorker ? statusPortugues : status}</span>;
+  }
   return (
     //p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80 md:items-startx
     <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
@@ -334,7 +436,7 @@ function ServiceHistory() {
           <hr className="w-full max-w-lg text-grey" />
           <div className="mt-2 flex justify-center max-w-lg">
             <p className="text-left font-semibold">
-              {isWorker ? "Meu cliente" : "My Professional"}
+              {isWorker ? "Meu cliente" : "My Profesional"}
             </p>
           </div>
           {typeUser != "externalWorker" && (
@@ -353,15 +455,10 @@ function ServiceHistory() {
                     : booking?.clientUser?.img?.imgUrl || "/assets/user.png"
                 }
                 showEdit={false}
-                // service={
-                //   booking?.workerUser?.workerData?.services && !isWorker
-                //     ? booking?.workerUser?.workerData?.services
-                //     : ""
-                // }
                 service={
-                  booking?.workerUser?.workerData?.services && !isWorker
-                    ? getServiceNames(booking?.workerUser?.workerData)
-                    : "No services"
+                  booking?.service?.name && !isWorker
+                    ? booking?.service?.name
+                    : ""
                 }
               />
               <div className="flex flex-col items-center justify-center max-w-lg">
@@ -407,7 +504,7 @@ function ServiceHistory() {
               {isWorker ? "Serviço" : "Service"}
             </p>
             <p className="text-blackBlue font-semibold text-md">
-              {booking?.service?.name} - {booking?.subservice?.name}
+              {booking?.subservice?.name}
             </p>
           </div>
           <div className="flex justify-between items-end w-full max-w-lg my-1">

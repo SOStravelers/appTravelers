@@ -65,7 +65,7 @@ function ListSection() {
             (booking) =>
               booking.date.stringData === dayjs().format("YYYY-MM-DD")
           ).length === 0 && (
-            <p className="text-center text-greyText max-w-lg my-3">
+            <p className="text-center text-greyText max-w-lg my-10">
               {isWorker ? "Não há reservas para hoje" : "No bookings for today"}
             </p>
           )}

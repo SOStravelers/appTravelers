@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { StarIcon, ChangeIcon } from "@/constants/icons";
 import { useState, useEffect } from "react";
-import ServiceService from "@/services/ServiceService";
 
 function WorkerCardSumary({
   link,
@@ -28,6 +27,11 @@ function WorkerCardSumary({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const handleEditWorker = () => {
+    const service = JSON.parse(localStorage.getItem("service"));
+    localStorage.setItem("editing", true);
+    router.push(`/workers-found/${service.service.hostelId}`);
+  };
   function truncate(str, num) {
     if (str.length <= num) {
       return str;
@@ -35,11 +39,6 @@ function WorkerCardSumary({
     return str.slice(0, num) + "...";
   }
 
-  const handleEditWorker = () => {
-    const service = JSON.parse(localStorage.getItem("service"));
-    localStorage.setItem("editing", true);
-    router.push(`/workers-found/${service.service.hostelId}`);
-  };
   return (
     <div className="flex py-4 w-full max-w-lg rounded-lg justify-between my-2 items-center">
       <div className="flex">
@@ -59,8 +58,6 @@ function WorkerCardSumary({
           <h1 className="font-semibold">{name}</h1>
           <p className="text-blackText text-sm">
             {width < 420 ? truncate(service, 26) : service}
-            {/* 
-            {width < 420 ? truncate(service, 26) : service} */}
           </p>
           {/* <div className="flex items-center">
             <StarIcon color={"#00A0D5"} className="mr-1" />

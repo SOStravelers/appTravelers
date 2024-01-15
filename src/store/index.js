@@ -36,7 +36,6 @@ export const useStore = create((set) => {
     services: [],
     haveNotification: false,
     loginModal: false,
-    socket: null,
     setHaveNotification: (haveNotification) =>
       set({ haveNotification: haveNotification }),
     setLoginModal: (loginModal) => set({ loginModal: loginModal }),
@@ -44,7 +43,6 @@ export const useStore = create((set) => {
     setLoggedIn: (loggedIn) => set({ loggedIn: loggedIn }),
     setServices: (services) => set({ services: services }),
     setWorker: (isWorker) => set({ isWorker: isWorker }),
-    setSocket: (socket) => set({ socket: socket }),
     setService: (service) =>
       set((state) => {
         const data = { service: { ...state.service, ...service } };

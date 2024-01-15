@@ -40,6 +40,7 @@ export default function Notifications() {
   //funcion para obtener las notificaciones del usuario
   const getData = async () => {
     try {
+      console.log("getData");
       const limit = 20;
       const response = await NotificationService.getAll(page, limit);
       setNotifications((prevNotifications) => {
@@ -61,6 +62,7 @@ export default function Notifications() {
   const getMoreData = async () => {
     if (page > 1 && nextPage && notifications.length > 0) {
       try {
+        console.log("getMoreData");
         setLoading2(true);
         const limit = 2;
         const response = await NotificationService.getAll(page, limit);
@@ -80,6 +82,7 @@ export default function Notifications() {
   const handleObserver = (entities) => {
     const target = entities[0];
     if (target.isIntersecting) {
+      console.log("buena");
       getMoreData();
       // Verificar si el usuario ha hecho scroll  hasta el final de la lista
       if (

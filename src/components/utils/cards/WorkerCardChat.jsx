@@ -19,7 +19,7 @@ function WorkerCardChat({
       className="flex p-1 cursor-pointer w-full max-w-md rounded-2xl md:mt-4 border-b-2 border-blueBorder justify-between my-2 items-center"
       onClick={onClick}
     >
-      <div className="flex w-full flex-row items-center">
+      <div className="flex">
         <div className="w-16 h-16 rounded-xl bg-blueBorder mr-2 relative">
           <Image
             src={img}
@@ -29,19 +29,17 @@ function WorkerCardChat({
           />
         </div>
         <div className="flex flex-col">
-          <h1 className=" ml-1 font-semibold">{name}</h1>
+          <h1 className=" ml-1 font-semibold">
+            {name} | {subservice}
+          </h1>
           {/* <p className="text-blackText ml-2">{service}</p> */}
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {date} | {time} | {subservice}
+              {date} | {time}
             </p>
           </div>
-          <p className=" ml-1 text-blackText font-semibold">
-            {lastMesssage.length > 20
-              ? `${lastMesssage.substring(0, 25)}...`
-              : lastMesssage}
-          </p>
+          <p className=" ml-1 text-blackText font-semibold">{lastMesssage}</p>
         </div>
       </div>
 

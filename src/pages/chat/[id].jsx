@@ -7,10 +7,10 @@ import WorkerProfileCardChat from "@/components/utils/cards/WorkerProfileCardCha
 import ChatClient from "@/components/chat/ChatClient";
 import ChatService from "@/services/ChatService";
 import { Rings } from "react-loader-spinner";
-import { fullName } from "@/utils/format";
 export default function PersonalChat() {
   const router = useRouter();
   const [initialMessages, setInitialMessages] = useState([]);
+  const { idWorker, idClient } = router.query;
   const [booking, setBooking] = useState({});
   const [loading, setLoading] = useState(true);
   const [worker, setWorker] = useState({});
@@ -23,19 +23,13 @@ export default function PersonalChat() {
     if (user) {
       console.log("conect socket chat");
       const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-      // console.log(host);
+      console.log(host);
       socket.current = io(host);
       socket.current.emit("add-user", user);
       const id = router.query.id;
       setChatId(id);
       fetchData(id);
     }
-    // Función de limpieza
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
-    };
   }, []);
   async function fetchData(id) {
     try {
@@ -51,17 +45,22 @@ export default function PersonalChat() {
         chatRoom: id,
       });
 
-      // console.log("los mensajes", messagesResponse.data);
+      console.log(messagesResponse.data);
       setInitialMessages(messagesResponse.data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      // console.error(error);
+      console.error(error);
     }
   }
+  const fullName = (data) => {
+    if (!data) return "";
+    const { first, last } = data;
+    return first + " " + (last ?? "");
+  };
 
   return (
-    <div className="bg-white w-screen py-16 px-5 md:pl-80  max-h-screen">
+    <div className="bg-white w-screen py-16 px-5 md:pl-80 md:mt-10 max-h-screen">
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings

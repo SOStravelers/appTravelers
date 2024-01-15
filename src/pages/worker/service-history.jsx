@@ -26,6 +26,12 @@ function ServiceHistory() {
   };
   return (
     <div className="flex flex-col py-16 md:py-28 px-5 md:pl-80">
+      {bookings.filter((booking) => booking.status === "requested").length >
+        0 && (
+        <h1 className="text-xl text-center my-6 max-w-lg">
+          Serviços solicitados
+        </h1>
+      )}
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings
@@ -38,9 +44,6 @@ function ServiceHistory() {
         </div>
       ) : (
         <>
-          <h1 className="text-xl text-center my-6 max-w-lg">
-            Serviços solicitados
-          </h1>
           {bookings
             .filter((booking) => booking.status === "requested")
             .map((booking) => (
@@ -56,59 +59,48 @@ function ServiceHistory() {
                 name={`${booking?.businessUser?.businessData?.name}`}
               />
             ))}
-          {!loading &&
-            bookings.filter((booking) => booking.status === "requested")
-              .length === 0 && (
-              <p className="text-center text-greyText max-w-lg my-3">
-                {"Não há reservas para solicitadas"}
-              </p>
-            )}
 
-          <h1 className="text-xl text-center my-8 max-w-lg">
-            Próximos serviços
-          </h1>
+          {bookings.filter((booking) => booking.status === "confirmed").length >
+            0 && (
+            <h1 className="text-xl text-center my-8 max-w-lg">
+              Próximos serviços
+            </h1>
+          )}
           {bookings
             .filter((booking) => booking.status === "confirmed")
             .map((booking) => (
               <WorkerCardBooking
                 key={booking._id}
-                booking={booking}
-                subService={booking.subservice.name}
-                status={booking.status}
-                service={booking.service.name}
-                avatar={booking?.businessUser?.img?.imgUrl}
+                link={"/"}
+                avatar={booking.businessUser?.img?.imgUrl}
+                name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
+                location={booking.businessUser.businessData.name}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                name={`${booking?.businessUser?.businessData?.name}`}
+                showArrow={false}
+                booking={booking}
               />
             ))}
-          {!loading &&
-            bookings.filter((booking) => booking.status === "confirmed")
-              .length === 0 && (
-              <p className="text-center text-greyText max-w-lg my-3">
-                {"Não há reservas confirmadas"}
-              </p>
-            )}
 
-          <h1 className="text-xl text-center my-8 max-w-lg">
-            Serviços concluídos
-          </h1>
+          {bookings.filter((booking) => booking.status === "accepted").length >
+            0 && (
+            <h1 className="text-xl text-center my-8 max-w-lg">
+              Últimos serviços
+            </h1>
+          )}
           {bookings
-            .filter(
-              (booking) =>
-                booking.status === "completed" || booking.status === "canceled"
-            )
+            .filter((booking) => booking.status === "completed")
             .map((booking) => (
               <WorkerCardBooking
                 key={booking._id}
-                booking={booking}
-                subService={booking.subservice.name}
-                status={booking.status}
-                service={booking.service.name}
-                avatar={booking?.businessUser?.img?.imgUrl}
+                link={"/"}
+                avatar={booking.businessUser?.img?.imgUrl}
+                name={`${booking.clientUser.personalData.name.first} ${booking.clientUser.personalData.name.last}`}
+                location={booking.businessUser.businessData.name}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                name={`${booking?.businessUser?.businessData?.name}`}
+                showArrow={false}
+                booking={booking}
               />
             ))}
         </>

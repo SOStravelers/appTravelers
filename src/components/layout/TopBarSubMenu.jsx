@@ -1,43 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ReturnArrowIcon } from "@/constants/icons";
 import { useRouter } from "next/router";
 import { LogoWhite } from "@/constants/icons";
 import clsx from "clsx";
 import Link from "next/link";
 import { useStore } from "@/store";
-import { io } from "socket.io-client";
-import Cookies from "js-cookie";
+
 function TopBarSubMenu() {
   const [titulo, setTitulo] = useState("");
   const router = useRouter();
-  const socket = useRef();
-  const { isWorker, setSocket } = useStore();
-  var userId = Cookies.get("auth.user_id");
-  useEffect(() => {
-    console.log("isWorker", isWorker);
-    if (isWorker) {
-      console.log("conect socket worker");
-      const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-      // console.log(host);
-      socket.current = io(host);
-      socket.current.emit("add-user", userId);
-      setSocket(socket);
-    }
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
-    };
-  }, [isWorker]);
-
-  // useEffect(() => {
-  //   // console.log("socket.current", socket.current);
-
-  //   if (socket && socket.current) {
-  //     // console.log("recibiendo desde a chatContainer comp");
-  //     socket.current.on("book-recieve", (data) => {});
-  //   }
-  // }, [socket]);
+  const { isWorker } = useStore();
 
   const actualURL = router.pathname;
 

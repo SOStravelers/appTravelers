@@ -1,36 +1,35 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useStore } from "@/store";
-import { PinIcon, ClockIcon, ArrangeIcon } from "@/constants/icons";
-import moment from "moment-timezone";
-import { StatusChip, getDayOfWeek } from "@/utils/format";
-import "moment/locale/pt-br"; // without this line it didn't work
-function WorkerCardBookingRequest({
-  booking,
-  name,
-  location,
-  avatar,
-  date,
-  hour,
-  service,
-  subService,
-  status,
-}) {
+import { PinIcon, ClockIcon } from "@/constants/icons";
+
+function WorkerCardBookingRequest({ booking, name, location, avatar, date, hour }) {
   const router = useRouter();
-  const { isWorker } = useStore();
 
   const goToDetails = () => {
     router.push({
       pathname: `/request-details/${booking.id}`,
+      query: {
+        name: name,
+        avatar: booking.avatar,
+        businessName: location,
+        location: `${booking.businessUser.businessData.location.city}, ${booking.businessUser.businessData.location.country}`,
+        date: date,
+        hour: hour,
+        service: booking.service.name,
+        subService: booking.subservice.name,
+        idWorker: booking.workerUser._id,
+        idBooking: booking.id,
+        idClient: booking.clientUser._id,
+      },
     });
   };
 
   return (
     <div
-      className="flex max-w-lg p-4 rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
+      className="flex p-4 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
       onClick={() => goToDetails()}
     >
-      <div className="flex w-full flex-row">
+      <div className="flex">
         <div className="w-20 h-20 rounded-xl bg-blueBorder mr-2 relative">
           <Image
             src={avatar ?? "/assets/proovedor.png"}
@@ -39,47 +38,16 @@ function WorkerCardBookingRequest({
             className="object-cover rounded-xl"
           />
         </div>
-        <div className="flex flex-col flex-grow">
-          <h1 className="font-semibold  ml-1">{name}</h1>
-
-          <div className="flex flex-row">
-            {location && (
-              <div className="flex items-center" style={{ marginLeft: "-1px" }}>
-                <PinIcon color={"#00A0D5"} className="ml-1 mr-2" />
-                <p className="text-blackText text-sm">{location}</p>
-              </div>
-            )}
-            {/* <div className="flex items-center">
-            <Image
-              src={"/assets/user.png"}
-              width={25}
-              height={25}
-              alt="profileImg"
-            />
-            <p className="text-blackText text-sm">{name}</p>
-          </div> */}
-            {subService && (
-              <div
-                className="flex items-center "
-                style={{ marginLeft: "-1px" }}
-              >
-                <ArrangeIcon />
-                <p
-                  style={{ marginTop: "2px" }}
-                  className="text-blackText text-sm ml-1"
-                >
-                  {subService}
-                </p>
-              </div>
-            )}
-            <div className="flex flex-grow justify-end">
-              <StatusChip status={status} isWorker={isWorker} />
-            </div>
+        <div className="flex flex-col">
+          <h1 className="font-semibold">{name}</h1>
+          <div className="flex items-center mb-1">
+            <PinIcon color={"#00A0D5"} className="mr-1" />
+            <p className="text-blackText text-sm">{location}</p>
           </div>
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {hour} | {getDayOfWeek(date, isWorker)}
+              {date} | {hour}
             </p>
           </div>
         </div>

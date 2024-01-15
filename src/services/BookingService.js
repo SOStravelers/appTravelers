@@ -11,6 +11,8 @@ export default class BookingService {
   }
 
   static async create(params) {
+    console.log("...creando");
+    console.log("this.get");
     return axios.post(`${this.baseUrl}`, params, {
       headers: this.getHeaders(),
     });
@@ -50,13 +52,7 @@ export default class BookingService {
   }
 
   static async getAllBookingsByClient() {
-    return axios.get(`${this.baseUrl}/clients/allbookings`, {
-      headers: this.getHeaders(),
-    });
-  }
-
-  static async totalNumberWeek(date) {
-    return axios.get(`${this.baseUrl}/client/week?date=${date}`, {
+    return axios.get(`${this.baseUrl}/clients/allclients`, {
       headers: this.getHeaders(),
     });
   }
@@ -64,18 +60,13 @@ export default class BookingService {
   // WORKER BOOKINGS
 
   static async getBookingsByList(date) {
+    console.log("...getBookingsByList");
     return axios.get(
       `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=4`,
       {
         headers: this.getHeaders(),
       }
     );
-  }
-
-  static async getAllBookingsByWorker(date) {
-    return axios.get(`${this.baseUrl}/worker/allworkers`, {
-      headers: this.getHeaders(),
-    });
   }
 
   static async getBookingsByMonthWorker(date) {
@@ -96,12 +87,13 @@ export default class BookingService {
     );
   }
 
-  static async getAllBookingsAvailable() {
-    return axios.get(`${this.baseUrl}/worker/available`, {
+  static async getAllBookingsByWorker() {
+    return axios.get(`${this.baseUrl}/worker/allworkers`, {
       headers: this.getHeaders(),
     });
   }
   static async getBookingById(id) {
+    console.log("el get");
     return axios.get(`${this.baseUrl}/byId/${id}`, {
       headers: this.getHeaders(),
     });
@@ -109,15 +101,6 @@ export default class BookingService {
   static async confirmBookingWorker(id) {
     return axios.put(
       `${this.baseUrl}/confirmWorker/${id}`,
-      {},
-      {
-        headers: this.getHeaders(),
-      }
-    );
-  }
-  static async confirmBookingWorkerExternal(id) {
-    return axios.put(
-      `${this.baseUrl}/confirmWorkerExternal/${id}`,
       {},
       {
         headers: this.getHeaders(),

@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import { Rings } from "react-loader-spinner";
 import { useRouter } from "next/router";
 import { ChatPicture } from "@/constants/icons";
-import { fullName } from "@/utils/format";
+
 export default function Chat() {
   const store = useStore();
   const router = useRouter();
@@ -25,6 +25,7 @@ export default function Chat() {
   useEffect(() => {
     document.title = "My chats | SOS Travelers";
     if (loginModal) {
+      console.log("entrando");
       setOpen(false);
       setLoginModal(false);
       // router.push("/");
@@ -52,6 +53,7 @@ export default function Chat() {
           }
         });
       }
+      console.log(unformattedChats);
       setChats(unformattedChats);
     }
     setLoading(false);
@@ -63,11 +65,16 @@ export default function Chat() {
       chatRoom: chat.id,
     };
     const response = await ChatService.markAsRead(body);
+    if (response) console.log(response);
     router.push({
       pathname: `/worker/chat/${chat._id}`,
     });
   };
-
+  const fullName = (data) => {
+    if (!data) return "";
+    const { first, last } = data;
+    return first + " " + (last ?? "");
+  };
   return (
     <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-16 px-3 md:pl-80">
       <h1 className="my-1   text-center max-w-lg">My chats</h1>
@@ -79,7 +86,7 @@ export default function Chat() {
             color="#00A0D5"
             ariaLabel="infinity-spin-loading"
           />
-          <p>Pesquisando...</p>
+          <p>Searching...</p>
         </div>
       ) : chats?.length > 0 ? (
         chats.map((chat, index) => (

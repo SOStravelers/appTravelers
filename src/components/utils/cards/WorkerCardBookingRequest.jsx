@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useStore } from "@/store";
 import { PinIcon, ClockIcon, ArrangeIcon } from "@/constants/icons";
 import moment from "moment-timezone";
+import { StatusChip } from "@/utils/format";
 import "moment/locale/pt-br"; // without this line it didn't work
 function WorkerCardBookingRequest({
   booking,
@@ -23,45 +24,6 @@ function WorkerCardBookingRequest({
       pathname: `/request-details/${booking.id}`,
     });
   };
-  function StatusChip({ status }) {
-    let color;
-    let textColor = "white"; // Define textColor here
-    let statusPortugues = status;
-    switch (status) {
-      case "requested":
-        color = "grey";
-        statusPortugues = "Solicitado";
-        break;
-      case "completed":
-        color = "green";
-        statusPortugues = "Completado";
-        break;
-      case "canceled":
-        color = "#e77b7b";
-        statusPortugues = "Cancelado";
-        break;
-      case "confirmed":
-        color = "#92ef72";
-        textColor = "black";
-        statusPortugues = "Confirmado";
-        break;
-      default:
-        color = "gray";
-    }
-
-    const style = {
-      display: "inline-block",
-      padding: "0.2rem 0.6rem",
-      borderRadius: "9999px",
-      fontSize: "0.80rem",
-      fontWeight: "550",
-      color: textColor,
-      backgroundColor: color,
-      maxHeight: "1.6rem",
-    };
-
-    return <span style={style}>{isWorker ? statusPortugues : status}</span>;
-  }
   function getDayOfWeek(date, location) {
     const language = !location ? "pt-br" : "en";
     return moment.tz(date, "America/Sao_Paulo").locale(language).format("dddd");
@@ -115,7 +77,7 @@ function WorkerCardBookingRequest({
               </div>
             )}
             <div className="flex flex-grow justify-end">
-              <StatusChip status={status} />
+              <StatusChip status={status} isWorker={isWorker} />
             </div>
           </div>
           <div className="flex items-center">

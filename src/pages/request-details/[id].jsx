@@ -10,7 +10,7 @@ import BookingService from "@/services/BookingService";
 import moment from "moment-timezone";
 import { Rings } from "react-loader-spinner";
 import { toast } from "react-toastify";
-import { fullName } from "@/utils/format";
+import { fullName, StatusChip } from "@/utils/format";
 function ServiceHistory() {
   const router = useRouter();
   const { isWorker, user } = useStore();
@@ -209,46 +209,6 @@ function ServiceHistory() {
 
     return fechaFormateada;
   }
-  function StatusChip({ status }) {
-    let color;
-    let textColor = "white"; // Define textColor here
-    let statusPortugues = status;
-    switch (status) {
-      case "requested":
-        color = "grey";
-        statusPortugues = "Solicitado";
-        break;
-      case "completed":
-        color = "green";
-        statusPortugues = "Completado";
-        break;
-      case "canceled":
-        color = "#e77b7b";
-        statusPortugues = "Cancelado";
-        break;
-      case "confirmed":
-        color = "#92ef72";
-        textColor = "black";
-        statusPortugues = "Confirmado";
-        break;
-      default:
-        color = "gray";
-    }
-
-    const style = {
-      display: "inline-block",
-      padding: "0.3rem 0.8rem",
-      position: "relative",
-      transform: "translateY(-2px)",
-      borderRadius: "9999px",
-      fontSize: "0.85rem",
-      fontWeight: "550",
-      color: textColor,
-      backgroundColor: color,
-    };
-
-    return <span style={style}>{isWorker ? statusPortugues : status}</span>;
-  }
   return (
     //p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80 md:items-startx
     <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
@@ -336,7 +296,7 @@ function ServiceHistory() {
           <div className="flex justify-between items-center w-full max-w-lg mt-4 mb-2">
             <p className="text-blackText font-semibold text-lg">Status</p>
             <p className="text-blackBlue font-semibold text-md">
-              <StatusChip status={booking?.status} />
+              <StatusChip status={booking?.status} isWorker={isWorker} />
             </p>
           </div>
           <hr className="w-full max-w-lg  text-grey" />

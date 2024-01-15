@@ -6,7 +6,7 @@ import WorkerService from "@/services/WorkerService";
 import { random } from "@/lib/utils";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
-import { fullName } from "@/utils/format";
+import { fullName, getServiceNames } from "@/utils/format";
 export default function WorkersFound() {
   const { setService, service } = useStore();
   const router = useRouter();
@@ -41,16 +41,6 @@ export default function WorkersFound() {
   const comeBack = () => {
     router.back();
   };
-
-  function getServiceNames(data) {
-    // Extraer los nombres de los servicios
-    const serviceNames = data.services.map((service) => service.id.name);
-
-    // Unir los nombres en un solo string con comas
-    const serviceNamesString = serviceNames.join(", ");
-
-    return serviceNamesString;
-  }
 
   const selectWorker = (workerId) => {
     const hostelId = router.query.id;
@@ -90,7 +80,7 @@ export default function WorkersFound() {
                   name={fullName(worker.personalData?.name)}
                   service={
                     worker?.workerData
-                      ? getServiceNames(worker.workerData)
+                      ? getServiceNames(worker?.workerData)
                       : "No services"
                   }
                   score={5}

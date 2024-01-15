@@ -6,11 +6,10 @@ import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import Link from "next/link";
 import { ClockIcon, ChangeIcon, CheckIcon } from "@/constants/icons";
-import { fullName } from "@/utils/format";
+import { fullName, getServiceNames, formatearFecha } from "@/utils/format";
 import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WorkerService";
 import SubserviceService from "@/services/SubserviceService";
-import { is } from "date-fns/locale";
 
 export default function Summary() {
   const { isWorker } = useStore();
@@ -70,86 +69,6 @@ export default function Summary() {
     if (localStorage.getItem("fromFavorite")) return false;
   };
 
-  function formatearFecha(fechaStr, isWorker) {
-    var [año, mes, dia] = fechaStr.split("-").map(Number);
-
-    // Crear un nuevo objeto Date en el huso horario local
-    var fechaObj = new Date(año, mes - 1, dia);
-
-    // Meses y días de la semana en inglés
-    var mesesIngles = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    var diasSemanaIngles = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-
-    // Meses y días de la semana en portugués
-    var mesesPortugues = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ];
-    var diasSemanaPortugues = [
-      "Domingo",
-      "Segunda-feira",
-      "Terça-feira",
-      "Quarta-feira",
-      "Quinta-feira",
-      "Sexta-feira",
-      "Sábado",
-    ];
-
-    // Seleccionar los meses y días de la semana correctos
-    var meses = isWorker ? mesesPortugues : mesesIngles;
-    var diasSemana = isWorker ? diasSemanaPortugues : diasSemanaIngles;
-
-    // Obtener el mes, día y año
-    var mes = meses[fechaObj.getMonth()];
-    var dia = fechaObj.getDate();
-    var año = fechaObj.getFullYear();
-    var diaSemana = diasSemana[fechaObj.getUTCDay()];
-
-    // Formatear la fecha como "Wednesday, December 20, 2023" o "Quarta-feira, Dezembro 20, 2023"
-    var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
-
-    return fechaFormateada;
-  }
-  function getServiceNames(data) {
-    // Extraer los nombres de los servicios
-    const serviceNames = data.services.map((service) => service.id.name);
-
-    // Unir los nombres en un solo string con comas
-    const serviceNamesString = serviceNames.join(", ");
-
-    return serviceNamesString;
-  }
   return (
     <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-6 md:pl-80">
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
@@ -163,11 +82,14 @@ export default function Summary() {
         subserviceId={subServiceId}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
+      <h1 className="mt-2 text-grey text-sm text-center max-w-lg">
+        Professional
+      </h1>
       <WorkerCardSumary
         name={fullName(worker?.personalData?.name)}
         service={
           worker?.workerData
-            ? getServiceNames(worker.workerData)
+            ? getServiceNames(worker?.workerData)
             : "No services"
         }
         score={5}
@@ -235,7 +157,7 @@ export default function Summary() {
         </p>
       </div>
       <OutlinedButton
-        disabled={!selected}
+        disabled={!selected && !service?.price[0]?.finalCost}
         text={"Hire Now"}
         onClick={hireNow}
       />

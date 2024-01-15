@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import WorkerProfileCardDetails from "@/components/utils/cards/WorkerProfileCardDetails";
-import SolidButton from "@/components/utils/buttons/SolidButton";
 import TextModal from "@/components/utils/modal/TextModal";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedChatButton from "@/components/utils/buttons/OutlinedChatButton";
@@ -14,8 +12,13 @@ import BookingService from "@/services/BookingService";
 import moment from "moment-timezone";
 import { Rings } from "react-loader-spinner";
 import { toast } from "react-toastify";
-import { data } from "autoprefixer";
-import { fullName, StatusChip } from "@/utils/format";
+import {
+  fullName,
+  StatusChip,
+  getServiceNames,
+  formatearFecha,
+} from "@/utils/format";
+
 function ServiceHistory() {
   const router = useRouter();
   const { isWorker, user } = useStore();
@@ -269,77 +272,6 @@ function ServiceHistory() {
       }
     });
   };
-  function formatearFecha(fechaStr, isWorker) {
-    var [año, mes, dia] = fechaStr.split("-").map(Number);
-
-    // Crear un nuevo objeto Date en el huso horario local
-    var fechaObj = new Date(año, mes - 1, dia);
-
-    // Meses y días de la semana en inglés
-    var mesesIngles = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    var diasSemanaIngles = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-
-    // Meses y días de la semana en portugués
-    var mesesPortugues = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ];
-    var diasSemanaPortugues = [
-      "Domingo",
-      "Segunda-feira",
-      "Terça-feira",
-      "Quarta-feira",
-      "Quinta-feira",
-      "Sexta-feira",
-      "Sábado",
-    ];
-
-    // Seleccionar los meses y días de la semana correctos
-    var meses = isWorker ? mesesPortugues : mesesIngles;
-    var diasSemana = isWorker ? diasSemanaPortugues : diasSemanaIngles;
-
-    // Obtener el mes, día y año
-    var mes = meses[fechaObj.getMonth()];
-    var dia = fechaObj.getDate();
-    var año = fechaObj.getFullYear();
-    var diaSemana = diasSemana[fechaObj.getUTCDay()];
-
-    // Formatear la fecha como "Wednesday, December 20, 2023" o "Quarta-feira, Dezembro 20, 2023"
-    var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
-
-    return fechaFormateada;
-  }
 
   return (
     //p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80 md:items-startx
@@ -411,10 +343,15 @@ function ServiceHistory() {
                     : booking?.clientUser?.img?.imgUrl || "/assets/user.png"
                 }
                 showEdit={false}
+                // service={
+                //   booking?.workerUser?.workerData?.services && !isWorker
+                //     ? booking?.workerUser?.workerData?.services
+                //     : ""
+                // }
                 service={
                   booking?.workerUser?.workerData?.services && !isWorker
-                    ? booking?.workerUser?.workerData?.services
-                    : ""
+                    ? getServiceNames(booking?.workerUser?.workerData)
+                    : "No services"
                 }
               />
               <div className="flex flex-col items-center justify-center max-w-lg">
@@ -451,7 +388,7 @@ function ServiceHistory() {
           <div className="flex justify-between items-center w-full max-w-lg mt-4 mb-2">
             <p className="text-blackText font-semibold text-lg">Status</p>
             <p className="text-blackBlue font-semibold text-md">
-              <StatusChip status={booking?.status} isWorker={isWorker} />
+              <StatusChip status={booking?.status} />
             </p>
           </div>
           <hr className="w-full max-w-lg  text-grey" />

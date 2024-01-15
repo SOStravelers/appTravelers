@@ -3,7 +3,7 @@ import { register } from "swiper/element/bundle";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
-
+import { Rings } from "react-loader-spinner";
 import NotificationService from "@/services/NotificationService";
 import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
@@ -22,7 +22,7 @@ export default function Home({}) {
   const [bookings, setBookings] = useState([]);
   const [swiper, setSwiper] = useState(null);
   const [randomUsers, setRandomUsers] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
@@ -91,9 +91,7 @@ export default function Home({}) {
   const getUsers = async () => {
     UserService.getRandom().then((response) => {
       setRandomUsers(response.data);
-      // checkNotification();
-
-      // console.log(response.data);
+      setLoading(false);
     });
   };
 
@@ -146,11 +144,23 @@ export default function Home({}) {
         >
           Recommended for you
         </h1>
-        <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
-          {randomUsers?.map((s, index) => (
-            <RecomendationCard key={index} user={s} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="max-w-lg flex flex-col items-center justify-center">
+            <Rings
+              width={100}
+              height={100}
+              color="#00A0D5"
+              ariaLabel="infinity-spin-loading"
+            />
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
+            {randomUsers?.map((s, index) => (
+              <RecomendationCard key={index} user={s} />
+            ))}
+          </div>
+        )}
       </section>
     </main>
   );

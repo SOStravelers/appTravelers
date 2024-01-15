@@ -3,17 +3,8 @@ import { useStore } from "@/store";
 import Image from "next/image";
 import { PinIcon, ClockIcon, ArrangeIcon } from "@/constants/icons";
 import moment from "moment-timezone";
-import { StatusChip } from "@/components/utils/StatusChip";
-import {
-  format,
-  isToday,
-  isYesterday,
-  isTomorrow,
-  isWithinInterval,
-  addDays,
-} from "date-fns";
-import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
-import { ptBR, enUS } from "date-fns/locale";
+import { StatusChip, getDayOfWeek } from "@/utils/format";
+
 function WorkerCardBooking({
   booking,
   name,
@@ -33,32 +24,6 @@ function WorkerCardBooking({
       pathname: `/service-details/${booking.id}`,
     });
   };
-
-  function getDayOfWeek(date) {
-    const timeZone = "America/Sao_Paulo";
-    const zonedDate = utcToZonedTime(date, timeZone);
-    const locale = isWorker ? ptBR : enUS;
-    const today = isWorker ? "hoje" : "today";
-    const yesterday = isWorker ? "ontem" : "yesterday";
-    const tomorrow = isWorker ? "amanhã" : "tomorrow";
-
-    if (isToday(zonedDate)) {
-      return today;
-    } else if (isYesterday(zonedDate)) {
-      return yesterday;
-    } else if (isTomorrow(zonedDate)) {
-      return tomorrow;
-    } else if (
-      isWithinInterval(zonedDate, {
-        start: zonedTimeToUtc(new Date(), timeZone),
-        end: addDays(zonedTimeToUtc(new Date(), timeZone), 7),
-      })
-    ) {
-      return format(zonedDate, "EEEE", { locale: locale });
-    } else {
-      return date;
-    }
-  }
 
   return (
     <div
@@ -114,7 +79,7 @@ function WorkerCardBooking({
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {hour} | {getDayOfWeek(date, location)}
+              {hour} | {getDayOfWeek(date, isWorker)}
             </p>
           </div>
         </div>

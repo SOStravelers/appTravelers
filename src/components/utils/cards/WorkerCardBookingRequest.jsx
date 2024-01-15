@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useStore } from "@/store";
 import { PinIcon, ClockIcon, ArrangeIcon } from "@/constants/icons";
 import moment from "moment-timezone";
-import { StatusChip } from "@/utils/format";
+import { StatusChip, getDayOfWeek } from "@/utils/format";
 import "moment/locale/pt-br"; // without this line it didn't work
 function WorkerCardBookingRequest({
   booking,
@@ -24,10 +24,6 @@ function WorkerCardBookingRequest({
       pathname: `/request-details/${booking.id}`,
     });
   };
-  function getDayOfWeek(date, location) {
-    const language = !location ? "pt-br" : "en";
-    return moment.tz(date, "America/Sao_Paulo").locale(language).format("dddd");
-  }
 
   return (
     <div
@@ -83,7 +79,7 @@ function WorkerCardBookingRequest({
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {hour} | {getDayOfWeek(date, location)}
+              {hour} | {getDayOfWeek(date, isWorker)}
             </p>
           </div>
         </div>

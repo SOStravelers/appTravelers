@@ -79,7 +79,7 @@ export default function Chat() {
             color="#00A0D5"
             ariaLabel="infinity-spin-loading"
           />
-          <p>Searching...</p>
+          <p>Pesquisando...</p>
         </div>
       ) : chats?.length > 0 ? (
         chats.map((chat, index) => (

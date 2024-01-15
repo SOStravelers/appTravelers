@@ -13,30 +13,10 @@ function WorkerCardSumary({
   img,
   showEdit = true,
 }) {
-  const router = useRouter(); /* 
-  const [width, setWidth] = useState(0); */
-  const [services, setServices] = useState();
-  const getServices = async () => {
-    try {
-      if (!service) return;
-      const servicesPromises = service.map(async (services) => {
-        const nameServices = await ServiceService.getServicesById(services.id);
-        return `${nameServices?.data.name}`;
-      });
-
-      // Esperar a que todas las promesas se resuelvan
-      const results = await Promise.all(servicesPromises);
-
-      // results contendrá un array con todas las cadenas generadas
-      setServices(results);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const router = useRouter();
+  const [width, setWidth] = useState(0);
   useEffect(() => {
-    getServices();
-    /*  setWidth(window.innerWidth);
+    setWidth(window.innerWidth);
 
     const handleResize = () => {
       setWidth(window.innerWidth);
@@ -46,25 +26,20 @@ function WorkerCardSumary({
 
     return () => {
       window.removeEventListener("resize", handleResize);
-    }; */
+    };
   }, []);
-
-  const capitalize = (cadena) => {
-    return cadena.charAt(0).toUpperCase() + cadena.slice(1);
-  };
+  function truncate(str, num) {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num) + "...";
+  }
 
   const handleEditWorker = () => {
     const service = JSON.parse(localStorage.getItem("service"));
     localStorage.setItem("editing", true);
     router.push(`/workers-found/${service.service.hostelId}`);
   };
-  /*  function truncate(str, num) {
-    if (str.length <= num) {
-      return str;
-    }
-    return str.slice(0, num) + "...";
-  } */
-
   return (
     <div className="flex py-4 w-full max-w-lg rounded-lg justify-between my-2 items-center">
       <div className="flex">
@@ -83,7 +58,7 @@ function WorkerCardSumary({
         <div className="flex mt-2 flex-col">
           <h1 className="font-semibold">{name}</h1>
           <p className="text-blackText text-sm">
-            {services?.map((service) => capitalize(service)).join(", ")}
+            {width < 420 ? truncate(service, 26) : service}
             {/* 
             {width < 420 ? truncate(service, 26) : service} */}
           </p>

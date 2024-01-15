@@ -54,6 +54,7 @@ function Layout({ children, lang }) {
     router.pathname === "/worker/profile" ||
     router.pathname === "/worker/home" ||
     router.pathname === "/" ||
+    router.pathname === "/worker/requests" ||
     router.pathname === "/worker/chat" ||
     router.pathname === "/worker/favorites" ||
     router.pathname === "/booking" ||

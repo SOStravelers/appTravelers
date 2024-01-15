@@ -45,7 +45,6 @@ export default function WorkerHome() {
     try {
       const response = await NotificationService.checkNotification();
       setHaveNotification(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -56,19 +55,28 @@ export default function WorkerHome() {
     setSlides([
       {
         id: 1,
-        direction: "124 street Miro Hotel, Ubud",
-        date: "4 Aug, 2023 | 04:30 PM",
+        title: "Dicas SOS",
+        body: "Só é possível cancelar uma reserva até 2 horas antes do início.",
+        // direction: "124 street Miro Hotel, Ubud",
+        // date: "4 Aug, 2023 | 04:30 PM",
       },
       {
         id: 2,
-        direction: "124 street Miro Hotel, Ubud",
-        date: "4 Aug, 2023 | 04:30 PM",
+        title: "Dicas SOS",
+        body: "Lembre-se de pressionar o botão 'concluir trabalho' ao finalizar o trabalho para poder ser remunerado.",
       },
       {
         id: 3,
-        direction: "124 street Miro Hotel, Ubud",
-        date: "4 Aug, 2023 | 04:30 PM",
+        title: "Dicas SOS",
+        body: "Se você não aceitar um trabalho solicitado nos primeiros 30 minutos, qualquer trabalhador poderá realizá-lo.",
       },
+
+      // {
+      //   id: 3,
+      //   title: "New booking",
+      //   direction: "124 street Miro Hotel, Ubud",
+      //   date: "4 Aug, 2023 | 04:30 PM",
+      // },
       // {
       //   id: 4,
       //   direction: "124 street Miro Hotel, Ubud",
@@ -106,8 +114,6 @@ export default function WorkerHome() {
     router.push(path);
   };
 
-  console.log(bookings);
-
   return (
     <main className="flex flex-col bg-white  py-16 lg:mt-5 xl:mt-5 px-4 md:pl-80 md:items-start">
       <div className="w-full max-w-lg ">
@@ -124,13 +130,18 @@ export default function WorkerHome() {
         >
           {slides?.map((slide) => (
             <SwiperSlide key={slide?.id}>
-              <BookingCard direction={slide?.direction} date={slide?.date} />
+              <BookingCard
+                title={slide?.title}
+                body={slide?.body}
+                direction={slide?.direction}
+                date={slide?.date}
+              />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
 
-      <section className=" mb-5 flex w-full max-w-lg items-center ">
+      <section className=" mb-1 flex w-full max-w-lg items-center ">
         <div className="flex flex-grow items-center ">
           <OutlinedButton text="Book a service" onClick={handleBookService} />
         </div>
@@ -138,7 +149,7 @@ export default function WorkerHome() {
 
       <section className="flex w-full max-w-lg items-center flex-col">
         <div className="items-center ">
-          <h1 className="text-black text-xl font-medium text-center my-5">
+          <h1 className="text-black text-xl font-medium text-center my-1">
             Upcoming
           </h1>
         </div>
@@ -174,7 +185,7 @@ export default function WorkerHome() {
               ))
           )}
           {!loading && bookings.length === 0 && (
-            <p className="text-center text-greyText max-w-lg my-10">
+            <p className="text-center text-greyText max-w-lg my-3">
               {"Não há reservas para hoje"}
             </p>
           )}
@@ -183,21 +194,3 @@ export default function WorkerHome() {
     </main>
   );
 }
-
-// export async function getServerSideProps({ req }) {
-//   const userId = req.cookies["auth.user_id"];
-//   let user = null;
-//   if (userId) {
-//     try {
-//       const response = await UserService.get(userId);
-//       user = response.data;
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-//   return {
-//     props: {
-//       user: user,
-//     },
-//   };
-// }

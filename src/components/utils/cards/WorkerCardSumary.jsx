@@ -18,6 +18,7 @@ function WorkerCardSumary({
   const [services, setServices] = useState();
   const getServices = async () => {
     try {
+      if (!service) return;
       const servicesPromises = service.map(async (services) => {
         const nameServices = await ServiceService.getServicesById(services.id);
         return `${nameServices?.data.name}`;

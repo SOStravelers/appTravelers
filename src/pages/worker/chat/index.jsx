@@ -25,7 +25,6 @@ export default function Chat() {
   useEffect(() => {
     document.title = "My chats | SOS Travelers";
     if (loginModal) {
-      console.log("entrando");
       setOpen(false);
       setLoginModal(false);
       // router.push("/");
@@ -53,7 +52,6 @@ export default function Chat() {
           }
         });
       }
-      console.log(unformattedChats);
       setChats(unformattedChats);
     }
     setLoading(false);
@@ -65,7 +63,6 @@ export default function Chat() {
       chatRoom: chat.id,
     };
     const response = await ChatService.markAsRead(body);
-    if (response) console.log(response);
     router.push({
       pathname: `/worker/chat/${chat._id}`,
     });

@@ -22,9 +22,7 @@ function Navbar() {
 
   const { isWorker, user, setHaveNotification } = useStore();
   const goTo = (ruta) => {
-    console.log("ruta", ruta);
     if (ruta != "/" && ruta != "/worker/home") {
-      console.log("accion");
       checkNotification();
     }
     router.push(ruta);
@@ -40,7 +38,6 @@ function Navbar() {
     try {
       const response = await NotificationService.checkNotification();
       setHaveNotification(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

@@ -29,17 +29,19 @@ function WorkerCardChat({
           />
         </div>
         <div className="flex flex-col">
-          <h1 className=" ml-1 font-semibold">
-            {name} | {subservice}
-          </h1>
+          <h1 className=" ml-1 font-semibold">{name}</h1>
           {/* <p className="text-blackText ml-2">{service}</p> */}
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {date} | {time}
+              {date} | {time} | {subservice}
             </p>
           </div>
-          <p className=" ml-1 text-blackText font-semibold">{lastMesssage}</p>
+          <p className=" ml-1 text-blackText font-semibold">
+            {lastMesssage.length > 20
+              ? `${lastMesssage.substring(0, 25)}...`
+              : lastMesssage}
+          </p>
         </div>
       </div>
 

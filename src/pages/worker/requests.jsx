@@ -25,13 +25,8 @@ function Requests() {
     });
   };
   return (
-    <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
-      {bookings.filter((booking) => booking.status === "requested").length >
-        0 && (
-        <h1 className="text-xl text-center mb-8 max-w-lg">
-          Trabalhos disponíveis
-        </h1>
-      )}
+    <div className="mt-1 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-1 text-center max-w-lg"> Trabalhos disponíveis</h1>
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings

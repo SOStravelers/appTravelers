@@ -11,8 +11,6 @@ export default class BookingService {
   }
 
   static async create(params) {
-    console.log("...creando");
-    console.log("this.get");
     return axios.post(`${this.baseUrl}`, params, {
       headers: this.getHeaders(),
     });
@@ -60,7 +58,6 @@ export default class BookingService {
   // WORKER BOOKINGS
 
   static async getBookingsByList(date) {
-    console.log("...getBookingsByList");
     return axios.get(
       `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=4`,
       {
@@ -93,7 +90,6 @@ export default class BookingService {
     });
   }
   static async getBookingById(id) {
-    console.log("el get", `${this.baseUrl}/byId/${id}`);
     return axios.get(`${this.baseUrl}/byId/${id}`, {
       headers: this.getHeaders(),
     });

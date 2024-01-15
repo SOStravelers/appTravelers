@@ -25,7 +25,6 @@ export default function Chat() {
   useEffect(() => {
     document.title = "My chats | SOS Travelers";
     if (loginModal) {
-      console.log("entrando");
       setOpen(false);
       setLoginModal(false);
       // router.push("/");
@@ -42,7 +41,6 @@ export default function Chat() {
     const response = await ChatService.getChatRooms();
     if (response) {
       const unformattedChats = response.data.docs;
-      console.log("hay respuesta");
       if (unformattedChats?.length > 0) {
         unformattedChats.map((chat) => {
           if (chat.receptor._id === user) {
@@ -54,7 +52,6 @@ export default function Chat() {
           }
         });
       }
-      console.log(unformattedChats);
       setChats(unformattedChats);
     }
     setLoading(false);
@@ -77,7 +74,7 @@ export default function Chat() {
     return first + " " + (last ?? "");
   };
   return (
-    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-16 px-3 md:pl-80">
+    <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
       <h1 className="my-1   text-center max-w-lg">My chats</h1>
       {loading ? (
         <Rings

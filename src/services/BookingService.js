@@ -55,6 +55,12 @@ export default class BookingService {
     });
   }
 
+  static async totalNumberWeek(date) {
+    return axios.get(`${this.baseUrl}/client/week?date=${date}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
   // WORKER BOOKINGS
 
   static async getBookingsByList(date) {

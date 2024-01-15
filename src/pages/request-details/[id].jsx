@@ -10,7 +10,7 @@ import BookingService from "@/services/BookingService";
 import moment from "moment-timezone";
 import { Rings } from "react-loader-spinner";
 import { toast } from "react-toastify";
-import { fullName, StatusChip } from "@/utils/format";
+import { fullName, StatusChip, formatearFecha } from "@/utils/format";
 function ServiceHistory() {
   const router = useRouter();
   const { isWorker, user } = useStore();
@@ -20,6 +20,7 @@ function ServiceHistory() {
   const [typeUser, setTypeUser] = useState(null);
   const [inTimeWorker, setInTimeWorker] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [startTimeBooking, setStartTimeBooking] = useState(true);
 
   useEffect(() => {
     document.title = "Serviço disponível | SOS Travelers";
@@ -138,77 +139,6 @@ function ServiceHistory() {
       }
     }
   };
-  function formatearFecha(fechaStr, isWorker) {
-    var [año, mes, dia] = fechaStr.split("-").map(Number);
-
-    // Crear un nuevo objeto Date en el huso horario local
-    var fechaObj = new Date(año, mes - 1, dia);
-
-    // Meses y días de la semana en inglés
-    var mesesIngles = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    var diasSemanaIngles = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-
-    // Meses y días de la semana en portugués
-    var mesesPortugues = [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ];
-    var diasSemanaPortugues = [
-      "Domingo",
-      "Segunda-feira",
-      "Terça-feira",
-      "Quarta-feira",
-      "Quinta-feira",
-      "Sexta-feira",
-      "Sábado",
-    ];
-
-    // Seleccionar los meses y días de la semana correctos
-    var meses = isWorker ? mesesPortugues : mesesIngles;
-    var diasSemana = isWorker ? diasSemanaPortugues : diasSemanaIngles;
-
-    // Obtener el mes, día y año
-    var mes = meses[fechaObj.getMonth()];
-    var dia = fechaObj.getDate();
-    var año = fechaObj.getFullYear();
-    var diaSemana = diasSemana[fechaObj.getUTCDay()];
-
-    // Formatear la fecha como "Wednesday, December 20, 2023" o "Quarta-feira, Dezembro 20, 2023"
-    var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
-
-    return fechaFormateada;
-  }
   return (
     //p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80 md:items-startx
     <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-6 md:pl-80">
@@ -326,12 +256,13 @@ function ServiceHistory() {
           </div>
           <hr className="w-full mb-4 max-w-lg text-lightGrey" />
 
-          {typeUser === "worker" && booking?.status == "available" && (
-            <OutlinedButton
-              onClick={() => dialogWorker("confirmed")}
-              text="Eu quero esse trabalho"
-            />
-          )}
+          {(typeUser === "worker" || typeUser === "externalWorker") &&
+            booking?.status === "available" && (
+              <OutlinedButton
+                onClick={() => dialogWorker("confirmed")}
+                text="Eu quero esse trabalho"
+              />
+            )}
         </>
       )}
     </div>

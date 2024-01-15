@@ -236,9 +236,10 @@ function EditGallery() {
           <div key={index} className="relative">
             {image && (
               <div
-                className="w-full h-28 rounded-xl bg-cover bg-center relative cursor-pointer"
+                className="w-full h-28 w-28 rounded-xl bg-cover bg-center relative cursor-pointer"
                 style={{
                   paddingTop: "56.25%", // 16:9 Aspect Ratio
+                  paddingTop: "100%", // 1:1 Aspect Ratio
                   backgroundImage: `url(${image}) `,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
@@ -346,7 +347,7 @@ function EditGallery() {
                     className="w-90"
                     crop={crop}
                     onChange={(c) => setCrop(c)}
-                    aspect={16 / 9}
+                    aspect={1 / 1}
                   >
                     <img src={src} onLoad={(img) => setImage(img.target)} />
                   </ReactCrop>

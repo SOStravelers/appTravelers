@@ -6,7 +6,7 @@ import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import Link from "next/link";
 import { ClockIcon, ChangeIcon, CheckIcon } from "@/constants/icons";
-
+import { fullName } from "@/utils/format";
 import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WorkerService";
 import SubserviceService from "@/services/SubserviceService";
@@ -56,12 +56,6 @@ export default function Summary() {
       // console.log("price", response.data);
       setService({ price: response.data.valuesToday, currency: "BRL" });
     });
-  };
-
-  const fullName = (data) => {
-    if (!data) return "";
-    const { first, last } = data;
-    return first + " " + (last ?? "");
   };
 
   const hireNow = () => {

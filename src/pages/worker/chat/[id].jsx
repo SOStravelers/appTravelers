@@ -7,6 +7,7 @@ import WorkerProfileCardChat from "@/components/utils/cards/WorkerProfileCardCha
 import ChatWorker from "@/components/chat/ChatWorker";
 import ChatService from "@/services/ChatService";
 import { Rings } from "react-loader-spinner";
+import { fullName } from "@/utils/format";
 export default function PersonalChat() {
   const router = useRouter();
   const [initialMessages, setInitialMessages] = useState([]);
@@ -53,11 +54,6 @@ export default function PersonalChat() {
     }
   }
 
-  const fullName = (data) => {
-    if (!data) return "";
-    const { first, last } = data;
-    return first + " " + (last ?? "");
-  };
   return (
     <div className="bg-white w-screen  py-16 px-2 md:pl-80 md:mt-8 max-h-screen">
       {loading ? (

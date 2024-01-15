@@ -7,11 +7,15 @@ import { ReservationIcon } from "@/constants/icons";
 function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
-    const user = Cookies.get("auth.user_id");
-    if (user) {
-      setBookings(dayBookings);
-    }
-  }, [dayBookings]);
+    console.log("wena");
+    try {
+      BookingService.gettotalWeek(day.date).then((res) => {
+        if (res) {
+          setBookings(res.data.docs);
+        }
+      });
+    } catch (err) {}
+  }, [bookings]);
   return (
     <>
       <div className="flex my-5 md:mx-16">

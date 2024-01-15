@@ -6,7 +6,7 @@ import WorkerService from "@/services/WorkerService";
 import { random } from "@/lib/utils";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
-
+import { fullName } from "@/utils/format";
 export default function WorkersFound() {
   const { setService, service } = useStore();
   const router = useRouter();
@@ -59,10 +59,6 @@ export default function WorkersFound() {
       workerId: workerId,
     });
     router.push("/summary");
-  };
-
-  const fullName = ({ first, last }) => {
-    return first + " " + (last ?? "");
   };
 
   return (

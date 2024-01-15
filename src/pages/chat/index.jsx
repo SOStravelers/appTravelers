@@ -7,7 +7,7 @@ import { Rings } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { ChatPicture } from "@/constants/icons";
-
+import { fullName } from "@/utils/format";
 export default function Chat() {
   const store = useStore();
   const router = useRouter();
@@ -67,11 +67,6 @@ export default function Chat() {
     router.push({
       pathname: `/chat/${chat._id}`,
     });
-  };
-  const fullName = (data) => {
-    if (!data) return "";
-    const { first, last } = data;
-    return first + " " + (last ?? "");
   };
   return (
     <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">

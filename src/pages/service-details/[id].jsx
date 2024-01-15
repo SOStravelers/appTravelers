@@ -15,7 +15,7 @@ import moment from "moment-timezone";
 import { Rings } from "react-loader-spinner";
 import { toast } from "react-toastify";
 import { data } from "autoprefixer";
-
+import { fullName } from "@/utils/format";
 function ServiceHistory() {
   const router = useRouter();
   const { isWorker, user } = useStore();
@@ -268,11 +268,6 @@ function ServiceHistory() {
         });
       }
     });
-  };
-  const fullName = (data) => {
-    if (!data) return "";
-    const { first, last } = data;
-    return first + " " + (last ?? "");
   };
   function formatearFecha(fechaStr, isWorker) {
     var [año, mes, dia] = fechaStr.split("-").map(Number);

@@ -63,7 +63,13 @@ export default function WorkerHome() {
       {
         id: 2,
         title: "Dicas SOS",
-        body: "Lembre-se de pressionar o botão 'concluir trabalho' ao finalizar o trabalho para poder ser remunerado.",
+        body: (
+          <span>
+            Lembre-se de pressionar o botão
+            <span style={{ fontWeight: "600" }}> Terminar o trabalho </span>
+            ao finalizar o trabalho para poder ser remunerado.
+          </span>
+        ),
       },
       {
         id: 3,

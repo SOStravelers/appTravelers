@@ -21,10 +21,10 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const session = await getSession();
       if (!user || Object.keys(user).length == 0) {
-        await obtenerInformacionUsuario();
+        await obtenerInformacionUsuario(session);
       }
-      // await routeValidation();
       setTimeout(() => {
         onMiddlewareComplete();
       }, 500);
@@ -32,10 +32,9 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
 
     fetchData();
   }, [onMiddlewareComplete]);
-
-  const obtenerInformacionUsuario = async () => {
+  const obtenerInformacionUsuario = async (session) => {
     let cookieAccessToken = Cookies.get("auth.access_token");
-    const session = await getSession();
+    // const session = await getSession();
     console.log(session);
     if (user && Object.keys(user).length > 0) {
       // console.log("ya hay usuario");

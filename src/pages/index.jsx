@@ -20,6 +20,7 @@ export default function Home({}) {
   const store = useStore();
   const { services, setServices, setHaveNotification } = store;
   const [bookings, setBookings] = useState([]);
+  const [slides, setSlides] = useState([]);
   const [swiper, setSwiper] = useState(null);
   const [randomUsers, setRandomUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,27 +41,30 @@ export default function Home({}) {
     if (!services || Object.keys(services).length == 0) {
       getData();
     }
-    setBookings([
+    setSlides([
       {
         id: 1,
-        direction: "124 street Miro Hotel, Ubud",
-        date: "4 Aug, 2023 | 04:30 PM",
+        title: "Tips SOS",
+        body: "Just 3 snappy steps: pick your service, grab a cool hostel, choose your pro, and seal the deal for instant excitement! 🌟 ",
       },
       {
         id: 2,
-        direction: "124 street Miro Hotel, Ubud",
-        date: "4 Aug, 2023 | 04:30 PM",
+        title: "Tips SOS",
+        body: "You'll only bust out your wallet once the service is a smashing success! 💸✨",
+        // direction: "124 street Miro Hotel, Ubud",
+        // date: "4 Aug, 2023 | 04:30 PM",
       },
       {
         id: 3,
-        direction: "124 street Miro Hotel, Ubud",
-        date: "4 Aug, 2023 | 04:30 PM",
+        title: "Tips SOS",
+        body: "Rock up 15 minutes early to your chosen hostel and let the good times roll when the service kicks off! 🚀⏰",
       },
-      // {
-      //   id: 4,
-      //   direction: "124 street Miro Hotel, Ubud",
-      //   date: "4 Aug, 2023 | 04:30 PM",
-      // },
+
+      {
+        id: 4,
+        title: "Tips SOS",
+        body: "Once your booking is a done deal, unleash the chat vibes with your pro! 🗨️🎉",
+      },
     ]);
   }, []);
   useEffect(() => {
@@ -113,11 +117,13 @@ export default function Home({}) {
             "--swiper-pagination-bullet-active-color": "#1111",
           }}
         >
-          {bookings?.map((booking) => (
-            <SwiperSlide key={booking?.id}>
+          {slides?.map((slide) => (
+            <SwiperSlide key={slide?.id}>
               <BookingCard
-                direction={booking?.direction}
-                date={booking?.date}
+                title={slide?.title}
+                body={slide?.body}
+                direction={slide?.direction}
+                date={slide?.date}
               />
             </SwiperSlide>
           ))}

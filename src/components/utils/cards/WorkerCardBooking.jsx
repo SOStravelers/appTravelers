@@ -27,7 +27,7 @@ function WorkerCardBooking({
 
   return (
     <div
-      className="flex max-w-lg p-4 rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
+      className="flex max-w-lg p-3 rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
       onClick={() => goToDetails()}
     >
       <div className="flex w-full flex-row items-center">

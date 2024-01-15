@@ -52,7 +52,8 @@ function Gallery({ images }) {
             <div key={index} className="rounded-2xl mr-2 relative">
               <div
                 style={{
-                  paddingTop: "56.25%", // 16:9 Aspect Ratio
+                  // paddingTop: "56.25%", // 16:9 Aspect Ratio
+                  paddingTop: "100%", // 1:1 Aspect Ratio
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                   display: !image ? "none" : "block",

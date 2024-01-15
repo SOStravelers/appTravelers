@@ -29,6 +29,15 @@ module.exports = {
         fb: "#3b5998",
         google: "#eee",
       },
+      transitionProperty: {
+        height: "height",
+        spacing: "margin, padding",
+        opacity: "opacity",
+        color: "color",
+        backgroundColor: "background-color",
+        borderColor: "border-color",
+        scale: "transform",
+      },
       keyframes: {
         heartbeat: {
           "0%, 100%": { transform: "scale(1)" },

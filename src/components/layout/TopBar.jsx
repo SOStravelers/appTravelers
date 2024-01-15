@@ -9,11 +9,15 @@ import { io } from "socket.io-client";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import TextModal from "@/components/utils/modal/TextModal";
-
+import { Howl } from "howler";
+import Router from "next/router";
+const sound = new Howl({
+  src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
+});
 import { useStore } from "@/store";
 function TopBar() {
+  const router = Router;
   const { loggedIn, user, isWorker, setUser, haveNotification } = useStore();
-  const [dataModal, setDataModal] = useState({});
   const [booking, setBooking] = useState({});
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   const socket = useRef();
@@ -36,6 +40,7 @@ function TopBar() {
       socket.current.on("booking-recieve", (data) => {
         console.log("booking recibido", data);
         setBooking(data.data);
+        sound.play();
         setOpenWorkerModal(true);
       });
     }
@@ -73,7 +78,6 @@ function TopBar() {
           `Data: ${booking?.date?.stringData} | ${booking?.startTime?.stringData}`,
         ]}
         textCancel="Voltar"
-        colorAceptButton={dataModal?.colorAceptButton}
         buttonText={"Veja a reserva"}
         open={openWorkerModal}
         setOpen={setOpenWorkerModal}

@@ -28,6 +28,9 @@ export default function Home({}) {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
   }, []);
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   useEffect(() => {
     document.title = "Home | SOS Travelers";
@@ -71,10 +74,6 @@ export default function Home({}) {
       clearInterval(timer);
     };
   }, [swiper]);
-
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   const getData = async () => {
     ServiceService.list({ isActive: true, page: 1 }).then((response) => {

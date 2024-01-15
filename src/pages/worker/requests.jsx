@@ -43,7 +43,7 @@ function Requests() {
             key={booking._id}
             booking={booking}
             subService={booking.subservice.name}
-            status={booking.status}
+            status={booking.status == "available" ? "Disponível" : "Solicitado"}
             service={booking.service.name}
             avatar={booking?.businessUser?.img?.imgUrl}
             date={booking.date.stringData}

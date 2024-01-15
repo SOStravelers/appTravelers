@@ -154,7 +154,7 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
       <div className="w-32 h-32 rounded-2xl mr-2 relative">
         {newAvatar && (
           <div
-            className="w-full h-32 w-32 rounded-xl bg-cover bg-center relative cursor-pointer"
+            className="w-32 h-32 rounded-xl bg-cover bg-center relative cursor-pointer"
             style={{ backgroundImage: `url(${newAvatar})` }}
             onClick={(e) => changeImageInput(e)}
           >

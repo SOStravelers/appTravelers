@@ -238,7 +238,7 @@ function EditGallery() {
               <div
                 className="w-full h-28 w-28 rounded-xl bg-cover bg-center relative cursor-pointer"
                 style={{
-                  paddingTop: "56.25%", // 16:9 Aspect Ratio
+                  // paddingTop: "56.25%", // 16:9 Aspect Ratio
                   paddingTop: "100%", // 1:1 Aspect Ratio
                   backgroundImage: `url(${image}) `,
                   backgroundSize: "cover",

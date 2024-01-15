@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Rings } from "react-loader-spinner";
 import Link from "next/link";
 import { CompleteGirlIcon, BarberPicture } from "@/constants/icons";
-
+import { io } from "socket.io-client";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 
 import { useStore } from "@/store";
@@ -18,8 +18,19 @@ export default function PaymentConfirmation() {
   const [complete, setComplete] = useState(false);
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState(null);
+  const socket = useRef();
   useEffect(() => {
     document.title = "Confirmation | SOS Travelers";
+  }, []);
+  useEffect(() => {
+    console.log("conect socket booking");
+    const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
+    socket.current = io(host);
+    return () => {
+      if (socket.current) {
+        socket.current.disconnect();
+      }
+    };
   }, []);
   useEffect(() => {
     console.log("el servicio", service);
@@ -71,7 +82,10 @@ export default function PaymentConfirmation() {
       const response = await BookingService.create(params);
       if (response.data) {
         setBooking(response.data.booking);
+        console.log("booking", response.data.booking);
         localStorage.removeItem("service");
+        console.log("se viene el socket");
+        socket.current.emit("send-booking", { data: response.data.booking });
         setComplete(true);
         setLoading(false);
       }

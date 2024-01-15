@@ -21,6 +21,7 @@ function Navbar() {
   const router = useRouter();
 
   const { isWorker, user, setHaveNotification } = useStore();
+  const userId = Cookies.get("auth.user_id");
   const goTo = (ruta) => {
     if (ruta != "/" && ruta != "/worker/home") {
       checkNotification();
@@ -36,6 +37,7 @@ function Navbar() {
   };
   const checkNotification = async () => {
     try {
+      if (!userId) return;
       const response = await NotificationService.checkNotification();
       setHaveNotification(response.data);
     } catch (error) {

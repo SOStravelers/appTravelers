@@ -29,14 +29,14 @@ const ChatWorker = ({
   useEffect(() => {
     // console.log("socket.current", socket.current);
 
-    if (socket.current) {
+    if (socket && socket.current) {
       // console.log("recibiendo desde a chatContainer comp");
       socket.current.on("msg-recieve", (data) => {
         if (data.chatRoom !== chatId) return;
         setArrivalMessage({ fromSelf: false, message: data.msg });
       });
     }
-  }, [socket.current]);
+  }, [socket]);
 
   useEffect(() => {
     if (arrivalMessage) {

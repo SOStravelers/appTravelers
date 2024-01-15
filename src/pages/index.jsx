@@ -8,7 +8,7 @@ import NotificationService from "@/services/NotificationService";
 import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
-
+import Cookies from "js-cookie";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 // import SwiperCore, { Pagination, Navigation } from "swiper";
@@ -23,6 +23,7 @@ export default function Home({}) {
   const [swiper, setSwiper] = useState(null);
   const [randomUsers, setRandomUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  var userId = Cookies.get("auth.user_id");
   useEffect(() => {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
@@ -30,7 +31,9 @@ export default function Home({}) {
 
   useEffect(() => {
     document.title = "Home | SOS Travelers";
-    checkNotification();
+    if (userId) {
+      checkNotification();
+    }
     if (!services || Object.keys(services).length == 0) {
       getData();
     }

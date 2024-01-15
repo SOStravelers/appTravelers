@@ -30,6 +30,12 @@ export default function PersonalChat() {
       setChatId(id);
       fetchData(id);
     }
+    // Función de limpieza
+    return () => {
+      if (socket.current) {
+        socket.current.disconnect();
+      }
+    };
   }, []);
   async function fetchData(id) {
     try {

@@ -5,7 +5,6 @@ import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
-import TextModal from "@/components/utils/modal/TextModal";
 import clsx from "clsx";
 import { ThreeDots } from "react-loader-spinner";
 import { LogoSosBlack, LogoSosRelleno } from "@/constants/icons";
@@ -21,38 +20,15 @@ const poppins = Poppins({
 
 function Layout({ children, lang }) {
   const router = useRouter();
-  const { socket } = useStore();
-  const [dataModal, setDataModal] = useState({});
-  const [booking, setBooking] = useState({});
-  const [openWorkerModal, setOpenWorkerModal] = useState(false);
 
   const [middlewareCompleted, setMiddlewareCompleted] = useState(false);
+
   const handleMiddlewareComplete = () => {
     // Esta función se llamará desde CustomMiddlewareComponent
     // cuando sus funciones hayan terminado.
     setMiddlewareCompleted(true);
   };
-  const stateBookingWorker = async () => {
-    console.log("stateBookingWorker");
-    router.push(`/service-details/${booking._id}`);
-  };
-  const cancelWorkerModal = async () => {
-    console.log("cancelWorkerModal");
-    setOpenWorkerModal(false);
-  };
-
-  useEffect(() => {
-    // console.log("socket.current", socket.current);
-
-    if (socket && socket.current) {
-      console.log("recibiendo desde a chatContainer comp");
-      socket.current.on("booking-recieve", (data) => {
-        console.log("booking recibido", data);
-        setBooking(data.data);
-        setOpenWorkerModal(true);
-      });
-    }
-  }, [socket]);
+  // const { socket } = useStore();
 
   let metaDescription = "";
   const language = lang ? lang : "en";
@@ -115,20 +91,6 @@ function Layout({ children, lang }) {
         </Head>
         {middlewareCompleted ? (
           <>
-            {/* <TextModal
-              title={"Parabéns!!, você tem uma nova reserva"}
-              text={[
-                `Lugar: ${booking?.businessUser?.businessData?.name}`,
-                `Data: ${booking?.date?.stringData} | ${booking?.startTime?.stringData}`,
-              ]}
-              textCancel="Voltar"
-              colorAceptButton={dataModal?.colorAceptButton}
-              buttonText={"Veja a reserva"}
-              open={openWorkerModal}
-              setOpen={setOpenWorkerModal}
-              onAccept={stateBookingWorker}
-              onCancel={cancelWorkerModal}
-            /> */}
             {isLoginPage ? (
               <WaveBar />
             ) : arePrincipalPages ? (

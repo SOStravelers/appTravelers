@@ -3,16 +3,20 @@ import {
   LogoWhite,
   NotificationIcon,
 } from "@/constants/icons";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { random } from "@/lib/utils";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import TextModal from "@/components/utils/modal/TextModal";
 
 import { useStore } from "@/store";
 function TopBar() {
   const { loggedIn, user, isWorker, setUser, haveNotification, setSocket } =
     useStore();
+  const [dataModal, setDataModal] = useState({});
+  const [booking, setBooking] = useState({});
+  const [openWorkerModal, setOpenWorkerModal] = useState(true);
   const socket = useRef();
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
@@ -38,6 +42,27 @@ function TopBar() {
       }
     };
   }, [isWorker]);
+
+  useEffect(() => {
+    // console.log("socket.current", socket.current);
+
+    if (socket && socket.current) {
+      console.log("recibiendo desde a chatContainer comp");
+      socket.current.on("booking-recieve", (data) => {
+        console.log("booking recibido", data);
+        setBooking(data.data);
+        setOpenWorkerModal(true);
+      });
+    }
+  }, [socket]);
+  const stateBookingWorker = async () => {
+    console.log("stateBookingWorker");
+    router.push(`/service-details/${booking._id}`);
+  };
+  const cancelWorkerModal = async () => {
+    console.log("cancelWorkerModal");
+    setOpenWorkerModal(false);
+  };
   const profileUrl = isWorker ? "/worker/profile" : "/profile";
   const initials = () => {
     if (user && Object.keys(user).length === 0) return "";
@@ -50,6 +75,20 @@ function TopBar() {
 
   return (
     <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-18   lg:h-20 xl:h-20 px-3 fixed top-0">
+      <TextModal
+        title={"Parabéns!!, você tem uma nova reserva"}
+        text={[
+          `Lugar: ${booking?.businessUser?.businessData?.name}`,
+          `Data: ${booking?.date?.stringData} | ${booking?.startTime?.stringData}`,
+        ]}
+        textCancel="Voltar"
+        colorAceptButton={dataModal?.colorAceptButton}
+        buttonText={"Veja a reserva"}
+        open={openWorkerModal}
+        setOpen={setOpenWorkerModal}
+        onAccept={stateBookingWorker}
+        onCancel={cancelWorkerModal}
+      />
       <div className="flex items-center">
         <Link
           href="/"

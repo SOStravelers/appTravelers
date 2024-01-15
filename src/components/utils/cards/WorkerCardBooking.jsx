@@ -31,7 +31,7 @@ function WorkerCardBooking({
       onClick={() => goToDetails()}
     >
       <div className="flex w-full flex-row">
-        <div className="w-20 h-20 rounded-xl bg-blueBorder mr-2 relative">
+        <div className="w-16 h-16 rounded-xl bg-blueBorder mr-2 relative">
           <Image
             src={avatar ?? "/assets/proovedor.png"}
             fill

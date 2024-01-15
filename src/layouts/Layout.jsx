@@ -39,18 +39,18 @@ function Layout({ children, lang }) {
     console.log("cancelWorkerModal");
     setOpenWorkerModal(false);
   };
-  // useEffect(() => {
-  //   console.log("socket.current", socket);
+  useEffect(() => {
+    console.log("socket.current", socket);
 
-  //   if (socket && socket.current) {
-  //     console.log("recibiendo desde a chatContainer comp");
-  //     socket.current.on("booking-recieve", (data) => {
-  //       console.log("booking recibido", data);
-  //       setBooking(data.data);
-  //       setOpenWorkerModal(true);
-  //     });
-  //   }
-  // }, [socket]);
+    if (socket && socket.current) {
+      console.log("recibiendo desde a chatContainer comp");
+      socket.current.on("booking-recieve", (data) => {
+        console.log("booking recibido", data);
+        setBooking(data.data);
+        setOpenWorkerModal(true);
+      });
+    }
+  }, [socket]);
 
   let metaDescription = "";
   const language = lang ? lang : "en";

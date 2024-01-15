@@ -36,6 +36,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const obtenerInformacionUsuario = async () => {
     let cookieAccessToken = Cookies.get("auth.access_token");
     const session = await getSession();
+    console.log(session);
     if (user && Object.keys(user).length > 0) {
       // console.log("ya hay usuario");
       return;
@@ -126,7 +127,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
           }
         } else {
           if (session) {
-            // console.log("hay sesion google");
+            console.log("hay sesion google");
             const user = await UserService.loginGoogle(
               session.user.name,
               session.user.email,

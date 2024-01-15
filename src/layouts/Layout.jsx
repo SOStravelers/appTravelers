@@ -5,7 +5,7 @@ import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
-import TextModal from "@/components/utils/modals/TextModal";
+import TextModal from "@/components/utils/modal/TextModal";
 import clsx from "clsx";
 import { ThreeDots } from "react-loader-spinner";
 import { LogoSosBlack, LogoSosRelleno } from "@/constants/icons";
@@ -115,7 +115,7 @@ function Layout({ children, lang }) {
         </Head>
         {middlewareCompleted ? (
           <>
-            <TextModal
+            {/* <TextModal
               title={"Parabéns!!, você tem uma nova reserva"}
               text={[
                 `Lugar: ${booking?.businessUser?.businessData?.name}`,
@@ -128,7 +128,7 @@ function Layout({ children, lang }) {
               setOpen={setOpenWorkerModal}
               onAccept={stateBookingWorker}
               onCancel={cancelWorkerModal}
-            />
+            /> */}
             {isLoginPage ? (
               <WaveBar />
             ) : arePrincipalPages ? (

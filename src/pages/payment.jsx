@@ -4,13 +4,15 @@ import { useRouter } from "next/router";
 import { MoneyIcon, CheckIcon } from "@/constants/icons";
 import Image from "next/image";
 import { useStore } from "@/store";
-import Select from "react-select";
 
 export default function Payment() {
   const { service, setService, isWorker } = useStore();
   const [paymentType, setPaymentType] = useState("stripe");
   const router = useRouter();
   const [price, setPrice] = useState(service.price[0].finalCost);
+  useEffect(() => {
+    isWorker ? setPaymentType("cash") : setPaymentType("stripe");
+  }, []);
 
   const handleSelectChange = (selectedOption) => {
     setService({ currency: selectedOption.value });
@@ -91,6 +93,7 @@ export default function Payment() {
             }}
           />
         </div> */}
+
         <div>
           <p className="text-blackBlue font-semibold text-xl">
             Total service:
@@ -103,24 +106,25 @@ export default function Payment() {
               : "  Not available"}
           </p>
         </div>
-        <div
-          className="flex justify-between items-center"
-          onClick={() => setPaymentType("stripe")}
-        >
-          <div className="flex items-center my-3">
-            <Image
-              onClick={() => setPaymentType("stripe")}
-              src={"/icons/visa.svg"}
-              width={50}
-              height={50}
-              alt="Credit Card Logo"
-            />
-            <p className="ml-2">Debit / Credit Card</p>
-          </div>
 
-          {paymentType === "stripe" && !isWorker ? (
-            <CheckIcon />
-          ) : (
+        {/* STRIPE */}
+        {!isWorker && (
+          <div
+            className="flex justify-between items-center"
+            onClick={() => setPaymentType("stripe")}
+          >
+            <div className="flex items-center my-3">
+              <Image
+                onClick={() => setPaymentType("stripe")}
+                src={"/icons/visa.svg"}
+                width={50}
+                height={50}
+                alt="Credit Card Logo"
+              />
+              <p className="ml-2">Debit / Credit Card</p>
+            </div>
+
+            {/* {(paymentType === "stripe") & <CheckIcon />} */}
             <input
               type="radio"
               name="payment"
@@ -131,9 +135,10 @@ export default function Payment() {
               onChange={(event) => setPaymentType(event.target.value)}
               checked={paymentType === "stripe"}
             />
-          )}
-        </div>
-        {/* PAYPAL DISABLED */}
+          </div>
+        )}
+
+        {/* PAYPAL */}
         {/* <div
           className="flex justify-between items-center"
           // onClick={() => setPaymentType("paypal")}
@@ -161,6 +166,8 @@ export default function Payment() {
             checked={paymentType === "paypal"}
           />
         </div> */}
+
+        {/* CASH */}
         {isWorker && (
           <div className="flex mt-3 justify-between items-center">
             <div className="flex items-center my-3">
@@ -187,7 +194,7 @@ export default function Payment() {
       </div>
       <OutlinedButton
         disabled={paymentType == null}
-        text="Continue"
+        text={isWorker ? "confirmar reserva em dinheiro" : "Continue"}
         color="blueBorder"
         onClick={pay}
       />

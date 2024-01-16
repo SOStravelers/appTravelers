@@ -25,7 +25,13 @@ function Calendar({ id }) {
   const [selectedDay, setSelected] = useState(new Date());
   const [selectedDayWorker, setSelectedWorker] = useState(new Date());
   const [intervals, setIntervals] = useState([]);
-
+  const now = new Date();
+  const currentTime = now.toLocaleTimeString("en-US", {
+    timeZone: "America/Sao_Paulo",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
   useEffect(() => {
     if (localStorage.getItem("fromFavorite")) {
       console.log("entro");
@@ -192,7 +198,11 @@ function Calendar({ id }) {
     );
   } else if (isWorker) {
     footer = (
-      <div>
+      <div className="flex flex-col align-center justify-center">
+        <p className="flex my-4 justify-center text-lg font-semibold">
+          Hora actual: {currentTime}
+        </p>
+
         <OutlinedButton text={"Siguiente"} onClick={comeBack} />
       </div>
     );

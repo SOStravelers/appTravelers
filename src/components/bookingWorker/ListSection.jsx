@@ -14,15 +14,28 @@ function ListSection() {
 
   const getBookings = () => {
     const today = dayjs().format("YYYY-MM-DD");
-    BookingService.getBookingsByList(today)
-      .then((response) => {
-        setBookings(response.data.docs);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+
+    if (isWorker) {
+      BookingService.getBookingsByListWorker(today)
+        .then((response) => {
+          setBookings(response.data.docs);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+        });
+    } else {
+      BookingService.getBookingsByListClient(today)
+        .then((response) => {
+          setBookings(response.data.docs);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
+        });
+    }
   };
 
   return (

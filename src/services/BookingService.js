@@ -63,9 +63,18 @@ export default class BookingService {
 
   // WORKER BOOKINGS
 
-  static async getBookingsByList(date) {
+  static async getBookingsByListWorker(date) {
     return axios.get(
       `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=4`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  static async getBookingsByListClient(date) {
+    return axios.get(
+      `${this.baseUrl}/client/listdays?date=${date}&page=1&limit=4`,
       {
         headers: this.getHeaders(),
       }

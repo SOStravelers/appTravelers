@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import SwitchButtons from "@/components/utils/buttons/SwitchButtons";
+import ThreeSwitchButtons from "@/components/utils/buttons/ThreeSwitchButtons";
 import DaySection from "@/components/booking/DaySection";
 import MonthSection from "@/components/booking/MonthSection";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
-import { SECTION_ONE } from "@/constants";
+import ListSection from "@/components/bookingWorker/ListSection";
+import {
+  SECTION_ONE,
+  SECTION_TWO,
+  SECTION_THREE,
+  SECTION_FOUR,
+} from "@/constants";
 import Cookies from "js-cookie";
 import { useStore } from "@/store";
 import BookingService from "@/services/BookingService";
@@ -75,23 +82,33 @@ export default function Booking() {
 
   return (
     <div className="w-full min-h-screen py-20 md:py-24 px-3 md:pl-80 bg-white text-black">
-      <SwitchButtons
+      {/* <SwitchButtons
         style={{ position: "sticky", top: "10000px" }}
         actualView={actualView}
         setActualView={setActualView}
         titleOne={"Day"}
         titleTwo={"Month"}
+      /> */}
+      <ThreeSwitchButtons
+        actualView={actualView}
+        setActualView={setActualView}
+        titleOne="Next"
+        titleTwo="Day"
+        titleThree="Month"
       />
       {actualView === SECTION_ONE ? (
+        <ListSection />
+      ) : actualView === SECTION_TWO ? (
         <DaySection
           weekDays={weekDays}
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
           dayBookings={bookings}
         />
-      ) : (
+      ) : actualView === SECTION_THREE ? (
         <MonthSection />
-      )}
+      ) : null}
+
       {!user && (
         <LoginFormModal
           open={open}

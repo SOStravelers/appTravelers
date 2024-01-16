@@ -31,7 +31,7 @@ export default function WorkerHome() {
 
   const getBookings = () => {
     const today = dayjs().format("YYYY-MM-DD");
-    BookingService.getBookingsByList(today)
+    BookingService.getBookingsByListWorker(today)
       .then((response) => {
         setBookings(response.data.docs);
         setLoading(false);

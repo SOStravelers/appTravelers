@@ -3,9 +3,11 @@ import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import BookingService from "@/services/BookingService";
 import dayjs from "dayjs";
 import { Rings } from "react-loader-spinner";
+import { useStore } from "@/store";
 function ServiceHistory() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isWorker } = useStore();
 
   useEffect(() => {
     getBookings();
@@ -31,7 +33,7 @@ function ServiceHistory() {
             color="#00A0D5"
             ariaLabel="infinity-spin-loading"
           />
-          <p className="mt-2">Pesquisando...</p>
+          <p className="mt-2">{isWorker ? "Searching.." : "Pesquisando..."}</p>
         </div>
       ) : (
         <>
@@ -87,9 +89,7 @@ function ServiceHistory() {
               </p>
             )}
 
-          <h1 className="text-xl text-center my-8 max-w-lg">
-            Previous services
-          </h1>
+          <h1 className="text-xl text-center my-8 max-w-lg">Closed services</h1>
           {bookings
             .filter(
               (booking) =>

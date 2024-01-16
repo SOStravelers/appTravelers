@@ -54,7 +54,7 @@ export default function WorkerBooking() {
   }, [selectedDay]);
 
   return (
-    <div className="py-20 lg:mt-5 px-5 md:pl-80">
+    <div className="w-full min-h-screen py-20 md:py-24 px-3 md:pl-80 bg-white text-black">
       <ThreeSwitchButtons
         actualView={actualView}
         setActualView={setActualView}

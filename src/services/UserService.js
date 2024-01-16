@@ -50,7 +50,7 @@ export default class UserService {
     });
   }
   static async loginGoogle(name, email, image) {
-    return axios.post(`${this.baseUrl}/loginGoogle`, {
+    return axios.post(`${this.authUrl}/loginGoogle`, {
       name: name,
       email: email,
       image: image,

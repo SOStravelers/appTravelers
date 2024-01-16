@@ -30,16 +30,8 @@ function LoginForm() {
       if (response.data.user.type && response.data.user.type != "personal") {
         localStorage.setItem("type", response.data.user.type);
       }
-      if (response.data.user.type == "worker") {
-        delete response.data.user.type;
 
-        console.log("es worker");
-        setWorker(true);
-        router.push("/worker/home");
-        return;
-      }
-      delete response.data.user.type;
-
+      // delete response.data.user.type;
       toast.info("signin", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 1500,
@@ -49,7 +41,14 @@ function LoginForm() {
       Cookies.set("auth.user_id", response.data.user._id);
       setUser(response.data.user);
       setLoggedIn(true);
-      if (service && Object.keys(service).length > 0) {
+      if (response.data.user.type == "worker") {
+        delete response.data.user.type;
+
+        console.log("es worker");
+        setWorker(true);
+        router.push("/");
+        // return;
+      } else if (service && Object.keys(service).length > 0) {
         setLoading(false);
         router.push(`/summary`);
       } else {

@@ -320,6 +320,7 @@ function ServiceHistory() {
             onAccept={stateBookingUser}
             onCancel={cancelUserModal}
           />
+          <p>Booking Number: {}</p>
           <div className="font-semibold text-center max-w-lg mt-2 lg:my-4 xl:my-4 mb-2">
             {isWorker ? "Local de serviço" : "Location Service"}
           </div>
@@ -401,6 +402,14 @@ function ServiceHistory() {
               <StatusChip status={booking?.status} />
             </p>
           </div>
+          <div className="flex justify-between items-center w-full max-w-lg mt-2 mb-2">
+            <p className="text-blackText font-semibold text-sm">
+              Booking Number
+            </p>
+            <p className="text-blackBlue font-semibold text-sm">
+              {booking.idKey}
+            </p>
+          </div>
           <hr className="w-full max-w-lg  text-grey" />
           <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
             <p className="text-blackText font-semibold">
@@ -441,7 +450,6 @@ function ServiceHistory() {
               text={isWorker ? "Confirmar reserva" : "Confirm Booking"}
             />
           )}
-
           {typeUser === "worker" &&
             booking?.status === "confirmed" &&
             startTimeBooking && (
@@ -456,7 +464,6 @@ function ServiceHistory() {
               text={"Completed Service"}
             />
           )} */}
-
           {typeUser === "worker" &&
             inTimeWorker &&
             (booking?.status === "confirmed" ||
@@ -467,7 +474,6 @@ function ServiceHistory() {
                 secondary={true}
               />
             )}
-
           {typeUser === "client" &&
             inTimeUser &&
             (booking?.status == "requested" ||

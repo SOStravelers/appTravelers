@@ -3,15 +3,17 @@ import ChangeEmailForm from "@/components/utils/forms/ChangeEmailForm";
 import ValidateEmailForm from "@/components/utils/forms/ValidateEmailForm";
 export default function ChangeEmail() {
   const [email, setEmail] = useState(null);
+  const [id, setId] = useState(null);
   const [validatingMail, setValidatingMail] = useState(false);
 
   return (
     <div className="px-5 py-28 md:pl-80">
       {validatingMail ? (
-        <ValidateEmailForm email={email} />
+        <ValidateEmailForm email={email} userId={id} change={true} />
       ) : (
         <ChangeEmailForm
           setEmail={setEmail}
+          setId={setId}
           setValidatingMail={setValidatingMail}
         />
       )}

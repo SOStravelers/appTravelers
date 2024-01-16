@@ -56,7 +56,7 @@ export default function ChangePassword() {
       }
     } catch (err) {
       console.log(err);
-      setErrorMsg(err.response?.data?.message);
+      setErrorMsg(err.response?.data?.error);
     }
   };
 

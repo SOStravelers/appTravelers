@@ -8,8 +8,8 @@ import Cookies from "js-cookie";
 import { useStore } from "@/store";
 import { Field, Form } from "houseform";
 import { toast } from "react-toastify";
-function ChangeEmailForm({ setEmail, setValidatingMail }) {
-  const { user, setUser, setLoggedIn } = useStore();
+function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
+  const { user, setUserId, setUser, setLoggedIn } = useStore();
 
   const changeEmail = async (values) => {
     try {
@@ -17,13 +17,15 @@ function ChangeEmailForm({ setEmail, setValidatingMail }) {
         user.email,
         values.currentPassword
       );
+      console.log(response);
       if (response.status === 200) {
         console.log(response);
-        verifyEmail();
+        const id = response.data.user._id;
+        verifyEmail(values.email, id);
       }
     } catch (err) {
       if (err.response && err.response.data) {
-        toast.error(err.response.data.message, {
+        toast.error(err.response.data.error, {
           position: toast.POSITION.BOTTOM_CENTER,
           autoClose: 1500,
         });
@@ -31,16 +33,20 @@ function ChangeEmailForm({ setEmail, setValidatingMail }) {
     }
   };
 
-  const verifyEmail = async () => {
+  const verifyEmail = async (newEmail, id) => {
     try {
+      console.log("enviando codigoss");
       const responseValidation = await UserService.sendCodeEmail(
         user._id,
-        "validate"
+        "validate",
+        newEmail
       );
+      console.log("perro");
       if (responseValidation.status === 200) {
         console.log(responseValidation);
         setValidatingMail(true);
-        setEmail(values.email);
+        setId(id);
+        setEmail(newEmail);
       }
     } catch (err) {
       if (err.response && err.response.data) {

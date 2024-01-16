@@ -154,16 +154,18 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
-  static async sendCodeEmail(userId, type) {
+  static async sendCodeEmail(userId, type, email = null) {
+    console.log("send code email", userId, type, email);
     return axios.get(
-      `${this.authUrl}/sendcode/template?id=${userId}&email=${type}`,
+      `${this.authUrl}/sendcode/template?id=${userId}&email=${type}&newEmail=${email}`,
       {
         headers: this.getHeaders(),
       }
     );
   }
-  static async verifyCodeEmail(userId, code) {
-    let data = { code: Number(code) };
+  static async verifyCodeEmail(userId, code, email = null) {
+    let data = { code: Number(code), email: email };
+    console.log("data", data);
     return axios.post(`${this.authUrl}/verifycode/${userId}/`, data, {
       headers: this.getHeaders(),
     });

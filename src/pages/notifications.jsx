@@ -4,29 +4,14 @@ import { useEffect, useState, useRef } from "react";
 import NotificationService from "@/services/NotificationService";
 import { Rings, Oval } from "react-loader-spinner";
 import { formatDistanceToNow } from "date-fns";
-import { set } from "zod";
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [loading2, setLoading2] = useState(false);
   const [page, setPage] = useState(1);
-  const [nextPage, setNextPage] = useState(2);
   const loader = useRef(null);
   useEffect(() => {
     document.title = "Notifications | SOS Travelers";
     getData();
-  }, []);
-  useEffect(() => {
-    var options = {
-      root: null,
-      rootMargin: "20px",
-      threshold: 1.0,
-    };
-
-    const observer = new IntersectionObserver(handleObserver, options);
-    if (loader.current) {
-      observer.observe(loader.current);
-    }
   }, []);
 
   const formattedDate = (date) => {
@@ -42,53 +27,14 @@ export default function Notifications() {
     try {
       const limit = 20;
       const response = await NotificationService.getAll(page, limit);
-      setNotifications((prevNotifications) => {
-        const combined = [...prevNotifications, ...response.data.docs];
-        return combined.filter((notification, index) => {
-          return (
-            combined.findIndex((item) => item.id === notification.id) === index
-          );
-        });
-      });
+      console.log("data", response.data.docs);
+      setNotifications(response.data.docs);
       setLoading(false);
-      setPage((prevPage) => prevPage + 1);
-      setNextPage(response.data.nextPage);
     } catch (error) {
       setLoading(false);
     }
   };
 
-  const getMoreData = async () => {
-    if (page > 1 && nextPage && notifications.length > 0) {
-      try {
-        setLoading2(true);
-        const limit = 2;
-        const response = await NotificationService.getAll(page, limit);
-        setNotifications((prevNotifications) => [
-          ...prevNotifications,
-          ...response.data.docs,
-        ]);
-        setLoading2(false);
-        setNextPage(response.data.nextPage);
-        setPage((prevPage) => prevPage + 1);
-      } catch (error) {
-        setLoading2(false);
-      }
-    }
-  };
-
-  const handleObserver = (entities) => {
-    const target = entities[0];
-    if (target.isIntersecting) {
-      getMoreData();
-      // Verificar si el usuario ha hecho scroll  hasta el final de la lista
-      if (
-        window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight
-      )
-        return;
-    }
-  };
   return (
     <div className="py-20 px-5 md:pl-80">
       {loading ? (
@@ -109,7 +55,11 @@ export default function Notifications() {
             isRead={notification.isRead}
             title={notification.title}
             body={notification.body}
-            link={notification.link}
+            link={
+              notification.booking
+                ? `/service-details/${notification.booking._id}`
+                : "/notifications"
+            }
           />
         ))
       )}

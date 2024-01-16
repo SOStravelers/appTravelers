@@ -11,10 +11,10 @@ export default function AssignClient() {
   return (
     <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
       <h1 className="text-blackText font-semibold text-xl mt-5">
-        Register your service
+        Registre seu cliente
       </h1>
       <h2 className="text-blackText mt-2 mb-5">
-        Enter the following customer information
+        Digite as seguintes informações do cliente
       </h2>
       <div className="w-full md:w-80">
         <ClientForm />
@@ -23,10 +23,10 @@ export default function AssignClient() {
         open={modal}
         setOpen={setModal}
         text={[
-          "The following information will be used ONLY to record the work done and to send a link for evaluating the service provided.",
+          "A seguinte informação será usada APENAS para registrar o trabalho realizado e enviar um link para avaliar o serviço prestado",
         ]}
         onAccept={() => setModal(false)}
-        buttonText={"Confirm"}
+        buttonText={"Confirmar"}
       />
     </div>
   );

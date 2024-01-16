@@ -86,7 +86,7 @@ function ClientForm() {
               );
             }}
           </Field>
-          <OutlinedButton text="Send Data" disabled={!isValid} />
+          <OutlinedButton text="Continuar" disabled={!isValid} />
         </form>
       )}
     </Form>

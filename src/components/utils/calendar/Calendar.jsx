@@ -32,6 +32,9 @@ function Calendar({ id }) {
     minute: "2-digit",
     hour12: false,
   });
+  const currentDate = new Date(
+    now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+  );
   useEffect(() => {
     if (localStorage.getItem("fromFavorite")) {
       console.log("entro");
@@ -45,7 +48,6 @@ function Calendar({ id }) {
     setDays(result);
   }, [schedule]);
   useEffect(() => {
-    console.log("bueno");
     if (selectedDay) {
       const date = new Date(selectedDay);
       const formattedDate =
@@ -148,6 +150,9 @@ function Calendar({ id }) {
     }
     console.log("service", service);
   };
+  const assignClient = () => {
+    router.push(`/assign-client`);
+  };
   const comeBack = () => {
     router.back();
   };
@@ -203,7 +208,7 @@ function Calendar({ id }) {
           Hora actual: {currentTime}
         </p>
 
-        <OutlinedButton text={"Siguiente"} onClick={comeBack} />
+        <OutlinedButton text={"Continuar"} onClick={assignClient} />
       </div>
     );
   }
@@ -225,13 +230,13 @@ function Calendar({ id }) {
       ) : (
         <DayPicker
           mode="single"
-          selected={selectedDayWorker}
+          selected={currentDate}
           fromDate={days?.firstDate || new Date()}
           toDate={
             days?.lastDate ||
-            new Date(new Date().setMonth(new Date().getMonth() + 1))
+            new Date(new Date().setDate(new Date().getDate() + 0))
           }
-          onSelect={setSelectedWorker}
+          onSelect={() => {}}
           footer={footer}
         />
       )}

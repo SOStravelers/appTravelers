@@ -10,15 +10,15 @@ export default function TermsOfService() {
     document.title = "Terms of service | SOS Travelers";
   }, []);
   return (
-    <section className="m-2 py-32 mb-16  xl:px-36 xl:ml-32">
-      <h1 className="mb-2 font-bold text-2xl">
+    <section className=" py-32 mb-16  xl:px-30 xl:ml-32">
+      <h1 className="mb-2 px-2 font-bold text-2xl">
         SOS Travelers Terms of Service
       </h1>
-      <p className="mb-5 text-sm">
-        <b className="mr-1">Last update: </b> November 2023
+      <p className="mb-5 px-2 text-sm">
+        <b className="mr-1  px-2">Last update: </b> November 2023
       </p>
-      <h2 className="mb-2 font-bold text-lg">1. Acceptance of Terms.</h2>
-      <p className="mb-2">
+      <h2 className="mb-2  px-2 font-bold text-lg">1. Acceptance of Terms.</h2>
+      <p className="mb-2 px-2">
         By accessing and using the SOS Travelers platform, you automatically
         agree to comply with these Terms and all policies and guidelines
         incorporated by reference. This includes the Use Policy, fee and payment
@@ -29,22 +29,22 @@ export default function TermsOfService() {
         ask you not to use our platform.
       </p>
 
-      <div className="mb-6"></div>
-      <h2 className="mb-2 font-bold text-lg">2. Service Description.</h2>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h2 className="mb-2  px-2 font-bold text-lg">2. Service Description.</h2>
+      <p className="mb-2  px-2">
         SOS Travelers is an online platform that serves as an intermediary
         between three main parties:
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">2.1 Establishment:</h3>
-      <p className="mb-2 ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">2.1 Establishment:</h3>
+      <p className="mb-2  px-2 ml-4">
         Establishments are accommodation businesses such as hostels or hotels
         that offer physical spaces for service provision. Through our platform,
         establishments can list their services and available spaces.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">2.2 Workers:</h3>
-      <p className="mb-2 ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">2.2 Workers:</h3>
+      <p className="mb-2  px-2 ml-4">
         Workers are individuals who provide specific services within the
         establishments provided by the hosts. Workers can include, for example,
         tour guides, chefs, massage therapists, or anyone offering a hospitality
@@ -52,8 +52,8 @@ export default function TermsOfService() {
         independently contracted and are not employees of SOS Travelers.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">2.3 Users:</h3>
-      <p className="mb-2 ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">2.3 Users:</h3>
+      <p className="mb-2  px-2 ml-4">
         Users are natural persons who require specific services performed by
         workers in a given establishment. Users can browse the platform, search
         for services, read reviews, and make reservations. Our platform provides
@@ -61,70 +61,74 @@ export default function TermsOfService() {
         establishments.
       </p>
 
-      <div className="mb-6"></div>
-      <h2 className="mb-2 font-bold text-lg">
+      <div className="mb-6  px-2"></div>
+      <h2 className="mb-2  px-2font-bold text-lg">
         3. Responsibilities of SOS Travelers.
       </h2>
-      <p className="mb-2">
+      <p className="mb-2  px-2">
         SOS Travelers assumes various responsibilities to ensure the proper
         functioning of the platform:
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
         3.1. Reliable Intermediary:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2 ml-4">
         Our primary function is to serve as a reliable intermediary between
         establishments, workers, and users. We facilitate the connection and
         communication between these parties so they can collaborate in the
         provision of services.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">3.2. Secure Environment:</h3>
-      <p className="mb-2 ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
+        3.2. Secure Environment:
+      </h3>
+      <p className="mb-2  px-2 ml-4">
         We are committed to providing a secure environment for user interaction.
         We implement security measures, such as identity verifications, to help
         ensure the reliability of the platform.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
         3.3. Assistance and Support:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2 ml-4">
         We offer customer assistance and support to address any issues or
         inquiries related to the platform. We are available to help users
         resolve problems and clarify any doubts.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">3.4. Payment Management:</h3>
-      <p className="mb-2 ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
+        3.4. Payment Management:
+      </h3>
+      <p className="mb-2   px-2 ml-4">
         SOS Travelers recognizes the importance of effective and transparent
         payment management to ensure a satisfactory experience for all involved
         parties. Below, we outline the policies and processes governing the
         negotiation, processing, and resolution of payment-related disputes.
       </p>
 
-      <h4 className="mb-2 font-bold text-sm ml-8">
+      <h4 className="mb-2  px-2 font-bold text-sm ml-8">
         3.4.1 Fee Negotiation and Visibility:
       </h4>
-      <p className="mb-2 ml-8">
+      <p className="mb-2  px-2 ml-8">
         Payment fees for workers and hostels will be subject to direct
         negotiation and mutual agreement with each party. The final price of the
         service will always be transparent and permanently available to each
         entity directly involved.
       </p>
 
-      <h4 className="mb-2 font-bold text-sm ml-8">
+      <h4 className="mb-2  px-2 font-bold text-sm ml-8">
         3.4.2 Secure Payment Processing:
       </h4>
-      <p className="mb-2 ml-8">
+      <p className="mb-2  px-2 ml-8">
         The security of payment information is of paramount importance. All
         transactions are processed through secure and reliable payment gateways.
         For example, credit card information is encrypted and processed securely
         to prevent unauthorized access.
       </p>
 
-      <h4 className="mb-2 font-bold text-sm ml-8">
+      <h4 className="mb-2  px-2 font-bold text-sm ml-8">
         3.4.3 Payments to Workers and Establishments:
       </h4>
       <p className="mb-2 ml-8">
@@ -134,7 +138,7 @@ export default function TermsOfService() {
         will be mutually agreed upon.
       </p>
 
-      <p className="mb-2 ml-8">
+      <p className="mb-2  px-2 ml-8">
         The default method for payments will be monthly, with fund transfers
         executed on the first business day of each month. This choice provides
         stability and predictability for both workers and establishments,
@@ -142,10 +146,10 @@ export default function TermsOfService() {
         platform.
       </p>
 
-      <h4 className="mb-2 font-bold text-sm ml-8">
+      <h4 className="mb-2  px-2 font-bold text-sm ml-8">
         3.4.4 Dispute Resolution and Refunds:
       </h4>
-      <p className="mb-2 ml-8">
+      <p className="mb-2  px-2 ml-8">
         In dispute situations, the responsibility lies with the worker. The
         worker will mark the job as completed through the application once the
         agreed-upon tasks are finished. Subsequently, the user has the
@@ -154,7 +158,7 @@ export default function TermsOfService() {
         assessed, including the possibility of a refund.
       </p>
 
-      <p className="mb-2 ml-8">
+      <p className="mb-2  px-2 ml-8">
         In cases where the provided service does not meet the agreed-upon
         quality, associated costs will be the primary responsibility of the
         worker. On the other hand, if the area provided by the hostel does not
@@ -164,65 +168,69 @@ export default function TermsOfService() {
         and evaluated without pending disputes.
       </p>
 
-      <p className="mb-2 ml-8">
+      <p className="mb-2  px-2 ml-8">
         Additionally, SOS Travelers reserves the right to charge the user for
         platform usage costs in cancellation and refund scenarios.
       </p>
 
-      <div className="mb-6"></div>
-      <h2 className="mb-2 font-bold text-lg">4. User Responsibilities.</h2>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h2 className="mb-2  px-2 font-bold text-lg">
+        4. User Responsibilities.
+      </h2>
+      <p className="mb-2  px-2">
         Both establishments, workers, and users have certain responsibilities
         when using our platform:
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">4.1. Legal Compliance:</h3>
-      <p className="mb-2 ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
+        4.1. Legal Compliance:
+      </h3>
+      <p className="mb-2   px-2 ml-4">
         All parties must comply with all applicable laws and regulations in
         their geographic area. This includes, but is not limited to, laws
         related to hospitality, tourism services, and taxes.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2  px-2 font-bold text-md ml-4">
         4.2. Accurate Information:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2  px-2 ml-4">
         Users must provide accurate and up-to-date information in their
         profiles. This includes personal information, contact information, and
         any other relevant information.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
         4.3. Respect for the Terms:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2 ml-4">
         All parties must respect the terms of any agreements made through the
         platform. This includes reservation agreements, cancellation policies,
         and any other specific agreements between the parties involved.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
         4.4. Respectful Communication:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2 ml-4">
         It is important to maintain respectful and professional communication in
         all interactions through the platform. Mutual respect is essential for
         creating a positive experience for all users.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
         4.5. Collaboration in Conflict Resolution:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2 ml-4">
         In the event of a conflict or issue arising during the provision of
         services, all parties involved are expected to collaborate in its
         resolution in a friendly and fair manner. SOS Travelers is available to
         mediate in cases of disputes.
       </p>
 
-      <div className="mb-6"></div>
-      <h3 className="mb-2 font-bold text-lg">5. Payments and Fees.</h3>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h3 className="mb-2  px-2 font-bold text-lg">5. Payments and Fees.</h3>
+      <p className="mb-2  px-2">
         Payments for the services provided are processed through our platform.
         Establishments and workers agree on their fees, which may vary depending
         on the type of service and location. Users can view the fees before
@@ -232,9 +240,11 @@ export default function TermsOfService() {
         and payment policies.
       </p>
 
-      <div className="mb-6"></div>
-      <h2 className="mb-2 font-bold text-lg">6. Cancellations and Refunds.</h2>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h2 className="mb-2  px-2 font-bold text-lg">
+        6. Cancellations and Refunds.
+      </h2>
+      <p className="mb-2  px-2">
         Cancellation and refund policies may vary depending on the establishment
         or worker. Users should review these policies before booking a service.
         SOS Travelers strives to provide clear information about cancellation
@@ -243,9 +253,9 @@ export default function TermsOfService() {
         established by the establishment or worker.
       </p>
 
-      <div className="mb-6"></div>
-      <h2 className="mb-2 font-bold text-lg">7. Use Policy.</h2>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h2 className="mb-2  px-2 font-bold text-lg">7. Use Policy.</h2>
+      <p className="mb-2  px-2">
         Our Use Policy provides a detailed description of how we collect, use,
         and share personal and platform information. By using our services, you
         agree to our Use Policy. The security and privacy of our users are of
@@ -257,9 +267,11 @@ export default function TermsOfService() {
         at any time for more details.
       </p>
 
-      <div className="mb-6"></div>
-      <h3 className="mb-2 font-bold text-lg">8. Modifications to the Terms.</h3>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h3 className="mb-2  px-2 font-bold text-lg">
+        8. Modifications to the Terms.
+      </h3>
+      <p className="mb-2  px-2">
         SOS Travelers reserves the right to modify these Terms at any time. The
         modifications will become effective once they are published on our
         platform. We recommend that you periodically review the Terms to stay
@@ -269,9 +281,9 @@ export default function TermsOfService() {
         in the Terms and the Usage Policy.
       </p>
 
-      <div className="mb-6"></div>
-      <h2 className="mb-2 font-bold text-lg">9. Account Termination.</h2>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h2 className="mb-2  px-2 font-bold text-lg">9. Account Termination.</h2>
+      <p className="mb-2  px-2">
         SOS Travelers reserves the right to suspend or close user accounts that
         violate these Terms or our policies. This may occur in situations where
         a user fails to fulfill their responsibilities, does not respect
@@ -280,9 +292,9 @@ export default function TermsOfService() {
         any pending services.
       </p>
 
-      <div className="mb-6"></div>
-      <h2 className="mb-2 font-bold text-lg">10. Contact.</h2>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h2 className="mb-2  px-2 font-bold text-lg">10. Contact.</h2>
+      <p className="mb-2  px-2">
         At SOS Travelers, we value effective communication with our users and
         understand that questions, concerns, or assistance needs may arise. To
         ensure a seamless experience and provide you with the support you may
@@ -302,16 +314,18 @@ export default function TermsOfService() {
         addressed officially through the email support.
       </p>
 
-      <div className="mb-6"></div>
-      <h3 className="mb-2 font-bold text-lg">11. Intellectual Property.</h3>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h3 className="mb-2  px-2 font-bold text-lg">
+        11. Intellectual Property.
+      </h3>
+      <p className="mb-2  px-2">
         At SOS Travelers, we respect and value the intellectual property rights
         of third parties and expect our users to do the same. Below are more
         important aspects related to copyright:
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">11.1. Copyright:</h3>
-      <p className="mb-2 ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">11.1. Copyright:</h3>
+      <p className="mb-2  px-2 ml-4">
         It is crucial for users to understand that when posting content on our
         platform, they must ensure that the content is original and that they
         have the necessary rights to use it. This means you should not upload
@@ -320,10 +334,10 @@ export default function TermsOfService() {
         property rights.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
         11.2. Ownership of User Data:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2 ml-4">
         Data generated or provided by users when using our platform and
         services, including personal information, user-provided content, and
         other valuable information such as location and language preferences,
@@ -331,9 +345,9 @@ export default function TermsOfService() {
         a timely and clear manner through the platform or email support.
       </p>
 
-      <div className="mb-6"></div>
-      <h2 className="mb-2 font-bold text-lg">12. User Accounts.</h2>
-      <p className="mb-2">
+      <div className="mb-6  px-2"></div>
+      <h2 className="mb-2  px-2 font-bold text-lg">12. User Accounts.</h2>
+      <p className="mb-2  px-2">
         Creating user accounts is the first step to immerse yourself in the SOS
         Travelers experience and access all the options the platform offers for
         users. Our Terms of Service clearly define the conditions and guidelines
@@ -341,19 +355,19 @@ export default function TermsOfService() {
         entails:
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
         12.1. Simple and Secure Registration:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2 ml-4">
         At SOS Travelers, we prioritize simplicity and security. Our
         registration process is designed to be straightforward and quick, while
         our security measures protect your personal data.
       </p>
 
-      <h3 className="mb-2 font-bold text-md ml-4">
+      <h3 className="mb-2  px-2 font-bold text-md ml-4">
         12.2. Deletion of User Account:
       </h3>
-      <p className="mb-2 ml-4">
+      <p className="mb-2  px-2 ml-4">
         At any time, the user can terminate their user account. To do this, SOS
         Travelers must provide through its platform an option that allows the
         user to perform this action. This does not exempt the user from their

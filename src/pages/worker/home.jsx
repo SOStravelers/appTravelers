@@ -150,6 +150,7 @@ export default function WorkerHome() {
       <section className=" mb-1 flex w-full max-w-lg items-center ">
         <div className="flex flex-grow items-center ">
           <OutlinedButton
+            disabled={true}
             text="Agende um serviço"
             onClick={handleBookService}
           />

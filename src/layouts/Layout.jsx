@@ -64,7 +64,8 @@ function Layout({ children, lang }) {
     router.pathname === "/favorites" ||
     router.pathname === "/profile" ||
     router.pathname === "/payment-confirmation" ||
-    router.pathname === "/guest-settings";
+    router.pathname === "/guest-settings" ||
+    router.pathname === "/summary";
 
   const isIntro = router.pathname === "/intro";
 

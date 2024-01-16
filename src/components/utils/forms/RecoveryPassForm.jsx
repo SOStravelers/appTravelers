@@ -6,13 +6,13 @@ import UserService from "@/services/UserService";
 import { Field, Form } from "houseform";
 import { toast } from "react-toastify";
 
-function RecoveryPassForm({ userId }) {
+function RecoveryPassForm({ user }) {
   const router = useRouter();
 
   const createPass = async (values) => {
     try {
-      const id = userId;
-      const response = await UserService.createPassword(values.password, id);
+      const token = user;
+      const response = await UserService.createPassword(values.password, token);
       if (response.data) {
         toast.success("Password successfully changed.", {
           position: toast.POSITION.BOTTOM_CENTER,
@@ -25,7 +25,7 @@ function RecoveryPassForm({ userId }) {
     } catch (err) {
       console.log(err.response.data.message);
       if (err.response && err.response.data) {
-        toast.error(err.response.data.message, {
+        toast.error(err.response.data.error, {
           position: toast.POSITION.BOTTOM_CENTER,
           autoClose: 1500,
         });

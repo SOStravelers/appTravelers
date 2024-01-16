@@ -36,7 +36,9 @@ export const useStore = create((set) => {
     services: [],
     haveNotification: false,
     loginModal: false,
+    register: false,
     socket: null,
+    setRegister: (register) => set({ register: register }),
     setHaveNotification: (haveNotification) =>
       set({ haveNotification: haveNotification }),
     setLoginModal: (loginModal) => set({ loginModal: loginModal }),

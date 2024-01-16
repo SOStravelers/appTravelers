@@ -16,7 +16,7 @@ import { useStore } from "@/store";
 import { set } from "date-fns";
 
 function RegisterForm() {
-  const { setUser, setLoggedIn, service } = useStore();
+  const { setUser, setLoggedIn, service, setRegister } = useStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const register = async (values) => {
@@ -35,31 +35,28 @@ function RegisterForm() {
       Cookies.set("auth.user_id", response.data.user._id);
       setUser(response.data.user);
       setLoggedIn(true);
-
-      if (service && Object.keys(service).length > 0) {
-        router.push(`/summary`);
-      } else {
-        const response = await UserService.findByEmail(values.email);
-        if (response?.data?.isActive && response?.data?.isValidate) {
-          router.push("/");
-        } else if (!response?.data?.isValidate) {
-          const res = await UserService.sendCodeEmail(
-            response.data._id,
-            "validate"
-          );
-          if (res.status === 200) {
-            router.push({
-              pathname: "/verify-account",
-              query: { userId: response?.data?._id },
-            });
-          }
+      console.log(response.data.user);
+      const response2 = await UserService.findByEmail(values.email);
+      if (response2?.data?.isActive && response2?.data?.isValidate) {
+        router.push("/");
+      } else if (!response2?.data?.isValidate) {
+        const res = await UserService.sendCodeEmail(
+          response2.data._id,
+          "validate"
+        );
+        if (res.status === 200) {
+          setRegister(true);
+          router.push({
+            pathname: "/verify-account",
+            query: { userId: response2?.data?._id },
+          });
         }
       }
     } catch (error) {
       let message;
-      if (error?.response?.status === 409)
-        message = error?.response?.data?.message;
-      else if (error?.response?.status === 400)
+      if (error?.response?.status == 409)
+        message = error?.response?.data?.error;
+      else if (error?.response?.status == 400)
         message = error?.response?.data?.result;
       toast.error(message);
     }

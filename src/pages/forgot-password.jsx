@@ -26,14 +26,15 @@ export default function ChangePassword() {
       console.log(response);
       if (response.status === 200) {
         console.log("ypui");
+        const token = response.data.access_token;
         router.push({
-          pathname: "/recovery-password",
-          query: { userId: response?.data?._id },
+          pathname: "/recovery-password/",
+          query: { user: token },
         });
       }
     } catch (err) {
       console.log(err);
-      setErrorMsg(err?.response?.data?.message);
+      setErrorMsg(err?.response?.data?.error);
     }
   };
 

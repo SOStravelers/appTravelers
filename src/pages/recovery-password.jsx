@@ -4,10 +4,10 @@ import RecoveryPassForm from "@/components/utils/forms/RecoveryPassForm";
 export default function RecoveryPassword() {
   const router = useRouter();
 
-  if (!router.query.userId) {
+  if (!router.query.user) {
     console.log("no hay query");
   } else {
-    console.log(router.query.userId);
+    console.log(router.query.user);
   }
 
   return (
@@ -18,7 +18,7 @@ export default function RecoveryPassword() {
       <p className="text-center mb-5 max-w-lg">
         Enter your new password and confirm it.
       </p>
-      <RecoveryPassForm userId={router?.query?.userId} />
+      <RecoveryPassForm user={router?.query?.user} />
     </div>
   );
 }

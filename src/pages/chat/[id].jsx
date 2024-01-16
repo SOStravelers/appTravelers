@@ -3,12 +3,15 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
+import { useStore } from "@/store";
 import WorkerProfileCardChat from "@/components/utils/cards/WorkerProfileCardChat";
 import ChatClient from "@/components/chat/ChatClient";
 import ChatService from "@/services/ChatService";
 import { Rings } from "react-loader-spinner";
 import { fullName } from "@/utils/format";
 export default function PersonalChat() {
+  const store = useStore();
+  const { setService } = store;
   const router = useRouter();
   const [initialMessages, setInitialMessages] = useState([]);
   const [booking, setBooking] = useState({});
@@ -20,6 +23,7 @@ export default function PersonalChat() {
 
   useEffect(() => {
     document.title = "Chat | SOS Travelers";
+    setService({});
     if (user) {
       console.log("conect socket chat");
       const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;

@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import UserService from "@/services/UserService";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import SolidButton from "@/components/utils/buttons/SolidButton";
-
+import { useStore } from "@/store";
 export default function VerifyAccount() {
   const [code, setCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
+  const { register, setRegister, service } = useStore();
 
   useEffect(() => {
     document.title = "Recovery Pass | SOS Travelers";
@@ -17,13 +18,19 @@ export default function VerifyAccount() {
       const userId = router?.query?.userId;
       const response = await UserService.verifyCodeEmail(userId, code);
       if (response.status === 200) {
-        router.push({
-          pathname: "/",
-        });
+        if (service && Object.keys(service).length > 0 && register) {
+          setRegister(false);
+          router.push(`/summary`);
+        } else {
+          setRegister(false);
+          router.push({
+            pathname: "/",
+          });
+        }
       }
     } catch (err) {
       console.log(err);
-      setErrorMsg(err?.response?.data?.message);
+      setErrorMsg(err?.response?.data?.error);
     }
   };
 

@@ -18,7 +18,7 @@ register();
 
 export default function Home({}) {
   const store = useStore();
-  const { services, setServices, setHaveNotification } = store;
+  const { services, setServices, setHaveNotification, setService } = store;
   const [bookings, setBookings] = useState([]);
   const [slides, setSlides] = useState([]);
   const [swiper, setSwiper] = useState(null);
@@ -26,6 +26,7 @@ export default function Home({}) {
   const [loading, setLoading] = useState(true);
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
+    setService({});
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
   }, []);

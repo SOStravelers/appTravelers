@@ -34,7 +34,7 @@ for (let i = 1; i <= 6; i++) {
 
 export default function Booking() {
   const store = useStore();
-  const { loginModal, setLoginModal } = store;
+  const { loginModal, setLoginModal, setService } = store;
   var user = Cookies.get("auth.user_id");
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
@@ -42,6 +42,7 @@ export default function Booking() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
+    setService({});
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
   }, []);

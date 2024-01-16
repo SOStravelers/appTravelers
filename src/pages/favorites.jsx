@@ -10,7 +10,7 @@ import { Rings } from "react-loader-spinner";
 export default function Favorites() {
   const store = useStore();
   const router = useRouter();
-  const { loginModal, setLoginModal } = store;
+  const { loginModal, setLoginModal, setService } = store;
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +18,7 @@ export default function Favorites() {
 
   useEffect(() => {
     document.title = "My favorites | SOS Travelers";
+    setService({});
     if (loginModal) {
       setOpen(false);
       setLoginModal(false);

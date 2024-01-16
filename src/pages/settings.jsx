@@ -10,7 +10,7 @@ import UserService from "@/services/UserService";
 import WorkerService from "@/services/WorkerService";
 import Link from "next/link";
 export default function Settings() {
-  const { setWorker, isWorker } = useStore();
+  const { setWorker, isWorker, setService } = useStore();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
@@ -20,6 +20,7 @@ export default function Settings() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOnNotification, setIsOnNotification] = useState(true);
   useEffect(() => {
+    setService({});
     document.title = "Settings | SOS Travelers";
   }, []);
   useEffect(() => {

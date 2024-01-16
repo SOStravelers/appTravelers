@@ -175,8 +175,8 @@ export default function Payment() {
                 <MoneyIcon />
               </div>
               <div>
-                <p className="ml-2">Cash</p>
-                <p className="ml-2">(Comming soon)</p>
+                <p className="ml-2">{isWorker ? "Dinheiro" : "Cash"} </p>
+                {/* <p className="ml-2">(Comming soon)</p> */}
               </div>
             </div>
             <input

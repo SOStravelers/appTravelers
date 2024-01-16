@@ -63,6 +63,11 @@ export default function CheckoutForm(clientSecret) {
 
   return (
     <form onSubmit={handleSubmit}>
+      <p className="mb-2 text-center text-sm">
+        No stress! We charge your card only after a successful service. Your
+        satisfaction is guaranteed. Relax, and let us handle it. Cheers to
+        success!
+      </p>
       <div className="mb-2 text-center  text-md">Billing Details</div>
       <LinkAuthenticationElement />
       {/* <AddressElement
@@ -78,11 +83,11 @@ export default function CheckoutForm(clientSecret) {
           isProcessing
             ? "Processing..."
             : service.currency == "BRL"
-            ? "Pay now " + "R$ " + price
+            ? "Book now " + "R$ " + price
             : service.currency == "USD"
-            ? "Pay now " + "USD " + price
+            ? "Book now " + "USD " + price
             : service.currency == "EUR"
-            ? "Pay now " + price + " EUR"
+            ? "Book now " + price + " EUR"
             : "null"
         }
         disabled={!stripe || isProcessing}

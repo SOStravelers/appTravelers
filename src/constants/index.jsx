@@ -31,3 +31,25 @@ export const SERVICES_OPTIONS = [
     ],
   },
 ];
+
+// routeTitles.js
+export const routeTitles = {
+  subservices: "Select Subservices",
+  "select-hostel": "Select Hostel",
+  reservation: "Reservation",
+  "workers-found": "Workers Found",
+  summary: "Summary",
+  payment: "Payment Method",
+  "service-history": "Service History",
+  settings: "Settings",
+  notifications: "Notifications",
+  "my-services": "My Services",
+  "personal-details": "Personal Details",
+  "worker/profile-config": "My Worker Profile",
+  "my-schedules": "My Schedule",
+  "worker/edit": "About Me",
+  "terms-of-service": "Terms of service",
+  "use-policy": "Use Policy",
+  "service-details": "Booking Details",
+  chat: "Chat",
+};

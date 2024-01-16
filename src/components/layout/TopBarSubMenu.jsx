@@ -7,21 +7,27 @@ import Link from "next/link";
 import { useStore } from "@/store";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
+import { routeTitles } from "@/constants/index";
+
 function TopBarSubMenu() {
   const [titulo, setTitulo] = useState("");
   const router = useRouter();
   const socket = useRef();
-  const { isWorker, setSocket } = useStore();
+  const { isWorker } = useStore();
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
-    console.log("isWorker", isWorker);
     if (isWorker) {
       console.log("conect socket worker");
       const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-      // console.log(host);
       socket.current = io(host);
       socket.current.emit("add-user", userId);
-      setSocket(socket);
+
+      socket.current.on("booking-recieve", (data) => {
+        console.log("booking recibido", data);
+        setBooking(data.data);
+        sound.play();
+        setOpenWorkerModal(true);
+      });
     }
     return () => {
       if (socket.current) {
@@ -29,79 +35,17 @@ function TopBarSubMenu() {
       }
     };
   }, [isWorker]);
-
-  // useEffect(() => {
-  //   // console.log("socket.current", socket.current);
-
-  //   if (socket && socket.current) {
-  //     // console.log("recibiendo desde a chatContainer comp");
-  //     socket.current.on("book-recieve", (data) => {});
-  //   }
-  // }, [socket]);
-
   const actualURL = router.pathname;
-
-  const isSubservices = actualURL.includes("subservices");
-  const isHostelSelection = actualURL.includes("select-hostel");
-  const isReservation = actualURL.includes("reservation");
-  const isWorkersFound = actualURL.includes("workers-found");
-  const isSumary = actualURL.includes("summary");
-  const isPayment = actualURL.includes("payment");
-  const isServiceHistoy = actualURL.includes("service-history");
-  const isSettings = actualURL.includes("settings");
-  const isNotifications = actualURL.includes("notifications");
-  const isWorkerServices = actualURL.includes("my-services");
-  const isPersonalProfile = actualURL.includes("personal-details");
-  const isWorkerProfile = actualURL.includes("worker/profile-config");
-  const isMyschedules = actualURL.includes("my-schedules");
-  const isAboutMe = actualURL.includes("worker/edit");
-  const terms = actualURL.includes("terms-of-service");
-  const policy = actualURL.includes("use-policy");
-  const serviceDetails = actualURL.includes("service-details");
-  const chat = actualURL.includes("chat");
-
   useEffect(() => {
     handleUrl();
-  }, [actualURL]);
+  }, [actualURL, routeTitles]);
 
   const handleUrl = () => {
-    if (isSubservices) {
-      setTitulo("Select Subservices");
-    } else if (isHostelSelection) {
-      setTitulo("Select Hostel");
-    } else if (isReservation) {
-      setTitulo("Reservation");
-    } else if (isWorkersFound) {
-      setTitulo("Workers Found");
-    } else if (isSumary) {
-      setTitulo("Summary");
-    } else if (isPayment) {
-      setTitulo("Payment Method");
-    } else if (isServiceHistoy) {
-      setTitulo("Service History");
-    } else if (isSettings) {
-      setTitulo("Settings");
-    } else if (isNotifications) {
-      setTitulo("Notifications");
-    } else if (isWorkerServices) {
-      setTitulo("My Services");
-    } else if (isPersonalProfile) {
-      setTitulo("Personal Details");
-    } else if (isWorkerProfile) {
-      setTitulo("My Worker Profile");
-    } else if (isMyschedules) {
-      setTitulo("My Schedule");
-    } else if (isAboutMe) {
-      setTitulo("About Me");
-    } else if (terms) {
-      setTitulo("Terms of service");
-    } else if (policy) {
-      setTitulo("Use Policy");
-    } else if (serviceDetails) {
-      setTitulo("Booking Details");
-    } else if (chat) {
-      setTitulo("Chat");
-    }
+    Object.keys(routeTitles).forEach((route) => {
+      if (actualURL.includes(route)) {
+        setTitulo(routeTitles[route]);
+      }
+    });
   };
 
   return (

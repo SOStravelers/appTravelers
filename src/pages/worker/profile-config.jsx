@@ -155,13 +155,14 @@ export default function WorkerProfile() {
         check={mScheCheck}
         onClick={() => router.push("/worker/my-schedules") && console.log()}
       />
-      <OptionCard
+      {/* <OptionCard
         title="My Workplaces"
         subtitle="Establishments"
+        disabled={true}
         icon={LockIcon}
         check={mPlacCheck}
         onClick={() => router.push("/worker/my-workplaces")}
-      />
+      /> */}
       <div className="max-w-lg text-center text-xl my-5 flex flex-col justify-center">
         {IsOnWorker ? (
           <>

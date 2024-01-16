@@ -90,7 +90,6 @@ export const getServiceNames = (data) => {
 
   // Unir los nombres en un solo string con comas
   const serviceNamesString = serviceNames.join(", ");
-  console.log(serviceNamesString);
   return serviceNamesString;
 };
 

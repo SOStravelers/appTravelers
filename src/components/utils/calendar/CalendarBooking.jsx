@@ -67,7 +67,6 @@ function CalendarBooking() {
 
   const handleDayClick = (day, modifiers) => {
     setShowBookings([]);
-    console.log(day, modifiers.booked);
     if (modifiers.booked) {
       const dateString = moment({
         year: day.getFullYear(),

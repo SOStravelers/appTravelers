@@ -4,11 +4,10 @@ import { useRouter } from "next/router";
 import { MoneyIcon, CheckIcon } from "@/constants/icons";
 import Image from "next/image";
 import { useStore } from "@/store";
-
 import Select from "react-select";
 
 export default function Payment() {
-  const { service, setService } = useStore();
+  const { service, setService, isWorker } = useStore();
   const [paymentType, setPaymentType] = useState("stripe");
   const router = useRouter();
   const [price, setPrice] = useState(service.price[0].finalCost);
@@ -119,7 +118,7 @@ export default function Payment() {
             <p className="ml-2">Debit / Credit Card</p>
           </div>
 
-          {paymentType === "stripe" ? (
+          {paymentType === "stripe" && !isWorker ? (
             <CheckIcon />
           ) : (
             <input
@@ -134,7 +133,8 @@ export default function Payment() {
             />
           )}
         </div>
-        <div
+        {/* PAYPAL DISABLED */}
+        {/* <div
           className="flex justify-between items-center"
           // onClick={() => setPaymentType("paypal")}
         >
@@ -160,28 +160,30 @@ export default function Payment() {
             // onChange={(event) => setPaymentType(event.target.value)}
             checked={paymentType === "paypal"}
           />
-        </div>
-        <div className="flex mt-3 justify-between items-center">
-          <div className="flex items-center my-3">
-            <div className="">
-              <MoneyIcon />
+        </div> */}
+        {isWorker && (
+          <div className="flex mt-3 justify-between items-center">
+            <div className="flex items-center my-3">
+              <div className="">
+                <MoneyIcon />
+              </div>
+              <div>
+                <p className="ml-2">Cash</p>
+                <p className="ml-2">(Comming soon)</p>
+              </div>
             </div>
-            <div>
-              <p className="ml-2">Cash</p>
-              <p className="ml-2">(Comming soon)</p>
-            </div>
+            <input
+              type="radio"
+              disabled
+              name="payment"
+              id="cash"
+              className="w-5 h-5 "
+              value="cash"
+              // onChange={(event) => setPaymentType(event.target.value)}
+              checked={paymentType === "cash"}
+            />
           </div>
-          <input
-            type="radio"
-            disabled
-            name="payment"
-            id="cash"
-            className="w-5 h-5 "
-            value="cash"
-            // onChange={(event) => setPaymentType(event.target.value)}
-            checked={paymentType === "cash"}
-          />
-        </div>
+        )}
       </div>
       <OutlinedButton
         disabled={paymentType == null}

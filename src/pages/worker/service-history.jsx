@@ -16,12 +16,10 @@ function ServiceHistory() {
         if (res) {
           setBookings(res.data.docs);
           setLoading(false);
-          console.log(res.data.docs);
         }
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
       });
   };
   return (

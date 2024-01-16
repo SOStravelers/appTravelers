@@ -52,12 +52,12 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
   return (
     <div
       onClick={select}
-      className="flex  max-w-lg justify-between items-center border-b-2 border-blueBorder rounded-2xl mt-2 mb-3"
+      className="flex max-w-lg  pt-1 mb-1 rounded-2xl border-b-2 border-blueBorder items-center cursor-pointer"
     >
-      <div className="flex items-center ml-2">
+      <div className="flex w-full flex-row items-center">
         <Link href={`/hostel/${id}`}>
           <div
-            className="w-20 h-20 rounded-xl relative"
+            className="w-16 h-16 rounded-xl  bg-blueBorder mx-1  relative"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -89,7 +89,7 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
       </div>
       <Link
         href={newLink}
-        className="w-8 h-28 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
+        className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer"
       >
         <ArrowRightIcon className="ml-1" />
       </Link>

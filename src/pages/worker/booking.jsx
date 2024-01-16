@@ -49,7 +49,7 @@ export default function WorkerBooking() {
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, [selectedDay]);
 

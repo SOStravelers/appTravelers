@@ -19,7 +19,6 @@ function ServiceHistory() {
       if (res) {
         setBookings(res.data.docs);
         setLoading(false);
-        console.log(res.data.docs);
       }
     });
   };

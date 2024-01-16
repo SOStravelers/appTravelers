@@ -47,11 +47,9 @@ export default function Booking() {
   }, []);
   useEffect(() => {
     const day = weekDays.find((day) => day.number === selectedDay);
-    console.log(day);
     if (user) {
       BookingService.totalNumberWeek(day.date).then((res) => {
         if (res) {
-          console.log(res.data);
         }
       });
     }

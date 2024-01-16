@@ -27,7 +27,6 @@ export default function Notifications() {
     try {
       const limit = 20;
       const response = await NotificationService.getAll(page, limit);
-      console.log("data", response.data.docs);
       setNotifications(response.data.docs);
       setLoading(false);
     } catch (error) {

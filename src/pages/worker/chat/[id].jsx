@@ -16,18 +16,18 @@ export default function PersonalChat() {
   const [client, setClient] = useState({});
   const [loading, setLoading] = useState(true);
   const [chatId, setChatId] = useState("");
-  // const socket = useRef();
-  const { socket } = useStore();
+  const socket = useRef();
+  // const { socket } = useStore();
   var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
     document.title = "Chat | SOS Travelers";
     if (user) {
-      //   console.log("conect socket chat");
-      //   const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-      //   // console.log(host);
-      //   socket.current = io(host);
-      //   socket.current.emit("add-user", user);
+      // console.log("conect socket chat");
+      const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
+      // console.log(host);
+      socket.current = io(host);
+      socket.current.emit("add-user", user);
       const id = router.query.id;
       setChatId(id);
       fetchData(id);

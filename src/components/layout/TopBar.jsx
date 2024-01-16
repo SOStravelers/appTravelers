@@ -11,6 +11,7 @@ import Link from "next/link";
 import TextModal from "@/components/utils/modal/TextModal";
 import { Howl } from "howler";
 import Router from "next/router";
+import { validationImg } from "@/utils/validation";
 const sound = new Howl({
   src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
 });
@@ -20,6 +21,7 @@ function TopBar() {
   const { loggedIn, user, isWorker, setUser, haveNotification } = useStore();
   const [booking, setBooking] = useState({});
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
+  const [isImageAccessible, setIsImageAccessible] = useState(false);
   const socket = useRef();
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
@@ -30,7 +32,6 @@ function TopBar() {
     }
   }, [user]);
   useEffect(() => {
-    console.log("isWorker", isWorker);
     if (isWorker) {
       console.log("conect socket worker");
       const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
@@ -50,7 +51,6 @@ function TopBar() {
       }
     };
   }, [isWorker]);
-
   const stateBookingWorker = async () => {
     console.log("stateBookingWorker");
     router.push(`/service-details/${booking._id}`);
@@ -68,6 +68,14 @@ function TopBar() {
     const str = `${first.charAt(0)}${last ? last.charAt(0) : ""}`.toUpperCase();
     return str;
   };
+
+  useEffect(() => {
+    const checkImage = async () => {
+      const validImg = await validationImg(user?.img?.imgUrl);
+      setIsImageAccessible(validImg);
+    };
+    checkImage();
+  }, [user?.img?.imgUrl]);
 
   return (
     <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-18   lg:h-20 xl:h-20 px-3 fixed top-0">
@@ -148,7 +156,7 @@ function TopBar() {
               </Link>
             )}
 
-            {user?.img && user?.img.imgUrl ? (
+            {isImageAccessible && user?.img && user?.img.imgUrl ? (
               <Link
                 className="rounded-xl"
                 href={profileUrl}
@@ -163,7 +171,7 @@ function TopBar() {
             ) : (
               <Link
                 href="/profile"
-                className="border border-white  text-sm text-white px-4 py-2 text rounded-xl"
+                className="border border-white  text-sm text-white px-3 py-2 text rounded-xl"
               >
                 {initials()}
               </Link>

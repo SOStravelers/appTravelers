@@ -2,13 +2,13 @@ import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { random } from "@/lib/utils";
-
+import { validationImg } from "@/utils/validation";
 function RecomendationCard(user) {
   const router = useRouter();
-  // console.log('el user', user)
+  const [isImageAccessible, setIsImageAccessible] = useState(false);
   function getRandomSubServiceName(user) {
-    // Obtén todos los subServices
     const allSubServices = user.workerData.services.flatMap(
       (service) => service.subServices
     );
@@ -40,6 +40,13 @@ function RecomendationCard(user) {
     localStorage.setItem("fromFavorite", true);
     router.push("/worker/" + id);
   };
+  useEffect(() => {
+    const checkImage = async () => {
+      const validImg = await validationImg(user?.user?.img?.imgUrl);
+      setIsImageAccessible(validImg);
+    };
+    checkImage();
+  }, [user?.user?.img?.imgUrl]);
   return (
     <div
       onClick={() => setFavorite(user?.user._id)}
@@ -48,7 +55,7 @@ function RecomendationCard(user) {
       <div className="w-full h-28 w-20 rounded-tr-2xl rounded-tl-2xl relative">
         <Image
           src={
-            user?.user?.img?.imgUrl
+            isImageAccessible && user?.user?.img?.imgUrl
               ? user?.user?.img?.imgUrl + "?hola=" + random()
               : "/assets/service.png"
           }

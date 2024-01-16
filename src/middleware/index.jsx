@@ -33,73 +33,23 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     fetchData();
   }, [onMiddlewareComplete]);
 
-  // const routeValidation = async () => {
-  //   console.log("validar", isWorker, !!user);
-  //   if (user == undefined) {
-  //     // setUser({});
-  //     // router.push("/");
-  //     return;
-  //   }
-  //   if (
-  //     router.pathname.includes("worker") &&
-  //     !isWorker &&
-  //     router.pathname != "/workers-found/[id]" &&
-  //     router.pathname != "/worker/[id]"
-  //   ) {
-  //     console.log("caso1");
-  //     router.push("/");
-  //   } else if (
-  //     (!user || Object.keys(user).length == 0) &&
-  //     (router.pathname == "/profile" ||
-  //       router.pathname == "/personal-details" ||
-  //       router.pathname == "/payment-confirmation" ||
-  //       router.pathname == "/settings" ||
-  //       router.pathname == "/payment" ||
-  //       router.pathname == "/stripe")
-  //   ) {
-  //     console.log("caso2");
-  //     router.push("/");
-  //   } else if (
-  //     user &&
-  //     Object.keys(user).length > 0 &&
-  //     isWorker &&
-  //     (router.pathname == "/" ||
-  //       router.pathname == "/profile" ||
-  //       router.pathname == "/chat" ||
-  //       router.pathname == "/favorites" ||
-  //       router.pathname == "/settings" ||
-  //       router.pathname == "/payment" ||
-  //       router.pathname == "/stripe")
-  //   ) {
-  //     console.log("caso3");
-  //     router.push("/worker/home");
-  //   } else if (
-  //     user &&
-  //     Object.keys(user).length > 0 &&
-  //     (router.pathname == "/login" || router.pathname == "/register")
-  //   ) {
-  //     console.log("caso4");
-  //     router.push("/");
-  //   }
-  // };
-
   const obtenerInformacionUsuario = async () => {
     let cookieAccessToken = Cookies.get("auth.access_token");
     const session = await getSession();
     if (user && Object.keys(user).length > 0) {
-      console.log("ya hay usuario");
+      // console.log("ya hay usuario");
       return;
     }
     let route = router.pathname;
-    console.log("route", route, route == "/forgot-password");
+    // console.log("route", route, route == "/forgot-password");
     if (route == "/login") {
-      console.log("caso login");
+      // console.log("caso login");
       if (
         (!user || Object.keys(user).length == 0) &&
         !cookieAccessToken &&
         !session
       ) {
-        console.log("no hay usuario");
+        // console.log("no hay usuario");
         return;
       } else {
         router.push("/");
@@ -109,19 +59,19 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       route == "/change-password" ||
       route == "/recovery-password"
     ) {
-      console.log("caso libre");
+      // console.log("caso libre");
       return;
     } else {
-      console.log("caso else");
+      // console.log("caso else");
       if (!user || Object.keys(user).length == 0) {
-        console.log("no hay usuario");
+        // console.log("no hay usuario");
 
         if (cookieAccessToken) {
-          console.log("set user back");
+          // console.log("set user back");
           const user = await UserService.getUserByToken();
           if (user) {
             if (user.data.type == "business") {
-              console.log("problem business");
+              // console.log("problem business");
               localStorage.removeItem("access_tokenB");
               Cookies.remove("auth.access_tokenB");
               Cookies.remove("auth.refresh_tokenB");
@@ -134,7 +84,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
               router.push("/login");
               return;
             }
-            console.log("todo bien", user.data);
+            // console.log("todo bien", user.data);
             Cookies.set("auth.user_idB", user.data._id);
             setUser(user.data);
             setLoggedIn(true);
@@ -167,7 +117,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
               }
             }
           } else {
-            console.log("no hay nada1");
+            // console.log("no hay nada1");
             setUser({});
             setLoggedIn(false);
             router.push("/login");
@@ -175,7 +125,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
           }
         } else {
           if (session) {
-            console.log("hay sesion google");
+            // console.log("hay sesion google");
             const user = await UserService.loginGoogle(
               session.user.name,
               session.user.email,
@@ -183,7 +133,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
             );
             if (user) {
               if (user.data.type == "business") {
-                console.log("problem business");
+                // console.log("problem business");
                 localStorage.removeItem("access_tokenB");
                 Cookies.remove("auth.access_tokenB");
                 Cookies.remove("auth.refresh_tokenB");
@@ -202,26 +152,26 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
               setLoggedIn(true);
               setLoginModal(true);
               setUser(user.data.user);
-              console.log("justo antes", user.data.user);
+              // console.log("justo antes", user.data.user);
 
               if (user.data.user.type == "worker") {
-                console.log("es worker");
+                // console.log("es worker");
                 setWorker(true);
                 router.push("/worker/home");
                 return;
               } else {
                 setWorker(false);
                 if (service && Object.keys(service).length > 0) {
-                  console.log("caso1");
+                  // console.log("caso1");
                   router.push(`/summary`);
                 } else {
-                  console.log("caso2");
+                  // console.log("caso2");
                   router.push("/");
                 }
               }
             }
           } else {
-            console.log("no hay nada");
+            // console.log("no hay nada");
             setLoggedIn(false);
             return;
           }

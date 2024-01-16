@@ -20,6 +20,7 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const { setUser, setLoggedIn, service } = useStore();
   const router = useRouter();
+  const [worker, setWorker] = useState(false);
   const [loading, setLoading] = useState(false);
   const login = async (values) => {
     setLoading(true);
@@ -44,9 +45,9 @@ function LoginForm() {
       if (response.data.user.type == "worker") {
         delete response.data.user.type;
 
-        console.log("es worker");
         setWorker(true);
-        router.push("/");
+        console.log("worker", worker);
+        router.push("/worker/home");
         // return;
       } else if (service && Object.keys(service).length > 0) {
         setLoading(false);

@@ -34,6 +34,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   }, [onMiddlewareComplete]);
 
   const obtenerInformacionUsuario = async () => {
+    console.log("middleware");
     let cookieAccessToken = Cookies.get("auth.access_token");
     const session = await getSession();
     if (user && Object.keys(user).length > 0) {
@@ -43,7 +44,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     let route = router.pathname;
     // console.log("route", route, route == "/forgot-password");
     if (route == "/login") {
-      // console.log("caso login");
+      console.log("caso login");
       if (
         (!user || Object.keys(user).length == 0) &&
         !cookieAccessToken &&

@@ -8,12 +8,18 @@ import { useStore } from "@/store";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
 import { routeTitles } from "@/constants/index";
-
+import TextModal from "@/components/utils/modal/TextModal";
+import { Howl } from "howler";
+const sound = new Howl({
+  src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
+});
 function TopBarSubMenu() {
   const [titulo, setTitulo] = useState("");
   const router = useRouter();
+  const [booking, setBooking] = useState({});
   const socket = useRef();
   const { isWorker } = useStore();
+  const [openWorkerModal, setOpenWorkerModal] = useState(false);
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
     if (isWorker) {
@@ -39,7 +45,14 @@ function TopBarSubMenu() {
   useEffect(() => {
     handleUrl();
   }, [actualURL, routeTitles]);
-
+  const stateBookingWorker = async () => {
+    console.log("stateBookingWorker");
+    router.push(`/service-details/${booking._id}`);
+  };
+  const cancelWorkerModal = async () => {
+    console.log("cancelWorkerModal");
+    setOpenWorkerModal(false);
+  };
   const handleUrl = () => {
     Object.keys(routeTitles).forEach((route) => {
       if (actualURL.includes(route)) {
@@ -55,14 +68,19 @@ function TopBarSubMenu() {
         "bg-darkBlue"
       )}
     >
-      {/* <div
-        className={clsx(
-          " border-2 rounded-full p-2 border-white cursor-pointer"
-        )}
-        onClick={() => router.back()}
-      >
-        <ReturnArrowIcon color={clsx("#fff")} />
-      </div> */}
+      <TextModal
+        title={"Parabéns!!, você tem uma nova reserva"}
+        text={[
+          `Lugar: ${booking?.businessUser?.businessData?.name}`,
+          `Data: ${booking?.date?.stringData} | ${booking?.startTime?.stringData}`,
+        ]}
+        textCancel="Voltar"
+        buttonText={"Veja a reserva"}
+        open={openWorkerModal}
+        setOpen={setOpenWorkerModal}
+        onAccept={stateBookingWorker}
+        onCancel={cancelWorkerModal}
+      />
       <div onClick={() => router.back()}>
         <ReturnArrowIcon color="#fff" size="35" />
       </div>

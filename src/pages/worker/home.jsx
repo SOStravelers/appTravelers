@@ -149,14 +149,17 @@ export default function WorkerHome() {
 
       <section className=" mb-1 flex w-full max-w-lg items-center ">
         <div className="flex flex-grow items-center ">
-          <OutlinedButton text="Book a service" onClick={handleBookService} />
+          <OutlinedButton
+            text="Agende um serviço"
+            onClick={handleBookService}
+          />
         </div>
       </section>
 
       <section className="flex w-full max-w-lg items-center flex-col">
         <div className="items-center ">
           <h1 className="text-black text-xl font-medium text-center my-1">
-            Upcoming
+            Próximos compromissos
           </h1>
         </div>
         <div className="flex flex-col w-full max-w-lg">

@@ -23,6 +23,7 @@ function Calendar({ id }) {
     disabledDays: [],
   });
   const [selectedDay, setSelected] = useState(new Date());
+  const [selectedDayWorker, setSelectedWorker] = useState(new Date());
   const [intervals, setIntervals] = useState([]);
 
   useEffect(() => {
@@ -55,7 +56,10 @@ function Calendar({ id }) {
 
   //Función que obtiene el schedule del hostel
   const getSchedule = async () => {
-    console.log(service);
+    if (isWorker) {
+      setLoading(false);
+      return;
+    }
     const data = localStorage.getItem("fromFavorite");
     const { serviceId, subServiceId, hostelId, workerId } = service;
     const worker = data ? workerId : null;
@@ -154,7 +158,7 @@ function Calendar({ id }) {
         <p className="mt-2">Searching...</p>
       </div>
     );
-  } else if (selectedDay && schedule.length > 0 && !loading) {
+  } else if (selectedDay && schedule.length > 0 && !loading && !isWorker) {
     footer = (
       <div>
         <h1 className="font-semibold text-xl mt-2">Choose de time</h1>
@@ -176,7 +180,7 @@ function Calendar({ id }) {
         {time && <OutlinedButton text={"Next"} onClick={selectTime} />}
       </div>
     );
-  } else if (schedule.length == 0 && !loading) {
+  } else if (schedule.length == 0 && !loading && !isWorker) {
     footer = (
       <div>
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
@@ -186,20 +190,42 @@ function Calendar({ id }) {
         <OutlinedButton text={"Back"} onClick={comeBack} />
       </div>
     );
+  } else if (isWorker) {
+    footer = (
+      <div>
+        <OutlinedButton text={"Siguiente"} onClick={comeBack} />
+      </div>
+    );
   }
   return (
-    <DayPicker
-      mode="single"
-      selected={selectedDay}
-      disabled={days?.disabledDays.length > 0 ? days?.disabledDays : true}
-      fromDate={days?.firstDate || new Date()}
-      toDate={
-        days?.lastDate ||
-        new Date(new Date().setMonth(new Date().getMonth() + 1))
-      }
-      onSelect={setSelected}
-      footer={footer}
-    />
+    <>
+      {!isWorker ? (
+        <DayPicker
+          mode="single"
+          selected={selectedDay}
+          disabled={days?.disabledDays.length > 0 ? days?.disabledDays : true}
+          fromDate={days?.firstDate || new Date()}
+          toDate={
+            days?.lastDate ||
+            new Date(new Date().setMonth(new Date().getMonth() + 1))
+          }
+          onSelect={setSelected}
+          footer={footer}
+        />
+      ) : (
+        <DayPicker
+          mode="single"
+          selected={selectedDayWorker}
+          fromDate={days?.firstDate || new Date()}
+          toDate={
+            days?.lastDate ||
+            new Date(new Date().setMonth(new Date().getMonth() + 1))
+          }
+          onSelect={setSelectedWorker}
+          footer={footer}
+        />
+      )}
+    </>
   );
 }
 

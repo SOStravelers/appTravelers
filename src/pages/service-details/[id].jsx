@@ -320,7 +320,6 @@ function ServiceHistory() {
             onAccept={stateBookingUser}
             onCancel={cancelUserModal}
           />
-          <p>Booking Number: {}</p>
           <div className="font-semibold text-center max-w-lg mt-2 lg:my-4 xl:my-4 mb-2">
             {isWorker ? "Local de serviço" : "Location Service"}
           </div>

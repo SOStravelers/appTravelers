@@ -100,12 +100,11 @@ export default function Home({}) {
 
   const getUsers = async () => {
     try {
-      UserService.getRandom().then((response) => {
-        setRandomUsers(response.data);
-        setLoading(false);
-      });
+      const response = await UserService.getRandom();
+      setRandomUsers(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
       setLoading(false);
     }
   };

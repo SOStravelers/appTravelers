@@ -193,7 +193,7 @@ export default function Payment() {
         )}
       </div>
       <OutlinedButton
-        disabled={paymentType == null}
+        disabled={paymentType == null || isWorker}
         text={isWorker ? "confirmar reserva em dinheiro" : "Continue"}
         color="blueBorder"
         onClick={pay}

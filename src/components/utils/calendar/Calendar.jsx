@@ -126,9 +126,54 @@ function Calendar({ id }) {
   };
   //Función que setea hora del booking
   const selectTime = () => {
+    if (isWorker) {
+      const now = moment();
+      let startTimeIso = now.toISOString();
+      let startTime = now.format("HH:mm");
+      const end = now.add(service.duration, "minutes");
+      let endTimeIso = end.toISOString();
+      let endTime = end.format("HH:mm");
+      const dateStr = moment(selectedDayWorker).format("YYYY-MM-DD");
+      console.log("el tiempo", time);
+      setService({
+        date: dateStr,
+        startTime: {
+          isoTime: startTimeIso,
+          stringData: startTime,
+        },
+        endTime: {
+          isoTime: endTimeIso,
+          stringData: endTime,
+        },
+      });
+      console.log("el servicioWorker", {
+        date: dateStr,
+        startTime: {
+          isoTime: startTimeIso,
+          stringData: startTime,
+        },
+        endTime: {
+          isoTime: endTimeIso,
+          stringData: endTime,
+        },
+      });
+      router.push(`/summary`);
+      return;
+    }
     const dateStr = moment(selectedDay).format("YYYY-MM-DD");
     console.log("el tiempo", time);
     setService({
+      date: dateStr,
+      startTime: {
+        isoTime: time.startTimeIso,
+        stringData: time.startTime,
+      },
+      endTime: {
+        isoTime: time.endTimeIso,
+        stringData: time.endTime,
+      },
+    });
+    console.log("el servicioCliente", {
       date: dateStr,
       startTime: {
         isoTime: time.startTimeIso,

@@ -180,8 +180,8 @@ export default function WorkerProfile() {
             <p className="text-center text-sm italic">
               Para ser um trabalhador validado, preencha todos os campos acima.
               Isso inclui adicionar 3 fotos à sua galeria, criar seu horário,
-              adicionar seus serviços e, por fim, pressionar "Pronto para
-              trabalhar". 🌟
+              adicionar seus serviços e, por fim, pressionar 'Pronto para
+              trabalhar'. 🌟
             </p>
           </>
         )}

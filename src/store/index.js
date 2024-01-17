@@ -13,7 +13,9 @@ export const useStore = create((set) => {
   //     : {};
   const urls = () => {
     let final = null;
-    let env = process.env.NODE_ENV;
+    let env = process.env.NEXT_NODE_ENV
+      ? process.env.NEXT_NODE_ENV
+      : process.env.NODE_ENV;
     if (typeof window != "undefined") {
       let storage = localStorage.getItem("apiUrl");
       storage

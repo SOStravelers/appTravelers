@@ -7,13 +7,15 @@ import Cookies from "js-cookie";
 import { useStore } from "@/store";
 import { Field, Form } from "houseform";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 function CreatePassForm() {
   const { user, setUser, setLoggedIn } = useStore();
-
+  const router = useRouter();
   const createPass = async (values) => {
     try {
       const id = user._id;
-      const response = await UserService.createPassword(values.password, id);
+      let token = Cookies.get("auth.access_token");
+      const response = await UserService.createPassword(values.password, token);
       if (response.data) {
         // if (response.data.user.type && response.data.user.type != "personal") {
         //   localStorage.setItem("type", response.data.user.type);
@@ -27,6 +29,7 @@ function CreatePassForm() {
           position: toast.POSITION.BOTTOM_CENTER,
           autoClose: 1800,
         });
+        router.push("/personal-details");
       }
     } catch (err) {
       console.log("perooo");

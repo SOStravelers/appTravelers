@@ -163,7 +163,7 @@ export default class UserService {
       }
     );
   }
-  static async verifyCodeEmail(userId, code, email = null) {
+  static async verifyCodeEmail(userId, code, email = "") {
     let data = { code: Number(code), email: email };
     console.log("data", data);
     return axios.post(`${this.authUrl}/verifycode/${userId}/`, data, {

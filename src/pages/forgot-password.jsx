@@ -14,6 +14,8 @@ export default function ChangePassword() {
   const [userId, setUserId] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [countdown, setCountdown] = useState(30);
 
   const router = useRouter();
   useEffect(() => {
@@ -25,7 +27,6 @@ export default function ChangePassword() {
       const response = await UserService.verifyCodeEmail(userId, code);
       console.log(response);
       if (response.status === 200) {
-        console.log("ypui");
         const token = response.data.access_token;
         router.push({
           pathname: "/recovery-password/",
@@ -62,12 +63,28 @@ export default function ChangePassword() {
 
   const handleResendCode = async () => {
     try {
-      const response = await UserService.sendCodeEmail(userId, "forgotPass");
+      const response = await UserService.sendCodeEmail(
+        userId,
+        "forgotPass",
+        null
+      );
       if (response.status === 200) {
         startCounter();
         toast.success("Code Send");
         setButtonDisabled(true);
         console.log(response);
+
+        setIsDisabled(true);
+        let timer = 60;
+        const intervalId = setInterval(() => {
+          timer--;
+          setCountdown(timer);
+          if (timer === 0) {
+            clearInterval(intervalId);
+            setIsDisabled(false);
+            setButtonDisabled(false); // Add this line
+          }
+        }, 1000);
       }
     } catch (err) {
       console.log(err);
@@ -77,7 +94,7 @@ export default function ChangePassword() {
   const startCounter = () => {
     setTimeout(() => {
       setButtonDisabled(false);
-    }, 300000);
+    }, 600000);
   };
 
   return (
@@ -85,8 +102,11 @@ export default function ChangePassword() {
       {codeSend ? (
         <div className="max-w-lg">
           <p className="text-center text-gray-500 mb-5">
-            Please check your email for the verification code so you can reset
-            your password.
+            Please check your email: <span> </span>
+            <span className="font-semibold">{email}</span>,
+          </p>
+          <p className="text-center text-gray-500 mb-5">
+            for the verification code so you can reset your password.
           </p>
           <OutlinedInput
             placeholder="Verification code"
@@ -96,11 +116,13 @@ export default function ChangePassword() {
           <SolidButton mt={5} text="Verify" onClick={handleVerifyCode} />
           <OutlinedButton
             secondary
+            disabled={buttonDisabled}
             text="Resend code"
             mt={5}
             onClick={handleResendCode}
-            disabled={buttonDisabled}
+            // disabled={buttonDisabled}
           />
+          {isDisabled && <span>{countdown}</span>}
         </div>
       ) : (
         <>

@@ -16,7 +16,11 @@ export default function CreateUserPassword() {
   console.log(user);
 
   const handleSendVerificationCode = async () => {
-    const response = await UserService.sendCodeEmail(user._id, "createPass");
+    const response = await UserService.sendCodeEmail(
+      user._id,
+      "createPass",
+      null
+    );
     console.log(response);
     if (response.status === 200) {
       setCodeSend(true);

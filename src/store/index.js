@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import SetLocalStorage from "../utils/apis";
-import getConfig from "next/config";
 
 export const useStore = create((set) => {
   const service =

@@ -18,9 +18,8 @@ import { set } from "date-fns";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
-  const { setUser, setLoggedIn, service } = useStore();
+  const { setUser, setLoggedIn, service, setWorker } = useStore();
   const router = useRouter();
-  const [worker, setWorker] = useState(false);
   const [loading, setLoading] = useState(false);
   const login = async (values) => {
     setLoading(true);
@@ -29,10 +28,12 @@ function LoginForm() {
       console.log("--login email--");
       const response = await UserService.login(values.email, values.password);
       if (response.data.user.type && response.data.user.type != "personal") {
+        console.log("caso worker");
         localStorage.setItem("type", response.data.user.type);
+        setWorker(true);
       }
 
-      // delete response.data.user.type;
+      delete response.data.user.type;
       toast.info("signin", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 1500,
@@ -43,12 +44,10 @@ function LoginForm() {
       setUser(response.data.user);
       setLoggedIn(true);
       if (response.data.user.type == "worker") {
-        delete response.data.user.type;
-
         setWorker(true);
-        console.log("worker", worker);
+
         router.push("/worker/home");
-        // return;
+        return;
       } else if (service && Object.keys(service).length > 0) {
         setLoading(false);
         router.push(`/summary`);

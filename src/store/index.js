@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import SetLocalStorage from "../utils/apis";
+import getConfig from "next/config";
 
 export const useStore = create((set) => {
   const service =
@@ -7,15 +8,13 @@ export const useStore = create((set) => {
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : {};
 
-  // const user =
-  //   typeof window !== "undefined"
-  //     ? JSON.parse(localStorage.getItem("auth_user") ?? "{}").service
-  //     : {};
+  const { publicRuntimeConfig } = getConfig();
+  const env = publicRuntimeConfig.nodeEnv
+    ? publicRuntimeConfig.nodeEnv
+    : process.env.NODE_ENV;
+
   const urls = () => {
     let final = null;
-    let env = process.env.NEXT_PUBLIC_NODE_ENV
-      ? process.env.NEXT_PUBLIC_NODE_ENV
-      : process.env.NODE_ENV;
     if (typeof window != "undefined") {
       let storage = localStorage.getItem("apiUrl");
       storage
@@ -27,7 +26,7 @@ export const useStore = create((set) => {
     return final;
   };
 
-  const theUrls = urls();
+  const theUrls = urls(env);
 
   return {
     user: {},

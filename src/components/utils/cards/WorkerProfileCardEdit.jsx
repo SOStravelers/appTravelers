@@ -198,7 +198,7 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
               type="file"
               accept="image/*"
               onChange={(e) => {
-                selectImage(e);
+                selectImage(e.target.files[0]);
                 setModal(true);
               }}
               className="hidden"

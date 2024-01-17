@@ -6,8 +6,8 @@ import FacebookProvider from "next-auth/providers/facebook";
 export default NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_CLIENTID_GOOGLE,
-      clientSecret: process.env.NEXT_PUBLIC_CLIENTSECRET_GOOGLE,
+      clientId: process.env.CLIENTID_GOOGLE,
+      clientSecret: process.env.CLIENTSECRET_GOOGLE,
       scope: [
         "https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/auth/userinfo.email",

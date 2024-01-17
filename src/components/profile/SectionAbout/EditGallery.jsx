@@ -152,28 +152,7 @@ function EditGallery() {
 
   const setImageInput = async (image, index) => {
     console.log("el index", index);
-    /* setLoading((prevLoading) => {
-      const newLoading = [...prevLoading]
-      newLoading[index] = true
-      return newLoading
-    })
-*/
-    /*
-    const file = event.target.files[0]
-    const reader = new FileReader()
 
-    reader.onloadend = async () => {
-      if (event.target.files.length === 0) {
-        // El usuario canceló la selección
-        setLoading((prevLoading) => {
-          const newLoading = [...prevLoading]
-          newLoading[index] = false
-          return newLoading
-        })
-        return
-      }*/
-
-    // console.log(reader.result);
     try {
       const response = await UserService.updatePhotoGallery(
         image,
@@ -274,7 +253,7 @@ function EditGallery() {
                 <label
                   htmlFor={`image-upload-${index}`}
                   className="w-full relative rounded-xl cursor-pointer flex justify-center items-center"
-                  style={{ paddingTop: "56.25%", backgroundColor: "grey" }}
+                  style={{ paddingTop: "100%", backgroundColor: "grey" }}
                 >
                   {loading[index] && (
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

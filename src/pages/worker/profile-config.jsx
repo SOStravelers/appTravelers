@@ -169,15 +169,19 @@ export default function WorkerProfile() {
             <CertificationPicture className="lg:pl-20 xl:ml-20 " />
 
             <p className="text-center mt-4 text-sm italic">
-              You have been Validated!!, now you are ready to start working,
-              remember to have your profile updated to receive better jobs
+              ¡Você foi validado! Agora, está pronto para começar a trabalhar.
+              Lembre-se de manter seu perfil atualizado para receber
+              oportunidades de emprego ainda melhores. 🚀
             </p>
           </>
         ) : (
           <>
             <CheckBoxesPicture className="" />
             <p className="text-center text-sm italic">
-              To be a validated worker, complete all the fields above
+              Para ser um trabalhador validado, preencha todos os campos acima.
+              Isso inclui adicionar 3 fotos à sua galeria, criar seu horário,
+              adicionar seus serviços e, por fim, pressionar "Pronto para
+              trabalhar". 🌟
             </p>
           </>
         )}

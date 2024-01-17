@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { MoneyIcon, CheckIcon } from "@/constants/icons";
 import Image from "next/image";
 import { useStore } from "@/store";
+import { toast } from "react-toastify";
 
 export default function Payment() {
   const { service, setService, isWorker } = useStore();
@@ -46,6 +47,10 @@ export default function Payment() {
   }));
 
   const pay = async () => {
+    if (isWorker) {
+      bookInCash();
+      return;
+    }
     let url = "/";
     switch (paymentType) {
       case "paypal":
@@ -56,6 +61,11 @@ export default function Payment() {
         break;
     }
     router.push(url);
+  };
+
+  const bookInCash = async () => {
+    console.log("book in cash ");
+    toast.info("Função indisponível por enquanto.");
   };
 
   return (
@@ -193,7 +203,7 @@ export default function Payment() {
         )}
       </div>
       <OutlinedButton
-        disabled={paymentType == null || isWorker}
+        // disabled={paymentType == null || isWorker}
         text={isWorker ? "confirmar reserva em dinheiro" : "Continue"}
         color="blueBorder"
         onClick={pay}

@@ -9,7 +9,7 @@ export default function AssignClient() {
   const [modal, setModal] = useState(true);
 
   return (
-    <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+    <div className="mt-4 p-10 pb-20 flex mx-4  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
       <h1 className="text-blackText font-semibold text-xl mt-5">
         Registre seu cliente
       </h1>

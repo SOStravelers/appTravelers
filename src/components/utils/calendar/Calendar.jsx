@@ -157,7 +157,7 @@ function Calendar({ id }) {
           stringData: endTime,
         },
       });
-      router.push(`/summary`);
+      router.push(`/assign-client`);
       return;
     }
     const dateStr = moment(selectedDay).format("YYYY-MM-DD");

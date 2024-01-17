@@ -19,7 +19,7 @@ register();
 
 export default function Home({}) {
   console.log("socket!", process.env.NEXT_PUBLIC_API_SOCKET_IO);
-  console.log("env", process.env.NEXT_PUBLIC_ENVIRONMENT);
+  console.log("env!", process.env.NEXT_PUBLIC_NODE_ENV);
   const store = useStore();
   const { services, setServices, setHaveNotification, setService } = store;
   const [bookings, setBookings] = useState([]);
@@ -99,10 +99,15 @@ export default function Home({}) {
   };
 
   const getUsers = async () => {
-    UserService.getRandom().then((response) => {
-      setRandomUsers(response.data);
+    try {
+      UserService.getRandom().then((response) => {
+        setRandomUsers(response.data);
+        setLoading(false);
+      });
+    } catch (error) {
+      console.log(error);
       setLoading(false);
-    });
+    }
   };
 
   return (
@@ -131,7 +136,7 @@ export default function Home({}) {
           ))}
         </Swiper>
       </div>
-      {process.env.NEXT_PUBLIC_ENVIRONMENT != "production" ? (
+      {process.env.NEXT_PUBLIC_NODE_ENV != "production" ? (
         <>
           <section>
             <h1

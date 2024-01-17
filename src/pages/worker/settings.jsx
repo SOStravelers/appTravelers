@@ -89,8 +89,8 @@ export default function WorkerSettings() {
       </Link>
 
       <div className="flex flex-col my-4">
-        {(process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ||
-          process.env.NODE_ENV === "development") && (
+        {(process.env.NEXT_PUBLIC_NODE_ENV === "Development" ||
+          process.env.NODE_ENV === "dev") && (
           <OptionSwitch
             title="Worker Mode"
             onFunction={workerModeOff}

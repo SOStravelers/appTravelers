@@ -10,6 +10,7 @@ import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
 import Cookies from "js-cookie";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { NotFoundPicture } from "@/constants/icons";
 import "swiper/swiper-bundle.css";
 // import SwiperCore, { Pagination, Navigation } from "swiper";
 // SwiperCore.use([Pagination, Navigation]);
@@ -128,49 +129,59 @@ export default function Home({}) {
           ))}
         </Swiper>
       </div>
+      {process.env.NEXT_PUBLIC_ENVIRONMENT != "production" ? (
+        <>
+          <section>
+            <h1
+              className={`text-black text-xl font-semibold mt-1 mb-3 ${mazzard.className}`}
+            >
+              Choose a service
+            </h1>
+            <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2">
+              {services?.map((s, index) => (
+                <ServiceCard
+                  key={index}
+                  id={s.id}
+                  link={`/subservices/${s.id}`}
+                  name={s.name}
+                />
+              ))}
+            </div>
+          </section>
 
-      <section>
-        <h1
-          className={`text-black text-xl font-semibold mt-1 mb-3 ${mazzard.className}`}
-        >
-          Choose a service
-        </h1>
-        <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2">
-          {services?.map((s, index) => (
-            <ServiceCard
-              key={index}
-              id={s.id}
-              link={`/subservices/${s.id}`}
-              name={s.name}
-            />
-          ))}
+          <section>
+            <h1
+              className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
+            >
+              Recommended for you
+            </h1>
+            {loading ? (
+              <div className="max-w-lg flex flex-col items-center justify-center">
+                <Rings
+                  width={100}
+                  height={100}
+                  color="#00A0D5"
+                  ariaLabel="infinity-spin-loading"
+                />
+                <p>Loading...</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
+                {randomUsers?.map((s, index) => (
+                  <RecomendationCard key={index} user={s} />
+                ))}
+              </div>
+            )}
+          </section>
+        </>
+      ) : (
+        <div className="flex flex-col justify-center align-items">
+          <NotFoundPicture />
+          <h1 className="flex justify-center mt-10">
+            We are hard at work to get back into action{" "}
+          </h1>
         </div>
-      </section>
-
-      <section>
-        <h1
-          className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
-        >
-          Recommended for you
-        </h1>
-        {loading ? (
-          <div className="max-w-lg flex flex-col items-center justify-center">
-            <Rings
-              width={100}
-              height={100}
-              color="#00A0D5"
-              ariaLabel="infinity-spin-loading"
-            />
-            <p>Loading...</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
-            {randomUsers?.map((s, index) => (
-              <RecomendationCard key={index} user={s} />
-            ))}
-          </div>
-        )}
-      </section>
+      )}
     </main>
   );
 }

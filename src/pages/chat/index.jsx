@@ -69,8 +69,8 @@ export default function Chat() {
     });
   };
   return (
-    <div className="bg-white h-full w-screen flex flex-col items-center md:items-start py-16 px-3 md:pl-80">
-      <h1 className="my-1   text-center max-w-lg">My chats</h1>
+    <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-3 font-semibold text-center max-w-lg">My Chats</h1>
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings
@@ -79,7 +79,7 @@ export default function Chat() {
             color="#00A0D5"
             ariaLabel="infinity-spin-loading"
           />
-          <p>Searching...</p>
+          <p className="mt-2">Searching...</p>
         </div>
       ) : chats?.length > 0 ? (
         chats.map((chat, index) => (

@@ -13,6 +13,7 @@ function SetLocalStorage(env) {
   fronts.set("extra", "https://app-travelers.vercel.app/");
   fronts.set("production", "https://sostvl.com/");
   const api = apis.get(env.trim());
+
   const front = fronts.get(env.trim());
   return { api, front };
 }

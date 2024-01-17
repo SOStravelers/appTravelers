@@ -7,8 +7,6 @@ export const useStore = create((set) => {
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : {};
   const env = process.env.NEXT_PUBLIC_ENVIRONMENT || "dev";
-  console.log("socket", process.env.NEXT_PUBLIC_API_SOCKET_IO);
-  console.log("env", process.env.NEXT_PUBLIC_ENVIRONMENT);
 
   const urls = () => {
     let final = null;

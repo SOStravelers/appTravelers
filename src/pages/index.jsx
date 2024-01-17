@@ -18,6 +18,8 @@ import { useStore } from "@/store";
 register();
 
 export default function Home({}) {
+  console.log("socket", process.env.NEXT_PUBLIC_API_SOCKET_IO);
+  console.log("env", process.env.NEXT_PUBLIC_ENVIRONMENT);
   const store = useStore();
   const { services, setServices, setHaveNotification, setService } = store;
   const [bookings, setBookings] = useState([]);

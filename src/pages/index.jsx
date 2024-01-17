@@ -175,7 +175,7 @@ export default function Home({}) {
           </section>
         </>
       ) : (
-        <div className="flex flex-col justify-center align-items">
+        <div className="flex flex-col justify-center max-w-lg  align-items">
           <NotFoundPicture />
           <h1 className="flex justify-center mt-10">
             We are hard at work to get back into action{" "}

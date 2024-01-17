@@ -8,7 +8,9 @@ import Cookies from "js-cookie";
 import { useStore } from "@/store";
 import { Field, Form } from "houseform";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 function ChangePassForm() {
+  const router = useRouter();
   const { user, setUser, setLoggedIn } = useStore();
 
   const changePass = async (values) => {
@@ -30,10 +32,11 @@ function ChangePassForm() {
           position: toast.POSITION.BOTTOM_CENTER,
           autoClose: 1800,
         });
+        router.push("/personal-details");
       }
     } catch (err) {
       if (err.response && err.response.data) {
-        toast.error(err.response.data.message, {
+        toast.error(err.response.data.error, {
           position: toast.POSITION.BOTTOM_CENTER,
           autoClose: 1500,
         });

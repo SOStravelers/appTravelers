@@ -1,4 +1,5 @@
 function SetLocalStorage(env) {
+  console.log("wena2", process.env.NEXT_PUBLIC_ENVIRONMENT);
   console.warn("env", env);
   const apis = new Map();
   apis.set("local", "http://localhost:9000/");

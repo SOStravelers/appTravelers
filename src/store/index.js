@@ -7,8 +7,7 @@ export const useStore = create((set) => {
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : {};
-
-  const env = process.env.ENVIRONMENT || "dev";
+  const env = process.env.NEXT_PUBLIC_ENVIRONMENT || "dev";
 
   const urls = () => {
     let final = null;

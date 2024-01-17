@@ -8,10 +8,7 @@ export const useStore = create((set) => {
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : {};
 
-  const { publicRuntimeConfig } = getConfig();
-  const env = publicRuntimeConfig.nodeEnv
-    ? publicRuntimeConfig.nodeEnv
-    : process.env.NODE_ENV;
+  const env = process.env.ENVIRONMENT || "dev";
 
   const urls = () => {
     let final = null;
@@ -26,7 +23,7 @@ export const useStore = create((set) => {
     return final;
   };
 
-  const theUrls = urls(env);
+  const theUrls = urls();
 
   return {
     user: {},

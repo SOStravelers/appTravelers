@@ -8,18 +8,23 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import GoogleButton from "@/components/utils/buttons/GoogleButton";
 
 import { Field, Form } from "houseform";
-import { z } from "zod";
+import { set, z } from "zod";
 import { toast } from "react-toastify";
 import { UserIcon, LockIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 
 import Cookies from "js-cookie";
-
 function ClientForm() {
+  const { setService, service } = useStore();
   const router = useRouter();
   const registerClient = async (values) => {
     console.log(values);
     if (values) {
+      setService({
+        ...service,
+        clientName: values.name,
+        clientEmail: values.email,
+      });
       router.push(`/summary`);
     }
   };

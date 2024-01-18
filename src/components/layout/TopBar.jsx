@@ -123,12 +123,12 @@ function TopBar() {
         {loggedIn ? (
           <>
             {isWorker && (
-              <h1 className="text-white mr-5 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
+              <h1 className="text-white mr-3 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
                 Worker Mode
               </h1>
             )}
             {haveNotification ? (
-              <Link href="/notifications" className="lg:mx-5 xl:mx-5">
+              <Link href="/notifications" className="lg:mx-4 xl:mx-5">
                 <NotificationIcon
                   active={"true"}
                   style={{

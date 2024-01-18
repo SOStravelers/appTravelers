@@ -48,7 +48,7 @@ export default function Payment() {
 
   const pay = async () => {
     if (isWorker) {
-      bookInCash();
+      router.push("/payment-confirmation");
       return;
     }
     let url = "/";

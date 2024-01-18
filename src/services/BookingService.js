@@ -15,6 +15,12 @@ export default class BookingService {
       headers: this.getHeaders(),
     });
   }
+  static async createWorkerBooking(params) {
+    console.log("agendando");
+    return axios.post(`${this.baseUrl}/worker/create`, params, {
+      headers: this.getHeaders(),
+    });
+  }
 
   static getHeaders() {
     let access_token = Cookies.get("auth.access_token");

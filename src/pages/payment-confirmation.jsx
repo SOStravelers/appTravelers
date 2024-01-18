@@ -13,7 +13,7 @@ import { set } from "date-fns";
 
 export default function PaymentConfirmation() {
   const router = useRouter();
-  const { service, user } = useStore();
+  const { service, user, isWorker } = useStore();
   const initialized = useRef(false);
   const [complete, setComplete] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,9 @@ export default function PaymentConfirmation() {
   useEffect(() => {
     console.log("el servicio", service);
     const paymentIntent = router.query.payment_intent;
-    if (paymentIntent && !initialized.current) {
+    if (isWorker) {
+      createBooking(null);
+    } else if (paymentIntent && !initialized.current) {
       initialized.current = true;
       createBooking(paymentIntent);
     } else {
@@ -49,7 +51,6 @@ export default function PaymentConfirmation() {
 
   const createBooking = async (paymentIntent) => {
     const client = user._id;
-    console.log("toda la data", service);
     const priceObject = service.price.find(
       (price) => price.currency === service.currency
     );
@@ -77,15 +78,21 @@ export default function PaymentConfirmation() {
       },
       subservice: service.subServiceId,
       service: service.serviceId,
+      clientName: service.clientName || null,
+      clientEmail: service.clientEmail || null,
     };
     try {
-      const response = await BookingService.create(params);
+      console.log("va");
+      const response = isWorker
+        ? await BookingService.createWorkerBooking(params)
+        : await BookingService.create(params);
       if (response.data) {
         setBooking(response.data.booking);
         console.log("booking", response.data.booking);
         localStorage.removeItem("service");
-        console.log("se viene el socket");
-        socket.current.emit("send-booking", { data: response.data.booking });
+        !isWorker
+          ? socket.current.emit("send-booking", { data: response.data.booking })
+          : "";
         setComplete(true);
         setLoading(false);
       }

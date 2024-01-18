@@ -148,6 +148,7 @@ export default function Home({}) {
                 <ServiceCard
                   key={index}
                   id={s.id}
+                  img={s.imgUrl}
                   link={`/subservices/${s.id}`}
                   name={s.name}
                 />

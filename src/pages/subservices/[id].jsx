@@ -59,7 +59,7 @@ export default function Subservices() {
                 price={s.price}
                 link={`/select-hostel/${s.id}`}
                 name={s.name}
-                icon={s.coverImg}
+                img={s.imgUrl}
               />
             </div>
           ))}

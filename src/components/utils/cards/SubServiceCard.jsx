@@ -1,6 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useStore } from "@/store";
+import {
+  HairBeardIcon,
+  WomanIcon,
+  BeardIcon,
+  ManIcon,
+} from "@/constants/icons";
 
 function SubServiceCard({ id, link, img, price, name, duration }) {
   const { setService } = useStore();

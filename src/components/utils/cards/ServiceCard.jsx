@@ -10,7 +10,7 @@ function ServiceCard({ link, icon, name, id }) {
   return (
     <Link href={link} onClick={select}>
       <div className="text-black flex flex-col items-center justify-center mx-3">
-        <div className="w-14 h-14 rounded-full bg-blueBorder flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-blueBorder  items-center justify-center">
           <HairCutIcon />
         </div>
         <h1 className={`text-center mt-2 ${mazzard.className}`}>{name}</h1>

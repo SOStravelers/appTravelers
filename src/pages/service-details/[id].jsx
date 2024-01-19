@@ -379,8 +379,9 @@ function ServiceHistory() {
                   )}
                 {booking.status == "available" && (
                   <p className="text-xs">
-                    If the worker doesn't respond soon, we'll offer you more
-                    options for your schedule with a sprinkle of excitement!
+                    If the worker doesn&apos;t respond soon, we&apos;ll offer
+                    you more options for your schedule with a sprinkle of
+                    excitement!
                   </p>
                 )}
                 <hr className="w-full mt-4 max-w-lg  text-grey" />

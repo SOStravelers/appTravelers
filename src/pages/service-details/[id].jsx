@@ -377,10 +377,12 @@ function ServiceHistory() {
                       onClick={() => goToChat()}
                     />
                   )}
-                <p className="text-xs">
-                  If the worker doesn't respond soon, we'll offer you more
-                  options for your schedule with a sprinkle of excitement!
-                </p>
+                {booking.status == "available" && (
+                  <p className="text-xs">
+                    If the worker doesn't respond soon, we'll offer you more
+                    options for your schedule with a sprinkle of excitement!
+                  </p>
+                )}
                 <hr className="w-full mt-4 max-w-lg  text-grey" />
               </div>
             </>

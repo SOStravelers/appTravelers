@@ -19,10 +19,20 @@ export const StatusChip = ({ status, isWorker }) => {
   let color;
   let textColor = "white"; // Define textColor here
   let statusPortugues = status;
+  let newStatus = status;
   switch (status) {
     case "requested":
       color = "grey";
       statusPortugues = "Solicitado";
+      break;
+    case "available":
+      if (isWorker) {
+        color = "grey";
+        statusPortugues = "Dispónivel";
+      } else {
+        color = "grey";
+        newStatus = "Requested";
+      }
       break;
     case "completed":
       color = "green";
@@ -54,7 +64,7 @@ export const StatusChip = ({ status, isWorker }) => {
     backgroundColor: color,
   };
 
-  return <span style={style}>{isWorker ? statusPortugues : status}</span>;
+  return <span style={style}>{isWorker ? statusPortugues : newStatus}</span>;
 };
 
 export const getDayOfWeek = (date, isWorker) => {

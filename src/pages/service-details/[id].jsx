@@ -176,7 +176,10 @@ function ServiceHistory() {
         state: "completed",
       });
       setOpenUserModal(true);
-    } else if (state == "canceled" && booking?.status == "requested") {
+    } else if (
+      (state == "canceled" && booking?.status == "requested") ||
+      booking?.status == "available"
+    ) {
       setDataModal({
         title: "Cancel booking",
         text: [
@@ -367,12 +370,17 @@ function ServiceHistory() {
               <div className="flex flex-col items-center justify-center max-w-lg">
                 {booking?.status != "canceled" &&
                   booking?.status != "completed" &&
-                  booking?.status != "requested" && (
+                  booking?.status != "requested" &&
+                  booking?.status != "available" && (
                     <OutlinedChatButton
                       text="Chat Now"
                       onClick={() => goToChat()}
                     />
                   )}
+                <p className="text-xs">
+                  If the worker doesn't respond soon, we'll offer you more
+                  options for your schedule with a sprinkle of excitement!
+                </p>
                 <hr className="w-full mt-4 max-w-lg  text-grey" />
               </div>
             </>
@@ -398,7 +406,7 @@ function ServiceHistory() {
           <div className="flex justify-between items-center w-full max-w-lg mt-4 mb-2">
             <p className="text-blackText font-semibold text-lg">Status</p>
             <p className="text-blackBlue font-semibold text-md">
-              <StatusChip status={booking?.status} />
+              <StatusChip status={booking?.status} isWorker={isWorker} />
             </p>
           </div>
           <div className="flex justify-between items-center w-full max-w-lg mt-2 mb-2">
@@ -476,7 +484,8 @@ function ServiceHistory() {
           {typeUser === "client" &&
             inTimeUser &&
             (booking?.status == "requested" ||
-              booking?.status == "confirmed") && (
+              booking?.status == "confirmed" ||
+              booking?.status == "available") && (
               <OutlinedButton
                 onClick={() => dialogUser("canceled")}
                 text={"Cancel Booking"}

@@ -29,6 +29,10 @@ body {
   color: #00A0D5;
   text-shadow: 0 0 10px #00A0D5, 0 0 1px #00A0D5;
 }
+.neon-dark {
+  color: #001C25;
+  text-shadow: 0 0 10px #001C25, 0 0 1px #001C25;
+}
 
 .chat {
   --rad: 20px;

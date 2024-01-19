@@ -78,7 +78,13 @@ function TopBar() {
   }, [user?.img?.imgUrl]);
 
   return (
-    <div className="w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between bg-darkBlue h-18   lg:h-20 xl:h-20 px-3 fixed top-0">
+    <div
+      className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-20 xl:h-20 px-3 fixed top-0 ${
+        process.env.NEXT_PUBLIC_NODE_ENV != "production"
+          ? "bg-blueBorder"
+          : "bg-darkBlue"
+      }`}
+    >
       <TextModal
         title={"Parabéns!!, você tem uma nova reserva"}
         text={[

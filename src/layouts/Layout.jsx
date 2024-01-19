@@ -8,7 +8,7 @@ import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
 import clsx from "clsx";
 import { ThreeDots } from "react-loader-spinner";
 import { LogoSosBlack, LogoSosRelleno } from "@/constants/icons";
-
+import { isLoginPage, arePrincipalPages } from "@/utils/variables";
 import { Poppins } from "next/font/google";
 import { CustomMiddlewareComponent } from "@/middleware";
 
@@ -46,27 +46,6 @@ function Layout({ children, lang }) {
       "Discover personalized well-being: choose your hostel, pick the time, and find elite professionals in our friendly app. Carefully selected workers for an unparalleled experience. Your comfort is our priority!";
   }
 
-  const isLoginPage =
-    router.pathname === "/login" ||
-    router.pathname === "/register" ||
-    router.pathname === "/create-user-password" ||
-    router.pathname === "/alternative-login";
-
-  const arePrincipalPages =
-    router.pathname === "/worker/booking" ||
-    router.pathname === "/worker/profile" ||
-    router.pathname === "/worker/home" ||
-    router.pathname === "/" ||
-    router.pathname === "/worker/chat" ||
-    router.pathname === "/worker/favorites" ||
-    router.pathname === "/booking" ||
-    router.pathname === "/chat" ||
-    router.pathname === "/favorites" ||
-    router.pathname === "/profile" ||
-    router.pathname === "/payment-confirmation" ||
-    router.pathname === "/guest-settings" ||
-    router.pathname === "/summary";
-
   const isIntro = router.pathname === "/intro";
 
   const isPaymentConfirm = router.pathname === "/payment-confirmation";
@@ -92,9 +71,9 @@ function Layout({ children, lang }) {
         </Head>
         {middlewareCompleted ? (
           <>
-            {isLoginPage ? (
+            {isLoginPage(router) ? (
               <WaveBar />
-            ) : arePrincipalPages ? (
+            ) : arePrincipalPages(router) ? (
               <TopBar />
             ) : (
               !isIntro && !isPaymentConfirm && <TopBarSubMenu />

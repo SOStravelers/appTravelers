@@ -14,48 +14,19 @@ import { useEffect } from "react";
 import { LogoSosRelleno } from "@/constants/icons";
 // Importa las funciones necesarias para renderizar el SVG a cadena
 import { renderToString } from "react-dom/server";
+import { routesNavbar, routesSidebar } from "@/utils/variables";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   const renderNavbar = () => {
-    if (
-      router.pathname !== "/login" &&
-      router.pathname !== "/register" &&
-      router.pathname !== "/create-user-password" &&
-      router.pathname !== "/alternative-login" &&
-      router.pathname !== "/hostel/login" &&
-      router.pathname !== "/validate-email" &&
-      router.pathname !== "/intro" &&
-      router.pathname !== "/terms-of-service" &&
-      router.pathname !== "/payment" &&
-      router.pathname !== "/stripe" &&
-      router.pathname !== "/paypal" &&
-      router.pathname !== "/worker/my-schedules" &&
-      router.pathname !== "/worker/settings" &&
-      router.pathname !== "/settings" &&
-      router.pathname !== "/personal-details" &&
-      router.pathname !== "/change-password" &&
-      router.pathname !== "/create-password" &&
-      router.pathname !== "/worker/profile-config" &&
-      router.pathname !== "/worker/my-services" &&
-      !router.pathname.includes("chat/") &&
-      router.pathname !== "/use-policy"
-    ) {
+    if (routesNavbar(router)) {
       return <Navbar />;
     }
   };
 
   const renderSidebar = () => {
-    if (
-      router.pathname !== "/login" &&
-      router.pathname !== "/register" &&
-      router.pathname !== "/alternative-login" &&
-      router.pathname !== "/create-user-password" &&
-      router.pathname !== "/hostel/login" &&
-      router.pathname !== "/validate-email" &&
-      router.pathname !== "/intro"
-    ) {
+    if (routesSidebar(router)) {
       return <Sidebar />;
     }
   };

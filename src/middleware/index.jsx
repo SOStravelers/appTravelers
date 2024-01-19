@@ -24,7 +24,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       if (!user || Object.keys(user).length == 0) {
         await obtenerInformacionUsuario();
       }
-      // await routeValidation();
       setTimeout(() => {
         onMiddlewareComplete();
       }, 500);
@@ -34,23 +33,18 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   }, [onMiddlewareComplete]);
 
   const obtenerInformacionUsuario = async () => {
-    // console.log("middleware");
     let cookieAccessToken = Cookies.get("auth.access_token");
     const session = await getSession();
     if (user && Object.keys(user).length > 0) {
-      // console.log("ya hay usuario");
       return;
     }
     let route = router.pathname;
-    // console.log("route", route, route == "/forgot-password");
     if (route == "/login") {
-      // console.log("caso login");
       if (
         (!user || Object.keys(user).length == 0) &&
         !cookieAccessToken &&
         !session
       ) {
-        // console.log("no hay usuario");
         return;
       } else {
         router.push("/");

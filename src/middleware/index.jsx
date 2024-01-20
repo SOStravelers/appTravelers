@@ -54,37 +54,28 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       route == "/change-password" ||
       route == "/recovery-password"
     ) {
-      // console.log("caso libre");
       return;
     } else {
-      // console.log("caso else");
       if (!user || Object.keys(user).length == 0) {
-        // console.log("no hay usuario");
-
         if (cookieAccessToken) {
-          // console.log("set user back");
           const user = await UserService.getUserByToken();
           if (user) {
             if (user.data.type == "business") {
-              // console.log("problem business");
               localStorage.removeItem("access_tokenB");
-              Cookies.remove("auth.access_tokenB");
-              Cookies.remove("auth.refresh_tokenB");
-              Cookies.remove("auth.user_idB");
-              //Por si hay pruebas de cuentas worker o personal
               Cookies.remove("auth.access_token");
+              Cookies.remove("auth.access_tokenB");
               Cookies.remove("auth.refresh_token");
+              Cookies.remove("auth.refresh_tokenB");
               Cookies.remove("auth.user_id");
+              Cookies.remove("auth.user_idB");
               setUser({});
               router.push("/login");
               return;
             }
-            // console.log("todo bien", user.data);
-            Cookies.set("auth.user_idB", user.data._id);
+            Cookies.set("auth.user_id", user.data._id);
             setUser(user.data);
             setLoggedIn(true);
             setLoginModal(true);
-
             if (user.data.type == "worker") {
               setWorker(true);
               if (
@@ -112,7 +103,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
               }
             }
           } else {
-            // console.log("no hay nada1");
             setUser({});
             setLoggedIn(false);
             router.push("/login");

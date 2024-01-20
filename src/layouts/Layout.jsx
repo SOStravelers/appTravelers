@@ -78,6 +78,7 @@ function Layout({ children, lang }) {
             ) : (
               !isIntro && !isPaymentConfirm && <TopBarSubMenu />
             )}
+
             {children}
           </>
         ) : (

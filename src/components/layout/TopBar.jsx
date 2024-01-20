@@ -79,11 +79,12 @@ function TopBar() {
 
   return (
     <div
-      className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-20 xl:h-20 px-3 fixed top-0 ${
-        process.env.NEXT_PUBLIC_NODE_ENV != "production"
-          ? "bg-blueBorder"
-          : "bg-darkBlue"
-      }`}
+      // className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 ${
+      //   process.env.NEXT_PUBLIC_NODE_ENV != "production"
+      //     ? "bg-blueBorder"
+      //     : "bg-darkBlue"
+      // }`}
+      className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 bg-darkBlue `}
     >
       <TextModal
         title={"Parabéns!!, você tem uma nova reserva"}
@@ -128,11 +129,18 @@ function TopBar() {
       <div className="flex justify-center items-center">
         {loggedIn ? (
           <>
-            {isWorker && (
-              <h1 className="text-white mr-3 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
-                Worker Mode
-              </h1>
-            )}
+            <div className="d-flex flex-col">
+              {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
+                <h1 className="text-white mr-3 neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                  Testing Version
+                </h1>
+              )}
+              {isWorker && (
+                <h1 className="text-white mr-3 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                  Worker Mode
+                </h1>
+              )}
+            </div>
             {haveNotification ? (
               <Link href="/notifications" className="lg:mx-4 xl:mx-5">
                 <NotificationIcon
@@ -185,6 +193,11 @@ function TopBar() {
           </>
         ) : (
           <>
+            {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
+              <h1 className="text-white mr-3 neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
+                Testing Version
+              </h1>
+            )}
             <Link className="text-white mr-2" href="/login">
               Sign In
             </Link>

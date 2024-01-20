@@ -16,12 +16,18 @@ function WaveBar() {
           fill="#001C25"
         />
       </svg>
+
       <LogoWhite
         className="my-auto absolute"
         height={100}
         width={100}
         color={"white"}
       />
+      {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
+        <h1 className="text-white  neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
+          Testing Version
+        </h1>
+      )}
     </div>
   );
 }

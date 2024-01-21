@@ -110,7 +110,7 @@ export default function Home({}) {
   };
 
   return (
-    <main className="flex flex-col w-full bg-white py-16 lg:py-20 xl:py-20 px-4 md:pl-80">
+    <main className="flex flex-col w-full bg-white py-16 lg:py-20 xl:py-20 px-3 md:pl-80">
       <div className="w-full max-w-lg ">
         <Swiper
           spaceBetween={10}

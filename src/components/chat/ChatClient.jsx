@@ -50,21 +50,23 @@ const ChatClient = ({
 
   const handleSendClick = () => {
     console.log("enviando", inputValue);
-    if (inputValue.trim() !== "") {
+    // Eliminar los saltos de línea al inicio y al final del mensaje
+    const trimmedInputValue = inputValue.replace(/^\n+|\n+$/g, "");
+    if (trimmedInputValue.trim() !== "") {
       socket.current.emit("send-msg", {
         from: idClient,
         to: idWorker,
         chatRoom: chatId,
-        msg: inputValue,
+        msg: trimmedInputValue,
       });
       ChatService.createMessage({
         from: idClient,
         to: idWorker,
         chatRoom: chatId,
-        message: inputValue,
+        message: trimmedInputValue,
       }).then((res) => {
         // console.log(res.data);
-        const newMessage = { fromSelf: true, message: inputValue };
+        const newMessage = { fromSelf: true, message: trimmedInputValue };
         setMessages([...messages, newMessage]);
       });
       setInputValue("");

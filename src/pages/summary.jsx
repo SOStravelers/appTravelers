@@ -25,6 +25,11 @@ export default function Summary() {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
+    console.log("el servicio", service, !service);
+    if (!service) {
+      router.push("/");
+      return;
+    }
     document.title = "Summary | SOS Travelers";
     //localStorage.removeItem("fromFavorite");
     localStorage.removeItem("editing");
@@ -32,6 +37,7 @@ export default function Summary() {
   }, []);
 
   const getData = async () => {
+    console.log("perro");
     const { hostelId, hour, date, workerId, subServiceId } = service;
     setSubservice(subServiceId);
 
@@ -79,6 +85,7 @@ export default function Summary() {
         name={hostel?.businessData?.name}
         location={hostel?.businessData?.location?.city}
         link={`/hostel/${hostel?._id}`}
+        linkSummary={`/select-hostel/${subServiceId}`}
         subserviceId={subServiceId}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />

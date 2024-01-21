@@ -6,6 +6,7 @@ import Image from "next/image";
 function HostelCardSummary({
   subserviceId,
   link,
+  linkSummary,
   name,
   location,
   image,
@@ -45,7 +46,7 @@ function HostelCardSummary({
             </div>
           </div>
           {go && (
-            <Link href={link}>
+            <Link href={linkSummary}>
               <div className="w-8 h-20 flex items-center justify-center pr-1 rounded-r-2xl cursor-pointer">
                 <ChangeIcon className="ml-1" />
               </div>

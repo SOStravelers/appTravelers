@@ -51,21 +51,22 @@ const ChatWorker = ({
 
   const handleSendClick = () => {
     console.log("enviando", inputValue);
-    if (inputValue.trim() !== "") {
+    const trimmedInputValue = inputValue.replace(/^\n+|\n+$/g, "");
+    if (trimmedInputValue.trim() !== "") {
       socket.current.emit("send-msg", {
         from: idWorker,
         to: idClient,
         chatRoom: chatId,
-        msg: inputValue,
+        msg: trimmedInputValue,
       });
       ChatService.createMessage({
         from: idWorker,
         to: idClient,
         chatRoom: chatId,
-        message: inputValue,
+        message: trimmedInputValue,
       }).then((res) => {
         // console.log(res.data);
-        const newMessage = { fromSelf: true, message: inputValue };
+        const newMessage = { fromSelf: true, message: trimmedInputValue };
         setMessages([...messages, newMessage]);
       });
       setInputValue("");

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import { useState, useEffect } from "react";
-
+import { validationImg } from "@/utils/validation";
 import { PinIcon, ArrowRightIcon } from "@/constants/icons";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,6 +11,7 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
   const { setService } = useStore();
   const [newLink, setNewLink] = useState(link);
   const [width, setWidth] = useState(0);
+  const [isImageAccessible, setIsImageAccessible] = useState(false);
   useEffect(() => {
     setWidth(window.innerWidth);
 
@@ -48,6 +49,13 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
     }
     return str.slice(0, num) + "...";
   }
+  useEffect(() => {
+    const checkImage = async () => {
+      const validImg = await validationImg(img);
+      setIsImageAccessible(validImg);
+    };
+    checkImage();
+  }, [img]);
 
   return (
     <div
@@ -62,7 +70,7 @@ function HostelCard({ id, link, name, editing, location, img, services }) {
           >
             <Image
               unoptimized
-              src={img}
+              src={img && isImageAccessible ? img : "/assets/user.png"}
               fill
               className="object-cover rounded-xl"
               alt="Image Location"

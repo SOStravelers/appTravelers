@@ -21,20 +21,20 @@ function ServiceCardGrey({ id, link, icon, name, subServices }) {
   };
 
   return (
-    <div
-      className="text-black flex flex-col items-center justify-center bg-white w-full h-full m-2 rounded-xl cursor-pointer"
-      onClick={select}
-    >
-      <div className="w-16 h-16 rounded-full bg-blueButton relative flex items-center justify-center">
-        <Image
-          src={icon ?? "/assets/subservice.png"}
-          fill
-          alt="service"
-          className="object-contain ml-1"
-        />
+    <Link href={link} onClick={select}>
+      <div className="text-black flex flex-col items-center justify-center bg-white w-full h-full m-2 rounded-xl cursor-pointer">
+        <div className="w-16 h-16 rounded-full bg-darkBlue relative flex items-center justify-center">
+          <Image
+            src={icon ? icon : "/assets/subservice.png"}
+            width={45}
+            height={45}
+            alt="service"
+            className="object-contain ml-1"
+          />
+        </div>
+        <h1 className="text-center text-lg mt-2">{name}</h1>
       </div>
-      <h1 className="text-center text-lg mt-2">{name}</h1>
-    </div>
+    </Link>
   );
 }
 

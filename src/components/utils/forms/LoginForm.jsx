@@ -27,15 +27,8 @@ function LoginForm() {
     try {
       console.log("--login email--");
       const response = await UserService.login(values.email, values.password);
-      if (response.data.user.type && response.data.user.type != "personal") {
-        console.log("caso worker");
-        localStorage.setItem("type", response.data.user.type);
-        setWorker(true);
-      }
-
-      delete response.data.user.type;
       toast.info("signin", {
-        position: toast.POSITION.BOTTOM_RIGHT,
+        position: toast.POSITION.TOP_RIGHT,
         autoClose: 1500,
       });
       Cookies.set("auth.access_token", response.data.access_token);
@@ -43,9 +36,12 @@ function LoginForm() {
       Cookies.set("auth.user_id", response.data.user._id);
       setUser(response.data.user);
       setLoggedIn(true);
+      console.log("vamos aqui->");
       if (response.data.user.type == "worker") {
+        localStorage.setItem("type", response.data.user.type);
+        delete response.data.user.type;
         setWorker(true);
-
+        console.log("vamos al home worker");
         router.push("/worker/home");
         return;
       } else if (service && Object.keys(service).length > 0) {
@@ -55,8 +51,8 @@ function LoginForm() {
         const response = await UserService.findByEmail(values.email);
         if (response?.data?.isActive && response?.data?.isValidate) {
           setLoading(false);
-
           router.push("/");
+          return;
         } else if (!response?.data?.isValidate) {
           const res = await UserService.sendCodeEmail(
             response.data._id,

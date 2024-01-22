@@ -61,7 +61,6 @@ function CalendarBookingWorker(today) {
     BookingService.getBookingsByMonthWorker(day).then((res) => {
       if (res) {
         setBookings(res.data.docs);
-        console.log(res.data.docs);
         const bookings = res.data.docs.map((booking) => {
           return new Date(booking.date.isoDate);
         });
@@ -72,7 +71,7 @@ function CalendarBookingWorker(today) {
 
   useEffect(() => {
     handleDayClick(selectedDay);
-  }, [selectedDay]);
+  }, [selectedDay, bookings]);
 
   const handleDayClick = (day, modifiers) => {
     setShowBookings([]);

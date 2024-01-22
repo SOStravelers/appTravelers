@@ -18,12 +18,19 @@ function WorkerCardBooking({
 }) {
   const { isWorker } = useStore();
   const router = useRouter();
-
+  const [isImageAccessible, setIsImageAccessible] = useState(false);
   const goToDetails = () => {
     router.push({
       pathname: `/service-details/${booking.id}`,
     });
   };
+  useEffect(() => {
+    const checkImage = async () => {
+      const validImg = await validationImg(avatar);
+      setIsImageAccessible(validImg);
+    };
+    checkImage();
+  }, [avatar]);
 
   return (
     <div
@@ -33,7 +40,7 @@ function WorkerCardBooking({
       <div className="flex w-full flex-row items-center">
         <div className="w-16 h-16 rounded-xl  bg-blueBorder mr-2 relative">
           <Image
-            src={avatar ?? "/assets/proovedor.png"}
+            src={isImageAccessible && avatar ? avatar : "/assets/proovedor.png"}
             fill
             alt="buenos"
             className="object-cover rounded-xl"

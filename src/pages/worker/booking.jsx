@@ -14,7 +14,7 @@ import {
   SECTION_FOUR,
 } from "@/constants";
 
-const weekDays = [];
+/* const weekDays = [];
 const today = dayjs();
 weekDays.push({
   day: today.format("ddd"),
@@ -28,30 +28,54 @@ for (let i = 1; i <= 6; i++) {
     number: day.format("D"),
     date: day.format("YYYY-MM-DD"),
   });
-}
+} */
+
+const today = dayjs();
 
 export default function WorkerBooking() {
-  useEffect(() => {
-    document.title = "Worker Booking | SOS Travelers";
-  }, []);
+  const [weekDays, setWeekDays] = useState([]);
+  const [loading, setLoadings] = useState(true);
 
   const [actualView, setActualView] = useState(SECTION_ONE);
-  const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
+  const [selectedDay, setSelectedDay] = useState(today.format("DD"));
   const [bookings, setBookings] = useState([]);
 
-  useEffect(() => {
-    const day = weekDays.find((day) => day.number === selectedDay);
-    setBookings(null);
-    BookingService.getBookingsByDayWorker(day.date)
-      .then((res) => {
+  const setWeek = async () => {
+    try {
+      const day = today.format("YYYY-MM-DD");
+      const newWeekDays = await BookingService.getWeekWorker(day);
+      setWeekDays(newWeekDays.data);
+    } catch (err) {}
+  };
+  const comeBooking = async () => {
+    setLoadings(true);
+    try {
+      const newDay = weekDays.find((day) => day.number === selectedDay);
+      BookingService.getBookingsByDayWorker(newDay.date).then((res) => {
         if (res) {
           setBookings(res.data.docs);
+          setLoadings(false);
         }
-      })
-      .catch((error) => {
-        // console.log(error);
       });
-  }, [selectedDay]);
+    } catch (err) {
+      console.log("error al obtenear bookings por dia");
+      setLoadings(false);
+    }
+  };
+
+  useEffect(() => {
+    comeBooking();
+  }, [weekDays, selectedDay]);
+
+  useEffect(() => {
+    setWeek();
+    // setSelectedDay(today.format("DD"));
+  }, [actualView]);
+
+  useEffect(() => {
+    setWeek();
+    document.title = "Worker Booking | SOS Travelers";
+  }, []);
 
   return (
     <div className="w-full min-h-screen py-20 md:py-24 px-3 md:pl-80 bg-white text-black">
@@ -71,9 +95,10 @@ export default function WorkerBooking() {
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
           dayBookings={bookings}
+          loading={loading}
         />
       ) : actualView === SECTION_THREE ? (
-        <MonthSection />
+        <MonthSection day={today} />
       ) : null}
     </div>
   );

@@ -428,6 +428,14 @@ function ServiceHistory() {
             <p className="text-blackBlue font-semibold text-md">
               {booking?.service?.name} - {booking?.subservice?.name}
             </p>
+          </div>{" "}
+          <div className="flex justify-between items-end w-full max-w-lg my-1">
+            <p className="text-blackText font-semibold">
+              {isWorker ? "Número de reserva" : "Reservation number"}
+            </p>
+            <p className="text-blackBlue font-semibold text-md">
+              {booking?.idKey}
+            </p>
           </div>
           <div className="flex justify-between items-end w-full max-w-lg my-1">
             <p className="text-blackText font-semibold">

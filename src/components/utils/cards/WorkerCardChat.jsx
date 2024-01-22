@@ -38,7 +38,7 @@ function WorkerCardChat({
             </p>
           </div>
           <p className=" ml-1 text-blackText font-semibold">
-            {lastMesssage.length > 20
+            {lastMesssage?.length > 20
               ? `${lastMesssage.substring(0, 25)}...`
               : lastMesssage}
           </p>

@@ -82,7 +82,7 @@ export default function PersonalChat() {
           />
           <ChatWorker
             chatId={chatId}
-            idWorker={booking.workerUser?._id}
+            idWorker={booking?.workerUser?._id}
             idClient={client?._id}
             socket={socket}
             initialMessages={initialMessages}

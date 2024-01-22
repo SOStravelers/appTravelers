@@ -8,7 +8,7 @@ import WorkerCardBooking from "../cards/WorkerCardBooking";
 
 import moment from "moment";
 
-function CalendarBooking(today) {
+function CalendarBooking() {
   const [selected, setSelected] = useState("");
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
@@ -16,9 +16,6 @@ function CalendarBooking(today) {
   const [bookedDays, setBookedDays] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [showBookings, setShowBookings] = useState([]);
-  const [selectedDay, setSelectedDay] = useState(
-    today.day.format("YYYY-MM-DD")
-  );
   // const bookedStyle = { border: "2px solid black" };
 
   const bookedStyle = {
@@ -42,7 +39,6 @@ function CalendarBooking(today) {
         day: selected.getDate(),
       }).format("YYYY-MM-DD");
       initialize(dateString);
-      setSelectedDay(dateString);
     }
   }, [selected]);
 
@@ -69,29 +65,23 @@ function CalendarBooking(today) {
     });
   };
 
-  useEffect(() => {
-    handleDayClick(selectedDay);
-  }, [selectedDay, bookings]);
-
   const handleDayClick = (day, modifiers) => {
     setShowBookings([]);
-    const filteredbookings = [];
-    if (modifiers?.booked) {
-      selectedDay;
+    if (modifiers.booked) {
+      const dateString = moment({
+        year: day.getFullYear(),
+        month: day.getMonth(),
+        day: day.getDate(),
+      }).format("YYYY-MM-DD");
 
+      const filteredbookings = [];
       bookings.forEach((booking) => {
-        if (booking.date.stringData === selectedDay) {
+        if (booking.date.stringData === dateString) {
           filteredbookings.push(booking);
         }
       });
-    } else {
-      bookings.forEach((booking) => {
-        if (booking.date.stringData === day) {
-          filteredbookings.push(booking);
-        }
-      });
+      setShowBookings(filteredbookings);
     }
-    setShowBookings(filteredbookings);
   };
 
   const initialize = (dateString = "") => {

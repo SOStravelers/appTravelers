@@ -30,7 +30,7 @@ function DaySection({
             number={day.number}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
-            bookings={day.bookings}
+            bookings={bookings?.length}
           />
         ))}
       </div>
@@ -40,7 +40,7 @@ function DaySection({
       </h1>
 
       <div className="flex flex-col">
-        {loading ? (
+        {!bookings ? (
           <div className="max-w-lg flex flex-col items-center justify-center">
             <Rings
               width={100}

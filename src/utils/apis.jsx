@@ -3,10 +3,10 @@ function SetLocalStorage(env) {
 
   const apis = new Map();
   apis.set("local", "http://localhost:9000/");
-  apis.set("dev", "https://apidev.sostvl.com/");
-  apis.set("development", "https://apidev.sostvl.com/");
-  apis.set("test", "https://apitest.sostvl.com/");
-  apis.set("production", "https://api.sostvl.com/");
+  apis.set("dev", "https://www.apidev.sostvl.com/");
+  apis.set("development", "https://www.apidev.sostvl.com/");
+  apis.set("test", "https://www.apitest.sostvl.com/");
+  apis.set("production", "https://www.api.sostvl.com/");
   const fronts = new Map();
   fronts.set("local", "http://localhost:3000/");
   fronts.set("dev", "https://dev.sostvl.com/");

@@ -19,16 +19,15 @@ function DayButton({ day, number, selectedDay, setSelectedDay, bookings }) {
       </p>
       <div className="flex flex-col items-center">
         <div className="flex">
-          {number === selectedDay &&
-            Array.from({ length: Math.min(bookings, 3) }).map((_, index) => (
-              <div
-                key={index}
-                className={clsx(
-                  "h-2 w-2 mx-1 rounded-full",
-                  selectedDay === number ? "bg-white" : "bg-black"
-                )}
-              ></div>
-            ))}
+          {Array.from({ length: Math.min(bookings, 3) }).map((_, index) => (
+            <div
+              key={index}
+              className={clsx(
+                "h-2 w-2 mx-1 rounded-full",
+                selectedDay === number ? "bg-white" : "bg-blueBorder"
+              )}
+            ></div>
+          ))}
         </div>
         <p
           className={clsx(

@@ -20,7 +20,7 @@ const today = dayjs();
 export default function Booking() {
   const store = useStore();
   const [weekDays, setWeekDays] = useState([]);
-  const [loading, setLoadings] = useState(true);
+  const [loading, setLoading] = useState(true);
   const { loginModal, setLoginModal, setService } = store;
   var user = Cookies.get("auth.user_id");
   const [actualView, setActualView] = useState(SECTION_ONE);
@@ -43,6 +43,11 @@ export default function Booking() {
     localStorage.removeItem("fromFavorite");
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    setWeek();
+  }, [actualView]);
+
   const comeBooking = async () => {
     try {
       const day = weekDays.find((day) => day.number === selectedDay);
@@ -55,10 +60,16 @@ export default function Booking() {
       }
     } catch (err) {
       console.log("error al obtenear bookings por dia");
-      setLoadings(false);
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    setLoading(true);
+  }, [selectedDay]);
+  useEffect(() => {
+    setLoading(false);
+  }, [bookings]);
   useEffect(() => {
     comeBooking();
   }, [weekDays, selectedDay]);
@@ -99,6 +110,7 @@ export default function Booking() {
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
           dayBookings={bookings}
+          loading={loading}
         />
       ) : actualView === SECTION_THREE ? (
         <MonthSection />

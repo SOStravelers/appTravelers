@@ -5,7 +5,13 @@ import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import { ReservationIcon } from "@/constants/icons";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
-function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
+function DaySection({
+  weekDays,
+  selectedDay,
+  setSelectedDay,
+  dayBookings,
+  loading,
+}) {
   const [bookings, setBookings] = useState([]);
   const { isWorker, user } = useStore();
   useEffect(() => {
@@ -32,7 +38,7 @@ function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
       <h1 className="text-center max-w-lg text-xl my-3">My next Commitments</h1>
 
       <div className="flex flex-col">
-        {!bookings ? (
+        {loading ? (
           <div className="max-w-lg flex flex-col items-center justify-center">
             <Rings
               width={100}

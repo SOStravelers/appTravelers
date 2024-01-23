@@ -42,7 +42,11 @@ function RecomendationCard(user) {
   };
   useEffect(() => {
     const checkImage = async () => {
-      const validImg = await validationImg(user?.user?.img?.imgUrl);
+      console.log("check");
+      const validImg = await validationImg(
+        user?.user?.img?.imgUrl + "?hola=" + random()
+      );
+      console.log("perro", validImg);
       setIsImageAccessible(validImg);
     };
     checkImage();

@@ -13,7 +13,7 @@ import { set } from "date-fns";
 
 export default function PaymentConfirmation() {
   const router = useRouter();
-  const { service, user, isWorker } = useStore();
+  const { service, user, isWorker, resetService } = useStore();
   const initialized = useRef(false);
   const [complete, setComplete] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -23,6 +23,14 @@ export default function PaymentConfirmation() {
     document.title = "Confirmation | SOS Travelers";
   }, []);
   useEffect(() => {
+    if (
+      service == null ||
+      service == undefined ||
+      service == "" ||
+      Object.keys(service).length === 0
+    ) {
+      router.push("/");
+    }
     console.log("conect socket booking");
     const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
     socket.current = io(host);
@@ -82,7 +90,6 @@ export default function PaymentConfirmation() {
       clientEmail: service.clientEmail || null,
     };
     try {
-      console.log("va");
       const response = isWorker
         ? await BookingService.createWorkerBooking(params)
         : await BookingService.create(params);
@@ -90,6 +97,8 @@ export default function PaymentConfirmation() {
         setBooking(response.data.booking);
         console.log("booking", response.data.booking);
         localStorage.removeItem("service");
+        resetService();
+
         !isWorker
           ? socket.current.emit("send-booking", { data: response.data.booking })
           : "";

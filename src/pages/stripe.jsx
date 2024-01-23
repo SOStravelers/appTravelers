@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import StripeForm from "@/components/utils/payments/StripeForm";
 import { useStore } from "@/store";
 import StripeService from "@/services/StripeService";
-
+import { useRouter } from "next/router";
 export default function Stripe() {
   const [clientSecret, setClientSecret] = useState(null);
+  const router = useRouter();
   const initialized = useRef(false);
   const { service } = useStore();
   function getFinalCost(service, currency) {
@@ -24,6 +25,15 @@ export default function Stripe() {
 
   useEffect(() => {
     document.title = "Your Payment | SOS Travelers";
+    if (
+      service == null ||
+      service == undefined ||
+      service == "" ||
+      Object.keys(service).length === 0
+    ) {
+      router.push("/");
+      return;
+    }
     if (!initialized.current) {
       initialized.current = true;
       createPaymentIntent();

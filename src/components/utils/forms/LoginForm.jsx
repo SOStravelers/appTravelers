@@ -28,7 +28,7 @@ function LoginForm() {
       console.log("--login email--");
       const response = await UserService.login(values.email, values.password);
       toast.info("signin", {
-        position: toast.POSITION.TOP_RIGHT,
+        position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 1500,
       });
       Cookies.set("auth.access_token", response.data.access_token);

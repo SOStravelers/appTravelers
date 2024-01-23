@@ -15,57 +15,64 @@ import {
 import Cookies from "js-cookie";
 import { useStore } from "@/store";
 import BookingService from "@/services/BookingService";
-const weekDays = [];
 const today = dayjs();
-
-weekDays.push({
-  day: today.format("ddd"),
-  number: today.format("D"),
-  date: today.format("YYYY-MM-DD"),
-});
-for (let i = 1; i <= 6; i++) {
-  const day = today.add(i, "day");
-  weekDays.push({
-    day: day.format("ddd"),
-    number: day.format("D"),
-    date: day.format("YYYY-MM-DD"),
-  });
-}
 
 export default function Booking() {
   const store = useStore();
+  const [weekDays, setWeekDays] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { loginModal, setLoginModal, setService } = store;
   var user = Cookies.get("auth.user_id");
   const [actualView, setActualView] = useState(SECTION_ONE);
-  const [selectedDay, setSelectedDay] = useState(weekDays[0].number);
+  const [selectedDay, setSelectedDay] = useState(today.format("DD"));
   const [open, setOpen] = useState(false);
   const [bookings, setBookings] = useState([]);
 
+  const setWeek = async () => {
+    try {
+      const day = today.format("YYYY-MM-DD");
+      const newWeekDays = await BookingService.getWeekUser(day);
+      setWeekDays(newWeekDays.data);
+    } catch (err) {}
+  };
+
   useEffect(() => {
+    setWeek();
     setService({});
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
   }, []);
-  useEffect(() => {
-    const day = weekDays.find((day) => day.number === selectedDay);
-    if (user) {
-      BookingService.totalNumberWeek(day.date).then((res) => {
-        if (res) {
-        }
-      });
-    }
-  }, []);
 
   useEffect(() => {
-    const day = weekDays.find((day) => day.number === selectedDay);
-    if (user) {
-      BookingService.getBookingsByDay(day.date).then((res) => {
-        if (res) {
-          setBookings(res.data.docs);
-        }
-      });
+    setLoading(true);
+    setWeek();
+  }, [actualView]);
+
+  const comeBooking = async () => {
+    try {
+      const day = weekDays.find((day) => day.number === selectedDay);
+      if (user) {
+        BookingService.getBookingsByDay(day.date).then((res) => {
+          if (res) {
+            setBookings(res.data.docs);
+          }
+        });
+      }
+    } catch (err) {
+      console.log("error al obtenear bookings por dia");
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    setLoading(true);
   }, [selectedDay]);
+  useEffect(() => {
+    setLoading(false);
+  }, [bookings]);
+  useEffect(() => {
+    comeBooking();
+  }, [weekDays, selectedDay]);
 
   useEffect(() => {
     document.title = "Booking | SOS Travelers";
@@ -103,6 +110,7 @@ export default function Booking() {
           selectedDay={selectedDay}
           setSelectedDay={setSelectedDay}
           dayBookings={bookings}
+          loading={loading}
         />
       ) : actualView === SECTION_THREE ? (
         <MonthSection />

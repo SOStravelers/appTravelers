@@ -24,7 +24,7 @@ function DaySection({ weekDays, selectedDay, setSelectedDay, dayBookings }) {
             number={day.number}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
-            bookings={bookings?.length}
+            bookings={day.bookings}
           />
         ))}
       </div>

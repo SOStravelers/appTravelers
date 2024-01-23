@@ -69,7 +69,7 @@ function Navbar() {
               : "text-greyText"
           )}
         >
-          Home
+          {isWorker ? "Inicio" : "Home"}
         </span>
       </button>
 

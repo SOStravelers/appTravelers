@@ -82,8 +82,8 @@ export default function WorkerSettings() {
 
       <Link href="/support" className="block">
         <OptionCard
-          title="Support"
-          subtitle="Contact us"
+          title="Suporte"
+          subtitle="Contate-nos"
           icon={MailIcon}
         ></OptionCard>
       </Link>

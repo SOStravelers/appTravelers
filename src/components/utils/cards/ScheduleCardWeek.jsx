@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import OptionSwitch from "../switch/OptionSwitch";
 import { CloseIcon } from "@/constants/icons";
 import { ToastContainer, toast } from "react-toastify";
+import { useStore } from "@/store";
 import {
   addTime,
   esMenorQueLas22,
@@ -17,6 +18,7 @@ function ScheduleCardWeek({
   enableDay,
   horario,
 }) {
+  const { isWorker } = useStore();
   const [isOpen, setIsOpen] = useState(false);
   const [saved, setIsSaved] = useState(false);
   const [startTime, setStartTime] = useState("08:00");
@@ -94,22 +96,37 @@ function ScheduleCardWeek({
     }
     if (compararAnterior == 1) {
       fail = true;
-      toast.warn("The start time must be later than the previous one.", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1800,
-      });
+      toast.warn(
+        isWorker
+          ? "O horário de início deve ser posterior ao anterior."
+          : "The start time must be later than the previous one.",
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1800,
+        }
+      );
     } else if (!hora1 || !hora2) {
       fail = true;
-      toast.warn("Time ranges only from 8 to 10 PM.", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1800,
-      });
+      toast.warn(
+        isWorker
+          ? "O horário varia apenas das 20h às 22h."
+          : "Time ranges only from 8 to 10 PM.",
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1800,
+        }
+      );
     } else if (difHoras == 1) {
       fail = true;
-      toast.warn("End time must be after start time.", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1800,
-      });
+      toast.warn(
+        isWorker
+          ? "O horário de término deve ser posterior ao horário de início."
+          : "End time must be after start time.",
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1800,
+        }
+      );
     }
     return fail;
   };
@@ -173,11 +190,33 @@ function ScheduleCardWeek({
       // setEndTime(end);
     }
   };
+  //funcion para convertir nombre del dia de la semana al portugues:
+  function convertDay(day) {
+    console.log(day);
+    switch (day) {
+      case "Monday":
+        return "Segunda";
+      case "Tuesday":
+        return "Terça";
+      case "Wednesday":
+        return "Quarta";
+      case "Thursday":
+        return "Quinta";
+      case "Friday":
+        return "Sexta";
+      case "Saturday":
+        return "Sábado";
+      case "Sunday":
+        return "Domingo";
+      default:
+        return "Dia";
+    }
+  }
 
   return (
     <div className="border-blueBorder border-2 py-1 px-4 rounded-2xl flex flex-col items-center my-3">
       <div className="flex w-full justify-between items-center">
-        <p>{day.name}</p>
+        <p>{convertDay(day.name)}</p>
         <OptionSwitch
           onFunction={openCard}
           offFunction={closeCard}
@@ -194,13 +233,13 @@ function ScheduleCardWeek({
             >
               <div className="w-full flex flex-col w-1/2 ml-5">
                 <label htmlFor="startTime" className="text-greyText text-sm">
-                  From
+                  {isWorker ? "Desde" : "From"}
                 </label>
                 <p>{interval.startTime}</p>
               </div>
               <div className="w-full flex flex-col w-1/2">
                 <label htmlFor="endTime" className="text-greyText text-sm">
-                  To
+                  {isWorker ? "Até" : "To"}
                 </label>
                 <p>{interval.endTime}</p>
               </div>
@@ -220,7 +259,7 @@ function ScheduleCardWeek({
                 className="bg-blueBorder text-sm text-white rounded-full w-40 mt-3"
                 onClick={() => mergeBlock(index)}
               >
-                Merge Blocks
+                {isWorker ? "Juntar bloco" : "Merge Block"}
               </button>
             )}
           </div>
@@ -230,7 +269,7 @@ function ScheduleCardWeek({
           <div className="flex justify-between w-full items-center border border-blueBorder rounded-lg p-2 mb-4">
             <div className="w-full flex flex-col w-1/2 ml-5">
               <label htmlFor="startTime" className="text-greyText text-sm">
-                From
+                {isWorker ? "Até" : "To"}
               </label>
               <input
                 type="time"
@@ -245,7 +284,7 @@ function ScheduleCardWeek({
             </div>
             <div className="w-full flex flex-col w-1/2" sty>
               <label htmlFor="endTime" className="text-greyText text-sm">
-                To
+                {isWorker ? "Até" : "To"}
               </label>
               <input
                 type="time"
@@ -266,14 +305,14 @@ function ScheduleCardWeek({
                 className="bg-blueBorder text-sm text-white rounded-full w-40 my-3 mx-2"
                 onClick={() => addBlock()}
               >
-                Add Block
+                {isWorker ? "Adicionar bloco" : "Add Block"}
               </button>
             )}
             <button
               className="bg-blueBorder text-sm text-white rounded-full w-40 my-3 mx-2"
               onClick={() => saveChanges()}
             >
-              Save changes
+              {isWorker ? "Salvar alterações" : "Save changes"}
             </button>
           </div>
         </>
@@ -283,7 +322,7 @@ function ScheduleCardWeek({
           className="bg-blueBorder text-sm text-white rounded-full w-40 my-3 mx-2"
           onClick={() => edit()}
         >
-          Edit Blocks
+          {isWorker ? "Editar bloco" : "Edit Block"}
         </button>
       )}
     </div>

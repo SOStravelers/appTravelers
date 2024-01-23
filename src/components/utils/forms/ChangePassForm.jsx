@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 function ChangePassForm() {
   const router = useRouter();
-  const { user, setUser, setLoggedIn } = useStore();
+  const { user, setUser, setLoggedIn, isWorker } = useStore();
 
   const changePass = async (values) => {
     try {
@@ -28,7 +28,7 @@ function ChangePassForm() {
         localStorage.setItem("auth.user", JSON.stringify(response.data.user));
         Cookies.set("auth.user", JSON.stringify(response.data.user));
         setUser(response.data.user);
-        toast.success("Password successfully changed.", {
+        toast.success(isWorker ? "Senha alterada" : "Password changed", {
           position: toast.POSITION.BOTTOM_CENTER,
           autoClose: 1800,
         });
@@ -65,7 +65,7 @@ function ChangePassForm() {
           <Field
             name="currentPassword"
             onChangeValidate={async (val, form) => {
-              if (!val) throw "Required field";
+              if (!val) throw isWorker ? "Campo obrigatório" : "Required field";
               return true;
             }}
           >
@@ -73,7 +73,7 @@ function ChangePassForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Current password"
+                    placeholder={isWorker ? "Senha atual" : "Current password"}
                     value={value}
                     icon={LockIcon}
                     onBlur={onBlur}
@@ -93,9 +93,12 @@ function ChangePassForm() {
             name="password"
             onChangeValidate={async (val, form) => {
               if (!val) throw "Required field";
-              if (val.length < 6) throw "Minimum 6 characters";
+              if (val.length < 6)
+                throw isWorker ? "Mínimo 6 caracteres" : "Minimum 6 characters";
               if (!/(?=.*[0-9])(?=.*[a-zA-Z])/.test(val))
-                throw "Must include both numbers and letters";
+                throw isWorker
+                  ? "Deve incluir números e letras"
+                  : "Must include both numbers and letters";
               return true;
             }}
           >
@@ -103,7 +106,7 @@ function ChangePassForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="New password"
+                    placeholder={isWorker ? "Nova senha" : "New password"}
                     value={value}
                     icon={LockIcon}
                     onBlur={onBlur}
@@ -125,11 +128,16 @@ function ChangePassForm() {
             onChangeValidate={async (val, form) => {
               if (!val) throw "Required field";
 
-              if (val.length < 6) throw "Minimum 6 characters";
+              if (val.length < 6)
+                throw isWorker ? "Mínimo 6 caracteres" : "Minimum 6 characters";
               if (!/(?=.*[0-9])(?=.*[a-zA-Z])/.test(val))
-                throw "Must include both numbers and letters";
+                throw isWorker
+                  ? "Deve incluir números e letras"
+                  : "Must include both numbers and letters";
               if (form.getFieldValue("password")?.value !== val)
-                throw "Passwords don't match";
+                throw isWorker
+                  ? "Senhas não coincidem"
+                  : "Passwords do not match";
 
               return true;
             }}
@@ -138,7 +146,9 @@ function ChangePassForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Confirm new password"
+                    placeholder={
+                      isWorker ? "Confirmar nova senha" : "Confirm new password"
+                    }
                     value={value}
                     icon={LockIcon}
                     onBlur={onBlur}
@@ -157,7 +167,7 @@ function ChangePassForm() {
 
           <OutlinedButton
             style={{ marginTop: "25px" }}
-            text="Change Password"
+            text={isWorker ? "Salvar alterações" : "Save Changes"}
             disabled={!isValid}
           />
         </form>

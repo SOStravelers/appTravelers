@@ -10,7 +10,7 @@ function ScheduleCardCalendar({ text, confirm, cancel }) {
           className="bg-blueBorder text-white rounded-lg text-xs py-1 px-2"
           onClick={confirm}
         >
-          Confirm
+          Confirmar
         </button>
       )}
       {cancel && <CloseIcon onClick={cancel} />}

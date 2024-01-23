@@ -95,7 +95,7 @@ function CalendarSchedule({ saveData }) {
     setDisabledDays(newDisabledDays);
   };
 
-  let footer = <p className="my-5 text-center">Please pick a day.</p>;
+  let footer = <p className="my-5 text-center">Por favor, escolha um dia.</p>;
   if (range?.from) {
     if (!range.to) {
       footer = <ScheduleCardCalendar text={format(range.from, "PP")} />;
@@ -111,6 +111,10 @@ function CalendarSchedule({ saveData }) {
 
   return (
     <>
+      <p className="text-center py-2 max-w-lg ">
+        Aqui você pode inserir os dias que estará de férias, se selecionar 1 ou
+        mais dias, não receberá solicitações de emprego nesses dias
+      </p>
       <DayPicker
         mode="range"
         selected={range}

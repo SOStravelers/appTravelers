@@ -192,6 +192,12 @@ function SectionWeek() {
 
   return (
     <section className="w-full max-w-lg">
+      <p className="py-3 text-center">
+        Aqui você deve inserir seus horários de disponibilidade para trabalhar e
+        somente nesses dias e horários receberá as solicitações. Ao fazer uma
+        alteração, pressione "salvar alterações", caso contrário elas não serão
+        refletidas
+      </p>
       {WEEK_DAYS.map((day, index) => (
         <ScheduleCardWeek
           key={day.id}

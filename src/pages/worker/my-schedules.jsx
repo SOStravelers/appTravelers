@@ -12,7 +12,7 @@ export default function MySchedules() {
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <SwitchButtons
         titleOne={isWorker ? "Meu Horario" : "My Schedule"}
-        titleTwo={"Holidays"}
+        titleTwo={isWorker ? "Feriados" : "Holidays"}
         setActualView={setActualView}
         actualView={actualView}
       />

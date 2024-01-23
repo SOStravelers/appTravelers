@@ -6,7 +6,7 @@ import { EditIcon, CheckIconBlack } from "@/constants/icons";
 function AboutEdit({ about }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedAbout, setEditedAbout] = useState(about); // Agregar un estado para el valor editado
-  const { user, setUser } = useStore();
+  const { user, setUser, isWorker } = useStore();
 
   useEffect(() => {
     setEditedAbout(about);
@@ -31,7 +31,7 @@ function AboutEdit({ about }) {
           className="mb-5 underline font-semibold underline-offset-8"
           style={{ textDecorationColor: "#00A0D5", textDecorationThickness: 2 }}
         >
-          About
+          {isWorker ? "Sobre mim" : "About me"}
         </h1>
         {isEditing ? (
           <CheckIconBlack onClick={handleEdit} />

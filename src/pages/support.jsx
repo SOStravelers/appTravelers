@@ -18,7 +18,7 @@ export default function SupportPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sended, setSended] = useState(false);
   const router = useRouter();
-  const { user, loggedIn } = useStore();
+  const { user, loggedIn, isWorker } = useStore();
   const id = router.query.id;
   useEffect(() => {
     document.title = "Support | SOS Travelers";
@@ -66,20 +66,35 @@ export default function SupportPage() {
     }
   };
   const optionsSupport = [
-    "⁠Issues with canceling a reservation",
-    "⁠Problems with scheduling",
-    "⁠Chat-related problems",
-    "⁠Payment or payment method issue",
-    "⁠Double payment has been made",
+    isWorker
+      ? "⁠Problemas com o cancelamento de uma reserva"
+      : "⁠Issues with canceling a reservation",
+    isWorker ? "⁠Problemas com agendamento" : "⁠Problems with scheduling",
+    isWorker
+      ? "⁠Problemas relacionados ao chat"
+      : "⁠Payment or payment method issue",
+    isWorker ? "⁠Pagamento duplo foi feito" : "⁠Double payment has been made",
     "Problems or dissatisfaction with the service received",
-    "⁠Reporting abuse or misconduct by a worker",
-    "⁠Reporting abuse or misconduct by the facility",
-    "⁠Interested in working with SOS Traveler",
-    "⁠Suggestions for the app",
-    "⁠Suggestions for the service",
-    "⁠Account access or login issue",
-    "Technical difficulties using the platform",
-    "⁠General inquiries about SOS Travelers services",
+    isWorker
+      ? "Problemas ou insatisfação com o serviço recebido"
+      : "⁠Reporting abuse or misconduct by a worker",
+    isWorker
+      ? "⁠Relatando abuso ou má conduta por parte da instalação"
+      : "⁠Reporting abuse or misconduct by the facility",
+    isWorker
+      ? "⁠Interessado em trabalhar com SOS Traveler"
+      : "⁠Interested in working with SOS Traveler",
+    isWorker ? "⁠Sugestões para o aplicativo" : "⁠Suggestions for the app",
+    isWorker ? "⁠Sugestões para o serviço" : "⁠Suggestions for the service",
+    isWorker
+      ? "⁠Acesso à conta ou problema de login"
+      : "⁠Account access or login issue",
+    isWorker
+      ? "Dificuldades técnicas na utilização da plataforma"
+      : "Technical difficulties using the platform",
+    isWorker
+      ? "⁠Dúvidas gerais sobre os serviços SOS Travellers"
+      : "⁠General inquiries about SOS Travelers services",
   ].map((issue) => ({
     value: issue,
     label: issue,
@@ -93,7 +108,9 @@ export default function SupportPage() {
   return (
     <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <h1 className="my-3 font-semibold text-center max-w-lg">
-        Support: How can we help you?
+        {isWorker
+          ? "Suporte: Como podemos ajudá-lo?"
+          : "Support: How can we help you?"}
       </h1>
       <Form
         key={formKey}
@@ -146,7 +163,7 @@ export default function SupportPage() {
                 </div>
 
                 <div className="mb-3">
-                  <p>Email Address</p>
+                  <p>{isWorker ? "Endereço de email" : "Email Address"}</p>
                   <Field
                     name="email"
                     onBlurValidate={z.string().email("Invalid email")}
@@ -174,11 +191,13 @@ export default function SupportPage() {
             )}
 
             <div className="mb-3">
-              <p>Choose a subject</p>
+              <p>{isWorker ? "Escolha um assunto" : "Choose a subject"}</p>
               <Field
                 name="subject"
                 onBlurValidate={z.string().refine((val) => val, {
-                  message: "You must choose an option",
+                  message: isWorker
+                    ? "Você deve escolher uma opção"
+                    : "You must choose an option",
                 })}
               >
                 {({ value, setValue, onBlur, errors }) => (
@@ -238,18 +257,22 @@ export default function SupportPage() {
             </div>
 
             <div className="mb-3">
-              <p>Message</p>
+              <p>{isWorker ? "Mensagem" : "Message"}</p>
               <Field
                 name="message"
                 onBlurValidate={z.string().refine((val) => val, {
-                  message: "You must enter a message",
+                  message: isWorker
+                    ? "Você deve inserir uma mensagem"
+                    : "You must enter a message",
                 })}
               >
                 {({ value, setValue, onBlur, errors }) => {
                   return (
                     <div>
                       <OutlinedTextArea
-                        placeholder="Enter Message"
+                        placeholder={
+                          isWorker ? "Inserir mensagem" : "Enter Message"
+                        }
                         value={value}
                         onBlur={onBlur}
                         onChange={(e) => setValue(e.target.value)}
@@ -266,13 +289,14 @@ export default function SupportPage() {
             </div>
             {!sended ? (
               <OutlinedButton
-                text="Send Message"
+                text={isWorker ? "Enviar mensagem" : "Send Message"}
                 disabled={!isValid || isSubmitting}
               />
             ) : (
               <p className="text-sm">
-                We have received your message!!. We will reply to you as soon as
-                possible
+                {isWorker
+                  ? "Recebemos sua mensagem!!. Responderemos assim que possível"
+                  : "We have received your message!!. We will reply to you as soon as possible"}
               </p>
             )}
           </form>

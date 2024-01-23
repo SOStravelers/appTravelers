@@ -14,7 +14,7 @@ import { random } from "@/lib/utils";
 
 function WorkerProfileCard({ name, services, score, avatar, lastName }) {
   const [newAvatar, setNewAvatar] = useState(null);
-
+  const { user, setUser, isWorker } = useStore();
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState();
   const [image, setImage] = useState(null);
@@ -63,7 +63,7 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
       setNewAvatar(avatar + "?hola=" + random());
     }
   }, [avatar]);
-  const { user, setUser } = useStore();
+
   const [loading, setLoading] = useState(false);
 
   const setImageInput = async (file) => {
@@ -237,7 +237,9 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
               }}
             >
               <h1 className="text-2xl font-semibold mb-5">
-                Adjust the image for better look
+                {isWorker
+                  ? "Ajuste a imagem para melhor visualização"
+                  : " Adjust the image for better look"}
               </h1>
               <ReactCrop
                 className="w-60"
@@ -250,10 +252,13 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
               <br />
               <SolidButton
                 disabled={!crop}
-                text="Crop the image"
+                text={isWorker ? "Cortar a imagem" : "Crop the image"}
                 onClick={cropImageNow}
               />
-              <OutlinedButton text="Cancel" onClick={handleCancel} />
+              <OutlinedButton
+                text={isWorker ? "Cancelar" : "Cancel"}
+                onClick={handleCancel}
+              />
               <br />
             </dialog>
           </>

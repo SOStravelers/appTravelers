@@ -13,7 +13,7 @@ function EditGallery() {
   const [loading, setLoading] = useState(
     new Array(selectedImages.length).fill(false)
   );
-  const { user, setUser } = useStore();
+  const { user, setUser, isWorker } = useStore();
 
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState();
@@ -208,7 +208,7 @@ function EditGallery() {
         className="mb-5 underline font-semibold underline-offset-8"
         style={{ textDecorationColor: "#00A0D5", textDecorationThickness: 2 }}
       >
-        Gallery
+        {isWorker ? "Galeria" : "Gallery"}
       </h1>
       <div className="grid grid-cols-2 gap-1">
         {selectedImages.map((image, index) => (
@@ -320,7 +320,9 @@ function EditGallery() {
                   }}
                 >
                   <h1 className="text-sm lg:text-xl font-semibold mb-5">
-                    Adjust the image for better look
+                    {isWorker
+                      ? "Ajuste a imagem para melhor visualização"
+                      : " Adjust the image for better look"}
                   </h1>
                   <ReactCrop
                     className="w-90"
@@ -331,10 +333,13 @@ function EditGallery() {
                     <img src={src} onLoad={(img) => setImage(img.target)} />
                   </ReactCrop>
                   <br />
-                  <SolidButton text="Crop the image" onClick={cropImageNow} />
+                  <SolidButton
+                    text={isWorker ? "Cortar a imagem" : "Crop the image"}
+                    onClick={cropImageNow}
+                  />
                   <OutlinedButton
                     margin="my-1"
-                    text="Cancel"
+                    text={isWorker ? "Cancelar" : "Cancel"}
                     onClick={handleCancel}
                   />
                   <br />

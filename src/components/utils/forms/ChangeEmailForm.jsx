@@ -9,7 +9,7 @@ import { useStore } from "@/store";
 import { Field, Form } from "houseform";
 import { toast } from "react-toastify";
 function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
-  const { user, setUserId, setUser, setLoggedIn } = useStore();
+  const { user, setUserId, setUser, setLoggedIn, isWorker } = useStore();
 
   const changeEmail = async (values) => {
     try {
@@ -41,7 +41,6 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
         "validate",
         newEmail
       );
-      console.log("perro");
       if (responseValidation.status === 200) {
         console.log(responseValidation);
         setValidatingMail(true);
@@ -83,7 +82,7 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Current password"
+                    placeholder={isWorker ? "Senha atual" : "Current password"}
                     value={value}
                     icon={LockIcon}
                     onBlur={onBlur}
@@ -112,7 +111,7 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="New email"
+                    placeholder={isWorker ? "Novo email" : "New email"}
                     value={value}
                     icon={MailIcon}
                     onBlur={onBlur}
@@ -145,7 +144,9 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Confirm new email"
+                    placeholder={
+                      isWorker ? "Confirmar novo email" : "New email"
+                    }
                     value={value}
                     icon={MailIcon}
                     onBlur={onBlur}
@@ -164,7 +165,7 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
 
           <OutlinedButton
             style={{ marginTop: "25px" }}
-            text="Change Email"
+            text={isWorker ? "Mude o e-mail" : "Change Email"}
             disabled={!isValid}
             type="submit"
           />

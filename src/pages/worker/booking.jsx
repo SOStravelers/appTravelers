@@ -34,6 +34,11 @@ export default function WorkerBooking() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    setWeek();
+  }, [actualView]);
+
+  useEffect(() => {
     setWeek();
     document.title = "Worker Booking | SOS Travelers";
   }, []);

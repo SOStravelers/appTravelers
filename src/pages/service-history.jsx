@@ -40,7 +40,10 @@ function ServiceHistory() {
             Requested Services
           </h1>
           {bookings
-            .filter((booking) => booking.status === "requested")
+            .filter(
+              (booking) =>
+                booking.status === "requested" || booking.status === "available"
+            )
             .map((booking) => (
               <WorkerCardBooking
                 key={booking._id}
@@ -55,8 +58,10 @@ function ServiceHistory() {
               />
             ))}
           {!loading &&
-            bookings.filter((booking) => booking.status === "requested")
-              .length === 0 && (
+            bookings.filter(
+              (booking) =>
+                booking.status === "requested" || booking.status === "available"
+            ).length === 0 && (
               <p className="text-center text-greyText max-w-lg my-3">
                 {"You do not have a booking requested"}
               </p>

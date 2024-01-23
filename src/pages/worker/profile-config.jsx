@@ -24,6 +24,7 @@ export default function WorkerProfile() {
   const [openInactive, setOpenInactive] = useState(false);
   const [user, setUser] = useState({});
   const router = useRouter();
+  const { isWorker } = useStore();
 
   const activeModeOff = async () => {
     setOpenInactive(true);
@@ -60,16 +61,26 @@ export default function WorkerProfile() {
       if (isActiveCheck) {
         setIsOnWorker(true);
         await UserService.readyToWork({ isActive: true });
-        toast.info("You are now ready to receive job offers.", {
-          position: toast.POSITION.BOTTOM_CENTER,
-          autoClose: 1500,
-        });
+        toast.info(
+          isWorker
+            ? "Agora você está pronto para receber ofertas de emprego."
+            : "You are now ready to receive job offers.",
+          {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 1500,
+          }
+        );
       } else {
         setIsOnWorker(false);
-        toast.error("You need to complete your Worker profile", {
-          position: toast.POSITION.BOTTOM_CENTER,
-          autoClose: 1500,
-        });
+        toast.error(
+          isWorker
+            ? "Você precisa completar seu perfil de trabalho"
+            : "You need to complete your Worker profile",
+          {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 1500,
+          }
+        );
       }
     } catch (err) {
       toast.error("Internal Server Error. Please try again later.", {
@@ -96,10 +107,13 @@ export default function WorkerProfile() {
   const cancelInactiveMode = () => {
     try {
       setIsOnWorker(true); // Actualizar el estado después de cerrar el modal
-      toast.info("No changes were saved.", {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1500,
-      });
+      toast.info(
+        isWorker ? "Nenhuma alteração foi salva." : "No changes were saved.",
+        {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1500,
+        }
+      );
     } catch (err) {
       toast.error("Internal Server Error. Please try again later.", {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -114,20 +128,30 @@ export default function WorkerProfile() {
     <div className="bg-white h-full w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <div className="flex flex-col max-w-lg px-2 justify-center my-4">
         <OptionSwitch
-          title="Ready to work"
+          title={isWorker ? "Pronto para trabalhar" : "Ready to work"}
           onFunction={activeModeOn}
           offFunction={activeModeOff}
           isOn={IsOnWorker}
           setIsOn={setIsOnWorker}
         />
         <TextModal
-          title={`Hide my worker account`}
+          title={
+            isWorker
+              ? "Ocultar minha conta de trabalho"
+              : "Hide my worker account"
+          }
           text={[
-            "Are you sure you want to inactive your account?",
-            "You will not receive job offers or notifications of new opportunities.",
-            "You can change this option at any time.",
+            isWorker
+              ? "Tem certeza de que deseja desativar sua conta"
+              : "Are you sure you want to inactive your account?",
+            isWorker
+              ? "Você não receberá ofertas de emprego ou notificações de novas oportunidades."
+              : "You will not receive job offers or notifications of new opportunities.",
+            isWorker
+              ? "Você pode alterar esta opção a qualquer momento."
+              : "You can change this option at any time.",
           ]}
-          buttonText="Accept"
+          buttonText={isWorker ? "Aceitar" : "Accept"}
           open={openInactive}
           setOpen={setOpenInactive}
           onAccept={confirmInactiveMode}
@@ -135,22 +159,24 @@ export default function WorkerProfile() {
         />
       </div>
       <OptionCard
-        title="My Services"
-        subtitle="Abilities and skills"
+        title={isWorker ? "Meus serviços" : "My Services"}
+        subtitle={
+          isWorker ? "Competências e habilidades" : "Abilities and skills"
+        }
         icon={ServicesIcon}
         check={mServCheck}
         onClick={() => router.push("/worker/my-services")}
       />
       <OptionCard
-        title="About Me"
-        subtitle="Gallery and description"
+        title={isWorker ? "Sobre mim" : "About Me"}
+        subtitle={isWorker ? "Galeria e descrição" : "Gallery and description"}
         icon={UserIcon}
         check={mProfCheck}
         onClick={() => router.push(`/worker/edit/${user._id}`)}
       />
       <OptionCard
-        title="My Schedules"
-        subtitle="Set your calendar"
+        title={isWorker ? "Meus horários" : "My Schedules"}
+        subtitle={isWorker ? "Defina seu calendário" : "Set your calendar"}
         icon={ListIcon}
         check={mScheCheck}
         onClick={() => router.push("/worker/my-schedules") && console.log()}

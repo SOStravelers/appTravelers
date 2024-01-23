@@ -9,7 +9,7 @@ import { signOut } from "next-auth/react";
 
 export default function WorkerProfile({ user }) {
   const router = useRouter();
-  const { setUser, setLoggedIn, setWorker } = useStore();
+  const { setUser, setLoggedIn, setWorker, isWorker } = useStore();
   useEffect(() => {
     document.title = "Profile | SOS Travelers";
   }, []);
@@ -35,18 +35,22 @@ export default function WorkerProfile({ user }) {
   return (
     <div className="bg-white h-full w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80 flex flex-col">
       <OutlinedButton
-        text="Personal Details"
+        text={isWorker ? "Informação pessoal" : "Personal Details"}
         onClick={() => router.push("/personal-details")}
       />
       <OutlinedButton
-        text="Settings"
+        text={isWorker ? "Configurações" : "Settings"}
         onClick={() => router.push("/worker/settings")}
       />
       <OutlinedButton
-        text="Worker Profile"
+        text={isWorker ? "Perfil do trabalhador" : "Worker Profile"}
         onClick={() => router.push("/worker/profile-config")}
       />
-      <OutlinedButton secondary text="Log Out" onClick={logout} />
+      <OutlinedButton
+        secondary
+        text={isWorker ? "Sair" : "Log Out"}
+        onClick={logout}
+      />
     </div>
   );
 }

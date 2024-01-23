@@ -16,7 +16,7 @@ export default function MyServices() {
   const [open, setOpen] = useState(true);
   const [addingService, setAddingService] = useState(false);
   const [isActiveInitial, setIsActiveInitial] = useState(null);
-
+  const { isWorker } = useStore();
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -58,7 +58,6 @@ export default function MyServices() {
   }, []);
 
   const getData = async () => {
-    console.log("se viene");
     ServiceService.listServices().then((response) => {
       setServices(response.data);
     });
@@ -124,7 +123,7 @@ export default function MyServices() {
       );
       user.workerData.services = servicesWithSubservices;
       const response = await UserService.updateUser(user);
-      toast.info("Saved.", {
+      toast.info(isWorker ? "alterações salvas" : "Saved.", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
       });
@@ -167,12 +166,14 @@ export default function MyServices() {
       {selectedOptions?.length === 0 && !addingService && (
         <>
           <p className="pb-20  pt-10 text-center max-w-lg">
-            No services register yet
+            {isWorker
+              ? "Nenhum serviço registrado ainda"
+              : "No services register yet"}
           </p>
           <BarberPicture className="mb-6 px-20" />
           <OutlinedButton
             margin="my-10"
-            text="Add services"
+            text={isWorker ? "Adicionar serviços" : "Add services"}
             onClick={() => handleAddService()}
           />
         </>
@@ -187,7 +188,7 @@ export default function MyServices() {
             />
           ))}
           <OutlinedButton
-            text="Edit/Add services"
+            text={isWorker ? "Editar/Adicionar serviços" : "Edit/Add services"}
             margin="my-10"
             onClick={() => handleAddService()}
           />
@@ -205,7 +206,7 @@ export default function MyServices() {
               />
             ))}
           <OutlinedButton
-            text="Save Selection"
+            text={isWorker ? "Salvar seleção" : "Save Selection"}
             onClick={() => handleSaveSelection()}
             margin="my-10"
           />
@@ -214,9 +215,13 @@ export default function MyServices() {
       <TextModal
         open={open}
         setOpen={setOpen}
-        title={`An administrator can modify enrolled services, including the ability to add or remove services or subservices.`}
+        title={
+          isWorker
+            ? "Um administrador pode modificar serviços inscritos, incluindo a capacidade de adicionar ou remover serviços ou subserviços."
+            : `An administrator can modify enrolled services, including the ability to add or remove services or subservices.`
+        }
         text={[]}
-        buttonText="Continue"
+        buttonText={isWorker ? "Continuar" : "Continue"}
         onAccept={() => setOpen(false)}
       />
     </div>

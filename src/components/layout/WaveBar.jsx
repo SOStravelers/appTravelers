@@ -25,7 +25,10 @@ function WaveBar() {
       />
       {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
         <h1 className="text-white  neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
-          Testing Version
+          {process.env.NEXT_PUBLIC_NODE_ENV == "dev" ||
+          process.env.NEXT_PUBLIC_NODE_ENV == "development"
+            ? "Dev Version"
+            : " Test Version"}
         </h1>
       )}
     </div>

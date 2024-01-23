@@ -27,6 +27,13 @@ export default class NotificationService {
     return `${api}${NotificationService.resourceAuth}`;
   }
 
+  static async getPublicKey() {
+    return axios.get(`${this.baseUrl}/getkey/`, {});
+  }
+  static async createSub(params) {
+    return axios.post(`${this.baseUrl}/createSub`, params, {});
+  }
+
   static async getAll(page, limit) {
     return axios.get(`${this.authUrl}/getAll/?page=${page}&limit=${limit}`, {
       headers: this.getHeaders(),

@@ -30,6 +30,7 @@ export default function PaymentConfirmation() {
       Object.keys(service).length === 0
     ) {
       router.push("/");
+      return;
     }
     console.log("conect socket booking");
     const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;

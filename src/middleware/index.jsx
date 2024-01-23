@@ -96,6 +96,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
                 router.pathname != "/workers-found/[id]" &&
                 router.pathname != "/worker/[id]"
               ) {
+                console.log("entro aqui");
                 router.push("/");
                 return;
               } else {
@@ -157,6 +158,15 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
             }
           } else {
             setLoggedIn(false);
+            if (
+              router.pathname.includes("worker") &&
+              router.pathname != "/workers-found/[id]" &&
+              router.pathname != "/worker/[id]"
+            ) {
+              router.push("/");
+              return;
+            }
+            console.log("nada");
             return;
           }
         }

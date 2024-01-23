@@ -87,7 +87,7 @@ function CalendarBookingWorker() {
   const initialize = (dateString = "") => {
     const now = moment();
     if (dateString === now.format("YYYY-MM-DD") || selected === "") {
-      if (!selected) setSelected(now.toDate());
+      // if (!selected) setSelected(now.toDate());
       setFromDate(now.toDate());
       setToDate(now.add(2, "months").toDate());
     }

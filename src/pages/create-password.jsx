@@ -29,7 +29,11 @@ export default function CreatePassword() {
       const response = await UserService.verifyCodeEmail(user._id, code);
       console.log(response);
       if (response.status === 200) {
-        setCanCreatePass(true);
+        const token = response.data.access_token;
+        router.push({
+          pathname: "/recovery-password/",
+          query: { user: token },
+        });
       }
     } catch (err) {
       console.log(err);

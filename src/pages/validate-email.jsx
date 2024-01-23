@@ -17,9 +17,10 @@ export default function ChangePassword() {
       const userId = router?.query?.userId;
       const response = await UserService.verifyCodeEmail(userId, code);
       if (response.status === 200) {
+        const token = response.data.access_token;
         router.push({
-          pathname: "/recovery-password",
-          query: { userId: userId },
+          pathname: "/recovery-password/",
+          query: { user: token },
         });
       }
     } catch (err) {

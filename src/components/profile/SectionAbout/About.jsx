@@ -7,7 +7,7 @@ function About({ description }) {
       >
         About
       </h1>
-      <p className="text-blackText max-w-lg">
+      <p className="text-blackText max-w-lg" style={{ whiteSpace: "pre-wrap" }}>
         {description?.length > 0 ? description : "No description"}
       </p>
     </div>

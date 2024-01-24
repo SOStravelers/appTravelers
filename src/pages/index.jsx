@@ -135,7 +135,7 @@ export default function Home({}) {
           ))}
         </Swiper>
       </div>
-      {process.env.NEXT_PUBLIC_NODE_ENV != "production" ? (
+      {process.env.NEXT_PUBLIC_NODE_ENV != "productionsss" ? (
         <>
           <section>
             <h1

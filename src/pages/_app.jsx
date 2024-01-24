@@ -18,7 +18,7 @@ import { routesNavbar, routesSidebar } from "@/utils/variables";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-
+  console.log("prueba");
   // useEffect(() => {
   //   console.log("buenas tardes");
   //   if ("serviceWorker" in navigator) {

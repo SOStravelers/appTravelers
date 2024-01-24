@@ -19,75 +19,75 @@ import { routesNavbar, routesSidebar } from "@/utils/variables";
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
-  useEffect(() => {
-    console.log("buenas tardes");
-    if ("serviceWorker" in navigator) {
-      console.log("Service Worker is supported");
-      const registerServiceWorker = () => {
-        navigator.serviceWorker.register("/sw.js").then(
-          function (registration) {
-            console.log(
-              "Service Worker registration successful with scope: ",
-              registration.scope
-            );
-            // Solicitar permiso para enviar notificaciones
-            console.log("vamos a los permisos");
-            Notification.requestPermission().then(async function (permission) {
-              if (permission === "granted") {
-                console.log("Notification permission granted.");
-                // Suscribirse a las notificaciones push
-                const responsePublicKey =
-                  await NotificationService.getPublicKey();
-                console.log(
-                  "vamos a la suscripcion",
-                  responsePublicKey.data.publicKey
-                );
-                const data = responsePublicKey.data;
-                if (!data) {
-                  console.log("No se pudo obtener la clave pública");
-                  return;
-                }
-                const publicKey = urlBase64ToUint8Array(data.publicKey);
-                registration.pushManager
-                  .subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: publicKey,
-                  })
-                  .then(async function (subscription) {
-                    console.log("se viene la subcripcion", subscription);
-                    await NotificationService.createSub(subscription);
-                  });
-              } else {
-                console.log("Unable to get permission to notify.");
-              }
-            });
-          },
-          function (err) {
-            console.log("Service Worker registration failed: ", err);
-          }
-        );
-      };
+  // useEffect(() => {
+  //   console.log("buenas tardes");
+  //   if ("serviceWorker" in navigator) {
+  //     console.log("Service Worker is supported");
+  //     const registerServiceWorker = () => {
+  //       navigator.serviceWorker.register("/sw.js").then(
+  //         function (registration) {
+  //           console.log(
+  //             "Service Worker registration successful with scope: ",
+  //             registration.scope
+  //           );
+  //           // Solicitar permiso para enviar notificaciones
+  //           console.log("vamos a los permisos");
+  //           Notification.requestPermission().then(async function (permission) {
+  //             if (permission === "granted") {
+  //               console.log("Notification permission granted.");
+  //               // Suscribirse a las notificaciones push
+  //               const responsePublicKey =
+  //                 await NotificationService.getPublicKey();
+  //               console.log(
+  //                 "vamos a la suscripcion",
+  //                 responsePublicKey.data.publicKey
+  //               );
+  //               const data = responsePublicKey.data;
+  //               if (!data) {
+  //                 console.log("No se pudo obtener la clave pública");
+  //                 return;
+  //               }
+  //               const publicKey = urlBase64ToUint8Array(data.publicKey);
+  //               registration.pushManager
+  //                 .subscribe({
+  //                   userVisibleOnly: true,
+  //                   applicationServerKey: publicKey,
+  //                 })
+  //                 .then(async function (subscription) {
+  //                   console.log("se viene la subcripcion", subscription);
+  //                   await NotificationService.createSub(subscription);
+  //                 });
+  //             } else {
+  //               console.log("Unable to get permission to notify.");
+  //             }
+  //           });
+  //         },
+  //         function (err) {
+  //           console.log("Service Worker registration failed: ", err);
+  //         }
+  //       );
+  //     };
 
-      if (document.readyState === "complete") {
-        registerServiceWorker();
-      } else {
-        window.addEventListener("load", registerServiceWorker);
-      }
-    }
-  }, []);
+  //     if (document.readyState === "complete") {
+  //       registerServiceWorker();
+  //     } else {
+  //       window.addEventListener("load", registerServiceWorker);
+  //     }
+  //   }
+  // }, []);
 
-  function urlBase64ToUint8Array(base64String) {
-    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding)
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-    const rawData = window.atob(base64);
-    const outputArray = new Uint8Array(rawData.length);
-    for (let i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
-    }
-    return outputArray;
-  }
+  // function urlBase64ToUint8Array(base64String) {
+  //   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  //   const base64 = (base64String + padding)
+  //     .replace(/-/g, "+")
+  //     .replace(/_/g, "/");
+  //   const rawData = window.atob(base64);
+  //   const outputArray = new Uint8Array(rawData.length);
+  //   for (let i = 0; i < rawData.length; ++i) {
+  //     outputArray[i] = rawData.charCodeAt(i);
+  //   }
+  //   return outputArray;
+  // }
 
   const renderNavbar = () => {
     if (routesNavbar(router)) {

@@ -125,7 +125,7 @@ function WorkerProfileCard({ name, services, score, avatar }) {
         <div className=" flex items-center w-30">
           <StarIcon color={"#00A0D5"} className="mr-1" />
           <p className="text-blackText">{score}</p>
-          <p className="text-blackText mr-2">{`(+50)`}</p>
+          <p className="text-blackText mr-2">{` (+50)`}</p>
 
           {fromFavorite && (
             <Link href={"/services/" + router.query.id}>

@@ -276,7 +276,7 @@ function WorkerProfileCard({ name, services, score, avatar, lastName }) {
         <div className="flex items-center">
           <StarIcon color={"#00A0D5"} className="mr-1" />
           <p className="text-blackText">{score}</p>
-          <p className="text-blackText">{`(50)`}</p>
+          <p className="text-blackText">{`(+50)`}</p>
         </div>
       </div>
     </div>

@@ -106,10 +106,36 @@ export default function App({ Component, pageProps }) {
   if (typeof window !== "undefined") {
     lang = window.navigator.userLanguage || window.navigator.language;
   }
+
+  // Lista de rutas que quieres indexar
+  const indexableRoutes = [
+    "/",
+    "/login",
+    "/register",
+    "/terms-of-service",
+    "/use-policy",
+  ];
+
+  // Lista de dominios que quieres indexar
+  const indexableDomains = [
+    "https://sostvl.com",
+    "https://business.sostvl.com",
+  ];
+
+  // Verifica si la ruta actual debe ser indexada
+  const shouldIndex = indexableRoutes.includes(router.pathname);
+
+  // Verifica si el dominio actual debe ser indexado
+  const shouldIndexDomain =
+    typeof window !== "undefined" &&
+    indexableDomains.includes(window.location.origin);
   return (
     <>
       <Head>
         {/* Agrega el logo en el encabezado */}
+        {!shouldIndex || !shouldIndexDomain ? (
+          <meta name="robots" content="noindex" />
+        ) : null}
         <link
           rel="icon"
           href={`data:image/svg+xml,${encodeURIComponent(svgString)}`}

@@ -23,7 +23,7 @@ function HostelProfileCard({ name, location, score, avatar }) {
         <div className="flex items-center ml-1">
           <StarIcon color={"#00A0D5"} />
           <p className="text-blackText ml-3">{score}</p>
-          <p className="text-blackText">{`(50)`}</p>
+          <p className="text-blackText">{` (+50)`}</p>
         </div>
       </div>
     </div>

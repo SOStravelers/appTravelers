@@ -10,7 +10,7 @@ export default function TermsOfService() {
     document.title = "Terms of service | SOS Travelers";
   }, []);
   return (
-    <section className=" py-32 mb-16  xl:px-30 xl:ml-32">
+    <section className=" py-24 mb-16 px-0   md:pl-64 md:pr-5">
       <h1 className="mb-2 px-2 font-bold text-2xl">
         SOS Travelers Terms of Service
       </h1>

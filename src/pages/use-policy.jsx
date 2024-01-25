@@ -11,7 +11,7 @@ export default function UsePolicy() {
   }, []);
 
   return (
-    <section className=" py-32 mb-16 xl:px-36 xl:ml-32">
+    <section className=" py-24 mb-16 px-0   md:pl-64 md:pr-5">
       <h1 className="mb-2 font-bold text-2xl">SOS Travelers Use Policy</h1>
       <p className="mb-5 text-sm">
         <b className="mr-1">Last update: </b> November 2023

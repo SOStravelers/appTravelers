@@ -95,6 +95,7 @@ export default function SupportPage() {
     isWorker
       ? "⁠Dúvidas gerais sobre os serviços SOS Travellers"
       : "⁠General inquiries about SOS Travelers services",
+    isWorker ? "⁠Excluir Conta" : "⁠Delete account",
   ].map((issue) => ({
     value: issue,
     label: issue,

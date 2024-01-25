@@ -108,10 +108,9 @@ export default function WorkerSettings() {
           setIsOn={setIsOnNotification}
         /> */}
       </div>
-      <div className="mt-10 flex flex-col">
-        {/* <OutlinedButton text="Save Changes" /> */}
+      {/*       <div className="mt-10 flex flex-col">
         <OutlinedButton text="Delete Account" error />
-      </div>
+      </div> */}
       <TextModal
         title={`Activate User Mode`}
         text={["Are you sure you want to activate user mode?"]}

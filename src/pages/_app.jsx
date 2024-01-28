@@ -89,13 +89,15 @@ export default function App({ Component, pageProps }) {
   //   return outputArray;
   // }
 
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag("js", new Date());
+  useEffect(() => {
+    const ga = new GA4React("G-RP0PLGCYV9"); // Reemplaza con tu ID de medición
 
-  gtag("config", "G-RP0PLGCYV9");
+    (async () => {
+      await ga.initialize();
+
+      ga.pageview(window.location.pathname + window.location.search);
+    })();
+  }, []);
 
   const renderNavbar = () => {
     if (routesNavbar(router)) {

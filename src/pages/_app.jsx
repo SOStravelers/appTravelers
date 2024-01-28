@@ -15,10 +15,10 @@ import { LogoSosRelleno } from "@/constants/icons";
 // Importa las funciones necesarias para renderizar el SVG a cadena
 import { renderToString } from "react-dom/server";
 import { routesNavbar, routesSidebar } from "@/utils/variables";
-
+import Script from "next/script";
+import GoogleAnalytics from "@bradgarropy/next-google-analytics";
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-  console.log("prueba");
   // useEffect(() => {
   //   console.log("buenas tardes");
   //   if ("serviceWorker" in navigator) {
@@ -89,16 +89,6 @@ export default function App({ Component, pageProps }) {
   //   return outputArray;
   // }
 
-  useEffect(() => {
-    const ga = new GA4React("G-RP0PLGCYV9"); // Reemplaza con tu ID de medición
-
-    (async () => {
-      await ga.initialize();
-
-      ga.pageview(window.location.pathname + window.location.search);
-    })();
-  }, []);
-
   const renderNavbar = () => {
     if (routesNavbar(router)) {
       return <Navbar />;
@@ -154,6 +144,22 @@ export default function App({ Component, pageProps }) {
         {/* Establece el título de la página */}
         <title>{router.asPath ? router.asPath : "SOS Travelers"}</title>
       </Head>
+      {/* Google Analytics */}
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-RP0PLGCYV9"
+      />
+      <Script strategy="afterInteractive" id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-RP0PLGCYV9');
+        `}
+      </Script>
+      <GoogleAnalytics measurementId="G-RP0PLGCYV9" />
+      {/* Layout */}
       <Layout lang={lang}>
         {renderSidebar()}
         <ToastContainer position="top-center" theme="dark" />

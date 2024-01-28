@@ -166,7 +166,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
               router.push("/");
               return;
             }
-            console.log("nada");
+            // console.log("nada");
             return;
           }
         }

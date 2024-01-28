@@ -69,7 +69,7 @@ function Calendar({ id }) {
     const data = localStorage.getItem("fromFavorite");
     const { serviceId, subServiceId, hostelId, workerId } = service;
     const worker = data ? workerId : null;
-    console.log("worker", worker, "fromFavorite", data);
+    // console.log("worker", worker, "fromFavorite", data);
     const response = await ScheduleService.getScheduleHostel(
       hostelId,
       serviceId,
@@ -77,7 +77,7 @@ function Calendar({ id }) {
       worker
     );
     if (response?.data) {
-      console.log("calendario", response.data);
+      // console.log("calendario", response.data);
       setSchedule(response.data);
       // setSelected(new Date());
     }
@@ -134,19 +134,8 @@ function Calendar({ id }) {
       let endTimeIso = end.toISOString();
       let endTime = end.format("HH:mm");
       const dateStr = moment(selectedDayWorker).format("YYYY-MM-DD");
-      console.log("el tiempo", time);
+      // console.log("el tiempo", time);
       setService({
-        date: dateStr,
-        startTime: {
-          isoTime: startTimeIso,
-          stringData: startTime,
-        },
-        endTime: {
-          isoTime: endTimeIso,
-          stringData: endTime,
-        },
-      });
-      console.log("el servicioWorker", {
         date: dateStr,
         startTime: {
           isoTime: startTimeIso,
@@ -161,19 +150,8 @@ function Calendar({ id }) {
       return;
     }
     const dateStr = moment(selectedDay).format("YYYY-MM-DD");
-    console.log("el tiempo", time);
+    // console.log("el tiempo", time);
     setService({
-      date: dateStr,
-      startTime: {
-        isoTime: time.startTimeIso,
-        stringData: time.startTime,
-      },
-      endTime: {
-        isoTime: time.endTimeIso,
-        stringData: time.endTime,
-      },
-    });
-    console.log("el servicioCliente", {
       date: dateStr,
       startTime: {
         isoTime: time.startTimeIso,
@@ -191,7 +169,6 @@ function Calendar({ id }) {
     } else if (fromFavorite === false) {
       router.push(`/workers-found/${id}`);
     }
-    console.log("service", service);
   };
   const comeBack = () => {
     router.back();

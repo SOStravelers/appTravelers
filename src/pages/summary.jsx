@@ -25,7 +25,6 @@ export default function Summary() {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-    console.log("el servicio", service, !service);
     if (!service) {
       router.push("/");
       return;
@@ -37,7 +36,6 @@ export default function Summary() {
   }, []);
 
   const getData = async () => {
-    console.log("perro");
     const { hostelId, hour, date, workerId, subServiceId } = service;
     setSubservice(subServiceId);
 

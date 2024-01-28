@@ -89,6 +89,14 @@ export default function App({ Component, pageProps }) {
   //   return outputArray;
   // }
 
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "G-RP0PLGCYV9");
+
   const renderNavbar = () => {
     if (routesNavbar(router)) {
       return <Navbar />;

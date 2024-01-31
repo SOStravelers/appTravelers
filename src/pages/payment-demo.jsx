@@ -20,12 +20,11 @@ export default function PaymentConfirmation() {
     <div className="flex flex-col max-w-lg items-center justify-center my-1 px-3 md:ml-80 min-h-screen md:pt-20">
       <div
         className="flex items-center justify-center"
-        style={{ marginTop: "-100px" }}
+        style={{ marginTop: "-130px" }}
       >
         <CompleteGirlIcon style={{ transform: "scale(0.7)" }} />
         <p className="text-blackText text-center w-3/4 text-lg">
-          Reserva concluída com sucesso. <br />
-          Este es el flujo demo para agendar un servicio
+          Reserva concluída com sucesso.
         </p>
       </div>
       <div
@@ -39,9 +38,9 @@ export default function PaymentConfirmation() {
       </div>
 
       <h2 className="text-blackText mt-2 mb-5">
-        Se você quiser fazer parte, deixe seus dados e entraremos em contato
+        Deixe seus dados e entraremos em contato
       </h2>
-      <div className="w-full md:w-80 ">
+      <div className="w-80  md:w-80 ">
         <ContactForm />
       </div>
       {/* <div className="mx-12 w-50 px-1" onClick={goTo}>

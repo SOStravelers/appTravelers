@@ -22,6 +22,7 @@ function ClientForm() {
 
   return (
     <Form
+      className="w-full flex flex-col"
       onSubmit={(values) => {
         registerClient(values);
       }}

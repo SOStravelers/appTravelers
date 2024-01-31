@@ -20,7 +20,7 @@ export default function PaymentConfirmation() {
     <div className="flex flex-col max-w-lg items-center justify-center my-1 px-3 md:ml-80 min-h-screen md:pt-20">
       <div
         className="flex items-center justify-center"
-        style={{ marginTop: "-105px" }}
+        style={{ marginTop: "-95px" }}
       >
         <CompleteGirlIcon />
         <p className="text-blackText text-center w-3/4 text-lg">
@@ -44,13 +44,13 @@ export default function PaymentConfirmation() {
       <div className="w-full md:w-80">
         <ContactForm />
       </div>
-      <div className="mx-12 w-50 px-1" onClick={goTo}>
+      {/* <div className="mx-12 w-50 px-1" onClick={goTo}>
         <SolidButton
           onClick={() => goTo()}
           text="Go to Home"
           color="blueBorder"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

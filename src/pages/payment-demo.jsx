@@ -37,24 +37,24 @@ export default function PaymentConfirmation() {
     <div className="flex flex-col max-w-lg items-center justify-center my-1 mb-10 px-3 md:ml-80 min-h-screen md:pt-20">
       <div
         className="flex items-center justify-center"
-        style={{ marginTop: "-110px" }}
+        style={{ marginTop: "-50px" }}
       >
         <CompleteGirlIcon style={{ transform: "scale(0.7)" }} />
-        <p className="text-blackText text-center w-3/4 text-lg">
+        <p className="text-blackText text-center w-3/4 text-md">
           Reserva concluída com sucesso.
         </p>
       </div>
       <div
-        style={{ marginTop: "-90px" }}
-        className="flex justify-center items-center bg-blueBorder text-white py-1  mx-4 rounded-md"
+        style={{ marginTop: "-100px" }}
+        className="flex justify-center items-center bg-blueBorder text-white py-1 px-1 mx-4 rounded-md"
       >
-        <p className="text-center">
+        <p className="text-center text-lg">
           Seja parceiro da Sos Travelers e ganhe até 20% por cada servicio em
           seu hostel!!
         </p>
       </div>
 
-      <h2 className="text-blackText mx-4 mt-2 mb-5">
+      <h2 className="text-blackText mx-4 mt-2 mb-3">
         Deixe seus dados e entraremos em contato
       </h2>
       <div className="w-80  md:w-80 ">

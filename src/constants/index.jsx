@@ -43,6 +43,7 @@ export const routeTitles = {
   "service-history": "Service History",
   settings: "Settings",
   notifications: "Notifications",
+  "payment-demo": "Reserva concluída",
   "my-services": "My Services",
   "personal-details": "Personal Details",
   "worker/profile-config": "My Worker Profile",

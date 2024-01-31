@@ -20,7 +20,7 @@ export default function PaymentConfirmation() {
     <div className="flex flex-col max-w-lg items-center justify-center my-1 px-3 md:ml-80 min-h-screen md:pt-20">
       <div
         className="flex items-center justify-center"
-        style={{ marginTop: "-130px" }}
+        style={{ marginTop: "-110px" }}
       >
         <CompleteGirlIcon style={{ transform: "scale(0.7)" }} />
         <p className="text-blackText text-center w-3/4 text-lg">
@@ -29,7 +29,7 @@ export default function PaymentConfirmation() {
       </div>
       <div
         style={{ marginTop: "-90px" }}
-        className="flex justify-center items-center bg-blueBorder text-white py-1  rounded-md"
+        className="flex justify-center items-center bg-blueBorder text-white py-1  mx-4 rounded-md"
       >
         <p className="text-center">
           Seja parceiro da Sos Travelers e ganhe até 20% por cada servicio em
@@ -37,7 +37,7 @@ export default function PaymentConfirmation() {
         </p>
       </div>
 
-      <h2 className="text-blackText mt-2 mb-5">
+      <h2 className="text-blackText mx-4 mt-2 mb-5">
         Deixe seus dados e entraremos em contato
       </h2>
       <div className="w-80  md:w-80 ">

@@ -195,4 +195,7 @@ export default class UserService {
   static async supportEmail(data) {
     return axios.post(`${this.suppUrl}/supportEmail`, data);
   }
+  static async sendRequest(data) {
+    return axios.post(`${this.suppUrl}/sendRequest`, data);
+  }
 }

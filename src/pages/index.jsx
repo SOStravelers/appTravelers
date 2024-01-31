@@ -111,6 +111,11 @@ export default function Home({}) {
 
   return (
     <main className="flex flex-col w-full bg-white py-16 lg:py-20 xl:py-20 px-3 md:pl-80">
+      {process.env.NEXT_PUBLIC_DEMO == "true" && (
+        <div className="flex justify-center mt-1 items-center bg-blueBorder max-w-lg text-white  rounded-md">
+          <p className="text-center">Esta é uma versão demo</p>
+        </div>
+      )}
       <div className="w-full max-w-lg ">
         <Swiper
           spaceBetween={10}

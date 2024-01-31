@@ -64,7 +64,10 @@ export default function Summary() {
   const hireNow = () => {
     localStorage.removeItem("editing");
     localStorage.removeItem("fromFavorite");
-    if (!loggedIn) router.push("login");
+    if (!loggedIn && process.env.NEXT_PUBLIC_DEMO != "true")
+      router.push("/login");
+    else if (process.env.NEXT_PUBLIC_DEMO === "true")
+      router.push("/payment-demo");
     else router.push("/payment");
   };
 

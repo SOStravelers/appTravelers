@@ -1,26 +1,23 @@
-import { useRouter } from "next/router";
-import { useStore } from "@/store";
-
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import UserService from "@/services/UserService";
 import { Field, Form } from "houseform";
 import { set, z } from "zod";
 import { toast } from "react-toastify";
-import {
-  UserIcon,
-  LockIcon,
-  MailIcon,
-  HomeIconOutlined,
-} from "@/constants/icons";
+import { UserIcon, MailIcon, HomeIconOutlined } from "@/constants/icons";
 
 function ClientForm() {
-  const { setService, service } = useStore();
-  const router = useRouter();
   const registerClient = async (values) => {
-    console.log("valores", values);
-    const response = await UserService.sendRequest(values);
-    toast.success("Solicitação enviada com sucesso");
+    try {
+      const response = await UserService.sendRequest(values);
+      if (response) {
+        toast.success("Solicitação enviada com sucesso");
+      } else {
+        toast.error("Erro ao enviar solicitação");
+      }
+    } catch (err) {
+      toast.error("Erro ao enviar solicitação");
+    }
   };
 
   return (

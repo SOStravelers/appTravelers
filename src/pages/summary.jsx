@@ -38,7 +38,7 @@ export default function Summary() {
   const getData = async () => {
     const { hostelId, hour, date, workerId, subServiceId } = service;
     setSubservice(subServiceId);
-
+    console.log("aa");
     if (!hostelId || !workerId) router.push("/");
     setIdHostel(hostelId);
     setHour(hour);

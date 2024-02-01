@@ -60,7 +60,7 @@ export default function PaymentConfirmation() {
       <div className="w-80  md:w-80 ">
         <ContactForm />
       </div>
-      <div className="flex- justify-start ml-8">
+      <div className=" ml-8">
         {/* Seccion 1 */}
         <div>
           <div
@@ -120,7 +120,7 @@ export default function PaymentConfirmation() {
             <div className="col-span-1">
               <ArrowUpIcon
                 color={"#5B78C7"}
-                className={`${isTextVisible1 ? "rotate-180" : "rotate-90"} `}
+                className={`${isTextVisible2 ? "rotate-180" : "rotate-90"} `}
               />
             </div>
           </div>

@@ -60,112 +60,135 @@ export default function PaymentConfirmation() {
       <div className="w-80  md:w-80 ">
         <ContactForm />
       </div>
+      <div className="flex- justify-start ml-8">
+        {/* Seccion 1 */}
+        <div>
+          <div
+            className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+            onClick={toggleText1}
+          >
+            <div className="col-span-4 text-left text-sm py-2 my-5">
+              <h1 className="text-lg">
+                O que a Sos Travelers faz pelo seu Hostel?
+              </h1>
+            </div>
+            <div className="col-span-1">
+              <ArrowUpIcon
+                color={"#5B78C7"}
+                className={`${isTextVisible1 ? "rotate-180" : "rotate-90"} `}
+              />
+            </div>
+          </div>
 
-      <div
-        className="text-sm text-black rounded-lg px-2 py-2 my-5 flex justify-between items-center cursor-pointer"
-        onClick={toggleText1}
-      >
-        <h1 className=" text-lg">O que a Sos Travelers faz pelo seu Hostel?</h1>
-        <ArrowUpIcon
-          color={"#5B78C7"}
-          className={`${
-            isTextVisible1 ? "rotate-180" : ""
-          } transform scale-200`}
-        />
+          <div
+            style={{ marginLeft: "-2px" }}
+            className={`overflow-hidden mx-10 transition-all duration-700 ease-in-out ${
+              isTextVisible1 ? "max-h-screen" : "max-h-0"
+            }`}
+          >
+            <p className=" font-bold">Variedade de serviços personalizados</p>
+            <p className=" mb-2">
+              De massagens relaxantes a cortes de cabelo e tatuagens, conectamos
+              seus hóspedes com uma ampla gama de serviços personalizados para
+              atender às suas necessidades.
+            </p>
+            <p className=" font-bold"> Plataforma fácil de user</p>
+            <p className=" mb-2">
+              Nosso aplicativo intuitivo facilita aos seus hóspedes descobrir e
+              reservar serviços com apenas alguns toques em seus dispositivos
+              móveis.
+            </p>
+            <p className=" font-bold"> Valor agregado para seus hóspedes</p>
+            <p className=" mb-2">
+              Com a Sos Travelers, seus hóspedes desfrutarão de uma experiência
+              além das comodidades tradicionais, tornando sua estadia algo
+              inesquecível.
+            </p>
+          </div>
+        </div>
+        {/* Seccion 2 */}
+        <div>
+          <div
+            className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+            onClick={toggleText2}
+          >
+            <div className="col-span-4 text-left text-sm py-2 my-5">
+              <h1 className="text-lg">
+                Como a Sos Travelers beneficia o seu Hostel?
+              </h1>
+            </div>
+            <div className="col-span-1">
+              <ArrowUpIcon
+                color={"#5B78C7"}
+                className={`${isTextVisible1 ? "rotate-180" : "rotate-90"} `}
+              />
+            </div>
+          </div>
+          <div
+            style={{ marginLeft: "-2px" }}
+            className={`overflow-hidden mx-10 transition-all duration-700 ease-in-out ${
+              isTextVisible2 ? "max-h-screen" : "max-h-0"
+            }`}
+          >
+            <p className=" font-bold "> Difenciação competitiva</p>
+            <p className=" mb-2">
+              Destaque-se oferecendo serviços inovadores e únicos que melhorarão
+              a reputação do seu hostel frente à concorrência.
+            </p>
+            <p className=" font-bold"> Geração de receita adicional</p>
+            <p className=" mb-2">
+              Obtenha receita extra por meio de comissões sobre transações
+              realizadas em nossa plataforma. Oferecemos 20% de cada serviço
+              realizado.
+            </p>
+            <p className=" font-bold "> Maior retensão de hóspedes</p>
+            <p className=" mb-2">
+              Fomentamos a lealdade de seus hóspedes ao proporcionar
+              experiências que superam suas expectativas, aumentando assim a
+              probabilidade de retorno.
+            </p>
+          </div>
+        </div>
+        {/* Seccion 3 */}
+        <div>
+          <div
+            className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+            onClick={toggleText3}
+          >
+            <div className="col-span-4 text-left text-sm py-2 my-5">
+              <h1 className="text-lg">Como Você Pode Começar?</h1>
+            </div>
+            <div className="col-span-1">
+              <ArrowUpIcon
+                color={"#5B78C7"}
+                className={`${isTextVisible3 ? "rotate-180" : "rotate-90"} `}
+              />
+            </div>
+          </div>
+          <div
+            style={{ marginLeft: "-2px" }}
+            className={`overflow-hidden mx-10 transition-all duration-700 ease-in-out ${
+              isTextVisible3 ? "max-h-screen" : "max-h-0"
+            }`}
+          >
+            <p className=" font-bold"> Registro Simples</p>
+            <p className=" mb-2">
+              Junte-se à Sos Travelers com um simples processo de registro para
+              hostels.
+            </p>
+            <p className=" font-bold"> Personalização de Serviços</p>
+            <p className=" mb-2">
+              Escolha os serviços que melhor se adequam às preferências e estilo
+              do seu hostel e fortaleça sua oferta. Aumente a satisfação de seus
+              hóspedes ao oferecer serviços exclusivos e personalizados por meio
+              da Sos Travelers, com controle total 24 horas. Com seu registro,
+              você poderá marcar seus dias e horários disponíveis, ver os
+              serviços agendados, as comissões geradas e obter informações sobre
+              nossos colaboradores.
+            </p>
+          </div>
+        </div>
       </div>
-
-      {isTextVisible1 && (
-        <p className="text-left mx-4">
-          <p className=" font-bold"> Variedade de serviços personalizados</p>
-          <p>
-            De massagens relaxantes a cortes de cabelo e tatuagens, conectamos
-            seus hóspedes com uma ampla gama de serviços personalizados para
-            atender às suas necessidades.
-          </p>
-          <p className=" font-bold"> Plataforma fácil de user</p>
-          <p>
-            Nosso aplicativo intuitivo facilita aos seus hóspedes descobrir e
-            reservar serviços com apenas alguns toques em seus dispositivos
-            móveis.
-          </p>
-          <p className=" font-bold"> Valor agregado para seus hóspedes</p>
-          <p>
-            Com a Sos Travelers, seus hóspedes desfrutarão de uma experiência
-            além das comodidades tradicionais, tornando sua estadia algo
-            inesquecível.
-          </p>
-        </p>
-      )}
-
-      <div
-        className="text-sm text-black rounded-lg px-2 py-2 my-5 flex justify-between items-center cursor-pointer"
-        onClick={toggleText2}
-      >
-        <h1 className="text-lg">
-          Como a Sos Travelers beneficia o seu Hostel?
-        </h1>
-        <ArrowUpIcon
-          color={"#5B78C7"}
-          className={`${
-            isTextVisible2 ? "rotate-180" : ""
-          } transform scale-200`}
-        />
-      </div>
-
-      {isTextVisible2 && (
-        <p className="text-left mx-4">
-          <p className=" font-bold"> Difenciação competitiva</p>
-          <p>
-            Destaque-se oferecendo serviços inovadores e únicos que melhorarão a
-            reputação do seu hostel frente à concorrência.
-          </p>
-          <p className=" font-bold"> Geração de receita adicional</p>
-          <p>
-            Obtenha receita extra por meio de comissões sobre transações
-            realizadas em nossa plataforma. Oferecemos 20% de cada serviço
-            realizado.
-          </p>
-          <p className=" font-bold"> Maior retensão de hóspedes</p>
-          <p>
-            Fomentamos a lealdade de seus hóspedes ao proporcionar experiências
-            que superam suas expectativas, aumentando assim a probabilidade de
-            retorno.
-          </p>
-        </p>
-      )}
-
-      <div
-        className="text-sm text-black rounded-lg px-2 py-2 my-5 flex justify-between items-center cursor-pointer"
-        onClick={toggleText3}
-      >
-        <h1 className="text-lg">Como Você Pode Começar?</h1>
-        <ArrowUpIcon
-          color={"#5B78C7"}
-          className={`${
-            isTextVisible3 ? "rotate-180" : ""
-          } transform scale-200`}
-        />
-      </div>
-
-      {isTextVisible3 && (
-        <p className="text-left mx-4">
-          <p className=" font-bold"> Registro Simples</p>
-          <p>
-            Junte-se à Sos Travelers com um simples processo de registro para
-            hostels.
-          </p>
-          <p className=" font-bold"> Personalização de Serviços</p>
-          <p>
-            Escolha os serviços que melhor se adequam às preferências e estilo
-            do seu hostel e fortaleça sua oferta. Aumente a satisfação de seus
-            hóspedes ao oferecer serviços exclusivos e personalizados por meio
-            da Sos Travelers, com controle total 24 horas. Com seu registro,
-            você poderá marcar seus dias e horários disponíveis, ver os serviços
-            agendados, as comissões geradas e obter informações sobre nossos
-            colaboradores.
-          </p>
-        </p>
-      )}
 
       <p className="text-left mt-2 mb-5 font-bold mx-4">Team Sos travelers</p>
 

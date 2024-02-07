@@ -4,8 +4,14 @@ import { useStore } from "@/store";
 import WorkerCardSumary from "@/components/utils/cards/WorkerCardSumary";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import SmallButton from "@/components/utils/buttons/SmallButton";
 import Link from "next/link";
-import { ClockIcon, ChangeIcon, CheckIcon } from "@/constants/icons";
+import {
+  ClockIcon,
+  ChangeIcon,
+  CheckIcon,
+  ArrowUpIcon,
+} from "@/constants/icons";
 import { fullName, getServiceNames, formatearFecha } from "@/utils/format";
 import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WorkerService";
@@ -15,7 +21,8 @@ export default function Summary() {
   const { isWorker } = useStore();
   const router = useRouter();
   const { loggedIn, service, setService } = useStore();
-
+  const [isTextVisible1, setIsTextVisible1] = useState(false);
+  const [isTextVisible2, setIsTextVisible2] = useState(false);
   const [theHour, setHour] = useState(null);
   const [theDate, setDate] = useState(null);
   const [IdHostel, setIdHostel] = useState(null);
@@ -61,6 +68,13 @@ export default function Summary() {
     });
   };
 
+  const toggleText1 = () => {
+    setIsTextVisible1(!isTextVisible1);
+  };
+  const toggleText2 = () => {
+    setIsTextVisible2(!isTextVisible2);
+  };
+
   const hireNow = () => {
     localStorage.removeItem("editing");
     localStorage.removeItem("fromFavorite");
@@ -89,6 +103,40 @@ export default function Summary() {
         linkSummary={`/select-hostel/${subServiceId}`}
         subserviceId={subServiceId}
       />
+      <div className="w-full max-w-lg">
+        <div
+          className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+          onClick={toggleText1}
+        >
+          <div className="col-span-4 text-left text-sm py-2 my-5">
+            <h1 className=" text-blackText font-semibold">
+              {isWorker ? "Informações de localização" : "Location information"}
+            </h1>
+          </div>
+          <div className="col-span-1 flex justify-end">
+            <ArrowUpIcon
+              color={"#00A0D5"}
+              className={`${isTextVisible1 ? "rotate-180" : "rotate-90"} `}
+            />
+          </div>
+        </div>
+
+        <div
+          style={{ marginLeft: "-2px" }}
+          className={`overflow-hidden mx-10 transition-all duration-700 ease-in-out ${
+            isTextVisible1 ? "max-h-screen" : "max-h-0"
+          }`}
+        >
+          <p className=" mb-2">
+            De massagens relaxantes a cortes de cabelo e tatuagens, conectamos
+            seus hóspedes com uma ampla gama de serviços personalizados para
+            atender às suas necessidades.
+          </p>
+          <div className="mb-2 flex justify-center">
+            <SmallButton text={isWorker ? "Veja no mapa" : "See on map"} />
+          </div>
+        </div>
+      </div>
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
       <h1 className="mt-2 text-grey text-sm text-center max-w-lg">
         Professional
@@ -120,6 +168,38 @@ export default function Summary() {
           </Link>
         </div>
       )}
+
+      <div className="w-full max-w-lg">
+        <div
+          className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+          onClick={toggleText2}
+        >
+          <div className="col-span-4 text-left text-sm py-2 my-5">
+            <h1 className=" text-blackText font-semibold">
+              {isWorker ? "Descrição do Serviço" : "Service description"}
+            </h1>
+          </div>
+          <div className="col-span-1 flex justify-end">
+            <ArrowUpIcon
+              color={"#00A0D5"}
+              className={`${isTextVisible2 ? "rotate-180" : "rotate-90"} `}
+            />
+          </div>
+        </div>
+
+        <div
+          style={{ marginLeft: "-2px" }}
+          className={`overflow-hidden mx-10 transition-all duration-700 ease-in-out ${
+            isTextVisible2 ? "max-h-screen" : "max-h-0"
+          }`}
+        >
+          <p className=" mb-2">
+            De massagens relaxantes a cortes de cabelo e tatuagens, conectamos
+            seus hóspedes com uma ampla gama de serviços personalizados para
+            atender às suas necessidades.
+          </p>
+        </div>
+      </div>
       <div className="flex items-center w-full max-w-lg my-2">
         {selected ? (
           <CheckIcon

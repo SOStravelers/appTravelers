@@ -103,6 +103,8 @@ export default function Summary() {
         linkSummary={`/select-hostel/${subServiceId}`}
         subserviceId={subServiceId}
       />
+      {/* Desplegable info hostel */}
+
       <div className="w-full max-w-lg">
         <div
           className="grid grid-cols-5 gap-4 items-center cursor-pointer"
@@ -120,20 +122,25 @@ export default function Summary() {
             />
           </div>
         </div>
-
         <div
           style={{ marginLeft: "-2px" }}
-          className={`overflow-hidden mx-10 transition-all duration-700 ease-in-out ${
+          className={`overflow-hidden mx-10 transition-all duration-500 ease-in-out ${
             isTextVisible1 ? "max-h-screen" : "max-h-0"
           }`}
         >
           <p className=" mb-2">
-            De massagens relaxantes a cortes de cabelo e tatuagens, conectamos
-            seus hóspedes com uma ampla gama de serviços personalizados para
-            atender às suas necessidades.
+            {isWorker
+              ? hostel?.businessData?.location?.details["pt"]
+              : hostel?.businessData?.location?.details["en"]}
           </p>
           <div className="mb-2 flex justify-center">
-            <SmallButton text={isWorker ? "Veja no mapa" : "See on map"} />
+            <a
+              href={hostel?.businessData?.location?.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SmallButton text={isWorker ? "Veja no mapa" : "See on map"} />
+            </a>
           </div>
         </div>
       </div>
@@ -189,14 +196,12 @@ export default function Summary() {
 
         <div
           style={{ marginLeft: "-2px" }}
-          className={`overflow-hidden mx-10 transition-all duration-700 ease-in-out ${
+          className={`overflow-hidden mx-10 transition-all duration-500 ease-in-out ${
             isTextVisible2 ? "max-h-screen" : "max-h-0"
           }`}
         >
           <p className=" mb-2">
-            De massagens relaxantes a cortes de cabelo e tatuagens, conectamos
-            seus hóspedes com uma ampla gama de serviços personalizados para
-            atender às suas necessidades.
+            {isWorker ? service.details["pt"] : service.details["en"]}
           </p>
         </div>
       </div>

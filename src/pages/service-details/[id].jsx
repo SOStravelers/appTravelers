@@ -4,9 +4,15 @@ import TextModal from "@/components/utils/modal/TextModal";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedChatButton from "@/components/utils/buttons/OutlinedChatButton";
 import ChatService from "@/services/ChatService";
+import SmallButton from "@/components/utils/buttons/SmallButton";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import WorkerCardSumary from "@/components/utils/cards/WorkerCardSumary";
-import { PinIcon, ClockIcon, CircleCheckIcon } from "@/constants/icons";
+import {
+  PinIcon,
+  ClockIcon,
+  CircleCheckIcon,
+  ArrowUpIcon,
+} from "@/constants/icons";
 import { useStore } from "@/store";
 import BookingService from "@/services/BookingService";
 import moment from "moment-timezone";
@@ -32,6 +38,8 @@ import {
 function ServiceHistory() {
   const router = useRouter();
   const { isWorker, user } = useStore();
+  const [isTextVisible1, setIsTextVisible1] = useState(false);
+  const [isTextVisible2, setIsTextVisible2] = useState(false);
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   const [openUserModal, setOpenUserModal] = useState(false);
   const [dataModal, setDataModal] = useState({}); // [title, text, buttonText]
@@ -59,6 +67,12 @@ function ServiceHistory() {
     } else {
       router.push("/");
     }
+  };
+  const toggleText1 = () => {
+    setIsTextVisible1(!isTextVisible1);
+  };
+  const toggleText2 = () => {
+    setIsTextVisible2(!isTextVisible2);
   };
   const getBooking = async () => {
     try {
@@ -334,6 +348,50 @@ function ServiceHistory() {
             subserviceId={booking?.subservice?._id}
             go={false}
           />
+
+          <div className="w-full max-w-lg">
+            <div
+              className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+              onClick={toggleText1}
+            >
+              <div className="col-span-4 text-left text-sm py-2 my-5">
+                <h1 className=" text-blackText font-semibold">
+                  {isWorker
+                    ? "Informações de localização"
+                    : "Location information"}
+                </h1>
+              </div>
+              <div className="col-span-1 flex justify-end">
+                <ArrowUpIcon
+                  color={"#00A0D5"}
+                  className={`${isTextVisible1 ? "rotate-180" : "rotate-90"} `}
+                />
+              </div>
+            </div>
+            <div
+              style={{ marginLeft: "-2px" }}
+              className={`overflow-hidden mx-10 transition-all duration-500 ease-in-out ${
+                isTextVisible1 ? "max-h-screen" : "max-h-0"
+              }`}
+            >
+              <p className=" mb-2">
+                {isWorker
+                  ? booking.businessUser?.businessData?.location?.details["pt"]
+                  : booking.businessUser?.businessData?.location?.details["en"]}
+              </p>
+              <div className="mb-2 flex justify-center">
+                <a
+                  href={booking.businessUser?.businessData?.location?.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SmallButton
+                    text={isWorker ? "Veja no mapa" : "See on map"}
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
           <hr className="w-full max-w-lg text-grey" />
           <div className="mt-2 flex justify-center max-w-lg">
             <p className="text-left font-semibold">
@@ -403,6 +461,38 @@ function ServiceHistory() {
                   booking?.startTime?.stringData + " hrs" || ""
                 }`}</p>
               </div>
+            </div>
+          </div>
+
+          <div className="w-full max-w-lg">
+            <div
+              className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+              onClick={toggleText2}
+            >
+              <div className="col-span-4 text-left text-sm py-2 my-5">
+                <h1 className=" text-blackText font-semibold">
+                  {isWorker ? "Descrição do Serviço" : "Service description"}
+                </h1>
+              </div>
+              <div className="col-span-1 flex justify-end">
+                <ArrowUpIcon
+                  color={"#00A0D5"}
+                  className={`${isTextVisible2 ? "rotate-180" : "rotate-90"} `}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{ marginLeft: "-2px" }}
+              className={`overflow-hidden mx-10 transition-all duration-500 ease-in-out ${
+                isTextVisible2 ? "max-h-screen" : "max-h-0"
+              }`}
+            >
+              <p className=" mb-2">
+                {isWorker
+                  ? booking.subservice.details["pt"]
+                  : booking.subservice.details["en"]}
+              </p>
             </div>
           </div>
           <hr className="w-full max-w-lg  text-grey" />

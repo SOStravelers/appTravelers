@@ -56,6 +56,7 @@ export default function Subservices() {
               <SubServiceCard
                 id={s._id}
                 duration={s.duration}
+                details={s.details}
                 price={s.price}
                 link={`/select-hostel/${s.id}`}
                 name={s.name}

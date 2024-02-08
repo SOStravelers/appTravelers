@@ -8,7 +8,7 @@ import {
   ManIcon,
 } from "@/constants/icons";
 
-function SubServiceCard({ id, link, img, price, name, duration }) {
+function SubServiceCard({ id, link, img, price, name, duration, details }) {
   const { setService } = useStore();
   const select = () => {
     setService({
@@ -16,6 +16,7 @@ function SubServiceCard({ id, link, img, price, name, duration }) {
       price: price,
       nameSubservice: name,
       duration: duration,
+      details: details,
     });
   };
   return (

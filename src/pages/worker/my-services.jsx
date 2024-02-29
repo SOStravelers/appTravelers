@@ -18,7 +18,6 @@ export default function MyServices() {
   const [isActiveInitial, setIsActiveInitial] = useState(null);
   const { isWorker } = useStore();
   const [user, setUser] = useState({});
-
   useEffect(() => {
     getData();
     getUserData();

@@ -129,9 +129,11 @@ export default function Summary() {
           }`}
         >
           <p className=" mb-2">
-            {isWorker
+            {isWorker && hostel?.businessData?.location?.details
               ? hostel?.businessData?.location?.details["pt"]
-              : hostel?.businessData?.location?.details["en"]}
+              : !isWorker && hostel?.businessData?.location?.details
+              ? hostel?.businessData?.location?.details["en"]
+              : "No details"}
           </p>
           <div className="mb-2 flex justify-center">
             <a

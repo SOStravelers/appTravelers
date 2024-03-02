@@ -33,7 +33,7 @@ export default class BookingService {
 
   static async getBookingsByMonth(date) {
     return axios.get(
-      `${this.baseUrl}/client/month?date=${date}&page=1&limit=10`,
+      `${this.baseUrl}/client/month?date=${date}&page=1&limit=100`,
       {
         headers: this.getHeaders(),
       }
@@ -42,7 +42,7 @@ export default class BookingService {
 
   static async getBookingsByDay(date) {
     return axios.get(
-      `${this.baseUrl}/client/day?date=${date}&page=1&limit=10`,
+      `${this.baseUrl}/client/day?date=${date}&page=1&limit=100`,
       {
         headers: this.getHeaders(),
       }
@@ -71,7 +71,7 @@ export default class BookingService {
 
   static async getBookingsByListWorker(date) {
     return axios.get(
-      `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=4`,
+      `${this.baseUrl}/worker/listdays?date=${date}&page=1&limit=100`,
       {
         headers: this.getHeaders(),
       }
@@ -80,7 +80,7 @@ export default class BookingService {
 
   static async getBookingsByListClient(date) {
     return axios.get(
-      `${this.baseUrl}/client/listdays?date=${date}&page=1&limit=4`,
+      `${this.baseUrl}/client/listdays?date=${date}&page=1&limit=100`,
       {
         headers: this.getHeaders(),
       }
@@ -95,7 +95,7 @@ export default class BookingService {
 
   static async getBookingsByMonthWorker(date) {
     return axios.get(
-      `${this.baseUrl}/worker/month?date=${date}&page=1&limit=10`,
+      `${this.baseUrl}/worker/month?date=${date}&page=1&limit=100`,
       {
         headers: this.getHeaders(),
       }
@@ -104,7 +104,7 @@ export default class BookingService {
 
   static async getBookingsByDayWorker(date) {
     return axios.get(
-      `${this.baseUrl}/worker/day?date=${date}&page=1&limit=10`,
+      `${this.baseUrl}/worker/day?date=${date}&page=1&limit=100`,
       {
         headers: this.getHeaders(),
       }

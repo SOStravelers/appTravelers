@@ -44,7 +44,7 @@ export default function PaymentConfirmation() {
   useEffect(() => {
     console.log("el servicio", service);
     const paymentIntent = router.query.payment_intent;
-    if (isWorker) {
+    if (isWorker || service.serviceId == "663039e1dbd84508c88f9074") {
       createBooking(null);
     } else if (paymentIntent && !initialized.current) {
       initialized.current = true;

@@ -376,8 +376,8 @@ function ServiceHistory() {
             >
               <p className=" mb-2">
                 {isWorker
-                  ? booking.businessUser?.businessData?.location?.details["pt"]
-                  : booking.businessUser?.businessData?.location?.details["en"]}
+                  ? booking.businessUser?.businessData?.details["pt"]
+                  : booking.businessUser?.businessData?.details["en"]}
               </p>
               <div className="mb-2 flex justify-center">
                 <a

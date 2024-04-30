@@ -47,7 +47,7 @@ export default function Payment() {
   }));
 
   const pay = async () => {
-    if (isWorker) {
+    if (isWorker || service.serviceId == "663039e1dbd84508c88f9074") {
       router.push("/payment-confirmation");
       return;
     }

@@ -12,13 +12,13 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 import { UserIcon, LockIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
-
+import languageData from "@/language/login.json";
 import Cookies from "js-cookie";
 import { set } from "date-fns";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
-  const { setUser, setLoggedIn, service, setWorker } = useStore();
+  const { setUser, setLoggedIn, service, setWorker, language } = useStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const login = async (values) => {
@@ -124,7 +124,7 @@ function LoginForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Email addres"
+                    placeholder={languageData.form.email[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
@@ -149,7 +149,7 @@ function LoginForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Password"
+                    placeholder={languageData.form.password[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
@@ -167,7 +167,7 @@ function LoginForm() {
           </Field>
           <Link href="/forgot-password">
             <p className="text-blackText mt-1 mb-2 text-right">
-              Forgot password?
+              {languageData.form.forgotPass[language]}
             </p>
           </Link>
           {loading ? (
@@ -181,7 +181,10 @@ function LoginForm() {
             </div>
           ) : (
             <>
-              <OutlinedButton text="Login" disabled={!isValid} />
+              <OutlinedButton
+                text={languageData.form.emailButton[language]}
+                disabled={!isValid}
+              />
 
               <GoogleButton />
             </>

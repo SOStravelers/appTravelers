@@ -1,0 +1,148 @@
+{
+  "login": {
+    "title": {
+      "en": "WELCOME BACK",
+      "es": "¡Qué bueno verte de nuevo!",
+      "fr": "Content de te revoir !",
+      "de": "Schön, dich wiederzusehen! ",
+      "pt": "Bem-vindo de volta"
+    },
+    "subtitle": {
+      "en": "Get back to account",
+      "es": "Accede a tu cuenta",
+      "fr": "Accédez à votre compte",
+      "de": "Greife auf dein Konto zu",
+      "pt": "Acesse sua conta"
+    },
+    "new": {
+      "en": "Are you new?",
+      "es": "¿Eres nuevo?",
+      "fr": "Êtes-vous nouveau ?",
+      "de": "Bist du neu??",
+      "pt": "Você é novo?"
+    },
+    "registerHere": {
+      "en": "Register Here!",
+      "es": "¡Regístrate Aquí!",
+      "fr": "Inscrivez-vous ici !",
+      "de": "Registriere dich hier!",
+      "pt": "Cadastre-se aqui!"
+    },
+    "skipNow": {
+      "en": "Register Here!",
+      "es": "Omitir por ahora",
+      "fr": "Passer pour le moment",
+      "de": "Für jetzt überspringen",
+      "pt": "Pular por enquanto"
+    },
+    "byjoining": {
+      "en": "By joining, you agree to our",
+      "es": "Al unirte, aceptas nuestros",
+      "fr": "En rejoignant, vous acceptez nos",
+      "de": "Durch den Beitritt akzeptieren Sie unsere",
+      "pt": "Ao se juntar, você concorda com os nossos"
+    },
+    "terms": {
+      "en": "Terms of Service",
+      "es": "Términos de Servicio",
+      "fr": "Conditions de Service",
+      "de": "Nutzungsbedingungen",
+      "pt": "Termos de Serviço"
+    },
+    "our": {
+      "en": "and our",
+      "es": "y nuestra",
+      "fr": "et notre",
+      "de": "und unsere",
+      "pt": "e com a nossa"
+    },
+    "policy": {
+      "en": "Use Policy",
+      "es": "Política de Uso",
+      "fr": "Politique d'Utilisation",
+      "de": "Nutzungsbedingungen",
+      "pt": "Política de Uso"
+    }
+  },
+  "form": {
+    "email": {
+      "en": "Email addres",
+      "es": "Correo electrónico",
+      "fr": "Adresse e-mail",
+      "de": "E-Mail-Adresse",
+      "pt": "Endereço de e-mail"
+    },
+    "password": {
+      "en": "Password",
+      "es": "Contraseña",
+      "fr": "Mot de passe",
+      "de": "Passwort",
+      "pt": "Senha"
+    },
+    "confirmPass": {
+      "en": "Confirm Password",
+      "es": "Confirmar Contraseña",
+      "fr": "Confirmer Mot de passe",
+      "de": "Passwort bestätigen",
+      "pt": "Confirmar Senha"
+    },
+    "forgotPass": {
+      "en": " Forgot password?",
+      "es": "¿Olvidaste tu contraseña?",
+      "fr": "Mot de passe oublié?",
+      "de": "Passwort vergessen?",
+      "pt": "Esqueceu a senha?"
+    },
+    "emailButton": {
+      "en": "Login",
+      "es": "Iniciar Sesión",
+      "fr": "Se connecter",
+      "de": "Einloggen",
+      "pt": "Entrar"
+    },
+    "registerButton": {
+      "en": "Login",
+      "es": "Iniciar Sesión",
+      "fr": "Se connecter",
+      "de": "Einloggen",
+      "pt": "Entrar"
+    },
+    "fullName": {
+      "en": "Full name",
+      "es": "Nombre completo",
+      "fr": "Nom complet",
+      "de": "Vollständiger Name",
+      "pt": "Nome completo"
+    }
+  },
+  "register": {
+    "title": {
+      "en": "Register",
+      "es": "Registrarse",
+      "fr": "S'inscrire",
+      "de": "Registrieren",
+      "pt": "Cadastrar-se"
+    },
+    "subtitle": {
+      "en": "Fill the following details",
+      "es": "Completa los siguientes datos",
+      "fr": "Remplissez les détails suivants",
+      "de": "Füllen Sie die folgenden Details aus",
+      "pt": "Preencha os dados seguintes"
+    },
+    "login": {
+      "en": "Login",
+      "es": "Iniciar Sesión",
+      "fr": "Se connecter",
+      "de": "Einloggen",
+      "pt": "Entrar"
+    },
+    "account": {
+      "en": "You have an account?",
+      "es": "¿Tienes una cuenta?",
+      "fr": "Vous avez un compte ?",
+      "de": "Hast du ein Konto?",
+      "pt": "Você tem uma conta?"
+    }
+  }
+}

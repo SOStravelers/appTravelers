@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Field, Form } from "houseform";
 import { z } from "zod";
 import { toast } from "react-toastify";
-
+import languageData from "@/language/login.json";
 import UserService from "@/services/UserService.js";
 
 import Cookies from "js-cookie";
@@ -16,7 +16,7 @@ import { useStore } from "@/store";
 import { set } from "date-fns";
 
 function RegisterForm() {
-  const { setUser, setLoggedIn, service, setRegister } = useStore();
+  const { setUser, setLoggedIn, service, setRegister, language } = useStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const register = async (values) => {
@@ -86,7 +86,7 @@ function RegisterForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Full Name"
+                    placeholder={languageData.form.fullName[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
@@ -108,7 +108,7 @@ function RegisterForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Email Address"
+                    placeholder={languageData.form.email[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
@@ -136,7 +136,7 @@ function RegisterForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Password"
+                    placeholder={languageData.form.password[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
@@ -166,7 +166,7 @@ function RegisterForm() {
               return (
                 <div>
                   <OutlinedInput
-                    placeholder="Confirm Password"
+                    placeholder={languageData.form.confirmPass[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
@@ -183,7 +183,7 @@ function RegisterForm() {
           </Field>
           <Link href="/">
             <p className="text-blackText mt-1 mb-2 text-right">
-              Forgot password?
+              {languageData.form.forgotPass[language]}
             </p>
           </Link>
           {loading ? (
@@ -197,7 +197,10 @@ function RegisterForm() {
             </div>
           ) : (
             <>
-              <OutlinedButton text="Register" disabled={!isValid} />
+              <OutlinedButton
+                text={languageData.register.title[language]}
+                disabled={!isValid}
+              />
               <GoogleButton />
             </>
           )}

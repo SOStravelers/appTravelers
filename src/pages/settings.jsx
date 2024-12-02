@@ -117,8 +117,8 @@ export default function Settings() {
 
       <Link href="/support" className="block">
         <OptionCard
-          title="Support"
-          subtitle="Contact us"
+          title={languageData.support.title[language]}
+          subtitle={languageData.support.body[language]}
           icon={MailIcon}
         ></OptionCard>
       </Link>

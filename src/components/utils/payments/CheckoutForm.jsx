@@ -10,13 +10,14 @@ import {
 } from "@stripe/react-stripe-js";
 import SolidButton from "../buttons/SolidButton";
 import { toast } from "react-toastify";
+import languageData from "@/language/payment.json";
 
 export default function CheckoutForm(clientSecret) {
   const secretClient = clientSecret.clientSecret;
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
-  const { service } = useStore();
+  const { service, language } = useStore();
   const [price, setPrice] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -63,31 +64,32 @@ export default function CheckoutForm(clientSecret) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="mb-2 text-center text-sm">
-        No stress! We charge your card only after a successful service. Your
-        satisfaction is guaranteed. Relax, and let us handle it. Cheers to
-        success!
+      <p className="mb-6 text-center text-sm">
+        {languageData.noStress[language]}
       </p>
-      <div className="mb-2 text-center  text-md">Billing Details</div>
+      <div className="mb-2 text-center  text-md">
+        {languageData.billingDetails[language]}
+      </div>
       <LinkAuthenticationElement />
       {/* <AddressElement
         options={{
           mode: "shipping",
         }}
-      /> */}
-      <div className="mt-4 text-center mb-2 text-md">Payment Method</div>
-
+      /> */}{" "}
+      <div className="mt-4 text-center mb-2 text-md">
+        {languageData.paymentMethod[language]}
+      </div>
       <PaymentElement />
       <SolidButton
         text={
           isProcessing
             ? "Processing..."
             : service.currency == "BRL"
-            ? "Book now " + "R$ " + price
+            ? languageData.bookNow[language] + " R$ " + price
             : service.currency == "USD"
-            ? "Book now " + "USD " + price
+            ? languageData.bookNow[language] + " USD " + price
             : service.currency == "EUR"
-            ? "Book now " + price + " EUR"
+            ? languageData.bookNow[language] + price + " EUR"
             : "null"
         }
         disabled={!stripe || isProcessing}

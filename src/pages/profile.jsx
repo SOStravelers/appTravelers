@@ -5,13 +5,14 @@ import { useStore } from "@/store";
 import { useEffect } from "react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { signOut } from "next-auth/react";
+import languageData from "@/language/routeTitles.json";
 
 export default function Profile({ user }) {
   useEffect(() => {
     document.title = "Profile | SOS Travelers";
   }, []);
   const router = useRouter();
-  const { setUser, setLoggedIn, setWorker } = useStore();
+  const { setUser, setLoggedIn, setWorker, language } = useStore();
   useEffect(() => {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
@@ -35,15 +36,19 @@ export default function Profile({ user }) {
   return (
     <div className="bg-white h-full flex flex-col w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       <OutlinedButton
-        text="Personal Details"
+        text={languageData.personalDetails[language]}
         onClick={() => router.push("/personal-details")}
       />
       <OutlinedButton
-        text="Settings"
+        text={languageData.settings[language]}
         onClick={() => router.push("/settings")}
       />
       {/* <OutlinedButton text="Invite Friends" /> */}
-      <OutlinedButton secondary text="Log Out" onClick={logout} />
+      <OutlinedButton
+        secondary
+        text={languageData.logOut[language]}
+        onClick={logout}
+      />
     </div>
   );
 }

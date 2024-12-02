@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useStore } from "@/store";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
-import { routeTitles } from "@/constants/index";
+import { useDynamicRouteTitles } from "@/constants/index";
 import TextModal from "@/components/utils/modal/TextModal";
 import { Howl } from "howler";
 const sound = new Howl({
@@ -21,6 +21,7 @@ function TopBarSubMenu() {
   const { isWorker } = useStore();
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   var userId = Cookies.get("auth.user_id");
+  const routeTitles = useDynamicRouteTitles();
   useEffect(() => {
     if (isWorker) {
       console.log("conect socket worker");
@@ -54,9 +55,14 @@ function TopBarSubMenu() {
     setOpenWorkerModal(false);
   };
   const handleUrl = () => {
+    if (!routeTitles || Object.keys(routeTitles).length === 0) {
+      console.error("routeTitles no está definido o está vacío.");
+      return;
+    }
+
     Object.keys(routeTitles).forEach((route) => {
       if (actualURL.includes(route)) {
-        setTitulo(routeTitles[route]);
+        setTitulo(routeTitles[route]); // Establece el título basado en la URL actual
       }
     });
   };

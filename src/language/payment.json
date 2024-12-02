@@ -1,0 +1,51 @@
+{
+  "totalService": {
+    "en": "Total service",
+    "es": "Servicio total",
+    "fr": "Service total",
+    "de": "Gesamtservice",
+    "pt": "Serviço total"
+  },
+  "creditCard": {
+    "en": "Debit / Credit Card",
+    "es": "Tarjeta de débito / crédito",
+    "fr": "Carte de débit / crédit",
+    "de": "Debit-/Kreditkarte",
+    "pt": "Cartão de débito / crédito"
+  },
+  "continueButton": {
+    "en": "Continue",
+    "es": "Continuar",
+    "fr": "Continuer",
+    "de": "Weiter",
+    "pt": "Continuar"
+  },
+  "billingDetails": {
+    "en": "Billing Details",
+    "es": "Detalles de facturación",
+    "fr": "Détails de facturation",
+    "de": "Rechnungsdetails",
+    "pt": "Detalhes de faturamento"
+  },
+  "noStress": {
+    "en": " No stress! We charge your card only after a successful service. Your satisfaction is guaranteed. Relax, and let us handle it. Cheers to success!",
+    "es": "¡Sin estrés! Solo cobramos tu tarjeta después de un servicio exitoso. Tu satisfacción está garantizada. Relájate y déjanos encargarnos de todo. ¡Por el éxito!",
+    "fr": "Pas de stress ! Nous débitons votre carte uniquement après un service réussi. Votre satisfaction est garantie. Détendez-vous et laissez-nous faire. À votre succès !",
+    "de": "Kein Stress! Wir belasten Ihre Karte erst nach einem erfolgreichen Service. Ihre Zufriedenheit ist garantiert. Entspannen Sie sich und überlassen Sie uns den Rest. Auf den Erfolg!",
+    "pt": "Sem estresse! Só cobramos no seu cartão após um serviço bem-sucedido. Sua satisfação é garantida. Relaxe e deixe conosco. Um brinde ao sucesso!"
+  },
+  "paymentMethod": {
+    "en": "Payment Method",
+    "es": "Método de pago",
+    "fr": "Méthode de paiement",
+    "de": "Zahlungsmethode",
+    "pt": "Método de pagamento"
+  },
+  "bookNow": {
+    "en": "Book now",
+    "es": "Agenda ahora",
+    "fr": "Réservez maintenant",
+    "de": "Jetzt buchen",
+    "pt": "Agende agora"
+  }
+}

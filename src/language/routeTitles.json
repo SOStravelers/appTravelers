@@ -1,0 +1,128 @@
+{
+  "selectSubservices": {
+    "en": "Select Subservices",
+    "es": "Seleccionar subservicios",
+    "fr": "Sélectionner les sous-services",
+    "de": "Unterdienste auswählen",
+    "pt": "Selecionar subserviços"
+  },
+  "selectPlace": {
+    "en": "Select Place",
+    "es": "Seleccionar lugar",
+    "fr": "Sélectionner le lieu",
+    "de": "Ort auswählen",
+    "pt": "Selecionar lugar"
+  },
+  "reservations": {
+    "en": "Reservation",
+    "es": "Reservación",
+    "fr": "Réservation",
+    "de": "Reservierung",
+    "pt": "Reserva"
+  },
+  "partnersFound": {
+    "en": "Partners Found",
+    "es": "Socios encontrados",
+    "fr": "Partenaires trouvés",
+    "de": "Gefundene Partner",
+    "pt": "Parceiros encontrados"
+  },
+  "summary": {
+    "en": "Summary",
+    "es": "Resumen",
+    "fr": "Résumé",
+    "de": "Zusammenfassung",
+    "pt": "Resumo"
+  },
+  "paymentMethods": {
+    "en": "Payment Method",
+    "es": "Método de pago",
+    "fr": "Méthode de paiement",
+    "de": "Zahlungsmethode",
+    "pt": "Método de pagamento"
+  },
+  "serviceHistory": {
+    "en": "Service History",
+    "es": "Historial de servicios",
+    "fr": "Historique des services",
+    "de": "Servicehistorie",
+    "pt": "Histórico de serviços"
+  },
+  "settings": {
+    "en": "Settings",
+    "es": "Configuraciones",
+    "fr": "Paramètres",
+    "de": "Einstellungen",
+    "pt": "Configurações"
+  },
+  "notifications": {
+    "en": "Notifications",
+    "es": "Notificaciones",
+    "fr": "Notifications",
+    "de": "Benachrichtigungen",
+    "pt": "Notificações"
+  },
+  "myServices": {
+    "en": "My Services",
+    "es": "Mis servicios",
+    "fr": "Mes services",
+    "de": "Meine Dienstleistungen",
+    "pt": "Meus serviços"
+  },
+  "personalDetails": {
+    "en": "Personal Details",
+    "es": "Detalles personales",
+    "fr": "Détails personnels",
+    "de": "Persönliche Details",
+    "pt": "Detalhes pessoais"
+  },
+  "mySchedule": {
+    "en": "My Schedule",
+    "es": "Mi horario",
+    "fr": "Mon emploi du temps",
+    "de": "Mein Zeitplan",
+    "pt": "Minha agenda"
+  },
+  "aboutMe": {
+    "en": "About Me",
+    "es": "Sobre mí",
+    "fr": "À propos de moi",
+    "de": "Über mich",
+    "pt": "Sobre mim"
+  },
+  "termsOfService": {
+    "en": "Terms of Service",
+    "es": "Términos de servicio",
+    "fr": "Conditions de service",
+    "de": "Nutzungsbedingungen",
+    "pt": "Termos de serviço"
+  },
+  "usePolicy": {
+    "en": "Use Policy",
+    "es": "Política de uso",
+    "fr": "Politique d'utilisation",
+    "de": "Nutzungsrichtlinien",
+    "pt": "Política de uso"
+  },
+  "bookingDetails": {
+    "en": "Booking Details",
+    "es": "Detalles de la reserva",
+    "fr": "Détails de la réservation",
+    "de": "Reservierungsdetails",
+    "pt": "Detalhes da reserva"
+  },
+  "chat": {
+    "en": "Chat",
+    "es": "Chat",
+    "fr": "Chat",
+    "de": "Chat",
+    "pt": "Chat"
+  },
+  "logOut": {
+    "en": "Log Out",
+    "es": "Cerrar sesión",
+    "fr": "Se déconnecter",
+    "de": "Abmelden",
+    "pt": "Sair"
+  }
+}

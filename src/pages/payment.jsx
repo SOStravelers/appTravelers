@@ -5,9 +5,10 @@ import { MoneyIcon, CheckIcon } from "@/constants/icons";
 import Image from "next/image";
 import { useStore } from "@/store";
 import { toast } from "react-toastify";
+import languageData from "@/language/payment.json";
 
 export default function Payment() {
-  const { service, setService, isWorker } = useStore();
+  const { service, setService, isWorker, language } = useStore();
   const [paymentType, setPaymentType] = useState("stripe");
   const router = useRouter();
   const [price, setPrice] = useState(service.price[0].finalCost);
@@ -106,7 +107,7 @@ export default function Payment() {
 
         <div>
           <p className="text-blackBlue font-semibold text-xl">
-            Total service:
+            {languageData.totalService[language]}:
             {service.currency == "BRL"
               ? "  R$ " + price
               : service.currency == "USD"
@@ -131,7 +132,7 @@ export default function Payment() {
                 height={50}
                 alt="Credit Card Logo"
               />
-              <p className="ml-2">Debit / Credit Card</p>
+              <p className="ml-2"> {languageData.creditCard[language]}</p>
             </div>
 
             {/* {(paymentType === "stripe") & <CheckIcon />} */}
@@ -204,7 +205,7 @@ export default function Payment() {
       </div>
       <OutlinedButton
         // disabled={paymentType == null || isWorker}
-        text={isWorker ? "confirmar reserva em dinheiro" : "Continue"}
+        text={languageData.continueButton[language]}
         color="blueBorder"
         onClick={pay}
       />

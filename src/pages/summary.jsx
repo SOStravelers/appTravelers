@@ -258,7 +258,7 @@ export default function Summary() {
         </p>
       </div>
       <OutlinedButton
-        disabled={!selected && !service?.price[0]?.finalCost}
+        disabled={!selected || !service?.price[0]?.finalCost}
         text={languageData.bookNow[language]}
         onClick={hireNow}
       />

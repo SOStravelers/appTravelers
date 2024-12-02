@@ -3,14 +3,17 @@ import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import TextModal from "@/components/utils/modal/TextModal";
+import Select from "react-select";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";
 import WorkerService from "@/services/WorkerService";
 import Link from "next/link";
+import languageData from "@/language/settings.json";
+import Cookies from "js-cookie";
 export default function Settings() {
-  const { setWorker, isWorker, setService } = useStore();
+  const { setWorker, isWorker, setService, language, setLanguage } = useStore();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
@@ -19,6 +22,14 @@ export default function Settings() {
   const [openNotification, setOpenNotification] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOnNotification, setIsOnNotification] = useState(true);
+  const [selection, setSelection] = useState({});
+  const optionsSupport = [
+    { value: "en", label: languageData.language[language]["en"] },
+    { value: "es", label: languageData.language[language]["es"] },
+    { value: "fr", label: languageData.language[language]["fr"] },
+    { value: "de", label: languageData.language[language]["de"] },
+    { value: "pt", label: languageData.language[language]["pt"] },
+  ];
   useEffect(() => {
     setService({});
     document.title = "Settings | SOS Travelers";
@@ -26,6 +37,22 @@ export default function Settings() {
   useEffect(() => {
     setIsOnNotification(true);
   }, []);
+
+  useEffect(() => {
+    setSelection({
+      value: language,
+      label: languageData.language[language][language],
+    });
+  }, []);
+
+  const setValue = (valor) => {
+    setLanguage(valor.value);
+    Cookies.set("language", valor.value);
+    setSelection({
+      value: valor.value,
+      label: languageData.language[valor.value][valor.value],
+    });
+  };
 
   const workerModeOn = () => {
     console.log("dialogo worker");
@@ -95,6 +122,48 @@ export default function Settings() {
           icon={MailIcon}
         ></OptionCard>
       </Link>
+
+      <h1 className={`text-black text-sm font-semibold mt-3 mb-2 `}>
+        {languageData.titleLanguage[language]}
+      </h1>
+      <Select
+        className="w-full max-w-lg rounded-xl my-1 mb-60"
+        options={optionsSupport}
+        value={selection}
+        // onBlur={() =>
+        //   setSelection({
+        //     value: "en",
+        //     label: "English",
+        //   })
+        // }
+        onChange={(selectedOption) => setValue(selectedOption)}
+        isSearchable={false}
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            borderColor: "#00A0D5",
+            borderRadius: "10px",
+            boxShadow: "none",
+            "&:hover": {
+              borderColor: "#00A0D5",
+            },
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            color: state.isSelected ? "#fff" : "#000",
+            backgroundColor: state.isSelected
+              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
+              : state.isFocused
+              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
+              : "#fff", // Fondo blanco por defecto
+            borderRadius: "5px",
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
+            },
+          }),
+        }}
+      />
 
       <div className="flex flex-col my-4">
         {(process.env.NEXT_PUBLIC_NODE_ENV === "Development" ||

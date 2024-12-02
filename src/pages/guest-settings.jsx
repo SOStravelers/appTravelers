@@ -51,7 +51,6 @@ export default function GuestSettings() {
     { value: "de", label: languageData.language[language]["de"] },
     { value: "pt", label: languageData.language[language]["pt"] },
   ];
-  console.log(optionsSupport);
 
   return (
     <div className="flex flex-col py-24 px-10 md:pl-80">

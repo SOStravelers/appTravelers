@@ -1,0 +1,179 @@
+{
+  "title": {
+    "en": "Support: How can we help you?",
+    "es": "Soporte: ¿Cómo podemos ayudarte?",
+    "fr": "Support : Comment pouvons-nous vous aider ?",
+    "de": "Support: Wie können wir Ihnen helfen?",
+    "pt": "Suporte: Como podemos ajudar você?"
+  },
+  "fullName": {
+    "en": "Full Name",
+    "es": "Nombre completo",
+    "fr": "Nom complet",
+    "de": "Vollständiger Name",
+    "pt": "Nome completo"
+  },
+  "enterName": {
+    "en": "Enter Name",
+    "es": "Ingrese el nombre",
+    "fr": "Entrez le nom",
+    "de": "Name eingeben",
+    "pt": "Insira o nome"
+  },
+  "invalidName": {
+    "en": "Invalid Name",
+    "es": "Nombre inválido",
+    "fr": "Nom invalide",
+    "de": "Ungültiger Name",
+    "pt": "Nome inválido"
+  },
+  "emailAddress": {
+    "en": "Email Address",
+    "es": "Dirección de correo electrónico",
+    "fr": "Adresse e-mail",
+    "de": "E-Mail-Adresse",
+    "pt": "Endereço de e-mail"
+  },
+  "enterEmail": {
+    "en": "Enter email",
+    "es": "Ingrese el correo electrónico",
+    "fr": "Entrez l'e-mail",
+    "de": "E-Mail eingeben",
+    "pt": "Insira o e-mail"
+  },
+  "invalidEmail": {
+    "en": "Invalid email",
+    "es": "Correo electrónico inválido",
+    "fr": "E-mail invalide",
+    "de": "Ungültige E-Mail",
+    "pt": "E-mail inválido"
+  },
+  "chooseSubject": {
+    "en": "Choose a subject",
+    "es": "Elija un asunto",
+    "fr": "Choisissez un sujet",
+    "de": "Wählen Sie ein Thema",
+    "pt": "Escolha um assunto"
+  },
+  "mustChooseOption": {
+    "en": "You must choose an option",
+    "es": "Debe elegir una opción",
+    "fr": "Vous devez choisir une option",
+    "de": "Sie müssen eine Option auswählen",
+    "pt": "Você deve escolher uma opção"
+  },
+  "message": {
+    "en": "Message",
+    "es": "Mensaje",
+    "fr": "Message",
+    "de": "Nachricht",
+    "pt": "Mensagem"
+  },
+  "mustEnterMessage": {
+    "en": "You must enter a message",
+    "es": "Debe ingresar un mensaje",
+    "fr": "Vous devez entrer un message",
+    "de": "Sie müssen eine Nachricht eingeben",
+    "pt": "Você deve inserir uma mensagem"
+  },
+  "enterMessage": {
+    "en": "Enter Message",
+    "es": "Ingrese el mensaje",
+    "fr": "Entrez le message",
+    "de": "Nachricht eingeben",
+    "pt": "Insira a mensagem"
+  },
+  "sendMessage": {
+    "en": "Send Message",
+    "es": "Enviar mensaje",
+    "fr": "Envoyer le message",
+    "de": "Nachricht senden",
+    "pt": "Enviar mensagem"
+  },
+  "messageReceived": {
+    "en": "We have received your message!!. We will reply to you as soon as possible",
+    "es": "¡Hemos recibido su mensaje! Le responderemos lo antes posible",
+    "fr": "Nous avons reçu votre message !! Nous vous répondrons dès que possible",
+    "de": "Wir haben Ihre Nachricht erhalten!! Wir werden Ihnen so schnell wie möglich antworten",
+    "pt": "Recebemos sua mensagem!! Responderemos o mais breve possível"
+  },
+  "issues": [
+    {
+      "en": "Issues with canceling a reservation",
+      "es": "Problemas para cancelar una reserva",
+      "fr": "Problèmes pour annuler une réservation",
+      "de": "Probleme bei der Stornierung einer Reservierung",
+      "pt": "Problemas ao cancelar uma reserva"
+    },
+    {
+      "en": "Payment or payment method issue",
+      "es": "Problemas con el pago o el método de pago",
+      "fr": "Problème de paiement ou de méthode de paiement",
+      "de": "Probleme mit der Zahlung oder Zahlungsmethode",
+      "pt": "Problemas com pagamento ou método de pagamento"
+    },
+    {
+      "en": "Reporting abuse or misconduct by a partner",
+      "es": "Reportar abuso o mala conducta de un socio",
+      "fr": "Signaler un abus ou une mauvaise conduite d'un partenaire",
+      "de": "Missbrauch oder Fehlverhalten eines Partners melden",
+      "pt": "Denunciar abuso ou má conduta de um parceiro"
+    },
+    {
+      "en": "Reporting abuse or misconduct by the facility",
+      "es": "Reportar abuso o mala conducta del establecimiento",
+      "fr": "Signaler un abus ou une mauvaise conduite de l'établissement",
+      "de": "Missbrauch oder Fehlverhalten der Einrichtung melden",
+      "pt": "Denunciar abuso ou má conduta do estabelecimento"
+    },
+    {
+      "en": "Interested in working with SOS Traveler",
+      "es": "Interesado en trabajar con SOS Traveler",
+      "fr": "Intéressé à travailler avec SOS Traveler",
+      "de": "Interessiert an einer Zusammenarbeit mit SOS Traveler",
+      "pt": "Interessado em trabalhar com o SOS Traveler"
+    },
+    {
+      "en": "Suggestions for the app",
+      "es": "Sugerencias para la aplicación",
+      "fr": "Suggestions pour l'application",
+      "de": "Vorschläge für die App",
+      "pt": "Sugestões para o aplicativo"
+    },
+    {
+      "en": "Suggestions for the service",
+      "es": "Sugerencias para el servicio",
+      "fr": "Suggestions pour le service",
+      "de": "Vorschläge für den Service",
+      "pt": "Sugestões para o serviço"
+    },
+    {
+      "en": "Account access or login issue",
+      "es": "Problema de acceso o inicio de sesión en la cuenta",
+      "fr": "Problème d'accès au compte ou de connexion",
+      "de": "Probleme beim Kontozugriff oder Login",
+      "pt": "Problema de acesso à conta ou login"
+    },
+    {
+      "en": "Technical difficulties using the platform",
+      "es": "Dificultades técnicas al usar la plataforma",
+      "fr": "Difficultés techniques avec la plateforme",
+      "de": "Technische Schwierigkeiten bei der Nutzung der Plattform",
+      "pt": "Dificuldades técnicas ao usar a plataforma"
+    },
+    {
+      "en": "General inquiries about SOS Travelers services",
+      "es": "Consultas generales sobre los servicios de SOS Travelers",
+      "fr": "Questions générales sur les services de SOS Travelers",
+      "de": "Allgemeine Anfragen zu SOS Travelers Dienstleistungen",
+      "pt": "Dúvidas gerais sobre os serviços do SOS Travelers"
+    },
+    {
+      "en": "Delete account",
+      "es": "Eliminar cuenta",
+      "fr": "Supprimer le compte",
+      "de": "Konto löschen",
+      "pt": "Excluir conta"
+    }
+  ]
+}

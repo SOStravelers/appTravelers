@@ -37,7 +37,7 @@ import {
 
 function ServiceHistory() {
   const router = useRouter();
-  const { isWorker, user } = useStore();
+  const { isWorker, user, language } = useStore();
   const [isTextVisible1, setIsTextVisible1] = useState(false);
   const [isTextVisible2, setIsTextVisible2] = useState(false);
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
@@ -454,7 +454,7 @@ function ServiceHistory() {
               <div>
                 <p className="ml-2">{`${
                   booking?.date?.stringData
-                    ? formatearFecha(booking?.date?.stringData, isWorker)
+                    ? formatearFecha(booking?.date?.stringData, language)
                     : ""
                 } `}</p>
                 <p className="ml-2">{`${

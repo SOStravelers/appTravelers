@@ -103,74 +103,150 @@ export const getServiceNames = (data) => {
   return serviceNamesString;
 };
 
-export const formatearFecha = (fechaStr, isWorker) => {
-  var [año, mes, dia] = fechaStr.split("-").map(Number);
+export const formatearFecha = (fechaStr, idioma) => {
+  const [año, mes, dia] = fechaStr.split("-").map(Number);
 
   // Crear un nuevo objeto Date en el huso horario local
-  var fechaObj = new Date(año, mes - 1, dia);
+  const fechaObj = new Date(año, mes - 1, dia);
 
-  // Meses y días de la semana en inglés
-  var mesesIngles = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  var diasSemanaIngles = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+  // Meses y días de la semana en cada idioma
+  const meses = {
+    en: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    es: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ],
+    fr: [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
+    ],
+    de: [
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember",
+    ],
+    pt: [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ],
+  };
 
-  // Meses y días de la semana en portugués
-  var mesesPortugues = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
-  var diasSemanaPortugues = [
-    "Domingo",
-    "Segunda-feira",
-    "Terça-feira",
-    "Quarta-feira",
-    "Quinta-feira",
-    "Sexta-feira",
-    "Sábado",
-  ];
+  const diasSemana = {
+    en: [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    es: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ],
+    fr: [
+      "Dimanche",
+      "Lundi",
+      "Mardi",
+      "Mercredi",
+      "Jeudi",
+      "Vendredi",
+      "Samedi",
+    ],
+    de: [
+      "Sonntag",
+      "Montag",
+      "Dienstag",
+      "Mittwoch",
+      "Donnerstag",
+      "Freitag",
+      "Samstag",
+    ],
+    pt: [
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
+    ],
+  };
 
-  // Seleccionar los meses y días de la semana correctos
-  var meses = isWorker ? mesesPortugues : mesesIngles;
-  var diasSemana = isWorker ? diasSemanaPortugues : diasSemanaIngles;
+  // Formatos de fecha según idioma
+  const formatos = {
+    en: (d, m, y, dw) => `${dw}, ${m} ${d}, ${y}`,
+    es: (d, m, y, dw) => `${dw}, ${d} de ${m} de ${y}`,
+    fr: (d, m, y, dw) => `${dw} ${d} ${m} ${y}`,
+    de: (d, m, y, dw) => `${dw}, ${d}. ${m} ${y}`,
+    pt: (d, m, y, dw) => `${dw}, ${d} de ${m} de ${y}`,
+  };
 
-  // Obtener el mes, día y año
-  var mes = meses[fechaObj.getMonth()];
-  var dia = fechaObj.getDate();
-  var año = fechaObj.getFullYear();
-  var diaSemana = diasSemana[fechaObj.getUTCDay()];
+  // Obtener mes, día, año y día de la semana
+  const mesTexto = meses[idioma][fechaObj.getMonth()];
+  const diaTexto = diasSemana[idioma][fechaObj.getDay()];
 
-  // Formatear la fecha como "Wednesday, December 20, 2023" o "Quarta-feira, Dezembro 20, 2023"
-  var fechaFormateada = diaSemana + ", " + mes + " " + dia + ", " + año;
+  // Usar el formato correcto
+  const formatear = formatos[idioma];
+  const fechaFormateada = formatear(dia, mesTexto, año, diaTexto);
 
   return fechaFormateada;
 };

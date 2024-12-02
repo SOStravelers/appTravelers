@@ -1,0 +1,72 @@
+{
+  "read": {
+    "en": "Read all the points carefully and make sure that it is what you need.",
+    "es": "Lee todos los puntos cuidadosamente y asegúrate de que sea lo que necesitas.",
+    "fr": "Lisez tous les points attentivement et assurez-vous que c'est ce dont vous avez besoin.",
+    "de": "Lesen Sie alle Punkte sorgfältig durch und stellen Sie sicher, dass es das ist, was Sie brauchen.",
+    "pt": "Leia todos os pontos com atenção e certifique-se de que é o que você precisa."
+  },
+  "service": {
+    "en": "Service",
+    "es": "Servicio",
+    "fr": "Service",
+    "de": "Service",
+    "pt": "Serviço"
+  },
+  "location": {
+    "en": "Location Information",
+    "es": "Información de ubicación",
+    "fr": "Informations sur l'emplacement",
+    "de": "Standortinformationen",
+    "pt": "Informações de localização"
+  },
+  "noDetails": {
+    "en": "No details",
+    "es": "Sin detalles",
+    "fr": "Pas de détails",
+    "de": "Keine Details",
+    "pt": "Sem detalhes"
+  },
+  "seeMap": {
+    "en": "See on map",
+    "es": "Ver en el mapa",
+    "fr": "Voir sur la carte",
+    "de": "Auf der Karte ansehen",
+    "pt": "Ver no mapa"
+  },
+  "acceptOur": {
+    "en": "Accept our",
+    "es": "Acepta nuestros",
+    "fr": "Acceptez nos",
+    "de": "Akzeptieren Sie unsere",
+    "pt": "Ver no mapa"
+  },
+  "descriptionService": {
+    "en": "Service description",
+    "es": "Descripción del servicio",
+    "fr": "Description du service",
+    "de": "Dienstleistungsbeschreibung",
+    "pt": "Descrição do serviço"
+  },
+  "durationService": {
+    "en": "Service duration",
+    "es": "Duración del servicio",
+    "fr": "Durée du service",
+    "de": "Servicedauer",
+    "pt": "Duração do serviço"
+  },
+  "totalService": {
+    "en": "Total Service Fee",
+    "es": "Costo total del servicio",
+    "fr": "Frais de service total",
+    "de": "Gesamte Servicegebühr",
+    "pt": "Taxa total do serviço"
+  },
+  "bookNow": {
+    "en": "Book now",
+    "es": "Agenda ahora",
+    "fr": "Réservez maintenant",
+    "de": "Jetzt buchen",
+    "pt": "Agende agora"
+  }
+}

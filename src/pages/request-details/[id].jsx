@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { fullName, StatusChip, formatearFecha } from "@/utils/format";
 function ServiceHistory() {
   const router = useRouter();
-  const { isWorker, user } = useStore();
+  const { isWorker, user, language } = useStore();
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   const [dataModal, setDataModal] = useState({}); // [title, text, buttonText]
   const [booking, setBooking] = useState(null);
@@ -213,7 +213,7 @@ function ServiceHistory() {
               <div>
                 <p className="ml-2">{`${
                   booking?.date?.stringData
-                    ? formatearFecha(booking?.date?.stringData, isWorker)
+                    ? formatearFecha(booking?.date?.stringData, language)
                     : ""
                 } `}</p>
                 <p className="ml-2">{`${

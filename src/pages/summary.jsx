@@ -16,9 +16,11 @@ import { fullName, getServiceNames, formatearFecha } from "@/utils/format";
 import HostelService from "@/services/HostelService";
 import WorkerService from "@/services/WorkerService";
 import SubserviceService from "@/services/SubserviceService";
+import languageData from "@/language/summary.json";
+import languageDataLogin from "@/language/login.json";
 
 export default function Summary() {
-  const { isWorker } = useStore();
+  const { isWorker, language } = useStore();
   const router = useRouter();
   const { loggedIn, service, setService } = useStore();
   const [isTextVisible1, setIsTextVisible1] = useState(false);
@@ -93,7 +95,7 @@ export default function Summary() {
   return (
     <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-6 md:pl-80">
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
-        Read all the points carefully and make sure that it is what you need.
+        {languageData.read[language]}
       </h1>
       <HostelCardSummary
         image={hostel?.img?.imgUrl}
@@ -112,7 +114,7 @@ export default function Summary() {
         >
           <div className="col-span-4 text-left text-sm py-2 my-5">
             <h1 className=" text-blackText font-semibold">
-              {isWorker ? "Informações de localização" : "Location information"}
+              {languageData.location[language]}
             </h1>
           </div>
           <div className="col-span-1 flex justify-end">
@@ -133,7 +135,7 @@ export default function Summary() {
               ? hostel?.businessData?.location?.details["pt"]
               : !isWorker && hostel?.businessData?.location?.details
               ? hostel?.businessData?.location?.details["en"]
-              : "No details"}
+              : languageData.noDetails[language]}
           </p>
           <div className="mb-2 flex justify-center">
             <a
@@ -141,15 +143,13 @@ export default function Summary() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <SmallButton text={isWorker ? "Veja no mapa" : "See on map"} />
+              <SmallButton text={languageData.seeMap[language]} />
             </a>
           </div>
         </div>
       </div>
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
-      <h1 className="mt-2 text-grey text-sm text-center max-w-lg">
-        Professional
-      </h1>
+      <h1 className="mt-2 text-grey text-sm text-center max-w-lg">Partner</h1>
       <WorkerCardSumary
         name={fullName(worker?.personalData?.name)}
         service={
@@ -169,7 +169,7 @@ export default function Summary() {
           <div className="flex  ">
             <ClockIcon />
             <p className="ml-2">{`${
-              formatearFecha(service?.date, false) || ""
+              formatearFecha(service?.date, language) || ""
             } | ${service?.startTime?.stringData + " hrs" || ""}`}</p>
           </div>
           <Link className="flex " href={`/reservation/${IdHostel}`}>
@@ -185,7 +185,7 @@ export default function Summary() {
         >
           <div className="col-span-4 text-left text-sm py-2 my-5">
             <h1 className=" text-blackText font-semibold">
-              {isWorker ? "Descrição do Serviço" : "Service description"}
+              {languageData.descriptionService[language]}
             </h1>
           </div>
           <div className="col-span-1 flex justify-end">
@@ -223,37 +223,43 @@ export default function Summary() {
         )}
 
         <p className="text-greyText">
-          Accept our{" "}
+          {languageData.acceptOur[language]}{" "}
           <Link href={"terms-of-service"} className="underline">
-            Terms of Service &nbsp;
+            {languageDataLogin.login.terms[language]} &nbsp;
           </Link>
-          and our{" "}
+          {languageDataLogin.login.our[language]}{" "}
           <Link href={"use-policy"} className="underline">
-            Use Policy.
+            {languageDataLogin.login.policy[language]}.
           </Link>
         </p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
-        <p className="text-blackText font-semibold">Service</p>
+        <p className="text-blackText font-semibold">
+          {languageData.service[language]}
+        </p>
         <p className="text-blackBlue font-semibold text-md">
           {service?.nameSubservice}
         </p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg my-1">
-        <p className="text-blackText font-semibold">Service duration</p>
+        <p className="text-blackText font-semibold">
+          {languageData.durationService[language]}
+        </p>
         <p className="text-blackBlue font-semibold text-md">
           {service?.duration} min
         </p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg my-1">
-        <p className="text-blackText font-semibold">Total Service Fee</p>
+        <p className="text-blackText font-semibold">
+          {languageData.totalService[language]}
+        </p>
         <p className="text-blackBlue font-semibold text-xl">
           R$ {service?.price[0]?.finalCost}
         </p>
       </div>
       <OutlinedButton
         disabled={!selected && !service?.price[0]?.finalCost}
-        text={"Book Now"}
+        text={languageData.bookNow[language]}
         onClick={hireNow}
       />
     </div>

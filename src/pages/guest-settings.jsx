@@ -2,17 +2,30 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import Select from "react-select";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import languageData from "@/language/settings.json";
 import { WorldIcon, MailIcon } from "@/constants/icons";
-
+import { useStore } from "@/store";
 export default function GuestSettings() {
   useEffect(() => {
     document.title = "Settings | SOS Travelers";
   }, []);
   const router = useRouter();
+  const store = useStore();
+  const { setLanguage, language } = store;
   const [isOnUbication, setIsOnUbication] = useState(false);
+  const [selection, setSelection] = useState({});
+
+  useEffect(() => {
+    setSelection({
+      value: language,
+      label: languageData.language[language][language],
+    });
+  }, []);
 
   const onFunction = () => {
     console.log("On");
@@ -22,17 +35,76 @@ export default function GuestSettings() {
     console.log("Off");
   };
 
+  const setValue = (valor) => {
+    setLanguage(valor.value);
+    Cookies.set("language", valor.value);
+    setSelection({
+      value: valor.value,
+      label: languageData.language[valor.value][valor.value],
+    });
+  };
+
+  const optionsSupport = [
+    { value: "en", label: languageData.language[language]["en"] },
+    { value: "es", label: languageData.language[language]["es"] },
+    { value: "fr", label: languageData.language[language]["fr"] },
+    { value: "de", label: languageData.language[language]["de"] },
+    { value: "pt", label: languageData.language[language]["pt"] },
+  ];
+  console.log(optionsSupport);
+
   return (
     <div className="flex flex-col py-24 px-10 md:pl-80">
       {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
 
       <Link href="support" className="block">
         <OptionCard
-          title="Support"
-          subtitle="Contact us"
+          title={languageData.support.title[language]}
+          subtitle={languageData.support.body[language]}
           icon={MailIcon}
         ></OptionCard>
       </Link>
+      <h1 className={`text-black text-sm font-semibold mt-3 mb-2 `}>
+        {languageData.titleLanguage[language]}
+      </h1>
+      <Select
+        className="w-full max-w-lg rounded-xl my-1 mb-60"
+        options={optionsSupport}
+        value={selection}
+        // onBlur={() =>
+        //   setSelection({
+        //     value: "en",
+        //     label: "English",
+        //   })
+        // }
+        onChange={(selectedOption) => setValue(selectedOption)}
+        isSearchable={false}
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            borderColor: "#00A0D5",
+            borderRadius: "10px",
+            boxShadow: "none",
+            "&:hover": {
+              borderColor: "#00A0D5",
+            },
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            color: state.isSelected ? "#fff" : "#000",
+            backgroundColor: state.isSelected
+              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
+              : state.isFocused
+              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
+              : "#fff", // Fondo blanco por defecto
+            borderRadius: "5px",
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
+            },
+          }),
+        }}
+      />
       {/* <div className="flex flex-col my-4">
         <OptionSwitch
           title="Activate Ubication"
@@ -52,7 +124,7 @@ export default function GuestSettings() {
       </div>
 
       <OutlinedButton
-        text="Register Now"
+        text={languageData.sigUpButton[language]}
         onClick={() => router.push("/register")}
       />
     </div>

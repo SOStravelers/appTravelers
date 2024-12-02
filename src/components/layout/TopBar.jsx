@@ -11,6 +11,7 @@ import Link from "next/link";
 import TextModal from "@/components/utils/modal/TextModal";
 import { Howl } from "howler";
 import Router from "next/router";
+import languageData from "@/language/menu.json";
 import { validationImg } from "@/utils/validation";
 const sound = new Howl({
   src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
@@ -18,7 +19,8 @@ const sound = new Howl({
 import { useStore } from "@/store";
 function TopBar() {
   const router = Router;
-  const { loggedIn, user, isWorker, setUser, haveNotification } = useStore();
+  const { loggedIn, user, isWorker, setUser, haveNotification, language } =
+    useStore();
   const [booking, setBooking] = useState({});
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   const [isImageAccessible, setIsImageAccessible] = useState(false);
@@ -205,13 +207,13 @@ function TopBar() {
               </h1>
             )}
             <Link className="text-white mr-2" href="/login">
-              Sign In
+              {languageData.signIn[language]}
             </Link>
             <Link
               className="text-white border border-white px-3 py-1 rounded-xl"
               href="/register"
             >
-              Join
+              {languageData.join[language]}
             </Link>
           </>
         )}

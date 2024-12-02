@@ -25,6 +25,7 @@ export const useStore = create((set) => {
 
   return {
     user: {},
+    language: "en",
     urls: theUrls,
     loggedIn: false,
     service: service,
@@ -43,6 +44,7 @@ export const useStore = create((set) => {
     setServices: (services) => set({ services: services }),
     setWorker: (isWorker) => set({ isWorker: isWorker }),
     setSocket: (socket) => set({ socket: socket }),
+    setLanguage: (language) => set({ language: language }),
     setService: (service) =>
       set((state) => {
         const data = { service: { ...state.service, ...service } };

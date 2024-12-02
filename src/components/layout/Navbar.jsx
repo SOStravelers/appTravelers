@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import clsx from "clsx";
 import NotificationService from "@/services/NotificationService";
+import languageData from "@/language/menu.json";
 import {
   HomeIcon,
   HomeIconOutlined,
@@ -20,7 +21,7 @@ import { useStore } from "@/store";
 function Navbar() {
   const router = useRouter();
 
-  const { isWorker, user, setHaveNotification } = useStore();
+  const { isWorker, user, setHaveNotification, language } = useStore();
   const userId = Cookies.get("auth.user_id");
   const goTo = (ruta) => {
     if (ruta != "/" && ruta != "/worker/home") {
@@ -69,7 +70,7 @@ function Navbar() {
               : "text-greyText"
           )}
         >
-          {isWorker ? "Inicio" : "Home"}
+          {languageData.home[language]}
         </span>
       </button>
 
@@ -92,7 +93,7 @@ function Navbar() {
               : "text-greyText"
           )}
         >
-          {isWorker ? "Agenda" : "Bookings"}
+          {languageData.bookings[language]}
         </span>
       </button>
 
@@ -114,7 +115,7 @@ function Navbar() {
               : "text-greyText"
           )}
         >
-          Chat
+          {languageData.chat[language]}
         </span>
       </button>
 
@@ -138,7 +139,7 @@ function Navbar() {
                 : "text-greyText"
             )}
           >
-            Favorites
+            {languageData.favorites[language]}
           </span>
         </button>
       )}
@@ -185,7 +186,7 @@ function Navbar() {
               : "text-greyText"
           )}
         >
-          {isWorker ? "Perfil" : "Profile"}
+          {languageData.profile[language]}
         </span>
       </button>
     </div>

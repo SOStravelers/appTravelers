@@ -1,0 +1,51 @@
+{
+  "home": {
+    "en": "Home",
+    "es": "Inicio",
+    "fr": "Accueil",
+    "de": "Startseite",
+    "pt": "Início"
+  },
+  "bookings": {
+    "en": "Bookings",
+    "es": "Reservas",
+    "fr": "Réservations",
+    "de": "Buchungens",
+    "pt": "Reservas"
+  },
+  "chat": {
+    "en": "Chat",
+    "es": "Chat",
+    "fr": "Chat",
+    "de": "Chat",
+    "pt": "Chat"
+  },
+  "favorites": {
+    "en": "Favorites",
+    "es": "Favoritos",
+    "fr": "Favoris",
+    "de": "Favoriten",
+    "pt": "Favoritos"
+  },
+  "profile": {
+    "en": "Profile",
+    "es": "Perfil",
+    "fr": "Profil",
+    "de": "Profil",
+    "pt": "Perfil"
+  },
+  "signIn": {
+    "en": "Sign In",
+    "es": "Iniciar Sesión",
+    "fr": "Se connecter",
+    "de": "Einloggen",
+    "pt": "Entrar"
+  },
+  "join": {
+    "en": "Join",
+    "es": "Unirse",
+    "fr": "S'inscrire",
+    "de": "Registrieren",
+    "pt": "Inscrever-se"
+  }
+}

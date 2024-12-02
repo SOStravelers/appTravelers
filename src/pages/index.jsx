@@ -11,6 +11,7 @@ import { mazzard } from "@/utils/mazzardFont";
 import Cookies from "js-cookie";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { NotFoundPicture } from "@/constants/icons";
+import languageData from "@/language/home.json";
 import "swiper/swiper-bundle.css";
 // import SwiperCore, { Pagination, Navigation } from "swiper";
 // SwiperCore.use([Pagination, Navigation]);
@@ -21,7 +22,8 @@ export default function Home({}) {
   // console.log("socket!", process.env.NEXT_PUBLIC_API_SOCKET_IO);
   // console.log("env!", process.env.NEXT_PUBLIC_NODE_ENV);
   const store = useStore();
-  const { services, setServices, setHaveNotification, setService } = store;
+  const { services, setServices, setHaveNotification, setService, language } =
+    store;
   const [bookings, setBookings] = useState([]);
   const [slides, setSlides] = useState([]);
   const [swiper, setSwiper] = useState(null);
@@ -47,27 +49,21 @@ export default function Home({}) {
     }
     setSlides([
       {
-        id: 1,
-        title: "Tips SOS",
-        body: "Just 3 snappy steps: pick your service, grab a cool hostel, choose your pro, and seal the deal for instant excitement! 🌟 ",
+        id: 0,
+        title: languageData.carrousel[0].title[language],
+        body: languageData.carrousel[0].body[language],
       },
       {
-        id: 2,
-        title: "Tips SOS",
-        body: "You'll only bust out your wallet once the service is a smashing success! 💸✨",
+        id: 1,
+        title: languageData.carrousel[1].title[language],
+        body: languageData.carrousel[1].body[language],
         // direction: "124 street Miro Hotel, Ubud",
         // date: "4 Aug, 2023 | 04:30 PM",
       },
       {
-        id: 3,
-        title: "Tips SOS",
-        body: "Rock up 15 minutes early to your chosen hostel and let the good times roll when the service kicks off! 🚀⏰",
-      },
-
-      {
-        id: 4,
-        title: "Tips SOS",
-        body: "Once your booking is a done deal, unleash the chat vibes with your pro! 🗨️🎉",
+        id: 2,
+        title: languageData.carrousel[2].title[language],
+        body: languageData.carrousel[2].body[language],
       },
     ]);
   }, []);
@@ -146,7 +142,7 @@ export default function Home({}) {
             <h1
               className={`text-black text-xl font-semibold mt-1 mb-3 ${mazzard.className}`}
             >
-              Choose a service
+              {languageData.title.service[language]}
             </h1>
             <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2 pl-3">
               {services?.map((s, index) => (
@@ -165,7 +161,7 @@ export default function Home({}) {
             <h1
               className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
             >
-              Recommended for you
+              {languageData.title.recommended[language]}
             </h1>
             {loading ? (
               <div className="max-w-lg flex flex-col items-center justify-center">

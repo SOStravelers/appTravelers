@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import Link from "next/link";
 import clsx from "clsx";
+import languageData from "@/language/menu.json";
 import {
   HomeIconOutlined,
   BookingIconOutlined,
@@ -14,7 +15,7 @@ import {
 function Sidebar() {
   const router = useRouter();
 
-  const { isWorker, user } = useStore();
+  const { isWorker, user, language } = useStore();
   const goTo = (ruta) => {
     router.push(ruta);
   };
@@ -41,7 +42,9 @@ function Sidebar() {
         onClick={() => goTo(isWorker ? "/worker/home" : "/")}
       >
         <HomeIconOutlined color="white" />
-        <p className={clsx("text-xl ml-3 text-white")}>Home</p>
+        <p className={clsx("text-xl ml-3 text-white")}>
+          {languageData.home[language]}
+        </p>
       </button>
 
       <button
@@ -55,7 +58,10 @@ function Sidebar() {
         )}
       >
         <BookingIconOutlined color="#FFFFFF" />
-        <p className={clsx("text-xl ml-3 text-white")}>Bookings</p>
+        <p className={clsx("text-xl ml-3 text-white")}>
+          {" "}
+          {languageData.bookings[language]}
+        </p>
       </button>
       <button
         onClick={() => goTo(isWorker ? "/worker/chat" : "/chat")}
@@ -67,7 +73,10 @@ function Sidebar() {
         )}
       >
         <ChatIconOutlined color="white" />
-        <p className={clsx("text-xl ml-3 text-white")}>Chat</p>
+        <p className={clsx("text-xl ml-3 text-white")}>
+          {" "}
+          {languageData.chat[language]}
+        </p>
       </button>
       {!isWorker && (
         <button
@@ -80,7 +89,9 @@ function Sidebar() {
           )}
         >
           <FavoriteIconOutlined color="white" />
-          <p className={clsx("text-xl ml-3 text-white")}>Favorites</p>
+          <p className={clsx("text-xl ml-3 text-white")}>
+            {languageData.favorites[language]}
+          </p>
         </button>
       )}
       {isWorker && (
@@ -108,7 +119,9 @@ function Sidebar() {
         )}
       >
         <ProfileIconOutlined color="white" />
-        <p className={clsx("text-xl ml-3 text-white")}>Profile</p>
+        <p className={clsx("text-xl ml-3 text-white")}>
+          {languageData.profile[language]}
+        </p>
       </button>
     </div>
   );

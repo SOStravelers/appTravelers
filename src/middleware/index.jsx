@@ -15,6 +15,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     setLoggedIn,
     isWorker,
     service,
+    setLanguage,
     setWorker,
     setLoginModal,
   } = store;
@@ -34,6 +35,24 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
 
   const obtenerInformacionUsuario = async () => {
     let cookieAccessToken = Cookies.get("auth.access_token");
+    let cookieLanguage = Cookies.get("language");
+    console.log("la dataaaa");
+
+    if (typeof window !== "undefined") {
+      if (cookieLanguage) {
+        setLanguage(cookieLanguage);
+        Cookies.set("language", cookieLanguage);
+      } else {
+        const userLanguage = navigator.language || navigator.languages[0];
+        const shortName = userLanguage.slice(0, 2);
+        setLanguage(shortName);
+        Cookies.set("language", shortName);
+      }
+    } else {
+      setLanguage("en");
+      Cookies.set("language", "en");
+    }
+
     const session = await getSession();
     if (user && Object.keys(user).length > 0) {
       return;

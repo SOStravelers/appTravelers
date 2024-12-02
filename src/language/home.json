@@ -1,0 +1,68 @@
+{
+  "title": {
+    "service": {
+      "en": "Choose a service",
+      "es": "Elige un servicio",
+      "fr": "Choisissez un service",
+      "de": "Wähle ein Service",
+      "pt": "Escolha um serviço"
+    },
+    "recommended": {
+      "en": "Recommended for you",
+      "es": "Recomendado para ti",
+      "fr": "Recommandé pour toi",
+      "de": "Empfohlen für dich",
+      "pt": "Recomendado para você"
+    }
+  },
+  "carrousel": [
+    {
+      "title": {
+        "en": "Tips SOS",
+        "es": "Tips SOS",
+        "fr": "Tips SOS",
+        "de": "Tips SOS",
+        "pt": "Tips SOS"
+      },
+      "body": {
+        "en": "Just 3 snappy steps: pick your service, grab a cool hostel, choose your pro, and seal the deal for instant excitement! 🌟 ",
+        "es": "¡Solo 3 pasos rápidos! Elige tu servicio, encuentra un hostal genial, selecciona a tu profesional y cierra el trato para emoción instantánea. 🌟",
+        "fr": "Juste 3 étapes rapides : choisissez votre service, trouvez une auberge cool, sélectionnez votre professionnel et concluez l'affaire pour une excitation instantanée ! 🌟",
+        "de": "Nur 3 schnelle Schritte: Wähle deinen Service, finde ein cooles Hostel, such dir deinen Profi aus und mach den Deal perfekt für sofortige Begeisterung! 🌟",
+        "pt": "Apenas 3 passos rápidos: escolha seu serviço, encontre um hostel irado, escolha seu profissional e feche o negócio para emoção instantânea! 🌟"
+      }
+    },
+    {
+      "title": {
+        "en": "Tips SOS",
+        "es": "Tips SOS",
+        "fr": "Tips SOS",
+        "de": "Tips SOS",
+        "pt": "Tips SOS"
+      },
+      "body": {
+        "en": "You'll only bust out your wallet once the service is a smashing success! 💸✨",
+        "es": "¡Solo sacarás la billetera cuando el servicio sea un éxito total! 💸✨",
+        "fr": "Vous ne sortirez votre portefeuille que lorsque le service sera un succès retentissant ! 💸✨",
+        "de": "Du zückst dein Portemonnaie erst, wenn der Service ein voller Erfolg ist! 💸✨",
+        "pt": "Você só vai abrir a carteira quando o serviço for um sucesso absoluto! 💸✨"
+      }
+    },
+    {
+      "title": {
+        "en": "Tips SOS",
+        "es": "Tips SOS",
+        "fr": "Tips SOS",
+        "de": "Tips SOS",
+        "pt": "Tips SOS"
+      },
+      "body": {
+        "en": "Arrive 15 minutes early at your reservation spot and let the good times roll when the service kicks off! 🚀⏰",
+        "es": "Llega 15 minutos antes al lugar de tu reserva y prepárate para la diversión cuando comience el servicio. 🚀⏰",
+        "fr": "Arrivez 15 minutes en avance au lieu de votre réservation et laissez les bons moments commencer lorsque le service démarre ! 🚀⏰",
+        "de": "Komm 15 Minuten früher am Ort deiner Reservierung an und lass den Spaß beginnen, wenn der Service losgeht! 🚀⏰",
+        "pt": "Chegue 15 minutos antes no local da sua reserva e deixe a diversão começar quando o serviço começar! 🚀⏰"
+      }
+    }
+  ]
+}

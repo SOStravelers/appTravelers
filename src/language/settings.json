@@ -1,0 +1,70 @@
+{
+    "language":{
+        "en":{
+            "en":"English",
+            "es":"Spanish",
+            "fr":"French",
+            "de":"German",
+            "pt":"Portuguese"
+        },
+        "es":{
+            "en":"Inglés",
+            "es":"Español",
+            "fr":"Francés",
+            "de":"Alemán",
+            "pt":"Portugués"
+        },
+        "fr":{
+            "en":"Anglais",
+            "es":"Espagnol",
+            "fr":"Français",
+            "de":"Allemand",
+            "pt":"Portugais"
+        },
+        "de":{
+            "en":"Englisch",
+            "es":"Spanisch",
+            "fr":"Französisch",
+            "de":"Deutsch",
+            "pt":"Portugiesisch"
+        },
+        "pt":{
+            "en":"Inglês",
+            "es":"Espanhol",
+            "fr":"Francês",
+            "de":"Alemão",
+            "pt":"Português"
+        }
+    },
+    "titleLanguage":{
+        "en":"Language",
+        "es":"Idioma",
+        "fr":"Langue",
+        "de":"Sprache",
+        "pt":"Linguagem"
+
+    },
+    "sigUpButton":{
+        "en":"Sign Up now",
+        "es":"Registrate ahora",
+        "fr":"Inscrivez-vous maintenant",
+        "de":"Jetzt registrieren",
+        "pt":"Cadastre-se agora"
+    },
+    "support":{
+        "title":{
+            "en":"Support",
+            "es":"Soporte",
+            "fr":"Support",
+            "de":"Unterstützung",
+            "pt":"Apoio"
+        },
+        "body":{
+            "en":"Contact us",
+            "es":"Contáctanos",
+            "fr":"Contactez-nous",
+            "de":"Kontaktieren Sie uns",
+            "pt":"Contate-nos"
+        }
+    }
+}

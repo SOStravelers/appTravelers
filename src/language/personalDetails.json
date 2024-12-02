@@ -1,0 +1,37 @@
+{
+  "name": {
+    "en": "Name",
+    "es": "Nombre",
+    "fr": "Nom",
+    "de": "Name",
+    "pt": "Nome"
+  },
+  "email": {
+    "en": "Email",
+    "es": "Correo electrónico",
+    "fr": "E-mail",
+    "de": "E-Mail",
+    "pt": "E-mail"
+  },
+  "changePassword": {
+    "en": "Change Password",
+    "es": "Cambiar contraseña",
+    "fr": "Changer le mot de passe",
+    "de": "Passwort ändern",
+    "pt": "Alterar senha"
+  },
+  "createPassword": {
+    "en": "Create Password",
+    "es": "Crear contraseña",
+    "fr": "Créer un mot de passe",
+    "de": "Passwort erstellen",
+    "pt": "Criar senha"
+  },
+  "saveChanges": {
+    "en": "Save Changes",
+    "es": "Guardar cambios",
+    "fr": "Enregistrer les modifications",
+    "de": "Änderungen speichern",
+    "pt": "Salvar alterações"
+  }
+}

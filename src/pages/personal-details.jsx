@@ -10,10 +10,10 @@ import { UserIcon, MailIcon, HouseIcon, LockIcon } from "@/constants/icons";
 import { useStore } from "@/store";
 import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
-
+import languageData from "@/language/personalDetails.json";
 export default function PersonalDetails() {
   const router = useRouter();
-  const { user, setUser, setLoggedIn, isWorker } = useStore();
+  const { user, setUser, setLoggedIn, isWorker, language } = useStore();
   const [name, setName] = useState(null);
   const [nameTrun, setNameTrun] = useState(null);
   const [emailTrun, setEmailTrun] = useState(null);
@@ -99,7 +99,7 @@ export default function PersonalDetails() {
     <div className="flex flex-col justify-center py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
       {!nameInput ? (
         <SelectCard
-          title={isWorker ? "Nome" : "Name"}
+          title={languageData.name[language]}
           onClick={handleNameClick}
           icon={UserIcon}
           edit={true}
@@ -107,7 +107,7 @@ export default function PersonalDetails() {
         />
       ) : (
         <OutlinedInput
-          placeholder={isWorker ? "Nome" : "Name"}
+          placeholder={languageData.name[language]}
           icon={UserIcon}
           value={name}
           // onBlur={onBlur}
@@ -131,21 +131,21 @@ export default function PersonalDetails() {
       {user && user.security && user.security.hasPassword ? (
         // Este componente se mostrará si el usuario está autenticado
         <OptionCard
-          title={isWorker ? "Alterar a senha" : "Change Password"}
+          title={languageData.changePassword[language]}
           icon={LockIcon}
           onClick={() => router.push("/change-password")}
         />
       ) : (
         // Este componente se mostrará si el usuario no está autenticado
         <OptionCard
-          title={isWorker ? "Criar senha" : "Change Password"}
+          title={languageData.createPassword[language]}
           icon={LockIcon}
           onClick={() => router.push("/create-password")}
         />
       )}
       {save && (
         <OutlinedButton
-          text={isWorker ? "Salvar alterações" : "Save Changes"}
+          text={languageData.saveChanges[language]}
           onClick={saveAll}
         />
       )}

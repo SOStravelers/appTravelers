@@ -54,6 +54,7 @@ function Calendar({ id }) {
         let cutDate = schedule[i].day.slice(0, -1);
         if (cutDate == formattedDate) {
           setIntervals(schedule[i].intervals);
+          console.log("23na", intervals);
           break;
         }
       }
@@ -91,6 +92,7 @@ function Calendar({ id }) {
     // Extrae la fecha del primer y último objeto
     const firstDate = new Date(schedule[0].day);
     const lastDate = new Date(schedule[schedule.length - 1].day);
+    console.log("wea", firstDate, lastDate);
 
     let disabledDays = [];
 

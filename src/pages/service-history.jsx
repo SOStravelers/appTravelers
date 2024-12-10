@@ -7,7 +7,7 @@ import { useStore } from "@/store";
 function ServiceHistory() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { isWorker } = useStore();
+  const { isWorker, language } = useStore();
 
   useEffect(() => {
     getBookings();
@@ -48,9 +48,9 @@ function ServiceHistory() {
               <WorkerCardBooking
                 key={booking._id}
                 booking={booking}
-                subService={booking.subservice.name}
+                subService={booking.subservice.name[language]}
                 status={booking.status}
-                service={booking.service.name}
+                service={booking.service.name[language]}
                 avatar={booking?.businessUser?.img?.imgUrl}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
@@ -76,9 +76,9 @@ function ServiceHistory() {
               <WorkerCardBooking
                 key={booking._id}
                 booking={booking}
-                subService={booking.subservice.name}
+                subService={booking.subservice.name[language]}
                 status={booking.status}
-                service={booking.service.name}
+                service={booking.service.name[language]}
                 avatar={booking?.businessUser?.img?.imgUrl}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
@@ -103,9 +103,9 @@ function ServiceHistory() {
               <WorkerCardBooking
                 key={booking._id}
                 booking={booking}
-                subService={booking.subservice.name}
+                subService={booking.subservice.name[language]}
                 status={booking.status}
-                service={booking.service.name}
+                service={booking.service.name[language]}
                 avatar={booking?.businessUser?.img?.imgUrl}
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}

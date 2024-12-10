@@ -4,11 +4,11 @@ import BookingService from "@/services/BookingService";
 import { ReservationIcon } from "@/constants/icons";
 import { Rings } from "react-loader-spinner";
 import dayjs from "dayjs";
-
+import { useStore } from "@/store";
 function Requests() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const { language } = useStore();
   useEffect(() => {
     getBookings();
   }, []);
@@ -41,9 +41,9 @@ function Requests() {
           <WorkerCardBookingRequest
             key={booking._id}
             booking={booking}
-            subService={booking.subservice.name}
+            subService={booking.subservice.name[language]}
             status={booking.status == "available" ? "Disponível" : "Solicitado"}
-            service={booking.service.name}
+            service={booking.service.name[language]}
             avatar={booking?.businessUser?.img?.imgUrl}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}

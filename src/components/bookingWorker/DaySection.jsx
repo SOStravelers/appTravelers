@@ -13,7 +13,7 @@ function DaySection({
   loading,
 }) {
   const [bookings, setBookings] = useState(null);
-  const { isWorker, user } = useStore();
+  const { isWorker, user, language } = useStore();
   useEffect(() => {
     const user = Cookies.get("auth.user_id");
     if (user) {
@@ -54,9 +54,9 @@ function DaySection({
             <WorkerCardBooking
               key={booking._id}
               booking={booking}
-              subService={booking.subservice.name}
+              subService={booking.subservice.name[language]}
               status={booking.status}
-              service={booking.service.name}
+              service={booking.service.name[language]}
               avatar={booking?.businessUser?.img?.imgUrl}
               date={booking.date.stringData}
               hour={booking.startTime.stringData}

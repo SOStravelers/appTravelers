@@ -421,7 +421,7 @@ function ServiceHistory() {
                 // }
                 service={
                   booking?.workerUser?.workerData?.services && !isWorker
-                    ? getServiceNames(booking?.workerUser?.workerData)
+                    ? getServiceNames(booking?.workerUser?.workerData, language)
                     : "No services"
                 }
               />
@@ -488,10 +488,10 @@ function ServiceHistory() {
                 isTextVisible2 ? "max-h-screen" : "max-h-0"
               }`}
             >
-              <p className=" mb-2">
+              <p className="mb-2">
                 {isWorker
-                  ? booking.subservice.details["pt"]
-                  : booking.subservice.details["en"]}
+                  ? booking.subservice.details["pt"] || ""
+                  : booking.subservice.details["en"] || ""}
               </p>
             </div>
           </div>
@@ -516,7 +516,8 @@ function ServiceHistory() {
               {isWorker ? "Serviço" : "Service"}
             </p>
             <p className="text-blackBlue font-semibold text-md">
-              {booking?.service?.name} - {booking?.subservice?.name}
+              {booking?.service?.name[language]} -{" "}
+              {booking?.subservice?.name[language]}
             </p>
           </div>
           <div className="flex justify-between items-end w-full max-w-lg my-1">

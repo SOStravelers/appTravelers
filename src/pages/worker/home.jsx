@@ -20,7 +20,7 @@ import { set } from "date-fns";
 export default function WorkerHome() {
   const router = useRouter();
   const [slides, setSlides] = useState([]);
-  const { setService, user, setHaveNotification } = useStore();
+  const { setService, user, setHaveNotification, language } = useStore();
   const [swiper, setSwiper] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -184,9 +184,9 @@ export default function WorkerHome() {
                 <WorkerCardBooking
                   key={booking._id}
                   booking={booking}
-                  subService={booking.subservice.name}
+                  subService={booking.subservice.name[language]}
                   status={booking.status}
-                  service={booking.service.name}
+                  service={booking.service.name[language]}
                   avatar={booking?.businessUser?.img?.imgUrl}
                   date={booking.date.stringData}
                   hour={booking.startTime.stringData}

@@ -12,7 +12,7 @@ import Link from "next/link";
 
 function WorkerProfileCard({ name, services, score, avatar }) {
   const [favorites, setFavorites] = useState([]);
-  const { user } = useStore();
+  const { user, language } = useStore();
   const [isFavorite, setIsFavorite] = useState(false);
   const [fromFavorite, setFromFavorite] = useState(false);
 
@@ -120,7 +120,9 @@ function WorkerProfileCard({ name, services, score, avatar }) {
           ) : null}
         </div>
         <p className="text-blackText my-1    text-xs   sm:text-sm ">
-          {services?.map((service) => capitalize(service.id.name)).join(", ")}
+          {services
+            ?.map((service) => capitalize(service.id.name[language]))
+            .join(", ")}
         </p>
         <div className=" flex items-center w-30">
           <StarIcon color={"#00A0D5"} className="mr-1" />

@@ -54,6 +54,7 @@ export default function Booking() {
       if (user) {
         BookingService.getBookingsByDay(day.date).then((res) => {
           if (res) {
+            console.log("respuesta", res.data.docs);
             setBookings(res.data.docs);
           }
         });

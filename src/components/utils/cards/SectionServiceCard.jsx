@@ -1,7 +1,8 @@
 import React from "react";
-
+import { useStore } from "@/store";
 function SectionServiceCard({ title, list, type }) {
   console.log(type, list);
+  const { language } = useStore();
   const capitalize = (cadena) => {
     if (!cadena) return "";
     return cadena.charAt(0).toUpperCase() + cadena.slice(1);
@@ -25,9 +26,9 @@ function SectionServiceCard({ title, list, type }) {
             <li key={index} className="flex justify-between my-1">
               <span>
                 {type == "business"
-                  ? capitalize(item?.service?.name)
+                  ? capitalize(item?.service?.name[language])
                   : type == "worker"
-                  ? capitalize(item?.id?.name)
+                  ? capitalize(item?.id?.name[language])
                   : ""}
               </span>
             </li>
@@ -35,9 +36,9 @@ function SectionServiceCard({ title, list, type }) {
         ) : (
           <span>
             {type == "business"
-              ? capitalize(list?.service?.name)
+              ? capitalize(list?.service?.name[language])
               : type == "worker"
-              ? capitalize(list?.id?.name)
+              ? capitalize(list?.id?.name[language])
               : ""}
           </span>
         )}

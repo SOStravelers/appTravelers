@@ -5,10 +5,12 @@ import "react-day-picker/dist/style.css";
 import Link from "next/link";
 import BookingService from "@/services/BookingService";
 import WorkerCardBooking from "../cards/WorkerCardBooking";
-
+import { useStore } from "@/store";
 import moment from "moment";
 
 function CalendarBookingWorker() {
+  const store = useStore();
+  const { language } = store;
   const [selected, setSelected] = useState("");
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
@@ -117,9 +119,9 @@ function CalendarBookingWorker() {
           <WorkerCardBooking
             key={booking._id}
             booking={booking}
-            subService={booking.subservice.name}
+            subService={booking.subservice.name[language]}
             status={booking.status}
-            service={booking.service.name}
+            service={booking.service.name[language]}
             avatar={booking?.businessUser?.img?.imgUrl}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}

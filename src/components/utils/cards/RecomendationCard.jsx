@@ -10,6 +10,10 @@ function RecomendationCard(user) {
   const router = useRouter();
   const { language } = useStore();
   const [isImageAccessible, setIsImageAccessible] = useState(false);
+  const [data, setData] = useState({ subService: "", imgUrl: "" });
+  useEffect(() => {
+    getRandomSubServiceName(user.user);
+  }, []);
   function getRandomSubServiceName(user) {
     const allSubServices = user.workerData.services.flatMap(
       (service) => service.subServices
@@ -17,15 +21,22 @@ function RecomendationCard(user) {
 
     // Si no hay subServices, devuelve null
     if (allSubServices.length === 0) {
-      return null;
+      setData({
+        subService: null,
+        imgUrl: user?.imgUrl + "?hola=" + random(),
+      });
     }
 
     // Obtén un índice aleatorio
     const randomIndex = Math.floor(Math.random() * allSubServices.length);
 
     // Devuelve el nombre del subService en el índice aleatorio
-    return allSubServices[randomIndex].name[language];
+    setData({
+      subService: allSubServices[randomIndex].name[language],
+      imgUrl: allSubServices[randomIndex]?.imgUrl + "?hola=" + random(),
+    });
   }
+
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -58,20 +69,14 @@ function RecomendationCard(user) {
     >
       <div className="w-full h-28 w-20 rounded-tr-2xl rounded-tl-2xl relative">
         <Image
-          src={
-            isImageAccessible && user?.user?.img?.imgUrl
-              ? user?.user?.img?.imgUrl + "?hola=" + random()
-              : "/assets/service.png"
-          }
+          src={data?.imgUrl || "/assets/service.png"}
           fill
           alt="casa"
           className="object-cover rounded-tr-2xl rounded-tl-2xl"
         />
       </div>
       <div className="px-1 flex flex-col sm:px-2">
-        <h1 className="font-semibold mt-2">
-          {getRandomSubServiceName(user.user)}
-        </h1>
+        <h1 className="font-semibold mt-2">{data.subService}</h1>
         <p className="text-blackText text-sm">
           {formatName(user?.user?.personalData?.name)}
         </p>

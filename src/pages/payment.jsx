@@ -15,7 +15,7 @@ export default function Payment() {
   useEffect(() => {
     isWorker ? setPaymentType("cash") : setPaymentType("stripe");
   }, []);
-
+  console.log("servicio", service);
   const handleSelectChange = (selectedOption) => {
     setService({ currency: selectedOption.value });
     getFinalCost(service, selectedOption.value);

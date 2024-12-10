@@ -11,11 +11,11 @@ import { useStore } from "@/store";
 function ServiceCard({ link, icon, name, id, img }) {
   const { setService } = useStore();
   const select = () => {
-    setService({ serviceId: id });
+    setService({ serviceId: id, serviceName: name });
   };
   return (
     <Link href={link} onClick={select}>
-      <div className="text-black flex flex-col items-center justify-center mx-3">
+      <div className="text-black flex flex-col items-center justify-center mx-2">
         {/* <TattooIcon color="white" /> */}
         <div className="w-16 h-16 rounded-full bg-blueBorder flex items-center justify-center">
           {img && (

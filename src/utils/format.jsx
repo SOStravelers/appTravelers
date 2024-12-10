@@ -93,10 +93,12 @@ export const getDayOfWeek = (date, isWorker) => {
   }
 };
 
-export const getServiceNames = (data) => {
+export const getServiceNames = (data, language) => {
   // Extraer los nombres de los servicios
   if (!data) return;
-  const serviceNames = data.services.map((service) => service.id.name);
+  const serviceNames = data.services.map(
+    (service) => service.id.name[language]
+  );
 
   // Unir los nombres en un solo string con comas
   const serviceNamesString = serviceNames.join(", ");

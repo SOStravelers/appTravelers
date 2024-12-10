@@ -47,25 +47,30 @@ export default function Summary() {
   const getData = async () => {
     const { hostelId, hour, date, workerId, subServiceId } = service;
     setSubservice(subServiceId);
-    console.log("aa");
+    console.log("aa", service);
     if (!hostelId || !workerId) router.push("/");
     setIdHostel(hostelId);
     setHour(hour);
     setDate(date);
 
-    HostelService.getBusiness(hostelId).then((response) => {
-      // console.log("hostel", response.data);
-      setHostel(response.data);
-    });
+    if (!service.multiple) {
+      HostelService.getBusiness(hostelId).then((response) => {
+        // console.log("hostel", response.data);
+        setHostel(response.data);
+      });
+    } else {
+      setHostel(null);
+      setService({ businessUser: null });
+    }
     WorkerService.getWorker(workerId).then((response) => {
       // console.log("worker", response.data);
       setWorker(response.data);
     });
     SubserviceService.getPrice({
-      businessUser: hostelId,
+      user: !service.multiple ? hostelId : workerId,
       subservice: subServiceId,
     }).then((response) => {
-      // console.log("price", response.data);
+      console.log("price", response.data);
       setService({ price: response.data.valuesToday, currency: "BRL" });
     });
   };
@@ -97,14 +102,17 @@ export default function Summary() {
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
         {languageData.read[language]}
       </h1>
-      <HostelCardSummary
-        image={hostel?.img?.imgUrl}
-        name={hostel?.businessData?.name}
-        location={hostel?.businessData?.location?.city}
-        link={`/hostel/${hostel?._id}`}
-        linkSummary={`/select-hostel/${subServiceId}`}
-        subserviceId={subServiceId}
-      />
+
+      {hostel && (
+        <HostelCardSummary
+          image={hostel?.img?.imgUrl}
+          name={hostel?.businessData?.name}
+          location={hostel?.businessData?.location?.city}
+          link={`/hostel/${hostel?._id}`}
+          linkSummary={`/select-hostel/${subServiceId}`}
+          subserviceId={subServiceId}
+        />
+      )}
       {/* Desplegable info hostel */}
 
       <div className="w-full max-w-lg">
@@ -202,9 +210,7 @@ export default function Summary() {
             isTextVisible2 ? "max-h-screen" : "max-h-0"
           }`}
         >
-          <p className=" mb-2">
-            {isWorker ? service.details["pt"] : service.details["en"]}
-          </p>
+          <p className="mb-2">{service?.details?.[language] ?? ""}</p>
         </div>
       </div>
       <div className="flex items-center w-full max-w-lg my-2">
@@ -258,7 +264,7 @@ export default function Summary() {
         </p>
       </div>
       <OutlinedButton
-        disabled={!selected || !service?.price[0]?.finalCost}
+        disabled={!selected}
         text={languageData.bookNow[language]}
         onClick={hireNow}
       />

@@ -17,7 +17,7 @@ export default class SubserviceService {
   }
   static async getPrice(data) {
     return axios.get(
-      `${this.baseUrl}/prices/business/?businessUser=${data.businessUser}&subservice=${data.subservice}`
+      `${this.baseUrl}/prices/business/?user=${data.user}&subservice=${data.subservice}`
     );
   }
 }

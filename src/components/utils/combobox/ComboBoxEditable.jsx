@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import SubserviceService from "@/services/SubserviceService";
+import { useStore } from "@/store";
 import {
   CheckOption,
   CheckOptionChecked,
@@ -9,6 +10,7 @@ import {
 const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
   const [open, setOpen] = useState(true);
   const [subservices, setSubservices] = useState([]);
+  const { language } = useStore();
 
   useEffect(() => {
     // Verificar si hay algún subservicio que cumple la condición
@@ -54,7 +56,9 @@ const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
           className="text-black border  border-greyText rounded-lg px-2 py-2 my-5 flex justify-between items-center cursor-pointer"
           onClick={() => setOpen(!open)}
         >
-          <h1 className=" text-lg ml-3">{capitalize(service?.name)}</h1>
+          <h1 className=" text-lg ml-3">
+            {capitalize(service?.name[language])}
+          </h1>
           <ArrowUpIcon
             color={"#5B78C7"}
             onClick={() => setOpen(!open)}
@@ -65,7 +69,7 @@ const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
           subservices?.length > 0 &&
           subservices.map((subservice, index) => (
             <div key={index} className="text-black flex justify-between px-4">
-              <h1>{capitalize(subservice?.name)}</h1>
+              <h1>{capitalize(subservice?.name[language])}</h1>
               {subserviceExist(service?._id, subservice?._id) ? (
                 <CheckOptionChecked
                   className="cursor-pointer"

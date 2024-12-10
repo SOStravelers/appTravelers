@@ -144,14 +144,14 @@ export default function Home({}) {
             >
               {languageData.title.service[language]}
             </h1>
-            <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2 pl-3">
+            <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2 pl-2">
               {services?.map((s, index) => (
                 <ServiceCard
                   key={index}
                   id={s.id}
                   img={s.imgUrl}
                   link={`/subservices/${s.id}`}
-                  name={s.name}
+                  name={s.name[language]}
                 />
               ))}
             </div>

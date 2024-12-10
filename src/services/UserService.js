@@ -171,9 +171,20 @@ export default class UserService {
     });
   }
   static async getUserByToken() {
-    return axios.get(`${this.baseUrl}/findUserToken`, {
-      headers: this.getHeaders(),
-    });
+    try {
+      const response = await axios.get(`${this.baseUrl}/findUserToken`, {
+        headers: this.getHeaders(),
+      });
+      return response;
+    } catch (error) {
+      console.error("Error fetching user by token:", error);
+
+      // Eliminar la cookie
+      Cookies.remove("auth.access_token");
+
+      // Redirigir al usuario
+      window.location.href = "/";
+    }
   }
   static async getUserById(id) {
     console.log("calculando");

@@ -5,8 +5,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { random } from "@/lib/utils";
 import { validationImg } from "@/utils/validation";
+import { useStore } from "@/store";
 function RecomendationCard(user) {
   const router = useRouter();
+  const { language } = useStore();
   const [isImageAccessible, setIsImageAccessible] = useState(false);
   function getRandomSubServiceName(user) {
     const allSubServices = user.workerData.services.flatMap(
@@ -22,7 +24,7 @@ function RecomendationCard(user) {
     const randomIndex = Math.floor(Math.random() * allSubServices.length);
 
     // Devuelve el nombre del subService en el índice aleatorio
-    return allSubServices[randomIndex].name;
+    return allSubServices[randomIndex].name[language];
   }
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

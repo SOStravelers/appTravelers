@@ -8,7 +8,7 @@ import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
 import { fullName, getServiceNames } from "@/utils/format";
 export default function WorkersFound() {
-  const { setService, service } = useStore();
+  const { setService, service, language } = useStore();
   const router = useRouter();
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -80,7 +80,7 @@ export default function WorkersFound() {
                   name={fullName(worker.personalData?.name)}
                   service={
                     worker?.workerData
-                      ? getServiceNames(worker?.workerData)
+                      ? getServiceNames(worker?.workerData, language)
                       : "No services"
                   }
                   score={5}

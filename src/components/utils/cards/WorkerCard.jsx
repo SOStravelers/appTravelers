@@ -45,13 +45,13 @@ function WorkerCard({
   return (
     <div
       onClick={handleSummary}
-      className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl my-2 max-w-lg"
+      className="flex justify-between items-center border-b-2 border-blueBorder rounded-2xl mr-1 my-2 max-w-lg"
     >
       <div className="flex">
         <div
           className={`${
-            isSubservice ? "w-60" : "w-20"
-          } h-20 rounded-xl mr-2 ml-3 relative`}
+            isSubservice ? "w-36" : "w-20"
+          } h-20 rounded-xl mr-2 ml-3 relative flex-none`}
         >
           <Link href={link}>
             {img && (
@@ -66,9 +66,9 @@ function WorkerCard({
           </Link>
         </div>
         <Link href={link}>
-          <div className="flex flex-col">
-            <h1 className="font-semibold">
-              {width < 420 ? truncate(name, 20) : name}
+          <div className="flex flex-col flex-grow">
+            <h1 className="font-semibold text-sm">
+              {width < 420 ? truncate(name, 40) : name}
             </h1>
             <p className="text-blackText text-xs">
               {width < 420 ? truncate(service, 26) : service}

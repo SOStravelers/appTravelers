@@ -11,7 +11,7 @@ import { set } from "date-fns";
 
 export default function Services() {
   const router = useRouter();
-  const { isWorker, user } = useStore();
+  const { isWorker, user, language } = useStore();
   const { service, setService } = useStore();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,7 +62,7 @@ export default function Services() {
               <ServiceCardGrey
                 id={s.id._id}
                 link={`/subservices/${s.id._id}`}
-                name={s.id.name}
+                name={s.id.name[language]}
                 icon={s.id.imgUrl}
                 subServices={s.subServices}
               />

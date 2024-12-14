@@ -1,0 +1,37 @@
+{
+  "bookingNumber": {
+    "en": "Booking Number",
+    "es": "Número de Reserva",
+    "fr": "Numéro de Réservation",
+    "de": "Buchungsnummer",
+    "pt": "Número da Reserva"
+  },
+  "service": {
+    "en": "Service",
+    "es": "Servicio",
+    "fr": "Service",
+    "de": "Dienstleistung",
+    "pt": "Serviço"
+  },
+  "serviceDuration": {
+    "en": "Service duration",
+    "es": "Duración del servicio",
+    "fr": "Durée du service",
+    "de": "Dauer der Dienstleistung",
+    "pt": "Duração do serviço"
+  },
+  "serviceFee": {
+    "en": "Total Service Fee",
+    "es": "Tarifa total del servicio",
+    "fr": "Frais totaux du service",
+    "de": "Gesamtkosten der Dienstleistung",
+    "pt": "Taxa total do serviço"
+  },
+  "status": {
+    "en": "Status",
+    "es": "Estado",
+    "fr": "Statut",
+    "de": "Status",
+    "pt": "Status"
+  }
+}

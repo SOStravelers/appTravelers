@@ -96,7 +96,7 @@ function Navbar() {
           {languageData.bookings[language]}
         </span>
       </button>
-
+      {/* 
       <button
         className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/chat" : "/chat")}
@@ -117,7 +117,7 @@ function Navbar() {
         >
           {languageData.chat[language]}
         </span>
-      </button>
+      </button> */}
 
       {!isWorker && (
         <button

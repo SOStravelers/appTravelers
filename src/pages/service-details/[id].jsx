@@ -7,6 +7,8 @@ import ChatService from "@/services/ChatService";
 import SmallButton from "@/components/utils/buttons/SmallButton";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import WorkerCardSumary from "@/components/utils/cards/WorkerCardSumary";
+import Image from "next/image";
+import LanguageData from "@/language/bookingDetails.json";
 import {
   PinIcon,
   ClockIcon,
@@ -337,17 +339,33 @@ function ServiceHistory() {
             onAccept={stateBookingUser}
             onCancel={cancelUserModal}
           />
-          <div className="font-semibold text-center max-w-lg mt-2 lg:my-4 xl:my-4 mb-2">
-            {isWorker ? "Local de serviço" : "Location Service"}
-          </div>
-          <HostelCardSummary
-            image={booking?.businessUser?.img?.imgUrl}
-            name={booking?.businessUser?.businessData?.name}
-            location={booking?.businessUser?.businessData?.location?.city}
-            link={`/hostel/${booking?.businessUser?._id}`}
-            subserviceId={booking?.subservice?._id}
-            go={false}
-          />
+          {booking?.businessUser && (
+            <div className="font-semibold text-center max-w-lg mt-2 lg:my-4 xl:my-4 mb-2">
+              {isWorker ? "Local de serviço" : "Location Service"}
+            </div>
+          )}
+          {/* Foto BAnner principal*/}
+          {booking?.businessUser ? (
+            <HostelCardSummary
+              image={booking?.businessUser?.img?.imgUrl}
+              name={booking?.businessUser?.businessData?.name}
+              location={booking?.businessUser?.businessData?.location?.city}
+              link={`/hostel/${booking?.businessUser?._id}`}
+              subserviceId={booking?.subservice?._id}
+              go={false}
+            />
+          ) : (
+            <div className="w-full h-28 mt-5 rounded-xl bg-blueBorder relative">
+              {booking && (
+                <Image
+                  src={booking?.subservice?.imgUrl}
+                  fill
+                  alt="imagenCover"
+                  className="object-cover rounded-xl"
+                />
+              )}
+            </div>
+          )}
 
           <div className="w-full max-w-lg">
             <div
@@ -395,7 +413,7 @@ function ServiceHistory() {
           <hr className="w-full max-w-lg text-grey" />
           <div className="mt-2 flex justify-center max-w-lg">
             <p className="text-left font-semibold">
-              {isWorker ? "Meu cliente" : "My Professional"}
+              {isWorker ? "Meu cliente" : "Partner"}
             </p>
           </div>
           {typeUser != "externalWorker" && (
@@ -435,7 +453,7 @@ function ServiceHistory() {
                       onClick={() => goToChat()}
                     />
                   )}
-                {booking.status == "available" && (
+                {booking.status == "available" && booking.businessUser && (
                   <p className="text-xs">
                     If the worker doesn&apos;t respond soon, we&apos;ll offer
                     you more options for your schedule with a sprinkle of
@@ -463,7 +481,6 @@ function ServiceHistory() {
               </div>
             </div>
           </div>
-
           <div className="w-full max-w-lg">
             <div
               className="grid grid-cols-5 gap-4 items-center cursor-pointer"
@@ -497,14 +514,21 @@ function ServiceHistory() {
           </div>
           <hr className="w-full max-w-lg  text-grey" />
           <div className="flex justify-between items-center w-full max-w-lg mt-4 mb-2">
-            <p className="text-blackText font-semibold text-lg">Status</p>
+            <p className="text-blackText font-semibold text-lg">
+              {" "}
+              {LanguageData.status[language]}
+            </p>
             <p className="text-blackBlue font-semibold text-md">
-              <StatusChip status={booking?.status} isWorker={isWorker} />
+              <StatusChip
+                status={booking?.status}
+                isWorker={isWorker}
+                language={language}
+              />
             </p>
           </div>
           <div className="flex justify-between items-center w-full max-w-lg mt-2 mb-2">
             <p className="text-blackText font-semibold text-sm">
-              Booking Number
+              {LanguageData.bookingNumber[language]}
             </p>
             <p className="text-blackBlue font-semibold text-sm">
               {booking.idKey}
@@ -513,7 +537,7 @@ function ServiceHistory() {
           <hr className="w-full max-w-lg  text-grey" />
           <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
             <p className="text-blackText font-semibold">
-              {isWorker ? "Serviço" : "Service"}
+              {LanguageData.service[language]}
             </p>
             <p className="text-blackBlue font-semibold text-md">
               {booking?.service?.name[language]} -{" "}
@@ -522,7 +546,7 @@ function ServiceHistory() {
           </div>
           <div className="flex justify-between items-end w-full max-w-lg my-1">
             <p className="text-blackText font-semibold">
-              {isWorker ? "Duração do serviço" : "Service duration"}
+              {LanguageData.serviceDuration[language]}
             </p>
             <p className="text-blackBlue font-semibold text-md">
               {booking?.duration} min
@@ -530,7 +554,7 @@ function ServiceHistory() {
           </div>
           <div className="flex justify-between items-end w-full max-w-lg my-1">
             <p className="text-blackText font-semibold">
-              {isWorker ? "Taxa total de serviço" : "Total Service Fee"}
+              {LanguageData.serviceFee[language]}
             </p>
             <p className="text-blackBlue font-semibold text-xl">
               R$ {booking?.payment?.price}

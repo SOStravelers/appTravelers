@@ -63,7 +63,7 @@ function Sidebar() {
           {languageData.bookings[language]}
         </p>
       </button>
-      <button
+      {/* <button
         onClick={() => goTo(isWorker ? "/worker/chat" : "/chat")}
         className={clsx(
           "flex items-center mb-2 pl-5 h-10 w-48 rounded-xl",
@@ -77,7 +77,7 @@ function Sidebar() {
           {" "}
           {languageData.chat[language]}
         </p>
-      </button>
+      </button> */}
       {!isWorker && (
         <button
           onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}

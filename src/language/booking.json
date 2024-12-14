@@ -137,6 +137,36 @@
       "pt": "Por favor, escolha um dia."
     }
   },
+  "serviceHistory": {
+    "requested": {
+      "en": "Requested Services",
+      "es": "Servicios Solicitados",
+      "fr": "Services Demandés",
+      "de": "Angeforderte Dienste",
+      "pt": "Serviços Solicitados"
+    },
+    "upcoming": {
+      "en": "Upcoming Services",
+      "es": "Próximos Servicios",
+      "fr": "Services à Venir",
+      "de": "Bevorstehende Dienste",
+      "pt": "Próximos Serviços"
+    },
+    "closed": {
+      "en": "Closed Services",
+      "es": "Servicios Cerrados",
+      "fr": "Services Fermés",
+      "de": "Geschlossene Dienste",
+      "pt": "Serviços Fechados"
+    },
+    "noBookings": {
+      "en": "You don't have any previous bookings",
+      "es": "No tienes reservas anteriores",
+      "fr": "Vous n'avez aucune réservation précédente",
+      "de": "Sie haben keine früheren Buchungen",
+      "pt": "Você não tem reservas anteriores"
+    }
+  },
   "workCard": {
     "today": {
       "en": "Today",

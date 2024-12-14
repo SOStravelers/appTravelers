@@ -55,7 +55,6 @@ export const StatusChip = ({ status, isWorker, language }) => {
     color: textColor,
     backgroundColor: color,
   };
-  console.log("el ");
   return <span style={style}>{LanguageData.status[status][language]}</span>;
 };
 

@@ -4,6 +4,7 @@ import BookingService from "@/services/BookingService";
 import dayjs from "dayjs";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
+import LanguageData from "@/language/booking.json";
 function ServiceHistory() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,12 +33,12 @@ function ServiceHistory() {
             color="#00A0D5"
             ariaLabel="infinity-spin-loading"
           />
-          <p className="mt-2">{isWorker ? "Searching.." : "Pesquisando..."}</p>
+          <p className="mt-2">{!isWorker ? "Searching.." : "Pesquisando..."}</p>
         </div>
       ) : (
         <>
           <h1 className="text-xl text-center my-6 max-w-lg">
-            Requested Services
+            {LanguageData.serviceHistory.requested[language]}
           </h1>
           {bookings
             .filter(
@@ -51,10 +52,22 @@ function ServiceHistory() {
                 subService={booking.subservice.name[language]}
                 status={booking.status}
                 service={booking.service.name[language]}
-                avatar={booking?.businessUser?.img?.imgUrl}
+                // avatar={booking?.businessUser?.img?.imgUrl}
+                avatar={
+                  booking.businessUser
+                    ? booking?.businessUser?.img?.imgUrl
+                    : booking?.subservice?.imgUrl
+                }
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                name={`${booking?.businessUser?.businessData?.name}`}
+                // name={`${booking?.businessUser?.businessData?.name}`}
+                name={`${
+                  booking.businessUser
+                    ? booking?.businessUser?.businessData?.name
+                    : booking?.workerUser?.personalData?.name?.first +
+                      " " +
+                      booking?.workerUser?.personalData?.name?.last
+                }`}
               />
             ))}
           {!loading &&
@@ -68,7 +81,7 @@ function ServiceHistory() {
             )}
 
           <h1 className="text-xl text-center my-8 max-w-lg">
-            Upcoming Services
+            {LanguageData.serviceHistory.upcoming[language]}
           </h1>
           {bookings
             .filter((booking) => booking.status === "confirmed")
@@ -79,10 +92,22 @@ function ServiceHistory() {
                 subService={booking.subservice.name[language]}
                 status={booking.status}
                 service={booking.service.name[language]}
-                avatar={booking?.businessUser?.img?.imgUrl}
+                // avatar={booking?.businessUser?.img?.imgUrl}
+                avatar={
+                  booking.businessUser
+                    ? booking?.businessUser?.img?.imgUrl
+                    : booking?.subservice?.imgUrl
+                }
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                name={`${booking?.businessUser?.businessData?.name}`}
+                // name={`${booking?.businessUser?.businessData?.name}`}
+                name={`${
+                  booking.businessUser
+                    ? booking?.businessUser?.businessData?.name
+                    : booking?.workerUser?.personalData?.name?.first +
+                      " " +
+                      booking?.workerUser?.personalData?.name?.last
+                }`}
               />
             ))}
           {!loading &&
@@ -93,7 +118,9 @@ function ServiceHistory() {
               </p>
             )}
 
-          <h1 className="text-xl text-center my-8 max-w-lg">Closed services</h1>
+          <h1 className="text-xl text-center my-8 max-w-lg">
+            {LanguageData.serviceHistory.closed[language]}
+          </h1>
           {bookings
             .filter(
               (booking) =>
@@ -106,10 +133,22 @@ function ServiceHistory() {
                 subService={booking.subservice.name[language]}
                 status={booking.status}
                 service={booking.service.name[language]}
-                avatar={booking?.businessUser?.img?.imgUrl}
+                // avatar={booking?.businessUser?.img?.imgUrl}
+                avatar={
+                  booking.businessUser
+                    ? booking?.businessUser?.img?.imgUrl
+                    : booking?.subservice?.imgUrl
+                }
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                name={`${booking?.businessUser?.businessData?.name}`}
+                // name={`${booking?.businessUser?.businessData?.name}`}
+                name={`${
+                  booking.businessUser
+                    ? booking?.businessUser?.businessData?.name
+                    : booking?.workerUser?.personalData?.name?.first +
+                      " " +
+                      booking?.workerUser?.personalData?.name?.last
+                }`}
               />
             ))}
           {!loading &&
@@ -118,7 +157,7 @@ function ServiceHistory() {
                 booking.status === "completed" || booking.status === "canceled"
             ).length === 0 && (
               <p className="text-center text-greyText max-w-lg my-3">
-                {"You don't have any previous bookings"}
+                {LanguageData.serviceHistory.noBookings[language]}
               </p>
             )}
         </>

@@ -16,7 +16,7 @@ function WorkerCardBooking({
   subService,
   status,
 }) {
-  const { isWorker } = useStore();
+  const { isWorker, language } = useStore();
   const router = useRouter();
 
   const goToDetails = () => {
@@ -73,13 +73,17 @@ function WorkerCardBooking({
               </div>
             )}
             <div className="flex flex-grow justify-end">
-              <StatusChip status={status} isWorker={isWorker} />
+              <StatusChip
+                status={status}
+                isWorker={isWorker}
+                language={language}
+              />
             </div>
           </div>
           <div className="flex items-center">
             <ClockIcon color={"#00A0D5"} className="mr-1" />
             <p className="text-blackText text-sm">
-              {hour} | {getDayOfWeek(date, isWorker)}
+              {hour} | {getDayOfWeek(date, language)}
             </p>
           </div>
         </div>

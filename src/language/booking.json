@@ -1,0 +1,163 @@
+{
+  "tabs": {
+    "next": {
+      "en": "Nexts",
+      "es": "Siguientes",
+      "fr": "Suivants",
+      "de": "Weitere",
+      "pt": "Próximos"
+    },
+    "day": {
+      "en": "Day",
+      "es": "Día",
+      "fr": "Jour",
+      "de": "Tag",
+      "pt": "Dia"
+    },
+    "month": {
+      "en": "Month",
+      "es": "Mes",
+      "fr": "Mois",
+      "de": "Monat",
+      "pt": "Mês"
+    }
+  },
+  "status": {
+    "requested": {
+      "en": "Requested",
+      "es": "Solicitado",
+      "fr": "Demandé",
+      "de": "Angefordert",
+      "pt": "Solicitado"
+    },
+    "available": {
+      "en": "Available",
+      "es": "Disponible",
+      "fr": "Disponible",
+      "de": "Verfügbar",
+      "pt": "Disponível"
+    },
+    "confirmed": {
+      "en": "Confirmed",
+      "es": "Confirmado",
+      "fr": "Confirmé",
+      "de": "Bestätigt",
+      "pt": "Confirmado"
+    },
+    "canceled": {
+      "en": "Canceled",
+      "es": "Cancelado",
+      "fr": "Annulé",
+      "de": "Abgesagt",
+      "pt": "Cancelado"
+    },
+    "completed": {
+      "en": "Completed",
+      "es": "Completado",
+      "fr": "Terminé",
+      "de": "Abgeschlossen",
+      "pt": "Completado"
+    },
+    "failed": {
+      "en": "Failed",
+      "es": "Fallido",
+      "fr": "échoué",
+      "de": "Fehlgeschlagen",
+      "pt": "Falhou"
+    }
+  },
+  "section1": {
+    "today": {
+      "en": "Today",
+      "es": "Hoy",
+      "fr": "Aujourd'hui",
+      "de": "Heute",
+      "pt": "Hoje"
+    },
+    "nextDays": {
+      "en": "Next Days",
+      "es": "Próximos Días",
+      "fr": "Prochains Jours",
+      "de": "Nächste Tage",
+      "pt": "Próximos Dias"
+    },
+    "noBookings": {
+      "nextDays": {
+        "en": "No bookings for the next days",
+        "es": "No hay reservas para los próximos días",
+        "fr": "Aucune réservation pour les prochains jours",
+        "de": "Keine Buchungen für die nächsten Tage",
+        "pt": "Sem reservas para os próximos dias"
+      },
+      "today": {
+        "en": "No bookings for today",
+        "es": "No hay reservas para hoy",
+        "fr": "Aucune réservation pour aujourd'hui",
+        "de": "Keine Buchungen für heute",
+        "pt": "Sem reservas para hoje"
+      }
+    }
+  },
+  "section2": {
+    "nextCommitments": {
+      "en": "My next Commitments",
+      "es": "Mis próximos compromisos",
+      "fr": "Mes prochains engagements",
+      "de": "Meine nächsten Verpflichtungen",
+      "pt": "Meus próximos compromissos"
+    },
+    "noBookings": {
+      "en": "No bookings yet",
+      "es": "Aún no hay reservas",
+      "fr": "Pas encore de réservations",
+      "de": "Noch keine Buchungen",
+      "pt": "Ainda não há reservas"
+    }
+  },
+  "section3": {
+    "title": {
+      "en": "My monthly calendar",
+      "es": "Mi calendario mensual",
+      "fr": "Mon calendrier mensuel",
+      "de": "Mein monatlicher Kalender",
+      "pt": "Meu calendário mensal"
+    },
+    "buttonRecords": {
+      "en": "See all my records",
+      "es": "Ver todos mis registros",
+      "fr": "Voir tous mes enregistrements",
+      "de": "Alle meine Aufzeichnungen ansehen",
+      "pt": "Ver todos os meus registros"
+    },
+    "pickDay": {
+      "en": "Please pick a day.",
+      "es": "Por favor, selecciona un día.",
+      "fr": "Veuillez choisir un jour.",
+      "de": "Bitte wählen Sie einen Tag aus.",
+      "pt": "Por favor, escolha um dia."
+    }
+  },
+  "workCard": {
+    "today": {
+      "en": "Today",
+      "es": "Hoy",
+      "fr": "Aujourd'hui",
+      "de": "Heute",
+      "pt": "Hoje"
+    },
+    "yesterday": {
+      "en": "Yesterday",
+      "es": "Ayer",
+      "fr": "Hier",
+      "de": "Gestern",
+      "pt": "Ontem"
+    },
+    "tomorrow": {
+      "en": "Tomorrow",
+      "es": "Mañana",
+      "fr": "Demain",
+      "de": "Morgen",
+      "pt": "Amanhã"
+    }
+  }
+}

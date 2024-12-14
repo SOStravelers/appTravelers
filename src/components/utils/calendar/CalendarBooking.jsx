@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
+import { enUS, es, fr, de, ptBR } from "date-fns/locale";
 import OutlinedButton from "../buttons/OutlinedButton";
 import "react-day-picker/dist/style.css";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import BookingService from "@/services/BookingService";
 import WorkerCardBooking from "../cards/WorkerCardBooking";
 import { useStore } from "@/store";
 import moment from "moment";
-
+import LanguageData from "@/language/booking.json";
 function CalendarBooking() {
   const store = useStore();
   const { language } = store;
@@ -26,6 +27,14 @@ function CalendarBooking() {
     borderRadius: "50%",
     padding: "0px",
     boxSizing: "border-box",
+  };
+
+  const locales = {
+    en: enUS,
+    es: es,
+    fr: fr,
+    de: de,
+    pt: ptBR,
   };
 
   useEffect(() => {
@@ -95,7 +104,11 @@ function CalendarBooking() {
     }
   };
 
-  let footer = <p className="my-2 text-center">Please pick a day.</p>;
+  let footer = (
+    <p className="my-2 text-center">
+      {LanguageData.section3.pickDay[language]}
+    </p>
+  );
   if (showBookings.length > 0) {
     footer = <div className="w-full "></div>;
   }
@@ -113,13 +126,21 @@ function CalendarBooking() {
         modifiersStyles={{ booked: bookedStyle }}
         onDayClick={handleDayClick}
         onMonthChange={setMonth}
+        locale={locales[language]} // Aquí asignamos el idioma
       />
       <div className="justify-center md:px-10  mt-4 ">
         {showBookings.map((booking) => (
           <WorkerCardBooking
             key={booking._id}
             booking={booking}
-            avatar={booking?.workerUser?.img?.imgUrl}
+            subService={booking.subservice.name[language]}
+            // avatar={booking?.workerUser?.img?.imgUrl}
+            avatar={
+              booking.businessUser
+                ? booking?.businessUser?.img?.imgUrl
+                : booking?.subservice?.imgUrl
+            }
+            // status={booking.status}
             status={booking.status}
             date={booking.date.stringData}
             hour={booking.startTime.stringData}
@@ -130,7 +151,9 @@ function CalendarBooking() {
       </div>
       <div className="justify-center mt-14 px-10 md:px-20 ">
         <Link href={`/service-history`}>
-          <OutlinedButton text={"See all my records"} />
+          <OutlinedButton
+            text={LanguageData.section3.buttonRecords[language]}
+          />
         </Link>
       </div>
     </div>

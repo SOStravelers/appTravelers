@@ -175,11 +175,14 @@ export default class BookingService {
       }
     );
   }
-  static async getWeekUser(date) {
+  static async getWeekUser(date, language) {
     console.log("...getWeekUser");
-    return axios.get(`${this.baseUrl}/client/week?date=${date}`, {
-      headers: this.getHeaders(),
-    });
+    return axios.get(
+      `${this.baseUrl}/client/week?date=${date}&language=${language}`,
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
   static async getWeekWorker(date) {
     console.log("...getWeekWorker");

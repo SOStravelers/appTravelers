@@ -5,6 +5,7 @@ import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import { ReservationIcon } from "@/constants/icons";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
+import LanguageData from "@/language/booking.json";
 function DaySection({
   weekDays,
   selectedDay,
@@ -35,7 +36,9 @@ function DaySection({
         ))}
       </div>
 
-      <h1 className="text-center max-w-lg text-xl my-3">My next Commitments</h1>
+      <h1 className="text-center max-w-lg text-xl my-3">
+        {LanguageData.section2.nextCommitments[language]}
+      </h1>
 
       <div className="flex flex-col">
         {loading ? (
@@ -55,16 +58,28 @@ function DaySection({
               subService={booking.subservice.name[language]}
               status={booking.status}
               service={booking.service.name[language]}
-              avatar={booking?.businessUser?.img?.imgUrl}
+              // avatar={booking?.businessUser?.img?.imgUrl}
+              avatar={
+                booking.businessUser
+                  ? booking?.businessUser?.img?.imgUrl
+                  : booking?.subservice?.imgUrl
+              }
               date={booking.date.stringData}
               hour={booking.startTime.stringData}
-              name={`${booking?.businessUser?.businessData?.name}`}
+              // name={`${booking?.businessUser?.businessData?.name}`}
+              name={`${
+                booking.businessUser
+                  ? booking?.businessUser?.businessData?.name
+                  : booking?.workerUser?.personalData?.name?.first +
+                    " " +
+                    booking?.workerUser?.personalData?.name?.last
+              }`}
             />
           ))
         ) : (
           <>
             <p className="text-center text-greyText max-w-lg my-10">
-              {isWorker ? "Não há reservas ainda" : "No bookings yet"}
+              {LanguageData.section2.noBookings[language]}
             </p>
             <div className="max-w-lg text-xl ml-2 my-3 flex justify-center">
               <ReservationIcon />

@@ -4,6 +4,7 @@ import BookingService from "@/services/BookingService";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
+import LanguageData from "@/language/booking.json";
 function ListSection() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +42,7 @@ function ListSection() {
   return (
     <div className="mt-10">
       <h1 className="text-center max-w-lg text-xl my-5">
-        {isWorker ? "Hoje" : "Today"}
+        {LanguageData.section1.today[language]}
       </h1>
       <div className="flex flex-col">
         {loading ? (
@@ -66,10 +67,21 @@ function ListSection() {
                 subService={booking.subservice.name[language]}
                 status={booking.status}
                 service={booking.service.name[language]}
-                avatar={booking?.businessUser?.img?.imgUrl}
+                avatar={
+                  booking.businessUser
+                    ? booking?.businessUser?.img?.imgUrl
+                    : booking?.subservice?.imgUrl
+                }
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                name={`${booking?.businessUser?.businessData?.name}`}
+                name={`${
+                  booking.businessUser
+                    ? booking?.businessUser?.businessData?.name
+                    : booking?.workerUser?.personalData?.name?.first +
+                      " " +
+                      booking?.workerUser?.personalData?.name?.last
+                }`}
+                // name={`${booking?.businessUser?.businessData?.name}`}
               />
             ))
         )}
@@ -79,11 +91,11 @@ function ListSection() {
               booking.date.stringData === dayjs().format("YYYY-MM-DD")
           ).length === 0 && (
             <p className="text-center text-greyText max-w-lg my-3">
-              {isWorker ? "Não há reservas para hoje" : "No bookings for today"}
+              {LanguageData.section1.noBookings.today[language]}
             </p>
           )}
         <h1 className="text-center max-w-lg text-xl my-5">
-          {isWorker ? "Próximos dias" : "Next Days"}
+          {LanguageData.section1.nextDays[language]}
         </h1>
         {loading ? (
           <div className="max-w-lg flex flex-col items-center justify-center">
@@ -107,10 +119,21 @@ function ListSection() {
                 subService={booking.subservice.name[language]}
                 status={booking.status}
                 service={booking.service.name[language]}
-                avatar={booking?.businessUser?.img?.imgUrl}
+                avatar={
+                  booking.businessUser
+                    ? booking?.businessUser?.img?.imgUrl
+                    : booking?.subservice?.imgUrl
+                }
                 date={booking.date.stringData}
                 hour={booking.startTime.stringData}
-                name={`${booking?.businessUser?.businessData?.name}`}
+                // name={`${booking?.businessUser?.businessData?.name}`}
+                name={`${
+                  booking.businessUser
+                    ? booking?.businessUser?.businessData?.name
+                    : booking?.workerUser?.personalData?.name?.first +
+                      " " +
+                      booking?.workerUser?.personalData?.name?.last
+                }`}
               />
             ))
         )}
@@ -120,7 +143,7 @@ function ListSection() {
               booking.date.stringData !== dayjs().format("YYYY-MM-DD")
           ).length === 0 && (
             <p className="text-center text-greyText max-w-lg my-10">
-              No bookings for the next days
+              {LanguageData.section1.noBookings.nextDays[language]}
             </p>
           )}
       </div>

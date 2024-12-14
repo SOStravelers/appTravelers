@@ -7,7 +7,8 @@ import {
   addDays,
 } from "date-fns";
 import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
-import { ptBR, enUS } from "date-fns/locale";
+import { ptBR, enUS, de, fr, es } from "date-fns/locale";
+import LanguageData from "@/language/booking.json";
 
 export const fullName = (data) => {
   if (!data) return "";
@@ -15,37 +16,28 @@ export const fullName = (data) => {
   return first + " " + (last ?? "");
 };
 
-export const StatusChip = ({ status, isWorker }) => {
+export const StatusChip = ({ status, isWorker, language }) => {
   let color;
   let textColor = "white"; // Define textColor here
-  let statusPortugues = status;
-  let newStatus = status;
   switch (status) {
     case "requested":
       color = "grey";
-      statusPortugues = "Solicitado";
       break;
     case "available":
-      if (isWorker) {
+      if (!isWorker) {
         color = "grey";
-        statusPortugues = "Dispónivel";
-      } else {
-        color = "grey";
-        newStatus = "Requested";
+        status = "requested";
       }
       break;
     case "completed":
       color = "green";
-      statusPortugues = "Completado";
       break;
     case "canceled":
       color = "#e77b7b";
-      statusPortugues = "Cancelado";
       break;
     case "confirmed":
       color = "#92ef72";
       textColor = "black";
-      statusPortugues = "Confirmado";
       break;
     default:
       color = "gray";
@@ -63,17 +55,24 @@ export const StatusChip = ({ status, isWorker }) => {
     color: textColor,
     backgroundColor: color,
   };
-
-  return <span style={style}>{isWorker ? statusPortugues : newStatus}</span>;
+  console.log("el ");
+  return <span style={style}>{LanguageData.status[status][language]}</span>;
 };
 
-export const getDayOfWeek = (date, isWorker) => {
+export const getDayOfWeek = (date, language) => {
+  const locales = {
+    en: enUS,
+    pt: ptBR,
+    es: es,
+    fr: fr,
+    de: de,
+  };
   const timeZone = "America/Sao_Paulo";
   const zonedDate = utcToZonedTime(date, timeZone);
-  const locale = isWorker ? ptBR : enUS;
-  const today = isWorker ? "hoje" : "today";
-  const yesterday = isWorker ? "ontem" : "yesterday";
-  const tomorrow = isWorker ? "amanhã" : "tomorrow";
+  const locale = locales[language];
+  const today = LanguageData.workCard.today[language];
+  const yesterday = LanguageData.workCard.yesterday[language];
+  const tomorrow = LanguageData.workCard.tomorrow[language];
 
   if (isToday(zonedDate)) {
     return today;

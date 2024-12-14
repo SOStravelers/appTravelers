@@ -6,6 +6,7 @@ import DaySection from "@/components/booking/DaySection";
 import MonthSection from "@/components/booking/MonthSection";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import ListSection from "@/components/bookingWorker/ListSection";
+import LanguageData from "@/language/booking.json";
 import {
   SECTION_ONE,
   SECTION_TWO,
@@ -21,7 +22,7 @@ export default function Booking() {
   const store = useStore();
   const [weekDays, setWeekDays] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { loginModal, setLoginModal, setService } = store;
+  const { loginModal, setLoginModal, setService, language } = store;
   var user = Cookies.get("auth.user_id");
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(today.format("DD"));
@@ -31,7 +32,9 @@ export default function Booking() {
   const setWeek = async () => {
     try {
       const day = today.format("YYYY-MM-DD");
-      const newWeekDays = await BookingService.getWeekUser(day);
+      console.log("el dia", day);
+      const newWeekDays = await BookingService.getWeekUser(day, language);
+      console.log("hola", newWeekDays.data);
       setWeekDays(newWeekDays.data);
     } catch (err) {}
   };
@@ -51,6 +54,7 @@ export default function Booking() {
   const comeBooking = async () => {
     try {
       const day = weekDays.find((day) => day.number === selectedDay);
+      console.log("buen dia", day);
       if (user) {
         BookingService.getBookingsByDay(day.date).then((res) => {
           if (res) {
@@ -99,9 +103,9 @@ export default function Booking() {
       <ThreeSwitchButtons
         actualView={actualView}
         setActualView={setActualView}
-        titleOne="Next"
-        titleTwo="Day"
-        titleThree="Month"
+        titleOne={LanguageData.tabs.next[language]}
+        titleTwo={LanguageData.tabs.day[language]}
+        titleThree={LanguageData.tabs.month[language]}
       />
       {actualView === SECTION_ONE ? (
         <ListSection />

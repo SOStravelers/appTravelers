@@ -31,7 +31,7 @@ function WorkerCardBooking({
       onClick={() => goToDetails()}
     >
       <div className="flex w-full flex-row items-center">
-        <div className="w-16 h-16 rounded-xl  bg-blueBorder mr-2 relative">
+        <div className="w-20 h-16 rounded-xl  bg-blueBorder mr-2 relative">
           <Image
             src={avatar ?? "/assets/proovedor.png"}
             fill
@@ -68,7 +68,8 @@ function WorkerCardBooking({
                   style={{ marginTop: "2px" }}
                   className="text-blackText text-sm ml-1"
                 >
-                  {service} - {subService}
+                  {/* {service} - {subService} */}
+                  {subService}
                 </p>
               </div>
             )}

@@ -1,0 +1,46 @@
+{
+  "selectDate": {
+    "en": "Select Reservation Date",
+    "es": "Selecciona la Fecha de Reserva",
+    "fr": "Sélectionnez la Date de Réservation",
+    "de": "Wählen Sie das Reservierungsdatum",
+    "pt": "Selecione a Data da Reserva"
+  },
+  "calendar": {
+    "chooseTime": {
+      "en": "Choose the time",
+      "es": "Elige la hora",
+      "fr": "Choisissez l'heure",
+      "de": "Wählen Sie die Uhrzeit",
+      "pt": "Escolha o horário"
+    },
+    "timeZone": {
+      "en": "Brazil time zone (GMT-3)",
+      "es": "Zona horaria de Brasil (GMT-3)",
+      "fr": "Fuseau horaire du Brésil (GMT-3)",
+      "de": "Brasilianische Zeitzone (GMT-3)",
+      "pt": "Fuso horário do Brasil (GMT-3)"
+    },
+    "anotherDay": {
+      "en": "Choose another day.",
+      "es": "Elige otro día.",
+      "fr": "Choisissez un autre jour.",
+      "de": "Wählen Sie einen anderen Tag.",
+      "pt": "Escolha outro dia."
+    },
+    "nextButton": {
+      "en": "Next",
+      "es": "Siguiente",
+      "fr": "Suivant",
+      "de": "Weiter",
+      "pt": "Próximo"
+    },
+    "backButton": {
+      "en": "Back",
+      "es": "Atrás",
+      "fr": "Précédent",
+      "de": "Zurück",
+      "pt": "Voltar"
+    }
+  }
+}

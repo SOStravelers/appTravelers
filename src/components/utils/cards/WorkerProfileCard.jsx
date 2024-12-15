@@ -129,11 +129,11 @@ function WorkerProfileCard({ name, services, score, avatar }) {
           <p className="text-blackText">{score}</p>
           <p className="text-blackText mr-2">{` (+50)`}</p>
 
-          {fromFavorite && (
+          {/* {fromFavorite && (
             <Link href={"/services/" + router.query.id}>
               <SmallButton text={"Book now!"} />
             </Link>
-          )}
+          )} */}
         </div>
       </div>
     </div>

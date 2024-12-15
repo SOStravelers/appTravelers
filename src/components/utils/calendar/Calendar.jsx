@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { DayPicker } from "react-day-picker";
+import { enUS, es, fr, de, ptBR } from "date-fns/locale";
 import TimeButton from "../buttons/TimeButton";
 import OutlinedButton from "../buttons/OutlinedButton";
 import "react-day-picker/dist/style.css";
@@ -9,10 +10,10 @@ import ScheduleService from "@/services/ScheduleService";
 import { useStore } from "@/store";
 import moment from "moment";
 import { formatISO, sub } from "date-fns";
-
+import languageData from "@/language/reservation.json";
 function Calendar({ id }) {
   const router = useRouter();
-  const { service, setService, isWorker } = useStore();
+  const { service, setService, isWorker, language } = useStore();
   const [time, setTime] = useState();
   const [fromFavorite, setFromFavorite] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,14 @@ function Calendar({ id }) {
     minute: "2-digit",
     hour12: false,
   });
+
+  const locales = {
+    en: enUS,
+    es: es,
+    fr: fr,
+    de: de,
+    pt: ptBR,
+  };
 
   useEffect(() => {
     if (localStorage.getItem("fromFavorite")) {
@@ -191,8 +200,12 @@ function Calendar({ id }) {
   } else if (selectedDay && schedule.length > 0 && !loading && !isWorker) {
     footer = (
       <div>
-        <h1 className="font-semibold text-xl mt-2">Choose de time</h1>
-        <h2 className="font-semibold text-sm mb-1">Brazil time zone (GTM-3)</h2>
+        <h1 className="font-semibold text-xl mt-2">
+          {languageData.calendar.chooseTime[language]}
+        </h1>
+        <h2 className="font-semibold text-sm mb-1">
+          {languageData.calendar.timeZone[language]}
+        </h2>
         <div className="w-full flex flex-wrap justify-center mb-2 mt-3">
           {intervals.length > 0 ? (
             intervals.map((hour, index) => (
@@ -204,10 +217,18 @@ function Calendar({ id }) {
               />
             ))
           ) : (
-            <span className="mt-4">Choose another day.</span>
+            <span className="mt-4">
+              {" "}
+              {languageData.calendar.anotherDay[language]}
+            </span>
           )}
         </div>
-        {time && <OutlinedButton text={"Next"} onClick={selectTime} />}
+        {time && (
+          <OutlinedButton
+            text={languageData.calendar.nextButton[language]}
+            onClick={selectTime}
+          />
+        )}
       </div>
     );
   } else if (schedule.length == 0 && !loading && !isWorker) {
@@ -215,9 +236,12 @@ function Calendar({ id }) {
       <div>
         {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
         <h1 className="font-semibold text-sm mt-2">
-          Not schedule available, choose another hostel.
+          Not schedule available, choose another.
         </h1>
-        <OutlinedButton text={"Back"} onClick={comeBack} />
+        <OutlinedButton
+          text={languageData.calendar.backButton[language]}
+          onClick={comeBack}
+        />
       </div>
     );
   } else if (isWorker) {
@@ -245,6 +269,7 @@ function Calendar({ id }) {
           }
           onSelect={setSelected}
           footer={footer}
+          locale={locales[language]}
         />
       ) : (
         <DayPicker

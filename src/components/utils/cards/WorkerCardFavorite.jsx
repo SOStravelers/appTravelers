@@ -17,7 +17,7 @@ function WorkerCardFavorite({
   showArrow = true,
   id,
 }) {
-  const { setService } = useStore();
+  const { setService, language } = useStore();
   const router = useRouter();
 
   const handleWorkerSelection = () => {
@@ -32,9 +32,9 @@ function WorkerCardFavorite({
     let servicesString = "";
     services?.forEach((service, index) => {
       if (index === 0) {
-        servicesString += service.id.name;
+        servicesString += service.id.name[language];
       } else {
-        servicesString += ", " + service.id.name;
+        servicesString += ", " + service.id.name[language];
       }
     });
     return servicesString;

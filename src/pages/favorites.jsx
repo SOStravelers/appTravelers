@@ -7,10 +7,12 @@ import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import { FavoritePicture } from "@/constants/icons";
 import { Rings } from "react-loader-spinner";
+import languageData from "@/language/favorites.json";
+
 export default function Favorites() {
   const store = useStore();
   const router = useRouter();
-  const { loginModal, setLoginModal, setService } = store;
+  const { loginModal, setLoginModal, setService, language } = store;
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -59,7 +61,9 @@ export default function Favorites() {
   };
   return (
     <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <h1 className="my-3 font-semibold text-center max-w-lg">My favorites</h1>
+      <h1 className="my-3 font-semibold text-center max-w-lg">
+        {languageData.title[language]}
+      </h1>
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings
@@ -92,7 +96,7 @@ export default function Favorites() {
       ) : (
         <div>
           <p className="text-center text-greyText max-w-lg  lg:my-4 xl:my-4 mb-2">
-            No favorites yet
+            {languageData.noFavorites[language]}
           </p>
           <div className="max-w-lg text-xl my-3 flex justify-center">
             <FavoritePicture />

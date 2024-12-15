@@ -7,6 +7,7 @@ import { random } from "@/lib/utils";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
 import { fullName, getServiceNames } from "@/utils/format";
+import languageData from "@/language/workersFound.json";
 export default function WorkersFound() {
   const { setService, service, language } = useStore();
   const router = useRouter();
@@ -68,8 +69,7 @@ export default function WorkersFound() {
       ) : workers.length > 0 ? (
         <>
           <h1 className="mt-1 mb-2 text-grey px-1 text-sm text-center max-w-lg">
-            These are the available workers, select the one that best suits your
-            needs.
+            {languageData.title[language]}
           </h1>
 
           <div className="flex flex-col items-center">
@@ -97,7 +97,7 @@ export default function WorkersFound() {
       ) : (
         <div className="px-4">
           <h1 className="mt-1 mb-2 text-grey px-1 text-sm text-center max-w-lg">
-            These are not the available workers, select another Date
+            {languageData.noWorkers[language]}
           </h1>
           <OutlinedButton text={"Back"} onClick={comeBack} />
         </div>

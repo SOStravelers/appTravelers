@@ -1,0 +1,16 @@
+{
+  "title": {
+    "en": "My favorites",
+    "es": "Mis favoritos",
+    "fr": "Mes favoris",
+    "de": "Meine Favoriten",
+    "pt": "Meus favoritos"
+  },
+  "noFavorites": {
+    "en": "You don't have any favorites yet",
+    "es": "Aún no tienes favoritos",
+    "fr": "Vous n'avez pas encore de favoris",
+    "de": "Du hast noch keine Favoriten",
+    "pt": "Você ainda não tem favoritos"
+  }
+}

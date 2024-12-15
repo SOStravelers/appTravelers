@@ -1,0 +1,16 @@
+{
+  "title": {
+    "en": "These are the available partners, select the one that best suits your needs.",
+    "es": "Estos son los socios disponibles, selecciona el que mejor se adapte a tus necesidades.",
+    "fr": "Voici les partenaires disponibles, sélectionnez celui qui correspond le mieux à vos besoins.",
+    "de": "Dies sind die verfügbaren Partner, wählen Sie denjenigen aus, der am besten zu Ihren Bedürfnissen passt.",
+    "pt": "Estes são os parceiros disponíveis, selecione o que melhor atende às suas necessidades."
+  },
+  "noWorkers": {
+    "en": "It seems there are no partners available on this date. Feel free to choose another one!",
+    "es": "Parece que no hay socios disponibles en esta fecha. ¡Puedes elegir otra sin problema!",
+    "fr": "Il semble qu'aucun partenaire ne soit disponible à cette date. N'hésitez pas à en choisir une autre !",
+    "de": "Es scheint, dass an diesem Datum keine Partner verfügbar sind. Wählen Sie doch einfach ein anderes!",
+    "pt": "Parece que não há parceiros disponíveis nesta data. Fique à vontade para escolher outra!"
+  }
+}

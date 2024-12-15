@@ -61,5 +61,41 @@
     "fr": "Informations sur l'emplacement",
     "de": "Standortinformationen",
     "pt": "Informações de localizaçãoo"
+  },
+  "morePeople": {
+    "en": "More people added",
+    "es": "Más personas añadidas",
+    "fr": "Plus de personnes ajoutées",
+    "de": "Weitere Personen hinzugefügt",
+    "pt": "Mais pessoa,s adicionadas"
+  },
+  "seeMap": {
+    "en": "See on map",
+    "es": "Ver en el mapa",
+    "fr": "Voir sur la carte",
+    "de": "Auf der Karte ansehen",
+    "pt": "Ver no mapa"
+  },
+  "noPeople": {
+    "en": "No people added",
+    "es": "No hay personas añadidas",
+    "fr": "Aucune personne ajoutée",
+    "de": "Keine Personen hinzugefügt",
+    "pt": "Nenhuma pessoa adicionada"
+  },
+  "msgWhatsapp1": {
+    "en": "Hello! I have hired the service:",
+    "es": "¡Hola! He contratado el servicio:",
+    "fr": "Bonjour ! J'ai commandé le service :",
+    "de": "Hallo! Ich habe den Service gebucht:",
+    "pt": "Olá! Eu contratei o serviço:"
+  },
+
+  "msgWhatsapp2": {
+    "en": "via **SOS Travel**, I have a question",
+    "es": "por *SOS Travel*, tengo una consulta",
+    "fr": "par *SOS Travel*, j'ai une question",
+    "de": "von *SOS Travel*, ich habe eine Frage",
+    "pt": "pela *SOS Travel*, tenho uma dúvida"
   }
 }

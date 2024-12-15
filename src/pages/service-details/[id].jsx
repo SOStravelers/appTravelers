@@ -14,6 +14,7 @@ import {
   ClockIcon,
   CircleCheckIcon,
   ArrowUpIcon,
+  WhatsappIcon,
 } from "@/constants/icons";
 import { useStore } from "@/store";
 import BookingService from "@/services/BookingService";
@@ -42,6 +43,7 @@ function ServiceHistory() {
   const { isWorker, user, language } = useStore();
   const [isTextVisible1, setIsTextVisible1] = useState(false);
   const [isTextVisible2, setIsTextVisible2] = useState(false);
+  const [isTextVisible3, setIsTextVisible3] = useState(false);
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   const [openUserModal, setOpenUserModal] = useState(false);
   const [dataModal, setDataModal] = useState({}); // [title, text, buttonText]
@@ -75,6 +77,9 @@ function ServiceHistory() {
   };
   const toggleText2 = () => {
     setIsTextVisible2(!isTextVisible2);
+  };
+  const toggleText3 = () => {
+    setIsTextVisible3(!isTextVisible3);
   };
   const getBooking = async () => {
     try {
@@ -282,24 +287,40 @@ function ServiceHistory() {
     }
   };
   const goToChat = () => {
-    ChatService.createChatRoom({
-      booking: booking?._id,
-      user: isWorker ? booking?.clientUser?._id : booking?.workerUser?._id,
-    }).then((res) => {
-      if (res.status === 200) {
-        console.log(res.data);
-        router.push({
-          pathname: isWorker
-            ? `/worker/chat/${res.data._id}`
-            : `/chat/${res.data._id}`,
-          query: {
-            idWorker: booking?.workerUser?._id,
+    // ChatService.createChatRoom({
+    //   booking: booking?._id,
+    //   user: isWorker ? booking?.clientUser?._id : booking?.workerUser?._id,
+    // }).then((res) => {
+    //   if (res.status === 200) {
+    //     console.log(res.data);
+    //     router.push({
+    //       pathname: isWorker
+    //         ? `/worker/chat/${res.data._id}`
+    //         : `/chat/${res.data._id}`,
+    //       query: {
+    //         idWorker: booking?.workerUser?._id,
 
-            idClient: booking?.clientUser?._id,
-          },
-        });
-      }
-    });
+    //         idClient: booking?.clientUser?._id,
+    //       },
+    //     });
+    //   }
+    // });
+
+    const whatsappNumber = booking?.workerUser?.workerData?.phone || ""; // Número del objeto booking
+    const message =
+      LanguageData.msgWhatsapp1[language] +
+      " " +
+      booking?.subservice?.name[language] +
+      " " +
+      LanguageData.msgWhatsapp2[language]; // Mensaje opcional
+    const encodedMessage = encodeURIComponent(message);
+    window.open(
+      `https://wa.me/${whatsappNumber.replace(
+        /\D/g,
+        ""
+      )}?text=${encodedMessage}`,
+      "_blank"
+    );
   };
 
   return (
@@ -344,6 +365,12 @@ function ServiceHistory() {
               {isWorker ? "Local de serviço" : "Location Service"}
             </div>
           )}
+
+          <div className="flex justify-center items-center w-full max-w-lg mt-5 mb-2">
+            <p className="text-blackBlue font-semibold text-md">
+              {booking?.subservice?.name[language]}
+            </p>
+          </div>
           {/* Foto BAnner principal*/}
           {booking?.businessUser ? (
             <HostelCardSummary
@@ -401,9 +428,7 @@ function ServiceHistory() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <SmallButton
-                    text={isWorker ? "Veja no mapa" : "See on map"}
-                  />
+                  <SmallButton text={LanguageData.seeMap[language]} />
                 </a>
               </div>
             </div>
@@ -442,15 +467,17 @@ function ServiceHistory() {
                 }
               />
               <div className="flex flex-col items-center justify-center max-w-lg">
-                {booking?.status != "canceled" &&
-                  booking?.status != "completed" &&
-                  booking?.status != "requested" &&
-                  booking?.status != "available" &&
-                  booking.businessUser && (
+                {booking?.status == "confirmed" &&
+                  booking?.workerUser?.workerData?.phone && (
                     <OutlinedChatButton
-                      text="Chat Now"
+                      text="Contact"
+                      icon={WhatsappIcon}
                       onClick={() => goToChat()}
                     />
+                    // <OutlinedChatButton
+                    //   text="Chat Now"
+                    //   onClick={() => goToChat()}
+                    // />
                   )}
                 {booking.status == "available" && booking.businessUser && (
                   <p className="text-xs">
@@ -480,6 +507,8 @@ function ServiceHistory() {
               </div>
             </div>
           </div>
+
+          {/* Description Service */}
           <div className="w-full max-w-lg">
             <div
               className="grid grid-cols-5 gap-4 items-center cursor-pointer"
@@ -509,6 +538,49 @@ function ServiceHistory() {
               </p>
             </div>
           </div>
+
+          {/* More users  */}
+
+          <div className="w-full max-w-lg">
+            <div
+              className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+              onClick={toggleText3}
+            >
+              <div className="col-span-4 text-left text-sm py-2 my-5">
+                <h1 className=" text-blackText font-semibold">
+                  {LanguageData.morePeople[language]}
+                </h1>
+              </div>
+              <div className="col-span-1 flex justify-end">
+                <ArrowUpIcon
+                  color={"#00A0D5"}
+                  className={`${isTextVisible3 ? "rotate-180" : "rotate-90"} `}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{ marginLeft: "-2px" }}
+              className={`overflow-hidden mx-10 transition-all duration-500 ease-in-out ${
+                isTextVisible3 ? "max-h-screen" : "max-h-0"
+              }`}
+            >
+              <div>
+                {booking?.clients && booking.clients.length > 0 ? (
+                  booking.clients.map((item, index) => (
+                    <p key={index} className="mb-2 ml-4">
+                      {item.name || "No name"}
+                    </p>
+                  ))
+                ) : (
+                  <p className="text-gray-500 ml-4">
+                    {LanguageData.noPeople[language]}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
           <hr className="w-full max-w-lg  text-grey" />
           <div className="flex justify-between items-center w-full max-w-lg mt-4 mb-2">
             <p className="text-blackText font-semibold text-lg">
@@ -532,14 +604,14 @@ function ServiceHistory() {
             </p>
           </div>
           <hr className="w-full max-w-lg  text-grey" />
-          <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
+          {/* <div className="flex justify-between items-end w-full max-w-lg mt-5 mb-2">
             <p className="text-blackText font-semibold">
               {LanguageData.service[language]}
             </p>
             <p className="text-blackBlue font-semibold text-md">
               {booking?.subservice?.name[language]}
             </p>
-          </div>
+          </div> */}
           <div className="flex justify-between items-end w-full max-w-lg my-1">
             <p className="text-blackText font-semibold">
               {LanguageData.serviceDuration[language]}

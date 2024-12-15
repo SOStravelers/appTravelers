@@ -1,8 +1,14 @@
 import React from "react";
 import clsx from "clsx";
-import { ChatButtonIcon } from "@/constants/icons";
+import { ChatButtonIcon, WhatsappIcon } from "@/constants/icons";
 
-function OutlinedChatButton({ text, disabled, margin = "", ...props }) {
+function OutlinedChatButton({
+  text,
+  icon: Icon = ChatButtonIcon,
+  disabled,
+  margin = "",
+  ...props
+}) {
   return (
     <button
       className={clsx(
@@ -17,7 +23,7 @@ function OutlinedChatButton({ text, disabled, margin = "", ...props }) {
       disabled={disabled} // Establece el atributo disabled basado en la prop
       {...props}
     >
-      <ChatButtonIcon className="mr-2" />
+      <Icon className="mr-2" /> {/* Renderiza el ícono dinámicamente */}
       {text}
     </button>
   );

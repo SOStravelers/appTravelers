@@ -72,6 +72,9 @@ export default function Summary() {
       // console.log("worker", response.data);
       setWorker(response.data);
     });
+
+    SubserviceService.getDatabyWorker;
+
     SubserviceService.getPrice({
       user: !service.multiple ? hostelId : workerId,
       subservice: subServiceId,
@@ -112,6 +115,7 @@ export default function Summary() {
   };
 
   useEffect(() => {
+    console.log("wenino", service.price);
     if (service && service.price) {
       const updatedPrice = service.price.map((item) => ({
         ...item,

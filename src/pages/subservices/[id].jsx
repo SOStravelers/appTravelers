@@ -39,11 +39,11 @@ export default function Subservices() {
   const selectSubservice = (service) => {
     setService({
       subServiceId: service._id,
-      price: service.price,
       nameSubservice: service.name[language],
       duration: service.duration,
       details: service.details,
       multiple: service.multiple,
+      ...(service.multiple === false && { price: service.price }), // Condicionalmente incluye `price`
     });
   };
 

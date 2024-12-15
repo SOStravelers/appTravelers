@@ -131,13 +131,13 @@ export default function PaymentConfirmation() {
         </div>
       ) : complete ? (
         <>
-          <div style={{ marginTop: "-120px" }}>
+          <div style={{ marginTop: "-100px" }}>
             <CompleteGirlIcon />
           </div>
           <p className="text-blackText text-center mb-18 w-3/4 text-lg">
             {languageData.title[language]}
           </p>
-          <p className="text-blackText my-4 text-center mb-18 w-3/4 text-lg">
+          <p className="text-blackText my-4 text-center mb-18 w-3/4 text-sm">
             {languageData.subtitle[language]}
           </p>
           <div className="mx-12 w-50 px-1" onClick={goTo}>

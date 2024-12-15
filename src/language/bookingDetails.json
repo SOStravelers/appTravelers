@@ -20,6 +20,20 @@
     "de": "Dauer der Dienstleistung",
     "pt": "Duração do serviço"
   },
+  "totalUser": {
+    "en": "Total Cost per User",
+    "es": "Costo Total por Usuario",
+    "fr": "Coût Total par Utilisateur",
+    "de": "Gesamtkosten pro Benutzer",
+    "pt": "Custo Total por Usuário"
+  },
+  "numberPeople": {
+    "en": "Number of people",
+    "es": "Cantidad de personas",
+    "fr": "Nombre de personnes",
+    "de": "Anzahl der Personen",
+    "pt": "Quantidade de pessoas"
+  },
   "serviceFee": {
     "en": "Total Service Fee",
     "es": "Tarifa total del servicio",

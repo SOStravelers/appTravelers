@@ -391,13 +391,13 @@ function ServiceHistory() {
               }`}
             >
               <p className=" mb-2">
-                {isWorker
-                  ? booking.businessUser?.businessData?.location?.details["pt"]
+                {booking.multiple && booking.locationInfo
+                  ? booking?.locationInfo[language]
                   : booking.businessUser?.businessData?.location?.details["en"]}
               </p>
               <div className="mb-2 flex justify-center">
                 <a
-                  href={booking.businessUser?.businessData?.location?.url}
+                  href={booking.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -505,9 +505,7 @@ function ServiceHistory() {
               }`}
             >
               <p className="mb-2">
-                {isWorker
-                  ? booking.subservice.details["pt"] || ""
-                  : booking.subservice.details["en"] || ""}
+                {booking.details ? booking.details[language] : ""}
               </p>
             </div>
           </div>
@@ -550,6 +548,30 @@ function ServiceHistory() {
               {booking?.duration} min
             </p>
           </div>
+
+          {booking?.multiple && (
+            <>
+              {/* Precio por unidad */}
+              <div className="flex justify-between items-end w-full max-w-lg my-1">
+                <p className="text-blackText font-semibold">
+                  {LanguageData.totalUser[language]}
+                </p>
+                <p className="text-blackBlue font-semibold text-xl">
+                  R$ {booking?.priceUnitService}
+                </p>
+              </div>
+              {/* Cantidad de personas */}
+              <div className="flex justify-between items-end w-full max-w-lg my-1">
+                <p className="text-blackText font-semibold">
+                  {LanguageData.numberPeople[language]}
+                </p>
+                <p className="text-blackBlue font-semibold text-xl">
+                  {booking?.clientsNumber}
+                </p>
+              </div>
+            </>
+          )}
+          {/* Total Servicios */}
           <div className="flex justify-between items-end w-full max-w-lg my-1">
             <p className="text-blackText font-semibold">
               {LanguageData.serviceFee[language]}
@@ -558,6 +580,7 @@ function ServiceHistory() {
               R$ {booking?.payment?.price}
             </p>
           </div>
+
           <hr className="w-full mb-4 max-w-lg text-lightGrey" />
           {typeUser === "externalWorker" &&
             booking?.status != "canceled" &&

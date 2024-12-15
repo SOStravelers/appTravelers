@@ -20,4 +20,9 @@ export default class SubserviceService {
       `${this.baseUrl}/prices/business/?user=${data.user}&subservice=${data.subservice}`
     );
   }
+  static async getSubserviceByWorker(data) {
+    return axios.get(
+      `${this.baseUrl}/data/byWorker/?user=${data.user}&subservice=${data.subservice}`
+    );
+  }
 }

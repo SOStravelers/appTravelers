@@ -73,19 +73,36 @@ export default function Summary() {
       setWorker(response.data);
     });
 
-    SubserviceService.getDatabyWorker;
-
-    SubserviceService.getPrice({
-      user: !service.multiple ? hostelId : workerId,
-      subservice: subServiceId,
-    }).then((response) => {
-      setPrice(response.data.valuesToday[0].finalCost);
-      setService({
-        price: response.data.valuesToday,
-        currency: "BRL",
-        priceUnitService: response.data.valuesToday[0].finalCost,
+    if (!service.multiple) {
+      SubserviceService.getPrice({
+        user: hostelId,
+        subservice: subServiceId,
+      }).then((response) => {
+        setPrice(response.data.valuesToday[0].finalCost);
+        setService({
+          price: response.data.valuesToday,
+          currency: "BRL",
+          priceUnitService: response.data.valuesToday[0].finalCost,
+        });
       });
-    });
+    } else {
+      SubserviceService.getSubserviceByWorker({
+        user: workerId,
+        subservice: subServiceId,
+      }).then((response) => {
+        setPrice(response.data.prices.valuesToday[0].finalCost);
+        setService({
+          duration: response.data.duration,
+          locationInfo: response.data.locationInfo,
+          details: response.data.details,
+          mapUrl: response.data.mapUrl,
+          currency: "BRL",
+          price: response.data.prices.valuesToday,
+          priceUnitService: response.data.prices.valuesToday[0].finalCost,
+        });
+      });
+    }
+
     setService({ language: language });
   };
 
@@ -186,18 +203,14 @@ export default function Summary() {
           }`}
         >
           <p className=" mb-2">
-            {isWorker && hostel?.businessData?.location?.details
-              ? hostel?.businessData?.location?.details["pt"]
-              : !isWorker && hostel?.businessData?.location?.details
+            {service.multiple && service?.locationInfo
+              ? service?.locationInfo[language]
+              : service.businessUser
               ? hostel?.businessData?.location?.details["en"]
               : languageData.noDetails[language]}
           </p>
           <div className="mb-2 flex justify-center">
-            <a
-              href={hostel?.businessData?.location?.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={service.mapUrl} target="_blank" rel="noopener noreferrer">
               <SmallButton text={languageData.seeMap[language]} />
             </a>
           </div>
@@ -334,7 +347,11 @@ export default function Summary() {
           {languageData.durationService[language]}
         </p>
         <p className="text-blackBlue font-semibold text-md">
-          {service?.duration} min
+          {service?.duration > 120
+            ? `${(service?.duration / 60).toFixed(1)} hr${
+                service?.duration >= 180 ? "s" : ""
+              }`
+            : `${service?.duration} min`}
         </p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg my-1">

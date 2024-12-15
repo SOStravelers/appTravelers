@@ -38,7 +38,7 @@ export default function Summary() {
   const [subServiceId, setSubservice] = useState(null);
   const [selected, setSelected] = useState(false);
   const [clients, setClients] = useState([]);
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState();
 
   useEffect(() => {
     if (!service) {
@@ -83,8 +83,10 @@ export default function Summary() {
       setService({
         price: response.data.valuesToday,
         currency: "BRL",
+        priceUnitService: response.data.valuesToday[0].finalCost,
       });
     });
+    setService({ language: language });
   };
 
   const toggleText1 = () => {
@@ -346,7 +348,7 @@ export default function Summary() {
           {languageData.totalService[language]}
         </p>
         <p className="text-blackBlue font-semibold text-xl">
-          R$ {service?.price[0]?.finalCost}
+          R$ {service?.price ? service?.price[0]?.finalCost : 0}
         </p>
       </div>
       <OutlinedButton

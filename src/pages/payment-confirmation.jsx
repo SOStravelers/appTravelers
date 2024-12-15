@@ -78,8 +78,10 @@ export default function PaymentConfirmation() {
       location: service.location,
       businessUser: service.hostelId,
       price: service.price.number,
+      priceUnitService: service.priceUnitService,
       startTime: service.startTime,
       duration: service.duration,
+      language: service.language,
       endTime: service.endTime,
       date: {
         stringData: service.date,
@@ -87,6 +89,9 @@ export default function PaymentConfirmation() {
       },
       subservice: service.subServiceId,
       service: service.serviceId,
+      clients: service.clients,
+      clientsNumber: service.clientsNumber,
+      multiple: service.multiple,
       clientName: service.clientName || null,
       clientEmail: service.clientEmail || null,
     };

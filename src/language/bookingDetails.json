@@ -33,5 +33,19 @@
     "fr": "Statut",
     "de": "Status",
     "pt": "Status"
+  },
+  "serviceDescription": {
+    "en": "Service description",
+    "es": "Descripción del servicio",
+    "fr": "Description du service",
+    "de": "Beschreibung der Dienstleistung",
+    "pt": "Descrição do serviço"
+  },
+  "locationInformation": {
+    "en": "Location Information",
+    "es": "Información de ubicación",
+    "fr": "Informations sur l'emplacement",
+    "de": "Standortinformationen",
+    "pt": "Informações de localizaçãoo"
   }
 }

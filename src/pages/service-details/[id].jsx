@@ -374,9 +374,7 @@ function ServiceHistory() {
             >
               <div className="col-span-4 text-left text-sm py-2 my-5">
                 <h1 className=" text-blackText font-semibold">
-                  {isWorker
-                    ? "Informações de localização"
-                    : "Location information"}
+                  {LanguageData.locationInformation[language]}
                 </h1>
               </div>
               <div className="col-span-1 flex justify-end">
@@ -447,7 +445,8 @@ function ServiceHistory() {
                 {booking?.status != "canceled" &&
                   booking?.status != "completed" &&
                   booking?.status != "requested" &&
-                  booking?.status != "available" && (
+                  booking?.status != "available" &&
+                  booking.businessUser && (
                     <OutlinedChatButton
                       text="Chat Now"
                       onClick={() => goToChat()}
@@ -488,7 +487,7 @@ function ServiceHistory() {
             >
               <div className="col-span-4 text-left text-sm py-2 my-5">
                 <h1 className=" text-blackText font-semibold">
-                  {isWorker ? "Descrição do Serviço" : "Service description"}
+                  {LanguageData.serviceDescription[language]}
                 </h1>
               </div>
               <div className="col-span-1 flex justify-end">
@@ -601,9 +600,10 @@ function ServiceHistory() {
             )}
           {typeUser === "client" &&
             inTimeUser &&
-            (booking?.status == "requested" ||
-              booking?.status == "confirmed" ||
-              booking?.status == "available") && (
+            (booking?.status === "requested" ||
+              booking?.status === "confirmed" ||
+              booking?.status === "available") &&
+            !booking?.multiple && (
               <OutlinedButton
                 onClick={() => dialogUser("canceled")}
                 text={"Cancel Booking"}

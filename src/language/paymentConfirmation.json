@@ -1,0 +1,23 @@
+{
+  "title": {
+    "en": "Reservation completed successfully",
+    "es": "Reserva completada con éxito",
+    "fr": "Réservation terminée avec succès",
+    "de": "Reservierung erfolgreich abgeschlossen",
+    "pt": "Reserva concluída com sucesso"
+  },
+  "subtitle": {
+    "en": "Your reservation is confirmed, we have sent you an email with everything you need. Now you can relax!",
+    "es": "Tu reserva ya está confirmada, te enviamos un correo con todo lo que necesitas. ¡Ahora puedes relajarte!",
+    "fr": "Votre réservation est confirmée, nous vous avons envoyé un e-mail avec tout ce dont vous avez besoin. Maintenant, vous pouvez vous détendre !",
+    "de": "Ihre Reservierung ist bestätigt, wir haben Ihnen eine E-Mail mit allen Informationen geschickt. Jetzt können Sie sich entspannen!",
+    "pt": "Sua reserva está confirmada, enviamos um e-mail com tudo o que você precisa. Agora você pode relaxar!"
+  },
+  "button": {
+    "en": "Go to the booking",
+    "es": "Ir a la reserva",
+    "fr": "Aller à la réservation",
+    "de": "Zur Buchung gehen",
+    "pt": "Ir para a reserva"
+  }
+}

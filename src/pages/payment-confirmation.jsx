@@ -6,14 +6,14 @@ import Link from "next/link";
 import { CompleteGirlIcon, BarberPicture } from "@/constants/icons";
 import { io } from "socket.io-client";
 import SolidButton from "@/components/utils/buttons/SolidButton";
-
+import languageData from "@/language/paymentConfirmation.json";
 import { useStore } from "@/store";
 import BookingService from "@/services/BookingService";
 import { set } from "date-fns";
 
 export default function PaymentConfirmation() {
   const router = useRouter();
-  const { service, user, isWorker, resetService } = useStore();
+  const { service, user, isWorker, resetService, language } = useStore();
   const initialized = useRef(false);
   const [complete, setComplete] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -135,15 +135,15 @@ export default function PaymentConfirmation() {
             <CompleteGirlIcon />
           </div>
           <p className="text-blackText text-center mb-18 w-3/4 text-lg">
-            Reservation completed successfully
+            {languageData.title[language]}
           </p>
           <p className="text-blackText my-4 text-center mb-18 w-3/4 text-lg">
-            The worker will confirm in the next few hours. Now go relax
+            {languageData.subtitle[language]}
           </p>
           <div className="mx-12 w-50 px-1" onClick={goTo}>
             <SolidButton
               onClick={() => goTo()}
-              text="Go to the booking"
+              text={languageData.button[language]}
               color="blueBorder"
             />
           </div>

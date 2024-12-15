@@ -539,7 +539,6 @@ function ServiceHistory() {
               {LanguageData.service[language]}
             </p>
             <p className="text-blackBlue font-semibold text-md">
-              {booking?.service?.name[language]} -{" "}
               {booking?.subservice?.name[language]}
             </p>
           </div>

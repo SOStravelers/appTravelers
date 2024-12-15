@@ -1,8 +1,11 @@
 import React from "react";
 
-function OutlinedInput({ icon: Icon, ...props }) {
+function OutlinedInput({ icon: Icon, width, ...props }) {
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      style={{ width: width || "100%" }} // Usa la prop `width` o un valor por defecto
+    >
       {Icon && (
         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
           <div className="border border-blueBorder rounded-full p-1 flex items-center justify-center">

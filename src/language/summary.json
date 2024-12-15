@@ -55,12 +55,40 @@
     "de": "Servicedauer",
     "pt": "Duração do serviço"
   },
+  "totalUser": {
+    "en": "Total Cost per User",
+    "es": "Costo Total por Usuario",
+    "fr": "Coût Total par Utilisateur",
+    "de": "Gesamtkosten pro Benutzer",
+    "pt": "Custo Total por Usuário"
+  },
   "totalService": {
     "en": "Total Service Fee",
     "es": "Costo total del servicio",
     "fr": "Frais de service total",
     "de": "Gesamte Servicegebühr",
     "pt": "Taxa total do serviço"
+  },
+  "buttonClient": {
+    "en": "Add",
+    "es": "Añadir",
+    "fr": "Ajouter",
+    "de": "Hinzufügen",
+    "pt": "Adicionar"
+  },
+  "textAdd": {
+    "en": "If you want to include more people in your booking, press the button to add their names.",
+    "es": "Si deseas incluir a más personas en tu reserva, presiona el botón para añadir sus nombres.",
+    "fr": "Si vous souhaitez inclure plus de personnes dans votre réservation, appuyez sur le bouton pour ajouter leurs noms.",
+    "de": "Wenn Sie weitere Personen in Ihre Buchung aufnehmen möchten, drücken Sie die Taste, um ihre Namen hinzuzufügen.",
+    "pt": "Se deseja incluir mais pessoas na sua reserva, pressione o botão para adicionar seus nomes."
+  },
+  "textInput": {
+    "en": "Enter the full name",
+    "es": "Escribe el nombre completo",
+    "fr": "Entrez le nom complet",
+    "de": "Geben Sie den vollständigen Namen ein",
+    "pt": "Digite o nome completo"
   },
   "bookNow": {
     "en": "Book now",

@@ -5,12 +5,17 @@ import WorkerCardSumary from "@/components/utils/cards/WorkerCardSumary";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import SmallButton from "@/components/utils/buttons/SmallButton";
+import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import Link from "next/link";
 import {
   ClockIcon,
+  MailIcon,
   ChangeIcon,
   CheckIcon,
+  PlusIcon,
   ArrowUpIcon,
+  MinusIcon,
+  UserIcon,
 } from "@/constants/icons";
 import { fullName, getServiceNames, formatearFecha } from "@/utils/format";
 import HostelService from "@/services/HostelService";
@@ -32,6 +37,8 @@ export default function Summary() {
   const [hostel, setHostel] = useState(null);
   const [subServiceId, setSubservice] = useState(null);
   const [selected, setSelected] = useState(false);
+  const [clients, setClients] = useState([]);
+  const [price, setPrice] = useState(null);
 
   useEffect(() => {
     if (!service) {
@@ -47,7 +54,6 @@ export default function Summary() {
   const getData = async () => {
     const { hostelId, hour, date, workerId, subServiceId } = service;
     setSubservice(subServiceId);
-    console.log("aa", service);
     if (!hostelId || !workerId) router.push("/");
     setIdHostel(hostelId);
     setHour(hour);
@@ -70,8 +76,11 @@ export default function Summary() {
       user: !service.multiple ? hostelId : workerId,
       subservice: subServiceId,
     }).then((response) => {
-      console.log("price", response.data);
-      setService({ price: response.data.valuesToday, currency: "BRL" });
+      setPrice(response.data.valuesToday[0].finalCost);
+      setService({
+        price: response.data.valuesToday,
+        currency: "BRL",
+      });
     });
   };
 
@@ -95,6 +104,38 @@ export default function Summary() {
   const validateEdit = () => {
     if (isWorker) return false;
     if (localStorage.getItem("fromFavorite")) return false;
+  };
+
+  const addClient = (newClient) => {
+    console.log("newClient", newClient);
+    setClients((prevClients) => [...prevClients, newClient]);
+  };
+
+  useEffect(() => {
+    if (service && service.price) {
+      const updatedPrice = service.price.map((item) => ({
+        ...item,
+        finalCost: price * (clients.length + 1),
+      }));
+
+      setService({
+        price: updatedPrice,
+        currency: "BRL",
+        clientsNumber: clients.length + 1,
+        clients: clients,
+      });
+    }
+  }, [clients]);
+
+  const handleInputChange = (index, value) => {
+    const updatedClients = [...clients];
+    updatedClients[index].name = value; // Actualiza el valor del cliente correspondiente
+    setClients(updatedClients);
+  };
+  const handleRemoveClient = (indexToRemove) => {
+    setClients((prevClients) =>
+      prevClients.filter((_, index) => index !== indexToRemove)
+    );
   };
 
   return (
@@ -213,6 +254,41 @@ export default function Summary() {
           <p className="mb-2">{service?.details?.[language] ?? ""}</p>
         </div>
       </div>
+      <div className="flex flex-col w-full max-w-lg my-2">
+        {clients.length > 0 &&
+          clients.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center w-full gap-2" // Espacio entre elementos ajustado con `gap-2`
+            >
+              <OutlinedInput
+                placeholder={languageData.textInput[language]}
+                value={item.name}
+                icon={UserIcon}
+                onChange={(e) => handleInputChange(index, e.target.value)}
+                type="email"
+                width="90%" // Define el ancho personalizado aquí
+              />
+              <button
+                onClick={() => handleRemoveClient(index)} // Maneja la acción del botón
+                className="text-red-500 hover:text-red-700  flex items-center justify-center ml-2"
+              >
+                <MinusIcon className="h-6 w-6 stroke-2" />{" "}
+                {/* Ícono más grueso */}
+              </button>
+            </div>
+          ))}
+      </div>
+      <h1 className="my-4 text-grey text-sm text-center max-w-lg">
+        {languageData.textAdd[language]}
+      </h1>
+      <div
+        className="mb-2 flex justify-center"
+        onClick={() => addClient({ name: "" })}
+      >
+        <SmallButton text={languageData.buttonClient[language]} />
+      </div>
+
       <div className="flex items-center w-full max-w-lg my-2">
         {selected ? (
           <CheckIcon
@@ -254,6 +330,12 @@ export default function Summary() {
         <p className="text-blackBlue font-semibold text-md">
           {service?.duration} min
         </p>
+      </div>
+      <div className="flex justify-between items-end w-full max-w-lg my-1">
+        <p className="text-blackText font-semibold">
+          {languageData.totalUser[language]}
+        </p>
+        <p className="text-blackBlue font-semibold text-xl">R$ {price}</p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg my-1">
         <p className="text-blackText font-semibold">

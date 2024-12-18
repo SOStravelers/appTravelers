@@ -10,7 +10,7 @@ import languageData from "@/language/paymentConfirmation.json";
 import { useStore } from "@/store";
 import BookingService from "@/services/BookingService";
 import { set } from "date-fns";
-
+import StripeService from "@/services/StripeService";
 export default function PaymentConfirmation() {
   const router = useRouter();
   const { service, user, isWorker, resetService, language } = useStore();
@@ -44,11 +44,12 @@ export default function PaymentConfirmation() {
   useEffect(() => {
     console.log("el servicio", service);
     const paymentIntent = router.query.payment_intent;
+
     if (isWorker) {
-      createBooking(null);
+      createBooking(null); // Si es un trabajador, no requiere paymentIntent
     } else if (paymentIntent && !initialized.current) {
       initialized.current = true;
-      createBooking(paymentIntent);
+      createBooking(paymentIntent); // Procesar transferencias y reserva
     } else {
       initialized.current = false;
     }
@@ -97,10 +98,20 @@ export default function PaymentConfirmation() {
       clientName: service.clientName || null,
       clientEmail: service.clientEmail || null,
     };
+
     try {
+      // 1. Realizar las transferencias antes de crear la reserva
+      console.log(
+        "Realizando transferencias para el paymentIntent:",
+        paymentIntent
+      );
+      await StripeService.handleTransfers(paymentIntent);
+
+      // 2. Crear la reserva después de las transferencias
       const response = isWorker
         ? await BookingService.createWorkerBooking(params)
         : await BookingService.create(params);
+
       if (response.data) {
         setBooking(response.data.booking);
         console.log("booking", response.data.booking);
@@ -114,7 +125,10 @@ export default function PaymentConfirmation() {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(
+        "Error creando la reserva o realizando las transferencias:",
+        error.message
+      );
       setLoading(false);
     }
   };

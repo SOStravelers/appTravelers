@@ -15,9 +15,21 @@ export default class StripeService {
     };
   }
 
+  // Método existente para crear el PaymentIntent
   static async createPaymentIntent(params) {
     return axios.post(`${this.baseUrl}/payment-intents`, params, {
       headers: this.getHeaders(),
     });
+  }
+
+  // Nuevo método para manejar las transferencias
+  static async handleTransfers(paymentIntentId) {
+    return axios.post(
+      `${this.baseUrl}/transfer-payments`,
+      { paymentIntentId },
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 }

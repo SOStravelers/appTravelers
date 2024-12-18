@@ -8,6 +8,7 @@ import {
   CardElement,
   useStripe,
 } from "@stripe/react-stripe-js";
+import StripeService from "@/services/StripeService";
 import SolidButton from "../buttons/SolidButton";
 import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
@@ -27,18 +28,35 @@ export default function CheckoutForm(clientSecret) {
 
     setIsProcessing(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
-      },
-    });
+    try {
+      // Confirmar el pago con return_url
+      const { paymentIntent, error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
+        },
+      });
 
-    if (error) {
+      if (error) {
+        console.error("Error confirmando el pago:", error.message);
+        toast.error("Hubo un error al procesar el pago.");
+        setIsProcessing(false);
+        return;
+      }
+
+      console.log("Pago confirmado:", paymentIntent.id);
+
+      // Llamar a StripeService para manejar las transferencias
+      await StripeService.handleTransfers(paymentIntent.id);
+
+      console.log("Transferencias realizadas con éxito.");
+      toast.success("Pago y transferencias realizadas con éxito.");
+    } catch (error) {
+      console.error("Error en el flujo de pago:", error.message);
       toast.error(error.message);
+    } finally {
+      setIsProcessing(false);
     }
-
-    setIsProcessing(false);
   };
   useEffect(() => {
     getFinalCost(service, service.currency);

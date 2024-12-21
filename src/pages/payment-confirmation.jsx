@@ -105,7 +105,9 @@ export default function PaymentConfirmation() {
         "Realizando transferencias para el paymentIntent:",
         paymentIntent
       );
-      await StripeService.handleTransfers(paymentIntent);
+      const result = await StripeService.handleTransfers(paymentIntent);
+      console.log("resultado", result, result.data);
+      params.payment.priceBRL = result.data.priceBRL;
 
       // 2. Crear la reserva después de las transferencias
       const response = isWorker

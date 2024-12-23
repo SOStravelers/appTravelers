@@ -142,7 +142,7 @@ export default function Summary() {
 
   useEffect(() => {
     console.log("wenino", service.price);
-    if (service && service?.price) {
+    if (service && service.price) {
       const updatedPrice = service.price.map((item) => ({
         ...item,
         finalCost: price * (clients.length + 1),

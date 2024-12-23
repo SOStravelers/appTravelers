@@ -52,15 +52,20 @@ export default function Summary() {
   }, []);
 
   const getData = async () => {
-    const { hostelId, hour, date, workerId, subServiceId } = service;
+    const { businessUser, hour, date, workerId, subServiceId } = service;
     setSubservice(subServiceId);
-    if (!hostelId || !workerId) router.push("/");
-    setIdHostel(hostelId);
+    if (!workerId) {
+      console.log("va al fallo");
+      setService({});
+      router.push("/");
+    }
+    setIdHostel(businessUser);
     setHour(hour);
     setDate(date);
 
     if (!service.multiple) {
-      HostelService.getBusiness(hostelId).then((response) => {
+      console.log("al hostel");
+      HostelService.getBusiness(businessUser).then((response) => {
         // console.log("hostel", response.data);
         setHostel(response.data);
       });
@@ -74,8 +79,9 @@ export default function Summary() {
     });
 
     if (!service.multiple) {
+      console.log("caso1");
       SubserviceService.getPrice({
-        user: hostelId,
+        user: businessUser,
         subservice: subServiceId,
       }).then((response) => {
         setPrice(response.data.valuesToday[0].finalCost);
@@ -86,6 +92,7 @@ export default function Summary() {
         });
       });
     } else {
+      console.log("caso2s");
       SubserviceService.getSubserviceByWorker({
         user: workerId,
         subservice: subServiceId,
@@ -135,7 +142,7 @@ export default function Summary() {
 
   useEffect(() => {
     console.log("wenino", service.price);
-    if (service && service.price) {
+    if (service && service?.price) {
       const updatedPrice = service.price.map((item) => ({
         ...item,
         finalCost: price * (clients.length + 1),

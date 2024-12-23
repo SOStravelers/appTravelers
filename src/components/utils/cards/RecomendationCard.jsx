@@ -8,7 +8,7 @@ import { validationImg } from "@/utils/validation";
 import { useStore } from "@/store";
 function RecomendationCard(user) {
   const router = useRouter();
-  const { language } = useStore();
+  const { language, service, setService } = useStore();
   const [isImageAccessible, setIsImageAccessible] = useState(false);
   const [data, setData] = useState({ subService: "", imgUrl: "" });
   useEffect(() => {
@@ -33,6 +33,10 @@ function RecomendationCard(user) {
     // Devuelve el nombre del subService en el índice aleatorio
     setData({
       subService: allSubServices[randomIndex].name[language],
+      subServiceId: allSubServices[randomIndex]._id,
+      duration: allSubServices[randomIndex].duration,
+      detaisl: allSubServices[randomIndex].details,
+      multiple: allSubServices[randomIndex].multiple,
       imgUrl: allSubServices[randomIndex]?.imgUrl + "?hola=" + random(),
     });
   }
@@ -49,9 +53,39 @@ function RecomendationCard(user) {
       : "";
     return first + " " + last;
   };
+
+  const findServiceBySubServiceId = (user, subServiceId) => {
+    for (const service of user.workerData.services) {
+      const matchingSubService = service.subServices.find(
+        (subService) => subService._id === subServiceId
+      );
+      if (matchingSubService) {
+        return {
+          serviceId: service.id ? service.id._id : null,
+          serviceName: service.id ? service.id.name : null,
+        };
+      }
+    }
+    return null; // Si no se encuentra el subServiceId
+  };
   const setFavorite = (id) => {
     localStorage.setItem("fromFavorite", true);
-    router.push("/worker/" + id);
+
+    const dataService = findServiceBySubServiceId(user.user, data.subServiceId);
+
+    setService({
+      duration: data.duration,
+      price: 0,
+      details: data.details,
+      serviceId: dataService.serviceId,
+      serviceName: dataService.serviceName,
+      nameSubservice: data.subService,
+      subServiceId: data.subServiceId,
+      multiple: data.multiple,
+      workerId: user.user._id,
+    });
+    router.push("reservation/" + service.subServiceId);
+    // router.push("/worker/" + id);
   };
   useEffect(() => {
     const checkImage = async () => {
@@ -69,7 +103,7 @@ function RecomendationCard(user) {
     >
       <div className="w-full h-28 w-20 rounded-tr-2xl rounded-tl-2xl relative">
         <Image
-          src={data?.imgUrl || "/assets/service.png"}
+          src={data?.imgUrl || "/assets/logoSOS.png"}
           fill
           alt="casa"
           className="object-cover rounded-tr-2xl rounded-tl-2xl"

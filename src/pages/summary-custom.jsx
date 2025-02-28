@@ -41,10 +41,6 @@ export default function Summary() {
   const [price, setPrice] = useState();
 
   useEffect(() => {
-    if (!service) {
-      router.push("/");
-      return;
-    }
     document.title = "Summary | SOS Travelers";
     //localStorage.removeItem("fromFavorite");
     localStorage.removeItem("editing");
@@ -52,66 +48,70 @@ export default function Summary() {
   }, []);
 
   const getData = async () => {
-    const { businessUser, hour, date, workerId, subServiceId } = service;
-    console.log("los resultados", service);
+    const {
+      isoTime,
+      stringData,
+      nameService,
+      nameSubservice,
+      date,
+      workerId,
+      subServiceId,
+      price,
+    } = router.query;
+
+    const startTime = {
+      isoTime: isoTime,
+      stringData: stringData,
+    };
+
+    // const date = "2025-03-15";
+    // const workerId = "67577f826779bb536c96fa10";
+    // const subServiceId = "675753add2b2668720116ed4";
+    // const startTime = {
+    //   isoTime: "2025-03-15T16:43:00.000Z",
+    //   stringData: "16:43",
+    // };
+    // const nameService = "Paseos";
+    // const nameSubservice = "Angra dos reis";
+
+    // date=2025-03-15&workerId=67577f826779bb536c96fa10&subServiceId=675753add2b2668720116ed4&isoTime=2025-03-15T16:43:00.000Z&stringData=16:43&nameService=Paseos&nameSubservice=Angra%20dos%20reis&price=3
     setSubservice(subServiceId);
     if (!workerId) {
       console.log("va al fallo");
       setService({});
       router.push("/");
     }
-    setIdHostel(businessUser);
-    setHour(hour);
+    setIdHostel(null);
     setDate(date);
-
-    if (!service.multiple) {
-      console.log("al hostel");
-      HostelService.getBusiness(businessUser).then((response) => {
-        // console.log("hostel", response.data);
-        setHostel(response.data);
-      });
-    } else {
-      setHostel(null);
-      setService({ businessUser: null });
-    }
+    setHostel(null);
+    setService({ businessUser: null });
+    console.log("va a buscar el worker");
     WorkerService.getWorker(workerId).then((response) => {
       // console.log("worker", response.data);
       setWorker(response.data);
     });
-
-    if (!service.multiple) {
-      console.log("caso1");
-      SubserviceService.getPrice({
-        user: businessUser,
-        subservice: subServiceId,
-      }).then((response) => {
-        setPrice(response.data.valuesToday[0].finalCost);
-        setService({
-          price: response.data.valuesToday,
-          currency: "BRL",
-          priceUnitService: response.data.valuesToday[0].finalCost,
-        });
+    console.log("caso2s");
+    SubserviceService.getSubserviceByWorker({
+      user: workerId,
+      subservice: subServiceId,
+    }).then((response) => {
+      console.log("la dataaa", response.data);
+      setPrice(price);
+      setService({
+        duration: response.data.duration,
+        date: date,
+        serviceName: nameService,
+        nameSubservice: nameSubservice,
+        startTime: startTime,
+        locationInfo: response.data.locationInfo,
+        details: response.data.details,
+        mapUrl: response.data.mapUrl,
+        currency: "BRL",
+        price: [{ currency: "BRL", value: 1, aprox: 1, finalCost: price }],
+        priceUnitService: price,
+        multiple: true,
       });
-    } else {
-      console.log("caso2s");
-      SubserviceService.getSubserviceByWorker({
-        user: workerId,
-        subservice: subServiceId,
-      }).then((response) => {
-        console.log("wena wena wena", response.data);
-
-        setPrice(response.data.prices.valuesToday[0].finalCost);
-        setService({
-          duration: response.data.duration,
-          locationInfo: response.data.locationInfo,
-          details: response.data.details,
-          mapUrl: response.data.mapUrl,
-          currency: "BRL",
-          price: response.data.prices.valuesToday,
-          priceUnitService: response.data.prices.valuesToday[0].finalCost,
-        });
-      });
-    }
+    });
 
     setService({ language: language });
   };
@@ -126,11 +126,8 @@ export default function Summary() {
   const hireNow = () => {
     localStorage.removeItem("editing");
     localStorage.removeItem("fromFavorite");
-    if (!loggedIn && process.env.NEXT_PUBLIC_DEMO != "true")
-      router.push("/login");
-    else if (process.env.NEXT_PUBLIC_DEMO === "true")
-      router.push("/payment-demo");
-    else router.push("/payment");
+
+    router.push("/payment");
   };
 
   const validateEdit = () => {
@@ -144,15 +141,10 @@ export default function Summary() {
   };
 
   useEffect(() => {
-    console.log("wenino", service.price);
-    if (service && service.price) {
-      const updatedPrice = service.price.map((item) => ({
-        ...item,
-        finalCost: price * (clients.length + 1),
-      }));
-
+    if (service && service?.price) {
+      const newValue = service.priceUnitService * (clients.length + 1);
       setService({
-        price: updatedPrice,
+        price: [{ currency: "BRL", value: 1, aprox: 1, finalCost: newValue }],
         currency: "BRL",
         clientsNumber: clients.length + 1,
         clients: clients,
@@ -213,14 +205,14 @@ export default function Summary() {
           }`}
         >
           <p className=" mb-2">
-            {service.multiple && service?.locationInfo
+            {service?.multiple && service?.locationInfo
               ? service?.locationInfo[language]
-              : service.businessUser
+              : service?.businessUser
               ? hostel?.businessData?.location?.details["en"]
               : languageData.noDetails[language]}
           </p>
           <div className="mb-2 flex justify-center">
-            <a href={service.mapUrl} target="_blank" rel="noopener noreferrer">
+            <a href={service?.mapUrl} target="_blank" rel="noopener noreferrer">
               <SmallButton text={languageData.seeMap[language]} />
             </a>
           </div>
@@ -244,13 +236,16 @@ export default function Summary() {
 
       {service && (
         <div className="flex justify-between w-full max-w-lg pr-1 my-5">
-          <div className="flex  ">
+          <div className="flex">
             <ClockIcon />
-            <p className="ml-2">{`${
-              formatearFecha(service?.date, language) || ""
-            } | ${service?.startTime?.stringData + " hrs" || ""}`}</p>
+            {service?.date && (
+              <p className="ml-2">{`${formatearFecha(
+                service?.date,
+                language
+              )} | ${service?.startTime?.stringData + " hrs" || ""}`}</p>
+            )}
           </div>
-          <Link className="flex " href={`/reservation/${IdHostel}`}>
+          <Link className="flex" href={`/reservation/${IdHostel}`}>
             <ChangeIcon />
           </Link>
         </div>
@@ -375,7 +370,7 @@ export default function Summary() {
           {languageData.totalService[language]}
         </p>
         <p className="text-blackBlue font-semibold text-xl">
-          R$ {service?.price ? service?.price[0]?.finalCost : 0}
+          R$ {service?.price ? service?.price[0]?.finalCost : price}
         </p>
       </div>
       <OutlinedButton

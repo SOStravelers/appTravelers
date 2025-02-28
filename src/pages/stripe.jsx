@@ -44,19 +44,37 @@ export default function Stripe() {
   }, []);
 
   const createPaymentIntent = async () => {
-    StripeService.createPaymentIntent({
-      amount: getFinalCost(service, service.currency) * 100,
-      currency: service.currency.toLowerCase(),
-      service: service.serviceName,
-      subservice: service.nameSubservice,
-      date: service.date,
-      startTime: service.startTime,
-      clientsNumber: service.clientsNumber,
-      language: service.language,
-    }).then((response) => {
-      console.log(response.data);
+    try {
+      if (!service) {
+        throw new Error("El servicio no está definido.");
+      }
+
+      const amount = getFinalCost(service, service.currency) * 100;
+      const currency = service.currency?.toLowerCase();
+
+      if (!amount || !currency) {
+        throw new Error("Datos insuficientes para crear el pago.");
+      }
+
+      const response = await StripeService.createPaymentIntent(
+        {
+          amount,
+          currency,
+          service: service.serviceName,
+          subservice: service.nameSubservice,
+          date: service.date,
+          startTime: service.startTime,
+          clientsNumber: service.clientsNumber,
+          language: service.language,
+        },
+        true
+      );
+
+      console.log("Respuesta de createIntent:", response.data);
       setClientSecret(response.data.clientSecret);
-    });
+    } catch (error) {
+      console.error("Error al crear el PaymentIntent:", error.message);
+    }
   };
 
   return (

@@ -106,7 +106,7 @@ export default function PaymentConfirmation() {
         "Realizando transferencias para el paymentIntent:",
         paymentIntent
       );
-      const result = await StripeService.handleTransfers(paymentIntent);
+      const result = await StripeService.handleTransfers(paymentIntent, true);
       console.log("resultado", result, result.data);
       params.payment.priceBRL = result.data.priceBRL;
 

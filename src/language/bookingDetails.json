@@ -97,5 +97,20 @@
     "fr": "par *SOS Travel*, j'ai une question",
     "de": "von *SOS Travel*, ich habe eine Frage",
     "pt": "pela *SOS Travel*, tenho uma dúvida"
+  },
+  "msgWhatsapp3": {
+    "en": "Hello! I have a question about the service:",
+    "es": "¡Hola! Tengo una consulta por el servicio:",
+    "fr": "Bonjour ! J'ai une question sur le service :",
+    "de": "Hallo! Ich habe eine Frage zum Service:",
+    "pt": "Olá! Tenho uma dúvida sobre o serviço:"
+  },
+
+  "msgWhatsapp4": {
+    "en": "that I saw on *SOS Travel*",
+    "es": "que he visto por *SOS Travel*",
+    "fr": "que j'ai vu sur *SOS Travel*",
+    "de": "das ich auf *SOS Travel* gesehen habe",
+    "pt": "que vi na *SOS Travel*"
   }
 }

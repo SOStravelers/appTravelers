@@ -7,11 +7,14 @@ import SubserviceService from "@/services/SubserviceService";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
 import languageData from "@/language/subServices.json";
+import languageBooking from "@/language/bookingDetails.json";
 export default function Subservices() {
   const { language, service, setService } = useStore();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [subServices, setSubservices] = useState([]);
+
+  const idPaseos = "6757137ad2b2668720116ec9";
 
   useEffect(() => {
     document.title = "Choose subservice | SOS Travelers";
@@ -36,15 +39,42 @@ export default function Subservices() {
     setSubservices(subServices);
     setLoading(false);
   };
-  const selectSubservice = (service) => {
-    setService({
-      subServiceId: service._id,
-      nameSubservice: service.name[language],
-      duration: service.duration,
-      details: service.details,
-      multiple: service.multiple,
-      ...(service.multiple === false && { price: service.price }), // Condicionalmente incluye `price`
-    });
+
+  const goToChat = (subservice) => {
+    const whatsappNumber = "+56971014264"; // Número del objeto booking
+    const message =
+      languageBooking.msgWhatsapp3[language] +
+      " " +
+      service.serviceName +
+      " - " +
+      subservice.name[language] +
+      " " +
+      languageBooking.msgWhatsapp4[language]; // Mensaje opcional
+    const encodedMessage = encodeURIComponent(message);
+    window.open(
+      `https://wa.me/${whatsappNumber.replace(
+        /\D/g,
+        ""
+      )}?text=${encodedMessage}`,
+      "_blank"
+    );
+  };
+  const selectSubservice = (miniService) => {
+    console.log("erno", miniService);
+    console.log("service", service);
+    if (service.serviceId == idPaseos) {
+      goToChat(miniService);
+      return;
+    } else {
+      setService({
+        subServiceId: miniService._id,
+        nameSubservice: miniService.name[language],
+        duration: miniService.duration,
+        details: miniService.details,
+        multiple: miniService.multiple,
+        ...(miniService.multiple === false && { price: miniService.price }), // Condicionalmente incluye `price`
+      });
+    }
   };
 
   return (
@@ -52,6 +82,8 @@ export default function Subservices() {
       <h1 className="my-2 font-semibold mt-1 text-center max-w-lg">
         {service.serviceName + " " + languageData.title[language]}
       </h1>
+
+      <p className="mt-2">{languageData.partner[language]}</p>
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings
@@ -91,6 +123,7 @@ export default function Subservices() {
                 name={s?.name[language] || ""}
                 isSubservice={true}
                 service={s?.shortDescription[language] || ""}
+                serviceName={s?.name[language] || ""}
                 subServiceId={s._id}
                 onClickSummary={() => {
                   selectSubservice(s);

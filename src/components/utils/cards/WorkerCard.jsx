@@ -29,6 +29,7 @@ function WorkerCard({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   const handleSummary = () => {
     if (onClickSummary) {
       console.log("wenaza");
@@ -73,10 +74,10 @@ function WorkerCard({
             <p className="text-blackText text-xs">
               {width < 420 ? truncate(service, 40) : service}
             </p>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <StarIcon color={"#00A0D5"} className="mr-1" />
               <p className="text-blackText">{score}</p>
-            </div>
+            </div> */}
           </div>
         </Link>
       </div>

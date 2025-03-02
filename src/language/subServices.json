@@ -5,5 +5,12 @@
     "pt": "Disponíveis",
     "fr": "Disponibles",
     "de": "Verfügbar"
+  },
+  "partner": {
+    "en": "For this option, we will connect you with one of our validated partners!",
+    "es": "Para esta opción, te contactaremos con uno de nuestros socios validados!",
+    "fr": "Pour cette option, nous vous mettrons en contact avec l'un de nos partenaires validés !",
+    "de": "Für diese Option verbinden wir Sie mit einem unserer geprüften Partner!",
+    "pt": "Para esta opção, vamos te conectar com um dos nossos parceiros validados!"
   }
 }

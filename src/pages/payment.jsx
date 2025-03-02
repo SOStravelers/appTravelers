@@ -7,7 +7,6 @@ import { useStore } from "@/store";
 import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
 
-
 export default function Payment() {
   const { service, setService, isWorker, language } = useStore();
   const [paymentType, setPaymentType] = useState("stripe");

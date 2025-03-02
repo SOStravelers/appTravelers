@@ -135,7 +135,11 @@ export default function Subservices() {
                 img={s.imgUrl || "/assets/user.png"}
                 multiple={true}
                 link={
-                  s.multiple ? `/reservation/${s.id}` : `/select-hostel/${s.id}`
+                  service.serviceId == idPaseos
+                    ? ""
+                    : s.multiple
+                    ? `/reservation/${s.id}`
+                    : `/select-hostel/${s.id}`
                 }
               />
             </div>

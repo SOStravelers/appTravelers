@@ -54,19 +54,41 @@ function WorkerCard({
             isSubservice ? "w-36" : "w-20"
           } h-20 rounded-xl mr-2 ml-3 relative flex-none`}
         >
-          <Link href={link}>
-            {img && (
+          {link != "" ? (
+            <Link href={link}>
+              {img && (
+                <Image
+                  onClick={(e) => e.stopPropagation()}
+                  src={img}
+                  alt="workerImg"
+                  fill
+                  className="object-cover rounded-xl"
+                />
+              )}
+            </Link>
+          ) : (
+            img && (
               <Image
-                onClick={(e) => e.stopPropagation()}
                 src={img}
                 alt="workerImg"
                 fill
                 className="object-cover rounded-xl"
               />
-            )}
-          </Link>
+            )
+          )}
         </div>
-        <Link href={link}>
+        {link != "" ? (
+          <Link href={link}>
+            <div className="flex flex-col flex-grow">
+              <h1 className="font-semibold text-sm">
+                {width < 420 ? truncate(name, 40) : name}
+              </h1>
+              <p className="text-blackText text-xs">
+                {width < 420 ? truncate(service, 40) : service}
+              </p>
+            </div>
+          </Link>
+        ) : (
           <div className="flex flex-col flex-grow">
             <h1 className="font-semibold text-sm">
               {width < 420 ? truncate(name, 40) : name}
@@ -74,19 +96,21 @@ function WorkerCard({
             <p className="text-blackText text-xs">
               {width < 420 ? truncate(service, 40) : service}
             </p>
-            {/* <div className="flex items-center">
-              <StarIcon color={"#00A0D5"} className="mr-1" />
-              <p className="text-blackText">{score}</p>
-            </div> */}
           </div>
-        </Link>
+        )}
       </div>
 
-      <Link href={multiple ? link : "/summary"} className="h-full">
+      {link != "" ? (
+        <Link href={link} className="h-full">
+          <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
+            <ArrowRightIcon className="ml-1" />
+          </div>
+        </Link>
+      ) : (
         <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">
           <ArrowRightIcon className="ml-1" />
         </div>
-      </Link>
+      )}
     </div>
   );
 }

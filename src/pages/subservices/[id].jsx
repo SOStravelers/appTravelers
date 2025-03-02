@@ -77,7 +77,7 @@ export default function Subservices() {
       });
     }
   };
-
+  //minicambio
   return (
     <div className="mt-4 p-10 pb-20 flex  flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
       <h1 className="my-2 font-semibold mt-1 text-center max-w-lg">

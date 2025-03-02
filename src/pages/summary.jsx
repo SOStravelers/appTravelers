@@ -8,7 +8,6 @@ import SmallButton from "@/components/utils/buttons/SmallButton";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import Link from "next/link";
 import {
-  
   ClockIcon,
   MailIcon,
   ChangeIcon,
@@ -251,9 +250,9 @@ export default function Summary() {
               formatearFecha(service?.date, language) || ""
             } | ${service?.startTime?.stringData + " hrs" || ""}`}</p>
           </div>
-          <Link className="flex " href={`/reservation/${IdHostel}`}>
+          {/* <Link className="flex " href={`/reservation/${IdHostel}`}>
             <ChangeIcon />
-          </Link>
+          </Link> */}
         </div>
       )}
 

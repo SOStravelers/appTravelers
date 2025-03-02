@@ -83,7 +83,9 @@ export default function Subservices() {
       <h1 className="my-2 font-semibold mt-1 text-center max-w-lg">
         {service.serviceName + " " + languageData.title[language]}
       </h1>
-      <p className="mt-2">{languageData.partner[language]}</p>
+      {service.serviceId == idPaseos && (
+        <p className="mt-2">{languageData.partner[language]}</p>
+      )}
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings

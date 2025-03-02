@@ -27,6 +27,7 @@ const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
   }, [service]);
 
   const capitalize = (cadena) => {
+    if (!cadena) return;
     return cadena.charAt(0).toUpperCase() + cadena.slice(1);
   };
 
@@ -52,19 +53,22 @@ const ComboBoxEditable = ({ service, selectedOptions, handleChange }) => {
   return (
     <div className="w-full max-w-lg">
       <>
-        <div
-          className="text-black border  border-greyText rounded-lg px-2 py-2 my-5 flex justify-between items-center cursor-pointer"
-          onClick={() => setOpen(!open)}
-        >
-          <h1 className=" text-lg ml-3">
-            {capitalize(service?.name[language])}
-          </h1>
-          <ArrowUpIcon
-            color={"#5B78C7"}
+        {service && (
+          <div
+            className="text-black border border-greyText rounded-lg px-2 py-2 my-5 flex justify-between items-center cursor-pointer"
             onClick={() => setOpen(!open)}
-            className={!open ? "rotate-180" : ""}
-          />
-        </div>
+          >
+            <h1 className="text-lg ml-3">
+              {capitalize(service?.name[language])}
+            </h1>
+            <ArrowUpIcon
+              color={"#5B78C7"}
+              onClick={() => setOpen(!open)}
+              className={!open ? "rotate-180" : ""}
+            />
+          </div>
+        )}
+
         {open &&
           subservices?.length > 0 &&
           subservices.map((subservice, index) => (

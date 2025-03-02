@@ -7,7 +7,6 @@ import { useStore } from "@/store";
 import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
 
-
 export default function Payment() {
   const { service, setService, isWorker, language } = useStore();
   const [paymentType, setPaymentType] = useState("stripe");
@@ -49,7 +48,7 @@ export default function Payment() {
   }));
 
   const pay = async () => {
-    if (isWorker || service.serviceId == "663039e1dbd84508c88f9074") {
+    if (isWorker) {
       router.push("/payment-confirmation");
       return;
     }

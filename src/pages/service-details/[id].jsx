@@ -418,15 +418,9 @@ function ServiceHistory() {
               }`}
             >
               <p className=" mb-2">
-<<<<<<< HEAD
                 {booking.multiple && booking.locationInfo
                   ? booking?.locationInfo[language]
                   : booking.businessUser?.businessData?.location?.details["en"]}
-=======
-                {isWorker
-                  ? booking.businessUser?.businessData?.details["pt"]
-                  : booking.businessUser?.businessData?.details["en"]}
->>>>>>> c6d5d0c8db77f7f1825f4dc7f921fe3a33264be0
               </p>
               <div className="mb-2 flex justify-center">
                 <a

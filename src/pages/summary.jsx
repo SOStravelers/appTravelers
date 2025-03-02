@@ -8,7 +8,6 @@ import SmallButton from "@/components/utils/buttons/SmallButton";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import Link from "next/link";
 import {
-
   
   ClockIcon,
   MailIcon,
@@ -132,8 +131,6 @@ export default function Summary() {
       router.push("/login");
     else if (process.env.NEXT_PUBLIC_DEMO === "true")
       router.push("/payment-demo");
-    else if (service.serviceId == "663039e1dbd84508c88f9074")
-      router.push("/payment-confirmation");
     else router.push("/payment");
   };
 

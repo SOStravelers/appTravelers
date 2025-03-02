@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { Rings } from "react-loader-spinner";
 import Link from "next/link";
+
 import { CompleteGirlIcon, BarberPicture } from "@/constants/icons";
 import { io } from "socket.io-client";
 import SolidButton from "@/components/utils/buttons/SolidButton";

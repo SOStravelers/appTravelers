@@ -29,6 +29,7 @@ function WorkerCard({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  //minicambio
 
   const handleSummary = () => {
     if (onClickSummary) {
@@ -99,7 +100,6 @@ function WorkerCard({
           </div>
         )}
       </div>
-
       {link != "" ? (
         <Link href={link} className="h-full">
           <div className="w-8 h-24 flex items-center justify-center bg-blueBorder rounded-r-2xl cursor-pointer">

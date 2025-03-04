@@ -41,7 +41,7 @@ export default function Subservices() {
   };
 
   const goToChat = (subservice) => {
-    const whatsappNumber = "+56971014264"; // Número del objeto booking
+    const whatsappNumber = "+56933938608"; // Número del objeto booking
     const message =
       languageBooking.msgWhatsapp3[language] +
       " " +
@@ -63,7 +63,7 @@ export default function Subservices() {
   const selectSubservice = (miniService) => {
     console.log("erno", miniService);
     console.log("service", service);
-    if (service.serviceId == idPaseos) {
+    if (miniService.goChat) {
       goToChat(miniService);
       return;
     } else {

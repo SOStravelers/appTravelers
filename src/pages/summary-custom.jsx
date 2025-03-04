@@ -7,6 +7,7 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import SmallButton from "@/components/utils/buttons/SmallButton";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ClockIcon,
   MailIcon,
@@ -91,17 +92,22 @@ export default function Summary() {
       setWorker(response.data);
     });
     console.log("caso2s");
-    SubserviceService.getSubserviceByWorker({
-      user: workerId,
-      subservice: subServiceId,
-    }).then((response) => {
-      console.log("la dataaa", response.data);
+    SubserviceService.getSubserviceByWorker(
+      {
+        user: workerId,
+        subservice: subServiceId,
+        onlySubservice: true,
+      },
+      true
+    ).then((response) => {
+      console.log("la dataaas", response.data);
       setPrice(price);
       setService({
         duration: response.data.duration,
         date: date,
         serviceName: nameService,
         nameSubservice: nameSubservice,
+        imgUrl: response.data.imgUrl,
         startTime: startTime,
         locationInfo: response.data.locationInfo,
         details: response.data.details,
@@ -163,11 +169,37 @@ export default function Summary() {
     );
   };
 
+  useEffect(() => {
+    console.log("wewadsa");
+    if (worker?.img?.imgUrl) {
+      setImage(worker.img.imgUrl);
+    }
+  }, [worker]);
+
+  const setImage = (img) => {
+    if (img) {
+      return `${img}?${new Date().getTime()}`; // Agrega un timestamp único
+    } else {
+      return "/assets/user.png";
+    }
+  };
+
   return (
     <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-6 md:pl-80">
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
         {languageData.read[language]}
       </h1>
+
+      <div className="w-full h-28 mt-5 rounded-xl bg-blueBorder relative">
+        {service?.imgUrl && (
+          <Image
+            src={service?.imgUrl}
+            fill
+            alt="imagenCover"
+            className="object-cover rounded-xl"
+          />
+        )}
+      </div>
 
       {hostel && (
         <HostelCardSummary
@@ -224,12 +256,12 @@ export default function Summary() {
         name={fullName(worker?.personalData?.name)}
         service={
           worker?.workerData
-            ? getServiceNames(worker?.workerData)
+            ? getServiceNames(worker?.workerData, language)
             : "No services"
         }
         score={5}
         link={`/worker/${worker?._id}`}
-        img={worker?.img?.imgUrl || "/assets/user.png"}
+        img={setImage(worker?.img?.imgUrl)} // Aquí se usa la función
         showEdit={validateEdit()}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
@@ -245,9 +277,9 @@ export default function Summary() {
               )} | ${service?.startTime?.stringData + " hrs" || ""}`}</p>
             )}
           </div>
-          <Link className="flex" href={`/reservation/${IdHostel}`}>
+          {/* <Link className="flex" href={`/reservation/${IdHostel}`}>
             <ChangeIcon />
-          </Link>
+          </Link> */}
         </div>
       )}
 

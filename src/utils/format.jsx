@@ -93,6 +93,7 @@ export const getDayOfWeek = (date, language) => {
 
 export const getServiceNames = (data, language) => {
   // Extraer los nombres de los servicios
+  console.log("wenos wenos", data.services, language);
   if (!data) return;
   const serviceNames = data.services.map(
     (service) => service.id.name[language]

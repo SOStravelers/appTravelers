@@ -46,7 +46,14 @@ function LoginForm() {
         return;
       } else if (service && Object.keys(service).length > 0) {
         setLoading(false);
-        router.push(`/summary`);
+        console.log("calabaza", localStorage.getItem("fromCustomSummary"));
+        if (localStorage.getItem("fromCustomSummary") == true) {
+          const url = localStorage.getItem("fullUrl");
+          localStorage.setItem("fromCustomSummary", false);
+          router.push(url);
+        } else {
+          router.push(`/summary`);
+        }
       } else {
         const response = await UserService.findByEmail(values.email);
         if (response?.data?.isActive && response?.data?.isValidate) {

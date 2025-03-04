@@ -169,7 +169,20 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
                 setWorker(false);
                 if (service && Object.keys(service).length > 0) {
                   // console.log("caso1");
-                  router.push(`/summary`);
+                  console.log(
+                    "calabaza",
+                    localStorage.getItem("fromCustomSummary"),
+                    localStorage.getItem("fullUrl")
+                  );
+                  if (localStorage.getItem("fromCustomSummary") == "true") {
+                    const url = localStorage.getItem("fullUrl");
+                    localStorage.setItem("fromCustomSummary", "false");
+                    window.location.href = url;
+
+                    return;
+                  } else {
+                    router.push(`/summary`);
+                  }
                 } else {
                   // console.log("caso2");
                   router.push("/");

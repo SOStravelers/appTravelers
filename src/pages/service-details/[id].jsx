@@ -418,7 +418,7 @@ function ServiceHistory() {
               }`}
             >
               <p className=" mb-2">
-                {booking.multiple && booking.locationInfo
+                {booking?.multiple && booking?.locationInfo
                   ? booking?.locationInfo[language]
                   : booking.businessUser?.businessData?.location?.details["en"]}
               </p>

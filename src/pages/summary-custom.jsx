@@ -35,6 +35,7 @@ export default function Summary() {
   const [theDate, setDate] = useState(null);
   const [IdHostel, setIdHostel] = useState(null);
   const [worker, setWorker] = useState(null);
+  const [workerId, setWorkeId] = useState(null);
   const [hostel, setHostel] = useState(null);
   const [subServiceId, setSubservice] = useState(null);
   const [selected, setSelected] = useState(false);
@@ -64,6 +65,7 @@ export default function Summary() {
       isoTime: isoTime,
       stringData: stringData,
     };
+    console.log("workerId", workerId);
     //hola
     // const date = "2025-03-15";
     // const workerId = "67577f826779bb536c96fa10";
@@ -81,14 +83,15 @@ export default function Summary() {
       console.log("va al fallo");
       setService({});
       router.push("/");
+      return;
     }
     setIdHostel(null);
     setDate(date);
     setHostel(null);
     setService({ businessUser: null });
-    console.log("va a buscar el worker");
+    console.log("va a buscar el worker", workerId);
     WorkerService.getWorker(workerId).then((response) => {
-      // console.log("worker", response.data);
+      console.log("workerListo", response.data);
       setWorker(response.data);
     });
     console.log("caso2s");
@@ -110,8 +113,11 @@ export default function Summary() {
         imgUrl: response.data.imgUrl,
         startTime: startTime,
         locationInfo: response.data.locationInfo,
+        serviceId: response.data.service,
+        subServiceId: subServiceId,
         details: response.data.details,
         mapUrl: response.data.mapUrl,
+        workerId: workerId,
         currency: "BRL",
         price: [{ currency: "BRL", value: 1, aprox: 1, finalCost: price }],
         priceUnitService: price,
@@ -132,8 +138,14 @@ export default function Summary() {
   const hireNow = () => {
     localStorage.removeItem("editing");
     localStorage.removeItem("fromFavorite");
-
-    router.push("/payment");
+    if (!loggedIn && process.env.NEXT_PUBLIC_DEMO != "true") {
+      localStorage.setItem("fromCustomSummary", true);
+      const fullUrl = window.location.href;
+      localStorage.setItem("fullUrl", fullUrl);
+      router.push("/login");
+    } else {
+      router.push("/payment");
+    }
   };
 
   const validateEdit = () => {

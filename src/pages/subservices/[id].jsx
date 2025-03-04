@@ -63,7 +63,16 @@ export default function Subservices() {
   const selectSubservice = (miniService) => {
     console.log("erno", miniService);
     console.log("service", service);
-    if (miniService.goChat) {
+
+    if (service.serviceId == "67c11c4917c3a7a2c353cb1b") {
+      let urlAmigable = encodeURIComponent(miniService.name[language]);
+
+      const url = `https://sostvl.com/summary-custom?date=2025-03-08&workerId=65312a63c0b1e1658a5a712c&subServiceId=${miniService._id}&isoTime=2025-03-15T17:45:00.000Z&stringData=17:45&nameSubservice=${urlAmigable}&price=${miniService.price.category1}`;
+      const urlSimple = `/summary-custom?date=2025-03-08&workerId=65312a63c0b1e1658a5a712c&subServiceId=${miniService._id}&isoTime=2025-03-15T17:45:00.000Z&stringData=17:45&nameSubservice=${urlAmigable}&price=${miniService.price.category1}`;
+      // router.push(urlSimple);
+      window.location.href = url;
+      return;
+    } else if (miniService.goChat) {
       goToChat(miniService);
       return;
     } else {

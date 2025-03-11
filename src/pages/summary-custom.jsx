@@ -53,12 +53,12 @@ export default function Summary() {
     const {
       isoTime,
       stringData,
-      nameService,
       nameSubservice,
       date,
       workerId,
       subServiceId,
       price,
+      duration,
     } = router.query;
 
     const startTime = {
@@ -106,9 +106,8 @@ export default function Summary() {
       console.log("la dataaas", response.data);
       setPrice(price);
       setService({
-        duration: response.data.duration,
+        duration: duration || response.data.duration,
         date: date,
-        serviceName: nameService,
         nameSubservice: nameSubservice,
         imgUrl: response.data.imgUrl,
         startTime: startTime,

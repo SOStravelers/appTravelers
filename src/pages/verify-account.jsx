@@ -20,7 +20,7 @@ export default function VerifyAccount() {
       if (response.status === 200) {
         if (service && Object.keys(service).length > 0 && register) {
           setRegister(false);
-
+          
           if (localStorage.getItem("fromCustomSummary") == true) {
             const url = localStorage.getItem("fullUrl");
             localStorage.setItem("fromCustomSummary", false);

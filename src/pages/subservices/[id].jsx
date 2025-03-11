@@ -15,7 +15,7 @@ export default function Subservices() {
   const [subServices, setSubservices] = useState([]);
 
   const idPaseos = "6757137ad2b2668720116ec9";
-
+  //minicambio
   useEffect(() => {
     document.title = "Choose subservice | SOS Travelers";
     const fromFavorite = localStorage.getItem("fromFavorite");

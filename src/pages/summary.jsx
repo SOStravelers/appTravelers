@@ -103,6 +103,7 @@ export default function Summary() {
         console.log("wena wena wena", response.data);
 
         setPrice(response.data.prices.valuesToday[0].finalCost);
+
         setService({
           duration: response.data.duration,
           locationInfo: response.data.locationInfo,

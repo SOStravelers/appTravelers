@@ -34,15 +34,11 @@ export default class StripeService {
   }
 
   // Nuevo método para manejar las transferencias
-  static async handleTransfers(paymentIntentId, auth = false) {
+  static async handleTransfers(data, auth = false) {
     if (auth) {
-      return axios.post(
-        `${this.authUrl}/transfer-payments`,
-        { paymentIntentId },
-        {
-          headers: this.getHeaders(),
-        }
-      );
+      return axios.post(`${this.authUrl}/transfer-payments`, data, {
+        headers: this.getHeaders(),
+      });
     } else {
       return axios.post(
         `${this.baseUrl}/transfer-payments`,

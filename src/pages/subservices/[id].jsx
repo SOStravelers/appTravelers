@@ -146,7 +146,7 @@ export default function Subservices() {
                 img={s.imgUrl || "/assets/user.png"}
                 multiple={true}
                 link={
-                  service.serviceId == idPaseos
+                  service.goChat
                     ? ""
                     : s.multiple
                     ? `/reservation/${s.id}`

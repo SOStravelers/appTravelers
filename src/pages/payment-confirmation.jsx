@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { Rings } from "react-loader-spinner";
 import Link from "next/link";
+import Cookies from "js-cookie";
 //prueba handle 6515996e711d8a6f4596e19e3f0d2e49f59f1f84
 import { CompleteGirlIcon, BarberPicture } from "@/constants/icons";
 import { io } from "socket.io-client";
@@ -106,7 +107,14 @@ export default function PaymentConfirmation() {
         "Realizando transferencias para el paymentIntent:",
         paymentIntent
       );
-      const result = await StripeService.handleTransfers(paymentIntent, true);
+      const partner = Cookies.get("partner");
+      const data = {
+        paymentIntentId: paymentIntent,
+        partner: partner,
+        workerUser: service.workerId,
+        service: service.serviceId,
+      };
+      const result = await StripeService.handleTransfers(data, true);
       console.log("resultado", result, result.data);
       params.payment.priceBRL = result.data.priceBRL;
 

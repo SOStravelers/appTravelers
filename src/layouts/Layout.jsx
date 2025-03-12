@@ -31,7 +31,18 @@ function Layout({ children, lang }) {
   // const { socket } = useStore();
 
   let metaDescription = "";
-  const language = lang ? lang : "en";
+
+  let newLang = "en";
+  if (
+    lang == "pt" ||
+    lang == "es" ||
+    lang == "de" ||
+    lang == "en" ||
+    lang == "fr"
+  ) {
+    newLang = lang;
+  }
+  const language = newLang ? newLang : "en";
   if (language.includes("fr")) {
     metaDescription =
       "Découvrez un bien-être personnalisé : choisissez votre hostel, choisissez l'heure et trouvez des professionnels d'élite dans notre application conviviale. Des travailleurs soigneusement sélectionnés pour une expérience inégalée. Votre confort est notre priorité !";

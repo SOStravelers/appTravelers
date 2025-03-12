@@ -36,6 +36,15 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const obtenerInformacionUsuario = async () => {
     let cookieAccessToken = Cookies.get("auth.access_token");
     let cookieLanguage = Cookies.get("language");
+    if (
+      cookieLanguage != "pt" &&
+      cookieLanguage != "es" &&
+      cookieLanguage != "de" &&
+      cookieLanguage != "en" &&
+      cookieLanguage != "fr"
+    ) {
+      cookieLanguage = null;
+    }
     console.log("la dataaaa");
 
     const { partner } = router.query;
@@ -49,9 +58,22 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
         Cookies.set("language", cookieLanguage);
       } else {
         const userLanguage = navigator.language || navigator.languages[0];
+        console.log("wena", userLanguage);
         const shortName = userLanguage.slice(0, 2);
-        setLanguage(shortName);
-        Cookies.set("language", shortName);
+        if (
+          cookieLanguage != "pt" &&
+          cookieLanguage != "es" &&
+          cookieLanguage != "de" &&
+          cookieLanguage != "en" &&
+          cookieLanguage != "fr"
+        ) {
+          cookieLanguage = null;
+          setLanguage("en");
+          Cookies.set("language", "en");
+        } else {
+          setLanguage(shortName);
+          Cookies.set("language", shortName);
+        }
       }
     } else {
       setLanguage("en");

@@ -53,6 +53,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     }
 
     if (typeof window !== "undefined") {
+      //cambio lenguage∂
       if (cookieLanguage) {
         setLanguage(cookieLanguage);
         Cookies.set("language", cookieLanguage);

@@ -50,6 +50,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     const { partner } = router.query;
     if (partner) {
       Cookies.set("partner", partner);
+      Cookies.set("timePartner", new Date().toISOString());
     }
 
     if (typeof window !== "undefined") {

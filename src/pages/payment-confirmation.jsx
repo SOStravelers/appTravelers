@@ -108,9 +108,26 @@ export default function PaymentConfirmation() {
         paymentIntent
       );
       const partner = Cookies.get("partner");
+      const timePartner = Cookies.get("timePartner");
+
+      function estaEnUltimos15Dias(isoString) {
+        const fechaGuardada = new Date(isoString);
+        const ahora = new Date();
+
+        // 15 días en milisegundos
+        const quinceDias = 15 * 24 * 60 * 60 * 1000;
+
+        // Calculamos el límite inferior (hace 15 días)
+        const limiteInferior = new Date(ahora - quinceDias);
+
+        return fechaGuardada >= limiteInferior && fechaGuardada <= ahora;
+      }
+
+      const tiempoMax = estaEnUltimos15Dias(timePartner);
+
       const data = {
         paymentIntentId: paymentIntent,
-        partner: partner,
+        partner: tiempoMax ? partner : null,
         workerUser: service.workerId,
         service: service.serviceId,
       };

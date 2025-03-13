@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { random } from "@/lib/utils";
 import { validationImg } from "@/utils/validation";
 import { useStore } from "@/store";
+import languageBooking from "@/language/bookingDetails.json";
 function RecomendationCard(user) {
   const router = useRouter();
   const { language, service, setService } = useStore();
@@ -24,6 +25,10 @@ function RecomendationCard(user) {
       setData({
         subService: null,
         imgUrl: user?.imgUrl + "?hola=" + random(),
+        subServiceId: null,
+        duration: null,
+        details: null,
+        multiple: null,
       });
     }
 
@@ -35,7 +40,8 @@ function RecomendationCard(user) {
       subService: allSubServices[randomIndex].name[language],
       subServiceId: allSubServices[randomIndex]._id,
       duration: allSubServices[randomIndex].duration,
-      detaisl: allSubServices[randomIndex].details,
+      goChat: allSubServices[randomIndex].goChat,
+      details: allSubServices[randomIndex].details,
       multiple: allSubServices[randomIndex].multiple,
       imgUrl: allSubServices[randomIndex]?.imgUrl + "?hola=" + random(),
     });
@@ -68,7 +74,26 @@ function RecomendationCard(user) {
     }
     return null; // Si no se encuentra el subServiceId
   };
+
+  const goToChat = (subservice) => {
+    const whatsappNumber = "+56933938608"; // Número del objeto booking
+    const message =
+      languageBooking.msgWhatsapp3[language] +
+      " " +
+      data.subService +
+      " " +
+      languageBooking.msgWhatsapp4[language]; // Mensaje opcional
+    const encodedMessage = encodeURIComponent(message);
+    window.open(
+      `https://wa.me/${whatsappNumber.replace(
+        /\D/g,
+        ""
+      )}?text=${encodedMessage}`,
+      "_blank"
+    );
+  };
   const setFavorite = (id) => {
+    console.log("hola hola", data);
     localStorage.setItem("fromFavorite", true);
 
     const dataService = findServiceBySubServiceId(user.user, data.subServiceId);
@@ -84,8 +109,12 @@ function RecomendationCard(user) {
       multiple: data.multiple,
       workerId: user.user._id,
     });
-    router.push("reservation/" + service.subServiceId);
-    // router.push("/worker/" + id);
+    if (data.goChat) {
+      goToChat(data);
+    } else {
+      router.push("reservation/" + service.subServiceId);
+      // router.push("/worker/" + id);
+    }
   };
   useEffect(() => {
     const checkImage = async () => {

@@ -74,7 +74,7 @@ function RecomendationCard(user) {
     }
     return null; // Si no se encuentra el subServiceId
   };
-
+  //go chat
   const goToChat = (subservice) => {
     const whatsappNumber = "+56933938608"; // Número del objeto booking
     const message =

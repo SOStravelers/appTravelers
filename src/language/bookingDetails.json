@@ -92,7 +92,7 @@
   },
 
   "msgWhatsapp2": {
-    "en": "via **SOS Travel**, I have a question",
+    "en": "via *SOS Travel*, I have a question",
     "es": "por *SOS Travel*, tengo una consulta",
     "fr": "par *SOS Travel*, j'ai une question",
     "de": "von *SOS Travel*, ich habe eine Frage",
@@ -112,5 +112,13 @@
     "fr": "que j'ai vu sur *SOS Travel*",
     "de": "das ich auf *SOS Travel* gesehen habe",
     "pt": "que vi na *SOS Travel*"
+  },
+
+  "msgWhatsapp5": {
+    "en": "Hello *SOS Travel*, I have a question",
+    "es": "Hola *SOS Travel*, tengo una consulta",
+    "fr": "Bonjour *SOS Travel*, j'ai une question",
+    "de": "Hallo *SOS Travel*, ich habe eine Frage",
+    "pt": "Olá *SOS Travel*, tenho uma dúvida"
   }
 }

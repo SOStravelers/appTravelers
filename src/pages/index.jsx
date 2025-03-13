@@ -8,6 +8,7 @@ import NotificationService from "@/services/NotificationService";
 import ServiceService from "@/services/ServiceService";
 import UserService from "@/services/UserService";
 import { mazzard } from "@/utils/mazzardFont";
+import FloatingWhatsAppButton from "../components/utils/buttons/FloatingWhatsAppButton";
 import Cookies from "js-cookie";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { NotFoundPicture } from "@/constants/icons";
@@ -136,6 +137,9 @@ export default function Home({}) {
           ))}
         </Swiper>
       </div>
+      <div>
+        <FloatingWhatsAppButton />
+      </div>
       {process.env.NEXT_PUBLIC_NODE_ENV != "productionsss" ? (
         <>
           <section>
@@ -156,7 +160,6 @@ export default function Home({}) {
               ))}
             </div>
           </section>
-
           <section>
             <h1
               className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}

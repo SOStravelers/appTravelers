@@ -127,10 +127,12 @@ export default function PaymentConfirmation() {
 
       const data = {
         paymentIntentId: paymentIntent,
-        partner: tiempoMax ? partner : null,
+        // partner: tiempoMax ? partner : null,
         workerUser: service.workerId,
         service: service.serviceId,
       };
+      tiempoMax ? (data.partner = partner) : "";
+      tiempoMax ? (params.payment.partner = partner) : "";
       const result = await StripeService.handleTransfers(data, true);
       console.log("resultado", result, result.data);
       params.payment.priceBRL = result.data.priceBRL;

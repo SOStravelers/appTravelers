@@ -190,7 +190,7 @@ export default function Summary() {
         {languageData.read[language]}
       </h1>
 
-      <div className="w-full h-28 mt-5 rounded-xl bg-blueBorder relative">
+      <div className="w-full max-w-lg h-28 mt-5 rounded-xl bg-blueBorder relative">
         {service?.imgUrl && (
           <Image
             src={service?.imgUrl}
@@ -332,7 +332,7 @@ export default function Summary() {
             </div>
           ))}
       </div>
-      <h1 className="my-4 text-grey text-sm text-center max-w-lg">
+      <h1 className="my-4 text-grey text-sm text-center w-full max-w-lg">
         {languageData.textAdd[language]}
       </h1>
       <div

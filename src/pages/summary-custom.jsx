@@ -203,7 +203,7 @@ export default function Summary() {
         {languageData.read[language]}
       </h1>
 
-      <div className="w-full h-28 mt-5 rounded-xl bg-blueBorder relative">
+      <div className="w-full max-w-lg h-28 mt-5 rounded-xl bg-blueBorder relative">
         {service?.imgUrl && (
           <Image
             src={service?.imgUrl}

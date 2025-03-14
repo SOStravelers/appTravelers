@@ -13,6 +13,14 @@ function ServiceCard({ link, icon, name, id, img }) {
   const select = () => {
     setService({ serviceId: id, serviceName: name });
   };
+
+  const numberImg = (img) => {
+    if (img.includes("experience")) {
+      return 500;
+    } else {
+      return 45;
+    }
+  };
   return (
     <Link href={link} onClick={select}>
       <div className="text-black flex flex-col items-center justify-center mx-2">
@@ -22,8 +30,8 @@ function ServiceCard({ link, icon, name, id, img }) {
             <Image
               src={img}
               alt="workerImg"
-              width={45}
-              height={45}
+              width={numberImg(img)}
+              height={numberImg(img)}
               className="object-cover rounded-xl"
             />
           )}

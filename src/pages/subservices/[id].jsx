@@ -66,7 +66,7 @@ export default function Subservices() {
 
     if (service.serviceId == "67c11c4917c3a7a2c353cb1b") {
       let urlAmigable = encodeURIComponent(miniService.name[language]);
-      //minicambio
+      //minicambio2
       const url = `https://sostvl.com/summary-custom?date=2025-03-16&workerId=65312a63c0b1e1658a5a712c&subServiceId=${miniService._id}&isoTime=2025-03-16T16:00:00.000Z&stringData=16:00&nameSubservice=${urlAmigable}&price=${miniService.price.category1}`;
       const urlSimple = `/summary-custom?date=2025-03-16&workerId=65312a63c0b1e1658a5a712c&subServiceId=${miniService._id}&isoTime=2025-03-12T21:30:00.000Z&stringData=21:30&nameSubservice=${urlAmigable}&price=${miniService.price.category1}`;
       // router.push(urlSimple);

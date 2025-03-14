@@ -13,7 +13,7 @@ function ServiceCard({ link, icon, name, id, img }) {
   const select = () => {
     setService({ serviceId: id, serviceName: name });
   };
-
+  //comentario
   const numberImg = (img) => {
     if (img.includes("experience")) {
       return 500;

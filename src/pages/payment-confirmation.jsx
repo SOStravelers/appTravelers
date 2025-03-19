@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { Rings } from "react-loader-spinner";
 import Link from "next/link";
 import Cookies from "js-cookie";
+
 //prueba handle 6515996e711d8a6f4596e19e3f0d2e49f59f1f84
 import { CompleteGirlIcon, BarberPicture } from "@/constants/icons";
 import { io } from "socket.io-client";

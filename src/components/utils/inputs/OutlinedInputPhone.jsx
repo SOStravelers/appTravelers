@@ -7,7 +7,7 @@ function OutlinedInputPhone({ width, value, onChange }) {
     <div className="relative" style={{ width: width || "100%" }}>
       <PhoneInput
         country={"cl"} // Código del país predeterminado
-        onlyCountries={["cl", "br", "us", "ar", "mx"]} // Lista de países permitidos
+        // onlyCountries={["cl", "br", "us", "ar", "mx"]} // Lista de países permitidos
         disableDropdown={false} // Permite cambiar el país con la bandera
         enableSearch={true} // Permite buscar en la lista de países
         value={value}

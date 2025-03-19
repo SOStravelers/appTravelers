@@ -511,7 +511,7 @@ function ServiceHistory() {
           {/* Description Service */}
           <div className="w-full max-w-lg">
             <div
-              className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+              className="grid grid-cols-5 gap-4 items-center cursor-pointer sticky top-[50px] bg-white z-10"
               onClick={toggleText2}
             >
               <div className="col-span-4 text-left text-sm py-2 my-5">

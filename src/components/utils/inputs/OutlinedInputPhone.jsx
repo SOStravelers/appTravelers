@@ -26,6 +26,7 @@ function OutlinedInputPhone({ width, value, onChange }) {
           border: "1px solid #00A0D5",
           fontSize: "16px",
         }}
+        //hola
         buttonStyle={{
           borderRadius: "8px 0px 0px 8px",
           border: "1px solid #00A0D5",

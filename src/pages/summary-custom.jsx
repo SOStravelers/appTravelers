@@ -6,6 +6,8 @@ import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import SmallButton from "@/components/utils/buttons/SmallButton";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+import OutlinedInputPhone from "@/components/utils/inputs/OutlinedInputPhone";
+import { toast } from "react-toastify";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -41,6 +43,7 @@ export default function Summary() {
   const [selected, setSelected] = useState(false);
   const [clients, setClients] = useState([]);
   const [price, setPrice] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     document.title = "Summary | SOS Travelers";
@@ -113,6 +116,7 @@ export default function Summary() {
         nameService: nameService,
         imgUrl: response.data.imgUrl,
         startTime: startTime,
+        phoneNumber: "",
         locationInfo: response.data.locationInfo,
         serviceId: response.data.service,
         subServiceId: subServiceId,
@@ -145,13 +149,27 @@ export default function Summary() {
       localStorage.setItem("fullUrl", fullUrl);
       router.push("/login");
     } else {
-      router.push("/payment");
+      console.log("phone number", service.phoneNumber);
+      const number = service.phoneNumber.split(" ")[1];
+      console.log("el number", number);
+      if (number.length < 8 || number.length > 15) {
+        toast.error("Not Valid number");
+      } else {
+        router.push("/payment");
+      }
     }
   };
 
   const validateEdit = () => {
     if (isWorker) return false;
     if (localStorage.getItem("fromFavorite")) return false;
+  };
+
+  const setTheNumber = (value) => {
+    setPhoneNumber(value);
+    setService({
+      phoneNumber: value,
+    });
   };
 
   const addClient = (newClient) => {
@@ -202,7 +220,7 @@ export default function Summary() {
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
         {languageData.read[language]}
       </h1>
-
+      <div className="font-bold">{service.nameSubservice}</div>
       <div className="w-full max-w-lg h-28 mt-5 rounded-xl bg-blueBorder relative">
         {service?.imgUrl && (
           <Image
@@ -317,10 +335,15 @@ export default function Summary() {
         <div
           style={{ marginLeft: "-2px" }}
           className={`overflow-hidden mx-10 transition-all duration-500 ease-in-out ${
-            isTextVisible2 ? "max-h-screen" : "max-h-0"
+            isTextVisible2 ? "max-h-auto" : "max-h-0"
           }`}
         >
-          <p className="mb-2">{service?.details?.[language] ?? ""}</p>
+          <div
+            className="mb-2 ml-1 text-left"
+            dangerouslySetInnerHTML={{
+              __html: service?.details?.[language] ?? "",
+            }}
+          />
         </div>
       </div>
       <div className="flex flex-col w-full max-w-lg my-2">
@@ -348,6 +371,18 @@ export default function Summary() {
             </div>
           ))}
       </div>
+      <hr className="w-full max-w-lg my-1 text-lightGrey" />
+      <h1 className="my-2 text-grey text-sm text-center max-w-lg">
+        Contact Number
+      </h1>
+      <OutlinedInputPhone
+        placeholder="Enter phone number"
+        value={phoneNumber}
+        onChange={(value) => setTheNumber(value)}
+        type="phone"
+        width="90%"
+      />
+      <hr className="w-full max-w-lg my-6 text-lightGrey" />
       <h1 className="my-4 text-grey text-sm text-center max-w-lg">
         {languageData.textAdd[language]}
       </h1>

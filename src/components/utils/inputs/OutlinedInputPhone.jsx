@@ -4,7 +4,10 @@ import "react-phone-input-2/lib/style.css";
 
 function OutlinedInputPhone({ width, value, onChange }) {
   return (
-    <div className="relative" style={{ width: width || "100%" }}>
+    <div
+      className="relative w-full max-w-lg"
+      style={{ width: width || "100%" }}
+    >
       <PhoneInput
         country={"cl"} // Código del país predeterminado
         // onlyCountries={["cl", "br", "us", "ar", "mx"]} // Lista de países permitidos

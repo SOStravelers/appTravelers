@@ -41,7 +41,7 @@ import {
 function ServiceHistory() {
   const router = useRouter();
   const { isWorker, user, language } = useStore();
-  const [isTextVisible1, setIsTextVisible1] = useState(false);
+  const [isTextVisible1, setIsTextVisible1] = useState(true);
   const [isTextVisible2, setIsTextVisible2] = useState(false);
   const [isTextVisible3, setIsTextVisible3] = useState(false);
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
@@ -530,12 +530,15 @@ function ServiceHistory() {
             <div
               style={{ marginLeft: "-2px" }}
               className={`overflow-hidden mx-10 transition-all duration-500 ease-in-out ${
-                isTextVisible2 ? "max-h-screen" : "max-h-0"
+                isTextVisible2 ? "max-h-auto" : "max-h-0"
               }`}
             >
-              <p className="mb-2">
-                {booking.details ? booking.details[language] : ""}
-              </p>
+              <div
+                className="mb-2 ml-1 text-left"
+                dangerouslySetInnerHTML={{
+                  __html: booking.details ? booking.details[language] : "",
+                }}
+              />
             </div>
           </div>
 

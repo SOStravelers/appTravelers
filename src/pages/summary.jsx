@@ -29,7 +29,7 @@ export default function Summary() {
   const { isWorker, language } = useStore();
   const router = useRouter();
   const { loggedIn, service, setService } = useStore();
-  const [isTextVisible1, setIsTextVisible1] = useState(false);
+  const [isTextVisible1, setIsTextVisible1] = useState(true);
   const [isTextVisible2, setIsTextVisible2] = useState(false);
   const [theHour, setHour] = useState(null);
   const [theDate, setDate] = useState(null);
@@ -186,10 +186,10 @@ export default function Summary() {
 
   return (
     <div className="flex flex-col items-center md:items-start py-20 lg:py-24 xl:py-24 px-6 md:pl-80">
-      <h1 className="my-5 text-grey text-sm text-center max-w-lg">
+      <h1 className="mt-1 mb-2 text-grey text-sm text-center max-w-lg">
         {languageData.read[language]}
       </h1>
-
+      {service.nameSubservice}
       <div className="w-full max-w-lg h-28 mt-5 rounded-xl bg-blueBorder relative">
         {service?.imgUrl && (
           <Image
@@ -200,7 +200,6 @@ export default function Summary() {
           />
         )}
       </div>
-
       {hostel && (
         <HostelCardSummary
           image={hostel?.img?.imgUrl}
@@ -212,7 +211,6 @@ export default function Summary() {
         />
       )}
       {/* Desplegable info hostel */}
-
       <div className="w-full max-w-lg">
         <div
           className="grid grid-cols-5 gap-4 items-center cursor-pointer"
@@ -265,7 +263,6 @@ export default function Summary() {
         showEdit={validateEdit()}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
-
       {service && (
         <div className="flex justify-between w-full max-w-lg pr-1 my-5">
           <div className="flex  ">
@@ -279,7 +276,6 @@ export default function Summary() {
           </Link> */}
         </div>
       )}
-
       <div className="w-full max-w-lg">
         <div
           className="grid grid-cols-5 gap-4 items-center cursor-pointer"
@@ -301,10 +297,15 @@ export default function Summary() {
         <div
           style={{ marginLeft: "-2px" }}
           className={`overflow-hidden mx-10 transition-all duration-500 ease-in-out ${
-            isTextVisible2 ? "max-h-screen" : "max-h-0"
+            isTextVisible2 ? "max-h-auto" : "max-h-0"
           }`}
         >
-          <p className="mb-2">{service?.details?.[language] ?? ""}</p>
+          <div
+            className="mb-2 text-left"
+            dangerouslySetInnerHTML={{
+              __html: service?.details?.[language] ?? "",
+            }}
+          />
         </div>
       </div>
       <div className="flex flex-col w-full max-w-lg my-2">
@@ -341,7 +342,6 @@ export default function Summary() {
       >
         <SmallButton text={languageData.buttonClient[language]} />
       </div>
-
       <div className="flex items-center w-full max-w-lg my-2">
         {selected ? (
           <CheckIcon

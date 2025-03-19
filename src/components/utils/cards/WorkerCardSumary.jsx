@@ -44,7 +44,8 @@ function WorkerCardSumary({
     <div className="flex py-4 w-full max-w-lg rounded-lg justify-between my-2 items-center">
       <div className="flex">
         <div className="w-16 h-16 rounded-xl  mr-2 relative">
-          <Link href={link}>
+          {/* <Link href={link}> */}
+          <div>
             {img ? (
               <Image
                 src={img}
@@ -53,7 +54,8 @@ function WorkerCardSumary({
                 className="object-cover rounded-xl"
               />
             ) : null}
-          </Link>
+          </div>
+          {/* </Link> */}
         </div>
         <div className="flex mt-2 flex-col">
           <h1 className="font-semibold">{name}</h1>

@@ -56,7 +56,7 @@ function WorkerCard({
           } h-20 rounded-xl mr-2 ml-3 relative flex-none`}
         >
           {link != "" ? (
-            <Link href={link}>
+            <div>
               {img && (
                 <Image
                   onClick={(e) => e.stopPropagation()}
@@ -66,7 +66,7 @@ function WorkerCard({
                   className="object-cover rounded-xl"
                 />
               )}
-            </Link>
+            </div>
           ) : (
             img && (
               <Image

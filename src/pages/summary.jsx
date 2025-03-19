@@ -93,6 +93,7 @@ export default function Summary() {
         setPrice(response.data.valuesToday[0].finalCost);
         setService({
           price: response.data.valuesToday,
+          phoneNumber: "",
           currency: "BRL",
           priceUnitService: response.data.valuesToday[0].finalCost,
         });
@@ -113,6 +114,7 @@ export default function Summary() {
           details: response.data.details,
           mapUrl: response.data.mapUrl,
           imgUrl: response.data.imgUrl,
+          phoneNumber: "",
           currency: "BRL",
           price: response.data.prices.valuesToday,
           priceUnitService: response.data.prices.valuesToday[0].finalCost,

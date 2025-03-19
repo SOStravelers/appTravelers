@@ -88,6 +88,7 @@ export default function PaymentConfirmation() {
       duration: service.duration,
       language: service.language,
       endTime: service.endTime,
+      phoneNumber: service.phoneNumber,
       date: {
         stringData: service.date,
         isoDate: service.startTime.isoTime,

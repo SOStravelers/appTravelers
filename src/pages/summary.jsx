@@ -6,6 +6,8 @@ import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import SmallButton from "@/components/utils/buttons/SmallButton";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+import OutlinedInputPhone from "@/components/utils/inputs/OutlinedInputPhone";
+import { toast } from "react-toastify";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -40,6 +42,7 @@ export default function Summary() {
   const [selected, setSelected] = useState(false);
   const [clients, setClients] = useState([]);
   const [price, setPrice] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     if (!service) {
@@ -129,18 +132,35 @@ export default function Summary() {
   };
 
   const hireNow = () => {
+    console.log("hire");
     localStorage.removeItem("editing");
     localStorage.removeItem("fromFavorite");
     if (!loggedIn && process.env.NEXT_PUBLIC_DEMO != "true")
       router.push("/login");
     else if (process.env.NEXT_PUBLIC_DEMO === "true")
       router.push("/payment-demo");
-    else router.push("/payment");
+    else {
+      console.log("phone number", service.phoneNumber);
+      const number = service.phoneNumber.split(" ")[1];
+      console.log("el number", number);
+      if (number.length < 8 || number.length > 15) {
+        toast.error("Not Valid number");
+      } else {
+        router.push("/payment");
+      }
+    }
   };
 
   const validateEdit = () => {
     if (isWorker) return false;
     if (localStorage.getItem("fromFavorite")) return false;
+  };
+
+  const setTheNumber = (value) => {
+    setPhoneNumber(value);
+    setService({
+      phoneNumber: value,
+    });
   };
 
   const addClient = (newClient) => {
@@ -189,7 +209,7 @@ export default function Summary() {
       <h1 className="mt-1 mb-2 text-grey text-sm text-center max-w-lg">
         {languageData.read[language]}
       </h1>
-      {service.nameSubservice}
+      <div className="font-bold">{service.nameSubservice}</div>
       <div className="w-full max-w-lg h-28 mt-5 rounded-xl bg-blueBorder relative">
         {service?.imgUrl && (
           <Image
@@ -262,6 +282,7 @@ export default function Summary() {
         img={setImage(worker?.img?.imgUrl)} // Aquí se usa la función
         showEdit={validateEdit()}
       />
+
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
       {service && (
         <div className="flex justify-between w-full max-w-lg pr-1 my-5">
@@ -278,11 +299,11 @@ export default function Summary() {
       )}
       <div className="w-full max-w-lg">
         <div
-          className="grid grid-cols-5 gap-4 items-center cursor-pointer"
+          className="grid grid-cols-5 gap-4 items-center cursor-pointer sticky top-[50px] bg-white z-10"
           onClick={toggleText2}
         >
           <div className="col-span-4 text-left text-sm py-2 my-5">
-            <h1 className=" text-blackText font-semibold">
+            <h1 className="text-blackText font-semibold">
               {languageData.descriptionService[language]}
             </h1>
           </div>
@@ -301,7 +322,7 @@ export default function Summary() {
           }`}
         >
           <div
-            className="mb-2 text-left"
+            className="mb-2 ml-1 text-left"
             dangerouslySetInnerHTML={{
               __html: service?.details?.[language] ?? "",
             }}
@@ -333,7 +354,19 @@ export default function Summary() {
             </div>
           ))}
       </div>
-      <h1 className="my-4 text-grey text-sm text-center w-full max-w-lg">
+      <hr className="w-full max-w-lg my-1 text-lightGrey" />
+      <h1 className="my-2 text-grey text-sm text-center max-w-lg">
+        Contact Number
+      </h1>
+      <OutlinedInputPhone
+        placeholder="Enter phone number"
+        value={phoneNumber}
+        onChange={(value) => setTheNumber(value)}
+        type="phone"
+        width="90%"
+      />
+      <hr className="w-full max-w-lg my-6 text-lightGrey" />
+      <h1 className="my-2 text-grey text-sm text-center w-full max-w-lg">
         {languageData.textAdd[language]}
       </h1>
       <div

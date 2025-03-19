@@ -74,7 +74,7 @@ function WorkerCardSumary({
       {showEdit && (
         <div
           className="w-8 h-20 flex items-center justify-centerrounded-r-2xl cursor-pointer"
-          onClick={handleEditWorker}
+          // onClick={handleEditWorker}
         >
           {/* <ChangeIcon className="ml-1" /> */}
         </div>

@@ -23,18 +23,18 @@ function OutlinedInputPhone({ width, value, onChange }) {
           paddingLeft: "60px", // Espacio suficiente para la bandera
           paddingRight: "15px", // Para alinear el número más a la derecha
           borderRadius: "8px",
-          border: "1px solid #0095FF",
+          border: "1px solid #00A0D5",
           fontSize: "16px",
         }}
         buttonStyle={{
           borderRadius: "8px 0px 0px 8px",
-          border: "1px solid #0095FF",
+          border: "1px solid #00A0D5",
           backgroundColor: "#fff",
           padding: "5px",
         }}
         dropdownStyle={{
           borderRadius: "8px",
-          width: "200px",
+          width: "300px",
         }}
       />
     </div>

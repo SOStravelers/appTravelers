@@ -231,7 +231,6 @@ export default function Summary() {
           />
         )}
       </div>
-
       {hostel && (
         <HostelCardSummary
           image={hostel?.img?.imgUrl}
@@ -243,7 +242,6 @@ export default function Summary() {
         />
       )}
       {/* Desplegable info hostel */}
-
       <div className="w-full max-w-lg">
         <div
           className="grid grid-cols-5 gap-4 items-center cursor-pointer"
@@ -296,7 +294,6 @@ export default function Summary() {
         showEdit={validateEdit()}
       />
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
-
       {service && (
         <div className="flex justify-between w-full max-w-lg pr-1 my-5">
           <div className="flex">
@@ -313,7 +310,7 @@ export default function Summary() {
           </Link> */}
         </div>
       )}
-
+      //Cambio
       <div className="w-full max-w-lg">
         <div
           className="grid grid-cols-5 gap-4 items-center cursor-pointer sticky top-[50px] bg-white z-10"
@@ -392,7 +389,6 @@ export default function Summary() {
       >
         <SmallButton text={languageData.buttonClient[language]} />
       </div>
-
       <div className="flex items-center w-full max-w-lg my-2">
         {selected ? (
           <CheckIcon

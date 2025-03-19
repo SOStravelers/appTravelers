@@ -282,6 +282,7 @@ export default function Summary() {
       </div>
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
       <h1 className="mt-2 text-grey text-sm text-center max-w-lg">Partner</h1>
+
       <WorkerCardSumary
         name={fullName(worker?.personalData?.name)}
         service={

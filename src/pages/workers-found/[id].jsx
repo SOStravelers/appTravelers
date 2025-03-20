@@ -87,6 +87,7 @@ export default function WorkersFound() {
                   img={worker.img?.imgUrl || "/assets/user.png"}
                   link={``}
                   // link={`/worker/${worker.id}`}
+
                   onClickSummary={() => {
                     selectWorker(worker.id);
                   }}

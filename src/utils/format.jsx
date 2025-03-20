@@ -55,7 +55,9 @@ export const StatusChip = ({ status, isWorker, language }) => {
     color: textColor,
     backgroundColor: color,
   };
-  return <span style={style}>{LanguageData.status[status][language]}</span>;
+  return (
+    <span style={style}>{LanguageData.status[status][language] || ""}</span>
+  );
 };
 
 export const getDayOfWeek = (date, language) => {

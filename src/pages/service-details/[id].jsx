@@ -8,11 +8,18 @@ import SmallButton from "@/components/utils/buttons/SmallButton";
 import HostelCardSummary from "@/components/utils/cards/HostelCardSummary";
 import WorkerCardSumary from "@/components/utils/cards/WorkerCardSumary";
 import Image from "next/image";
+import SelectCard from "@/components/utils/cards/SelectCard";
 import LanguageData from "@/language/bookingDetails.json";
+import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+import OutlinedInputPhone from "@/components/utils/inputs/OutlinedInputPhone";
 import {
   PinIcon,
   ClockIcon,
+  CheckIcon,
+  ChangeIcon,
   CircleCheckIcon,
+  ChatIcon,
+  UserIcon,
   ArrowUpIcon,
   WhatsappIcon,
 } from "@/constants/icons";
@@ -53,6 +60,8 @@ function ServiceHistory() {
   const [inTimeWorker, setInTimeWorker] = useState(true);
   const [inTimeUser, setInTimeUser] = useState(true);
   const [startTimeBooking, setStartTimeBooking] = useState(true);
+  const [phoneInput, setPhoneInput] = useState(false);
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     document.title = "Service Details | SOS Travelers";
@@ -105,6 +114,7 @@ function ServiceHistory() {
       setInTimeWorker(brazilTime._d < bookingLastTimeWorker._d);
       setInTimeUser(brazilTime._d < bookingLastTimeUser._d);
       setStartTimeBooking(brazilTime._d > bookingStartTimeBooking._d);
+      setPhone(booking?.clientPhone || "");
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -284,6 +294,40 @@ function ServiceHistory() {
           s,
         });
       }
+    }
+  };
+
+  const handlePhoneClick = () => {
+    setPhoneInput(true);
+  };
+  function setThePhone(value) {
+    setPhone(value);
+  }
+
+  const savePhone = async () => {
+    if (!phone || phone.length < 8 || phone.length > 15) {
+      toast.error("Not Valid phone number", {
+        position: "bottom-center", // Puedes usar bottom-left, bottom-right, etc.
+      });
+      return;
+    }
+    try {
+      await BookingService.setPhoneClientBooking(phone, booking._id);
+      setBooking((prevBooking) => ({
+        ...prevBooking, // Copia todas las propiedades anteriores
+        clientPhone: phone, // Actualiza solo `clientPhone`
+      }));
+      setPhoneInput(false);
+      toast.info("updated", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    } catch (err) {
+      setPhoneInput(false);
+      toast.error("Unable to update phone", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
     }
   };
   const goToChat = () => {
@@ -542,6 +586,33 @@ function ServiceHistory() {
             </div>
           </div>
 
+          <div className="w-full max-w-lg">
+            {!phoneInput ? (
+              <SelectCard
+                title={"My number"}
+                onClick={handlePhoneClick}
+                icon={WhatsappIcon}
+                edit={true}
+                subtitle={booking.clientPhone}
+                value={phone}
+              />
+            ) : (
+              <div className="flex justify-between w-full max-w-lg pr-1 my-5 items-center">
+                <OutlinedInputPhone
+                  placeholder="Enter phone number"
+                  value={phone}
+                  onChange={(value) => setThePhone(value)}
+                  type="phone"
+                  width="90%"
+                  onBlur={() => savePhone()}
+                />
+                <div className="flex justify-center items-center h-full ml-3">
+                  <ChangeIcon onClick={() => savePhone()} />
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* More users  */}
 
           <div className="w-full max-w-lg">
@@ -592,7 +663,7 @@ function ServiceHistory() {
             </p>
             <p className="text-blackBlue font-semibold text-md">
               <StatusChip
-                status={booking?.status}
+                status={booking?.status || "requested"}
                 isWorker={isWorker}
                 language={language}
               />

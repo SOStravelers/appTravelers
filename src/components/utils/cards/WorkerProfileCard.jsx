@@ -18,7 +18,7 @@ function WorkerProfileCard({ name, services, score, avatar }) {
 
   const router = useRouter();
   const capitalize = (cadena) => {
-    return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+    return cadena?.charAt(0).toUpperCase() + cadena?.slice(1);
   };
 
   useEffect(() => {
@@ -121,7 +121,7 @@ function WorkerProfileCard({ name, services, score, avatar }) {
         </div>
         <p className="text-blackText my-1    text-xs   sm:text-sm ">
           {services
-            ?.map((service) => capitalize(service.id.name[language]))
+            ?.map((service) => capitalize(service?.id?.name[language]))
             .join(", ")}
         </p>
         <div className=" flex items-center w-30">

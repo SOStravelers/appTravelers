@@ -121,6 +121,15 @@ export default class BookingService {
       headers: this.getHeaders(),
     });
   }
+  static async setPhoneClientBooking(clientPhone, bookingId) {
+    return axios.put(
+      `${this.baseUrl}/set/phoneBooking`,
+      { clientPhone, bookingId },
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
   static async confirmBookingWorker(id) {
     return axios.put(
       `${this.baseUrl}/confirmWorker/${id}`,

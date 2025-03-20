@@ -85,7 +85,8 @@ export default function WorkersFound() {
                   }
                   score={5}
                   img={worker.img?.imgUrl || "/assets/user.png"}
-                  link={`/worker/${worker.id}`}
+                  link={``}
+                  // link={`/worker/${worker.id}`}
                   onClickSummary={() => {
                     selectWorker(worker.id);
                   }}

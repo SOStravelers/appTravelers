@@ -90,7 +90,7 @@ export default function PaymentConfirmation() {
       language: service.language,
       endTime: service.endTime,
       //number
-      phoneNumber: service.phoneNumber,
+      clientPhone: service.phoneNumber,
       date: {
         stringData: service.date,
         isoDate: service.startTime.isoTime,

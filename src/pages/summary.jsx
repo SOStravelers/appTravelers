@@ -145,8 +145,10 @@ export default function Summary() {
       console.log("phone number", service.phoneNumber);
       const number = service.phoneNumber.split(" ")[1];
       console.log("el number", number);
-      if (number.length < 8 || number.length > 15) {
-        toast.error("Not Valid number");
+      if (!number || number.length < 8 || number.length > 15) {
+        toast.error("Not Valid phone number", {
+          position: "bottom-center", // Puedes usar bottom-left, bottom-right, etc.
+        });
       } else {
         router.push("/payment");
       }

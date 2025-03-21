@@ -13,7 +13,6 @@ export default function WorkersFound() {
   const router = useRouter();
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
-  
 
   const getData = async () => {
     const data = {
@@ -88,7 +87,7 @@ export default function WorkersFound() {
                   img={worker.img?.imgUrl || "/assets/user.png"}
                   link={``}
                   // link={`/worker/${worker.id}`}
-
+                  //cambio
                   onClickSummary={() => {
                     selectWorker(worker.id);
                   }}

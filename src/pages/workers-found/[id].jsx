@@ -13,7 +13,6 @@ export default function WorkersFound() {
   const router = useRouter();
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
-  
 
   const getData = async () => {
     const data = {

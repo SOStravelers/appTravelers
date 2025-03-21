@@ -333,7 +333,7 @@ export default function Summary() {
           />
         </div>
       </div>
-
+      {/* Phone number */}
       <hr className="w-full max-w-lg my-1 text-lightGrey" />
       <h1 className="my-2 text-grey text-sm text-center max-w-lg">
         Contact Number

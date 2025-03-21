@@ -333,6 +333,20 @@ export default function Summary() {
           />
         </div>
       </div>
+
+      <hr className="w-full max-w-lg my-1 text-lightGrey" />
+      <h1 className="my-2 text-grey text-sm text-center max-w-lg">
+        Contact Number
+      </h1>
+      <OutlinedInputPhone
+        placeholder="Enter phone number"
+        value={phoneNumber}
+        onChange={(value) => setTheNumber(value)}
+        type="phone"
+        width="90%"
+      />
+      <hr className="w-full max-w-lg my-6 text-lightGrey" />
+
       <div className="flex flex-col w-full max-w-lg my-2">
         {clients.length > 0 &&
           clients.map((item, index) => (
@@ -358,18 +372,7 @@ export default function Summary() {
             </div>
           ))}
       </div>
-      <hr className="w-full max-w-lg my-1 text-lightGrey" />
-      <h1 className="my-2 text-grey text-sm text-center max-w-lg">
-        Contact Number
-      </h1>
-      <OutlinedInputPhone
-        placeholder="Enter phone number"
-        value={phoneNumber}
-        onChange={(value) => setTheNumber(value)}
-        type="phone"
-        width="90%"
-      />
-      <hr className="w-full max-w-lg my-6 text-lightGrey" />
+
       <h1 className="my-2 text-grey text-sm text-center w-full max-w-lg">
         {languageData.textAdd[language]}
       </h1>
@@ -379,6 +382,7 @@ export default function Summary() {
       >
         <SmallButton text={languageData.buttonClient[language]} />
       </div>
+
       <div className="flex items-center w-full max-w-lg my-2">
         {selected ? (
           <CheckIcon

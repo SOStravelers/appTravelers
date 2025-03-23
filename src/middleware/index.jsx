@@ -36,15 +36,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const obtenerInformacionUsuario = async () => {
     let cookieAccessToken = Cookies.get("auth.access_token");
     let cookieLanguage = Cookies.get("language");
-    if (
-      cookieLanguage != "pt" &&
-      cookieLanguage != "es" &&
-      cookieLanguage != "de" &&
-      cookieLanguage != "en" &&
-      cookieLanguage != "fr"
-    ) {
-      cookieLanguage = null;
-    }
 
     const { partner } = router.query;
     if (partner) {
@@ -55,12 +46,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     if (typeof window !== "undefined") {
       //cambio lenguage∂
       if (cookieLanguage) {
-        setLanguage(cookieLanguage);
-        Cookies.set("language", cookieLanguage);
-      } else {
-        const userLanguage = navigator.language || navigator.languages[0];
-        console.log("wena", userLanguage);
-        const shortName = userLanguage.slice(0, 2);
+        console.log("setLanguage");
         if (
           cookieLanguage != "pt" &&
           cookieLanguage != "es" &&
@@ -68,7 +54,22 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
           cookieLanguage != "en" &&
           cookieLanguage != "fr"
         ) {
-          cookieLanguage = null;
+          setLanguage("en");
+          Cookies.set("language", "en");
+        } else {
+          setLanguage(cookieLanguage);
+        }
+      } else {
+        const userLanguage = navigator.language || navigator.languages[0];
+        console.log("wena", navigator.language, userLanguage);
+        const shortName = userLanguage.slice(0, 2);
+        if (
+          shortName != "pt" &&
+          shortName != "es" &&
+          shortName != "de" &&
+          shortName != "en" &&
+          shortName != "fr"
+        ) {
           setLanguage("en");
           Cookies.set("language", "en");
         } else {

@@ -69,7 +69,21 @@ function Calendar({ id }) {
       }
     }
   }, [selectedDay]);
+  const updateIntervalsFromSelectedDay = (dayToCheck, scheduleData) => {
+    if (!dayToCheck || !scheduleData) return;
 
+    const date = new Date(dayToCheck);
+    const formattedDate =
+      formatISO(date, { representation: "date" }) + "T00:00:00.000";
+
+    for (let i = 0; i < scheduleData.length; i++) {
+      let cutDate = scheduleData[i].day.slice(0, -1);
+      if (cutDate === formattedDate) {
+        setIntervals(scheduleData[i].intervals);
+        break;
+      }
+    }
+  };
   //Función que obtiene el schedule del hostel
   const getSchedule = async () => {
     console.log("getSchedule");
@@ -80,18 +94,20 @@ function Calendar({ id }) {
     const data = localStorage.getItem("fromFavorite");
     const { serviceId, subServiceId, hostelId, workerId } = service;
     const worker = data ? workerId : null;
-    // console.log("worker", worker, "fromFavorite", data);
+
     const response = await ScheduleService.getScheduleHostel(
       hostelId,
       serviceId,
       subServiceId,
       worker
     );
+
     if (response?.data) {
       console.log("calendario", response.data);
       setSchedule(response.data);
-      // setSelected(new Date());
+      updateIntervalsFromSelectedDay(selectedDay, response.data); // 👈 se actualiza justo después de obtener el schedule
     }
+
     setLoading(false);
   };
   //Función que obtiene los días deshabilitados

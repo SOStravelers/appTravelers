@@ -31,7 +31,7 @@ export default class PartnerService {
     return axios.get(`${this.baseUrl}/getkey/`, {});
   }
   static async sentIdClient(id, partner) {
-    const body = { idClient: id, partner: partner };
+    const body = { clientId: id, partner: partner };
     return axios.post(`${this.baseUrl}/infoClient`, body);
   }
 }

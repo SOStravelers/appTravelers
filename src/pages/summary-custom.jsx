@@ -220,7 +220,7 @@ export default function Summary() {
       <h1 className="my-5 text-grey text-sm text-center max-w-lg">
         {languageData.read[language]}
       </h1>
-      <div className="font-bold">{service.nameSubservice}</div>
+      <div className="font-bold">{service?.nameSubservice || ""}</div>
       <div className="w-full max-w-lg h-28 mt-5 rounded-xl bg-blueBorder relative">
         {service?.imgUrl && (
           <Image
@@ -343,6 +343,19 @@ export default function Summary() {
           />
         </div>
       </div>
+
+      <hr className="w-full max-w-lg my-1 text-lightGrey" />
+      <h1 className="my-2 text-grey text-sm text-center max-w-lg">
+        Contact Number
+      </h1>
+      <OutlinedInputPhone
+        placeholder="Enter phone number"
+        value={phoneNumber}
+        onChange={(value) => setTheNumber(value)}
+        type="phone"
+        width="90%"
+      />
+      <hr className="w-full max-w-lg my-6 text-lightGrey" />
       <div className="flex flex-col w-full max-w-lg my-2">
         {clients.length > 0 &&
           clients.map((item, index) => (
@@ -368,18 +381,7 @@ export default function Summary() {
             </div>
           ))}
       </div>
-      <hr className="w-full max-w-lg my-1 text-lightGrey" />
-      <h1 className="my-2 text-grey text-sm text-center max-w-lg">
-        Contact Number
-      </h1>
-      <OutlinedInputPhone
-        placeholder="Enter phone number"
-        value={phoneNumber}
-        onChange={(value) => setTheNumber(value)}
-        type="phone"
-        width="90%"
-      />
-      <hr className="w-full max-w-lg my-6 text-lightGrey" />
+
       <h1 className="my-4 text-grey text-sm text-center max-w-lg">
         {languageData.textAdd[language]}
       </h1>

@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
+import PartnerService from "@/services/PartnerService";
 import { useStore } from "@/store";
 import { getSession } from "next-auth/react";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const router = useRouter();
@@ -43,6 +45,15 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       Cookies.set("timePartner", new Date().toISOString());
     }
 
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+
+    // Guardar visitorId
+    if (result.visitorId != null) {
+      PartnerService.sentIdClient(result.visitorId, partner);
+    }
+
+    console.log("navigator", navigator);
     if (typeof window !== "undefined") {
       //cambio lenguage∂
       if (cookieLanguage) {
@@ -61,7 +72,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
         }
       } else {
         const userLanguage = navigator.language || navigator.languages[0];
-        console.log("wena", navigator.language, userLanguage);
         const shortName = userLanguage.slice(0, 2);
         if (
           shortName != "pt" &&

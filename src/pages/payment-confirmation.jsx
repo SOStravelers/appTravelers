@@ -130,9 +130,10 @@ export default function PaymentConfirmation() {
 
       const data = {
         paymentIntentId: paymentIntent,
-        // partner: tiempoMax ? partner : null,
+        partner: tiempoMax ? partner : null,
         workerUser: service.workerId,
         service: service.serviceId,
+        subService: service.subServiceId,
       };
       tiempoMax ? (data.partner = partner) : "";
       tiempoMax ? (params.payment.partner = partner) : "";

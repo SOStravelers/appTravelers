@@ -45,7 +45,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     ) {
       cookieLanguage = null;
     }
-    console.log("la dataaaa");
 
     const { partner } = router.query;
     if (partner) {

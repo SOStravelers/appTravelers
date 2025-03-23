@@ -72,6 +72,7 @@ function Calendar({ id }) {
 
   //Función que obtiene el schedule del hostel
   const getSchedule = async () => {
+    console.log("getSchedule");
     if (isWorker) {
       setLoading(false);
       return;
@@ -87,7 +88,7 @@ function Calendar({ id }) {
       worker
     );
     if (response?.data) {
-      // console.log("calendario", response.data);
+      console.log("calendario", response.data);
       setSchedule(response.data);
       // setSelected(new Date());
     }
@@ -95,6 +96,7 @@ function Calendar({ id }) {
   };
   //Función que obtiene los días deshabilitados
   const getDisabledDays = () => {
+    console.log("getdisableday");
     // Ordena el array por la propiedad 'day'
     schedule.sort((a, b) => new Date(a.day) - new Date(b.day));
 
@@ -128,7 +130,7 @@ function Calendar({ id }) {
     let formattedLastDate = new Date(
       lastDate.toISOString().split("T")[0] + "T00:00:00.000"
     );
-
+    console.log("dias", formattedFirstDate, formattedLastDate, disabledDays);
     return {
       firstDate: formattedFirstDate,
       lastDate: formattedLastDate,
@@ -261,7 +263,7 @@ function Calendar({ id }) {
         <DayPicker
           mode="single"
           selected={selectedDay}
-          disabled={days?.disabledDays.length > 0 ? days?.disabledDays : true}
+          disabled={days?.disabledDays.length > 0 ? days?.disabledDays : false}
           fromDate={days?.firstDate || new Date()}
           toDate={
             days?.lastDate ||

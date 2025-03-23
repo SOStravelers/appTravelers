@@ -1,10 +1,14 @@
 export const validationImg = async (imgUrl) => {
   try {
-    const res = await fetch(imgUrl);
-    if (res.ok) {
-      return true;
+    if (!imgUrl.includes("undefined")) {
+      const res = await fetch(imgUrl);
+      if (res.ok) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
-      return false;
+      return;
     }
   } catch {
     return false;

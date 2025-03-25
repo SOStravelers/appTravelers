@@ -24,6 +24,7 @@ function RecomendationCard(user) {
     if (allSubServices.length === 0) {
       setData({
         subService: null,
+        serviceId: null,
         imgUrl: user?.imgUrl + "?hola=" + random(),
         subServiceId: null,
         duration: null,
@@ -68,7 +69,6 @@ function RecomendationCard(user) {
         (subService) => subService._id === subServiceId
       );
       if (matchingSubService) {
-        console.log("service", service);
         return {
           serviceId: service.id ? service.id._id : null,
           serviceName: service.id ? service.id.name : null,
@@ -102,7 +102,6 @@ function RecomendationCard(user) {
     return { fecha, hora };
   }
   const setFavorite = (id) => {
-    console.log("hola hola", data);
     localStorage.setItem("fromFavorite", true);
 
     const dataService = findServiceBySubServiceId(user.user, data.subServiceId);
@@ -118,15 +117,15 @@ function RecomendationCard(user) {
       multiple: data.multiple,
       workerId: user.user._id,
     });
-    console.log("dataService", dataService);
     if (data.goChat) {
       goToChat(data);
-    } else if (service.serviceId == "67c11c4917c3a7a2c353cb1b") {
+      setService({});
+    } else if (dataService.serviceId == "67c11c4917c3a7a2c353cb1b") {
       let urlAmigable = encodeURIComponent(data.subService);
 
       const fechas = obtenerFechaYHora(data.isoTime);
       //minicambio2
-      const url = `https://sostvl.com/summary-custom?date=${fechas.fecha}&workerId=65312a63c0b1e1658a5a712c&subServiceId=${data.subServiceId}&${data.isoTime}&stringData=${fechas.hora}&nameSubservice=${urlAmigable}&price=${data.price.category1}`;
+      const url = `http://localhost:3000/summary-custom?date=${fechas.fecha}&workerId=65312a63c0b1e1658a5a712c&subServiceId=${data.subServiceId}&${data.isoTime}&stringData=${fechas.hora}&nameSubservice=${urlAmigable}&price=${data.price.category1}`;
       const urlSimple = `/summary-custom?date=${fechas.fecha}&workerId=65312a63c0b1e1658a5a712c&subServiceId=${data.subServiceId}&${data.isoTime}&stringData=${fechas.hora}&nameSubservice=${urlAmigable}&price=${data.price.category1}`;
       // router.push(urlSimple);
       window.location.href = url;

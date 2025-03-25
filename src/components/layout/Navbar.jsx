@@ -22,9 +22,11 @@ import { useStore } from "@/store";
 function Navbar() {
   const router = useRouter();
 
-  const { isWorker, user, setHaveNotification, language } = useStore();
+  const { isWorker, user, setHaveNotification, language, setService } =
+    useStore();
   const userId = Cookies.get("auth.user_id");
   const goTo = (ruta) => {
+    setService({});
     if (ruta != "/" && ruta != "/worker/home") {
       checkNotification();
     }

@@ -44,7 +44,6 @@ function Calendar({ id }) {
 
   useEffect(() => {
     if (localStorage.getItem("fromFavorite")) {
-      console.log("entro");
       setFromFavorite(true);
     }
     getSchedule();
@@ -63,7 +62,6 @@ function Calendar({ id }) {
         let cutDate = schedule[i].day.slice(0, -1);
         if (cutDate == formattedDate) {
           setIntervals(schedule[i].intervals);
-          console.log("23na", intervals);
           break;
         }
       }
@@ -86,7 +84,6 @@ function Calendar({ id }) {
   };
   //Función que obtiene el schedule del hostel
   const getSchedule = async () => {
-    console.log("getSchedule");
     if (isWorker) {
       setLoading(false);
       return;
@@ -103,7 +100,6 @@ function Calendar({ id }) {
     );
 
     if (response?.data) {
-      console.log("calendario", response.data);
       setSchedule(response.data);
       updateIntervalsFromSelectedDay(selectedDay, response.data); // 👈 se actualiza justo después de obtener el schedule
     }
@@ -112,14 +108,12 @@ function Calendar({ id }) {
   };
   //Función que obtiene los días deshabilitados
   const getDisabledDays = () => {
-    console.log("getdisableday");
     // Ordena el array por la propiedad 'day'
     schedule.sort((a, b) => new Date(a.day) - new Date(b.day));
 
     // Extrae la fecha del primer y último objeto
     const firstDate = new Date(schedule[0].day);
     const lastDate = new Date(schedule[schedule.length - 1].day);
-    console.log("wea", firstDate, lastDate);
 
     let disabledDays = [];
 
@@ -146,7 +140,6 @@ function Calendar({ id }) {
     let formattedLastDate = new Date(
       lastDate.toISOString().split("T")[0] + "T00:00:00.000"
     );
-    console.log("dias", formattedFirstDate, formattedLastDate, disabledDays);
     return {
       firstDate: formattedFirstDate,
       lastDate: formattedLastDate,

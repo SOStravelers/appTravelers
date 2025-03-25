@@ -144,7 +144,7 @@ export default function Home({}) {
         <>
           <section>
             <h1
-              className={`text-black text-xl font-semibold mt-1 mb-3 ${mazzard.className}`}
+              className={`text-black text-xl font-semibold mb-3 ${mazzard.className}`}
             >
               {languageData.title.service[language]}
             </h1>

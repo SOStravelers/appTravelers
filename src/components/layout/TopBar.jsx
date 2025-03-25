@@ -206,11 +206,11 @@ function TopBar() {
                   : " Test V"}
               </h1>
             )}
-            <Link className="text-white mr-2" href="/login">
+            <Link className="text-white text-sm mr-2" href="/login">
               {languageData.signIn[language]}
             </Link>
             <Link
-              className="text-white border border-white px-3 py-1 rounded-xl"
+              className="text-white border border-white text-sm px-3 py-1 rounded-xl"
               href="/register"
             >
               {languageData.join[language]}

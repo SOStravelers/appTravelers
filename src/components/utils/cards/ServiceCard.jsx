@@ -36,7 +36,9 @@ function ServiceCard({ link, icon, name, id, img }) {
             />
           )}
         </div>
-        <h1 className={`text-center mt-2 ${mazzard.className}`}>{name}</h1>
+        <h1 className={`text-center mt-2 text-sm ${mazzard.className}`}>
+          {name}
+        </h1>
       </div>
     </Link>
   );

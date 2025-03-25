@@ -48,6 +48,14 @@
     "de": "Status",
     "pt": "Status"
   },
+
+  "from": {
+    "en": "From",
+    "es": "Desde",
+    "pt": "A partir de",
+    "fr": "À partir de",
+    "de": "Ab"
+  },
   "serviceDescription": {
     "en": "Service description",
     "es": "Descripción del servicio",

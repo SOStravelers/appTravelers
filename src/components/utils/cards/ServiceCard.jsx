@@ -16,16 +16,16 @@ function ServiceCard({ link, icon, name, id, img }) {
   //comentario
   const numberImg = (img) => {
     if (img.includes("experience")) {
-      return 500;
+      return 450;
     } else {
-      return 45;
+      return 30;
     }
   };
   return (
     <Link href={link} onClick={select}>
       <div className="text-black flex flex-col items-center justify-center mx-2">
         {/* <TattooIcon color="white" /> */}
-        <div className="w-16 h-16 rounded-full bg-blueBorder flex items-center justify-center">
+        <div className="w-14 h-14 rounded-full bg-blueBorder flex items-center justify-center">
           {img && (
             <Image
               src={img}

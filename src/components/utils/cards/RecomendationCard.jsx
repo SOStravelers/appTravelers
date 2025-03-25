@@ -125,7 +125,7 @@ function RecomendationCard(user) {
 
       const fechas = obtenerFechaYHora(data.isoTime);
       //minicambio2
-      const url = `http://localhost:3000/summary-custom?date=${fechas.fecha}&workerId=65312a63c0b1e1658a5a712c&subServiceId=${data.subServiceId}&${data.isoTime}&stringData=${fechas.hora}&nameSubservice=${urlAmigable}&price=${data.price.category1}`;
+      const url = `https://sostvl.com/summary-custom?date=${fechas.fecha}&workerId=65312a63c0b1e1658a5a712c&subServiceId=${data.subServiceId}&${data.isoTime}&stringData=${fechas.hora}&nameSubservice=${urlAmigable}&price=${data.price.category1}`;
       const urlSimple = `/summary-custom?date=${fechas.fecha}&workerId=65312a63c0b1e1658a5a712c&subServiceId=${data.subServiceId}&${data.isoTime}&stringData=${fechas.hora}&nameSubservice=${urlAmigable}&price=${data.price.category1}`;
       // router.push(urlSimple);
       window.location.href = url;

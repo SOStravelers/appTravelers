@@ -3,6 +3,7 @@ import { register } from "swiper/element/bundle";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
+import WorkerIndexCard from "@/components/utils/cards/WorkerIndexCard";
 import { Rings } from "react-loader-spinner";
 import NotificationService from "@/services/NotificationService";
 import ServiceService from "@/services/ServiceService";
@@ -29,6 +30,7 @@ export default function Home({}) {
   const [slides, setSlides] = useState([]);
   const [swiper, setSwiper] = useState(null);
   const [randomUsers, setRandomUsers] = useState([]);
+  const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
@@ -51,19 +53,28 @@ export default function Home({}) {
     setSlides([
       {
         id: 0,
-        title: languageData.carrousel[0].title[language],
+        title:
+          languageData.carrousel[0].title[language] +
+          ", " +
+          languageData.carrousel[0].title2[language],
         body: languageData.carrousel[0].body[language],
       },
       {
         id: 1,
-        title: languageData.carrousel[1].title[language],
+        title:
+          languageData.carrousel[1].title[language] +
+          ", " +
+          languageData.carrousel[0].title2[language],
         body: languageData.carrousel[1].body[language],
         // direction: "124 street Miro Hotel, Ubud",
         // date: "4 Aug, 2023 | 04:30 PM",
       },
       {
         id: 2,
-        title: languageData.carrousel[2].title[language],
+        title:
+          languageData.carrousel[2].title[language] +
+          ", " +
+          languageData.carrousel[0].title2[language],
         body: languageData.carrousel[2].body[language],
       },
     ]);
@@ -99,6 +110,9 @@ export default function Home({}) {
     try {
       const response = await UserService.getRandom();
       setRandomUsers(response.data);
+
+      const response2 = await UserService.getWorkers();
+      setWorkers(response2.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -160,7 +174,7 @@ export default function Home({}) {
               ))}
             </div>
           </section>
-          <section>
+          <section className="mb-10">
             <h1
               className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
             >
@@ -177,13 +191,37 @@ export default function Home({}) {
                 <p>Loading...</p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 mb-10  gap-4 max-w-lg overflow-x-auto  pb-10">
+              <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
                 {randomUsers?.map((s, index) => (
                   <RecomendationCard key={index} user={s} />
                 ))}
               </div>
             )}
           </section>
+          {/* <section>
+            <h1
+              className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
+            >
+              {languageData.title.ourPartners[language]}
+            </h1>
+            {loading ? (
+              <div className="max-w-lg flex flex-col items-center justify-center">
+                <Rings
+                  width={100}
+                  height={100}
+                  color="#00A0D5"
+                  ariaLabel="infinity-spin-loading"
+                />
+                <p>Loading...</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 mb-10  gap-4 max-w-lg overflow-x-auto  pb-10">
+                {workers?.map((s, index) => (
+                  <WorkerIndexCard key={index} user={s} />
+                ))}
+              </div>
+            )}
+          </section> */}
         </>
       ) : (
         <div className="flex flex-col justify-center max-w-lg  align-items">

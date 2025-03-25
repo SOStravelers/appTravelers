@@ -13,6 +13,13 @@
       "fr": "Recommandé pour toi",
       "de": "Empfohlen für dich",
       "pt": "Recomendado para você"
+    },
+    "ourPartners": {
+      "en": "Our Partners",
+      "es": "Nuestros Partners",
+      "fr": "Nos Partenaires",
+      "de": "Unsere Partner",
+      "pt": "Nossos Parceiros"
     }
   },
   "carrousel": [
@@ -23,6 +30,13 @@
         "fr": "Tips SOS",
         "de": "Tips SOS",
         "pt": "Tips SOS"
+      },
+      "title2": {
+        "en": "Best app in Rio",
+        "es": "La mejor app en Río",
+        "fr": "La meilleure appli à Rio",
+        "de": "Die beste App in Rio",
+        "pt": "O melhor app no Rio"
       },
       "body": {
         "en": "Just 3 snappy steps: pick your service, choose your partner, and seal the deal for instant excitement! ",

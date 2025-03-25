@@ -40,6 +40,9 @@ export default class UserService {
   static async getRandom() {
     return axios.get(`${this.authUrl}/random/users`);
   }
+  static async getWorkers() {
+    return axios.get(`${this.authUrl}/worker/users`);
+  }
   static async login(email, password) {
     console.log("login email");
     return axios.post(`${this.authUrl}/loginEmail`, {

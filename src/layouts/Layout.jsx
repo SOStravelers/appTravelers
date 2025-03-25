@@ -45,16 +45,16 @@ function Layout({ children, lang }) {
   const language = newLang ? newLang : "en";
   if (language.includes("fr")) {
     metaDescription =
-      "Découvrez un bien-être personnalisé : choisissez votre hostel, choisissez l'heure et trouvez des professionnels d'élite dans notre application conviviale. Des travailleurs soigneusement sélectionnés pour une expérience inégalée. Votre confort est notre priorité !";
+      "Découvrez le meilleur de Rio de Janeiro : réservez des expériences uniques, des visites, des plats locaux et même des billets pour le stade, le tout dans une seule application conviviale. Explorez Rio comme jamais auparavant !";
   } else if (language.includes("pt")) {
     metaDescription =
-      "Descubra o bem-estar personalizado: escolha seu hostel, escolha o horário e encontre profissionais de elite em nosso amigável aplicativo. Trabalhadores cuidadosamente selecionados para uma experiência incomparável. Seu conforto é nossa prioridade!";
+      "Descubra o melhor do Rio de Janeiro: reserve experiências incríveis, passeios, comidas locais e até ingressos para o estádio — tudo em um só app. Explore o Rio como nunca antes!";
   } else if (language.includes("es")) {
     metaDescription =
-      "Descubre el bienestar personalizado: elige tu hostel, elige el horario y encuentra profesionales de élite en nuestra amigable aplicación. Trabajadores cuidadosamente seleccionados para una experiencia inigualable. ¡Su comodidad es nuestra prioridad!";
+      "Descubre lo mejor de Río de Janeiro: reserva experiencias increíbles, tours, comida local e incluso entradas para el estadio, todo desde una sola aplicación. ¡Explora Río como nunca antes!";
   } else {
     metaDescription =
-      "Discover personalized well-being: choose your hostel, pick the time, and find elite professionals in our friendly app. Carefully selected workers for an unparalleled experience. Your comfort is our priority!";
+      "Discover the best of Rio de Janeiro: book amazing experiences, tours, local food, and even stadium tickets — all in one friendly app. Explore Rio like never before!";
   }
 
   const isIntro = router.pathname === "/intro";

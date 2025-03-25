@@ -177,7 +177,7 @@ export default function Home({}) {
                 <p>Loading...</p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
+              <div className="grid grid-cols-2 sm:grid-cols-3 mb-10  gap-4 max-w-lg overflow-x-auto  pb-10">
                 {randomUsers?.map((s, index) => (
                   <RecomendationCard key={index} user={s} />
                 ))}

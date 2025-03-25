@@ -160,7 +160,7 @@ function RecomendationCard(user) {
       <div className="px-1 flex flex-col sm:px-2">
         <h1 className="font-semibold mt-2 text-sm">{data.subService}</h1>
         <h1 className="font-semibold  ">
-          {languageBooking.from[language]} $ {data?.price?.category1 || ""}
+          {languageBooking.from[language]} R$ {data?.price?.category1 || ""}
         </h1>
         {/* <p className="text-blackText text-sm">
           {formatName(user?.user?.personalData?.name)}

@@ -8,7 +8,9 @@ import SectionServices from "@/components/profile/SectionServices/SectionService
 import { SECTION_ONE } from "@/constants";
 import UserService from "@/services/UserService";
 import { Rings } from "react-loader-spinner";
+import { useStore } from "@/store";
 export default function Worker() {
+  const store = useStore();
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [user, setUser] = useState(null);
   const [nombre, setNombre] = useState("");
@@ -16,6 +18,7 @@ export default function Worker() {
   const [loading, setLoading] = useState(true);
   const router = Router;
   const id = router.query.id;
+  const { language } = store;
 
   useEffect(() => {
     getUserData();
@@ -86,7 +89,8 @@ export default function Worker() {
           <WorkerProfileCard
             name={setName(user?.personalData?.name)}
             services={user?.workerData?.services}
-            score={5}
+            score={user?.reviewScore || 3}
+            numberBookings={user?.numberBookings || 12}
             avatar={user?.img?.imgUrl}
           />
           <SwitchButtons
@@ -96,7 +100,10 @@ export default function Worker() {
             titleTwo={"Services"}
           />
           {actualView === SECTION_ONE ? (
-            <SectionAbout description={user?.about} gallery={galleryFilter} />
+            <SectionAbout
+              description={user?.newAbout[language] || ""}
+              gallery={galleryFilter}
+            />
           ) : (
             <SectionServices
               type="worker"

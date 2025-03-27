@@ -4,8 +4,8 @@ import Gallery from "./Gallery";
 function SectionAbout({ description, gallery }) {
   return (
     <div>
-      <About description={description} />
       <Gallery images={gallery} />
+      <About description={description} />
     </div>
   );
 }

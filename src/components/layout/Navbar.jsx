@@ -122,7 +122,7 @@ function Navbar() {
         </span>
       </button> */}
 
-      {!isWorker && (
+      {/* {!isWorker && (
         <button
           className="flex mt-1 flex-col items-center justify-center"
           onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
@@ -145,7 +145,7 @@ function Navbar() {
             {languageData.favorites[language]}
           </span>
         </button>
-      )}
+      )} */}
       {isWorker && (
         <button
           className="flex mt-1 flex-col items-center justify-center"

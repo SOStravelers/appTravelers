@@ -1,4 +1,5 @@
 function About({ description }) {
+  console.log("description", description);
   return (
     <div className="my-5">
       <h1
@@ -7,9 +8,14 @@ function About({ description }) {
       >
         About
       </h1>
-      <p className="text-blackText max-w-lg" style={{ whiteSpace: "pre-wrap" }}>
-        {description?.length > 0 ? description : "No description"}
-      </p>
+
+      <p
+        className="text-blackText max-w-lg"
+        style={{ whiteSpace: "pre-wrap" }}
+        dangerouslySetInnerHTML={{
+          __html: description?.length > 0 ? description : "No description",
+        }}
+      ></p>
     </div>
   );
 }

@@ -19,63 +19,10 @@ function WorkerIndexCard(theUser) {
     // setUser(user.user);
   }, [user]);
 
-  //go chat
-  const goToChat = (subservice) => {
-    const whatsappNumber = "+56933938608"; // Número del objeto booking
-    const message =
-      languageBooking.msgWhatsapp3[language] +
-      " " +
-      data.subService +
-      " " +
-      languageBooking.msgWhatsapp4[language]; // Mensaje opcional
-    const encodedMessage = encodeURIComponent(message);
-    window.open(
-      `https://wa.me/${whatsappNumber.replace(
-        /\D/g,
-        ""
-      )}?text=${encodedMessage}`,
-      "_blank"
-    );
-  };
-
-  function obtenerFechaYHora(isoString) {
-    const [fecha, horaCompleta] = isoString.split("T");
-    const hora = horaCompleta.slice(0, 5); // solo HH:mm
-    return { fecha, hora };
-  }
   const setFavorite = (id) => {
-    localStorage.setItem("fromFavorite", true);
-
-    const dataService = findServiceBySubServiceId(user.user, data.subServiceId);
-
-    setService({
-      duration: data.duration,
-      price: 0,
-      details: data.details,
-      serviceId: dataService.serviceId,
-      serviceName: dataService.serviceName,
-      nameSubservice: data.subService,
-      subServiceId: data.subServiceId,
-      multiple: data.multiple,
-      workerId: user.user._id,
-    });
-    if (data.goChat) {
-      goToChat(data);
-      setService({});
-    } else if (dataService.serviceId == "67c11c4917c3a7a2c353cb1b") {
-      let urlAmigable = encodeURIComponent(data.subService);
-
-      const fechas = obtenerFechaYHora(data.isoTime);
-      //minicambio2
-      const url = `http://localhost:3000/summary-custom?date=${fechas.fecha}&workerId=65312a63c0b1e1658a5a712c&subServiceId=${data.subServiceId}&${data.isoTime}&stringData=${fechas.hora}&nameSubservice=${urlAmigable}&price=${data.price.category1}`;
-      const urlSimple = `/summary-custom?date=${fechas.fecha}&workerId=65312a63c0b1e1658a5a712c&subServiceId=${data.subServiceId}&${data.isoTime}&stringData=${fechas.hora}&nameSubservice=${urlAmigable}&price=${data.price.category1}`;
-      // router.push(urlSimple);
-      window.location.href = url;
-      return;
-    } else {
-      router.push("reservation/" + service.subServiceId);
-      // router.push("/worker/" + id);
-    }
+    // localStorage.setItem("fromFavorite", true);
+    router.push("/worker/" + id);
+    return;
   };
   useEffect(() => {
     const checkImage = async () => {

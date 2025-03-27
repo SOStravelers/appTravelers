@@ -10,7 +10,7 @@ import { useStore } from "@/store";
 import SmallButton from "../buttons/SmallButton";
 import Link from "next/link";
 
-function WorkerProfileCard({ name, services, score, avatar }) {
+function WorkerProfileCard({ name, services, score, numberBookings, avatar }) {
   const [favorites, setFavorites] = useState([]);
   const { user, language } = useStore();
   const [isFavorite, setIsFavorite] = useState(false);
@@ -109,7 +109,7 @@ function WorkerProfileCard({ name, services, score, avatar }) {
         <div className="flex items-center justify-">
           <h1 className="font-semibold text-black">{name}</h1>
 
-          {user && Object.keys(user).length > 0 ? (
+          {/* {user && Object.keys(user).length > 0 ? (
             <div className="ml-4">
               <FavButton
                 isFavorite={isFavorite}
@@ -117,7 +117,7 @@ function WorkerProfileCard({ name, services, score, avatar }) {
                 handleDeleteFav={handleDeleteFav}
               />
             </div>
-          ) : null}
+          ) : null} */}
         </div>
         <p className="text-blackText my-1    text-xs   sm:text-sm ">
           {services
@@ -127,14 +127,16 @@ function WorkerProfileCard({ name, services, score, avatar }) {
         <div className=" flex items-center w-30">
           <StarIcon color={"#00A0D5"} className="mr-1" />
           <p className="text-blackText">{score}</p>
-          <p className="text-blackText mr-2">{` (+50)`}</p>
 
           {/* {fromFavorite && (
             <Link href={"/services/" + router.query.id}>
-              <SmallButton text={"Book now!"} />
+            <SmallButton text={"Book now!"} />
             </Link>
-          )} */}
+            )} */}
         </div>
+        <p className="text-blackText mr-2">
+          {`+ ` + numberBookings} Bookings this month
+        </p>
       </div>
     </div>
   );

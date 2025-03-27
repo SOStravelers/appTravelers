@@ -113,6 +113,7 @@ export default function Home({}) {
 
       const response2 = await UserService.getWorkers();
       setWorkers(response2.data);
+      console.log("worker", workers);
     } catch (error) {
       console.log(error);
     } finally {
@@ -174,7 +175,7 @@ export default function Home({}) {
               ))}
             </div>
           </section>
-          <section className="mb-10">
+          <section className="mb-1">
             <h1
               className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
             >
@@ -198,30 +199,34 @@ export default function Home({}) {
               </div>
             )}
           </section>
-          {/* <section>
-            <h1
-              className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
-            >
-              {languageData.title.ourPartners[language]}
-            </h1>
-            {loading ? (
-              <div className="max-w-lg flex flex-col items-center justify-center">
-                <Rings
-                  width={100}
-                  height={100}
-                  color="#00A0D5"
-                  ariaLabel="infinity-spin-loading"
-                />
-                <p>Loading...</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3 mb-10  gap-4 max-w-lg overflow-x-auto  pb-10">
-                {workers?.map((s, index) => (
-                  <WorkerIndexCard key={index} user={s} />
-                ))}
-              </div>
-            )}
-          </section> */}
+
+          {workers?.length > 0 && (
+            <section>
+              <h1
+                className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
+              >
+                {languageData.title.ourPartners[language]}
+              </h1>
+
+              {loading ? (
+                <div className="max-w-lg flex flex-col items-center justify-center">
+                  <Rings
+                    width={100}
+                    height={100}
+                    color="#00A0D5"
+                    ariaLabel="infinity-spin-loading"
+                  />
+                  <p>Loading...</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 mb-10  gap-4 max-w-lg overflow-x-auto  pb-10">
+                  {workers.map((s, index) => (
+                    <WorkerIndexCard key={index} user={s} />
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
         </>
       ) : (
         <div className="flex flex-col justify-center max-w-lg  align-items">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
+import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
@@ -128,6 +129,7 @@ export default function Home({}) {
           <p className="text-center">Esta é uma versão demo</p>
         </div>
       )}
+      <SyncCarousel />
       <div className="w-full max-w-lg ">
         <Swiper
           spaceBetween={10}

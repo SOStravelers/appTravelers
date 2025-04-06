@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react';
 const DEFAULT_ITEMS = [
   {
     videoSrc: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    
     thumbnailSrc: 'https://picsum.photos/seed/fire_thumb/100/130',
     rating: '5.0 (187)',
     duration: '1.5 h',
@@ -12,7 +11,6 @@ const DEFAULT_ITEMS = [
   },
   {
     videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-    
     thumbnailSrc: 'https://picsum.photos/seed/surf_thumb/100/130',
     rating: '4.9 (95)',
     duration: '2 h',
@@ -21,7 +19,6 @@ const DEFAULT_ITEMS = [
   },
   {
     videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    
     thumbnailSrc: 'https://picsum.photos/seed/stars_thumb/100/130',
     rating: '4.8 (250)',
     duration: '3 h',
@@ -72,7 +69,7 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [likes, setLikes] = useState(new Set());
+  const [likes, setLikes] = useState([]);
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
   const scrollTimeout = useRef(null);
@@ -81,6 +78,29 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
     if (!videoRef.current) return;
     isPlaying ? videoRef.current.pause() : videoRef.current.play();
     setIsPlaying(!isPlaying);
+  };
+
+  const handleLike = async (index) => {
+    // Simulación de petición API (descomentar para implementación real)
+    /*
+    try {
+      const response = await fetch('/api/like', {
+        method: 'POST',
+        body: JSON.stringify({ itemId: index })
+      });
+      if (!response.ok) throw new Error('Error en la petición');
+    } catch (error) {
+      console.error('Error:', error);
+      return;
+    }
+    */
+    
+    // Actualización optimista del estado local
+    setLikes(prev => 
+      prev.includes(index) 
+        ? prev.filter(i => i !== index) 
+        : [...prev, index]
+    );
   };
 
   useEffect(() => {
@@ -151,7 +171,7 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
       
       <button
         onClick={togglePlayPause}
-        className="absolute bottom-80 opacity-50 left-4 z-2 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white transition-colors"
+        className="absolute bottom-44 opacity-50 left-4 z-2 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white transition-colors"
       >
         {isPlaying ? (
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -165,7 +185,7 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
       </button>
 
       <div ref={containerRef} className="absolute bottom-8 left-0 w-full overflow-x-auto scrollbar-hidden no-scrollbar">
-        <div className="flex gap-5 pb-4 pl-[calc(50vw-45%)] md:pl-[calc(50vw-65%)] lg:pl-[calc(50vw-100%)] ">
+        <div className="flex gap-5 pb-4 pl-[calc(50vw-45%)] md:pl-[calc(50vw-65%)] lg:pl-[calc(50vw-100%)]">
           {items.map((item, index) => (
             <article
               key={item.videoSrc}
@@ -181,10 +201,12 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
                 <p className="text-sm text-gray-600 truncate">{item.host}</p>
               </div>
               <button
-                onClick={() => setLikes(prev => new Set([...prev].add(index)))}
-                className={`self-start text-2xl ${likes.has(index) ? 'text-red-500' : 'text-gray-500 hover:text-red-400'}`}
+                onClick={() => handleLike(index)}
+                className={`self-start text-2xl transition-colors ${
+                  likes.includes(index) ? 'text-red-500' : 'text-gray-500 hover:text-red-400'
+                }`}
               >
-                {likes.has(index) ? '❤️' : '♡'}
+                {likes.includes(index) ? '❤️' : '♡'}
               </button>
             </article>
           ))}

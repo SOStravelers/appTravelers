@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 const DEFAULT_ITEMS = [
   {
     videoSrc: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    posterSrc: 'https://picsum.photos/seed/fire_poster/800/600',
+    
     thumbnailSrc: 'https://picsum.photos/seed/fire_thumb/100/130',
     rating: '5.0 (187)',
     duration: '1.5 h',
@@ -11,8 +11,8 @@ const DEFAULT_ITEMS = [
     host: 'Anfitrión: Catherine'
   },
   {
-    videoSrc: 'https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4',
-    posterSrc: 'https://picsum.photos/seed/surf_poster/800/600',
+    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    
     thumbnailSrc: 'https://picsum.photos/seed/surf_thumb/100/130',
     rating: '4.9 (95)',
     duration: '2 h',
@@ -20,8 +20,8 @@ const DEFAULT_ITEMS = [
     host: 'Anfitrión: Alex'
   },
   {
-    videoSrc: 'https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4',
-    posterSrc: 'https://picsum.photos/seed/stars_poster/800/600',
+    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    
     thumbnailSrc: 'https://picsum.photos/seed/stars_thumb/100/130',
     rating: '4.8 (250)',
     duration: '3 h',
@@ -146,7 +146,7 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
   }, []);
 
   return (
-    <div className="relative h-screen max-w-lg display flex flex-col justify-center bg-black overflow-hidden">
+    <div className="-mx-3 -mt-32 relative h-screen max-w-lg display flex flex-col justify-center bg-black overflow-hidden">
       <VideoLoader activeItem={items[activeIndex]} videoRef={videoRef} />
       
       <button
@@ -164,8 +164,8 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
         )}
       </button>
 
-      <div ref={containerRef} className="absolute bottom-8 left-0 w-full overflow-x-auto scrollbar-hidden">
-        <div className="flex gap-5 pb-4 pl-[calc(50vw-50%)] md:pl-[calc(50vw-65%)]">
+      <div ref={containerRef} className="absolute bottom-8 left-0 w-full overflow-x-auto scrollbar-hidden no-scrollbar">
+        <div className="flex gap-5 pb-4 pl-[calc(50vw-45%)] md:pl-[calc(50vw-65%)] lg:pl-[calc(50vw-100%)] ">
           {items.map((item, index) => (
             <article
               key={item.videoSrc}

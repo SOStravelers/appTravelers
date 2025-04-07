@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 const DEFAULT_ITEMS = [
   {
     videoSrc: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    posterSrc:'',
     thumbnailSrc: 'https://picsum.photos/seed/fire_thumb/100/130',
     rating: '5.0 (187)',
     duration: '1.5 h',
@@ -11,6 +12,7 @@ const DEFAULT_ITEMS = [
   },
   {
     videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    posterSrc:'',
     thumbnailSrc: 'https://picsum.photos/seed/surf_thumb/100/130',
     rating: '4.9 (95)',
     duration: '2 h',

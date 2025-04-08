@@ -5,8 +5,8 @@ const DEFAULT_ITEMS = [
     videoSrc: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     posterSrc:'',
     thumbnailSrc: 'https://picsum.photos/seed/fire_thumb/100/130',
-    rating: '5.0 (187)',
-    duration: '1.5 h',
+    // rating: '5.0 (187)',
+    // duration: '1.5 h',
     title: 'Aprende a tragar fuego',
     host: 'Anfitrión: Catherine'
   },
@@ -192,14 +192,14 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
             <article
               key={item.videoSrc}
               ref={el => cardsRef.current[index] = el}
-              className="flex-shrink-0 w-[336px] max-w-[400px] bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg flex gap-4 transition-transform duration-150 hover:scale-105"
+              className="flex-shrink-0 w-[360px] max-w-[400px] bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg flex gap-4 transition-transform duration-150 hover:scale-105 z-2"
             >
               <img src={item.thumbnailSrc} alt="" className="w-14 h-20 object-cover rounded-lg" />
               <div className="flex-1 min-w-0 space-y-2">
                 <p className="text-sm text-gray-600 truncate">
                   <span className="text-red-500">★</span> {item.rating} · {item.duration}
                 </p>
-                <h3 className="text-lg font-semibold text-gray-800 truncate">{item.title}</h3>
+                <h3 className="text-md font-semibold text-black">{item.title}</h3>
                 <p className="text-sm text-gray-600 truncate">{item.host}</p>
               </div>
               <button

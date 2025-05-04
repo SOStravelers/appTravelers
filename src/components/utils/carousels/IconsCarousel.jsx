@@ -1,6 +1,7 @@
 // Importa los íconos que necesites de react-icons
 // Ejemplo: importando íconos de Font Awesome y Material Design
 import { FaReact, FaVuejs, FaAngular, FaNodeJs, FaPython } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 import { SiJavascript, SiTypescript, SiTailwindcss } from 'react-icons/si';
 import { MdArrowForward } from "react-icons/md"; // Ícono para el botón
 
@@ -32,17 +33,23 @@ function IconCarousel({
   onIconClick,
   onViewMoreClick
 }) {
+  const router = useRouter();
 
   const handleIconClick = (iconData) => {
     if (onIconClick) {
       onIconClick(iconData);
     } else {
       console.log('Icon clicked:', iconData.label);
-      // Comportamiento predeterminado o ninguno si no se proporciona onIconClick
     }
   };
 
   const handleViewMore = (e) => {
+    if (!onViewMoreClick) {
+      e.preventDefault();
+       // Navega a la página de colecciones
+       router.push('/collections');
+    }
+
     if (onViewMoreClick) {
       e.preventDefault(); // Prevenir navegación si hay una función onClick personalizada
       onViewMoreClick();
@@ -80,20 +87,18 @@ function IconCarousel({
           ))}
           {/* --- Fin Mapeo de íconos --- */}
 
-           {/* --- Elemento "Ver más" (opcional, como último item del scroll) --- */}
-           {/* Puedes descomentar esto si prefieres el botón DENTRO del scroll */}
-           {/*
-           <a
-              href={viewMoreLink}
-              onClick={handleViewMore}
-              className="flex flex-col items-center justify-center flex-shrink-0 w-24 h-24 p-3 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-200 ease-in-out"
-              aria-label="Ver más categorías"
-           >
-              <MdArrowForward size={32} />
-              <span className="text-xs text-center mt-2">Ver más</span>
-           </a>
-           */}
-
+          {/* --- Elemento "Ver más" (como último item del scroll) --- */}
+          <a
+            href={viewMoreLink}
+            onClick={handleViewMore}
+            className="flex flex-col items-center justify-center flex-shrink-0 w-24 h-24 p-3 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-200 ease-in-out"
+            aria-label="Ver más categorías"          
+          >
+            <MdArrowForward size={32} />
+            <span className="text-xs text-center mt-2">Ver más</span>
+          </a>
+         
+         
         </div>
          {/* Indicador visual opcional de que hay más contenido (si se desea) */}
          {/* <div className="absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white dark:from-gray-800 pointer-events-none"></div> */}
@@ -101,15 +106,7 @@ function IconCarousel({
 
       {/* --- Botón "Ver más" (debajo del carrusel) --- */}
       <div className="flex justify-center mt-6">
-         <a
-            href={viewMoreLink}
-            onClick={handleViewMore}
-            className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-offset-gray-800"
-         >
-            Ver más
-            <MdArrowForward className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
-         </a>
-      </div>
+      </div> 
     </div>
   );
 }

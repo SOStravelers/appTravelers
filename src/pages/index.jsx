@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
-import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
@@ -21,6 +20,7 @@ import "swiper/swiper-bundle.css";
 // SwiperCore.use([Pagination, Navigation]);
 import { useStore } from "@/store";
 register();
+import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 
 export default function Home({}) {
   // console.log("socket!", process.env.NEXT_PUBLIC_API_SOCKET_IO);
@@ -34,6 +34,7 @@ export default function Home({}) {
   const [randomUsers, setRandomUsers] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
+  
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
     setService({});
@@ -131,8 +132,8 @@ export default function Home({}) {
         </div>
       )}
       <SyncCarousel />
-       <IconCarousel  />       
-      <div className="w-full max-w-lg ">
+      <IconCarousel />
+      <div className="w-full max-w-lg">
         <Swiper
           spaceBetween={10}
           slidesPerView={1}

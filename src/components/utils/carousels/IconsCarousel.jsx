@@ -58,7 +58,7 @@ function IconCarousel({
   };
 
   return (
-    <div className="w-full max-w-lg py-6">
+    <div className="w-full max-w-2xl py-6 mx-auto">
       {/* Contenedor principal del carrusel con scroll horizontal */}
       <div className="relative">
         <div className="flex space-x-6 overflow-x-auto no-scrollbar py-4 px-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">

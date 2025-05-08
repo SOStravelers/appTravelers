@@ -125,17 +125,17 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
     const container = containerRef.current;
     if (!container) return 0;
     
-    const center = container.scrollLeft + container.offsetWidth / 2;
+    const containerCenterX = container.scrollLeft + container.offsetWidth / 2;
     let closestIndex = 0;
     let smallestDistance = Infinity;
 
     cardsRef.current.forEach((card, index) => {
       if (!card) return;
       const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(center - cardCenter);
-      if (distance < smallestDistance) {
+      const distance = Math.abs(cardCenter - containerCenterX);
+      if (Math.abs(cardCenter - containerCenterX) < smallestDistance) {
         smallestDistance = distance;
-        closestIndex = index;
+        closestIndex= index;
       }
     });
 
@@ -146,17 +146,17 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
     const index = getNearestCardIndex();
     const card = cardsRef.current[index];
     if (!card || !containerRef.current) return;
-
     containerRef.current.scrollTo({
-      left: card.offsetLeft - (containerRef.current.offsetWidth - card.offsetWidth) / 2,
+      left: card.offsetLeft - (containerRef.current.offsetWidth - card.offsetWidth) / 2 ,
       behavior: 'smooth'
     });
+
     setActiveIndex(index);
   };
 
   const handleScroll = () => {
     clearTimeout(scrollTimeout.current);
-    scrollTimeout.current = setTimeout(snapToNearestCard, 100);
+    scrollTimeout.current = setTimeout(snapToNearestCard, 200);
   };
 
   useEffect(() => {
@@ -168,13 +168,13 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
   }, []);
 
   return (
-    <div className="-mx-3 -mt-32 relative h-screen max-w-lg display flex flex-col justify-center bg-black overflow-hidden">
+    <div className="relative h-[90vh] flex flex-col justify-center items-center  overflow-hidden">
       <VideoLoader activeItem={items[activeIndex]} videoRef={videoRef} />
       
       <button
         onClick={togglePlayPause}
         className="absolute bottom-44 opacity-50 left-4 z-2 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white transition-colors"
-      >
+      > 
         {isPlaying ? (
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
             <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
@@ -186,8 +186,8 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
         )}
       </button>
 
-      <div ref={containerRef} className="absolute bottom-8 left-0 w-full overflow-x-auto scrollbar-hidden no-scrollbar">
-        <div className="flex gap-5 pb-4 pl-[calc(50vw-45%)] md:pl-[calc(50vw-65%)] lg:pl-[calc(50vw-100%)]">
+      <div ref={containerRef} className="absolute bottom-8 left-0 w-full overflow-x-auto scrollbar-hidden no-scrollbar" >
+        <div className="flex gap-5 pb-4 pl-[calc(20vw)] md:pl-[calc(50vw - 180px - 10px)] lg:pl-[calc(50vw - 180px - 10px)]">
           {items.map((item, index) => (
             <article
               key={item.videoSrc}

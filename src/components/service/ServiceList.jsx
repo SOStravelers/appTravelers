@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import ServiceCardRecomendation from '@/components/utils/cards/ServiceCardRecomendation';
+import  { useState, useEffect } from 'react';
 import SolidButton from '@/components/utils/buttons/SolidButton';
+import ServiceCard from './ServiceCard'; // Import the new ServiceCard component
 
 const ITEMS_PER_LOAD = 4;
 
@@ -53,7 +53,7 @@ const ServiceList = ({ services: initialServices = [] }) => {
     } else{
         setHasMore(false)
     }
-  }, [initialServices]);
+  }, []);
 
   const handleLoadMore = () => {
     const nextServices = initialServices.slice(nextItemIndex, nextItemIndex + ITEMS_PER_LOAD);
@@ -68,7 +68,7 @@ const ServiceList = ({ services: initialServices = [] }) => {
       {displayedServices.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center w-full">
           {displayedServices.map((service) => (
-            <ServiceCardRecomendation key={service.id} service={service} isFavorite={service.isFavorite} />
+            <ServiceCard key={service.id} service={service} /> 
           ))}
         </div>
       ) : (

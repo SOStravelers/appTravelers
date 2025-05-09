@@ -8,7 +8,7 @@ const RecomendationCarousel = (services = []) => {
 
 
   const servicesToDisplay = services?.length > 0 ? services : [];
-  // console.log('services to display:', servicesToDisplay)
+  console.log('services to display:', servicesToDisplay)
 
   const carouselRef = useRef(null);
 

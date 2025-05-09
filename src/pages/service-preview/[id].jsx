@@ -10,7 +10,7 @@ import PointsOfInterestList from '@/components/ServicePreview/PointsOfInterestLi
 import Gallery from '@/components/ServicePreview/Gallery';
 import FullScreenCarousel from '@/components/ServicePreview/FullScreenCarousel';
 import InclusionsExclusions from '@/components/ServicePreview/InclusionsExclusions';
-// import ServiceList from '@/components/service/ServiceList'; // Imported but not used
+import ServiceList from '@/components/service/ServiceList'; // Imported but not used
 import RecomendationCarousel from '@/components/utils/carousels/RecomendationCarousel';
 
 // Placeholder Data (replace with actual data fetching later)
@@ -139,6 +139,7 @@ useEffect(()=>{
 
           {/* Add other sections like what's included, what to bring, etc. */}
           <RecomendationCarousel />
+          <ServiceList></ServiceList>
         </div>
 
         {/* Sidebar (Optional - you can add this if needed) */}

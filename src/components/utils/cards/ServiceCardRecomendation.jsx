@@ -1,6 +1,18 @@
 import {useState} from 'react';
 import {useStore} from '@/store'
 
+
+/* {
+  "id": 3,
+  "name": "Join a conservation mission",
+  "imageUrl": "https://via.placeholder.com/300x220?text=Service+3",
+  "score": 4.8,
+  "scoreCount": 30,
+  "duration": "1 hour",
+  "price": 75,
+  "isFavorite": false
+} */
+
 const ServiceCardRecomendation = ({service}) => {
   console.log('this object i recive',service)
   const [isFavorite, setIsFavorite] = useState(false);
@@ -16,7 +28,7 @@ const ServiceCardRecomendation = ({service}) => {
         </div>
       <div className="p-4">
         <div className="flex items-center mb-2">
-          <h3 className="text-base font-semibold text-gray-800">{service.name[language]}</h3>
+          <h3 className="text-base font-semibold text-gray-800">{service.name}</h3>
         </div>
         <div className='flex items-center'>
           <div className="flex items-center">
@@ -30,11 +42,11 @@ const ServiceCardRecomendation = ({service}) => {
               />
             </svg>
           </div>
-          {/* <span className="text-sm text-gray-600 ml-1">{service.score} ({service.scoreCount})</span> */}
+          <span className="text-sm text-gray-600 ml-1">{service.score} ({service.scoreCount})</span>
         </div>
-        <button className={`absolute top-2 right-2 p-1 rounded-full ${isFavorite ? 'bg-red-100' : 'bg-gray-100'}`}>
+        <button className={`absolute top-2 right-2 p-1 rounded-full ${service.isFavorite ? 'bg-red-100' : 'bg-gray-100'}`}>
             <svg
-              className={`h-5 w-5 ${isFavorite ? 'text-red-500' : 'text-gray-500'}`}
+              className={`h-5 w-5 ${service.isFavorite ? 'text-red-500' : 'text-gray-500'}`}
               fill={isFavorite ? 'currentColor' : 'none'}
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -48,7 +60,7 @@ const ServiceCardRecomendation = ({service}) => {
             </svg>
           </button>
         <div className="flex justify-between items-center mt-2">
- <span className="text-sm text-gray-600"> {service.duration} · {service.details[language]}</span>
+ <span className="text-sm text-gray-600"> {service.duration} · </span>
           <span className="text-sm font-medium text-gray-800">Desde {service.price} € por persona</span>
         </div>   
       </div>   

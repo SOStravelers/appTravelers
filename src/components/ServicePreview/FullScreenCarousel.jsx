@@ -46,7 +46,7 @@ const FullScreenCarousel = ({ images = [], initialIndex = 0, onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-filter backdrop-blur-sm" onClick={onClose}>
       <div className="relative w-full h-full max-w-screen-xl max-h-screen-xl flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
         <img
-          // className='relative w-full max-h-[90vh] object-contain transition-transform duration-300 ease-in-out transform scale-100 hover:scale-105'
+          
           src={images[currentIndex]}
           alt={`Gallery image ${currentIndex + 1}`}
           className="max-w-full max-h-full object-contain"

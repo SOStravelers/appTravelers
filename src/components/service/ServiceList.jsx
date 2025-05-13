@@ -1,6 +1,6 @@
 import  { useState, useEffect } from 'react';
 import SolidButton from '@/components/utils/buttons/SolidButton';
-import ServiceCard from './ServiceCard'; // Import the new ServiceCard component
+import ServiceCard from './SubServiceCard'; // Import the new ServiceCard component
 
 const ITEMS_PER_LOAD = 4;
 

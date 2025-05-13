@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
-import ationCarousel from "@/components/utils/carousels/RecomendationCarousel";
+import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
@@ -133,13 +133,13 @@ export default function Home({}) {
           <p className="text-center">Esta é uma versão demo</p>
         </div>
       )}
-      {/* <SyncCarousel /> */}
+      <SyncCarousel />
       <section className="px-3">
-      {/* <IconCarousel /> */}
+      <IconCarousel />
       </section>
 
-      <section className="px-52 mx-auto">
-      {/* <RecomendationCarousel services={randomUsers?.flatMap(user=>user.workerData.services.flatMap(service=>service.subServices))}></RecomendationCarousel> */}
+      <section className="mx-auto">
+      <RecomendationCarousel services={randomUsers?.flatMap(user=>user.workerData.services.flatMap(service=>service.subServices))}></RecomendationCarousel>
       </section>
       
       <div className="w-full max-w-lg mx-auto">

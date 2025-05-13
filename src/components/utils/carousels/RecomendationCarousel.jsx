@@ -1,8 +1,6 @@
 import { useRef, useEffect } from 'react';
 import ServiceCardRecomendation from '@/components/utils/cards/ServiceCardRecomendation';
 
-// const defaultServices = 
-
 const RecomendationCarousel = (services = []) => {
   
 

@@ -186,16 +186,16 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
         )}
       </button>
 
-      <div ref={containerRef} className="absolute bottom-8 left-0 w-full overflow-x-auto scrollbar-hidden no-scrollbar" >
-        <div className="flex gap-5 pb-4 pl-[calc(20vw)] md:pl-[calc(50vw - 180px - 10px)] lg:pl-[calc(50vw - 180px - 10px)]">
+      <div ref={containerRef} className="absolute bottom-8  overflow-x-auto scrollbar-hidden no-scrollbar" >
+        <div className="snap-x snap-mandatory flex justify-left gap-5 w-[500px] md:w-[1000px] md:pr-[calc(100%+300px)] px-[calc(50%-150px)]">
           {items.map((item, index) => (
             <article
               key={item.videoSrc}
               ref={el => cardsRef.current[index] = el}
-              className="flex-shrink-0 w-[360px] max-w-[400px] bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg flex gap-4 transition-transform duration-150 hover:scale-105 z-2"
+              className="flex-shrink-0 w-[270px] max-w-[400px] bg-white/95 backdrop-blur-sm rounded-xl p-2 shadow-lg flex gap-4 transition-transform duration-150 hover:scale-105 z-2"
             >
-              <img src={item.thumbnailSrc} alt="" className="w-14 h-20 object-cover rounded-lg" />
-              <div className="flex-1 min-w-0 space-y-2">
+              <img src={item.thumbnailSrc} alt="" className="w-20 h-20 object-cover rounded-lg" />
+              <div className="flex-1 min-w-0">
                 <p className="text-sm text-gray-600 truncate">
                   <span className="text-red-500">★</span> {item.rating} · {item.duration}
                 </p>

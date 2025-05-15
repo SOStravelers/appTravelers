@@ -1,23 +1,25 @@
 // Importa los íconos que necesites de react-icons
 // Ejemplo: importando íconos de Font Awesome y Material Design
-import { FaReact, FaVuejs, FaAngular, FaNodeJs, FaPython } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { SiJavascript, SiTypescript, SiTailwindcss } from 'react-icons/si';
-import { MdArrowForward } from "react-icons/md"; // Ícono para el botón
+// Import necessary icons for categories
+import { FaMapMarkedAlt } from 'react-icons/fa';
+import { GiPartyPopper, GiMeal, GiHiking, GiParachute, GiSoccerBall, GiCarWheel } from 'react-icons/gi';
+import { MdArrowForward, MdSurfing } from "react-icons/md"; // Ícono para el botón
 
 // Datos de ejemplo para los íconos
 // En una aplicación real, esto podría venir de props o una API
-const defaultIcons = [
-  { id: 1, icon: <FaReact size={32} />, label: 'React' },
-  { id: 2, icon: <FaVuejs size={32} />, label: 'Vue.js' },
-  { id: 3, icon: <FaAngular size={32} />, label: 'Angular' },
-  { id: 4, icon: <SiJavascript size={32} />, label: 'JavaScript' },
-  { id: 5, icon: <SiTypescript size={32} />, label: 'TypeScript' },
-  { id: 6, icon: <FaNodeJs size={32} />, label: 'Node.js' },
-  { id: 7, icon: <FaPython size={32} />, label: 'Python' },
-  { id: 8, icon: <SiTailwindcss size={32} />, label: 'Tailwind' },
-  // Agrega más íconos si lo deseas
+const services = [
+  { id: 1, icon: <FaMapMarkedAlt size={32} />, label: 'Tour' },
+  { id: 2, icon: <GiPartyPopper size={32} />, label: 'Fiestas & Shows' },
+  { id: 3, icon: <GiMeal size={32} />, label: 'Gastronomia' },
+  { id: 4, icon: <GiHiking size={32} />, label: 'Senderos' },
+  { id: 5, icon: <GiParachute size={32} />, label: 'Experiencias' },
+  { id: 6, icon: <MdSurfing size={32} />, label: 'Surf al amanecer' },
+  { id: 7, icon: <GiSoccerBall size={32} />, label: 'Partidos de futbol' },
+  { id: 8, icon: <GiCarWheel size={32} />, label: 'Transfers' },
 ];
+
+
 
 /**
  * Componente de Carrusel de Íconos con Tailwind CSS.
@@ -28,7 +30,7 @@ const defaultIcons = [
  * @param {function} [onViewMoreClick] - Función opcional a ejecutar cuando se hace clic en "Ver más". Prevalece sobre viewMoreLink si se proporciona.
  */
 function IconCarousel({
-  icons = defaultIcons,
+  icons = services,
   viewMoreLink = '#',
   onIconClick,
   onViewMoreClick
@@ -59,8 +61,12 @@ function IconCarousel({
 
   return (
     <div className="w-full max-w-2xl py-6 mx-auto">
+      <div className="flex items-center justify-between mb-4 px-2">
+        <h2 className="text-xl font-semibold text-gray-800">Explore nossas coleções</h2>
+        <a href="/collections" className="text-sm text-blue-600 hover:underline" onClick={handleViewMore}>Ver tudo</a>
+      </div>
       {/* Contenedor principal del carrusel con scroll horizontal */}
-      <div className="relative">
+ <div className="relative">
         <div className="flex space-x-6 overflow-x-auto max-md:no-scrollbar py-4 px-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 ">
           {/* --- Mapeo de los íconos --- */}
           {icons.map((iconData) => (

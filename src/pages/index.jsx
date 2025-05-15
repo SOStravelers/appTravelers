@@ -250,7 +250,7 @@ export default function Home({}) {
           </h1>
         </div>
       )}
-      {/* <ServiceList></ServiceList> */}
+      <ServiceList></ServiceList>
 
     </main>
   );

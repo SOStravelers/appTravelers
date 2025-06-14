@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { register } from "swiper/element/bundle";
+import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
+import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import BookingCard from "@/components/utils/cards/BookingCard";
 import ServiceCard from "@/components/utils/cards/ServiceCard";
 import RecomendationCard from "@/components/utils/cards/RecomendationCard";
@@ -19,6 +21,8 @@ import "swiper/swiper-bundle.css";
 // SwiperCore.use([Pagination, Navigation]);
 import { useStore } from "@/store";
 register();
+import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
+import ServiceList from "@/components/service/ServiceList";
 
 export default function Home({}) {
   // console.log("socket!", process.env.NEXT_PUBLIC_API_SOCKET_IO);
@@ -32,6 +36,7 @@ export default function Home({}) {
   const [randomUsers, setRandomUsers] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
+  
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
     setService({});
@@ -122,13 +127,22 @@ export default function Home({}) {
   };
 
   return (
-    <main className="flex flex-col w-full bg-white py-16 lg:py-20 xl:py-20 px-3 md:pl-80">
+    <main className="flex flex-col w-full bg-white   md:pl-[240px]">
       {process.env.NEXT_PUBLIC_DEMO == "true" && (
         <div className="flex justify-center mt-1 items-center bg-blueBorder max-w-lg text-white  rounded-md">
           <p className="text-center">Esta é uma versão demo</p>
         </div>
       )}
-      <div className="w-full max-w-lg ">
+      <SyncCarousel />
+      <section className="px-3">
+      <IconCarousel />
+      </section>
+
+      <section className="mx-auto">
+      <RecomendationCarousel services={randomUsers?.flatMap(user=>user.workerData.services.flatMap(service=>service.subServices))}></RecomendationCarousel>
+      </section>
+      
+      <div className="w-full max-w-lg mx-auto">
         <Swiper
           spaceBetween={10}
           slidesPerView={1}
@@ -236,6 +250,8 @@ export default function Home({}) {
           </h1>
         </div>
       )}
+      <ServiceList></ServiceList>
+
     </main>
   );
 }

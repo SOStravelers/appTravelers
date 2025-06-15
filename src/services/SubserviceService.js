@@ -25,4 +25,8 @@ export default class SubserviceService {
       `${this.baseUrl}/data/byWorker/?user=${data.user}&subservice=${data.subservice}&onlySubservice=${onlySubservice}`
     );
   }
+
+  static async getWithVideos() {
+    return axios.get(`${this.baseUrl}/get/withVideos`);
+  }
 }

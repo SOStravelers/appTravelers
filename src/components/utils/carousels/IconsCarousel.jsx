@@ -81,10 +81,10 @@ function IconCarousel({
                   : ""
               } ${index !== icons.length - 1 ? "mr-4" : ""}`}
             >
-              <div className="text-gray-700 dark:text-gray-300 mb-2">
+              <div className="text-gray-900 dark:text-gray-500 mb-2">
                 {iconData.icon}
               </div>
-              <span className="text-xs text-center text-gray-600 dark:text-gray-400">
+              <span className="text-xs text-center text-gray-900 dark:text-gray-600">
                 {iconData.label}
               </span>
             </div>

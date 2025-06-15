@@ -1,7 +1,12 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
-
+import SubserviceService from "@/services/SubserviceService";
+import { useStore } from "@/store";
 const RecomendationCarousel = (services = []) => {
+  const store = useStore();
+  const { language } = store;
+  const carouselRef = useRef(null);
+  const [servicesToDisplay, setServicesToDisplay] = useState([]);
   const defaultServices = [
     {
       id: 1,
@@ -34,12 +39,22 @@ const RecomendationCarousel = (services = []) => {
       price: 75,
     },
   ];
-
-  const servicesToDisplay =
-    services && services.length > 0 ? services : defaultServices;
-  console.log("services to display:", servicesToDisplay);
-
-  const carouselRef = useRef(null);
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await SubserviceService.getRecommended();
+        const data = response.data;
+        if (data && Array.isArray(data)) {
+          setServicesToDisplay(data);
+        } else {
+          console.warn("La respuesta no es un array:", data);
+        }
+      } catch (error) {
+        console.error("Error al obtener subservicios con videos:", error);
+      }
+    };
+    fetchItems();
+  }, []);
 
   useEffect(() => {
     if (carouselRef.current) {

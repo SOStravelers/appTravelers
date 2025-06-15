@@ -29,4 +29,7 @@ export default class SubserviceService {
   static async getWithVideos() {
     return axios.get(`${this.baseUrl}/get/withVideos`);
   }
+  static async getRecommended() {
+    return axios.get(`${this.baseUrl}/get/recommended`);
+  }
 }

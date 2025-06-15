@@ -115,10 +115,11 @@ export default function Home({}) {
     try {
       const response = await UserService.getRandom();
       setRandomUsers(response.data);
+      console.log("la data 1", response.data);
 
       const response2 = await UserService.getWorkers();
       setWorkers(response2.data);
-      console.log("worker", workers);
+      console.log("la data 2", workers);
     } catch (error) {
       console.log(error);
     } finally {
@@ -134,11 +135,7 @@ export default function Home({}) {
       </section>
 
       <section className="p-4">
-        <RecomendationCarousel
-          services={randomUsers?.flatMap((user) =>
-            user.workerData.services.flatMap((service) => service.subServices)
-          )}
-        ></RecomendationCarousel>
+        <RecomendationCarousel services={randomUsers}></RecomendationCarousel>
       </section>
 
       <div className="w-full p-4 pt-10 max-w-lg mx-auto">
@@ -174,7 +171,7 @@ export default function Home({}) {
             <h1
               className={`text-black text-xl font-semibold mb-3 ${mazzard.className}`}
             >
-              {languageData.title.service[language]}
+              {languageData.title.service[language] + "-> wena"}
             </h1>
             <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2 pl-2">
               {services?.map((s, index) => (
@@ -192,7 +189,7 @@ export default function Home({}) {
             <h1
               className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
             >
-              {languageData.title.recommended[language]}
+              {languageData.title.recommended[language] + "->chao"}
             </h1>
             {loading ? (
               <div className="max-w-lg flex flex-col items-center justify-center">

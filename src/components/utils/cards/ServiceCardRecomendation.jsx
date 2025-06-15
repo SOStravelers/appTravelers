@@ -17,7 +17,6 @@ import { MdFavorite } from "react-icons/md";
 const ServiceCardRecomendation = ({ service }) => {
   const { imageUrl, name, score, scoreCount, duration, price, isFavorite } =
     service;
-  console.log("this object i recive", service);
   const [isFavorited, setIsFavorited] = useState(isFavorite || false);
   const { language } = useStore();
   if (!service) {

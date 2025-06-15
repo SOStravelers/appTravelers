@@ -12,19 +12,51 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
+/* Scrollbar visible y delgada solo en escritorio */
+@media (min-width: 768px) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;      /* vertical */
+    height: 6px;     /* horizontal */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+}
+
+/* Ocultar scrollbar completamente en mobile */
+@media (max-width: 767px) {
+  * {
+    scrollbar-width: none; /* Firefox */
+  }
+
+  ::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Edge */
+  }
+}
+
+/* Estilos para datepicker RDP */
 .rdp {
   --rdp-cell-size: 40px !important;
   --rdp-accent-color: #00A0D5 !important;
   --rdp-background-color: #e7edff !important;
-  /* Switch to dark colors for dark themes */
   --rdp-accent-color-dark: #1cdae5 !important;
   --rdp-background-color-dark: #0063d5 !important;
-  /* Outline border for focused elements */
   --rdp-outline: 2px solid var(--rdp-accent-color) !important;
-  /* Outline border for focused and selected elements */
   --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75) !important;
 }
 
+/* Efectos de texto */
 .neon-green {
   color: #00A0D5;
   text-shadow: 0 0 10px #00A0D5, 0 0 1px #00A0D5;
@@ -34,6 +66,7 @@ body {
   text-shadow: 0 0 10px #1CDAE5, 0 0 1px #1CDAE5;
 }
 
+/* Estilos del chat */
 .chat {
   --rad: 20px;
   --rad-sm: 3px;
@@ -41,70 +74,72 @@ body {
   display: flex;
   flex-direction: column;
   padding: 5px;
-  height: 900px; 
+  height: 900px;
   width: 100%;
   margin: 0;
   overflow: auto;
   border-radius: 6px;
   border: 2px solid #00A0D5;
-  @media (max-height: 1200px) {
+}
+
+@media (max-height: 1200px) {
+  .chat {
     height: 650px;
   }
-  @media (max-height: 1000px) {
+}
+@media (max-height: 1000px) {
+  .chat {
     height: 550px;
   }
-  @media (max-height: 900px) {
+}
+@media (max-height: 900px) {
+  .chat {
     height: 490px;
   }
-  @media (max-height: 800px) {
+}
+@media (max-height: 800px) {
+  .chat {
     height: 350px;
   }
-  @media (max-height: 700px) {
-    height: 320px;
-  } 
-  @media (max-height: 650px) {
-    height: 290px;
-  } 
 }
+@media (max-height: 700px) {
+  .chat {
+    height: 320px;
+  }
+}
+@media (max-height: 650px) {
+  .chat {
+    height: 290px;
+  }
+}
+
+/* Mensajes del chat */
 .msg {
   position: relative;
   max-width: 75%;
   padding: 7px 15px;
   margin-bottom: 2px;
 }
-.swiper-pagination-bullet {
-  background: #00A0D5;
-}
 .msg.sent {
   border-radius: var(--rad) var(--rad-sm) var(--rad) var(--rad);
   background: #001C25;
   color: #fff;
-  /* moves it to the right */
   margin-left: auto;
 }
-
 .msg.rcvd {
   border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad);
   background: #00A0D5;
   color: #fff;
-  /* moves it to the left */
   margin-right: auto;
 }
-
-/* Improve radius for messages group */
-
 .msg.sent:first-child,
 .msg.rcvd + .msg.sent {
   border-top-right-radius: var(--rad-sm);
 }
-
 .msg.rcvd:first-child,
 .msg.sent + .msg.rcvd {
   border-top-left-radius: var(--rad-sm);
 }
-
-/* time */
-
 .msg::before {
   content: attr(data-time);
   font-size: 0.8rem;
@@ -112,36 +147,32 @@ body {
   bottom: 100%;
   color: #888;
   white-space: nowrap;
-  /* Hidden by default */
   display: none;
 }
-
 .msg.sent::before {
   right: 15px;
 }
-
 .msg.rcvd::before {
   left: 15px;
 }
-
-/* Show time only for first message in group */
-
 .msg:first-child::before,
 .msg.sent + .msg.rcvd::before,
 .msg.rcvd + .msg.sent::before {
-  /* Show only for first message in group */
   display: block;
 }
 
-
-@layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-      display: none;
-  }
- /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+/* Estilo de los bullets del Swiper */
+.swiper-pagination-bullet {
+  background: #00A0D5;
 }
+
+/* Scrollbar completamente oculta (si la necesitas en componentes específicos) */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE y Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
 }

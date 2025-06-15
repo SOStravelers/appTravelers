@@ -24,6 +24,28 @@ function TopBar() {
   const [booking, setBooking] = useState({});
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   const [isImageAccessible, setIsImageAccessible] = useState(false);
+
+  const [scrolledPastVh, setScrolledPastVh] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY + 800 > window.innerHeight;
+      if (isScrolled !== scrolledPastVh) {
+        setScrolledPastVh(isScrolled);
+      }
+    };
+
+    // Set initial state on mount
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolledPastVh]); // Re-run effect if scrolledPastVh changes
+
   const socket = useRef();
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
@@ -86,7 +108,13 @@ function TopBar() {
       //     ? "bg-blueBorder"
       //     : "bg-darkBlue"
       // }`}
-      className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 bg-darkBlue `}
+      className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 transition-all duration-500 ${
+        router.pathname === "/"
+          ? scrolledPastVh
+            ? "bg-darkBlue"
+            : "bg-transparent"
+          : "bg-darkBlue"
+      }`}
     >
       <TextModal
         title={"Parabéns!!, você tem uma nova reserva"}

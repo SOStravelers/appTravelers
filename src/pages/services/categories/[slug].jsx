@@ -5,6 +5,7 @@ import { getServicesByCategory } from "@/utils/apis";
 import ServiceList from "@/components/service/ServiceList";
 
 
+
 export default function ServiceCategory() {
 
     const router = useRouter()
@@ -59,3 +60,9 @@ export default function ServiceCategory() {
       );
     }
 
+export const getServerSideProps = async () => {
+  const res = ''
+  const services = res.json()
+  
+  return{props:services}
+}

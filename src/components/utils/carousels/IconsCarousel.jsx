@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { FaMapMarkedAlt } from "react-icons/fa";
+import languageData from "@/language/subServices.json";
 import {
   GiPartyPopper,
   GiMeal,
@@ -9,7 +10,7 @@ import {
   GiCarWheel,
 } from "react-icons/gi";
 import { MdSurfing } from "react-icons/md";
-
+import { useStore } from "@/store";
 const services = [
   { id: 1, icon: <FaMapMarkedAlt size={32} />, label: "Tour" },
   { id: 2, icon: <GiPartyPopper size={32} />, label: "Fiestas & Shows" },
@@ -30,7 +31,7 @@ function IconCarousel({
   onViewMoreClick,
 }) {
   const router = useRouter();
-
+  const { language } = useStore();
   const handleIconClick = (iconData) => {
     if (onIconClick) {
       onIconClick(iconData);
@@ -51,14 +52,14 @@ function IconCarousel({
     <div className="w-full mt-5">
       <div className="flex items-center justify-between mb-4 px-4">
         <h2 className="text-xl font-semibold text-gray-800">
-          Explore nossas coleções
+          {languageData.index.explore[language]}
         </h2>
         <button
           type="button"
           onClick={handleViewMore}
-          className="text-sm text-blue-600 hover:underline"
+          className="text-sm font-semibold text-blueBorder hover:underline"
         >
-          Ver tudo
+          {languageData.index.seeAllButton[language]}
         </button>
       </div>
 

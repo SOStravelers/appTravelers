@@ -1,24 +1,15 @@
 import { useState } from "react";
-import { useStore } from "@/store";
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
-
-/* {
-  "id": 3,
-  "name": "Join a conservation mission",
-  "imageUrl": "https://via.placeholder.com/300x220?text=Service+3",
-  "score": 4.8,
-  "scoreCount": 30,
-  "duration": "1 hour",
-  "price": 75,
-  "isFavorite": false
-} */
+import languageData from "@/language/subServices.json";
+import { useStore } from "@/store";
 
 const ServiceCardRecomendation = ({ service }) => {
-  const { imageUrl, name, score, scoreCount, duration, price, isFavorite } =
+  const store = useStore();
+  const { language } = store;
+  const { imgUrl, name, rate, numberComments, duration, price, isFavorite } =
     service;
   const [isFavorited, setIsFavorited] = useState(isFavorite || false);
-  const { language } = useStore();
   if (!service) {
     return null;
   }
@@ -27,13 +18,15 @@ const ServiceCardRecomendation = ({ service }) => {
       <div className="w-full h-[220px] overflow-hidden rounded-t-lg">
         <img
           className="h-full w-full object-cover"
-          src={imageUrl}
+          src={imgUrl}
           alt="Service"
         />
       </div>
       <div className="p-4">
         <div className="flex items-center mb-2">
-          <h3 className="text-base font-semibold text-gray-800">{name}</h3>
+          <h3 className="text-base font-semibold text-gray-800">
+            {name[language]}
+          </h3>
         </div>
         <div className="flex items-center">
           <div className="flex items-center">
@@ -46,7 +39,7 @@ const ServiceCardRecomendation = ({ service }) => {
             </svg>
           </div>
           <span className="text-sm text-gray-600 ml-1">
-            {score} ({scoreCount})
+            {rate} ({numberComments})
           </span>
         </div>
         <button
@@ -60,9 +53,15 @@ const ServiceCardRecomendation = ({ service }) => {
           )}
         </button>
         <div className="flex justify-between items-start flex-col mt-2">
-          <span className="text-sm text-gray-600"> {duration} · </span>
+          <span className="text-sm text-gray-600">
+            {" "}
+            {duration > 120
+              ? `${(duration / 60).toFixed(1)} hr${duration >= 180 ? "s" : ""}`
+              : `${duration} min`}{" "}
+          </span>
           <span className="text-sm font-medium text-gray-800">
-            Desde {price} € por persona
+            {languageData.card.textPrice1[language]} R${price.category1}{" "}
+            {languageData.card.textPrice2[language]}
           </span>
         </div>
       </div>

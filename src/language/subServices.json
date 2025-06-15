@@ -12,5 +12,44 @@
     "fr": "Pour cette option, nous vous mettrons en contact avec l'un de nos partenaires validés !",
     "de": "Für diese Option verbinden wir Sie mit einem unserer geprüften Partner!",
     "pt": "Para esta opção, vamos te conectar com um dos nossos parceiros validados!"
+  },
+  "index": {
+    "explore": {
+      "pt": "Explore nossas coleções",
+      "en": "Explore our collections",
+      "es": "Explora nuestras colecciones",
+      "fr": "Explorez nos collections",
+      "de": "Erkunden Sie unsere Sammlungen"
+    },
+    "recommended": {
+      "de": "Empfohlen für dich,",
+      "es": "Recomendado para ti",
+      "en": "Recommended for you",
+      "fr": "Recommandé pour toi",
+      "pt": "Recomendado para você"
+    },
+    "seeAllButton": {
+      "en": "See all",
+      "es": "Ver todo",
+      "fr": "Voir tout",
+      "de": "Alle sehen",
+      "pt": "Ver tudo"
+    }
+  },
+  "card": {
+    "textPrice1": {
+      "en": "From",
+      "es": "Desde",
+      "fr": "À partir  de",
+      "de": "Ab",
+      "pt": "A partir de"
+    },
+    "textPrice2": {
+      "en": "per person",
+      "es": "por persona",
+      "fr": "par personne",
+      "de": "pro Person",
+      "pt": "por pessoa"
+    }
   }
 }

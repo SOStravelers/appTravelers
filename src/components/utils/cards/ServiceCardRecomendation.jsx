@@ -7,7 +7,7 @@ import { useStore } from "@/store";
 const ServiceCardRecomendation = ({ service }) => {
   const store = useStore();
   const { language } = store;
-  const { imgUrl, name, rate, numberComments, duration, price, isFavorite } =
+  const { imgUrl, name, rate, rateNumber, duration, price, isFavorite } =
     service;
   const [isFavorited, setIsFavorited] = useState(isFavorite || false);
   if (!service) {
@@ -39,7 +39,7 @@ const ServiceCardRecomendation = ({ service }) => {
             </svg>
           </div>
           <span className="text-sm text-gray-600 ml-1">
-            {rate} ({numberComments})
+            {rate} ({rateNumber})
           </span>
         </div>
         <button

@@ -51,5 +51,39 @@
       "de": "pro Person",
       "pt": "por pessoa"
     }
+  },
+
+  "serviceInfo": {
+    "languageTitle": {
+      "es": "Idioma",
+      "en": "Language",
+      "fr": "Langue",
+      "de": "Sprache",
+      "pt": "Idioma"
+    },
+    "duration": {
+      "es": "Duración",
+      "en": "Duration",
+      "fr": "Durée",
+      "de": "Dauer",
+      "pt": "Duração"
+    },
+
+    "languages": {
+      "es": "Español, Inglés, Portugués",
+      "en": "English, Spanish, Portuguese",
+      "fr": "Français, Anglais, Portugais,",
+      "de": "Deutsch, Englisch, Portugiesisch",
+      "pt": "Português, Inglês, Espanhol"
+    }
+  },
+  "serviceDescription": {
+    "title": {
+      "es": "Descripción del servicio",
+      "en": "Service description",
+      "fr": "Description du service",
+      "de": "Beschreibung der Dienstleistung",
+      "pt": "Descrição do serviço"
+    }
   }
 }

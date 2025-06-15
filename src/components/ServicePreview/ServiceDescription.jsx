@@ -1,27 +1,48 @@
-import  { useState } from 'react';
-
+import { useState, useRef, useEffect } from "react";
+import { useStore } from "@/store";
+import languageData from "@/language/subServices.json";
 const ServiceDescription = ({ description }) => {
-  const [showFullDescription, setShowFullDescription] = useState(false);
-  const descriptionLimit = 200; // Adjust this limit as needed
+  const { language } = useStore();
+  const [expanded, setExpanded] = useState(false);
+  const containerRef = useRef(null);
 
-  const toggleShowMore = () => {
-    setShowFullDescription(!showFullDescription);
-  };
+  const detailsHtml =
+    typeof description === "object" ? description[language] : "";
 
-  const shouldShowButton = description && description.length > descriptionLimit;
+  const plainText = detailsHtml.replace(/<[^>]+>/g, " ").trim();
+  const words = plainText.split(/\s+/).filter(Boolean);
+  const descriptionLimit = 100;
+  const shouldShowButton = words.length > descriptionLimit;
+  const previewText = words.slice(0, descriptionLimit).join(" ") + "…";
+
+  // Al colapsar, scrolling 200px arriba del contenedor
+  useEffect(() => {
+    if (!expanded && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const scrollTop = window.pageYOffset + rect.top - 270;
+      window.scrollTo({ top: scrollTop, behavior: "smooth" });
+    }
+  }, [expanded]);
 
   return (
-    <div className="mt-6">
-      <h3 className="text-lg font-semibold mb-2">Descripción del tour</h3>
-      <p className={`text-gray-700 ${!showFullDescription && shouldShowButton ? 'line-clamp-4' : ''}`}>
-        {description}
-      </p>
+    <div ref={containerRef} className="mt-6">
+      <h3 className="text-lg font-semibold mb-2">
+        {languageData.serviceDescription.title[language]}
+      </h3>
+
+      <div
+        className="text-gray-700"
+        dangerouslySetInnerHTML={{
+          __html: expanded || !shouldShowButton ? detailsHtml : previewText,
+        }}
+      />
+
       {shouldShowButton && (
         <button
-          onClick={toggleShowMore}
-          className="text-blue-600 hover:underline mt-2"
+          onClick={() => setExpanded((e) => !e)}
+          className="text-blue-600 hover:underline mt-2 font-semibold focus:outline-none"
         >
-          {showFullDescription ? 'Mostrar menos' : 'Mostrar más'}
+          {expanded ? "Mostrar menos" : "Mostrar más"}
         </button>
       )}
     </div>

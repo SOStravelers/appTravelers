@@ -9,7 +9,7 @@ const ServiceList = ({ services: initialServices = [] }) => {
     {
       id: 1,
       name: "Prepare your own vinegar with an expert",
-      imageUrl: "https://via.placeholder.com/300x220?text=Service+1",
+      imageUrl: "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*",
       score: 4.83,
       scoreCount: 24,
       duration: "2 hours",
@@ -19,7 +19,7 @@ const ServiceList = ({ services: initialServices = [] }) => {
     {
       id: 2,
       name: "Live a local match at Vasco da Gama",
-      imageUrl: "https://via.placeholder.com/300x220?text=Service+2",
+      imageUrl: "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*",
       score: 4.83,
       scoreCount: 24,
       duration: "3,5 hours",
@@ -29,7 +29,7 @@ const ServiceList = ({ services: initialServices = [] }) => {
     {
       id: 3,
       name: "Join a conservation mission",
-      imageUrl: "https://via.placeholder.com/300x220?text=Service+3",
+      imageUrl: "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*",
       score: 4.8,
       scoreCount: 30,
       duration: "1 hour",
@@ -66,7 +66,7 @@ const ServiceList = ({ services: initialServices = [] }) => {
     <div className="flex flex-col items-center w-full">
       <h2 className="text-2xl font-semibold mb-6">All experiences</h2>
       {displayedServices.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-2 min-md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 justify-items-center w-full">
           {displayedServices.map((service) => (
             <ServiceCard key={service.id} service={service} /> 
           ))}

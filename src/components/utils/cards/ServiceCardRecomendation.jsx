@@ -1,5 +1,7 @@
-import {useState} from 'react';
-import {useStore} from '@/store'
+import { useState } from 'react';
+import { useStore } from '@/store'
+import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
 
 
 /* {
@@ -13,22 +15,26 @@ import {useStore} from '@/store'
   "isFavorite": false
 } */
 
-const ServiceCardRecomendation = ({service}) => {
-  console.log('this object i recive',service)
-  const [isFavorite, setIsFavorite] = useState(false);
-  const {language} = useStore()
+const ServiceCardRecomendation = ({ service }) => {
+  const {imageUrl, name, score, scoreCount, duration, price, isFavorite} = service
+  console.log('this object i recive', service)
+  const [isFavorited, setIsFavorited] = useState(isFavorite || false);
+  const { language } = useStore()
+  if (!service) {
+    return null;
+  }
   return (
     <div className="bg-white rounded-lg shadow-md w-[250px] min-w-[250px] relative">
       <div className='w-full h-[220px] overflow-hidden flex items-center justify-center'>
-          <img
-            className='h-full w-full object-cover'
-            src={service.imageUrl}
-            alt="Service" 
-          />
-        </div>
+        <img
+          className='h-full w-full object-cover'
+          src={imageUrl}
+          alt="Service"
+        />
+      </div>
       <div className="p-4">
         <div className="flex items-center mb-2">
-          <h3 className="text-base font-semibold text-gray-800">{service.name}</h3>
+          <h3 className="text-base font-semibold text-gray-800">{name}</h3>
         </div>
         <div className='flex items-center'>
           <div className="flex items-center">
@@ -42,28 +48,19 @@ const ServiceCardRecomendation = ({service}) => {
               />
             </svg>
           </div>
-          <span className="text-sm text-gray-600 ml-1">{service.score} ({service.scoreCount})</span>
+          <span className="text-sm text-gray-600 ml-1">{score} ({scoreCount})</span>
         </div>
-        <button className={`absolute top-2 right-2 p-1 rounded-full ${service.isFavorite ? 'bg-red-100' : 'bg-gray-100'}`}>
-            <svg
-              className={`h-5 w-5 ${service.isFavorite ? 'text-red-500' : 'text-gray-500'}`}
-              fill={isFavorite ? 'currentColor' : 'none'}
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-              />
-            </svg>
-          </button>
-        <div className="flex justify-between items-center mt-2">
- <span className="text-sm text-gray-600"> {service.duration} · </span>
-          <span className="text-sm font-medium text-gray-800">Desde {service.price} € por persona</span>
-        </div>   
-      </div>   
+        <button
+          onClick={() => setIsFavorited(!isFavorited)}
+          className={`absolute top-2 right-2 p-1 z-10`}
+        >
+          {isFavorited ? <MdFavorite size={25} color='tomato' /> : <MdFavoriteBorder size={25} />}
+        </button>
+        <div className="flex justify-between items-start flex-col mt-2">
+          <span className="text-sm text-gray-600"> {duration} · </span>
+          <span className="text-sm font-medium text-gray-800">Desde {price} € por persona</span>
+        </div>
+      </div>
     </div>
   );
 };

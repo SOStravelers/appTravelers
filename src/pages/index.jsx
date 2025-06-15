@@ -127,22 +127,23 @@ export default function Home({}) {
   };
 
   return (
-    <main className="flex flex-col w-full bg-white   md:pl-[240px]">
+    <main className="flex flex-col w-full bg-white md:pl-[240px] pb-[100px]">
       {process.env.NEXT_PUBLIC_DEMO == "true" && (
         <div className="flex justify-center mt-1 items-center bg-blueBorder max-w-lg text-white  rounded-md">
           <p className="text-center">Esta é uma versão demo</p>
         </div>
       )}
+      
       <SyncCarousel />
-      <section className="px-3">
+      <section className="pt-10">
       <IconCarousel />
       </section>
 
-      <section className="mx-auto">
+      <section className="p-4 pt-10">
       <RecomendationCarousel services={randomUsers?.flatMap(user=>user.workerData.services.flatMap(service=>service.subServices))}></RecomendationCarousel>
       </section>
       
-      <div className="w-full max-w-lg mx-auto">
+      <div className="w-full p-4 pt-10 max-w-lg mx-auto">
         <Swiper
           spaceBetween={10}
           slidesPerView={1}
@@ -250,7 +251,10 @@ export default function Home({}) {
           </h1>
         </div>
       )}
+      <section className="p-4">
+
       <ServiceList></ServiceList>
+      </section>
 
     </main>
   );

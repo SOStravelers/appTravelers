@@ -60,20 +60,20 @@ function IconCarousel({
   };
 
   return (
-    <div className="w-full max-w-2xl py-6 mx-auto">
+    <div className="w-full max-w-2xl py-12 mx-auto">
       <div className="flex items-center justify-between mb-4 px-2">
         <h2 className="text-xl font-semibold text-gray-800">Explore nossas coleções</h2>
         <a href="/collections" className="text-sm text-blue-600 hover:underline" onClick={handleViewMore}>Ver tudo</a>
       </div>
       {/* Contenedor principal del carrusel con scroll horizontal */}
  <div className="relative">
-        <div className="flex space-x-6 overflow-x-auto max-md:no-scrollbar py-4 px-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 ">
+        <div className="flex space-x-6 overflow-x-auto max-md:no-scrollbar py-12 px-8 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 ">
           {/* --- Mapeo de los íconos --- */}
           {icons.map((iconData) => (
             <div
               key={iconData.id}
               onClick={() => handleIconClick(iconData)}
-              className={`flex flex-col items-center justify-center flex-shrink-0 w-24 h-28 shadow-[0px_11px_20px_5px_#00000024] p-4  rounded-lg transition-colors duration-200 ease-in-out ${
+              className={`flex flex-col items-center justify-center flex-shrink-0 w-24 h-28 shadow-[0px_11px_20px_5px_#00000015] p-4  rounded-lg transition-colors duration-200 ease-in-out ${
                 onIconClick
                   ? 'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700'
                   : ''
@@ -94,15 +94,7 @@ function IconCarousel({
           {/* --- Fin Mapeo de íconos --- */}
 
           {/* --- Elemento "Ver más" (como último item del scroll) --- */}
-          <a
-            href={viewMoreLink}
-            onClick={handleViewMore}
-            className="flex flex-col items-center justify-center flex-shrink-0 w-24 h-24 p-3 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-200 ease-in-out"
-            aria-label="Ver más categorías"          
-          >
-            <MdArrowForward size={32} />
-            <span className="text-xs text-center mt-2">Ver más</span>
-          </a>
+          
          
          
         </div>

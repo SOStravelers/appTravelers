@@ -313,8 +313,8 @@ const SyncCarousel = ({ items = DEFAULT_ITEMS }) => {
                   likes.includes(index) ? 'text-red-500' : 'text-gray-500 hover:text-red-400'
                 }`}
               >
-                {/* {likes.includes(index) ? '❤️' : '♡'} */}
-                {likes.includes(index) ? <MdFavorite color='tomato' /> : <MdFavoriteBorder /> }
+                
+                {likes.includes(index) ? <MdFavorite color='tomato' /> : <  MdFavoriteBorder /> }
               </button>
             </article>
           ))}

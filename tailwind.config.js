@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const defaultColors = require("tailwindcss/colors");
+
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,6 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // tus colores custom, con nombres únicos para no borrar la paleta por defecto
         lightBlue: "#5B78C7",
         darkBlue: "#001C25",
         blueBorder: "#00A0D5",
@@ -18,17 +21,27 @@ module.exports = {
         blackButton: "#001C25",
         transparentBlue: "rgba(91, 120, 199, 0.21)",
         blackText: "#2e2e2e",
-        white: "#FFFFFF",
-        black: "#000000",
-        grey: "#4e4e4e",
-        lightGrey: "#D9D9D9",
-        greyText: "rgba(0, 0, 0, 0.44)",
-        red: "rgb(239 68 68)",
-        green: "rgba(0, 160, 6, 0.77)",
+        softWhite: "#fefefe",
         greyButton: "#ECEEEF",
         fb: "#3b5998",
         google: "#eee",
-        softWhite: "#fefefe",
+
+        // renombrados para no pisar `red` ni `green`
+        brandRed: "rgb(239 68 68)",
+        brandGreen: "rgba(0, 160, 6, 0.77)",
+
+        // si quieres un gris custom, renómbralo también
+        customGrey: "#4e4e4e",
+
+        // si realmente quieres redefinir `white` y `black`, puedes:
+        white: defaultColors.white,
+        black: defaultColors.black,
+        // el gris claro
+        lightGrey: "#D9D9D9",
+        greyText: "rgba(0, 0, 0, 0.44)",
+
+        // y aprovechar el resto de la paleta por defecto:
+        ...defaultColors,
       },
       transitionProperty: {
         height: "height",
@@ -50,6 +63,5 @@ module.exports = {
       },
     },
   },
-  variants: {},
   plugins: [],
 };

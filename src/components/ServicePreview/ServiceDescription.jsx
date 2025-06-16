@@ -46,7 +46,9 @@ const ServiceDescription = ({ description }) => {
           onClick={toggleExpand}
           className="text-blueBorder hover:underline mt-2 font-bold focus:outline-none"
         >
-          {expanded ? "Mostrar menos ▲" : "Mostrar más ▼"}
+          {expanded
+            ? languageData.serviceDescription.button.showLess[language] + " ▲"
+            : languageData.serviceDescription.button.showMore[language] + " ▼"}
         </button>
       )}
     </div>

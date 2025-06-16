@@ -125,12 +125,23 @@ const ServicePreviewPage = () => {
   return (
     <div className="mx-auto p-4 md:pl-[240px] py-[60px] ">
       {/* Video full-width */}
-      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden mb-8">
-        <VideoScreen
-          currentVideo={subService.videoUrl}
-          idService={idSubservice}
-        />
-      </div>
+      {(subService.videoUrl || subService.imgUrl) && (
+        <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden mb-2">
+          {subService.videoUrl ? (
+            <VideoScreen
+              currentVideo={subService.videoUrl}
+              idService={idSubservice}
+            />
+          ) : (
+            <img
+              src={subService.imgUrl}
+              alt={subService.id}
+              className="w-full h-64 object-cover mb-2 rounded-lg cursor-pointer"
+              onClick={() => openCarousel(0)}
+            />
+          )}
+        </div>
+      )}
 
       <div
         className="
@@ -151,8 +162,8 @@ const ServicePreviewPage = () => {
           <ServiceInfo service={subService} />
           <ServiceDescription description={subService.details} />
           <InclusionsExclusions
-            inclusions={placeholderInclusions}
-            exclusions={placeholderExclusions}
+            inclusions={subService.includedList}
+            exclusions={subService.restrictions}
           />
 
           <Gallery

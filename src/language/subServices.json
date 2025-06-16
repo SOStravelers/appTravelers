@@ -84,6 +84,42 @@
       "fr": "Description du service",
       "de": "Beschreibung der Dienstleistung",
       "pt": "Descrição do serviço"
+    },
+    "button": {
+      "showMore": {
+        "es": "Mostrar más",
+        "en": "Show more",
+        "fr": "Afficher plus",
+        "de": "Mehr sehen",
+        "pt": "Mostrar mais"
+      },
+      "showLess": {
+        "es": "Mostrar menos",
+        "en": "Show less",
+        "fr": "Afficher moins",
+        "de": "Weniger sehen",
+        "pt": "Mostrar menos"
+      }
+    }
+  },
+  "inclusionsList": {
+    "inclusions": {
+      "title": {
+        "es": "Qué incluye",
+        "en": "What includes",
+        "fr": "Que comprend",
+        "de": "Was beinhaltet",
+        "pt": "O que inclui"
+      }
+    },
+    "exclusions": {
+      "title": {
+        "es": "No apto para",
+        "en": "Not suitable for",
+        "fr": "Ne convient pas à",
+        "de": "Nicht geeignet für",
+        "pt": "Não é indicado para"
+      }
     }
   }
 }

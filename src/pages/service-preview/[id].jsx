@@ -123,7 +123,7 @@ const ServicePreviewPage = () => {
   };
 
   return (
-    <div className="mx-auto p-4 md:pl-[240px] py-[60px]">
+    <div className="mx-auto p-4 md:pl-[240px] py-[60px] ">
       {/* Video full-width */}
       <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden mb-8">
         <VideoScreen
@@ -132,7 +132,17 @@ const ServicePreviewPage = () => {
         />
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8 pb-1 px-2 md:p-8">
+      <div
+        className="
+    flex flex-col lg:flex-row gap-8
+    w-full max-w-lg
+    pb-1 px-2 md:p-8
+    border-b-12 border-gray-400
+    bg-softWhite
+    rounded-xl
+    shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]
+  "
+      >
         <div className="flex-1">
           <ServiceHeader
             service={subService}
@@ -155,7 +165,6 @@ const ServicePreviewPage = () => {
           <PointsOfInterestList
             pointsOfInterest={placeholderService.highlightedPoints}
           />
-          <RecomendationCarousel />
 
           <div className="my-20" />
 
@@ -167,6 +176,10 @@ const ServicePreviewPage = () => {
             onAction={() => router.push(`/booking/${idSubservice}`)}
           />
         </div>
+      </div>
+
+      <div>
+        <RecomendationCarousel />
       </div>
 
       {isCarouselOpen && media.length > 0 && (

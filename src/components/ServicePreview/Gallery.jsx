@@ -33,7 +33,9 @@ const Gallery = ({
     <div className="gallery-container mt-8">
       <h3 className="text-lg font-semibold mb-4">Gallery</h3>
       {visible.length > 0 ? (
-        <div className={`grid ${gridClasses} gap-2 rounded-lg overflow-hidden`}>
+        <div
+          className={`grid ${gridClasses} gap-2 rounded-lg overflow-hidden mx-auto max-w-xl`}
+        >
           {visible.map((item, i) => (
             <div
               key={i}

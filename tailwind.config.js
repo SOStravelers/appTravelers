@@ -28,6 +28,7 @@ module.exports = {
         greyButton: "#ECEEEF",
         fb: "#3b5998",
         google: "#eee",
+        softWhite: "#fefefe",
       },
       transitionProperty: {
         height: "height",

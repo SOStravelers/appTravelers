@@ -11,7 +11,7 @@ const ServiceDescription = ({ description }) => {
 
   const plainText = detailsHtml.replace(/<[^>]+>/g, " ").trim();
   const words = plainText.split(/\s+/).filter(Boolean);
-  const descriptionLimit = 100;
+  const descriptionLimit = 50;
   const shouldShowButton = words.length > descriptionLimit;
   const previewText = words.slice(0, descriptionLimit).join(" ") + "…";
 
@@ -40,7 +40,7 @@ const ServiceDescription = ({ description }) => {
       {shouldShowButton && (
         <button
           onClick={() => setExpanded((e) => !e)}
-          className="text-blue-600 hover:underline mt-2 font-semibold focus:outline-none"
+          className="text-blueBorder hover:underline mt-2 font-bold focus:outline-none"
         >
           {expanded ? "Mostrar menos" : "Mostrar más"}
         </button>

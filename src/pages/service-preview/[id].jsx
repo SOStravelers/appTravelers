@@ -11,6 +11,7 @@ import PointsOfInterestList from "@/components/ServicePreview/PointsOfInterestLi
 import Gallery from "@/components/ServicePreview/Gallery";
 import FullScreenCarousel from "@/components/ServicePreview/FullScreenCarousel";
 import InclusionsExclusions from "@/components/ServicePreview/InclusionsExclusions";
+import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import ServiceList from "@/components/service/ServiceList"; // Imported but not used
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 
@@ -164,7 +165,6 @@ const ServicePreviewPage = () => {
             inclusions={placeholderInclusions}
             exclusions={placeholderExclusions}
           />
-          <PointsOfInterestList pointsOfInterest={service.highlightedPoints} />
 
           {/* Pass openCarousel to Gallery so it can open at a specific index */}
           <Gallery
@@ -173,9 +173,24 @@ const ServicePreviewPage = () => {
             onViewAllClick={() => openCarousel(0)}
           />
 
+          <PointsOfInterestList pointsOfInterest={service.highlightedPoints} />
+
           {/* Add other sections like what's included, what to bring, etc. */}
           <RecomendationCarousel />
-          <ServiceList></ServiceList>
+          {/* <ServiceList></ServiceList> */}
+
+          <div className="my-20"></div>
+
+          <BookingPopup
+            priceLabel={`Desde R$${subService.price?.category1 || "–"}`}
+            subtext="por viajero"
+            tagLine="Cancelación gratuita"
+            buttonText="Revisa las fechas"
+            onAction={() => {
+              // navegar al calendario o abrir modal de fechas
+              router.push(`/booking/${idSubservice}`);
+            }}
+          />
         </div>
 
         {/* Sidebar (Optional - you can add this if needed) */}

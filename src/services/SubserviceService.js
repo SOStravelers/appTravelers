@@ -26,7 +26,7 @@ export default class SubserviceService {
     );
   }
   static async getById(id) {
-    return axios.get(`${this.baseUrl}/get/${id}`);
+    return axios.get(`${this.baseUrl}/byId/${id}`);
   }
   static async getWithVideos() {
     return axios.get(`${this.baseUrl}/get/withVideos`);

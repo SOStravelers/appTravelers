@@ -7,7 +7,8 @@ const InclusionsExclusions = ({ inclusions = [], exclusions = [] }) => {
         <ul>
           {inclusions.map((item, index) => (
             <li key={index} className="flex items-center mb-2">
-              <span className="mr-2 text-green-500">&#10004;</span> {/* Checkmark icon */}
+              <span className="mr-2 text-green-500">&#10004;</span>{" "}
+              {/* Checkmark icon */}
               <span>{item.text}</span>
             </li>
           ))}
@@ -20,7 +21,8 @@ const InclusionsExclusions = ({ inclusions = [], exclusions = [] }) => {
         <ul>
           {exclusions.map((item, index) => (
             <li key={index} className="flex items-center mb-2">
-              <span className="mr-2 text-red-500">&#10006;</span> {/* Cross icon */}
+              <span className="mr-2 text-red-500">&#10006;</span>{" "}
+              {/* Cross icon */}
               <span>{item.text}</span>
             </li>
           ))}

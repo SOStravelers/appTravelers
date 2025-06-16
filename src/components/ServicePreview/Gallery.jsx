@@ -1,21 +1,17 @@
 // components/ServicePreview/Gallery.jsx
 import React from "react";
 import { MdCollections } from "react-icons/md";
+import { useStore } from "@/store";
+import languageData from "@/language/subServices.json";
 
-/**
- * Gallery
- * Props:
- * - images: string[]
- * - videos: string[]
- * - onImageClick: (index: number) => void
- * - onViewAllClick: () => void
- */
 const Gallery = ({
   images = [],
   videos = [],
   onImageClick,
   onViewAllClick,
 }) => {
+  const store = useStore();
+  const { language } = store;
   const media = [
     ...images.map((url) => ({ url, type: "image" })),
     ...videos.map((url) => ({ url, type: "video" })),
@@ -31,7 +27,9 @@ const Gallery = ({
 
   return (
     <div className="gallery-container mt-8">
-      <h3 className="text-lg font-semibold mb-4">Gallery</h3>
+      <h3 className="text-lg font-semibold mb-4">
+        {languageData.gallery.title[language]}
+      </h3>
       {visible.length > 0 ? (
         <div
           className={`grid ${gridClasses} gap-2 rounded-lg overflow-hidden mx-auto max-w-xl`}

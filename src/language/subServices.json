@@ -143,5 +143,44 @@
       "de": "Was wir in diesem Tour sehen werden",
       "pt": "O que veremos neste passeio"
     }
+  },
+  "gallery": {
+    "title": {
+      "es": "Galería",
+      "en": "Gallery",
+      "fr": "Galerie",
+      "de": "Galerie",
+      "pt": "Galeria"
+    }
+  },
+  "bookingButton": {
+    "title": {
+      "es": "Desde",
+      "en": "From",
+      "fr": "De",
+      "de": "Von",
+      "pt": "De"
+    },
+    "subtitle": {
+      "es": "por viajero",
+      "en": "per person",
+      "fr": "par personne",
+      "de": "pro Person",
+      "pt": "por pessoa"
+    },
+    "cancel": {
+      "es": "Cancelación gratuita",
+      "en": "Free cancellation",
+      "fr": "Annulation gratuite",
+      "de": "Kostenlos stornieren",
+      "pt": "Cancelamento gratuito"
+    },
+    "goDates": {
+      "es": "Mostrar fechas",
+      "en": "Show dates",
+      "fr": "Afficher les dates",
+      "de": "Zeige Datum",
+      "pt": "Mostrar datas"
+    }
   }
 }

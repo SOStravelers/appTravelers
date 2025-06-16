@@ -1,43 +1,77 @@
-import { useState } from 'react';
+// components/ServicePreview/Gallery.jsx
+import React from "react";
+import { MdCollections } from "react-icons/md";
 
-const Gallery = ({ images = [], onViewAllClick }) => {
-  const visibleImages = images.slice(0, 4);
-  // Removed isCarouselOpen state as it's handled by the parent page
-
-  // Function to determine the grid layout based on the number of visible images
-  const getGridLayout = () => {
-    if (visibleImages.length === 1) return 'grid-cols-1';
-    if (visibleImages.length === 2) return 'grid-cols-2';
-    return 'grid-cols-2 grid-rows-2'; // Default for 3 or 4 images
-  };
+/**
+ * Gallery
+ * Props:
+ * - images: string[]
+ * - videos: string[]
+ * - onImageClick: (index: number) => void
+ * - onViewAllClick: () => void
+ */
+const Gallery = ({
+  images = [],
+  videos = [],
+  onImageClick,
+  onViewAllClick,
+}) => {
+  const media = [
+    ...images.map((url) => ({ url, type: "image" })),
+    ...videos.map((url) => ({ url, type: "video" })),
+  ];
+  const visible = media.slice(0, 4);
+  const extraCount = media.length - visible.length;
+  const gridClasses =
+    visible.length === 1
+      ? "grid-cols-1"
+      : visible.length === 2
+      ? "grid-cols-2"
+      : "grid-cols-2 grid-rows-2";
 
   return (
     <div className="gallery-container mt-8">
       <h3 className="text-lg font-semibold mb-4">Gallery</h3>
-      {images.length > 0 ? (
-        <>
-          <div className={`grid ${getGridLayout()} gap-2 rounded-lg overflow-hidden`}>
-            {visibleImages.map((imageUrl, index) => (
-              <div key={index} className="relative w-full h-40 overflow-hidden rounded-lg">
+      {visible.length > 0 ? (
+        <div className={`grid ${gridClasses} gap-2 rounded-lg overflow-hidden`}>
+          {visible.map((item, i) => (
+            <div
+              key={i}
+              className="relative w-full h-40 rounded-lg overflow-hidden cursor-pointer"
+              onClick={() =>
+                i === 3 && extraCount > 0 ? onViewAllClick() : onImageClick(i)
+              }
+            >
+              {item.type === "video" ? (
+                <video
+                  src={item.url}
+                  className="w-full h-full object-cover"
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                />
+              ) : (
                 <img
-                  src={imageUrl} // No click handler on individual images in the grid
-                  alt={`Gallery image ${index + 1}`}
+                  src={item.url}
+                  alt={`Media ${i + 1}`}
                   className="w-full h-full object-cover"
                 />
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 text-center">
-            <button
-              className="text-blue-600 font-semibold border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100 transition-colors"
-              onClick={onViewAllClick}
-            >
-              Ver las {images.length} fotos
-            </button>
-          </div>
-        </>
+              )}
+
+              {i === 3 && extraCount > 0 && (
+                <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                  <MdCollections className="text-white text-3xl" />
+                  <span className="absolute bottom-2 right-2 bg-white bg-opacity-75 text-gray-900 text-xs px-1 rounded">
+                    +{extraCount}
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       ) : (
-        <p>No images available.</p>
+        <p className="text-gray-500">No media available.</p>
       )}
     </div>
   );

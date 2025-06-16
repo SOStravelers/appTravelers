@@ -1,3 +1,4 @@
+// pages/ServicePreviewPage.jsx
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
@@ -13,9 +14,9 @@ import FullScreenCarousel from "@/components/ServicePreview/FullScreenCarousel";
 import VideoScreen from "@/components/ServicePreview/VideoScreen";
 import InclusionsExclusions from "@/components/ServicePreview/InclusionsExclusions";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
-import ServiceList from "@/components/service/ServiceList"; // Imported but not used
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 
+// Placeholder Data (replace with actual data fetching later)
 // Placeholder Data (replace with actual data fetching later)
 const placeholderService = {
   id: "1",
@@ -48,17 +49,23 @@ const placeholderService = {
       details: null,
     },
   ],
-  images: [
-    "https://media.istockphoto.com/id/143918363/es/foto/pie-alto.jpg?s=612x612&w=0&k=20&c=RChPH41W9XygEkKgOo9rYxN_qV13YF4q6oiSGM94MWs=",
-    "https://cdn.pixabay.com/photo/2017/07/07/18/10/island-2482200_1280.jpg",
-    "https://media.istockphoto.com/id/1368808461/es/foto/mujer-joven-alimentando-peces-en-playa-tropical.jpg?s=612x612&w=0&k=20&c=9sQY6faWPAaN_XMXF3qlsqzDm9S5NY64XFvHGTtJKxE=",
-    "https://cdn.pixabay.com/photo/2017/07/07/18/10/island-2482200_1280.jpg",
-    "https://media.istockphoto.com/id/143918363/es/foto/pie-alto.jpg?s=612x612&w=0&k=20&c=RChPH41W9XygEkKgOo9rYxN_qV13YF4q6oiSGM94MWs=",
-    "https://cdn.pixabay.com/photo/2017/07/07/18/10/island-2482200_1280.jpg",
-    "https://media.istockphoto.com/id/143918363/es/foto/pie-alto.jpg?s=612x612&w=0&k=20&c=RChPH41W9XygEkKgOo9rXyN_qV13YF4q6oiSGM94MWs=",
-    "https://cdn.pixabay.com/photo/2017/07/07/18/10/island-2482200_1280.jpg",
-    "https://media.istockphoto.com/id/143918363/es/foto/pie-alto.jpg?s=612x612&w=0&k=20&c=RChPH41W9XygEkKgOo9rYxN_qV13YF4q6oiSGM94MWs=",
-  ],
+
+  gallery: {
+    images: [
+      "https://media.istockphoto.com/id/143918363/es/foto/pie-alto.jpg?s=612x612&w=0&k=20&c=RChPH41W9XygEkKgOo9rYxN_qV13YF4q6oiSGM94MWs=",
+      "https://cdn.pixabay.com/photo/2017/07/07/18/10/island-2482200_1280.jpg",
+      "https://media.istockphoto.com/id/1368808461/es/foto/mujer-joven-alimentando-peces-en-playa-tropical.jpg?s=612x612&w=0&k=20&c=9sQY6faWPAaN_XMXF3qlsqzDm9S5NY64XFvHGTtJKxE=",
+      "https://cdn.pixabay.com/photo/2017/07/07/18/10/island-2482200_1280.jpg",
+      "https://media.istockphoto.com/id/143918363/es/foto/pie-alto.jpg?s=612x612&w=0&k=20&c=RChPH41W9XygEkKgOo9rYxN_qV13YF4q6oiSGM94MWs=",
+      "https://cdn.pixabay.com/photo/2017/07/07/18/10/island-2482200_1280.jpg",
+      "https://media.istockphoto.com/id/143918363/es/foto/pie-alto.jpg?s=612x612&w=0&k=20&c=RChPH41W9XygEkKgOo9rXyN_qV13YF4q6oiSGM94MWs=",
+      "https://cdn.pixabay.com/photo/2017/07/07/18/10/island-2482200_1280.jpg",
+      "https://media.istockphoto.com/id/143918363/es/foto/pie-alto.jpg?s=612x612&w=0&k=20&c=RChPH41W9XygEkKgOo9rYxN_qV13YF4q6oiSGM94MWs=",
+    ],
+    videos: [
+      "https://sosappfiles.s3.us-east-1.amazonaws.com/test+videos/Trilha+Dois+Irma%CC%83os+-+Vidigal+%F0%9F%87%A7%F0%9F%87%B7+Ao+chegar+no+Vidigal%2C+pegar+moto+ta%CC%81xi+para+trilha+(7%2C00).+A+subida+tem+um+custo+de+10%2C00+e+durou+em+me%CC%81dio+50-70+min+que+compensaram+muito+com+uma+vista+360%C2%B0+da+cidade+maravilhosa!+%23trilha+%23vidigal+%23.mp4",
+    ],
+  },
 };
 
 // Placeholder data for inclusions and exclusions
@@ -83,94 +90,53 @@ const placeholderExclusions = [
 ];
 
 const ServicePreviewPage = () => {
-  const { query, isReady } = useRouter();
-  const { id } = query;
+  const router = useRouter();
+  const { id } = router.query;
   const idSubservice = id;
-  const [services, setServices] = useState([]);
   const [subService, setSubservice] = useState({});
+  const [isCarouselOpen, setIsCarouselOpen] = useState(false);
+  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
-  const getData = async () => {
-    // ServiceService.list({ isActive: true, page: 1 }).then((response) => {
-    //   setServices(response.data.docs);
-    //   console.log("get data action!!! yupiiii", services);
-    // });
-  };
-
-  useEffect(() => {
-    if (!services || Object.keys(services).length == 0) {
-      getData();
-      console.log("here we go!!", services);
-    }
-  }, []);
-
+  // Fetch dinámico de subservice
   useEffect(() => {
     if (!idSubservice) return;
-
-    const fetchItems = async () => {
-      try {
-        const { data } = await SubserviceService.getById(idSubservice);
-        if (data != null && typeof data === "object" && !Array.isArray(data)) {
-          setSubservice(data);
-        } else {
-          console.warn("La respuesta no es un Object:", data);
-        }
-      } catch (error) {
-        console.error("Error al obtener subServicio", error);
-      }
-    };
-
-    fetchItems();
+    SubserviceService.getById(idSubservice)
+      .then(({ data }) => {
+        if (data && typeof data === "object") setSubservice(data);
+      })
+      .catch(console.error);
   }, [idSubservice]);
 
-  const [isCarouselOpen, setIsCarouselOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // State to track which image was clicked/should be shown first
+  // Media combinada para FullScreenCarousel
+  const images = placeholderService.gallery.images;
+  const videos = placeholderService.gallery.videos;
+  const media = [
+    ...images.map((url) => ({ url, type: "image" })),
+    ...videos.map((url) => ({ url, type: "video" })),
+  ];
 
-  // In a real application, you would fetch service data based on 'id' here
-  const service = placeholderService; // Using placeholder data for now
-
-  if (!service) {
-    // Consider adding a proper loading spinner or error message
-    return <div>Loading or Service not found...</div>;
-  }
-
-  // Function to open carousel from a specific image index
-  const openCarousel = (index = 0) => {
-    setCurrentImageIndex(index);
+  const openCarousel = (idx = 0) => {
+    console.log("hola");
+    setCurrentMediaIndex(idx);
     setIsCarouselOpen(true);
+    console.log("vamos", isCarouselOpen && media.length > 0);
   };
 
   return (
     <div className="mx-auto p-4 md:pl-[240px] py-[60px]">
-      {/* Video full-width, ignorando el padding del contenedor */}
-      <div
-        className="
-        relative
-        left-1/2 right-1/2
-        w-screen
-        -translate-x-1/2
-        overflow-hidden
-        mb-8
-      "
-      >
-        <VideoScreen currentVideo={subService.videoUrl} idService="12345" />
+      {/* Video full-width */}
+      <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden mb-8">
+        <VideoScreen
+          currentVideo={subService.videoUrl}
+          idService={idSubservice}
+        />
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8 pb-1 px-2 md:p-8">
-        {/* Main Content Area */}
         <div className="flex-1">
-          {/* Main service image */}
-          {/* {service.images && service.images.length > 0 && (
-            <img
-              src={service.images[0]}
-              alt={service.title}
-              className="w-full h-64 object-cover mb-8 rounded-lg cursor-pointer"
-              onClick={() => openCarousel(0)}
-            />
-          )} */}
-
           <ServiceHeader
             service={subService}
-            serviceType={subService?.service?.name}
+            serviceType={subService.service?.name}
           />
           <ServiceInfo service={subService} />
           <ServiceDescription description={subService.details} />
@@ -180,16 +146,18 @@ const ServicePreviewPage = () => {
           />
 
           <Gallery
-            images={service.images}
-            onImageClick={(index) => openCarousel(index)}
+            images={images}
+            videos={videos}
+            onImageClick={(idx) => openCarousel(idx)}
             onViewAllClick={() => openCarousel(0)}
           />
 
-          <PointsOfInterestList pointsOfInterest={service.highlightedPoints} />
-
+          <PointsOfInterestList
+            pointsOfInterest={placeholderService.highlightedPoints}
+          />
           <RecomendationCarousel />
 
-          <div className="my-20"></div>
+          <div className="my-20" />
 
           <BookingPopup
             priceLabel={`Desde R$${subService.price?.category1 || "–"}`}
@@ -201,10 +169,10 @@ const ServicePreviewPage = () => {
         </div>
       </div>
 
-      {isCarouselOpen && service.images && service.images.length > 0 && (
+      {isCarouselOpen && media.length > 0 && (
         <FullScreenCarousel
-          images={service.images}
-          initialIndex={currentImageIndex}
+          media={media}
+          initialIndex={currentMediaIndex}
           onClose={() => setIsCarouselOpen(false)}
         />
       )}

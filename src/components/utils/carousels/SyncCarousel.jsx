@@ -7,7 +7,7 @@ import {
 } from "react-icons/md";
 import SubserviceService from "@/services/SubserviceService";
 import { useStore } from "@/store";
-
+import { useRouter } from "next/router";
 const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
   useEffect(() => {
     const video = videoRef.current;
@@ -81,6 +81,8 @@ const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
 };
 
 const SyncCarousel = () => {
+  const router = useRouter();
+
   const { language } = useStore();
   const videoRef = useRef(null);
   const [items, setItems] = useState([]);
@@ -232,6 +234,7 @@ const SyncCarousel = () => {
           {items.map((item, i) => (
             <article
               key={i}
+              onClick={() => router.push(`/service-preview/${item._id}`)}
               ref={(el) => (cardsRef.current[i] = el)}
               className="flex-shrink-0 relative w-[300px] max-w-[400px] bg-white/95 backdrop-blur-sm rounded-xl p-2 mx-2 shadow-lg flex gap-4 hover:scale-105 transition-transform duration-150 cursor-pointer"
             >

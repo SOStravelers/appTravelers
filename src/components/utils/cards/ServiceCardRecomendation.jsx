@@ -4,7 +4,7 @@ import { MdFavorite } from "react-icons/md";
 import languageData from "@/language/subServices.json";
 import { useStore } from "@/store";
 
-const ServiceCardRecomendation = ({ service }) => {
+const ServiceCardRecomendation = ({ service, onClick }) => {
   const store = useStore();
   const { language } = store;
   const { imgUrl, name, rate, rateNumber, duration, price, isFavorite } =
@@ -14,7 +14,10 @@ const ServiceCardRecomendation = ({ service }) => {
     return null;
   }
   return (
-    <div className="bg-white rounded-lg shadow-md w-[250px] min-w-[250px] relative">
+    <div
+      onClick={onClick}
+      className="bg-white rounded-lg shadow-md w-[250px] min-w-[250px] relative"
+    >
       <div className="w-full h-[220px] overflow-hidden rounded-t-lg">
         <img
           className="h-full w-full object-cover"

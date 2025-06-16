@@ -8,12 +8,16 @@ const PointsOfInterestList = ({ pointsOfInterest = [] }) => {
   const { language } = store;
   return (
     <div className="points-of-interest-list mt-8">
-      <h3 className="text-lg font-semibold mb-2">
-        {languageData.pointInterest.title[language]}
-      </h3>
-      <h4 className="text-md  mb-6">
-        {languageData.pointInterest.subtitle[language]}
-      </h4>
+      {pointsOfInterest.length > 0 && (
+        <>
+          <h3 className="text-lg font-semibold mb-2">
+            {languageData.pointInterest.title[language]}
+          </h3>
+          <h4 className="text-md mb-6">
+            {languageData.pointInterest.subtitle[language]}
+          </h4>
+        </>
+      )}
 
       <div className="relative">
         {/* Línea vertical del timeline */}

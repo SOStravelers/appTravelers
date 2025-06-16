@@ -1,10 +1,12 @@
 import { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
 import SubserviceService from "@/services/SubserviceService";
 import { useStore } from "@/store";
 import languageData from "@/language/subServices.json";
 const RecomendationCarousel = (services = []) => {
   const store = useStore();
+  const router = useRouter();
   const { language } = store;
   const carouselRef = useRef(null);
   const [servicesToDisplay, setServicesToDisplay] = useState([]);
@@ -48,6 +50,7 @@ const RecomendationCarousel = (services = []) => {
       >
         {servicesToDisplay.map((service, index) => (
           <ServiceCardRecomendation
+            onClick={() => router.push(`/service-preview/${service._id}`)}
             key={service._id}
             service={service}
             index={index}

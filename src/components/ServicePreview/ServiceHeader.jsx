@@ -1,4 +1,5 @@
 import { useStore } from "@/store";
+import languageData from "@/language/subServices.json";
 const ServiceHeader = ({ service, serviceType }) => {
   const store = useStore();
   const { language } = store;
@@ -12,7 +13,7 @@ const ServiceHeader = ({ service, serviceType }) => {
   return (
     <div className="service-header mb-4">
       {serviceType && (
-        <span className="text-xs font-semibold text-gray-600 bg-gray-200 px-2 pb-1 rounded">
+        <span className="text-xs font-semibold text-gray-600 bg-gray-200 px-2 py-1 rounded">
           {serviceType[language]}
         </span>
       )}
@@ -28,7 +29,11 @@ const ServiceHeader = ({ service, serviceType }) => {
         )}
         {rateCount && <span className="ml-2">({rateCount})</span>}
         {/* You might want to add "Aceptable" or similar text based on score */}
-        {rate && rate >= 4 && <span className="ml-2">Aceptable</span>}
+        {rate && rate >= 4 && (
+          <span className="ml-2 text-green-500 font-semibold">
+            {languageData.serviceInfo.highRate[language]}
+          </span>
+        )}
       </div>
     </div>
   );

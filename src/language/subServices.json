@@ -68,7 +68,13 @@
       "de": "Dauer",
       "pt": "Duração"
     },
-
+    "highRate": {
+      "es": "Gran Valoración",
+      "en": "High Rating",
+      "fr": "Note élevée",
+      "de": "Hohe Bewertung",
+      "pt": "Nota alta"
+    },
     "languages": {
       "es": "Español, Inglés, Portugués",
       "en": "English, Spanish, Portuguese",

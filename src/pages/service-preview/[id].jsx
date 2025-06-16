@@ -10,6 +10,7 @@ import ServiceDescription from "@/components/ServicePreview/ServiceDescription";
 import PointsOfInterestList from "@/components/ServicePreview/PointsOfInterestList";
 import Gallery from "@/components/ServicePreview/Gallery";
 import FullScreenCarousel from "@/components/ServicePreview/FullScreenCarousel";
+import VideoScreen from "@/components/ServicePreview/VideoScreen";
 import InclusionsExclusions from "@/components/ServicePreview/InclusionsExclusions";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import ServiceList from "@/components/service/ServiceList"; // Imported but not used
@@ -140,24 +141,36 @@ const ServicePreviewPage = () => {
 
   return (
     <div className="mx-auto p-4 md:pl-[240px] py-[60px]">
-      <div className="flex flex-col lg:flex-row gap-8 p-2 md:p-8">
+      {/* Video full-width, ignorando el padding del contenedor */}
+      <div
+        className="
+        relative
+        left-1/2 right-1/2
+        w-screen
+        -translate-x-1/2
+        overflow-hidden
+        mb-8
+      "
+      >
+        <VideoScreen currentVideo={subService.videoUrl} idService="12345" />
+      </div>
+
+      <div className="flex flex-col lg:flex-row gap-8 pb-1 px-2 md:p-8">
         {/* Main Content Area */}
         <div className="flex-1">
           {/* Main service image */}
-          {/* Clicking the main image could also open the carousel */}
-          {service.images && service.images.length > 0 && (
+          {/* {service.images && service.images.length > 0 && (
             <img
               src={service.images[0]}
               alt={service.title}
               className="w-full h-64 object-cover mb-8 rounded-lg cursor-pointer"
-              onClick={() => openCarousel(0)} // Open carousel starting at index 0
+              onClick={() => openCarousel(0)}
             />
-          )}
+          )} */}
+
           <ServiceHeader
             service={subService}
             serviceType={subService?.service?.name}
-            // Pass openCarousel function if Header needs to trigger it (e.g., from a button)
-            // onOpenGallery={() => openCarousel(0)}
           />
           <ServiceInfo service={subService} />
           <ServiceDescription description={subService.details} />
@@ -166,7 +179,6 @@ const ServicePreviewPage = () => {
             exclusions={placeholderExclusions}
           />
 
-          {/* Pass openCarousel to Gallery so it can open at a specific index */}
           <Gallery
             images={service.images}
             onImageClick={(index) => openCarousel(index)}
@@ -175,9 +187,7 @@ const ServicePreviewPage = () => {
 
           <PointsOfInterestList pointsOfInterest={service.highlightedPoints} />
 
-          {/* Add other sections like what's included, what to bring, etc. */}
           <RecomendationCarousel />
-          {/* <ServiceList></ServiceList> */}
 
           <div className="my-20"></div>
 
@@ -186,24 +196,11 @@ const ServicePreviewPage = () => {
             subtext="por viajero"
             tagLine="Cancelación gratuita"
             buttonText="Revisa las fechas"
-            onAction={() => {
-              // navegar al calendario o abrir modal de fechas
-              router.push(`/booking/${idSubservice}`);
-            }}
+            onAction={() => router.push(`/booking/${idSubservice}`)}
           />
         </div>
-
-        {/* Sidebar (Optional - you can add this if needed) */}
-        {/* <div className="lg:w-1/3">
-          <div className="bg-gray-100 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold mb-4">Booking Information</h3>
-            // Add booking related details or a booking form here
-          </div>
-        </div> */}
       </div>
 
-      {/* Conditionally render the FullScreenCarousel outside the main content flow */}
-      {/* This should be a sibling to the main content div or placed where it can overlay */}
       {isCarouselOpen && service.images && service.images.length > 0 && (
         <FullScreenCarousel
           images={service.images}

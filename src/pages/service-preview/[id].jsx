@@ -1,10 +1,7 @@
 // pages/ServicePreviewPage.jsx
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-
-import ServiceService from "@/services/ServiceService";
 import SubserviceService from "@/services/SubserviceService";
-
 import ServiceHeader from "@/components/ServicePreview/ServiceHeader";
 import ServiceInfo from "@/components/ServicePreview/ServiceInfo";
 import ServiceDescription from "@/components/ServicePreview/ServiceDescription";
@@ -68,27 +65,6 @@ const placeholderService = {
   },
 };
 
-// Placeholder data for inclusions and exclusions
-const placeholderInclusions = [
-  { text: "Servicio de recogida y regreso al hotel.", included: true },
-  {
-    text: "Tarifas de entrada al Cristo Redentor, la catedral y el Pan de Azúcar",
-    included: true,
-  },
-  {
-    text: "Visitas externos a la escalera de Selarón, el estadio de Maracaná y el Sambódromo",
-    included: true,
-  },
-  { text: "Guía multilingüe", included: true },
-  { text: "Bebidas y postre", included: false },
-  { text: "Entrada al Maracaná y al Sambódromo", included: false },
-];
-
-const placeholderExclusions = [
-  { text: "Personas con problemas de movilidad", included: false },
-  { text: "Personas en silla de ruedas", included: false },
-];
-
 const ServicePreviewPage = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -143,17 +119,7 @@ const ServicePreviewPage = () => {
         </div>
       )}
 
-      <div
-        className="
-    flex flex-col lg:flex-row gap-8
-    w-full max-w-lg
-    pb-1 px-2 md:p-8
-    border-b-12 border-gray-400
-    bg-softWhite
-    rounded-xl
-    shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]
-  "
-      >
+      <div className="flex flex-col lg:flex-row gap-8 w-full max-w-lg pb-1 px-2 md:p-8 border-b-12 border-gray-400 bg-softWhite rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
         <div className="flex-1">
           <ServiceHeader
             service={subService}
@@ -173,9 +139,7 @@ const ServicePreviewPage = () => {
             onViewAllClick={() => openCarousel(0)}
           />
 
-          <PointsOfInterestList
-            pointsOfInterest={placeholderService.highlightedPoints}
-          />
+          <PointsOfInterestList pointsOfInterest={subService.route} />
 
           <div className="my-20" />
 
@@ -189,7 +153,7 @@ const ServicePreviewPage = () => {
         </div>
       </div>
 
-      <div>
+      <div className="mt-12 mb-20">
         <RecomendationCarousel />
       </div>
 

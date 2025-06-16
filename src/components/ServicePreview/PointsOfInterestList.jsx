@@ -1,12 +1,19 @@
 import React from "react";
 import { FaFlag } from "react-icons/fa";
 import { MdArrowForward } from "react-icons/md";
-
+import { useStore } from "@/store";
+import languageData from "@/language/subServices.json";
 const PointsOfInterestList = ({ pointsOfInterest = [] }) => {
+  const store = useStore();
+  const { language } = store;
   return (
     <div className="points-of-interest-list mt-8">
-      <h3 className="text-lg font-semibold mb-2">Puntos destacados</h3>
-      <h4 className="text-md font-semibold mb-6">¿Qué veremos en este tour?</h4>
+      <h3 className="text-lg font-semibold mb-2">
+        {languageData.pointInterest.title[language]}
+      </h3>
+      <h4 className="text-md  mb-6">
+        {languageData.pointInterest.subtitle[language]}
+      </h4>
 
       <div className="relative">
         {/* Línea vertical del timeline */}
@@ -28,13 +35,11 @@ const PointsOfInterestList = ({ pointsOfInterest = [] }) => {
 
             {/* Contenido del punto */}
             <div className="flex flex-col">
-              <p className="font-semibold text-gray-800">{point.name}</p>
-              {point.location && (
-                <p className="text-sm text-gray-600">{point.location}</p>
-              )}
-              {point.mapLink && (
+              <p className=" text-gray-800">{point.name[language]}</p>
+
+              {point.mapLocation && index === 0 && (
                 <button
-                  onClick={() => window.open(point.mapLink, "_blank")}
+                  onClick={() => window.open(point.mapLocation, "_blank")}
                   className="inline-flex items-center text-blueBorder font-semibold text-md mt-1 hover:underline focus:outline-none"
                 >
                   Ver en mapa

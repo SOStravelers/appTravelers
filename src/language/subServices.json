@@ -127,5 +127,21 @@
         "pt": "Não é indicado para"
       }
     }
+  },
+  "pointInterest": {
+    "title": {
+      "es": "Puntos de destacados",
+      "en": "Highlighted Points",
+      "fr": "Points mis en évidence",
+      "de": "Wichtige Punkte",
+      "pt": "Pontos destacados"
+    },
+    "subtitle": {
+      "es": "Qué veremos en este tour",
+      "en": "What we will see in this tour",
+      "fr": "Que nous verrons dans ce tour",
+      "de": "Was wir in diesem Tour sehen werden",
+      "pt": "O que veremos neste passeio"
+    }
   }
 }

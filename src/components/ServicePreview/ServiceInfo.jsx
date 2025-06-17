@@ -1,6 +1,6 @@
 import languageData from "@/language/subServices.json";
 import { useStore } from "@/store";
-
+import { formatTime } from "@/lib/time";
 const ServiceInfo = ({ service }) => {
   const store = useStore();
   const { language } = store;
@@ -22,12 +22,8 @@ const ServiceInfo = ({ service }) => {
           <path d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-18C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm-.5 5H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
         </svg>
         <span>
-          {languageData.serviceInfo.duration[language]}:{" "}
-          {service.duration > 120
-            ? `${(service.duration / 60).toFixed(1)} hr${
-                service.duration >= 180 ? "s" : ""
-              }`
-            : `${service.duration} min`}{" "}
+          {languageData.serviceInfo.duration[language]}:
+          {formatTime(service.duration)}
         </span>
       </div>
       <div className="flex items-center text-gray-700 text-sm">

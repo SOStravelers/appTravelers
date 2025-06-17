@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { formatTime } from "@/lib/time";
 import {
   MdFavoriteBorder,
   MdFavorite,
@@ -246,11 +247,7 @@ const SyncCarousel = () => {
               <div className="flex-1 min-w-0">
                 <p className="text-sm pt-2 text-gray-600 truncate">
                   <span className="text-red-500">★</span> {item.rate} ·{" "}
-                  {item.duration > 120
-                    ? `${(item.duration / 60).toFixed(1)} hr${
-                        item.duration >= 180 ? "s" : ""
-                      }`
-                    : `${item.duration} min`}
+                  {formatTime(item.duration)}
                 </p>
                 <h3 className="text-sm pt-1 text-black">
                   {item.name[language]}

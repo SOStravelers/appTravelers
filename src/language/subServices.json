@@ -15,11 +15,11 @@
   },
   "index": {
     "explore": {
-      "pt": "Explore nossas coleções",
-      "en": "Explore our collections",
-      "es": "Explora nuestras colecciones",
-      "fr": "Explorez nos collections",
-      "de": "Erkunden Sie unsere Sammlungen"
+      "pt": "Explore ",
+      "en": "Explore ",
+      "es": "Explora ",
+      "fr": "Explorez ",
+      "de": "Erkunden"
     },
     "recommended": {
       "de": "Empfohlen für dich,",

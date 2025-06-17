@@ -25,6 +25,14 @@ export default class SubserviceService {
       `${this.baseUrl}/data/byWorker/?user=${data.user}&subservice=${data.subservice}&onlySubservice=${onlySubservice}`
     );
   }
+  static async getAll(data) {
+    const page = data.page;
+    const limit = data.limit;
+    console.log("se viene", data);
+    return axios.get(
+      `${this.baseUrl}/getAll/paginate?page=${page}&limit=${limit}`
+    );
+  }
   static async getById(id) {
     return axios.get(`${this.baseUrl}/byId/${id}`);
   }

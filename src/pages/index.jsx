@@ -115,11 +115,9 @@ export default function Home({}) {
     try {
       const response = await UserService.getRandom();
       setRandomUsers(response.data);
-      console.log("la data 1", response.data);
 
       const response2 = await UserService.getWorkers();
       setWorkers(response2.data);
-      console.log("la data 2", workers);
     } catch (error) {
       console.log(error);
     } finally {
@@ -167,7 +165,7 @@ export default function Home({}) {
       </div>
       {process.env.NEXT_PUBLIC_NODE_ENV != "productionsss" ? (
         <>
-          <section>
+          {/* <section>
             <h1
               className={`text-black text-xl font-semibold mb-3 ${mazzard.className}`}
             >
@@ -184,8 +182,9 @@ export default function Home({}) {
                 />
               ))}
             </div>
-          </section>
-          <section className="mb-1">
+          </section> */}
+
+          {/* <section className="mb-1">
             <h1
               className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
             >
@@ -208,9 +207,9 @@ export default function Home({}) {
                 ))}
               </div>
             )}
-          </section>
+          </section> */}
 
-          {workers?.length > 0 && (
+          {/* {workers?.length > 0 && (
             <section>
               <h1
                 className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
@@ -236,7 +235,7 @@ export default function Home({}) {
                 </div>
               )}
             </section>
-          )}
+          )} */}
         </>
       ) : (
         <div className="flex flex-col justify-center max-w-lg  align-items">

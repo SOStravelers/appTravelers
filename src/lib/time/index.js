@@ -63,3 +63,10 @@ export const horaEnRango = (hora) => {
     return false;
   }
 };
+
+//convierte minutos a horas
+export const formatTime = (duration) => {
+  return duration > 120
+    ? `${(duration / 60).toFixed(1)} hr${duration >= 180 ? "s" : ""}`
+    : `${duration} min`;
+};

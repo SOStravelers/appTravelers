@@ -10,6 +10,7 @@ import OutlinedInputPhone from "@/components/utils/inputs/OutlinedInputPhone";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import Image from "next/image";
+import { formatTime } from "@/lib/time";
 import {
   ClockIcon,
   MailIcon,
@@ -422,11 +423,7 @@ export default function Summary() {
           {languageData.durationService[language]}
         </p>
         <p className="text-blackBlue font-semibold text-md">
-          {service?.duration > 120
-            ? `${(service?.duration / 60).toFixed(1)} hr${
-                service?.duration >= 180 ? "s" : ""
-              }`
-            : `${service?.duration} min`}
+          {formatTime(service.duration)}
         </p>
       </div>
       <div className="flex justify-between items-end w-full max-w-lg my-1">

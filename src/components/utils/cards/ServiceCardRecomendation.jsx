@@ -3,7 +3,7 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
 import languageData from "@/language/subServices.json";
 import { useStore } from "@/store";
-
+import { formatTime } from "@/lib/time";
 const ServiceCardRecomendation = ({ service, onClick }) => {
   const store = useStore();
   const { language } = store;
@@ -56,12 +56,7 @@ const ServiceCardRecomendation = ({ service, onClick }) => {
           )}
         </button>
         <div className="flex justify-between items-start flex-col mt-2">
-          <span className="text-sm text-gray-600">
-            {" "}
-            {duration > 120
-              ? `${(duration / 60).toFixed(1)} hr${duration >= 180 ? "s" : ""}`
-              : `${duration} min`}{" "}
-          </span>
+          <span className="text-sm text-gray-600">{formatTime(duration)}</span>
           <span className="text-sm font-medium text-gray-800">
             {languageData.card.textPrice1[language]} R${price.category1}{" "}
             {languageData.card.textPrice2[language]}

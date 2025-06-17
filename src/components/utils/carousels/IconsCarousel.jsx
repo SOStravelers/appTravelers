@@ -50,7 +50,7 @@ function IconCarousel({
 
   return (
     <div className="w-full mt-5">
-      <div className="flex items-center justify-between mb-4 px-4">
+      <div className="flex items-center justify-between mt-1 px-4">
         <h2 className="text-xl font-semibold text-gray-800">
           {languageData.index.explore[language]}
         </h2>
@@ -71,7 +71,7 @@ function IconCarousel({
           scrollbarWidth: "auto",
         }}
       >
-        <div className="flex py-4 px-2 w-max mx-auto">
+        <div className="flex py-2 px-2 w-max mx-auto">
           {icons.map((iconData, index) => (
             <div
               key={iconData.id}

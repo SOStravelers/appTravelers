@@ -257,7 +257,10 @@ const SyncCarousel = () => {
                 </p>
               </div>
               <button
-                onClick={() => handleLike(i)}
+                onClick={(e) => {
+                  e.stopPropagation(); // ⚠️ evita que el click suba al article
+                  handleLike(i);
+                }}
                 className={`absolute top-1 right-1 text-2xl transition-colors ${
                   likes.includes(i)
                     ? "text-red-500"

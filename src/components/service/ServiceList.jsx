@@ -46,9 +46,11 @@ const ServiceList = () => {
       <h2 className="text-2xl font-semibold mb-6">All experiences</h2>
 
       {items.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full px-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 w-full ">
           {items.map((service) => (
-            <ServiceCard key={service._id} service={service} />
+            <div key={service._id} className="w-full">
+              <ServiceCard service={service} />
+            </div>
           ))}
         </div>
       ) : (

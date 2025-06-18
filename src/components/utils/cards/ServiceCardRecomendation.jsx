@@ -1,53 +1,63 @@
+// ServiceCardRecomendation.jsx
 import { useState } from "react";
-import { MdFavoriteBorder } from "react-icons/md";
-import { MdFavorite } from "react-icons/md";
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import languageData from "@/language/subServices.json";
 import { useStore } from "@/store";
 import { formatTime } from "@/lib/time";
-const ServiceCardRecomendation = ({ service, onClick }) => {
+
+const ServiceCardRecomendation = ({ service, onClick, index }) => {
   const store = useStore();
   const { language } = store;
   const { imgUrl, name, rate, rateNumber, duration, price, isFavorite } =
     service;
   const [isFavorited, setIsFavorited] = useState(isFavorite || false);
-  if (!service) {
-    return null;
-  }
+
+  if (!service) return null;
+
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-lg shadow-md w-[250px] min-w-[250px] relative"
+      className="bg-white rounded-lg shadow-md w-[250px] min-w-[250px] relative cursor-pointer"
     >
+      {/* Imagen */}
       <div className="w-full h-[220px] overflow-hidden rounded-t-lg">
         <img
           className="h-full w-full object-cover"
           src={imgUrl}
-          alt="Service"
+          alt={name[language] || "Service"}
         />
       </div>
+
+      {/* Contenido */}
       <div className="p-4">
         <div className="flex items-center mb-2">
           <h3 className="text-base font-semibold text-gray-800">
             {name[language]}
           </h3>
         </div>
+
+        {/* Rating */}
         <div className="flex items-center">
-          <div className="flex items-center">
-            <svg
-              className="h-4 w-4 text-yellow-500"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M10 1l2.8 6.3 6.2.9-4.5 4.3 1.1 6-5.6-3.2L4.4 18.5l1.1-6-4.5-4.3 6.2-.9L10 1z" />
-            </svg>
-          </div>
+          <svg
+            className="h-4 w-4 text-yellow-500"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 1l2.8 6.3 6.2.9-4.5 4.3 1.1 6-5.6-3.2L4.4 18.5l1.1-6-4.5-4.3 6.2-.9L10 1z" />
+          </svg>
           <span className="text-sm text-gray-600 ml-1">
             {rate} ({rateNumber})
           </span>
         </div>
+
+        {/* Botón de favorito */}
         <button
-          onClick={() => setIsFavorited(!isFavorited)}
-          className={`absolute top-2 right-2 p-1 z-10`}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsFavorited((prev) => !prev);
+          }}
+          className="absolute top-2 right-2 p-1 z-10"
         >
           {isFavorited ? (
             <MdFavorite size={25} color="tomato" />
@@ -55,6 +65,8 @@ const ServiceCardRecomendation = ({ service, onClick }) => {
             <MdFavoriteBorder size={25} />
           )}
         </button>
+
+        {/* Duración y precio */}
         <div className="flex justify-between items-start flex-col mt-2">
           <span className="text-sm text-gray-600">{formatTime(duration)}</span>
           <span className="text-sm font-medium text-gray-800">

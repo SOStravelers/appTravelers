@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
-import { FaMapMarkedAlt } from "react-icons/fa";
+import { useStore } from "@/store";
+import { useEffect, useState } from "react";
 import languageData from "@/language/subServices.json";
+import ServiceService from "@/services/ServiceService";
+import { FaMapMarkedAlt } from "react-icons/fa";
 import {
   GiPartyPopper,
   GiMeal,
@@ -10,8 +13,18 @@ import {
   GiCarWheel,
 } from "react-icons/gi";
 import { MdSurfing } from "react-icons/md";
-import { useStore } from "@/store";
-const services = [
+
+import * as FaIcons from "react-icons/fa";
+import * as GiIcons from "react-icons/gi";
+import * as MdIcons from "react-icons/md";
+
+const Icons = {
+  ...FaIcons,
+  ...GiIcons,
+  ...MdIcons,
+};
+import { TbCheese } from "react-icons/tb";
+const allIcons = [
   { id: 1, icon: <FaMapMarkedAlt size={32} />, label: "Tour" },
   { id: 2, icon: <GiPartyPopper size={32} />, label: "Fiestas & Shows" },
   { id: 3, icon: <GiMeal size={32} />, label: "Gastronomía" },
@@ -25,19 +38,33 @@ const services = [
 ];
 
 function IconCarousel({
-  icons = services,
+  icons = allIcons,
   viewMoreLink = "/collections", // antes era "#"
-  onIconClick,
   onViewMoreClick,
 }) {
   const router = useRouter();
-  const { language } = useStore();
-  const handleIconClick = (iconData) => {
-    if (onIconClick) {
-      onIconClick(iconData);
-    } else {
-      console.log("Icon clicked:", iconData.label);
-    }
+  const store = useStore();
+  const { services, setServices, setService, language } = store;
+
+  // 1) Fetch y setear items + activeIndex a 0
+  useEffect(() => {
+    ServiceService.list({ isActive: true, page: 1 })
+      .then((res) => {
+        const data = res.data.docs;
+        if (Array.isArray(data) && data.length > 0) {
+          setServices(response.data.docs);
+        }
+      })
+      .catch((err) => console.error("Fetch services:", err));
+  }, []);
+
+  const IconMapper = ({ name, ...props }) => {
+    const IconComponent = Icons[name] || TbCheese;
+    return <IconComponent {...props} />;
+  };
+
+  const handleIconClick = (data) => {
+    setService({ serviceId: data._id, serviceName: data.name });
   };
 
   const handleViewMore = () => {
@@ -72,21 +99,23 @@ function IconCarousel({
         }}
       >
         <div className="flex py-2 px-2 w-max mx-auto">
-          {icons.map((iconData, index) => (
+          {services.map((service, index) => (
             <div
-              key={iconData.id}
-              onClick={() => handleIconClick(iconData)}
+              key={service._id}
+              onClick={() => handleIconClick(service)}
               className={`flex flex-col items-center justify-center flex-shrink-0 w-24 h-28 shadow-[0px_11px_20px_5px_#00000015] p-4 rounded-lg transition-colors duration-200 ease-in-out ${
-                onIconClick
-                  ? "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                handleIconClick
+                  ? "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-300"
                   : ""
-              } ${index !== icons.length - 1 ? "mr-4" : ""}`}
+              } ${index !== services.length - 1 ? "mr-4" : ""}`}
             >
-              <div className="text-gray-900 dark:text-gray-500 mb-2">
-                {iconData.icon}
-              </div>
+              <IconMapper
+                name={service.icon}
+                size={32}
+                className="text-gray-900 dark:text-gray-500 mb-2"
+              />
               <span className="text-xs text-center text-gray-900 dark:text-gray-600">
-                {iconData.label}
+                {service.name[language]}
               </span>
             </div>
           ))}

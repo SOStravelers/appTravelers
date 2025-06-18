@@ -177,7 +177,7 @@ export default function SyncCarousel() {
     return <div className="text-white">Cargando experiencias...</div>;
 
   return (
-    <div className="relative h-screen flex flex-col justify-center items-center overflow-hidden bg-black">
+    <div className="relative h-[90vh] flex flex-col justify-center items-center overflow-hidden bg-black">
       {/* Video + fades */}
       <div className="relative w-full h-full">
         <VideoLoader

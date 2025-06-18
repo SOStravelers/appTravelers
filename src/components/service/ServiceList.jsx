@@ -1,5 +1,6 @@
 // ServiceList.jsx
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import ServiceCard from "./SubServiceCard";
 import SubserviceService from "@/services/SubserviceService";
 import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
@@ -10,6 +11,7 @@ const ServiceList = () => {
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(true);
   const loadMoreRef = useRef(null);
+  const router = useRouter();
 
   // Carga una página y concatena resultados
   const loadPage = (p) => {

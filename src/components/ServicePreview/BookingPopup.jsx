@@ -19,7 +19,7 @@ const BookingPopup = ({
 }) => {
   return (
     <div
-      className="fixed bottom-14 left-1/2 transform -translate-x-1/2 z-50 \
+      className="fixed bottom-14 left-1/2 transform -translate-x-1/2 z-20 \
         w-[90%] max-w-xl bg-white rounded-full \
          shadow-[0_10px_20px_rgba(0,0,0,0.25),50px_20px_60px_rgba(0,0,0,0.1)] \
         flex items-center justify-between px-6 py-2"

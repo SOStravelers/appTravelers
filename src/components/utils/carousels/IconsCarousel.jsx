@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import languageData from "@/language/subServices.json";
 import ServiceService from "@/services/ServiceService";
 import { TbCheese } from "react-icons/tb";
@@ -14,26 +14,25 @@ const Icons = {
   ...MdIcons,
 };
 
-function IconCarousel({ viewMoreLink = "/collections", onViewMoreClick }) {
+export default function IconCarousel({
+  viewMoreLink = "/collections",
+  onViewMoreClick,
+}) {
   const router = useRouter();
   const store = useStore();
   const { services, setServices, setService, language } = store;
+  const [activeIdx, setActiveIdx] = useState(0);
 
+  // Fetch services once
   useEffect(() => {
     ServiceService.list({ isActive: true, page: 1 })
-      .then((res) => {
-        setServices(res.data.docs);
-      })
+      .then((res) => setServices(res.data.docs))
       .catch((err) => console.error("Fetch services:", err));
   }, []);
 
-  const IconMapper = ({ name, ...props }) => {
-    const IconComponent = Icons[name] || TbCheese;
-    return <IconComponent {...props} />;
-  };
-
-  const handleIconClick = (service) => {
+  const handleIconClick = (service, idx) => {
     setService({ serviceId: service._id, serviceName: service.name });
+    setActiveIdx(idx);
   };
 
   const handleViewMore = () => {
@@ -41,10 +40,15 @@ function IconCarousel({ viewMoreLink = "/collections", onViewMoreClick }) {
     else router.push(viewMoreLink);
   };
 
+  const IconMapper = ({ name, ...props }) => {
+    const IconComponent = Icons[name] || TbCheese;
+    return <IconComponent {...props} />;
+  };
+
   return (
-    <div className="w-full ">
-      {/* Header */}
-      <div className="flex items-center justify-between my-2 px-4">
+    <nav className="w-full">
+      {/* Header with title and "see all" */}
+      <div className="flex items-center justify-between px-4 py-2">
         <h2 className="text-xl font-semibold text-gray-800">
           {languageData.index.explore[language]}
         </h2>
@@ -57,47 +61,36 @@ function IconCarousel({ viewMoreLink = "/collections", onViewMoreClick }) {
         </button>
       </div>
 
-      {/* Scroll + fades */}
-      <div className="relative w-full px-4 ">
-        {/* Zona scrollable de iconos */}
-        <div
-          className="overflow-x-auto"
-          style={{ scrollbarColor: "#888 #f1f1f1", scrollbarWidth: "auto" }}
-        >
-          <div className="flex pb-6 px-6 w-max mx-auto">
-            {services.map((service, index) => (
-              <div
-                key={service._id}
-                onClick={() => handleIconClick(service)}
-                className={`
-                  flex flex-col items-center justify-center 
-                  flex-shrink-0 w-24 h-20 
-                  shadow-[0px_11px_20px_5px_rgba(0,0,0,0.15)] 
-                  p-2 rounded-lg 
-                  cursor-pointer hover:bg-gray-300 
-                  transition-colors duration-200 
-                  ${index !== services.length - 1 ? "mr-4" : ""}
-                `}
+      {/* Scrollable list */}
+      <div className="overflow-x-auto">
+        <ul className="flex space-x-6 px-4">
+          {services.map((service, idx) => (
+            <li key={service._id}>
+              <button
+                onClick={() => handleIconClick(service, idx)}
+                className="flex flex-col items-center text-center focus:outline-none"
               >
                 <IconMapper
                   name={service.icon}
                   size={24}
-                  className="text-gray-900 mb-2"
+                  className={
+                    idx === activeIdx ? "text-gray-900" : "text-gray-500"
+                  }
                 />
-                <span className="text-xs text-center text-gray-900">
+                <span
+                  className={`mt-1 text-sm ${
+                    idx === activeIdx
+                      ? "text-gray-900 border-b-2 border-blueBorder pb-1 my-1"
+                      : "text-gray-500"
+                  }`}
+                >
                   {service.name[language]}
                 </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Gradientes sólo sobre la altura del scroll */}
-        <div className="pointer-events-none absolute inset-y-0 left-4 w-12 bg-gradient-to-r from-white to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-4 w-12 bg-gradient-to-l from-white to-transparent" />
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </nav>
   );
 }
-
-export default IconCarousel;

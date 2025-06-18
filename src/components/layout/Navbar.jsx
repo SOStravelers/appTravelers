@@ -4,7 +4,6 @@ import clsx from "clsx";
 import NotificationService from "@/services/NotificationService";
 import languageData from "@/language/menu.json";
 
-
 import {
   HomeIcon,
   HomeIconOutlined,
@@ -52,7 +51,7 @@ function Navbar() {
 
   return (
     <div
-      className="w-screen h-12 fixed bottom-0 left-0 z-10 bg-white flex justify-around items-center md:hidden"
+      className="w-screen h-12 fixed bottom-0 left-0 z-30 bg-white flex justify-around items-center md:hidden"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
     >
       <button

@@ -108,7 +108,7 @@ function TopBar() {
       //     ? "bg-blueBorder"
       //     : "bg-darkBlue"
       // }`}
-      className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 transition-all duration-500 ${
+      className={`w-screen z-30 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 transition-all duration-500 ${
         router.pathname === "/"
           ? scrolledPastVh
             ? "bg-darkBlue"

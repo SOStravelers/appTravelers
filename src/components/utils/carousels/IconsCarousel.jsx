@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import languageData from "@/language/subServices.json";
 import ServiceService from "@/services/ServiceService";
 import { TbCheese } from "react-icons/tb";
@@ -18,15 +18,13 @@ function IconCarousel({ viewMoreLink = "/collections", onViewMoreClick }) {
   const router = useRouter();
   const store = useStore();
   const { services, setServices, setService, language } = store;
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     ServiceService.list({ isActive: true, page: 1 })
       .then((res) => {
         setServices(res.data.docs);
       })
-      .catch((err) => console.error("Fetch services:", err))
-      .finally(() => setLoading(false));
+      .catch((err) => console.error("Fetch services:", err));
   }, []);
 
   const IconMapper = ({ name, ...props }) => {
@@ -44,9 +42,9 @@ function IconCarousel({ viewMoreLink = "/collections", onViewMoreClick }) {
   };
 
   return (
-    <div className="w-full my-2">
+    <div className="w-full ">
       {/* Header */}
-      <div className="flex items-center justify-between px-4">
+      <div className="flex items-center justify-between my-2 px-4">
         <h2 className="text-xl font-semibold text-gray-800">
           {languageData.index.explore[language]}
         </h2>
@@ -59,41 +57,44 @@ function IconCarousel({ viewMoreLink = "/collections", onViewMoreClick }) {
         </button>
       </div>
 
-      {/* Contenedor principal con fade a los lados */}
-      <div className="relative w-full px-4">
-        {/* Scrollable */}
+      {/* Scroll + fades */}
+      <div className="relative w-full px-4 ">
+        {/* Zona scrollable de iconos */}
         <div
           className="overflow-x-auto"
           style={{ scrollbarColor: "#888 #f1f1f1", scrollbarWidth: "auto" }}
         >
-          <div className="flex py-2 px-2 w-max mx-auto">
-            {!loading &&
-              services.map((service, idx) => (
-                <div
-                  key={service._id}
-                  onClick={() => handleIconClick(service)}
-                  className={
-                    "flex flex-col items-center justify-center flex-shrink-0 w-24 h-20 " +
-                    "shadow-[0px_11px_20px_5px_rgba(0,0,0,0.15)] p-2 rounded-lg " +
-                    "cursor-pointer hover:bg-gray-100 transition-colors duration-200 " +
-                    (idx !== services.length - 1 ? "mr-4" : "")
-                  }
-                >
-                  <IconMapper
-                    name={service.icon}
-                    size={24}
-                    className="text-gray-900 mb-2"
-                  />
-                  <span className="text-xs text-center text-gray-900">
-                    {service.name[language]}
-                  </span>
-                </div>
-              ))}
+          <div className="flex pb-6 px-6 w-max mx-auto">
+            {services.map((service, index) => (
+              <div
+                key={service._id}
+                onClick={() => handleIconClick(service)}
+                className={`
+                  flex flex-col items-center justify-center 
+                  flex-shrink-0 w-24 h-20 
+                  shadow-[0px_11px_20px_5px_rgba(0,0,0,0.15)] 
+                  p-2 rounded-lg 
+                  cursor-pointer hover:bg-gray-300 
+                  transition-colors duration-200 
+                  ${index !== services.length - 1 ? "mr-4" : ""}
+                `}
+              >
+                <IconMapper
+                  name={service.icon}
+                  size={24}
+                  className="text-gray-900 mb-2"
+                />
+                <span className="text-xs text-center text-gray-900">
+                  {service.name[language]}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-        {/* Fade overlays */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white to-transparent" />
+
+        {/* Gradientes sólo sobre la altura del scroll */}
+        <div className="pointer-events-none absolute inset-y-0 left-4 w-12 bg-gradient-to-r from-white to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-4 w-12 bg-gradient-to-l from-white to-transparent" />
       </div>
     </div>
   );

@@ -77,12 +77,12 @@ export default function Home({}) {
     ]);
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (swiper) swiper.slideNext();
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [swiper]);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     if (swiper) swiper.slideNext();
+  //   }, 5000);
+  //   return () => clearInterval(timer);
+  // }, [swiper]);
 
   const getData = async () => {
     const response = await ServiceService.list({ isActive: true, page: 1 });
@@ -118,11 +118,11 @@ export default function Home({}) {
         <IconCarousel />
       </section>
 
-      <section className="p-4">
+      {/* <section className="p-4">
         <RecomendationCarousel services={randomUsers} />
-      </section>
+      </section> */}
 
-      <div className="w-full p-4 pt-10 max-w-lg mx-auto">
+      {/* <div className="w-full p-4 pt-10 max-w-lg mx-auto">
         <Swiper
           spaceBetween={10}
           slidesPerView={1}
@@ -145,13 +145,13 @@ export default function Home({}) {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </div> */}
 
       <FloatingWhatsAppButton />
 
       {process.env.NEXT_PUBLIC_NODE_ENV !== "productionsss" ? (
         <>
-          <section>
+          {/* <section>
             <h1
               className={`text-black text-xl font-semibold mb-3 ${mazzard.className}`}
             >
@@ -168,7 +168,7 @@ export default function Home({}) {
                 />
               ))}
             </div>
-          </section>
+          </section> */}
 
           {/* Puedes descomentar estas secciones si las necesitas */}
           {/*

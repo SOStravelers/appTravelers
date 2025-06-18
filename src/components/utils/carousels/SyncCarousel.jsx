@@ -9,6 +9,7 @@ import {
 import SubserviceService from "@/services/SubserviceService";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
+
 const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
   useEffect(() => {
     const video = videoRef.current;
@@ -24,17 +25,14 @@ const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
 
     const loadVideo = async () => {
       try {
-        // pre-reset
         video.style.opacity = "0";
         video.pause();
         video.removeAttribute("src");
         video.load();
 
-        // carga
         video.poster = activeItem.imgUrl;
         video.src = activeItem.videoUrl;
 
-        // espera a que pueda reproducir
         await new Promise((resolve) => {
           const onCanPlay = () => {
             video.removeEventListener("canplay", onCanPlay);
@@ -43,7 +41,6 @@ const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
           video.addEventListener("canplay", onCanPlay);
         });
 
-        // play
         await video.play();
         video.style.opacity = "1";
       } catch (err) {
@@ -54,7 +51,6 @@ const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
 
     loadVideo();
 
-    // cleanup al desmontar o cambiar URL
     return () => {
       if (video) {
         video.pause();
@@ -63,17 +59,16 @@ const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
         video.style.opacity = "0";
       }
     };
-  }, [activeItem?.videoUrl]); // solo dispara cuando cambia la URL
+  }, [activeItem?.videoUrl]);
 
   return (
     <video
       ref={videoRef}
-      className="
-        absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        w-full h-full
-        sm:w-[60vw] sm:max-w-[1000px] sm:h-auto
-        object-cover opacity-0 transition-opacity duration-200
-      "
+      className={
+        "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 " +
+        "w-full h-full sm:w-[60vw] sm:max-w-[1000px] sm:h-auto " +
+        "object-cover opacity-0 transition-opacity duration-200"
+      }
       muted={isMuted}
       loop
       playsInline
@@ -81,9 +76,8 @@ const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
   );
 };
 
-const SyncCarousel = () => {
+export default function SyncCarousel() {
   const router = useRouter();
-
   const { language } = useStore();
   const videoRef = useRef(null);
   const [items, setItems] = useState([]);
@@ -95,7 +89,6 @@ const SyncCarousel = () => {
   const cardsRef = useRef([]);
   const scrollTimeout = useRef(null);
 
-  // 1) Fetch y setear items + activeIndex a 0
   useEffect(() => {
     SubserviceService.getWithVideos()
       .then((res) => {
@@ -108,7 +101,6 @@ const SyncCarousel = () => {
       .catch((err) => console.error("Fetch videos:", err));
   }, []);
 
-  // 2) Sincroniza estado de play/pause con el elemento <video>
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -122,21 +114,19 @@ const SyncCarousel = () => {
     };
   }, [items]);
 
-  // 3) Control de click en pausa/play
   const togglePlayPause = () => {
     const video = videoRef.current;
     if (!video) return;
-    isPlaying ? video.pause() : video.play();
+    if (isPlaying) video.pause();
+    else video.play();
     setIsPlaying(!isPlaying);
   };
 
-  // 4) Likes
   const handleLike = (i) =>
     setLikes((prev) =>
       prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]
     );
 
-  // 5) Cálculo del índice del card más cercano al centro
   const getNearestCardIndex = () => {
     const c = containerRef.current;
     if (!c) return 0;
@@ -155,7 +145,6 @@ const SyncCarousel = () => {
     return best;
   };
 
-  // 6) Snap + setActiveIndex al scrollear
   const snapToNearest = () => {
     const i = getNearestCardIndex();
     const card = cardsRef.current[i];
@@ -168,10 +157,12 @@ const SyncCarousel = () => {
     });
     setActiveIndex(i);
   };
+
   const onScroll = () => {
     clearTimeout(scrollTimeout.current);
     scrollTimeout.current = setTimeout(snapToNearest, 200);
   };
+
   useEffect(() => {
     const c = containerRef.current;
     if (!c) return;
@@ -182,23 +173,24 @@ const SyncCarousel = () => {
     };
   }, [items]);
 
-  // 7) Mientras carga, muestra texto
-  if (items.length === 0) {
+  if (items.length === 0)
     return <div className="text-white">Cargando experiencias...</div>;
-  }
 
-  // 8) Render principal
   return (
-    <div className="relative h-[90vh] flex flex-col justify-center items-center overflow-hidden bg-black">
-      {/* FORZAMOS REMOUNT con key */}
-      <VideoLoader
-        key={items[activeIndex].videoUrl}
-        activeItem={items[activeIndex]}
-        videoRef={videoRef}
-        isMuted={isMuted}
-      />
+    <div className="relative h-screen flex flex-col justify-center items-center overflow-hidden bg-black">
+      {/* Video + fades */}
+      <div className="relative w-full h-full">
+        <VideoLoader
+          key={items[activeIndex].videoUrl}
+          activeItem={items[activeIndex]}
+          videoRef={videoRef}
+          isMuted={isMuted}
+        />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent" />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-white" />
+      </div>
 
-      {/* Botón Play/Pause */}
+      {/* Controls */}
       <button
         onClick={togglePlayPause}
         className="absolute bottom-[140px] left-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white transition-colors"
@@ -213,8 +205,6 @@ const SyncCarousel = () => {
           </svg>
         )}
       </button>
-
-      {/* Botón Mute/Unmute */}
       <button
         onClick={() => setIsMuted((m) => !m)}
         className="absolute bottom-[140px] right-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white transition-colors"
@@ -226,7 +216,7 @@ const SyncCarousel = () => {
         )}
       </button>
 
-      {/* Carrusel de cards */}
+      {/* Carousel */}
       <div
         ref={containerRef}
         className="absolute bottom-4 w-[500px] xl:w-[750px] overflow-x-auto overflow-y-hidden pt-2 md:pb-4"
@@ -258,7 +248,7 @@ const SyncCarousel = () => {
               </div>
               <button
                 onClick={(e) => {
-                  e.stopPropagation(); // ⚠️ evita que el click suba al article
+                  e.stopPropagation();
                   handleLike(i);
                 }}
                 className={`absolute top-1 right-1 text-2xl transition-colors ${
@@ -276,6 +266,4 @@ const SyncCarousel = () => {
       </div>
     </div>
   );
-};
-
-export default SyncCarousel;
+}

@@ -1,7 +1,8 @@
+// ServiceList.jsx
 import React, { useState, useEffect, useRef } from "react";
 import ServiceCard from "./SubServiceCard";
 import SubserviceService from "@/services/SubserviceService";
-
+import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
 const ITEMS_PER_LOAD = 2;
 
 const ServiceList = () => {
@@ -21,12 +22,12 @@ const ServiceList = () => {
       .catch(console.error);
   };
 
-  // Al montar y cada vez que cambie `page`, pedir esa página
+  // Cada vez que cambie `page`, pedimos esa página
   useEffect(() => {
     loadPage(page);
   }, [page]);
 
-  // Observer para scroll infinito
+  // IntersectionObserver para scroll infinito
   useEffect(() => {
     if (!loadMoreRef.current || !hasNext) return;
     const observer = new IntersectionObserver(
@@ -43,13 +44,29 @@ const ServiceList = () => {
 
   return (
     <div className="flex flex-col items-center w-full">
-      <h2 className="text-2xl font-semibold mb-6">All experiences</h2>
+      {/* <h2 className="text-2xl font-semibold mb-6">All experiences</h2> */}
 
       {items.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 w-full ">
-          {items.map((service) => (
+        <div
+          className="
+            grid 
+              grid-cols-1       /* 1 columna en móvil */
+              sm:grid-cols-2    /* 2 cols desde ≥640px */
+              md:grid-cols-3    /* 3 cols desde ≥768px */
+              lg:grid-cols-4    /* 4 cols desde ≥1024px */
+            gap-6 w-full
+          "
+        >
+          {items.map((service, index) => (
             <div key={service._id} className="w-full">
-              <ServiceCard service={service} />
+              {/* <ServiceCard service={service} /> */}
+
+              <ServiceCardRecomendation
+                onClick={() => router.push(`/service-preview/${service._id}`)}
+                key={service._id}
+                service={service}
+                index={index}
+              />
             </div>
           ))}
         </div>
@@ -57,7 +74,7 @@ const ServiceList = () => {
         <p className="text-center py-10">No services available.</p>
       )}
 
-      {/* Sentinel: dispara cargar siguiente página al hacerse visible */}
+      {/* Sentinel: cuando aparece, cargamos siguiente página */}
       {hasNext && <div ref={loadMoreRef} className="h-2 w-full" />}
     </div>
   );

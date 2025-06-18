@@ -17,16 +17,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { NotFoundPicture } from "@/constants/icons";
 import languageData from "@/language/home.json";
 import "swiper/swiper-bundle.css";
-// import SwiperCore, { Pagination, Navigation } from "swiper";
-// SwiperCore.use([Pagination, Navigation]);
 import { useStore } from "@/store";
 register();
 import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import ServiceList from "@/components/service/ServiceList";
 
 export default function Home({}) {
-  // console.log("socket!", process.env.NEXT_PUBLIC_API_SOCKET_IO);
-  // console.log("env!", process.env.NEXT_PUBLIC_NODE_ENV);
   const store = useStore();
   const { services, setServices, setHaveNotification, setService, language } =
     store;
@@ -37,24 +33,22 @@ export default function Home({}) {
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  var userId = Cookies.get("auth.user_id");
+  const userId = Cookies.get("auth.user_id");
+
   useEffect(() => {
     setService({});
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
   }, []);
+
   useEffect(() => {
     getUsers();
   }, []);
 
   useEffect(() => {
     document.title = "Home | SOS Travelers";
-    if (userId) {
-      checkNotification();
-    }
-    if (!services || Object.keys(services).length == 0) {
-      getData();
-    }
+    if (userId) checkNotification();
+    if (!services || Object.keys(services).length === 0) getData();
     setSlides([
       {
         id: 0,
@@ -71,8 +65,6 @@ export default function Home({}) {
           ", " +
           languageData.carrousel[0].title2[language],
         body: languageData.carrousel[1].body[language],
-        // direction: "124 street Miro Hotel, Ubud",
-        // date: "4 Aug, 2023 | 04:30 PM",
       },
       {
         id: 2,
@@ -84,42 +76,34 @@ export default function Home({}) {
       },
     ]);
   }, []);
+
   useEffect(() => {
     const timer = setInterval(() => {
-      if (swiper) {
-        swiper.slideNext();
-      }
+      if (swiper) swiper.slideNext();
     }, 5000);
-
-    return () => {
-      clearInterval(timer);
-    };
+    return () => clearInterval(timer);
   }, [swiper]);
 
   const getData = async () => {
-    ServiceService.list({ isActive: true, page: 1 }).then((response) => {
-      setServices(response.data.docs);
-    });
+    const response = await ServiceService.list({ isActive: true, page: 1 });
+    setServices(response.data.docs);
   };
+
   const checkNotification = async () => {
     try {
       const response = await NotificationService.checkNotification();
       setHaveNotification(response.data);
-      // console.log(response.data);
-    } catch (error) {
-      // console.error(error);
-    }
+    } catch {}
   };
 
   const getUsers = async () => {
     try {
-      const response = await UserService.getRandom();
-      setRandomUsers(response.data);
-
-      const response2 = await UserService.getWorkers();
-      setWorkers(response2.data);
-    } catch (error) {
-      console.log(error);
+      const resp1 = await UserService.getRandom();
+      setRandomUsers(resp1.data);
+      const resp2 = await UserService.getWorkers();
+      setWorkers(resp2.data);
+    } catch (err) {
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -128,12 +112,14 @@ export default function Home({}) {
   return (
     <main className="flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible">
       <SyncCarousel />
-      <section>
+
+      {/* Aquí aplicamos sticky */}
+      <section className="sticky top-[58px] z-20 bg-white">
         <IconCarousel />
       </section>
 
       <section className="p-4">
-        <RecomendationCarousel services={randomUsers}></RecomendationCarousel>
+        <RecomendationCarousel services={randomUsers} />
       </section>
 
       <div className="w-full p-4 pt-10 max-w-lg mx-auto">
@@ -148,33 +134,33 @@ export default function Home({}) {
             "--swiper-pagination-bullet-active-color": "#1111",
           }}
         >
-          {slides?.map((slide) => (
-            <SwiperSlide key={slide?.id}>
+          {slides.map((slide) => (
+            <SwiperSlide key={slide.id}>
               <BookingCard
-                title={slide?.title}
-                body={slide?.body}
-                direction={slide?.direction}
-                date={slide?.date}
+                title={slide.title}
+                body={slide.body}
+                direction={slide.direction}
+                date={slide.date}
               />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
-      <div>
-        <FloatingWhatsAppButton />
-      </div>
-      {process.env.NEXT_PUBLIC_NODE_ENV != "productionsss" ? (
+
+      <FloatingWhatsAppButton />
+
+      {process.env.NEXT_PUBLIC_NODE_ENV !== "productionsss" ? (
         <>
-          {/* <section>
+          <section>
             <h1
               className={`text-black text-xl font-semibold mb-3 ${mazzard.className}`}
             >
               {languageData.title.service[language] + "-> wena"}
             </h1>
             <div className="w-full max-w-lg flex justify-center overflow-x-auto mb-2 pl-2">
-              {services?.map((s, index) => (
+              {services.map((s, i) => (
                 <ServiceCard
-                  key={index}
+                  key={i}
                   id={s.id}
                   img={s.imgUrl}
                   link={`/subservices/${s.id}`}
@@ -182,71 +168,60 @@ export default function Home({}) {
                 />
               ))}
             </div>
-          </section> */}
+          </section>
 
-          {/* <section className="mb-1">
-            <h1
-              className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
-            >
+          {/* Puedes descomentar estas secciones si las necesitas */}
+          {/*
+          <section className="mb-1">
+            <h1 className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}>
               {languageData.title.recommended[language] + "->chao"}
             </h1>
             {loading ? (
               <div className="max-w-lg flex flex-col items-center justify-center">
-                <Rings
-                  width={100}
-                  height={100}
-                  color="#00A0D5"
-                  ariaLabel="infinity-spin-loading"
-                />
+                <Rings width={100} height={100} color="#00A0D5" ariaLabel="loading" />
                 <p>Loading...</p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-3  gap-4 max-w-lg overflow-x-auto  pb-10">
-                {randomUsers?.map((s, index) => (
-                  <RecomendationCard key={index} user={s} />
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-lg overflow-x-auto pb-10">
+                {randomUsers.map((u, i) => (
+                  <RecomendationCard key={i} user={u} />
                 ))}
               </div>
             )}
-          </section> */}
+          </section>
 
-          {/* {workers?.length > 0 && (
+          {workers.length > 0 && (
             <section>
-              <h1
-                className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}
-              >
+              <h1 className={`text-black text-xl font-semibold mt-2 mb-5 ${mazzard.className}`}>
                 {languageData.title.ourPartners[language]}
               </h1>
-
               {loading ? (
                 <div className="max-w-lg flex flex-col items-center justify-center">
-                  <Rings
-                    width={100}
-                    height={100}
-                    color="#00A0D5"
-                    ariaLabel="infinity-spin-loading"
-                  />
+                  <Rings width={100} height={100} color="#00A0D5" ariaLabel="loading" />
                   <p>Loading...</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 mb-10  gap-4 max-w-lg overflow-x-auto  pb-10">
-                  {workers.map((s, index) => (
-                    <WorkerIndexCard key={index} user={s} />
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-lg overflow-x-auto pb-10">
+                  {workers.map((w, i) => (
+                    <WorkerIndexCard key={i} user={w} />
                   ))}
                 </div>
               )}
             </section>
-          )} */}
+          )}
+          */}
         </>
       ) : (
-        <div className="flex flex-col justify-center max-w-lg  align-items">
+        <div className="flex flex-col justify-center max-w-lg items-center">
           <NotFoundPicture />
-          <h1 className="flex justify-center mt-10">
-            We are hard at work to get back into action{" "}
+          <h1 className="mt-10 text-center">
+            We are hard at work to get back into action
           </h1>
         </div>
       )}
+
       <section className="p-4">
-        <ServiceList></ServiceList>
+        <ServiceList />
       </section>
     </main>
   );

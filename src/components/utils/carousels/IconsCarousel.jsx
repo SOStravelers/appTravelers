@@ -3,17 +3,7 @@ import { useStore } from "@/store";
 import { useEffect, useState } from "react";
 import languageData from "@/language/subServices.json";
 import ServiceService from "@/services/ServiceService";
-import { FaMapMarkedAlt } from "react-icons/fa";
-import {
-  GiPartyPopper,
-  GiMeal,
-  GiHiking,
-  GiParachute,
-  GiSoccerBall,
-  GiCarWheel,
-} from "react-icons/gi";
-import { MdSurfing } from "react-icons/md";
-
+import { TbCheese } from "react-icons/tb";
 import * as FaIcons from "react-icons/fa";
 import * as GiIcons from "react-icons/gi";
 import * as MdIcons from "react-icons/md";
@@ -23,39 +13,20 @@ const Icons = {
   ...GiIcons,
   ...MdIcons,
 };
-import { TbCheese } from "react-icons/tb";
-const allIcons = [
-  { id: 1, icon: <FaMapMarkedAlt size={32} />, label: "Tour" },
-  { id: 2, icon: <GiPartyPopper size={32} />, label: "Fiestas & Shows" },
-  { id: 3, icon: <GiMeal size={32} />, label: "Gastronomía" },
-  { id: 4, icon: <GiHiking size={32} />, label: "Senderos" },
-  { id: 5, icon: <GiParachute size={32} />, label: "Experiencias" },
-  { id: 6, icon: <MdSurfing size={32} />, label: "Surf al amanecer" },
-  { id: 7, icon: <GiSoccerBall size={32} />, label: "Fútbol" },
-  { id: 8, icon: <GiCarWheel size={32} />, label: "Transfers" },
-  { id: 9, icon: <GiMeal size={32} />, label: "Extra 1" },
-  { id: 10, icon: <GiHiking size={32} />, label: "Extra 2" },
-];
 
-function IconCarousel({
-  icons = allIcons,
-  viewMoreLink = "/collections", // antes era "#"
-  onViewMoreClick,
-}) {
+function IconCarousel({ viewMoreLink = "/collections", onViewMoreClick }) {
   const router = useRouter();
   const store = useStore();
   const { services, setServices, setService, language } = store;
+  const [loading, setLoading] = useState(true);
 
-  // 1) Fetch y setear items + activeIndex a 0
   useEffect(() => {
     ServiceService.list({ isActive: true, page: 1 })
       .then((res) => {
-        const data = res.data.docs;
-        if (Array.isArray(data) && data.length > 0) {
-          setServices(response.data.docs);
-        }
+        setServices(res.data.docs);
       })
-      .catch((err) => console.error("Fetch services:", err));
+      .catch((err) => console.error("Fetch services:", err))
+      .finally(() => setLoading(false));
   }, []);
 
   const IconMapper = ({ name, ...props }) => {
@@ -63,21 +34,19 @@ function IconCarousel({
     return <IconComponent {...props} />;
   };
 
-  const handleIconClick = (data) => {
-    setService({ serviceId: data._id, serviceName: data.name });
+  const handleIconClick = (service) => {
+    setService({ serviceId: service._id, serviceName: service.name });
   };
 
   const handleViewMore = () => {
-    if (onViewMoreClick) {
-      onViewMoreClick();
-    } else {
-      router.push(viewMoreLink || "/collections");
-    }
+    if (onViewMoreClick) onViewMoreClick();
+    else router.push(viewMoreLink);
   };
 
   return (
-    <div className="w-full mt-5">
-      <div className="flex items-center justify-between mt-1 px-4">
+    <div className="w-full my-2">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4">
         <h2 className="text-xl font-semibold text-gray-800">
           {languageData.index.explore[language]}
         </h2>
@@ -90,36 +59,41 @@ function IconCarousel({
         </button>
       </div>
 
-      {/* Contenedor scrollable */}
-      <div
-        className="overflow-x-auto w-full px-4"
-        style={{
-          scrollbarColor: "#888 #f1f1f1",
-          scrollbarWidth: "auto",
-        }}
-      >
-        <div className="flex py-2 px-2 w-max mx-auto">
-          {services.map((service, index) => (
-            <div
-              key={service._id}
-              onClick={() => handleIconClick(service)}
-              className={`flex flex-col items-center justify-center flex-shrink-0 w-24 h-28 shadow-[0px_11px_20px_5px_#00000015] p-4 rounded-lg transition-colors duration-200 ease-in-out ${
-                handleIconClick
-                  ? "cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-300"
-                  : ""
-              } ${index !== services.length - 1 ? "mr-4" : ""}`}
-            >
-              <IconMapper
-                name={service.icon}
-                size={32}
-                className="text-gray-900 dark:text-gray-500 mb-2"
-              />
-              <span className="text-xs text-center text-gray-900 dark:text-gray-600">
-                {service.name[language]}
-              </span>
-            </div>
-          ))}
+      {/* Contenedor principal con fade a los lados */}
+      <div className="relative w-full px-4">
+        {/* Scrollable */}
+        <div
+          className="overflow-x-auto"
+          style={{ scrollbarColor: "#888 #f1f1f1", scrollbarWidth: "auto" }}
+        >
+          <div className="flex py-2 px-2 w-max mx-auto">
+            {!loading &&
+              services.map((service, idx) => (
+                <div
+                  key={service._id}
+                  onClick={() => handleIconClick(service)}
+                  className={
+                    "flex flex-col items-center justify-center flex-shrink-0 w-24 h-20 " +
+                    "shadow-[0px_11px_20px_5px_rgba(0,0,0,0.15)] p-2 rounded-lg " +
+                    "cursor-pointer hover:bg-gray-100 transition-colors duration-200 " +
+                    (idx !== services.length - 1 ? "mr-4" : "")
+                  }
+                >
+                  <IconMapper
+                    name={service.icon}
+                    size={24}
+                    className="text-gray-900 mb-2"
+                  />
+                  <span className="text-xs text-center text-gray-900">
+                    {service.name[language]}
+                  </span>
+                </div>
+              ))}
+          </div>
         </div>
+        {/* Fade overlays */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white to-transparent" />
       </div>
     </div>
   );

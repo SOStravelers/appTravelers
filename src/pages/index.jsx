@@ -21,7 +21,7 @@ import { useStore } from "@/store";
 register();
 import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import ServiceList from "@/components/service/ServiceList";
-
+import FilterModal from "@/components/utils/modal/FilterModal";
 export default function Home({}) {
   const store = useStore();
   const { services, setServices, setHaveNotification, setService, language } =
@@ -39,10 +39,6 @@ export default function Home({}) {
     setService({});
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
-  }, []);
-
-  useEffect(() => {
-    getUsers();
   }, []);
 
   useEffect(() => {
@@ -96,17 +92,26 @@ export default function Home({}) {
     } catch {}
   };
 
-  const getUsers = async () => {
-    try {
-      const resp1 = await UserService.getRandom();
-      setRandomUsers(resp1.data);
-      const resp2 = await UserService.getWorkers();
-      setWorkers(resp2.data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+  // const getUsers = async () => {
+  //   try {
+  //     const resp1 = await UserService.getRandom();
+  //     setRandomUsers(resp1.data);
+  //     const resp2 = await UserService.getWorkers();
+  //     setWorkers(resp2.data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // contador para forzar remount
+  const [filterKey, setFilterKey] = useState(0);
+  // control del modal
+  const [isFilterOpen, setFilterOpen] = useState(false);
+
+  const handleFilterChange = () => {
+    setFilterKey((k) => k + 1);
   };
 
   return (
@@ -115,7 +120,10 @@ export default function Home({}) {
 
       {/* Aquí aplicamos sticky */}
       <section className="sticky top-[58px] z-20 bg-white">
-        <IconCarousel />
+        <IconCarousel
+          onFilterChange={handleFilterChange}
+          onOpenFilter={() => setFilterOpen(true)}
+        />
       </section>
 
       {/* <section className="p-4">
@@ -221,8 +229,15 @@ export default function Home({}) {
       )}
 
       <section className="p-4">
-        <ServiceList />
+        <ServiceList filterKey={filterKey} />
       </section>
+
+      {/* nuestro modal separado */}
+      <FilterModal
+        isOpen={isFilterOpen}
+        onClose={() => setFilterOpen(false)}
+        onApply={handleFilterChange}
+      />
     </main>
   );
 }

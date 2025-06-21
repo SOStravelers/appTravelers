@@ -35,6 +35,12 @@ export const useStore = create((set) => {
     loginModal: false,
     register: false,
     socket: null,
+    filters: {
+      keyword: null,
+      maxPrice: 0,
+      minPrice: 0,
+      service: null,
+    },
     setRegister: (register) => set({ register: register }),
     setHaveNotification: (haveNotification) =>
       set({ haveNotification: haveNotification }),
@@ -45,6 +51,7 @@ export const useStore = create((set) => {
     setWorker: (isWorker) => set({ isWorker: isWorker }),
     setSocket: (socket) => set({ socket: socket }),
     setLanguage: (language) => set({ language: language }),
+    setFilters: (filters) => set({ filters: filters }),
     setService: (service) =>
       set((state) => {
         const data = { service: { ...state.service, ...service } };

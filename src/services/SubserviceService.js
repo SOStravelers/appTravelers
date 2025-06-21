@@ -26,6 +26,9 @@ export default class SubserviceService {
     );
   }
   static async getAll(data) {
+    console.log("getAll subservices");
+
+    console.log("filtro actuales", useStore.getState().filters);
     const page = data.page;
     const limit = data.limit;
     console.log("se viene", data);

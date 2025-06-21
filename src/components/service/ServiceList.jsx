@@ -1,71 +1,89 @@
 // ServiceList.jsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
-import ServiceCard from "./SubServiceCard";
-import SubserviceService from "@/services/SubserviceService";
 import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
+import SubserviceService from "@/services/SubserviceService";
+
 const ITEMS_PER_LOAD = 2;
 
-const ServiceList = () => {
+export default function ServiceList({ filterKey }) {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(true);
+  const [loading, setLoading] = useState(false);
   const loadMoreRef = useRef(null);
   const router = useRouter();
 
-  // Carga una página y concatena resultados
-  const loadPage = (p) => {
-    SubserviceService.getAll({ page: p, limit: ITEMS_PER_LOAD })
-      .then((res) => {
-        const { docs, hasNextPage } = res.data;
-        setItems((prev) => [...prev, ...docs]);
-        setHasNext(hasNextPage);
-      })
-      .catch(console.error);
-  };
+  // Fetch a page, passing filterKey, manage loading state
+  const loadPage = useCallback(
+    async (p) => {
+      setLoading(true);
+      // Añadimos un delay de 500ms para que se aprecie el estado de "cargando"
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-  // Cada vez que cambie `page`, pedimos esa página
+      try {
+        const res = await SubserviceService.getAll({
+          page: p,
+          limit: ITEMS_PER_LOAD,
+          filter: filterKey,
+        });
+        const { docs, hasNextPage } = res.data;
+        setItems((prev) => (p === 1 ? docs : [...prev, ...docs]));
+        setHasNext(hasNextPage);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [filterKey]
+  );
+
+  // when page or filterKey changes, load that page
   useEffect(() => {
     loadPage(page);
-  }, [page]);
+  }, [page, loadPage]);
 
-  // IntersectionObserver para scroll infinito
+  // when filterKey changes, reset items and page
   useEffect(() => {
-    if (!loadMoreRef.current || !hasNext) return;
-    const observer = new IntersectionObserver(
+    setPage(1);
+  }, [filterKey]);
+
+  // infinite scroll sentinel
+  useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el || !hasNext) return;
+    const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !loading) {
           setPage((prev) => prev + 1);
         }
       },
       { rootMargin: "200px" }
     );
-    observer.observe(loadMoreRef.current);
-    return () => observer.disconnect();
-  }, [hasNext]);
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [hasNext, loading]);
+
+  // render skeleton placeholders
+  {
+    loading && (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full animate-pulse">
+        {Array.from({ length: ITEMS_PER_LOAD }).map((_, i) => (
+          <div key={i} className="h-48 bg-gray-200 rounded-md" />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center w-full">
-      {/* <h2 className="text-2xl font-semibold mb-6">All experiences</h2> */}
-
       {items.length > 0 ? (
-        <div
-          className="
-            grid 
-              grid-cols-1       /* 1 columna en móvil */
-              sm:grid-cols-2    /* 2 cols desde ≥640px */
-              md:grid-cols-3    /* 3 cols desde ≥768px */
-              lg:grid-cols-4    /* 4 cols desde ≥1024px */
-            gap-6 w-full
-          "
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
           {items.map((service, index) => (
             <div key={service._id} className="w-full">
-              {/* <ServiceCard service={service} /> */}
-
               <ServiceCardRecomendation
                 onClick={() => router.push(`/service-preview/${service._id}`)}
-                key={service._id}
                 service={service}
                 index={index}
               />
@@ -73,13 +91,9 @@ const ServiceList = () => {
           ))}
         </div>
       ) : (
-        <p className="text-center py-10">No services available.</p>
+        !loading && <p className="text-center py-10">No services available.</p>
       )}
-
-      {/* Sentinel: cuando aparece, cargamos siguiente página */}
       {hasNext && <div ref={loadMoreRef} className="h-2 w-full" />}
     </div>
   );
-};
-
-export default ServiceList;
+}

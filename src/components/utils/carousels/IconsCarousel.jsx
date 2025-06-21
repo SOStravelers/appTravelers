@@ -1,38 +1,86 @@
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
-import { useEffect, useState } from "react";
 import languageData from "@/language/subServices.json";
 import ServiceService from "@/services/ServiceService";
 import { TbCheese } from "react-icons/tb";
 import * as FaIcons from "react-icons/fa";
 import * as GiIcons from "react-icons/gi";
 import * as MdIcons from "react-icons/md";
+import * as AiIcons from "react-icons/ai";
 
 const Icons = {
   ...FaIcons,
   ...GiIcons,
   ...MdIcons,
+  ...AiIcons,
 };
 
 export default function IconCarousel({
   viewMoreLink = "/collections",
   onViewMoreClick,
+  onOpenFilter,
+  onFilterChange,
 }) {
   const router = useRouter();
-  const store = useStore();
-  const { services, setServices, setService, language } = store;
+  const { services, setServices, setService, language, filters, setFilters } =
+    useStore();
+
   const [activeIdx, setActiveIdx] = useState(0);
+  const [showLeftBlur, setShowLeftBlur] = useState(false);
+  const [showRightBlur, setShowRightBlur] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+
+  const navRef = useRef(null);
+  const scrollRef = useRef(null);
 
   // Fetch services once
   useEffect(() => {
     ServiceService.list({ isActive: true, page: 1 })
       .then((res) => setServices(res.data.docs))
-      .catch((err) => console.error("Fetch services:", err));
+      .catch((err) => console.error(err));
+  }, [setServices]);
+
+  // Sticky shadow threshold (accounting for parent top-[58px])
+  useEffect(() => {
+    if (!navRef.current) return;
+    const rect = navRef.current.getBoundingClientRect();
+    const initialTop = rect.top + window.scrollY;
+    const threshold = initialTop + 150;
+
+    const onScroll = () => {
+      setIsSticky(window.scrollY >= threshold);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleIconClick = (service, idx) => {
-    setService({ serviceId: service._id, serviceName: service.name });
+  // Side‐blurs for horizontal scroll
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onSideScroll = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = el;
+      setShowLeftBlur(scrollLeft > 0);
+      setShowRightBlur(scrollLeft + clientWidth < scrollWidth);
+    };
+    el.addEventListener("scroll", onSideScroll);
+    window.addEventListener("resize", onSideScroll);
+    onSideScroll();
+    return () => {
+      el.removeEventListener("scroll", onSideScroll);
+      window.removeEventListener("resize", onSideScroll);
+    };
+  }, []);
+
+  const handleIconClick = (svc, idx) => {
+    setService({ serviceId: svc._id, serviceName: svc.name });
     setActiveIdx(idx);
+
+    const updated = { ...filters, service: svc._id };
+    setFilters(updated);
+    onFilterChange(updated);
   };
 
   const handleViewMore = () => {
@@ -41,56 +89,152 @@ export default function IconCarousel({
   };
 
   const IconMapper = ({ name, ...props }) => {
-    const IconComponent = Icons[name] || TbCheese;
-    return <IconComponent {...props} />;
+    const Component = Icons[name] || TbCheese;
+    return <Component {...props} />;
   };
 
+  // Build filter chips and notify parent
+  const { keyword, minPrice, maxPrice, service } = filters;
+  const chips = [];
+
+  if (minPrice > 0 && maxPrice > 0) {
+    const updated = { ...filters, minPrice: 0, maxPrice: 0 };
+    chips.push({
+      key: "priceRange",
+      label: `$${minPrice} - $${maxPrice}`,
+      onClear: () => {
+        setFilters(updated);
+        onFilterChange && onFilterChange(updated);
+      },
+    });
+  } else {
+    if (minPrice > 0) {
+      const updated = { ...filters, minPrice: 0 };
+      chips.push({
+        key: "minPrice",
+        label: `Above $${minPrice}`,
+        onClear: () => {
+          setFilters(updated);
+          onFilterChange && onFilterChange(updated);
+        },
+      });
+    }
+    if (maxPrice > 0) {
+      const updated = { ...filters, maxPrice: 0 };
+      chips.push({
+        key: "maxPrice",
+        label: `$${maxPrice} and below`,
+        onClear: () => {
+          setFilters(updated);
+          onFilterChange && onFilterChange(updated);
+        },
+      });
+    }
+  }
+
+  if (keyword) {
+    const updated = { ...filters, keyword: "" };
+    chips.push({
+      key: "keyword",
+      label: keyword,
+      onClear: () => {
+        setFilters(updated);
+        onFilterChange && onFilterChange(updated);
+      },
+    });
+  }
+
   return (
-    <nav className="w-full">
-      {/* Header with title and "see all" */}
+    <nav
+      ref={navRef}
+      className={`w-full sticky top-0 z-20 bg-white transition-shadow duration-200 ${
+        isSticky ? "shadow-xl border-b border-gray-200" : ""
+      }`}
+    >
+      {/* Header */}
       <div className="flex items-center justify-between px-4 py-2">
-        <h2 className="text-xl font-semibold text-gray-800">
+        <h2 className="text-md font-semibold text-gray-800">
           {languageData.index.explore[language]}
         </h2>
-        <button
-          type="button"
-          onClick={handleViewMore}
-          className="text-sm font-semibold text-blueBorder hover:underline"
-        >
-          {languageData.index.seeAllButton[language]}
-        </button>
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={handleViewMore}
+            className="text-sm font-semibold text-blueBorder hover:underline"
+          >
+            {languageData.index.seeAllButton[language]}
+          </button>
+          <button
+            onClick={onOpenFilter}
+            className="text-gray-900 hover:text-gray-700 focus:outline-none"
+          >
+            <IconMapper name="MdTune" size={24} />
+          </button>
+        </div>
       </div>
 
-      {/* Scrollable list */}
-      <div className="overflow-x-auto">
-        <ul className="flex space-x-6 px-4">
+      {/* Services carousel */}
+      <div className="relative mx-4">
+        <div
+          ref={scrollRef}
+          className="overflow-x-auto whitespace-nowrap pb-1 "
+        >
           {services.map((service, idx) => (
-            <li key={service._id}>
-              <button
-                onClick={() => handleIconClick(service, idx)}
-                className="flex flex-col items-center text-center focus:outline-none"
+            <button
+              key={service._id}
+              onClick={() => handleIconClick(service, idx)}
+              className="inline-flex flex-col items-center mx-3 focus:outline-none"
+            >
+              <IconMapper
+                name={service.icon}
+                size={24}
+                className={
+                  idx === activeIdx ? "text-gray-900" : "text-gray-500"
+                }
+              />
+              <span
+                className={`
+        mt-1 text-xs border-b-2 pb-1
+        transition-colors duration-200 ease-in-out
+        ${
+          idx === activeIdx
+            ? "text-gray-900 border-blueBorder"
+            : "text-gray-500 border-transparent"
+        }
+      `}
               >
-                <IconMapper
-                  name={service.icon}
-                  size={24}
-                  className={
-                    idx === activeIdx ? "text-gray-900" : "text-gray-500"
-                  }
-                />
-                <span
-                  className={`mt-1 text-sm ${
-                    idx === activeIdx
-                      ? "text-gray-900 border-b-2 border-blueBorder pb-1 my-1"
-                      : "text-gray-500"
-                  }`}
-                >
-                  {service.name[language]}
-                </span>
-              </button>
-            </li>
+                {service.name[language]}
+              </span>
+            </button>
           ))}
-        </ul>
+        </div>
+        {showLeftBlur && (
+          <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-white to-transparent" />
+        )}
+        {showRightBlur && (
+          <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white to-transparent" />
+        )}
       </div>
+
+      {/* Filter chips */}
+      {chips.length > 0 && (
+        <div className="flex flex-wrap gap-2 px-4 py-2">
+          {chips.map(({ key, label, onClear }) => (
+            <div
+              key={key}
+              onClick={onClear}
+              className="flex items-center bg-white border border-black border-opacity-40 rounded-md px-3 py-1 text-xs text-gray-700 cursor-pointer"
+            >
+              <span>{label}</span>
+              <button
+                type="button"
+                className="ml-2 focus:outline-none text-gray-500 hover:text-gray-700"
+              >
+                <AiIcons.AiOutlineClose size={16} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }

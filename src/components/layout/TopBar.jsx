@@ -139,14 +139,10 @@ function TopBar() {
           className="mr-2 my-2"
         >
           <LogoWhite
-            href="/"
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              "&:focus": { outline: "none" },
-              fontSize: "0.5rem", // Ajusta el tamaño del texto según tus necesidades
-            }}
-            color={"white"}
+            // remove the old fontSize (it doesn’t affect SVG paths)
+            size={38} // ← pick the pixel size you want (e.g. 18 × 18 px)
+            color="white"
+            style={{ "&:focus": { outline: "none" } }} // keep any extra styles you need
           />
         </Link>
         <div>

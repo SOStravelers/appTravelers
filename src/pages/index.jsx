@@ -106,7 +106,7 @@ export default function Home({}) {
       <SyncCarousel />
 
       {/* Aquí aplicamos sticky */}
-      <section className="sticky top-[58px] z-20 bg-white">
+      <section className="sticky top-[52px] z-20 bg-white">
         <IconCarousel
           onFilterChange={handleFilterChange}
           onOpenFilter={() => setFilterOpen(true)}

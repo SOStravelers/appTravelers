@@ -1,37 +1,26 @@
-// pages/subservices/create.jsx
-
+// pages/config/subservice/update/[id].jsx
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import { toast, ToastContainer } from "react-toastify";
 import { useStore } from "@/store";
 import SubserviceService from "@/services/SubserviceService";
 import ServiceService from "@/services/ServiceService";
+import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const LANGS = ["es", "en", "pt", "fr", "de"];
-const REQUIRED_LANGS = ["es", "en"];
-const LANG_LABELS = {
-  es: "Español",
-  en: "English",
-  pt: "Português",
-  fr: "Français",
-  de: "Deutsch",
-};
-
+/* ——— Quill únicamente con formato de texto ——— */
 const TEXT_ONLY_MODULES = {
   toolbar: [
-    ["bold", "italic", "underline", "strike"], // basic inline style
-    [{ list: "ordered" }, { list: "bullet" }], // lists
-    [{ align: [] }], // alignment
-    ["clean"], // remove formatting
+    ["bold", "italic", "underline", "strike"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ align: [] }],
+    ["clean"],
   ],
-  clipboard: {
-    matchVisual: false, // keep plain-text when pasting
-  },
+  clipboard: { matchVisual: false },
 };
-
 const TEXT_ONLY_FORMATS = [
   "bold",
   "italic",
@@ -42,12 +31,24 @@ const TEXT_ONLY_FORMATS = [
   "align",
 ];
 
-export default function NewSubservicePage() {
+/* ——— constantes de idiomas ——— */
+const LANGS = ["es", "en", "pt", "fr", "de"];
+const REQUIRED_LANGS = ["es", "en"];
+const LANG_LABELS = {
+  es: "Español",
+  en: "English",
+  pt: "Português",
+  fr: "Français",
+  de: "Deutsch",
+};
+
+export default function EditSubservicePage() {
   const router = useRouter();
+  const { id } = router.query;
   const { language } = useStore();
   const emptyName = { es: "", en: "", pt: "", fr: "", de: "" };
 
-  // form state
+  /* ——— state del formulario ——— */
   const [activeLang, setActiveLang] = useState(language);
   const [name, setName] = useState({ ...emptyName });
   const [details, setDetails] = useState({ ...emptyName });
@@ -66,8 +67,10 @@ export default function NewSubservicePage() {
     { name: { ...emptyName }, mapLocation: "" },
   ]);
 
-  // validation state
+  /* ——— state de validación / UI ——— */
   const [submitted, setSubmitted] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState({
     name: {},
     details: {},
@@ -79,16 +82,62 @@ export default function NewSubservicePage() {
     route: false,
   });
 
-  // modal visibility
-  const [showModal, setShowModal] = useState(false);
+  /* ——— helpers para actualizar arrays ——— */
+  const updateArray = (arr, setter, idx, key, value) =>
+    setter(arr.map((it, i) => (i === idx ? { ...it, [key]: value } : it)));
 
-  // fetch active services
+  const updateNameInArray = (arr, setter, idx, lang, val) =>
+    setter(
+      arr.map((it, i) =>
+        i === idx ? { ...it, name: { ...it.name, [lang]: val } } : it
+      )
+    );
+
+  /* ——— cargar servicios activos ——— */
   useEffect(() => {
     ServiceService.list({ isActive: true, page: 1 })
       .then((res) => setServices(res.data.docs))
-      .catch((err) => console.error("Fetch services:", err));
+      .catch(console.error);
   }, []);
 
+  /* ——— cargar subservicio existente ——— */
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    SubserviceService.getById(id)
+      .then(({ data }) => {
+        if (!data || typeof data !== "object") return;
+        setName(data.name || { ...emptyName });
+        setDetails(data.details || { ...emptyName });
+        setPriceCategory1(
+          data?.price?.category1 != null ? String(data.price.category1) : ""
+        );
+        setDuration(data?.duration != null ? String(data.duration) : "");
+        setServiceId(data?.service || "");
+        setIncludedList(
+          Array.isArray(data.includedList) && data.includedList.length
+            ? data.includedList
+            : [{ name: { ...emptyName } }]
+        );
+        setRestrictions(
+          Array.isArray(data.restrictions) && data.restrictions.length
+            ? data.restrictions
+            : [{ name: { ...emptyName } }]
+        );
+        setRoute(
+          Array.isArray(data.route) && data.route.length
+            ? data.route
+            : [{ name: { ...emptyName }, mapLocation: "" }]
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("No se pudo cargar el subservicio.");
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  /* ——— validación local ——— */
   const validate = () => {
     const err = {
       name: {},
@@ -101,7 +150,6 @@ export default function NewSubservicePage() {
       route: false,
     };
 
-    // only Spanish & English required
     REQUIRED_LANGS.forEach((l) => {
       err.name[l] = !name[l]?.trim();
       err.details[l] = !(details[l] || "").replace(/<(.|\n)*?>/g, "").trim();
@@ -110,24 +158,17 @@ export default function NewSubservicePage() {
     err.price = priceCategory1 === "" || isNaN(Number(priceCategory1));
     err.duration = duration === "" || isNaN(Number(duration));
     err.service = !serviceId;
-
-    // includedList: at least one element with ES+EN
     err.included = !includedList.some(
       (it) => it.name.es.trim() && it.name.en.trim()
     );
-
-    // restrictions: same
     err.restrictions = !restrictions.some(
       (it) => it.name.es.trim() && it.name.en.trim()
     );
-
-    // route: at least one with ES+EN+mapLocation
     err.route = !route.some(
       (it) => it.name.es.trim() && it.name.en.trim() && it.mapLocation.trim()
     );
 
     setErrors(err);
-
     return !(
       Object.values(err.name).some(Boolean) ||
       Object.values(err.details).some(Boolean) ||
@@ -140,11 +181,13 @@ export default function NewSubservicePage() {
     );
   };
 
+  /* ——— submit ——— */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
     if (!validate()) {
       setShowModal(true);
+      toast.error("Completa los campos obligatorios.");
       return;
     }
 
@@ -159,22 +202,34 @@ export default function NewSubservicePage() {
       route,
       isActive: true,
     };
-    console.log("Payload:", payload);
-    await SubserviceService.create(payload);
-    // router.push('/subservices');
+
+    try {
+      await SubserviceService.updateById(id, payload);
+      toast.success("Actualizado con éxito", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1200,
+      });
+    } catch (error) {
+      toast.error("Ocurrio un error", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1200,
+      });
+    }
   };
 
-  const updateArray = (arr, setter, idx, key, value) =>
-    setter(arr.map((it, i) => (i === idx ? { ...it, [key]: value } : it)));
-
-  const updateNameInArray = (arr, setter, idx, lang, val) =>
-    setter(
-      arr.map((it, i) =>
-        i === idx ? { ...it, name: { ...it.name, [lang]: val } } : it
-      )
+  /* ——— pantalla de carga ——— */
+  if (loading) {
+    return (
+      <>
+        <ToastContainer position="top-right" autoClose={4000} />
+        <div className="flex items-center justify-center h-[60vh]">
+          <p className="text-lg font-medium">Cargando…</p>
+        </div>
+      </>
     );
+  }
 
-  // determine if there are errors to show
+  /* ——— vista principal ——— */
   const hasErrors =
     submitted &&
     (Object.values(errors.name).some(Boolean) ||
@@ -188,12 +243,15 @@ export default function NewSubservicePage() {
 
   return (
     <>
+      <ToastContainer position="top-right" autoClose={4000} />
+
       {showModal && hasErrors && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg max-w-sm text-center">
             <p className="text-red-700 font-bold mb-4">
               Faltan campos por llenar
             </p>
+
             <button
               type="button"
               onClick={() => setShowModal(false)}
@@ -206,9 +264,26 @@ export default function NewSubservicePage() {
       )}
 
       <div className="max-w-4xl my-12 mx-auto p-6 bg-white rounded-lg shadow">
-        <h1 className="text-2xl font-bold mb-4">Nuevo Subservicio</h1>
+        <div className="flex w-full justify-between mt-8">
+          <h1 className="text-2xl font-bold mb-4">Editar Subservicio</h1>
+          <div>
+            <button
+              type="submit"
+              className="bg-green-600 text-white px-2 py-2 rounded hover:bg-green-700"
+            >
+              Guardar Cambios
+            </button>
+            <button
+              type="button"
+              onClick={() => router.push("/config/subservice/gallery/" + id)}
+              className="bg-blue-200 text-gray-800 px-2 ml-2 py-2 rounded hover:bg-blue-300"
+            >
+              Ir a Galeria
+            </button>
+          </div>
+        </div>
 
-        {/* language tabs */}
+        {/* ——— selector de idioma ——— */}
         <div className="flex overflow-x-auto whitespace-nowrap border-b mb-6">
           {LANGS.map((l) => (
             <button
@@ -226,8 +301,9 @@ export default function NewSubservicePage() {
           ))}
         </div>
 
+        {/* ——— formulario ——— */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name */}
+          {/* Nombre */}
           <div>
             <label className="block font-medium mb-1">
               Nombre ({LANG_LABELS[activeLang]})
@@ -248,7 +324,7 @@ export default function NewSubservicePage() {
             />
           </div>
 
-          {/* Details */}
+          {/* Descripción */}
           <div>
             <label className="block font-medium mb-1">
               Descripción ({LANG_LABELS[activeLang]})
@@ -266,13 +342,13 @@ export default function NewSubservicePage() {
                 value={details[activeLang]}
                 onChange={(v) => setDetails({ ...details, [activeLang]: v })}
                 theme="snow"
-                modules={TEXT_ONLY_MODULES} // ← NEW
-                formats={TEXT_ONLY_FORMATS} // ← NEW
+                modules={TEXT_ONLY_MODULES}
+                formats={TEXT_ONLY_FORMATS}
               />
             </div>
           </div>
 
-          {/* Price & Duration */}
+          {/* Precio y Duración */}
           <div className="flex flex-wrap gap-6">
             <div>
               <label className="block font-medium mb-1">Precio (€)</label>
@@ -304,7 +380,7 @@ export default function NewSubservicePage() {
             </div>
           </div>
 
-          {/* Service selector */}
+          {/* Servicio asociado */}
           <div>
             <label className="block font-medium mb-1">Servicio Asociado</label>
             <select
@@ -319,13 +395,13 @@ export default function NewSubservicePage() {
               <option value="">-- Selecciona un servicio --</option>
               {services.map((s) => (
                 <option key={s._id} value={s._id}>
-                  {s.name[language]}
+                  {s.name[language] || s.name.es}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* IncludedList */}
+          {/* Incluye */}
           <fieldset
             className={`mb-6 ${
               submitted && errors.included ? "border border-red-500 p-4" : ""
@@ -378,7 +454,7 @@ export default function NewSubservicePage() {
             </button>
           </fieldset>
 
-          {/* Restrictions */}
+          {/* Restricciones */}
           <fieldset
             className={`mb-6 ${
               submitted && errors.restrictions
@@ -433,7 +509,7 @@ export default function NewSubservicePage() {
             </button>
           </fieldset>
 
-          {/* Route */}
+          {/* Ruta */}
           <fieldset
             className={`mb-6 ${
               submitted && errors.route ? "border border-red-500 p-4" : ""
@@ -504,12 +580,25 @@ export default function NewSubservicePage() {
           </fieldset>
 
           {/* Submit */}
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
-          >
-            Crear Subservicio
-          </button>
+          {/* …dentro de tu <form> o después de él … */}
+          <div className="flex w-full justify-between mt-8">
+            {/* Botón izquierda */}
+            <button
+              type="submit"
+              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+            >
+              Guardar Cambios
+            </button>
+
+            {/* Botón derecha */}
+            <button
+              type="button"
+              onClick={() => router.push("/config/subservice/gallery/" + id)}
+              className="bg-blue-200 text-gray-800 px-6 py-2 rounded hover:bg-blue-300"
+            >
+              Ir a Galeria
+            </button>
+          </div>
         </form>
       </div>
     </>

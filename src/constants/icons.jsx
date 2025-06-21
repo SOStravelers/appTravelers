@@ -2633,11 +2633,18 @@ export const MassageIcon = ({ color = "black", ...props }) => (
   </svg>
 );
 
-export const LogoWhite = ({ color, height, width, ...props }) => (
+// components/icons/LogoWhite.jsx
+export const LogoWhite = ({
+  color = "white",
+  size = 24, // <— new
+  width,
+  height,
+  ...props
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={width || "45"}
-    height={height || "45"}
+    width={width ?? size} // keep width > height override precedence
+    height={height ?? size} // keep height > size precedence
     viewBox="0 0 45 45"
     fill="none"
     {...props}

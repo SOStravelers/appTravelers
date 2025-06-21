@@ -28,6 +28,15 @@ export default class SubserviceService {
       headers: this.getHeaders(),
     });
   }
+  //actualizar informacion de las fotos y videos
+  static async updateGallery(id, formData) {
+    return axios.post(`${this.baseUrl}/assets/${id}`, formData, {
+      headers: {
+        ...this.getHeaders(), // ← Authorization
+        "Content-Type": "multipart/form-data", // ← multipart
+      },
+    });
+  }
   //Obtener todos los subservicios con paginate
   static async getAll(data) {
     console.log("getAll subservices");

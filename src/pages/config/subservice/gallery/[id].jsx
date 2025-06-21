@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { FaImage, FaVideo, FaTrash, FaGripVertical } from "react-icons/fa";
 import { useStore } from "@/store";
 import SubserviceService from "@/services/SubserviceService";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function UploadAssetsPage() {
   const router = useRouter();
   const { id } = router.query;
@@ -113,14 +113,17 @@ export default function UploadAssetsPage() {
     );
 
     try {
-      await axios.post(`http://localhost:9000/subservices/assets/${id}`, form, {
-        headers: { "Content-Type": "multipart/form-data" },
+      await SubserviceService.updateGallery(id, form);
+      toast.success("Actualizado con éxito", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1200,
       });
-      alert("Assets actualizados con éxito");
-      router.push("/subservices");
-    } catch (err) {
-      console.error(err.response || err);
-      alert("Error al actualizar assets");
+    } catch (error) {
+      console.error(error.response || error);
+      toast.error("Ocurrió un error", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+        autoClose: 1200,
+      });
     } finally {
       setSubmitting(false);
     }
@@ -447,13 +450,24 @@ export default function UploadAssetsPage() {
           </div>
 
           {/* Submit */}
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full bg-blueBorder text-white py-2 rounded-lg hover:opacity-90"
-          >
-            {submitting ? "Actualizando…" : "Guardar Cambios"}
-          </button>
+
+          <div className="flex w-full justify-between mt-8">
+            <button
+              type="submit"
+              disabled={submitting}
+              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+            >
+              {submitting ? "Actualizando…" : "Guardar "}
+            </button>
+            {/* Botón derecha */}
+            <button
+              type="button"
+              onClick={() => router.push("/config/subservice/info/" + id)}
+              className="bg-blue-200 text-gray-800 px-8 py-2 rounded hover:bg-blue-300"
+            >
+              Ir a Info
+            </button>
+          </div>
         </form>
       </div>
     </div>

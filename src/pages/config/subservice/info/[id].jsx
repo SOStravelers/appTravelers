@@ -69,6 +69,7 @@ export default function EditSubservicePage() {
 
   /* ——— state de validación / UI ——— */
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false); // ← NUEVO
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState({
@@ -184,7 +185,9 @@ export default function EditSubservicePage() {
   /* ——— submit ——— */
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (saving) return; // evita doble clic
     setSubmitted(true);
+
     if (!validate()) {
       setShowModal(true);
       toast.error("Completa los campos obligatorios.");
@@ -203,6 +206,7 @@ export default function EditSubservicePage() {
       isActive: true,
     };
 
+    setSaving(true); // bloquea el botón
     try {
       await SubserviceService.updateById(id, payload);
       toast.success("Actualizado con éxito", {
@@ -210,10 +214,12 @@ export default function EditSubservicePage() {
         autoClose: 1200,
       });
     } catch (error) {
-      toast.error("Ocurrio un error", {
+      toast.error("Ocurrió un error", {
         position: toast.POSITION.BOTTOM_RIGHT,
         autoClose: 1200,
       });
+    } finally {
+      setSaving(false); // libera el botón
     }
   };
 
@@ -251,7 +257,6 @@ export default function EditSubservicePage() {
             <p className="text-red-700 font-bold mb-4">
               Faltan campos por llenar
             </p>
-
             <button
               type="button"
               onClick={() => setShowModal(false)}
@@ -264,23 +269,27 @@ export default function EditSubservicePage() {
       )}
 
       <div className="max-w-4xl my-12 mx-auto p-6 bg-white rounded-lg shadow">
-        <div className="flex w-full justify-between mt-8">
-          <h1 className="text-2xl font-bold mb-4">Editar Subservicio</h1>
-          <div>
-            <button
-              type="submit"
-              className="bg-green-600 text-white px-2 py-2 rounded hover:bg-green-700"
-            >
-              Guardar Cambios
-            </button>
-            <button
-              type="button"
-              onClick={() => router.push("/config/subservice/gallery/" + id)}
-              className="bg-blue-200 text-gray-800 px-2 ml-2 py-2 rounded hover:bg-blue-300"
-            >
-              Ir a Galeria
-            </button>
-          </div>
+        <h1 className="text-2xl font-bold mb-4">Editar Subservicio</h1>
+
+        {/* botones superiores */}
+        <div className="flex w-full justify-between my-3">
+          <button
+            type="submit"
+            form="editForm"
+            disabled={saving}
+            className={`bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 ${
+              saving ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            {saving ? "Guardando…" : "Guardar"}
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push("/config/subservice/gallery/" + id)}
+            className="bg-blue-200 text-gray-800 px-2 ml-2 py-2 rounded hover:bg-blue-300"
+          >
+            Ir a Galeria
+          </button>
         </div>
 
         {/* ——— selector de idioma ——— */}
@@ -302,7 +311,7 @@ export default function EditSubservicePage() {
         </div>
 
         {/* ——— formulario ——— */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form id="editForm" onSubmit={handleSubmit} className="space-y-6">
           {/* Nombre */}
           <div>
             <label className="block font-medium mb-1">
@@ -580,17 +589,17 @@ export default function EditSubservicePage() {
           </fieldset>
 
           {/* Submit */}
-          {/* …dentro de tu <form> o después de él … */}
           <div className="flex w-full justify-between mt-8">
-            {/* Botón izquierda */}
             <button
               type="submit"
-              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+              disabled={saving}
+              className={`bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 ${
+                saving ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              Guardar Cambios
+              {saving ? "Guardando…" : "Guardar Cambios"}
             </button>
 
-            {/* Botón derecha */}
             <button
               type="button"
               onClick={() => router.push("/config/subservice/gallery/" + id)}

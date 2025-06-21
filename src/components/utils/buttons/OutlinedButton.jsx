@@ -4,7 +4,7 @@ import clsx from "clsx";
 function OutlinedButton({
   text,
   secondary,
-  py = 3,
+  py = 2,
   error,
   disabled,
   margin,

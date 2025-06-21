@@ -3,17 +3,21 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
 import SubserviceService from "@/services/SubserviceService";
-
+import Cookies from "js-cookie";
+import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 const ITEMS_PER_LOAD = 2;
-
+import { useStore } from "@/store";
 export default function ServiceList({ filterKey }) {
+  const store = useStore();
+  const { loginModal, setLoginModal, setService, language } = store;
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const loadMoreRef = useRef(null);
   const router = useRouter();
-
+  var user = Cookies.get("auth.user_id");
   // Fetch a page, passing filterKey, manage loading state
   const loadPage = useCallback(
     async (p) => {
@@ -48,6 +52,17 @@ export default function ServiceList({ filterKey }) {
   useEffect(() => {
     setPage(1);
   }, [filterKey]);
+
+  const likeButton = (state, id) => {
+    console.log("entro");
+    if (!user) {
+      setOpen(true);
+      return false;
+    } else {
+      console.log("a guardar like", state, id);
+      return true;
+    }
+  };
 
   // infinite scroll sentinel
   useEffect(() => {
@@ -84,6 +99,7 @@ export default function ServiceList({ filterKey }) {
             <div key={service._id} className="w-full">
               <ServiceCardRecomendation
                 onClick={() => router.push(`/service-preview/${service._id}`)}
+                onlikeButton={likeButton}
                 service={service}
                 index={index}
               />
@@ -94,6 +110,14 @@ export default function ServiceList({ filterKey }) {
         !loading && <p className="text-center py-10">No services available.</p>
       )}
       {hasNext && <div ref={loadMoreRef} className="h-2 w-full" />}
+
+      {!user && (
+        <LoginFormModal
+          open={open}
+          setOpen={setOpen}
+          title="Login to continue"
+        />
+      )}
     </div>
   );
 }

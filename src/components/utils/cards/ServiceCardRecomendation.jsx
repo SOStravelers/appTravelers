@@ -6,7 +6,12 @@ import languageData from "@/language/subServices.json";
 import { useStore } from "@/store";
 import { formatTime } from "@/lib/time";
 
-const ServiceCardRecomendation = ({ service, onClick, index }) => {
+const ServiceCardRecomendation = ({
+  service,
+  onClick,
+  index,
+  onlikeButton,
+}) => {
   const store = useStore();
   const router = useRouter();
   const { language } = store;
@@ -29,6 +34,14 @@ const ServiceCardRecomendation = ({ service, onClick, index }) => {
   const images = gallery?.images || [];
   const gridItems = [0, 1, 2, 3].map((i) => images[i] || null);
 
+  const favoriteAction = (state) => {
+    console.log("entramos");
+    const shouldToggle = onlikeButton(state, service._id);
+    if (shouldToggle) {
+      setIsFavorited(state);
+    }
+  };
+
   return (
     <div
       onClick={onClick}
@@ -44,7 +57,7 @@ const ServiceCardRecomendation = ({ service, onClick, index }) => {
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          setIsFavorited((prev) => !prev);
+          favoriteAction((prev) => !prev);
         }}
         className="absolute top-2 right-2 z-10 p-1"
       >

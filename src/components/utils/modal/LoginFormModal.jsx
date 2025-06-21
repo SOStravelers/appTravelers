@@ -17,23 +17,37 @@ export default function LoginFormModal({
   const handleCancel = () => {
     setOpen(false);
     onCancel?.();
-    router.push("/");
+    // solo navegamos a “/” si no estamos ya en home
+    if (router.pathname !== "/") {
+      router.push("/");
+    }
   };
 
   return (
     <div
-      className="
+      className={`
         fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm
         flex items-center justify-center z-50
-      "
+        transition-opacity duration-300 ease-out
+        ${
+          open
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }
+      `}
       onClick={handleCancel}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="
-          bg-white rounded-2xl w-[90vw] max-w-sm p-5
+        className={`
+          bg-white rounded-2xl w-[90vw] max-w-sm p-5 mx-2
           transform transition-all duration-200 ease-out
-        "
+          ${
+            open
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-95 translate-y-4"
+          }
+        `}
       >
         {/* Close button */}
         <button

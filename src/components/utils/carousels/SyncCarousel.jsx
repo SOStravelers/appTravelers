@@ -9,7 +9,8 @@ import {
 import SubserviceService from "@/services/SubserviceService";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
-
+import Cookies from "js-cookie";
+import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
   useEffect(() => {
     const video = videoRef.current;
@@ -77,11 +78,13 @@ const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
 };
 
 export default function SyncCarousel() {
+  var user = Cookies.get("auth.user_id");
   const router = useRouter();
   const { language } = useStore();
   const videoRef = useRef(null);
   const [items, setItems] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [open, setOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [likes, setLikes] = useState([]);
@@ -122,10 +125,27 @@ export default function SyncCarousel() {
     setIsPlaying(!isPlaying);
   };
 
-  const handleLike = (i) =>
-    setLikes((prev) =>
-      prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]
-    );
+  // like-button logic: opens modal if no user, else toggles like
+  const onLikeButton = (newState, id) => {
+    console.log("entra", newState);
+    if (!user) {
+      console.log("entra 2");
+      setOpen(true);
+      return false;
+    }
+    // could call an API to persist the like here...
+    return true;
+  };
+
+  const handleLike = (i, item) => {
+    const newState = !likes.includes(i);
+    console.log("newState", newState);
+    if (onLikeButton(newState, item._id)) {
+      setLikes((prev) =>
+        prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]
+      );
+    }
+  };
 
   const getNearestCardIndex = () => {
     const c = containerRef.current;
@@ -249,7 +269,7 @@ export default function SyncCarousel() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleLike(i);
+                  handleLike(i, item);
                 }}
                 className={`absolute top-1 right-1 text-2xl transition-colors ${
                   likes.includes(i)
@@ -263,6 +283,14 @@ export default function SyncCarousel() {
           ))}
           <div className="flex-shrink-0 w-32" />
         </div>
+        {/* Modal login */}
+        {!user && (
+          <LoginFormModal
+            open={open}
+            setOpen={setOpen}
+            title="Login to continue"
+          />
+        )}
       </div>
     </div>
   );

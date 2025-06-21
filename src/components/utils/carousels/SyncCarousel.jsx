@@ -42,7 +42,7 @@ const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
             r();
           })
         );
-        await video.play();
+        video.play();
         video.style.opacity = "1";
       } catch (err) {
         console.error("VideoLoader:", err);
@@ -108,24 +108,37 @@ export default function SyncCarousel() {
   }, []);
 
   /* -------- sincronizar icono play/pause -------- */
+  /* ➊ añade este efecto  — se ejecuta cada vez que cambia activeItem */
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    const onPlay = () => setIsPlaying(true);
-    const onPause = () => setIsPlaying(false);
-    v.addEventListener("play", onPlay);
-    v.addEventListener("pause", onPause);
+
+    // si el nuevo vídeo ya empezó a reproducirse,
+    // actualizamos el icono del botón
+    const sync = () => setIsPlaying(!v.paused);
+
+    v.addEventListener("play", sync);
+    v.addEventListener("pause", sync);
+
+    // cuando cambie nuevamente quitamos listeners anteriores
     return () => {
-      v.removeEventListener("play", onPlay);
-      v.removeEventListener("pause", onPause);
+      v.removeEventListener("play", sync);
+      v.removeEventListener("pause", sync);
     };
-  }, [items]);
+  }, [activeIndex]); // 👈 depende del slide activo
 
   /* -------- controles -------- */
   const togglePlayPause = () => {
     const v = videoRef.current;
     if (!v) return;
-    isPlaying ? v.pause() : v.play();
+
+    if (v.paused) {
+      v.play().catch(() => {}); // evita warning de promesa
+      setIsPlaying(true);
+    } else {
+      v.pause();
+      setIsPlaying(false);
+    }
   };
 
   const onLikeButton = (newState) => {

@@ -28,7 +28,7 @@ function Navbar() {
     useStore();
   const userId = Cookies.get("auth.user_id");
   const goTo = (ruta) => {
-    if (!userCookie && ruta != "/" && ruta != "/profile") {
+    if (!userCookie && ruta != "/" && ruta != "/profiles") {
       setOpenLogin(true);
       return;
     }

@@ -4,11 +4,10 @@ import Cookies from "js-cookie";
 import { useStore } from "@/store";
 import "flag-icons/css/flag-icons.min.css";
 
-/** Mapea tu código de idioma ⇢ código ISO-2 que usa flag-icons */
 const FLAGS = {
   es: "es", // 🇪🇸
   en: "gb", // 🇬🇧
-  pt: "pt", // 🇵🇹
+  pt: "br", // 🇵🇹
   fr: "fr", // 🇫🇷
   de: "de", // 🇩🇪
 };
@@ -18,11 +17,11 @@ const LanguageSelector = () => {
   const [open, setOpen] = useState(false);
   const wrapper = useRef(null);
 
-  /* Cerrar pop-over si se hace click fuera */
+  /* click-fuera ⇒ cerrar */
   useEffect(() => {
     const close = (e) => !wrapper.current?.contains(e.target) && setOpen(false);
-    window.addEventListener("mousedown", close);
-    return () => window.removeEventListener("mousedown", close);
+    addEventListener("mousedown", close);
+    return () => removeEventListener("mousedown", close);
   }, []);
 
   const changeLang = (code) => {
@@ -33,7 +32,7 @@ const LanguageSelector = () => {
 
   return (
     <div ref={wrapper} className="relative">
-      {/* ───── Botón con la bandera activa ───── */}
+      {/* ─── Botón principal ─── */}
       <button
         onClick={() => setOpen((o) => !o)}
         className="flex items-center justify-center w-8 h-6 rounded
@@ -43,11 +42,11 @@ const LanguageSelector = () => {
         <span className={`fi fi-${FLAGS[language] ?? "gb"} fis`} />
       </button>
 
-      {/* ───── Pop-over con el resto de idiomas ───── */}
+      {/* ─── Pop-over ─── */}
       {open && (
         <div
-          className="absolute right-0 mt-1 flex flex-col overflow-hidden
-                     rounded-lg bg-white shadow-lg ring-1 ring-black/10 z-50"
+          className="absolute right-0 mt-2 flex flex-col gap-1
+                     p-2 bg-white shadow-lg rounded-lg ring-1 ring-black/10 z-50"
         >
           {Object.entries(FLAGS)
             .filter(([code]) => code !== language)
@@ -55,7 +54,8 @@ const LanguageSelector = () => {
               <button
                 key={code}
                 onClick={() => changeLang(code)}
-                className="p-1 hover:bg-gray-100"
+                className="flex items-center justify-center w-8 h-6 rounded
+                           hover:bg-gray-100 transition"
                 aria-label={code}
               >
                 <span className={`fi fi-${iso} fis`} />

@@ -4,6 +4,7 @@ import {
   NotificationIcon,
 } from "@/constants/icons";
 import { useEffect, useRef, useState } from "react";
+import { FiMapPin } from "react-icons/fi";
 import { random } from "@/lib/utils";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
@@ -246,6 +247,12 @@ function TopBar() {
             </Link>
           </>
         )} */}
+
+        <span className="mx-1 text-white">RJ</span>
+
+        <button className="flex items-center justify-center mr-6 text-white hover:text-white/80 transition">
+          <FiMapPin size={16} />
+        </button>
         <LanguageSelector />
       </div>
     </div>

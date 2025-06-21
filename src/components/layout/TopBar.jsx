@@ -3,6 +3,7 @@ import {
   LogoWhite,
   NotificationIcon,
 } from "@/constants/icons";
+import { FiBell, FiBellOff } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 import { FiMapPin } from "react-icons/fi";
 import { random } from "@/lib/utils";
@@ -159,57 +160,36 @@ function TopBar() {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        {/* {loggedIn ? (
+        {loggedIn ? (
           <>
             <div className="d-flex flex-col">
-              {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
-                <h1 className="text-white mr-3 neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
-                  {process.env.NEXT_PUBLIC_NODE_ENV == "dev" ||
-                  process.env.NEXT_PUBLIC_NODE_ENV == "development"
-                    ? "Dev Version"
-                    : " Test Version"}
-                </h1>
-              )}
               {isWorker && (
                 <h1 className="text-white mr-3 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
                   Worker Mode
                 </h1>
               )}
             </div>
-            {haveNotification ? (
-              <Link href="/notifications" className="lg:mx-4 xl:mx-5">
-                <NotificationIcon
-                  active={"true"}
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    "&:focus": { outline: "none" },
-                    fontSize: "0.1rem", // Ajusta el tamaño del texto según tus necesidades
-                  }}
-                  color="#FFFFFF"
-                  className="mr-3 cursor-pointer"
-                />
-              </Link>
-            ) : (
-              <Link href="/notifications" className="lg:mx-5 xl:mx-5">
-                <NotificationOffIcon
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    "&:focus": { outline: "none" },
-                    fontSize: "0.1rem", // Ajusta el tamaño del texto según tus necesidades
-                  }}
-                  color="#FFFFFF"
-                  className="mr-3 cursor-pointer"
-                />
-              </Link>
-            )}
+
+            <Link href="/notifications" className="relative lg:mx-4 xl:mx-5">
+              {/* campana (siempre) */}
+              <FiBell className="w-5 h-5 mr-4 text-white" />
+
+              {/* puntito SOLO cuando existe notificación */}
+              {haveNotification && (
+                <span className="absolute -top-0.5  inline-flex h-2 w-2">
+                  {/* efecto ping (opcional) */}
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  {/* círculo sólido */}
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                </span>
+              )}
+            </Link>
 
             {isImageAccessible && user?.img && user?.img.imgUrl ? (
               <Link
                 className="rounded-xl"
                 href={profileUrl}
-                style={{ width: "40px", height: "40px", overflow: "hidden" }}
+                style={{ width: "36px", height: "36px", overflow: "hidden" }}
               >
                 <img
                   src={user.img.imgUrl}
@@ -228,15 +208,7 @@ function TopBar() {
           </>
         ) : (
           <>
-            {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
-              <h1 className="text-white mr-2 neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
-                {process.env.NEXT_PUBLIC_NODE_ENV == "dev" ||
-                process.env.NEXT_PUBLIC_NODE_ENV == "development"
-                  ? "Dev V"
-                  : " Test V"}
-              </h1>
-            )}
-            <Link className="text-white text-sm mr-2" href="/login">
+            {/* <Link className="text-white text-sm mr-2" href="/login">
               {languageData.signIn[language]}
             </Link>
             <Link
@@ -244,16 +216,16 @@ function TopBar() {
               href="/register"
             >
               {languageData.join[language]}
-            </Link>
+            </Link> */}
+
+            <span className="mx-1 text-white">RJ</span>
+
+            <button className="flex items-center justify-center mr-6 text-white hover:text-white/80 transition">
+              <FiMapPin size={16} />
+            </button>
+            <LanguageSelector />
           </>
-        )} */}
-
-        <span className="mx-1 text-white">RJ</span>
-
-        <button className="flex items-center justify-center mr-6 text-white hover:text-white/80 transition">
-          <FiMapPin size={16} />
-        </button>
-        <LanguageSelector />
+        )}
       </div>
     </div>
   );

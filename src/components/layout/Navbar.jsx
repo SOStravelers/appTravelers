@@ -3,7 +3,8 @@ import Cookies from "js-cookie";
 import clsx from "clsx";
 import NotificationService from "@/services/NotificationService";
 import languageData from "@/language/menu.json";
-
+import { useEffect, useState } from "react";
+import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import {
   HomeIcon,
   HomeIconOutlined,
@@ -21,11 +22,16 @@ import {
 import { useStore } from "@/store";
 function Navbar() {
   const router = useRouter();
-
+  const [openLogin, setOpenLogin] = useState(false);
+  const userCookie = Cookies.get("auth.user_id");
   const { isWorker, user, setHaveNotification, language, setService } =
     useStore();
   const userId = Cookies.get("auth.user_id");
   const goTo = (ruta) => {
+    if (!userCookie && ruta != "/" && ruta != "/profile") {
+      setOpenLogin(true);
+      return;
+    }
     setService({});
     if (ruta != "/" && ruta != "/worker/home") {
       checkNotification();
@@ -122,7 +128,7 @@ function Navbar() {
         </span>
       </button> */}
 
-      {/* {!isWorker && (
+      {!isWorker && (
         <button
           className="flex mt-1 flex-col items-center justify-center"
           onClick={() => goTo(isWorker ? "/worker/favorites" : "/favorites")}
@@ -145,7 +151,7 @@ function Navbar() {
             {languageData.favorites[language]}
           </span>
         </button>
-      )} */}
+      )}
       {isWorker && (
         <button
           className="flex mt-1 flex-col items-center justify-center"
@@ -192,6 +198,14 @@ function Navbar() {
           {languageData.profile[language]}
         </span>
       </button>
+
+      {!userCookie && (
+        <LoginFormModal
+          open={openLogin}
+          setOpen={setOpenLogin}
+          title="Login to continue"
+        />
+      )}
     </div>
   );
 }

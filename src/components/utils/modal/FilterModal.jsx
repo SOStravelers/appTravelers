@@ -53,7 +53,7 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
       <div
         onClick={(e) => e.stopPropagation()}
         className={`
-          bg-white rounded-lg w-full max-w-md p-4 mx-2
+          bg-white rounded-lg w-full max-w-md p-4 mx-4
           transform transition-all duration-200 ease-out
           ${
             isOpen

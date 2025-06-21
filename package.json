@@ -25,6 +25,7 @@
     "dayjs": "^1.11.10",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.16",
+    "flag-icons": "^7.5.0",
     "houseform": "^1.11.1",
     "howler": "^2.2.4",
     "js-cookie": "^3.0.5",

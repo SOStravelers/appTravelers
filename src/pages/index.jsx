@@ -84,7 +84,7 @@ export default function Home({}) {
       // restoredRef.current = true;
       window.scrollTo(0, y);
       setScrolled(true);
-    }, 400);
+    }, 300);
 
     return () => clearTimeout(id); // ← limpieza
   }, []);

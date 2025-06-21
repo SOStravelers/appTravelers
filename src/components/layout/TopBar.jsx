@@ -13,6 +13,7 @@ import { Howl } from "howler";
 import Router from "next/router";
 import languageData from "@/language/menu.json";
 import { validationImg } from "@/utils/validation";
+import LanguageSelector from "@/components/utils/selector/LanguageSelector";
 const sound = new Howl({
   src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
 });
@@ -147,17 +148,17 @@ function TopBar() {
           />
         </Link>
         <div>
-          <p className="text-white font-semibold text-lg">SOS</p>
+          <p className="text-white font-semibold text-md">SOS</p>
           <p
-            style={{ marginTop: "-12px" }}
-            className="text-white font-semibold text-lg"
+            style={{ marginTop: "-10px" }}
+            className="text-white font-semibold text-md"
           >
             Travelers
           </p>
         </div>
       </div>
       <div className="flex justify-center items-center">
-        {loggedIn ? (
+        {/* {loggedIn ? (
           <>
             <div className="d-flex flex-col">
               {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
@@ -244,7 +245,8 @@ function TopBar() {
               {languageData.join[language]}
             </Link>
           </>
-        )}
+        )} */}
+        <LanguageSelector />
       </div>
     </div>
   );

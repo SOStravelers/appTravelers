@@ -18,7 +18,7 @@ function TopBarSubMenu() {
   const router = useRouter();
   const [booking, setBooking] = useState({});
   const socket = useRef();
-  const { isWorker } = useStore();
+  const { isWorker, setScrollY, setRestoreScroll } = useStore(); // 👈 nuevos
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   var userId = Cookies.get("auth.user_id");
   const routeTitles = useDynamicRouteTitles();
@@ -91,7 +91,15 @@ function TopBarSubMenu() {
         <ReturnArrowIcon color="#fff" size="35" />
       </div>
       <h1 className={clsx(" text-xl", "text-white")}>{titulo}</h1>
-      <Link className="my-2" href={isWorker ? "/worker/home" : "/"}>
+      <Link
+        className="my-2"
+        href={isWorker ? "/worker/home" : "/"}
+        scroll={false}
+        onClick={() => {
+          setScrollY(window.scrollY); // guardamos Y
+          setRestoreScroll(true); // marcamos que hay que restaurar
+        }}
+      >
         <LogoWhite
           style={{
             textDecoration: "none",

@@ -53,7 +53,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       PartnerService.sentIdClient(result.visitorId, partner);
     }
 
-    console.log("navigator");
     if (typeof window !== "undefined") {
       //cambio lenguage∂
       if (cookieLanguage) {

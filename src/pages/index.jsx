@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/router";
 import { register } from "swiper/element/bundle";
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
@@ -22,16 +23,50 @@ register();
 import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import ServiceList from "@/components/service/ServiceList";
 import FilterModal from "@/components/utils/modal/FilterModal";
+
 export default function Home({}) {
   const store = useStore();
-  const { services, setServices, setHaveNotification, setService, language } =
-    store;
+  const {
+    services,
+    setServices,
+    setHaveNotification,
+    setService,
+    language,
+    /* ---------- NUEVO ---------- */
+    restoreScroll,
+    setRestoreScroll,
+    homeScrollY,
+    setScrollY,
+    setLastPage,
+  } = store;
+
+  const router = useRouter();
   const [bookings, setBookings] = useState([]);
   const [slides, setSlides] = useState([]);
   const [swiper, setSwiper] = useState(null);
   const [randomUsers, setRandomUsers] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // const homeScrollY = useStore((s) => s.homeScrollY);
+  const listItems = useStore((s) => s.listItems); // tarjetas ya cargadas
+  const restoredRef = useRef(false);
+
+  /* ---------- ajuste restauración de scroll ---------- */
+  useEffect(() => {
+    // if (!restoreScroll) return; // ← sólo si la bandera está activa
+    // if (restoredRef.current) return;
+    // if (!restoreScroll || listItems.length === 0) return;
+
+    requestAnimationFrame(() => {
+      console.log("entrasssss", homeScrollY);
+      const altura = Cookies.get("homeScrollY");
+      window.scrollTo(0, altura);
+      restoredRef.current = true;
+      setRestoreScroll(false); // ← la apagamos
+    });
+  }, [listItems, restoreScroll]);
+  /* -------------------------------------------------- */
 
   const userId = Cookies.get("auth.user_id");
 

@@ -1,57 +1,57 @@
+// store.js
 import { create } from "zustand";
 import SetLocalStorage from "../utils/apis";
 
 export const useStore = create((set) => {
+  /* ------------------ estado base que ya tenías ------------------ */
   const service =
     typeof window !== "undefined"
       ? JSON.parse(localStorage.getItem("service") ?? "{}").service
       : { multiple: true };
-  const env = process.env.NEXT_PUBLIC_NODE_ENV || "dev";
 
+  const env = process.env.NEXT_PUBLIC_NODE_ENV || "dev";
   const urls = () => {
-    let final = null;
-    if (typeof window != "undefined") {
-      let storage = localStorage.getItem("apiUrl");
-      storage
-        ? (final = SetLocalStorage(storage))
-        : (final = SetLocalStorage(env));
-    } else {
-      final = SetLocalStorage("dev");
-    }
-    return final;
+    if (typeof window === "undefined") return SetLocalStorage("dev");
+    const stored = localStorage.getItem("apiUrl");
+    return stored ? SetLocalStorage(stored) : SetLocalStorage(env);
   };
 
-  const theUrls = urls();
-
   return {
+    /* ----- estado original ----- */
     user: {},
     language: "en",
-    urls: theUrls,
+    urls: urls(),
     loggedIn: false,
-    service: service,
+    service,
     isWorker: false,
     services: [],
     haveNotification: false,
     loginModal: false,
     register: false,
     socket: null,
-    filters: {
-      keyword: null,
-      maxPrice: 0,
-      minPrice: 0,
-      service: null,
-    },
-    setRegister: (register) => set({ register: register }),
-    setHaveNotification: (haveNotification) =>
-      set({ haveNotification: haveNotification }),
-    setLoginModal: (loginModal) => set({ loginModal: loginModal }),
+    filters: { keyword: null, maxPrice: 0, minPrice: 0, service: null },
+
+    lastPage: "",
+
+    /* ----- NUEVO: para lista infinita y restaurar scroll ----- */
+    listItems: [], // tarjetas ya cargadas
+    listPage: 1,
+    listHasNext: true,
+    scrollY: 0, // ⭐ NUEVO: posición Y
+    restoreScroll: false, // ⭐ NUEVO: bandera “toca restaurar”
+    syncItems: [], // ⭐ NUEVO: caché de vídeos para SyncCarousel
+
+    /* ----- setters originales ----- */
+    setRegister: (register) => set({ register }),
+    setHaveNotification: (haveNotification) => set({ haveNotification }),
+    setLoginModal: (loginModal) => set({ loginModal }),
     setUser: (user) => set({ user: { ...user } }),
-    setLoggedIn: (loggedIn) => set({ loggedIn: loggedIn }),
-    setServices: (services) => set({ services: services }),
-    setWorker: (isWorker) => set({ isWorker: isWorker }),
-    setSocket: (socket) => set({ socket: socket }),
-    setLanguage: (language) => set({ language: language }),
-    setFilters: (filters) => set({ filters: filters }),
+    setLoggedIn: (loggedIn) => set({ loggedIn }),
+    setServices: (services) => set({ services }),
+    setWorker: (isWorker) => set({ isWorker }),
+    setSocket: (socket) => set({ socket }),
+    setLanguage: (language) => set({ language }),
+    setFilters: (filters) => set({ filters }),
     setService: (service) =>
       set((state) => {
         const data = { service: { ...state.service, ...service } };
@@ -59,5 +59,16 @@ export const useStore = create((set) => {
         return data;
       }),
     resetService: () => set({ service: {} }),
+
+    /* ----- setters NUEVOS ----- */
+    setListItems: (arr) => set({ listItems: arr }),
+    appendListItems: (arr) =>
+      set((s) => ({ listItems: [...s.listItems, ...arr] })),
+    setListPage: (p) => set({ listPage: p }),
+    setListHasNext: (v) => set({ listHasNext: v }),
+    setScrollY: (y) => set({ scrollY: y }), // ⭐
+    setRestoreScroll: (v) => set({ restoreScroll: v }), // ⭐
+    setSyncItems: (arr) => set({ syncItems: arr }), // ⭐
+    setLastPage: (lastPage) => set({ lastPage }),
   };
 });

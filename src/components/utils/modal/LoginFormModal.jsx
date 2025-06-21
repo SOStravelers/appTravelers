@@ -12,12 +12,10 @@ export default function LoginFormModal({
   onCancel,
 }) {
   const router = useRouter();
-  if (!open) return null;
 
   const handleCancel = () => {
     setOpen(false);
     onCancel?.();
-    // solo navegamos a “/” si no estamos ya en home
     if (router.pathname !== "/") {
       router.push("/");
     }

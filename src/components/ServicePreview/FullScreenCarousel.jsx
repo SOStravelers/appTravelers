@@ -1,23 +1,27 @@
-// components/ServicePreview/FullScreenCarousel.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+
+/* eslint-disable @next/next/no-img-element */ // ← seguimos usando <img/> por simplicidad
 
 const FullScreenCarousel = ({ media = [], initialIndex = 0, onClose }) => {
+  /* ---------------- state ---------------- */
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
-  // Reset currentIndex when initialIndex changes
-  useEffect(() => {
-    setCurrentIndex(initialIndex);
-  }, [initialIndex]);
+  /* ---------------- efectos ---------------- */
+  // sincronizar cuando cambia `initialIndex`
+  useEffect(() => setCurrentIndex(initialIndex), [initialIndex]);
 
-  // Navigate backwards
-  const handlePrev = () =>
-    setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
+  /* ---------------- navegación ---------------- */
+  const handlePrev = useCallback(
+    () => setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1)),
+    [media.length]
+  );
 
-  // Navigate forwards
-  const handleNext = () =>
-    setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
+  const handleNext = useCallback(
+    () => setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1)),
+    [media.length]
+  );
 
-  // Keyboard controls
+  // controles de teclado
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowLeft" || e.key === "a") handlePrev();
@@ -26,16 +30,16 @@ const FullScreenCarousel = ({ media = [], initialIndex = 0, onClose }) => {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [media.length, onClose]);
+  }, [handlePrev, handleNext, onClose]);
 
-  // Don't render if there's no media
+  /* ---------------- early-return ---------------- */
   if (!media.length) return null;
-
   const current = media[currentIndex];
 
+  /* ---------------- render ---------------- */
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 backdrop-filter backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
@@ -57,7 +61,7 @@ const FullScreenCarousel = ({ media = [], initialIndex = 0, onClose }) => {
           />
         )}
 
-        {/* Close Button */}
+        {/* close */}
         <button
           className="absolute top-4 right-4 text-white text-3xl focus:outline-none z-10"
           onClick={onClose}
@@ -65,24 +69,22 @@ const FullScreenCarousel = ({ media = [], initialIndex = 0, onClose }) => {
           &times;
         </button>
 
-        {/* Prev Arrow */}
+        {/* arrows */}
         {media.length > 1 && (
-          <button
-            className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white text-4xl focus:outline-none bg-black bg-opacity-50 rounded-full p-2 z-10"
-            onClick={handlePrev}
-          >
-            &#10094;
-          </button>
-        )}
-
-        {/* Next Arrow */}
-        {media.length > 1 && (
-          <button
-            className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white text-3xl focus:outline-none bg-black bg-opacity-50 rounded-full p-2 z-10"
-            onClick={handleNext}
-          >
-            &#10095;
-          </button>
+          <>
+            <button
+              className="absolute top-1/2 left-4 -translate-y-1/2 text-white text-4xl bg-black/50 rounded-full p-2 focus:outline-none z-10"
+              onClick={handlePrev}
+            >
+              &#10094;
+            </button>
+            <button
+              className="absolute top-1/2 right-4 -translate-y-1/2 text-white text-3xl bg-black/50 rounded-full p-2 focus:outline-none z-10"
+              onClick={handleNext}
+            >
+              &#10095;
+            </button>
+          </>
         )}
       </div>
     </div>

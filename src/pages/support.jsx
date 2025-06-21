@@ -24,20 +24,15 @@ export default function SupportPage() {
   useEffect(() => {
     document.title = "Support | SOS Travelers";
   }, []);
+
   useEffect(() => {
-    let array = [];
-    console.log("wena", languageData.issues);
-    for (let item of languageData.issues) {
-      array.push(item[language]);
-    }
-    console.log("aaray", array);
-    const final = array.map((issue) => ({
-      value: issue,
-      label: issue,
-    }));
-    console.log("final", final);
-    setOptionsSupport(final);
-  }, []);
+    const opts = languageData.issues.map((issue) => {
+      const label = issue[language];
+      return { value: label, label };
+    });
+    setOptionsSupport(opts);
+  }, [language]);
+
   const supportEmail = async (values) => {
     try {
       if (isSubmitting) {

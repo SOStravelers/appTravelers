@@ -81,7 +81,7 @@ export default function SyncCarousel() {
   const router = useRouter();
 
   /* setters correctos del store */
-  const { language, setScrollY, setRestoreScroll } = useStore();
+  const { language, setScrollY, setRestoreScroll, lastPage } = useStore();
 
   const videoRef = useRef(null);
   const [items, setItems] = useState([]);

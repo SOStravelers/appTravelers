@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import dayjs from "dayjs";
 import BookingService from "@/services/BookingService";
 import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
@@ -9,11 +9,8 @@ function ListSection() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const { isWorker, user, language } = useStore();
-  useEffect(() => {
-    getBookings();
-  }, []);
 
-  const getBookings = () => {
+  const getBookings = useCallback(() => {
     const today = dayjs().format("YYYY-MM-DD");
 
     if (isWorker) {
@@ -37,7 +34,11 @@ function ListSection() {
           setLoading(false);
         });
     }
-  };
+  }, [isWorker]);
+
+  useEffect(() => {
+    getBookings();
+  }, [getBookings]);
 
   return (
     <div className="mt-10">

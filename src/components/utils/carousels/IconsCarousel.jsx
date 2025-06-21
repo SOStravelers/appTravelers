@@ -23,8 +23,15 @@ export default function IconCarousel({
   onFilterChange,
 }) {
   const router = useRouter();
-  const { services, setServices, setService, language, filters, setFilters } =
-    useStore();
+  const {
+    services,
+    setServices,
+    setService,
+    language,
+    filters,
+    setFilters,
+    lastPage,
+  } = useStore();
 
   const [activeIdx, setActiveIdx] = useState(0);
   const [showLeftBlur, setShowLeftBlur] = useState(false);
@@ -36,6 +43,7 @@ export default function IconCarousel({
 
   // Fetch services once
   useEffect(() => {
+    if (lastPage == "preview") return;
     ServiceService.list({ isActive: true, page: 1 })
       .then((res) => setServices(res.data.docs))
       .catch((err) => console.error(err));

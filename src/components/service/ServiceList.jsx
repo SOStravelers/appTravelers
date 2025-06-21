@@ -23,10 +23,6 @@ export default function ServiceList({ filterKey }) {
     setListPage,
     setListHasNext,
     /* NUEVO:  */
-    homeScrollY,
-    setScrollY, // ⬅️  NUEVO nombre
-    setRestoreScroll,
-    restoreScroll,
     setLastPage,
     lastPage,
   } = useStore((s) => ({
@@ -37,10 +33,6 @@ export default function ServiceList({ filterKey }) {
     appendListItems: s.appendListItems,
     setListPage: s.setListPage,
     setListHasNext: s.setListHasNext,
-    homeScrollY: s.homeScrollY,
-    setScrollY: s.setScrollY,
-    setRestoreScroll: s.setRestoreScroll,
-    restoreScroll: s.restoreScroll,
     setLastPage: s.setLastPage,
     lastPage: s.lastPage,
   }));
@@ -52,13 +44,19 @@ export default function ServiceList({ filterKey }) {
 
   /* ----------  1) Carga inicial (sólo si aún no hay data) ---------- */
   useEffect(() => {
-    console.log("vamos a cargar la data,", lastPage);
-    if (listItems.length === 0 && lastPage != "index") loadPage(1);
+    console.log("vamos a cargar la data inicial,", lastPage);
+    if (listItems.length === 0) {
+      loadPage(1);
+    } else {
+      console.log("no se carga");
+    }
   }, []); // ← se ejecuta 1-vez
 
   /* ----------  2) Función para pedir una página ---------- */
   const loadPage = useCallback(
     async (page) => {
+      console.log("vamos a cargar la data", lastPage);
+      if (lastPage == "preview") return;
       setLoading(true);
       const res = await SubserviceService.getAll({
         page,
@@ -70,9 +68,10 @@ export default function ServiceList({ filterKey }) {
       else appendListItems(docs);
       setListHasNext(hasNextPage);
       setListPage(page);
+      console.log("termino");
       setLoading(false);
     },
-    [filterKey]
+    [filterKey, lastPage]
   );
 
   /* ----------  3) Infinite scroll ---------- */
@@ -82,33 +81,32 @@ export default function ServiceList({ filterKey }) {
     const obs = new IntersectionObserver(
       ([e]) => {
         console.log("activa segundo caso", lastPage);
-        if (e.isIntersecting && !loading && lastPage != "index") {
-          console.log("entra aqui", lastPage);
+        if (e.isIntersecting && !loading) {
           loadPage(listPage + 1);
+          setLastPage("");
         }
-        setLastPage("");
       },
       { rootMargin: "200px" }
     );
     obs.observe(sentinel);
     return () => obs.disconnect();
-  }, [listHasNext, listPage, loading]);
+  }, [listHasNext, listPage, loading, lastPage]);
 
   /* ----------  4) Reiniciar cuando cambia el filtro ---------- */
   useEffect(() => {
-    console.log("wena");
-    setListItems([]);
-    setListHasNext(true);
-    loadPage(1);
+    console.log("va a cambiar filtros", lastPage);
+    if (lastPage != "preview") {
+      // setListItems([]);
+      setListHasNext(true);
+      loadPage(1);
+    }
   }, [filterKey]);
 
   /* ----------  6) Guardar scroll y navegar ---------- */
   const handleNavigate = (id) => {
     console.log("altura list", window.scrollY);
-    setScrollY(window.scrollY);
     Cookies.set("homeScrollY", window.scrollY);
-    setRestoreScroll(true);
-    setLastPage("index");
+    setLastPage("preview");
     router.push(`/service-preview/${id}`, undefined, { scroll: false });
   };
 

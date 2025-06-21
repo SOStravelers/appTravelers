@@ -32,6 +32,7 @@ export const useStore = create((set) => {
     filters: { keyword: null, maxPrice: 0, minPrice: 0, service: null },
 
     lastPage: "",
+    itemsVideo: [],
 
     /* ----- NUEVO: para lista infinita y restaurar scroll ----- */
     listItems: [], // tarjetas ya cargadas
@@ -70,5 +71,6 @@ export const useStore = create((set) => {
     setRestoreScroll: (v) => set({ restoreScroll: v }), // ⭐
     setSyncItems: (arr) => set({ syncItems: arr }), // ⭐
     setLastPage: (lastPage) => set({ lastPage }),
+    setItemsVideo: (itemsVideo) => set({ itemsVideo }),
   };
 });

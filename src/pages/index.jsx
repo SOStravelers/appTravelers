@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { register } from "swiper/element/bundle";
+import clsx from "clsx";
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import BookingCard from "@/components/utils/cards/BookingCard";
@@ -33,11 +34,9 @@ export default function Home({}) {
     setService,
     language,
     /* ---------- NUEVO ---------- */
-    restoreScroll,
-    setRestoreScroll,
-    homeScrollY,
-    setScrollY,
+    lastPage,
     setLastPage,
+    listItems,
   } = store;
 
   const router = useRouter();
@@ -47,25 +46,48 @@ export default function Home({}) {
   const [randomUsers, setRandomUsers] = useState([]);
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
-  // const homeScrollY = useStore((s) => s.homeScrollY);
-  const listItems = useStore((s) => s.listItems); // tarjetas ya cargadas
   const restoredRef = useRef(false);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      console.log("✅ timer disparado – eliminando cookie");
+      Cookies.remove("homeScrollY");
+
+      setLastPage("");
+    }, 4000);
+
+    // Se ejecuta al desmontar el componente o al recrearse el efecto
+    return () => clearTimeout(timerId);
+  }, []);
 
   /* ---------- ajuste restauración de scroll ---------- */
   useEffect(() => {
-    // if (!restoreScroll) return; // ← sólo si la bandera está activa
-    // if (restoredRef.current) return;
-    // if (!restoreScroll || listItems.length === 0) return;
+    // requestAnimationFrame(() => {
+    // restoredRef.current = true;
+    console.log("items", listItems);
+    // });
+  }, []);
 
-    requestAnimationFrame(() => {
-      console.log("entrasssss", homeScrollY);
-      const altura = Cookies.get("homeScrollY");
-      window.scrollTo(0, altura);
-      restoredRef.current = true;
-      setRestoreScroll(false); // ← la apagamos
-    });
-  }, [listItems, restoreScroll]);
+  useEffect(() => {
+    console.log("la page", lastPage);
+    if (lastPage !== "preview") {
+      setScrolled(true);
+      return; // ← 1️⃣  condición
+    }
+    const id = setTimeout(() => {
+      console.log("entro al minitimer", lastPage);
+      // ← 2️⃣  pequeño delay opcional
+      const y = Cookies.get("homeScrollY") || 0;
+      console.log("la y", y);
+      // restoredRef.current = true;
+      window.scrollTo(0, y);
+      setScrolled(true);
+    }, 400);
+
+    return () => clearTimeout(id); // ← limpieza
+  }, []);
   /* -------------------------------------------------- */
 
   const userId = Cookies.get("auth.user_id");
@@ -150,7 +172,14 @@ export default function Home({}) {
   };
 
   return (
-    <main className="flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible">
+    <main
+      className={clsx(
+        "flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible",
+        scrolled
+          ? "opacity-100 transition-opacity duration-300"
+          : "opacity-0 pointer-events-none"
+      )}
+    >
       <SyncCarousel />
 
       {/* Aquí aplicamos sticky */}

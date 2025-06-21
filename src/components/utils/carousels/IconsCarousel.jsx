@@ -54,7 +54,7 @@ export default function IconCarousel({
     if (!navRef.current) return;
     const rect = navRef.current.getBoundingClientRect();
     const initialTop = rect.top + window.scrollY;
-    const threshold = initialTop + 150;
+    const threshold = initialTop;
 
     const onScroll = () => {
       setIsSticky(window.scrollY >= threshold);

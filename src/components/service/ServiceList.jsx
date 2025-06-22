@@ -24,6 +24,7 @@ export default function ServiceList({ filterKey }) {
     setListHasNext,
     lastPage,
     setLastPage,
+    filters,
   } = useStore((s) => ({
     listItems: s.listItems,
     listPage: s.listPage,
@@ -34,6 +35,7 @@ export default function ServiceList({ filterKey }) {
     setListHasNext: s.setListHasNext,
     setLastPage: s.setLastPage,
     lastPage: s.lastPage,
+    filters: s.filters,
   }));
 
   const [loading, setLoading] = useState(false);
@@ -58,7 +60,7 @@ export default function ServiceList({ filterKey }) {
         const res = await SubserviceService.getAll({
           page,
           limit: ITEMS_PER_LOAD,
-          filter: filterKey,
+          filter: filters,
         });
 
         const { docs, hasNextPage } = res.data;
@@ -74,7 +76,7 @@ export default function ServiceList({ filterKey }) {
       }
     },
     [
-      filterKey,
+      filters,
       lastPage,
       loading,
       setListItems,
@@ -134,7 +136,14 @@ export default function ServiceList({ filterKey }) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      {safeItems.length === 0 && loading ? (
+      {safeItems.length === 0 && !loading ? (
+        <div className="text-center text-sm text-gray-500 py-10">
+          <p className="text-lg font-medium">No services found</p>
+          <p className="text-sm">
+            Try adjusting your filters or come back later.
+          </p>
+        </div>
+      ) : safeItems.length === 0 && loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full animate-pulse">
           {Array.from({ length: ITEMS_PER_LOAD }).map((_, i) => (
             <div key={i} className="h-48 bg-gray-200 rounded-md" />

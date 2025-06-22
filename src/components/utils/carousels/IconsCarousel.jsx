@@ -24,13 +24,11 @@ export default function IconCarousel({
 }) {
   const router = useRouter();
   const {
-    services,
-    setServices,
-    setService,
+    servicesIndexList,
+    setServicesIndexList,
     language,
     filters,
     setFilters,
-    lastPage,
   } = useStore();
 
   const [activeIdx, setActiveIdx] = useState(0);
@@ -43,11 +41,17 @@ export default function IconCarousel({
 
   // Fetch services once
   useEffect(() => {
-    if (lastPage == "preview") return;
+    // ‼️  Si el store ya tiene datos, no hagas nada
+    if (servicesIndexList.length > 0) return;
+
     ServiceService.list({ isActive: true, page: 1 })
-      .then((res) => setServices(res.data.docs))
-      .catch((err) => console.error(err));
-  }, [setServices]);
+      .then((res) => setServicesIndexList(res.data.docs))
+      .catch(console.error);
+
+    // 👉  Dependencias:
+    //     — `services.length`  para que sólo vuelva a disparar
+    //       si se vacía explícitamente desde otro sitio.
+  }, [servicesIndexList.length, setServicesIndexList]);
 
   // Sticky shadow threshold (accounting for parent top-[58px])
   useEffect(() => {
@@ -87,7 +91,7 @@ export default function IconCarousel({
   }, []);
 
   const handleIconClick = (svc, idx) => {
-    setService({ serviceId: svc._id, serviceName: svc.name });
+    setServicesList({ serviceId: svc._id, serviceName: svc.name });
     setActiveIdx(idx);
 
     const updated = { ...filters, service: svc._id };
@@ -190,7 +194,7 @@ export default function IconCarousel({
           ref={scrollRef}
           className="overflow-x-auto whitespace-nowrap pb-1 "
         >
-          {services.map((service, idx) => (
+          {servicesIndexList.map((service, idx) => (
             <button
               key={service._id}
               onClick={() => handleIconClick(service, idx)}

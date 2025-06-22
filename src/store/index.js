@@ -24,13 +24,12 @@ export const useStore = create((set) => {
     loggedIn: false,
     service,
     isWorker: false,
-    services: [],
     haveNotification: false,
     loginModal: false,
     register: false,
     socket: null,
     filters: { keyword: null, maxPrice: 0, minPrice: 0, service: null },
-
+    servicesIndexList: [],
     lastPage: "",
     itemsVideo: [],
 
@@ -43,24 +42,19 @@ export const useStore = create((set) => {
     syncItems: [], // ⭐ NUEVO: caché de vídeos para SyncCarousel
 
     /* ----- setters originales ----- */
+    setService: (service) => set({ service }),
     setRegister: (register) => set({ register }),
     setHaveNotification: (haveNotification) => set({ haveNotification }),
     setLoginModal: (loginModal) => set({ loginModal }),
     setUser: (user) => set({ user: { ...user } }),
     setLoggedIn: (loggedIn) => set({ loggedIn }),
-    setServices: (services) => set({ services }),
     setWorker: (isWorker) => set({ isWorker }),
     setSocket: (socket) => set({ socket }),
     setLanguage: (language) => set({ language }),
     setFilters: (filters) => set({ filters }),
-    setService: (service) =>
-      set((state) => {
-        const data = { service: { ...state.service, ...service } };
-        localStorage.setItem("service", JSON.stringify(data));
-        return data;
-      }),
+    setServicesIndexList: (servicesIndexList) => set({ servicesIndexList }),
     resetService: () => set({ service: {} }),
-
+    setItemsVideo: (itemsVideo) => set({ itemsVideo }),
     /* ----- setters NUEVOS ----- */
     setListItems: (arr) => set({ listItems: arr }),
     appendListItems: (arr) =>

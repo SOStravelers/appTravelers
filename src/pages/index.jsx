@@ -13,15 +13,8 @@ import FilterModal from "@/components/utils/modal/FilterModal";
 
 export default function Home({}) {
   const store = useStore();
-  const {
-    services,
-    setServices,
-    setHaveNotification,
-    setService,
-    language,
-    lastPage,
-    setLastPage,
-  } = store;
+  const { setHaveNotification, setService, language, lastPage, setLastPage } =
+    store;
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -73,13 +66,7 @@ export default function Home({}) {
   useEffect(() => {
     document.title = "Home | SOS Travelers";
     if (userId) checkNotification();
-    if (!services || Object.keys(services).length === 0) getData();
   }, []);
-
-  const getData = async () => {
-    const response = await ServiceService.list({ isActive: true, page: 1 });
-    setServices(response.data.docs);
-  };
 
   const checkNotification = async () => {
     try {

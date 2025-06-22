@@ -14,8 +14,17 @@ export default function Home({}) {
   const store = useStore();
   const { setHaveNotification, setService, language, lastPage, setLastPage } =
     store;
-
   const [scrolled, setScrolled] = useState(false);
+
+  const userId = Cookies.get("auth.user_id");
+
+  useEffect(() => {
+    document.title = "Home | SOS Travelers";
+    if (userId) checkNotification();
+    setService({});
+    localStorage.removeItem("service");
+    localStorage.removeItem("fromFavorite");
+  }, []);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -52,16 +61,6 @@ export default function Home({}) {
         setLastPage("");
       });
     });
-  }, []);
-
-  const userId = Cookies.get("auth.user_id");
-
-  useEffect(() => {
-    document.title = "Home | SOS Travelers";
-    if (userId) checkNotification();
-    setService({});
-    localStorage.removeItem("service");
-    localStorage.removeItem("fromFavorite");
   }, []);
 
   const checkNotification = async () => {

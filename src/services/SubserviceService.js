@@ -64,7 +64,7 @@ export default class SubserviceService {
   static async getAllByService() {
     return axios.get(`${this.baseUrl}/all/byService`);
   }
-  //Actualizar estado activo de un servicio
+  //Actualizar estado activo de un sub-servicio
   static async changeStatus(id, val) {
     return axios.put(`${this.baseUrl}/changeStatus/one/${id}`, {
       isActive: val,

@@ -1,39 +1,42 @@
-// pages/subservices/bulk-toggle.jsx
 import React, { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import SubserviceService from "@/services/SubserviceService";
-import ServiceService from "@/services/ServiceService"; // ← NUEVO
+import ServiceService from "@/services/ServiceService";
+import { FiSearch } from "react-icons/fi";
 import { FaChevronDown, FaChevronRight, FaEdit } from "react-icons/fa";
-import { toast, ToastContainer } from "react-toastify"; // ← NUEVO
-import "react-toastify/dist/ReactToastify.css"; // ← NUEVO
+import { toast } from "react-toastify";
+import ConfirmModal from "@/components/utils/modal/ConfirmModal";
+import NewSwitch from "@/components/utils/switch/NewSwitch";
+import "react-toastify/dist/ReactToastify.css";
 
-/* ---------- switch verde/rojo ---------- */
-const Switch = ({ checked, onChange }) => (
-  <label className="inline-block relative w-14 h-7 cursor-pointer">
-    <input
-      type="checkbox"
-      checked={checked}
-      onChange={(e) => onChange(e.target.checked)}
-      className="sr-only peer"
-    />
-    <span
-      className={`absolute inset-0 rounded-full transition-colors
-        ${checked ? "bg-green-500" : "bg-red-500"} peer-focus:ring-2`}
-    />
-    <span
-      className={`absolute top-1 left-1 h-5 w-5 rounded-full bg-white shadow
-        transition-transform ${checked ? "translate-x-7" : ""}`}
-    />
-  </label>
-);
-
+/* ───── helper búsqueda ───── */
 const matchName = (nameObj, term) => {
   if (!term) return true;
   const t = term.toLowerCase();
   if (typeof nameObj === "string") return nameObj.toLowerCase().includes(t);
   return Object.values(nameObj).some((v) => v?.toLowerCase().includes(t));
 };
+
+/* ───── helper toast ───── */
+const showToast = (type, msg) => {
+  const opts = {
+    containerId: "bulk",
+    theme: "dark",
+    toastId: "bulk-toast",
+    autoClose: 1500,
+  };
+  if (type === "success") toast.success(msg, opts);
+  if (type === "error") toast.error(msg, opts);
+  if (type === "warn") toast.warn(msg, opts);
+};
+
+const inputClasses = `
+  mt-1 block w-full border border-gray-300 bg-gray-100
+  rounded-md py-2 pr-3 pl-10 text-sm
+  focus:outline-none focus:ring-0 focus:border-gray-500
+  transition-colors duration-150 ease-in-out
+`;
 
 export default function BulkTogglePage() {
   const router = useRouter();
@@ -45,35 +48,40 @@ export default function BulkTogglePage() {
   const [open, setOpen] = useState(new Set());
   const [search, setSearch] = useState("");
 
-  /* ---------- fetch ---------- */
+  const [modal, setModal] = useState({
+    open: false,
+    msg: "",
+    onConfirm: () => {},
+  });
+
+  /* ---------- fetch inicial ---------- */
   useEffect(() => {
     SubserviceService.getAllByService()
       .then(({ data }) => {
         setGroups(data);
-        setOpen(new Set(data.map((g) => g._id)));
+        setOpen(new Set(data.map((g) => g._id))); // abrir todos al inicio
       })
       .finally(() => setLoading(false));
   }, []);
 
-  /* ---------- filtrar ---------- */
+  /* ---------- filtrado ---------- */
   const filteredGroups = useMemo(() => {
     if (!search.trim()) return groups;
     return groups
       .map((g) => {
         const serviceMatch = matchName(g.service.name, search);
-        const subMatchs = g.subservices.filter((s) =>
+        const subsFiltered = g.subservices.filter((s) =>
           matchName(s.name, search)
         );
         if (serviceMatch) return g;
-        if (subMatchs.length) return { ...g, subservices: subMatchs };
+        if (subsFiltered.length) return { ...g, subservices: subsFiltered };
         return null;
       })
       .filter(Boolean);
   }, [groups, search]);
 
-  /* reabrir visibles al buscar */
   useEffect(() => {
-    setOpen(new Set(filteredGroups.map((g) => g._id)));
+    if (search.trim()) setOpen(new Set(filteredGroups.map((g) => g._id)));
   }, [search, filteredGroups]);
 
   /* ---------- selección ---------- */
@@ -119,64 +127,188 @@ export default function BulkTogglePage() {
           )
         );
 
-  /* ---------- cambiar estado con toast & rollback ---------- */
+  /* ---------- update individual ---------- */
   const updateIsActive = async (type, id, val) => {
-    const prev = JSON.parse(JSON.stringify(groups)); // backup profundo rápido
-    // optimista
+    const prev = JSON.parse(JSON.stringify(groups));
+
+    setGroups((prevG) =>
+      prevG.map((g) => {
+        if (type === "service" && g.service._id === id)
+          return { ...g, service: { ...g.service, isActive: val } };
+        if (type === "subservice")
+          return {
+            ...g,
+            subservices: g.subservices.map((s) =>
+              s._id === id ? { ...s, isActive: val } : s
+            ),
+          };
+        return g;
+      })
+    );
+
+    try {
+      type === "service"
+        ? await ServiceService.changeStatus(id, val)
+        : await SubserviceService.changeStatus(id, val);
+      showToast("success", "Estado actualizado");
+    } catch (err) {
+      console.error(err);
+      setGroups(prev);
+      showToast("error", "Error al actualizar");
+    }
+  };
+
+  /* ---------- bulk helpers ---------- */
+  const getSelectedIds = () => {
+    const services = [];
+    const subservices = [];
+    groups.forEach((g) => {
+      if (checked.has(g.service._id)) services.push(g.service._id);
+      g.subservices.forEach((s) => {
+        if (checked.has(s._id)) subservices.push(s._id);
+      });
+    });
+    return { services, subservices };
+  };
+
+  const applyMany = async (isActive) => {
+    const { services, subservices } = getSelectedIds();
+    if (!services.length && !subservices.length) {
+      showToast("warn", "No hay elementos seleccionados");
+      return;
+    }
+
+    const prev = JSON.parse(JSON.stringify(groups));
     setGroups((prevG) =>
       prevG.map((g) => ({
         ...g,
-        service:
-          type === "service" && g.service._id === id
-            ? { ...g.service, isActive: val }
-            : g.service,
+        service: services.includes(g.service._id)
+          ? { ...g.service, isActive }
+          : g.service,
         subservices: g.subservices.map((s) =>
-          type === "service" && g.service._id === id
-            ? { ...s, isActive: val } // reflejar en hijos
-            : type === "subservice" && s._id === id
-            ? { ...s, isActive: val }
-            : s
+          subservices.includes(s._id) ? { ...s, isActive } : s
         ),
       }))
     );
 
     try {
-      if (type === "service") {
-        await ServiceService.changeStatus(id, val);
-      } else {
-        await SubserviceService.changeStatus(id, val);
-      }
-      toast.success("Estado actualizado", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 1200,
+      await SubserviceService.changeStateMany({
+        services,
+        subservices,
+        isActive,
       });
+      showToast("success", "Actualización masiva completada");
+      setChecked(new Set());
     } catch (err) {
       console.error(err);
-      setGroups(prev); // rollback
-      toast.error("Error al actualizar", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 1200,
-      });
+      setGroups(prev);
+      showToast("error", "Error en actualización masiva");
     }
+  };
+
+  const applyAll = async (isActive) => {
+    const prev = JSON.parse(JSON.stringify(groups));
+    setGroups((prevG) =>
+      prevG.map((g) => ({
+        ...g,
+        service: { ...g.service, isActive },
+        subservices: g.subservices.map((s) => ({ ...s, isActive })),
+      }))
+    );
+
+    try {
+      await SubserviceService.changeStateAll(isActive);
+      showToast("success", "Todos los elementos actualizados");
+    } catch (err) {
+      console.error(err);
+      setGroups(prev);
+      showToast("error", "Error al actualizar todo");
+    }
+  };
+
+  /* ---------- modal helpers ---------- */
+  const openModalForSelection = (isActive) => {
+    const { services, subservices } = getSelectedIds();
+    if (!services.length && !subservices.length) {
+      showToast("warn", "No hay elementos seleccionados");
+      return;
+    }
+    setModal({
+      open: true,
+      msg: `¿Desea ${isActive ? "activar" : "desactivar"} estos ${
+        services.length
+      } servicios y ${subservices.length} subservicios?`,
+      onConfirm: () => applyMany(isActive),
+    });
+  };
+
+  const openModalForAll = (isActive) => {
+    const totalServices = groups.length;
+    const totalSubs = groups.reduce((acc, g) => acc + g.subservices.length, 0);
+    setModal({
+      open: true,
+      msg: `¿Desea ${
+        isActive ? "activar" : "desactivar"
+      } TODOS los ${totalServices} servicios y ${totalSubs} subservicios?`,
+      onConfirm: () => applyAll(isActive),
+    });
   };
 
   /* ---------- UI ---------- */
   if (loading) return <p className="p-10 text-lg">Cargando…</p>;
 
   return (
-    <div className="max-w-5xl mx-auto p-6 mt-6 md:mt-20 md:ml-60">
-      <ToastContainer position="top-right" autoClose={4000} /> {/* NUEVO */}
-      <h1 className="text-2xl font-bold mb-6">Servicios y Subservicios</h1>
-      {/* buscador */}
-      <div className="mb-6">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Buscar servicio o subservicio…"
-          className="border rounded px-4 py-2 w-full md:w-1/2"
-        />
+    <div className="max-w-5xl mx-auto p-6 my-12 md:mt-20 md:ml-60">
+      <h1 className="text-2xl font-bold mb-4">Servicios y Subservicios</h1>
+
+      {/* Buscador */}
+      <div className="mb-6 w-full md:w-1/2">
+        <div className="relative">
+          {/* Ícono: más grande y centrado */}
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+            <FiSearch className="text-gray-500 text-lg" />
+          </div>
+
+          {/* Input */}
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Buscar servicio o subservicio…"
+            className={inputClasses}
+          />
+        </div>
       </div>
+
+      {/* Botones masivos */}
+      <div className="flex flex-wrap gap-3 mb-4">
+        <button
+          onClick={() => openModalForSelection(true)}
+          className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-1.5 rounded"
+        >
+          Activar selección
+        </button>
+        <button
+          onClick={() => openModalForSelection(false)}
+          className="bg-red-600 hover:bg-red-700 text-white text-sm px-4 py-1.5 rounded"
+        >
+          Desactivar selección
+        </button>
+        <button
+          onClick={() => openModalForAll(true)}
+          className="ml-auto bg-green-500/20 hover:bg-green-500/30 text-green-700 text-xs px-3 py-1 rounded hidden md:inline"
+        >
+          Activar todo
+        </button>
+        <button
+          onClick={() => openModalForAll(false)}
+          className="bg-red-500/20 hover:bg-red-500/30 text-red-700 text-xs px-3 py-1 rounded hidden md:inline"
+        >
+          Desactivar todo
+        </button>
+      </div>
+
+      {/* Tabla */}
       <table className="w-full border">
         <thead className="bg-gray-100">
           <tr>
@@ -185,6 +317,10 @@ export default function BulkTogglePage() {
                 type="checkbox"
                 checked={isAllChecked}
                 onChange={toggleAll}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModalForAll(!isAllChecked);
+                }}
                 className="accent-green-600 w-4 h-4"
               />
             </th>
@@ -206,7 +342,7 @@ export default function BulkTogglePage() {
 
             return (
               <React.Fragment key={g._id}>
-                {/* -------- servicio -------- */}
+                {/* Servicio */}
                 <tr className="border-b bg-indigo-50">
                   <td className="p-3 text-center align-top">
                     <input
@@ -231,7 +367,7 @@ export default function BulkTogglePage() {
                   </td>
 
                   <td className="p-3 text-center">
-                    <Switch
+                    <NewSwitch
                       checked={g.service.isActive}
                       onChange={(v) =>
                         updateIsActive("service", g.service._id, v)
@@ -242,7 +378,7 @@ export default function BulkTogglePage() {
                   <td className="p-3 text-center">
                     <button
                       onClick={() =>
-                        router.push(`/subservice/info/${g.service._id}`)
+                        router.push(`/config/service/info/${g.service._id}`)
                       }
                       className="text-blue-600 underline flex items-center gap-1"
                     >
@@ -252,7 +388,7 @@ export default function BulkTogglePage() {
                   </td>
                 </tr>
 
-                {/* -------- subservicios -------- */}
+                {/* Subservicios */}
                 {serviceOpen &&
                   g.subservices.map((s) => (
                     <tr key={s._id} className="border-b">
@@ -272,7 +408,7 @@ export default function BulkTogglePage() {
                       </td>
 
                       <td className="p-3 text-center">
-                        <Switch
+                        <NewSwitch
                           checked={s.isActive}
                           onChange={(v) =>
                             updateIsActive("subservice", s._id, v)
@@ -283,7 +419,7 @@ export default function BulkTogglePage() {
                       <td className="p-3 text-center">
                         <button
                           onClick={() =>
-                            router.push(`/subservice/info/${s._id}`)
+                            router.push(`/config/subservice/info/${s._id}`)
                           }
                           className="text-blue-600 underline flex items-center gap-1"
                         >
@@ -298,6 +434,14 @@ export default function BulkTogglePage() {
           })}
         </tbody>
       </table>
+
+      {/* Modal */}
+      <ConfirmModal
+        isOpen={modal.open}
+        onClose={() => setModal((m) => ({ ...m, open: false }))}
+        onConfirm={modal.onConfirm}
+        message={modal.msg}
+      />
     </div>
   );
 }

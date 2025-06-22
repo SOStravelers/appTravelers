@@ -2,3 +2,4 @@
 export default function ServiceConfigPage() {
   return <div>hola</div>;
 }
+//hola

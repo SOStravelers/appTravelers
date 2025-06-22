@@ -56,7 +56,6 @@ export default function Home({}) {
       window.scrollTo(0, metrica);
       setScrolled(true);
     }, 350);
-    //minicambio
     return () => clearTimeout(id); // ← limpieza
   }, []);
 

@@ -34,7 +34,7 @@ export default function Home({}) {
       Cookies.remove("homeScrollY");
 
       setLastPage("");
-    }, 4000);
+    }, 2500);
 
     // Se ejecuta al desmontar el componente o al recrearse el efecto
     return () => clearTimeout(timerId);
@@ -54,7 +54,7 @@ export default function Home({}) {
       // restoredRef.current = true;
       window.scrollTo(0, y);
       setScrolled(true);
-    }, 300);
+    }, 350);
 
     return () => clearTimeout(id); // ← limpieza
   }, []);

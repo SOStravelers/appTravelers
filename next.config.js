@@ -7,10 +7,9 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     nodeEnv: process.env.NEXT_PUBLIC_NODE_ENV,
-  
   },
   // eslint: { ignoreDuringBuilds: true },
 };
-//comentario
+//comentarios
 
 module.exports = nextConfig;

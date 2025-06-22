@@ -1,49 +1,99 @@
-import { useState, useEffect, useCallback } from "react";
+/* components/ServicePreview/FullScreenCarousel.jsx */
+import { useEffect, useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 
-/* eslint-disable @next/next/no-img-element */ // ← seguimos usando <img/> por simplicidad
+/* eslint-disable @next/next/no-img-element */
+export default function FullScreenCarousel({
+  media = [],
+  initialIndex = 0,
+  onClose,
+}) {
+  const [idx, setIdx] = useState(initialIndex);
+  const [mounted, setMounted] = useState(false); // portal listo
 
-const FullScreenCarousel = ({ media = [], initialIndex = 0, onClose }) => {
-  /* ---------------- state ---------------- */
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-
-  /* ---------------- efectos ---------------- */
-  // sincronizar cuando cambia `initialIndex`
-  useEffect(() => setCurrentIndex(initialIndex), [initialIndex]);
-
-  /* ---------------- navegación ---------------- */
-  const handlePrev = useCallback(
-    () => setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1)),
-    [media.length]
-  );
-
-  const handleNext = useCallback(
-    () => setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1)),
-    [media.length]
-  );
-
-  // controles de teclado
+  /* crear nodo portal solo 1 vez */
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "ArrowLeft" || e.key === "a") handlePrev();
-      if (e.key === "ArrowRight" || e.key === "d") handleNext();
-      if (e.key === "Escape") onClose();
+    const node = document.createElement("div");
+    document.body.appendChild(node);
+    setMounted(node);
+    return () => {
+      document.body.removeChild(node);
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handlePrev, handleNext, onClose]);
+  }, []);
 
-  /* ---------------- early-return ---------------- */
-  if (!media.length) return null;
-  const current = media[currentIndex];
+  /* navegación */
+  const prev = useCallback(
+    () => setIdx((i) => (i === 0 ? media.length - 1 : i - 1)),
+    [media.length]
+  );
+  const next = useCallback(
+    () => setIdx((i) => (i === media.length - 1 ? 0 : i + 1)),
+    [media.length]
+  );
 
-  /* ---------------- render ---------------- */
-  return (
+  /* teclado + bloqueo scroll */
+  useEffect(() => {
+    const key = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", key);
+    const { style } = document.body;
+    const old = style.overflow;
+    style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", key);
+      style.overflow = old;
+    };
+  }, [prev, next, onClose]);
+
+  if (!media.length || !mounted) return null; // aún no hay portal
+  const current = media[idx];
+
+  /* --- contenido del lightbox --- */
+  const lightbox = (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm"
+      className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/90"
       onClick={onClose}
     >
+      {/* close */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 text-white text-3xl z-10"
+      >
+        &times;
+      </button>
+
+      {/* arrows */}
+      {media.length > 1 && (
+        <>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              prev();
+            }}
+            className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2
+                       text-white text-4xl bg-black/50 rounded-full p-2 z-10"
+          >
+            &#10094;
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2
+                       text-white text-4xl bg-black/50 rounded-full p-2 z-10"
+          >
+            &#10095;
+          </button>
+        </>
+      )}
+
+      {/* media */}
       <div
-        className="relative w-full h-full max-w-screen-xl max-h-screen-xl flex items-center justify-center"
+        className="w-screen h-screen flex items-center justify-center"
         onClick={(e) => e.stopPropagation()}
       >
         {current.type === "video" ? (
@@ -51,44 +101,19 @@ const FullScreenCarousel = ({ media = [], initialIndex = 0, onClose }) => {
             src={current.url}
             controls
             autoPlay
-            className="max-w-full max-h-full object-contain"
+            className="max-h-full h-full w-auto object-contain"
           />
         ) : (
           <img
             src={current.url}
-            alt={`Media ${currentIndex + 1}`}
-            className="max-w-full max-h-full object-contain"
+            alt=""
+            className="max-h-full h-full w-auto object-contain"
           />
-        )}
-
-        {/* close */}
-        <button
-          className="absolute top-4 right-4 text-white text-3xl focus:outline-none z-10"
-          onClick={onClose}
-        >
-          &times;
-        </button>
-
-        {/* arrows */}
-        {media.length > 1 && (
-          <>
-            <button
-              className="absolute top-1/2 left-4 -translate-y-1/2 text-white text-4xl bg-black/50 rounded-full p-2 focus:outline-none z-10"
-              onClick={handlePrev}
-            >
-              &#10094;
-            </button>
-            <button
-              className="absolute top-1/2 right-4 -translate-y-1/2 text-white text-3xl bg-black/50 rounded-full p-2 focus:outline-none z-10"
-              onClick={handleNext}
-            >
-              &#10095;
-            </button>
-          </>
         )}
       </div>
     </div>
   );
-};
 
-export default FullScreenCarousel;
+  /* --- render en portal --- */
+  return createPortal(lightbox, mounted);
+}

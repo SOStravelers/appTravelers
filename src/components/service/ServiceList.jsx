@@ -109,8 +109,11 @@ export default function ServiceList({ filterKey }) {
   /* ----------  6) Guardar scroll y navegar ---------- */
   const handleNavigate = (id) => {
     console.log("altura list", window.scrollY);
-    Cookies.set("homeScrollY", window.scrollY);
-    setLastPage("preview");
+    // Cookies.set("homeScrollY", window.scrollY);
+    // setLastPage("preview");
+    // router.push(`/service-preview/${id}`, undefined, { scroll: false });
+
+    Cookies.set("homeItemId", id); // ⬅️  sólo guardamos qué abrió
     router.push(`/service-preview/${id}`, undefined, { scroll: false });
   };
 
@@ -137,7 +140,7 @@ export default function ServiceList({ filterKey }) {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
             {listItems.map((svc, i) => (
-              <div key={svc._id} className="w-full">
+              <div key={svc._id} data-item-id={svc._id} className="w-full">
                 <ServiceCardRecomendation
                   service={svc}
                   index={i}

@@ -61,6 +61,7 @@ module.exports = {
       animation: {
         heartbeat: "heartbeat 2s infinite",
       },
+
       fontSize: {
         xxs: "0.625rem", // 10px
       },

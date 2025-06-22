@@ -12,8 +12,14 @@ import FilterModal from "@/components/utils/modal/FilterModal";
 
 export default function Home({}) {
   const store = useStore();
-  const { setHaveNotification, setService, language, lastPage, setLastPage } =
-    store;
+  const {
+    setHaveNotification,
+    setService,
+    language,
+    lastPage,
+    setLastPage,
+    listItems,
+  } = store;
   const [scrolled, setScrolled] = useState(false);
 
   const userId = Cookies.get("auth.user_id");
@@ -38,30 +44,55 @@ export default function Home({}) {
     return () => clearTimeout(timerId);
   }, []);
 
-  useLayoutEffect(() => {
+  // useLayoutEffect(() => {
+  //   if (lastPage !== "preview") {
+  //     setScrolled(true);
+  //     return;
+  //   }
+
+  //   // valor guardado
+  //   const ySaved = Number(Cookies.get("homeScrollY") || 0);
+
+  //   // Espera a que la página haya pintado el IconCarousel
+  //   requestAnimationFrame(() => {
+  //     requestAnimationFrame(() => {
+  //       const sticky = document.getElementById("icon-carousel");
+
+  //       // alto de la barra fija + alto real del carrusel cuando se hace sticky
+  //       const TOPBAR = 52;
+  //       const offset = TOPBAR + (sticky ? sticky.offsetHeight : 0);
+  //       //minicambio
+  //       window.scrollTo(0, Math.max(0, ySaved - 700));
+  //       setScrolled(true);
+  //       setLastPage("");
+  //     });
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    const id = Cookies.get("homeItemId");
+    if (!id) return;
+
+    /** espera a que la lista exista en el DOM */
+    const tryScroll = () => {
+      const el = document.querySelector(`[data-item-id='${id}']`);
+      if (!el) {
+        requestAnimationFrame(tryScroll);
+        return;
+      }
+
+      el.scrollIntoView({ block: "start" });
+      Cookies.remove("homeItemId"); // úsalo solo una vez
+    };
+    requestAnimationFrame(tryScroll);
+  }, [listItems.length]);
+
+  useEffect(() => {
+    // Si NO venimos de preview, habilita la vista enseguida
     if (lastPage !== "preview") {
       setScrolled(true);
-      return;
     }
-
-    // valor guardado
-    const ySaved = Number(Cookies.get("homeScrollY") || 0);
-
-    // Espera a que la página haya pintado el IconCarousel
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const sticky = document.getElementById("icon-carousel");
-
-        // alto de la barra fija + alto real del carrusel cuando se hace sticky
-        const TOPBAR = 52;
-        const offset = TOPBAR + (sticky ? sticky.offsetHeight : 0);
-        //minicambio
-        window.scrollTo(0, Math.max(0, ySaved - 700));
-        setScrolled(true);
-        setLastPage("");
-      });
-    });
-  }, []);
+  }, [lastPage]);
 
   const checkNotification = async () => {
     try {

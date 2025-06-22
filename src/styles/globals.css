@@ -9,6 +9,15 @@
 }
 
 
+/* /Muy importante sirve para el scroll tipo instagram del index a los listado de items automatico */
+@layer utilities {
+  /* deja 52 px de holgura para la barra fija al hacer scrollIntoView */
+  [data-item-id] {
+    scroll-margin-top: 52px; /* ajusta aquí si tu top-bar cambia de altura */
+  }
+}
+
+
 
 body {
   color: rgb(var(--foreground-rgb));

@@ -55,7 +55,7 @@ export default function Home({}) {
       window.scrollTo(0, y);
       setScrolled(true);
     }, 350);
-
+    //minicambio
     return () => clearTimeout(id); // ← limpieza
   }, []);
 

@@ -52,7 +52,7 @@ export default function ServicePreviewPage() {
   };
 
   return (
-    <div className="mx-auto p-4 md:pl-[240px] py-[60px]">
+    <div className="mx-auto p-4 md:pl-[240px] py-[52px]">
       {/* fade + slide container */}
       <div
         className={`

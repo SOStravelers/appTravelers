@@ -590,6 +590,7 @@ export default function EditSubservicePage() {
 
           {/* Submit */}
           <div className="flex w-full justify-between mt-8">
+            <div></div>
             <button
               type="submit"
               disabled={saving}
@@ -599,14 +600,14 @@ export default function EditSubservicePage() {
             >
               {saving ? "Guardando…" : "Guardar Cambios"}
             </button>
-
+            {/* 
             <button
               type="button"
               onClick={() => router.push("/config/subservice/gallery/" + id)}
               className="bg-blue-200 text-gray-800 px-6 py-2 rounded hover:bg-blue-300"
             >
               Ir a Galeria
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

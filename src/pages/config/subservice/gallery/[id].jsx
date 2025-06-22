@@ -3,12 +3,21 @@ import { useRouter } from "next/router";
 import { FaImage, FaVideo, FaTrash, FaGripVertical } from "react-icons/fa";
 import { useStore } from "@/store";
 import SubserviceService from "@/services/SubserviceService";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 export default function UploadAssetsPage() {
   const router = useRouter();
   const { id } = router.query;
   const { language } = useStore();
+
+  /* ─── NUEVO: tipos que Jimp sí soporta ─── */
+  const SUPPORTED_IMG_TYPES = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/gif",
+  ];
 
   const [existingImgUrl, setExistingImgUrl] = useState("");
   const [existingVideoUrl, setExistingVideoUrl] = useState("");
@@ -29,11 +38,10 @@ export default function UploadAssetsPage() {
   const [submitting, setSubmitting] = useState(false);
 
   const bytes = (mb) => mb * 1024 * 1024;
-
-  // Trunca cadenas a `max` caracteres y añade "..."
   const truncate = (str, max = 25) =>
     !str ? "" : str.length > max ? str.slice(0, max) + "..." : str;
 
+  /* -------- Fetch subservice -------- */
   useEffect(() => {
     if (!id) return;
     SubserviceService.getById(id)
@@ -46,21 +54,26 @@ export default function UploadAssetsPage() {
       .catch(console.error);
   }, [id]);
 
+  /* -------- Validación -------- */
   const validate = () => {
     const err = {};
     if (!existingImgUrl && !imgFile) err.img = "Imagen requerida";
     if (!existingVideoUrl && !videoFile) err.video = "Vídeo requerido";
 
+    /* ─── Imagen principal ─── */
     if (imgFile) {
-      if (!["image/jpeg", "image/png", "image/webp"].includes(imgFile.type))
-        err.img = "Formato inválido";
+      if (!SUPPORTED_IMG_TYPES.includes(imgFile.type))
+        err.img = "Formato inválido (JPG/PNG/GIF)";
       else if (imgFile.size > bytes(20)) err.img = "Máx 20 MB";
     }
+
+    /* ─── Vídeo principal ─── */
     if (videoFile) {
       if (!videoFile.type.startsWith("video/")) err.video = "Formato inválido";
       else if (videoFile.size > bytes(20)) err.video = "Máx 20 MB";
     }
 
+    /* ─── Galería imágenes ─── */
     const currImgs = existingGalleryImages.filter(
       (_, i) => !removeGalleryImages.has(i)
     );
@@ -69,11 +82,12 @@ export default function UploadAssetsPage() {
       err.galleryImages = `Imágenes totales deben ser 4–8 (tienes ${totImgs})`;
     if (
       galleryImages.some(
-        (f) => !f.type.startsWith("image/") || f.size > bytes(20)
+        (f) => !SUPPORTED_IMG_TYPES.includes(f.type) || f.size > bytes(20)
       )
     )
-      err.galleryImages = "Cada imagen ≤20 MB y formato válido";
+      err.galleryImages = "Cada imagen (JPG/PNG/GIF) ≤20 MB";
 
+    /* ─── Galería vídeos ─── */
     const currVids = existingGalleryVideos.filter(
       (_, i) => !removeGalleryVideos.has(i)
     );
@@ -91,6 +105,7 @@ export default function UploadAssetsPage() {
     return Object.keys(err).length === 0;
   };
 
+  /* -------- Submit -------- */
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -129,6 +144,7 @@ export default function UploadAssetsPage() {
     }
   };
 
+  /* -------- Helpers UI -------- */
   const toggleRemove = (type, idx = null) => {
     if (type === "img") return setRemoveImg((v) => !v);
     if (type === "video") return setRemoveVideo((v) => !v);
@@ -153,11 +169,15 @@ export default function UploadAssetsPage() {
       return setGalleryVideos((prev) => prev.filter((_, i) => i !== idx));
   };
 
+  /* ================================================
+     ===============  RENDER UI  =====================
+     ================================================ */
+
   return (
     <div className="relative min-h-screen my-10 bg-gradient-to-br from-indigo-50 to-pink-50 p-4 sm:p-8">
-      {/* Spinner global */}
+      {/* Spinner */}
       {submitting && (
-        <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50">
+        <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-50">
           <svg
             className="animate-spin h-12 w-12 text-indigo-600"
             xmlns="http://www.w3.org/2000/svg"
@@ -182,16 +202,36 @@ export default function UploadAssetsPage() {
       )}
 
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 relative z-10">
-        <h1 className="text-2xl font-bold text-darkBlue mb-6">
+        <h1 className="text-2xl font-bold text-darkBlue mb-2">
           Configurar Assets
         </h1>
+        {/* ------------ Botones ------------ */}
+        <div className="flex w-full justify-between mb-3">
+          {/* <button
+              type="submit"
+              disabled={submitting}
+              className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+            >
+              {submitting ? "Actualizando…" : "Guardar"}
+            </button> */}
+          <div></div>
+
+          <button
+            type="button"
+            onClick={() => router.push(`/config/subservice/info/${id}`)}
+            className="bg-blue-200 text-gray-800 px-8 py-2 rounded hover:bg-blue-300"
+          >
+            Ir a Info
+          </button>
+        </div>
         <form onSubmit={onSubmit} className="space-y-6">
-          {/* Imagen Principal */}
+          {/* ------------ Imagen principal ------------ */}
           <div>
-            <label className="flex items-center text-xl pb-3 font-medium ">
+            <label className="flex items-center text-xl pb-3 font-medium">
               <FaImage className="mr-2" /> Imagen Principal - obligatoria
             </label>
             <div className="mt-2 flex items-center space-x-4">
+              {/* existente */}
               {existingImgUrl && !removeImg ? (
                 <div className="relative">
                   <img
@@ -206,7 +246,7 @@ export default function UploadAssetsPage() {
                     <FaTrash />
                   </button>
                 </div>
-              ) : imgFile ? (
+              ) : /* nueva */ imgFile ? (
                 <div className="relative">
                   <img
                     src={URL.createObjectURL(imgFile)}
@@ -221,11 +261,12 @@ export default function UploadAssetsPage() {
                   </button>
                 </div>
               ) : (
+                /* selector */
                 <label className="w-24 h-24 flex flex-col justify-center items-center bg-gray-100 rounded cursor-pointer">
                   Elegir
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/jpeg,image/png,image/jpg,image/gif"
                     className="hidden"
                     onChange={(e) => setImgFile(e.target.files[0] || null)}
                   />
@@ -235,15 +276,15 @@ export default function UploadAssetsPage() {
             {errors.img && <p className="text-red-600 mt-1">{errors.img}</p>}
           </div>
 
-          {/* Vídeo Principal */}
+          {/* ------------ Vídeo principal ------------ */}
           <div>
-            <label className="flex items-center pb-3 text-xl font-medium ">
+            <label className="flex items-center pb-3 text-xl font-medium">
               <FaVideo className="mr-2 text-3xl" /> Vídeo Principal
             </label>
             <div className="mt-2 flex items-center space-x-4">
               {existingVideoUrl && !removeVideo ? (
                 <div className="flex items-center space-x-2">
-                  <FaVideo className=" text-gray-700" />
+                  <FaVideo className="text-gray-700" />
                   <a
                     href={existingVideoUrl}
                     target="_blank"
@@ -261,8 +302,8 @@ export default function UploadAssetsPage() {
                 </div>
               ) : videoFile ? (
                 <div className="flex items-center space-x-2">
-                  <FaVideo className="text-3xl text-gray-700" />
-                  <span className="truncate whitespace-nowrap max-w-xs">
+                  <FaVideo className="text-3xl text-gray-700 mr-1" />
+                  <span className="truncate max-w-xs">
                     {truncate(videoFile.name, 25)}
                   </span>
                   <button
@@ -290,183 +331,168 @@ export default function UploadAssetsPage() {
             )}
           </div>
 
-          {/* Galería – Imágenes */}
+          {/* ------------ Galería imágenes ------------ */}
           <div>
-            <label className="block text-lg font-medium underline mb-4 ">
-              Galería de img (min 4 - max 8)
+            <label className="block text-lg font-medium underline mb-4">
+              Galería de imágenes (4–8)
             </label>
 
-            <div className="mt-2 space-y-2">
-              {galleryImages.length > 0 && (
-                <ul className="divide-y border rounded overflow-hidden">
-                  {galleryImages.map((file, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center px-3 py-2 bg-white hover:bg-gray-50"
+            {/* nuevas en cola */}
+            {galleryImages.length > 0 && (
+              <ul className="divide-y border rounded overflow-hidden mb-3">
+                {galleryImages.map((file, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center px-3 py-2 bg-white hover:bg-gray-50"
+                  >
+                    <FaGripVertical className="text-gray-400 mr-3" />
+                    <span className="flex-1 truncate">{file.name}</span>
+                    <span className="text-sm text-gray-500 ml-4">
+                      {(file.size / 1024 / 1024).toFixed(2)} MB
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveNew("galleryImgNew", i)}
+                      className="ml-4 text-red-600 hover:text-red-800"
                     >
-                      <FaGripVertical className="text-gray-400 mr-3" />
-                      <span className="flex-1 truncate whitespace-nowrap">
-                        {file.name}
-                      </span>
-                      <span className="text-sm text-gray-500 ml-4">
-                        {(file.size / 1024 / 1024).toFixed(2)} MB
-                      </span>
+                      <FaTrash />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* existentes */}
+            <div className="grid grid-cols-4 gap-2 mb-4">
+              {existingGalleryImages.map(
+                (url, i) =>
+                  !removeGalleryImages.has(i) && (
+                    <div key={i} className="relative">
+                      <img
+                        src={url}
+                        className="w-full h-24 object-cover rounded border"
+                      />
                       <button
                         type="button"
-                        onClick={() => handleRemoveNew("galleryImgNew", i)}
-                        className="ml-4 text-red-600 hover:text-red-800"
+                        onClick={() => toggleRemove("galleryImg", i)}
+                        className="absolute top-1 right-1 text-red-600"
                       >
-                        <FaTrash />
+                        <FaTrash size={12} />
                       </button>
-                    </li>
-                  ))}
-                </ul>
+                    </div>
+                  )
               )}
+            </div>
 
-              <div className="mt-2 grid grid-cols-4 gap-2">
-                {existingGalleryImages.map(
-                  (url, i) =>
-                    !removeGalleryImages.has(i) && (
-                      <div key={i} className="relative">
-                        <img
-                          src={url}
-                          className="w-full h-24 object-cover rounded border"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => toggleRemove("galleryImg", i)}
-                          className="absolute top-1 right-1 text-red-600"
-                        >
-                          <FaTrash size={12} />
-                        </button>
-                      </div>
-                    )
-                )}
-              </div>
-
-              <div className="mt-4 flex justify-center">
-                <label className=" flex p-3 flex-col justify-center items-center bg-gray-300 rounded cursor-pointer">
-                  Sube imgs
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    className="hidden"
-                    onChange={(e) =>
-                      setGalleryImages(Array.from(e.target.files))
-                    }
-                  />
-                </label>
-              </div>
+            {/* selector */}
+            <div className="flex justify-center">
+              <label className="flex p-3 flex-col items-center bg-gray-300 rounded cursor-pointer">
+                Sube imgs
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/jpg,image/gif"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => setGalleryImages(Array.from(e.target.files))}
+                />
+              </label>
             </div>
             {errors.galleryImages && (
-              <p className="text-red-600 mt-1 truncate">
-                {errors.galleryImages}
-              </p>
+              <p className="text-red-600 mt-1">{errors.galleryImages}</p>
             )}
           </div>
 
-          {/* Galería – Vídeos */}
+          {/* ------------ Galería vídeos ------------ */}
           <div>
-            <label className="block text-lg font-medium underline mb-4 ">
-              Galería de vídeos (min 1 - max 3)
+            <label className="block text-lg font-medium underline mb-4">
+              Galería de vídeos (1–3)
             </label>
-            <div className="mt-2 space-y-2">
-              {galleryVideos.length > 0 && (
-                <ul className="divide-y border rounded overflow-hidden">
-                  {galleryVideos.map((file, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center px-3 py-2 bg-white hover:bg-gray-50"
+
+            {galleryVideos.length > 0 && (
+              <ul className="divide-y border rounded overflow-hidden mb-3">
+                {galleryVideos.map((file, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center px-3 py-2 bg-white hover:bg-gray-50"
+                  >
+                    <FaGripVertical className="text-gray-400 mr-3" />
+                    <FaVideo className="text-xl text-gray-700 mr-2" />
+                    <span className="flex-1 truncate">{file.name}</span>
+                    <span className="text-sm text-gray-500 ml-4">
+                      {(file.size / 1024 / 1024).toFixed(2)} MB
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveNew("galleryVidNew", i)}
+                      className="ml-4 text-red-600 hover:text-red-800"
                     >
-                      <FaGripVertical className="text-gray-400 mr-3" />
-                      <FaVideo className="text-xl text-gray-700 mr-2" />
-                      <span className="flex-1 truncate whitespace-nowrap">
-                        {file.name}
-                      </span>
-                      <span className="text-sm text-gray-500 ml-4">
-                        {(file.size / 1024 / 1024).toFixed(2)} MB
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveNew("galleryVidNew", i)}
-                        className="ml-4 text-red-600 hover:text-red-800"
-                      >
-                        <FaTrash />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                      <FaTrash />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
 
-              <div className="mt-2 space-y-2">
-                {existingGalleryVideos.map(
-                  (url, i) =>
-                    !removeGalleryVideos.has(i) && (
-                      <div
-                        key={i}
-                        className="flex items-center bg-gray-50 p-2 rounded"
-                      >
-                        <FaVideo className="text-xl text-gray-700 mr-2" />
-                        <a
-                          href={url}
-                          target="_blank"
-                          className="truncate whitespace-nowrap flex-1"
-                        >
-                          {truncate(url, 25)}
-                        </a>
-                        <button
-                          type="button"
-                          onClick={() => toggleRemove("galleryVid", i)}
-                          className="ml-2 text-red-600 hover:text-red-800"
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    )
-                )}
-              </div>
+            {existingGalleryVideos.map(
+              (url, i) =>
+                !removeGalleryVideos.has(i) && (
+                  <div
+                    key={i}
+                    className="flex items-center bg-gray-50 p-2 rounded mb-2"
+                  >
+                    <FaVideo className="text-xl text-gray-700 mr-2" />
+                    <a
+                      href={url}
+                      target="_blank"
+                      className="truncate whitespace-nowrap flex-1"
+                    >
+                      {truncate(url, 25)}
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => toggleRemove("galleryVid", i)}
+                      className="ml-2 text-red-600 hover:text-red-800"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                )
+            )}
 
-              <div className="mt-4 flex justify-center">
-                <label className="p-3  bg-gray-300 rounded cursor-pointer">
-                  Sube vídeos
-                  <input
-                    type="file"
-                    accept="video/*"
-                    multiple
-                    className="hidden"
-                    onChange={(e) =>
-                      setGalleryVideos(Array.from(e.target.files))
-                    }
-                  />
-                </label>
-              </div>
+            <div className="flex justify-center mt-4">
+              <label className="p-3 bg-gray-300 rounded cursor-pointer">
+                Sube vídeos
+                <input
+                  type="file"
+                  accept="video/*"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => setGalleryVideos(Array.from(e.target.files))}
+                />
+              </label>
             </div>
             {errors.galleryVideos && (
-              <p className="text-red-600 mt-1 truncate">
-                {errors.galleryVideos}
-              </p>
+              <p className="text-red-600 mt-1">{errors.galleryVideos}</p>
             )}
           </div>
 
-          {/* Submit */}
-
+          {/* ------------ Botones ------------ */}
           <div className="flex w-full justify-between mt-8">
+            <div></div>
             <button
               type="submit"
               disabled={submitting}
               className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
             >
-              {submitting ? "Actualizando…" : "Guardar "}
+              {submitting ? "Actualizando…" : "Guardar"}
             </button>
-            {/* Botón derecha */}
-            <button
+            {/* <button
               type="button"
-              onClick={() => router.push("/config/subservice/info/" + id)}
+              onClick={() => router.push(`/config/subservice/info/${id}`)}
               className="bg-blue-200 text-gray-800 px-8 py-2 rounded hover:bg-blue-300"
             >
               Ir a Info
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

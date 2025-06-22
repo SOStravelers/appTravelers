@@ -78,19 +78,23 @@ export default function ServiceList({ filterKey }) {
   useEffect(() => {
     const sentinel = loadMoreRef.current;
     if (!sentinel || !listHasNext) return;
+
     const obs = new IntersectionObserver(
       ([e]) => {
-        console.log("activa segundo caso", lastPage);
+        // ⛔  Ignorar mientras sigas en modo preview
+        if (lastPage === "preview") return;
+
         if (e.isIntersecting && !loading) {
           loadPage(listPage + 1);
-          setLastPage("");
+          // setLastPage("");  ← ya no lo necesitas aquí
         }
       },
       { rootMargin: "200px" }
     );
+
     obs.observe(sentinel);
     return () => obs.disconnect();
-  }, [listHasNext, listPage, loading, lastPage]);
+  }, [listHasNext, listPage, loading, lastPage, loadPage]);
 
   /* ----------  4) Reiniciar cuando cambia el filtro ---------- */
   useEffect(() => {

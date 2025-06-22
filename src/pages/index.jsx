@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useLayoutEffect } from "react";
 import clsx from "clsx";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import NotificationService from "@/services/NotificationService";
@@ -37,23 +37,29 @@ export default function Home({}) {
     return () => clearTimeout(timerId);
   }, []);
 
-  useEffect(() => {
-    console.log("la page", lastPage);
+  useLayoutEffect(() => {
     if (lastPage !== "preview") {
       setScrolled(true);
-      return; // ← 1️⃣  condición
+      return;
     }
-    const id = setTimeout(() => {
-      console.log("entro al minitimer", lastPage);
-      // ← 2️⃣  pequeño delay opcional
-      const y = Cookies.get("homeScrollY") || 0;
-      console.log("la y", y);
-      const metrica = y - 200;
-      // restoredRef.current = true;
-      window.scrollTo(0, metrica);
-      setScrolled(true);
-    }, 350);
-    return () => clearTimeout(id); // ← limpieza
+
+    // valor guardado
+    const ySaved = Number(Cookies.get("homeScrollY") || 0);
+
+    // Espera a que la página haya pintado el IconCarousel
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const sticky = document.getElementById("icon-carousel");
+
+        // alto de la barra fija + alto real del carrusel cuando se hace sticky
+        const TOPBAR = 52;
+        const offset = TOPBAR + (sticky ? sticky.offsetHeight : 0);
+
+        window.scrollTo(0, Math.max(0, ySaved - 700));
+        setScrolled(true);
+        setLastPage("");
+      });
+    });
   }, []);
 
   const userId = Cookies.get("auth.user_id");

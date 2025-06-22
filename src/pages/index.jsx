@@ -11,6 +11,7 @@ import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import ServiceList from "@/components/service/ServiceList";
 import FilterModal from "@/components/utils/modal/FilterModal";
 
+
 export default function Home({}) {
   const store = useStore();
   const {

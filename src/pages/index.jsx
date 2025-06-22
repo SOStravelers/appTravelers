@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { register } from "swiper/element/bundle";
 import clsx from "clsx";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import NotificationService from "@/services/NotificationService";
@@ -7,9 +6,7 @@ import ServiceService from "@/services/ServiceService";
 import FloatingWhatsAppButton from "../components/utils/buttons/FloatingWhatsAppButton";
 import Cookies from "js-cookie";
 import { NotFoundPicture } from "@/constants/icons";
-import "swiper/swiper-bundle.css";
 import { useStore } from "@/store";
-register();
 import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import ServiceList from "@/components/service/ServiceList";
 import FilterModal from "@/components/utils/modal/FilterModal";

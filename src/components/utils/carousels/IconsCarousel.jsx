@@ -51,16 +51,20 @@ export default function IconCarousel({
 
   // Sticky shadow threshold (accounting for parent top-[58px])
   useEffect(() => {
-    if (!navRef.current) return;
-    const rect = navRef.current.getBoundingClientRect();
-    const initialTop = rect.top + window.scrollY - 200;
-    const threshold = initialTop;
+    const nav = navRef.current;
+    if (!nav) return;
+
+    const threshold = nav.getBoundingClientRect().top + window.scrollY;
+    // -- Si tu top-bar fija mide 58 px y quieres activar justo cuando el nav
+    //    se “pegue” debajo de ella, resta sólo esos 58:
+    // const threshold = nav.getBoundingClientRect().top + window.scrollY - 58;
 
     const onScroll = () => {
       setIsSticky(window.scrollY >= threshold);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+
+    onScroll(); // calcula una vez al montar con el valor correcto
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 

@@ -207,7 +207,7 @@ export default function SyncCarousel() {
   if (!items.length) return <div className="text-white">Cargando…</div>;
 
   return (
-    <div className="relative h-[90vh] flex flex-col justify-center items-center overflow-hidden bg-black">
+    <div className="relative h-[80vh] flex flex-col justify-center items-center overflow-hidden bg-black">
       {/* ----- video ----- */}
       <div className="relative w-full h-full">
         <VideoLoader

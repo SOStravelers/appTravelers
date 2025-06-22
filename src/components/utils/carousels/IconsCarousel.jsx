@@ -53,7 +53,7 @@ export default function IconCarousel({
   useEffect(() => {
     if (!navRef.current) return;
     const rect = navRef.current.getBoundingClientRect();
-    const initialTop = rect.top + window.scrollY;
+    const initialTop = rect.top + window.scrollY - 200;
     const threshold = initialTop;
 
     const onScroll = () => {

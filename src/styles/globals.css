@@ -13,7 +13,7 @@
 @layer utilities {
   /* deja 52 px de holgura para la barra fija al hacer scrollIntoView */
   [data-item-id] {
-    scroll-margin-top: 52px; /* ajusta aquí si tu top-bar cambia de altura */
+    scroll-margin-top: 200; /* ajusta aquí si tu top-bar cambia de altura */
   }
 }
 

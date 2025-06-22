@@ -34,11 +34,10 @@ export default function Home({}) {
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      console.log("✅ timer disparado – eliminando cookie");
-      Cookies.remove("homeScrollY");
+      console.log("✅ timer disparado – setLastPage");
 
       setLastPage("");
-    }, 2500);
+    }, 500);
 
     // Se ejecuta al desmontar el componente o al recrearse el efecto
     return () => clearTimeout(timerId);
@@ -73,17 +72,42 @@ export default function Home({}) {
     const id = Cookies.get("homeItemId");
     if (!id) return;
 
-    /** espera a que la lista exista en el DOM */
+    // /** espera a que la lista exista en el DOM */
     const tryScroll = () => {
       const el = document.querySelector(`[data-item-id='${id}']`);
       if (!el) {
         requestAnimationFrame(tryScroll);
         return;
       }
+      console.log("entro aqui", `[data-item-id='${id}']`);
+      // el.scrollIntoView({ behavior: "smooth", block: "center" });
 
-      el.scrollIntoView({ block: "start" });
+      const topBar = 70;
+      const nav = document.getElementById("icon-carousel")?.offsetHeight ?? 0;
+      const y =
+        el.getBoundingClientRect().top + window.scrollY - (topBar + nav);
+
+      window.scrollTo({ top: y });
       Cookies.remove("homeItemId"); // úsalo solo una vez
     };
+
+    // const tryScroll = () => {
+    //   const el = document.querySelector(`[data-item-id='${id}']`);
+    //   if (!el) {
+    //     requestAnimationFrame(tryScroll);
+    //     return;
+    //   }
+
+    //   /* alto fijo de top-bar (52 px) + alto real del IconCarousel */
+    //   const topBar = 52;
+    //   const nav = document.getElementById("icon-carousel")?.offsetHeight ?? 0;
+
+    //   const y =
+    //     el.getBoundingClientRect().top + window.scrollY - (topBar + nav);
+
+    //   window.scrollTo({ top: y, behavior: "instant" });
+    //   Cookies.remove("homeItemId");
+    // };
     requestAnimationFrame(tryScroll);
   }, [listItems.length]);
 
@@ -122,7 +146,7 @@ export default function Home({}) {
       <SyncCarousel />
 
       {/* Aquí aplicamos sticky */}
-      <section className="sticky top-[52px] z-20 bg-white">
+      <section id="icon-carousel" className="sticky top-[52px] z-20 bg-white">
         <IconCarousel
           onFilterChange={handleFilterChange}
           onOpenFilter={() => setFilterOpen(true)}

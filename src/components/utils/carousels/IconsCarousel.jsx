@@ -91,7 +91,7 @@ export default function IconCarousel({
   }, []);
 
   const handleIconClick = (svc, idx) => {
-    setServicesList({ serviceId: svc._id, serviceName: svc.name });
+    setServicesIndexList({ serviceId: svc._id, serviceName: svc.name });
     setActiveIdx(idx);
 
     const updated = { ...filters, service: svc._id };
@@ -194,34 +194,31 @@ export default function IconCarousel({
           ref={scrollRef}
           className="overflow-x-auto whitespace-nowrap pb-1 "
         >
-          {servicesIndexList.map((service, idx) => (
-            <button
-              key={service._id}
-              onClick={() => handleIconClick(service, idx)}
-              className="inline-flex flex-col items-center mx-3 focus:outline-none"
-            >
-              <IconMapper
-                name={service.icon}
-                size={24}
-                className={
-                  idx === activeIdx ? "text-gray-900" : "text-gray-500"
-                }
-              />
-              <span
-                className={`
-        mt-1 text-xs border-b-2 pb-1
-        transition-colors duration-200 ease-in-out
-        ${
-          idx === activeIdx
-            ? "text-gray-900 border-blueBorder"
-            : "text-gray-500 border-transparent"
-        }
-      `}
+          {Array.isArray(servicesIndexList) &&
+            servicesIndexList.map((service, idx) => (
+              <button
+                key={service._id}
+                onClick={() => handleIconClick(service, idx)}
+                className="inline-flex flex-col items-center mx-3 focus:outline-none"
               >
-                {service.name[language]}
-              </span>
-            </button>
-          ))}
+                <IconMapper
+                  name={service.icon}
+                  size={24}
+                  className={
+                    idx === activeIdx ? "text-gray-900" : "text-gray-500"
+                  }
+                />
+                <span
+                  className={`mt-1 text-xs border-b-2 pb-1 transition-colors duration-200 ease-in-out ${
+                    idx === activeIdx
+                      ? "text-gray-900 border-blueBorder"
+                      : "text-gray-500 border-transparent"
+                  }`}
+                >
+                  {service.name[language]}
+                </span>
+              </button>
+            ))}
         </div>
         {showLeftBlur && (
           <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-white to-transparent" />

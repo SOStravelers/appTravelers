@@ -77,6 +77,7 @@ const ServiceCardRecomendation = ({
               src={imgUrl}
               alt={name[language] || "Service image"}
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           ) : (
             <div key={idx} className="w-full h-full bg-gray-100" />

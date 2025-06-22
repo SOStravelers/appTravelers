@@ -54,7 +54,7 @@ export default function Home({}) {
         // alto de la barra fija + alto real del carrusel cuando se hace sticky
         const TOPBAR = 52;
         const offset = TOPBAR + (sticky ? sticky.offsetHeight : 0);
-
+        //minicambio
         window.scrollTo(0, Math.max(0, ySaved - 700));
         setScrolled(true);
         setLastPage("");

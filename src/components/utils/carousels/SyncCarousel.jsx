@@ -81,10 +81,16 @@ export default function SyncCarousel() {
   const router = useRouter();
 
   /* setters correctos del store */
-  const { language, setScrollY, setRestoreScroll, lastPage } = useStore();
+  const {
+    language,
+    setScrollY,
+    setRestoreScroll,
+    itemsWithVideos,
+    setItemsWithVideos,
+  } = useStore();
 
   const videoRef = useRef(null);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => itemsWithVideos);
   const [activeIndex, setActiveIndex] = useState(0);
   const [openLogin, setOpenLogin] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -96,17 +102,20 @@ export default function SyncCarousel() {
   const scrollTimeout = useRef(null);
 
   /* -------- carga inicial de vídeos -------- */
+
   useEffect(() => {
+    if (itemsWithVideos.length) return; // ✅  ya estaban cargados
+
     SubserviceService.getWithVideos()
       .then(({ data }) => {
         if (Array.isArray(data) && data.length) {
-          setItems(data);
+          setItemsWithVideos(data); // guarda global
+          setItems(data); // refleja en local
           setActiveIndex(0);
         }
       })
       .catch(console.error);
-  }, []);
-
+  }, [itemsWithVideos.length, setItemsWithVideos]);
   /* -------- sincronizar icono play/pause -------- */
   /* ➊ añade este efecto  — se ejecuta cada vez que cambia activeItem */
   useEffect(() => {

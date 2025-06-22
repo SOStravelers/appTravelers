@@ -32,7 +32,7 @@ export const useStore = create((set) => {
     servicesIndexList: [],
     lastPage: "",
     itemsVideo: [],
-
+    itemsWithVideos: [],
     /* ----- NUEVO: para lista infinita y restaurar scroll ----- */
     listItems: [], // tarjetas ya cargadas
     listPage: 1,
@@ -53,6 +53,7 @@ export const useStore = create((set) => {
     setLanguage: (language) => set({ language }),
     setFilters: (filters) => set({ filters }),
     setServicesIndexList: (servicesIndexList) => set({ servicesIndexList }),
+    setItemsWithVideos: (itemsWithVideos) => set({ itemsWithVideos }),
     resetService: () => set({ service: {} }),
     setItemsVideo: (itemsVideo) => set({ itemsVideo }),
     /* ----- setters NUEVOS ----- */

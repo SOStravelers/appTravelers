@@ -2,7 +2,6 @@ import { useEffect, useState, useLayoutEffect } from "react";
 import clsx from "clsx";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import NotificationService from "@/services/NotificationService";
-import ServiceService from "@/services/ServiceService";
 import FloatingWhatsAppButton from "../components/utils/buttons/FloatingWhatsAppButton";
 import Cookies from "js-cookie";
 import { NotFoundPicture } from "@/constants/icons";
@@ -58,14 +57,11 @@ export default function Home({}) {
   const userId = Cookies.get("auth.user_id");
 
   useEffect(() => {
+    document.title = "Home | SOS Travelers";
+    if (userId) checkNotification();
     setService({});
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
-  }, []);
-
-  useEffect(() => {
-    document.title = "Home | SOS Travelers";
-    if (userId) checkNotification();
   }, []);
 
   const checkNotification = async () => {

@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useStore } from "@/store";
 import SubserviceService from "@/services/SubserviceService";
 import ServiceService from "@/services/ServiceService";
-import "react-toastify/dist/ReactToastify.css";
 import "react-quill/dist/quill.snow.css";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });

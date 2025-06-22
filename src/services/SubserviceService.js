@@ -60,6 +60,16 @@ export default class SubserviceService {
   static async getById(id) {
     return axios.get(`${this.baseUrl}/byId/${id}`);
   }
+  //Obtener todos los subservicio agrupados en servicios
+  static async getAllByService() {
+    return axios.get(`${this.baseUrl}/all/byService`);
+  }
+  //Actualizar estado activo de un servicio
+  static async changeStatus(id, val) {
+    return axios.put(`${this.baseUrl}/changeStatus/one/${id}`, {
+      isActive: val,
+    });
+  }
   static async list(params = {}) {
     let query = "";
     Object.keys(params).forEach((key) => {

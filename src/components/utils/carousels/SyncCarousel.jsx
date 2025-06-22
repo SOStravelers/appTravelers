@@ -208,7 +208,7 @@ export default function SyncCarousel() {
 
   return (
     <div className="relative h-[80vh] flex flex-col justify-center items-center overflow-hidden bg-black">
-      {/* ----- video ----- */}
+      {/* ----- video ------ */}
       <div className="relative w-full h-full">
         <VideoLoader
           key={items[activeIndex].videoUrl}

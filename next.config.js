@@ -10,5 +10,6 @@ const nextConfig = {
   },
   // eslint: { ignoreDuringBuilds: true },
 };
+//comentario
 
 module.exports = nextConfig;

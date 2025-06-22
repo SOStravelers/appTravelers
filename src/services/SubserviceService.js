@@ -38,15 +38,32 @@ export default class SubserviceService {
     });
   }
   //Obtener todos los subservicios con paginate
-  static async getAll(data) {
-    console.log("getAll subservices");
-    console.log("filtro actuales", useStore.getState().filters);
-    const page = data.page;
-    const limit = data.limit;
-    console.log("se viene", data);
-    return axios.get(
-      `${this.baseUrl}/getAll/paginate?page=${page}&limit=${limit}`
-    );
+  static async getAll({ page, limit }) {
+    const filters = useStore.getState().filters || {};
+
+    const params = new URLSearchParams();
+    params.append("page", page);
+    params.append("limit", limit);
+
+    Object.entries(filters).forEach(([key, value]) => {
+      /* ---- saltar nulos, vacíos y precio = 0 ---- */
+      if (
+        value == null || // null / undefined
+        value === "" || // string vacío
+        ((key === "minPrice" || key === "maxPrice") && Number(value) === 0)
+      ) {
+        return;
+      }
+
+      /* arrays → ?tag=a&tag=b */
+      if (Array.isArray(value)) {
+        value.forEach((v) => params.append(key, v));
+      } else {
+        params.append(key, value);
+      }
+    });
+
+    return axios.get(`${this.baseUrl}/getAll/paginate?${params.toString()}`);
   }
   //Obtener subservicios que contengan videos
   static async getWithVideos() {

@@ -51,8 +51,9 @@ export default function Home({}) {
       // ← 2️⃣  pequeño delay opcional
       const y = Cookies.get("homeScrollY") || 0;
       console.log("la y", y);
+      const metrica = y - 200;
       // restoredRef.current = true;
-      window.scrollTo(0, y);
+      window.scrollTo(0, metrica);
       setScrolled(true);
     }, 350);
     //minicambio

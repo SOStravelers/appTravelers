@@ -60,7 +60,7 @@ export const getRouteTitles = (language) => ({
   "config/subservice": "Config Subservicio",
   "config/subservice/info": "Config Subserv - Info",
   "config/subservice/gallery": "Config Subserv - Gallery",
-  "config/subservice/create": "Config Subserv - Info",
+  "config/subservice/create": "Config Subserv - Create",
 });
 
 // Hook para obtener el idioma dinámicamente

@@ -41,7 +41,7 @@ export default function Home() {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
   }, []);
-
+  //minicambio
   useEffect(() => {
     const timerIds = setTimeout(() => {
       console.log("inicio");

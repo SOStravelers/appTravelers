@@ -164,7 +164,7 @@ export default function ServiceList({ filterKey }) {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 w-full">
             {safeItems.map((svc, i) => (
               <div key={svc._id} data-item-id={svc._id} className="w-full">
                 <ServiceCardRecomendation

@@ -232,14 +232,14 @@ export default function SyncCarousel() {
       {/* botón play/pause */}
       <button
         onClick={togglePlayPause}
-        className="absolute bottom-[140px] left-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
+        className="absolute bottom-[120px] left-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isPlaying ? (
           <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
             <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
           </svg>
         ) : (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M8 5v14l11-7z" />
           </svg>
         )}
@@ -248,12 +248,12 @@ export default function SyncCarousel() {
       {/* botón mute */}
       <button
         onClick={() => setIsMuted((m) => !m)}
-        className="absolute bottom-[140px] right-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
+        className="absolute bottom-[120px] right-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isMuted ? (
-          <MdVolumeOff className="w-6 h-6 text-black" />
+          <MdVolumeOff className="w-5 h-5 text-black" />
         ) : (
-          <MdVolumeUp className="w-6 h-6 text-black" />
+          <MdVolumeUp className="w-5 h-5 text-black" />
         )}
       </button>
 
@@ -268,8 +268,8 @@ export default function SyncCarousel() {
               key={i}
               ref={(el) => (cardsRef.current[i] = el)}
               className="flex-shrink-0 relative w-[300px] max-w-[400px] bg-white/95 backdrop-blur-sm
-                         rounded-xl p-2 mx-2 shadow-lg flex gap-4 hover:scale-105
-                         transition-transform duration-150 cursor-pointer"
+             rounded-xl p-2 mx-2 shadow-lg flex gap-4 items-center hover:scale-105
+             transition-transform duration-150 cursor-pointer"
               onClick={() => {
                 /* -------------- guardar scroll + marcar restauración -------- */
                 setScrollY(window.scrollY);
@@ -280,16 +280,16 @@ export default function SyncCarousel() {
               <img
                 src={it.imgUrl}
                 alt=""
-                className="w-16 h-20 object-cover rounded-lg"
+                className="w-16 h-16 object-cover rounded-lg"
               />
               <div className="flex-1 min-w-0">
-                <p className="text-sm pt-2 text-gray-600 truncate">
+                <p className="text-xs pt-2 text-gray-600 truncate">
                   <span className="text-red-500">★</span> {it.rate} ·{" "}
                   {formatTime(it.duration)}
                 </p>
-                <h3 className="text-sm pt-1 text-black">{it.name[language]}</h3>
+                <h3 className="text-xs pt-1 text-black">{it.name[language]}</h3>
                 {it.partner && (
-                  <p className="text-xs pt-2 text-gray-600 truncate">
+                  <p className="text-xxs pt-1 text-gray-600 truncate">
                     Partner: {it.partner}
                   </p>
                 )}
@@ -299,7 +299,7 @@ export default function SyncCarousel() {
                   e.stopPropagation();
                   handleLike(i);
                 }}
-                className={`absolute top-1 right-1 text-2xl transition-colors ${
+                className={`absolute top-2 right-2 text-xl transition-colors ${
                   likes.includes(i)
                     ? "text-red-500"
                     : "text-gray-500 hover:text-red-400"

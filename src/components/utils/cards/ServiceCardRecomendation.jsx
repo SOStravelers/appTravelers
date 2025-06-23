@@ -94,7 +94,7 @@ const ServiceCardRecomendation = ({
             {languageData.card.textPrice1[language]} R${price.category1}{" "}
           </span>
 
-          <div className="flex items-center mb-2">
+          <div className="flex items-center">
             <svg
               className="h-4 w-4 text-yellow-500"
               fill="currentColor"
@@ -109,13 +109,13 @@ const ServiceCardRecomendation = ({
         </div>
 
         {/* Título */}
-        <h3 className="text-base font-semibold text-gray-800 mb-1">
+        <h3 className="text-sm font-semibold text-gray-800 ">
           {name[language]}
         </h3>
 
         {/* Rating */}
 
-        <span className="text-sm text-gray-600">{formatTime(duration)}</span>
+        <span className="text-xs text-gray-600">{formatTime(duration)}</span>
       </div>
     </div>
   );

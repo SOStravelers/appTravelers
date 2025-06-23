@@ -54,7 +54,7 @@ export default function Home() {
         console.log("el point1", stickyEl.getBoundingClientRect().top);
         console.log("el point", stickypoint);
       }
-    }, 500);
+    }, 1000);
     return () => clearTimeout(timerIds);
   }, [stickypoint]);
 

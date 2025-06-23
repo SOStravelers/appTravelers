@@ -8,7 +8,7 @@ import * as FaIcons from "react-icons/fa";
 import * as GiIcons from "react-icons/gi";
 import * as MdIcons from "react-icons/md";
 import * as AiIcons from "react-icons/ai";
-
+import Cookies from "js-cookie";
 const Icons = {
   ...FaIcons,
   ...GiIcons,
@@ -91,9 +91,10 @@ export default function IconCarousel({
   }, []);
 
   const handleIconClick = (svc, idx) => {
-    setServicesIndexList({ serviceId: svc._id, serviceName: svc.name });
+    // setServicesIndexList({ serviceId: svc._id, serviceName: svc.name });
+    console.log("🟢 Scroll fjusto al click", window.scrollY);
     setActiveIdx(idx);
-
+    // Cookies.remove("homeItemId");
     const updated = { ...filters, service: svc._id };
     setFilters(updated);
     onFilterChange(updated);

@@ -40,6 +40,7 @@ export default function ServiceList({ filterKey }) {
 
   const [loading, setLoading] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
+  const [previousPage, setPreviousPage] = useState(0);
   const sentinelRef = useRef(null);
   const observerRef = useRef(null);
   const safeItems = Array.isArray(listItems) ? listItems : [];
@@ -47,15 +48,11 @@ export default function ServiceList({ filterKey }) {
 
   const loadPage = useCallback(
     async (page) => {
-      if (
-        requestedPages.current.has(page) ||
-        loading ||
-        (lastPage === "preview" && page === 1)
-      )
-        return;
+      if (loading || (lastPage === "preview" && page === 1)) return;
 
-      requestedPages.current.add(page);
+      setPreviousPage(page);
       setLoading(true);
+
       try {
         const res = await SubserviceService.getAll({
           page,
@@ -64,8 +61,20 @@ export default function ServiceList({ filterKey }) {
         });
 
         const { docs, hasNextPage } = res.data;
-        if (page === 1) setListItems(docs);
-        else appendListItems(docs);
+
+        if (page === 1) {
+          // Reemplazo total sin validar duplicados
+          setListItems(docs);
+        } else {
+          // Evitar duplicados si es append
+          const currentIds = new Set(
+            Array.isArray(listItems) ? listItems.map((item) => item._id) : []
+          );
+          const newDocs = docs.filter((doc) => !currentIds.has(doc._id));
+          if (newDocs.length > 0) {
+            appendListItems(newDocs);
+          }
+        }
 
         setListPage(page);
         setListHasNext(hasNextPage);
@@ -83,11 +92,14 @@ export default function ServiceList({ filterKey }) {
       appendListItems,
       setListPage,
       setListHasNext,
+      listItems,
+      previousPage,
     ]
   );
 
   useEffect(() => {
     if (safeItems.length === 0 && lastPage !== "preview") {
+      window.scrollTo({ top: 0, behavior: "auto" });
       loadPage(1);
     }
   }, []);
@@ -99,7 +111,7 @@ export default function ServiceList({ filterKey }) {
           loadPage(listPage + 1);
         }
       },
-      { rootMargin: "200px" }
+      { rootMargin: "50px" }
     );
 
     const sentinel = sentinelRef.current;
@@ -113,9 +125,10 @@ export default function ServiceList({ filterKey }) {
 
   useEffect(() => {
     if (lastPage !== "preview") {
-      requestedPages.current.clear();
-      setListItems([]);
+      // requestedPages.current.clear();
+      // setListItems([]);
       setListHasNext(true);
+      // window.scrollTo({ top: 0, behavior: "auto" });
       loadPage(1);
     }
   }, [filterKey]);
@@ -166,7 +179,7 @@ export default function ServiceList({ filterKey }) {
           {listHasNext && <div ref={sentinelRef} className="h-2 w-full" />}
         </>
       )}
-      {/* minicambio */}
+
       {!user && (
         <LoginFormModal
           open={openLogin}

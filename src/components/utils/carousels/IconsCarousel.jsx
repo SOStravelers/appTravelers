@@ -162,7 +162,7 @@ export default function IconCarousel({
       },
     });
   }
-
+  //minicambio
   return (
     <nav
       ref={navRef}

@@ -40,7 +40,7 @@ function TopBar() {
       }
     };
 
-    // Set initial state on mount
+    // Set initial state on moun
     handleScroll();
 
     window.addEventListener("scroll", handleScroll);

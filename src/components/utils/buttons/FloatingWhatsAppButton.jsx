@@ -1,9 +1,11 @@
 import clsx from "clsx";
-import { WhatsappIcon } from "@/constants/icons";
+import { FaWhatsapp } from "react-icons/fa"; // ⬅️ Reemplazo aquí
 import languageBooking from "@/language/bookingDetails.json";
 import { useStore } from "@/store";
+
 function FloatingWhatsAppButton({}) {
   const { language } = useStore();
+
   const handleClick = () => {
     const phoneNumber = "+5521969936320";
     window.open(
@@ -11,6 +13,7 @@ function FloatingWhatsAppButton({}) {
       "_blank"
     );
   };
+
   return (
     <div
       style={{
@@ -27,8 +30,8 @@ function FloatingWhatsAppButton({}) {
           color: "white",
           border: "none",
           borderRadius: "50%",
-          width: "60px",
-          height: "60px",
+          width: "50px",
+          height: "50px",
           fontSize: "24px",
           cursor: "pointer",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
@@ -37,8 +40,7 @@ function FloatingWhatsAppButton({}) {
           justifyContent: "center",
         }}
       >
-        <WhatsappIcon width="32" height="32" fill="white" />{" "}
-        {/* Usa tu ícono personalizado */}
+        <FaWhatsapp size={28} color="white" />
       </button>
     </div>
   );

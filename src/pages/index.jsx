@@ -48,6 +48,7 @@ export default function Home() {
         const stickyEl = document.getElementById("icon-carousel");
         const point = stickyEl.getBoundingClientRect().top - 52;
         setStickypoint(point);
+        console.log("el point", point);
       }
     }, 1000);
     return () => clearTimeout(timerIds);

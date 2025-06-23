@@ -10,10 +10,10 @@ const PointsOfInterestList = ({ pointsOfInterest = [] }) => {
     <div className="points-of-interest-list mt-8">
       {pointsOfInterest.length > 0 && (
         <>
-          <h3 className="text-lg font-semibold mb-2">
+          <h3 className="text-md font-semibold mb-2">
             {languageData.pointInterest.title[language]}
           </h3>
-          <h4 className="text-md mb-6">
+          <h4 className="text-sm mb-6">
             {languageData.pointInterest.subtitle[language]}
           </h4>
         </>
@@ -33,18 +33,20 @@ const PointsOfInterestList = ({ pointsOfInterest = [] }) => {
               {index === 0 ? (
                 <FaFlag className="text-white w-4 h-4" />
               ) : (
-                <span className="text-white font-semibold">{index}</span>
+                <span className="text-white text-sm font-semibold">
+                  {index}
+                </span>
               )}
             </div>
 
             {/* Contenido del punto */}
             <div className="flex flex-col">
-              <p className=" text-gray-800">{point.name[language]}</p>
+              <p className=" text-gray-800 text-sm">{point.name[language]}</p>
 
               {point.mapLocation && index === 0 && (
                 <button
                   onClick={() => window.open(point.mapLocation, "_blank")}
-                  className="inline-flex items-center text-blueBorder font-semibold text-md mt-1 hover:underline focus:outline-none"
+                  className="inline-flex items-center text-blueBorder font-semibold text-sm mt-1 hover:underline focus:outline-none"
                 >
                   Ver en mapa
                   <MdArrowForward className="ml-1 w-6 h-6" />

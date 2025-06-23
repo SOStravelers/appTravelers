@@ -25,17 +25,15 @@ const BookingPopup = ({
         flex items-center justify-between px-6 py-2"
     >
       <div className="flex flex-col">
-        <span className="text-md font-semibold text-gray-900">
+        <span className="text-sm mt-1 font-semibold text-gray-900">
           {priceLabel}
         </span>
-        {subtext && <span className="text-xs text-gray-600">{subtext}</span>}
-        {tagLine && (
-          <span className="text-xs text-red-500 mt-1">{tagLine}</span>
-        )}
+        {subtext && <span className="text-xxs text-gray-600">{subtext}</span>}
+        {tagLine && <span className="text-xxs text-red-500 ">{tagLine}</span>}
       </div>
       <button
         onClick={onAction}
-        className="ml-2 bg-blueBorder text-white text-md px-3 py-2 rounded-full \
+        className="ml-2 bg-blueBorder text-white text-sm px-3 py-2 rounded-full \
            hover:bg-blueBorderLight focus:outline-none"
       >
         {buttonText}

@@ -54,7 +54,7 @@ export default function VideoScreen({ currentVideo, idService }) {
           const v = videoRef.current;
           isPlaying ? v.pause() : v.play();
         }}
-        className="absolute bottom-4 left-4 p-2 bg-white/80 rounded-full"
+        className="absolute bottom-[10px] left-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isPlaying ? (
           <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -70,7 +70,7 @@ export default function VideoScreen({ currentVideo, idService }) {
       {/* mute */}
       <button
         onClick={() => setIsMuted((m) => !m)}
-        className="absolute bottom-4 right-4 p-2 bg-white/80 rounded-full"
+        className="absolute bottom-[10px] right-1 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isMuted ? (
           <MdVolumeOff className="w-6 h-6" />

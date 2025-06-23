@@ -30,12 +30,12 @@ const ServiceDescription = ({ description }) => {
 
   return (
     <div ref={containerRef} className="mt-6">
-      <h3 className="text-lg font-semibold mb-2">
+      <h3 className="text-md font-semibold mb-2">
         {languageData.serviceDescription.title[language]}
       </h3>
 
       <div
-        className="text-gray-700"
+        className="text-gray-700 text-xs"
         dangerouslySetInnerHTML={{
           __html: expanded || !shouldShowButton ? detailsHtml : previewText,
         }}

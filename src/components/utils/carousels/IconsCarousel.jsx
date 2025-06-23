@@ -8,7 +8,6 @@ import * as FaIcons from "react-icons/fa";
 import * as GiIcons from "react-icons/gi";
 import * as MdIcons from "react-icons/md";
 import * as AiIcons from "react-icons/ai";
-import Cookies from "js-cookie";
 const Icons = {
   ...FaIcons,
   ...GiIcons,
@@ -34,7 +33,6 @@ export default function IconCarousel({
     stickypoint,
   } = useStore();
 
-  const [activeIdx, setActiveIdx] = useState(0);
   const [showLeftBlur, setShowLeftBlur] = useState(false);
   const [showRightBlur, setShowRightBlur] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -94,17 +92,19 @@ export default function IconCarousel({
   }, []);
 
   const handleIconClick = (svc, idx) => {
-    // setServicesIndexList({ serviceId: svc._id, serviceName: svc.name });
     setIndexService(idx);
-    // Cookies.remove("homeItemId");
     const updated = { ...filters, service: svc._id };
     setFilters(updated);
     onFilterChange(updated);
   };
 
   const handleViewMore = () => {
-    if (onViewMoreClick) onViewMoreClick();
-    else router.push(viewMoreLink);
+    // if (onViewMoreClick) onViewMoreClick();
+    // else router.push(viewMoreLink);
+    setIndexService(null);
+    const updated = { keyword: null, maxPrice: 0, minPrice: 0, service: null };
+    setFilters(updated);
+    onFilterChange(updated);
   };
 
   const IconMapper = ({ name, ...props }) => {

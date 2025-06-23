@@ -235,7 +235,7 @@ export default function SyncCarousel() {
         className="absolute bottom-[120px] left-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isPlaying ? (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
           </svg>
         ) : (

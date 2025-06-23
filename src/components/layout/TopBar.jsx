@@ -3,6 +3,8 @@ import {
   LogoWhite,
   NotificationIcon,
 } from "@/constants/icons";
+import clsx from "clsx";
+
 import { FiBell, FiBellOff } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 import { FiMapPin } from "react-icons/fi";
@@ -32,7 +34,7 @@ function TopBar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY + 800 > window.innerHeight;
+      const isScrolled = window.scrollY > 50;
       if (isScrolled !== scrolledPastVh) {
         setScrolledPastVh(isScrolled);
       }
@@ -106,18 +108,21 @@ function TopBar() {
 
   return (
     <div
-      // className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 ${
-      //   process.env.NEXT_PUBLIC_NODE_ENV != "production"
-      //     ? "bg-blueBorder"
-      //     : "bg-darkBlue"
-      // }`}
-      className={`w-screen z-30 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 transition-all duration-500 ${
+      className={clsx(
+        "w-screen z-30 fixed top-0 transition-all duration-500",
+        "lg:px-10 xl:px-10 px-3 flex items-center justify-between h-18 lg:h-16 xl:h-16",
         router.pathname === "/"
           ? scrolledPastVh
             ? "bg-darkBlue"
             : "bg-transparent"
           : "bg-darkBlue"
-      }`}
+      )}
+      style={{
+        backgroundColor:
+          scrolledPastVh || router.pathname !== "/" ? undefined : "transparent",
+        WebkitBackdropFilter: scrolledPastVh ? "none" : "blur(0px)", // opcional
+        backdropFilter: scrolledPastVh ? "none" : "blur(0px)", // opcional
+      }}
     >
       <TextModal
         title={"Parabéns!!, você tem uma nova reserva"}

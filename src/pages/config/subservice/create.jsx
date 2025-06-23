@@ -205,7 +205,7 @@ export default function NewSubservicePage() {
         </div>
       )}
 
-      <div className="max-w-4xl my-12 mx-auto p-6 bg-white rounded-lg shadow">
+      <div className="max-w-4xl my-12 md:my-28 mx-auto p-6 bg-white rounded-lg shadow">
         <h1 className="text-2xl font-bold mb-4">Nuevo Subservicio</h1>
 
         {/* language tabs */}
@@ -229,8 +229,8 @@ export default function NewSubservicePage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name */}
           <div>
-            <label className="block font-medium mb-1">
-              Nombre ({LANG_LABELS[activeLang]})
+            <label className="block font-bold mb-3">
+              1. Nombre ({LANG_LABELS[activeLang]})
             </label>
             <input
               type="text"
@@ -250,8 +250,8 @@ export default function NewSubservicePage() {
 
           {/* Details */}
           <div>
-            <label className="block font-medium mb-1">
-              Descripción ({LANG_LABELS[activeLang]})
+            <label className="block font-bold mb-3">
+              2. Descripción ({LANG_LABELS[activeLang]})
             </label>
             <div
               className={`border rounded ${
@@ -275,7 +275,7 @@ export default function NewSubservicePage() {
           {/* Price & Duration */}
           <div className="flex flex-wrap gap-6">
             <div>
-              <label className="block font-medium mb-1">Precio (€)</label>
+              <label className="block font-bold mb-3">3. Precio (R$)</label>
               <input
                 type="number"
                 value={priceCategory1}
@@ -289,7 +289,7 @@ export default function NewSubservicePage() {
               />
             </div>
             <div>
-              <label className="block font-medium mb-1">Duración (min)</label>
+              <label className="block font-bold mb-3">4. Duración (min)</label>
               <input
                 type="number"
                 value={duration}
@@ -306,7 +306,7 @@ export default function NewSubservicePage() {
 
           {/* Service selector */}
           <div>
-            <label className="block font-medium mb-1">Servicio Asociado</label>
+            <label className="block font-bold mb-3">5. Servicio Asociado</label>
             <select
               value={serviceId}
               onChange={(e) => setServiceId(e.target.value)}
@@ -331,7 +331,7 @@ export default function NewSubservicePage() {
               submitted && errors.included ? "border border-red-500 p-4" : ""
             }`}
           >
-            <legend className="font-medium mb-2">Incluye</legend>
+            <legend className="font-bold mb-3">6. Lista de que incluye</legend>
             {includedList.map((it, i) => (
               <div key={i} className="mb-4 border p-3 rounded">
                 <div className="flex justify-between mb-2">
@@ -386,7 +386,9 @@ export default function NewSubservicePage() {
                 : ""
             }`}
           >
-            <legend className="font-medium mb-2">Restricciones</legend>
+            <legend className="font-bold mb-3">
+              7. Listado de Restricciones
+            </legend>
             {restrictions.map((it, i) => (
               <div key={i} className="mb-4 border p-3 rounded">
                 <div className="flex justify-between mb-2">
@@ -439,7 +441,9 @@ export default function NewSubservicePage() {
               submitted && errors.route ? "border border-red-500 p-4" : ""
             }`}
           >
-            <legend className="font-medium mb-2">Ruta del tour</legend>
+            <legend className="font-bold mb-3">
+              8. Listado de Ruta del tour
+            </legend>
             {route.map((it, i) => (
               <div key={i} className="mb-4 border p-3 rounded">
                 <div className="flex justify-between mb-2">

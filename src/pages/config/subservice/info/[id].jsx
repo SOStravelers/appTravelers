@@ -114,7 +114,7 @@ export default function EditSubservicePage() {
           data?.price?.category1 != null ? String(data.price.category1) : ""
         );
         setDuration(data?.duration != null ? String(data.duration) : "");
-        setServiceId(data?.service || "");
+        setServiceId(data?.service?._id || data?.service || "");
         setIncludedList(
           Array.isArray(data.includedList) && data.includedList.length
             ? data.includedList
@@ -268,7 +268,7 @@ export default function EditSubservicePage() {
         </div>
       )}
 
-      <div className="max-w-4xl my-12 mx-auto p-6 bg-white rounded-lg shadow">
+      <div className="max-w-4xl my-12 md:my-28 mx-auto p-6 bg-white rounded-lg shadow">
         <h1 className="text-2xl font-bold mb-4">Editar Subservicio</h1>
 
         {/* botones superiores */}
@@ -314,8 +314,8 @@ export default function EditSubservicePage() {
         <form id="editForm" onSubmit={handleSubmit} className="space-y-6">
           {/* Nombre */}
           <div>
-            <label className="block font-medium mb-1">
-              Nombre ({LANG_LABELS[activeLang]})
+            <label className="block   font-bold mb-3">
+              1. Nombre ({LANG_LABELS[activeLang]})
             </label>
             <input
               type="text"
@@ -335,8 +335,8 @@ export default function EditSubservicePage() {
 
           {/* Descripción */}
           <div>
-            <label className="block font-medium mb-1">
-              Descripción ({LANG_LABELS[activeLang]})
+            <label className="block font-bold mb-3">
+              2. Descripción ({LANG_LABELS[activeLang]})
             </label>
             <div
               className={`border rounded ${
@@ -360,7 +360,7 @@ export default function EditSubservicePage() {
           {/* Precio y Duración */}
           <div className="flex flex-wrap gap-6">
             <div>
-              <label className="block font-medium mb-1">Precio (€)</label>
+              <label className="block font-bold mb-3">3. Precio (R$)</label>
               <input
                 type="number"
                 value={priceCategory1}
@@ -374,7 +374,7 @@ export default function EditSubservicePage() {
               />
             </div>
             <div>
-              <label className="block font-medium mb-1">Duración (min)</label>
+              <label className="block font-bold mb-3">4. Duración (min)</label>
               <input
                 type="number"
                 value={duration}
@@ -391,7 +391,7 @@ export default function EditSubservicePage() {
 
           {/* Servicio asociado */}
           <div>
-            <label className="block font-medium mb-1">Servicio Asociado</label>
+            <label className="block font-bold mb-3">5. Servicio Asociado</label>
             <select
               value={serviceId}
               onChange={(e) => setServiceId(e.target.value)}
@@ -416,7 +416,9 @@ export default function EditSubservicePage() {
               submitted && errors.included ? "border border-red-500 p-4" : ""
             }`}
           >
-            <legend className="font-medium mb-2">Incluye</legend>
+            <legend className="font-bold mb-3">
+              6. Listado de que incluye
+            </legend>
             {includedList.map((it, i) => (
               <div key={i} className="mb-4 border p-3 rounded">
                 <div className="flex justify-between mb-2">
@@ -471,7 +473,9 @@ export default function EditSubservicePage() {
                 : ""
             }`}
           >
-            <legend className="font-medium mb-2">Restricciones</legend>
+            <legend className="font-bold mb-3">
+              7. Lista de Restricciones
+            </legend>
             {restrictions.map((it, i) => (
               <div key={i} className="mb-4 border p-3 rounded">
                 <div className="flex justify-between mb-2">
@@ -524,7 +528,9 @@ export default function EditSubservicePage() {
               submitted && errors.route ? "border border-red-500 p-4" : ""
             }`}
           >
-            <legend className="font-medium mb-2">Ruta del tour</legend>
+            <legend className="font-bold mb-3">
+              8. Lista de Ruta del tour
+            </legend>
             {route.map((it, i) => (
               <div key={i} className="mb-4 border p-3 rounded">
                 <div className="flex justify-between mb-2">

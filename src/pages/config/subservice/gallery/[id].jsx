@@ -174,7 +174,7 @@ export default function UploadAssetsPage() {
      ================================================ */
 
   return (
-    <div className="relative min-h-screen my-10 bg-gradient-to-br from-indigo-50 to-pink-50 p-4 sm:p-8">
+    <div className="relative min-h-screen my-10  p-4 sm:p-8">
       {/* Spinner */}
       {submitting && (
         <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-50">
@@ -201,7 +201,7 @@ export default function UploadAssetsPage() {
         </div>
       )}
 
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-6 relative z-10">
+      <div className="max-w-4xl my-4 md:my-12 mx-auto  rounded-lg shadow-lg p-6 relative z-10">
         <h1 className="text-2xl font-bold text-darkBlue mb-2">
           Configurar Assets
         </h1>

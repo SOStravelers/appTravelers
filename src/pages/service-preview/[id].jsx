@@ -26,6 +26,10 @@ export default function ServicePreviewPage() {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
   useEffect(() => {
+    document.title = "Preview Subservice | SOS Travelers";
+  }, []);
+
+  useEffect(() => {
     if (!id) return;
     setLoading(true);
     SubserviceService.getById(id)

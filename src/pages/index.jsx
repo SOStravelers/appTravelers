@@ -41,41 +41,17 @@ export default function Home() {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
   }, []);
-  //minicambio
   useEffect(() => {
     const timerIds = setTimeout(() => {
-      console.log("inicio");
+      setLastPage("");
       if (stickypoint == 0) {
         const stickyEl = document.getElementById("icon-carousel");
-        console.log("el sticky", stickyEl);
         const point = stickyEl.getBoundingClientRect().top - 52;
-        console.log("the point", point);
         setStickypoint(point);
-        console.log("el point1", stickyEl.getBoundingClientRect().top);
-        console.log("el point", stickypoint);
       }
     }, 1000);
     return () => clearTimeout(timerIds);
   }, [stickypoint]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      console.log("🔵 Scroll actual:", window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      setLastPage("");
-    }, 500);
-    return () => clearTimeout(timerId);
-  }, []);
 
   useEffect(() => {
     console.log("acitvando");
@@ -83,47 +59,25 @@ export default function Home() {
       setScrolled(true);
       setObsFilter(false);
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            const stickyEl = document.getElementById("icon-carousel");
-            if (!stickyEl) return;
-
-            const style = window.getComputedStyle(stickyEl);
-            const isSticky =
-              style.position === "sticky" || style.position === "fixed";
-            console.log("antes sticky", isSticky);
-            if (isSticky) {
-              const stickyY =
-                stickyEl.getBoundingClientRect().top + window.scrollY - 52;
-              console.log(
-                "🟢 Scroll final calculado:",
-                stickyEl.getBoundingClientRect().top,
-                stickyY,
-                window.scrollY,
-                stickypoint
-              );
-              window.scrollTo({ top: stickypoint, behavior: "smooth" });
-            }
-          }, 50);
-        });
+        setTimeout(() => {
+          const stickyEl = document.getElementById("icon-carousel");
+          if (!stickyEl) return;
+          window.scrollTo({ top: stickypoint, behavior: "smooth" });
+        }, 50);
       });
     } else {
       const id = Cookies.get("homeItemId");
-      console.log("la id", Cookies.get("homeItemId"), !id);
       if (!id) return;
-
       const tryScroll = () => {
         const el = document.querySelector(`[data-item-id='${id}']`);
         if (!el) {
           requestAnimationFrame(tryScroll);
           return;
         }
-
         const topBar = 70;
         const nav = document.getElementById("icon-carousel")?.offsetHeight ?? 0;
         const y =
           el.getBoundingClientRect().top + window.scrollY - (topBar + nav);
-
         window.scrollTo({ top: y });
         Cookies.remove("homeItemId");
       };
@@ -131,42 +85,6 @@ export default function Home() {
       requestAnimationFrame(tryScroll);
     }
   }, [listItems.length, filterKey]);
-
-  // useEffect(() => {
-  //   console.log("otro scroll");
-  //   if (!hasMounted.current) {
-  //     hasMounted.current = true;
-  //     return; // ❌ Ignora la primera vez
-  //   }
-  //   if (lastPage !== "preview") {
-  //     setScrolled(true);
-
-  //     requestAnimationFrame(() => {
-  //       requestAnimationFrame(() => {
-  //         setTimeout(() => {
-  //           const stickyEl = document.getElementById("icon-carousel");
-  //           if (!stickyEl) return;
-
-  //           const style = window.getComputedStyle(stickyEl);
-  //           const isSticky =
-  //             style.position === "sticky" || style.position === "fixed";
-  //           console.log("antes sticky", isSticky);
-  //           if (isSticky) {
-  //             const stickyY =
-  //               stickyEl.getBoundingClientRect().top + window.scrollY - 52;
-  //             console.log("🟢 Scroll final calculado:", stickyY);
-  //             if (window.scrollY == stickyY) return;
-  //             window.scrollTo({ top: stickyY, behavior: "smooth" });
-  //           }
-  //         }, 50);
-  //       });
-  //     });
-  //   }
-  // }, [
-  //   lastPage,
-  //   // filterKey,
-  //   listItems.length,
-  // ]);
 
   const checkNotification = async () => {
     try {

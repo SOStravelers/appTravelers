@@ -18,9 +18,9 @@ function FloatingWhatsAppButton({}) {
     <div
       style={{
         position: "fixed",
-        bottom: "80px",
-        right: "20px",
-        zIndex: 1000,
+        bottom: "77px",
+        right: "16px",
+        zIndex: 25,
       }}
     >
       <button
@@ -30,8 +30,8 @@ function FloatingWhatsAppButton({}) {
           color: "white",
           border: "none",
           borderRadius: "50%",
-          width: "50px",
-          height: "50px",
+          width: "42px",
+          height: "42px",
           fontSize: "24px",
           cursor: "pointer",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",

@@ -173,7 +173,7 @@ export default function IconCarousel({
     >
       <div className="min-h-[80px]">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3">
+        <div className="flex items-center justify-between px-4 pt-2 pb-3">
           <h2 className="text-md font-semibold text-gray-800">
             {languageData.index.explore[language]}
           </h2>

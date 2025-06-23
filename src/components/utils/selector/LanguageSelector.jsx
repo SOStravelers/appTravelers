@@ -35,11 +35,11 @@ const LanguageSelector = () => {
       {/* ─── Botón principal ─── */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center justify-center w-8 h-6 rounded
+        className="flex items-center justify-center w-7 h-6 rounded
                    ring-1 ring-white/40 hover:ring-white transition"
         aria-label="Change language"
       >
-        <span className={`fi fi-${FLAGS[language] ?? "gb"} fis`} />
+        <span className={`fi fi-${FLAGS[language] ?? "gb"} fis text-lg`} />
       </button>
 
       {/* ─── Pop-over ─── */}
@@ -54,11 +54,11 @@ const LanguageSelector = () => {
               <button
                 key={code}
                 onClick={() => changeLang(code)}
-                className="flex items-center justify-center w-8 h-6 rounded
+                className="flex items-center justify-center w-7 h-6 rounded
                            hover:bg-gray-100 transition"
                 aria-label={code}
               >
-                <span className={`fi fi-${iso} fis`} />
+                <span className={`fi fi-${iso} fis text-lg`} />
               </button>
             ))}
         </div>

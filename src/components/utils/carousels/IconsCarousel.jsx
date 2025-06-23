@@ -8,6 +8,7 @@ import * as FaIcons from "react-icons/fa";
 import * as GiIcons from "react-icons/gi";
 import * as MdIcons from "react-icons/md";
 import * as AiIcons from "react-icons/ai";
+
 const Icons = {
   ...FaIcons,
   ...GiIcons,

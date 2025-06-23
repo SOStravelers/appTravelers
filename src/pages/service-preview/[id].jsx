@@ -85,7 +85,7 @@ export default function ServicePreviewPage() {
           </div>
         )}
 
-        <div className="flex flex-col lg:flex-row gap-8 w-full max-w-lg  px-2 md:p-8 border-b-2 border-gray-400 bg-softWhite rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
+        <div className="flex flex-col lg:flex-row gap-8 w-full max-w-lg px-2 md:p-8 border-b-2 border-gray-400 bg-softWhite rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
           <div className="flex-1">
             <ServiceHeader
               service={subService}

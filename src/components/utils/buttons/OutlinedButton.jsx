@@ -13,8 +13,8 @@ function OutlinedButton({
   return (
     <button
       className={clsx(
-        `border-2 border-solid max-w-lg text-lg py-${py} w-full rounded-xl cursor-pointer`,
-        margin ? margin : "my-2",
+        `border-2 border-solid max-w-lg text-md py-${py} w-3/4 mx-auto rounded-xl cursor-pointer`,
+        margin ? margin : "my-1",
         secondary
           ? "text-grey border-grey"
           : error
@@ -24,9 +24,9 @@ function OutlinedButton({
           "opacity-50 cursor-not-allowed": disabled,
           "bg-gray-300": disabled,
           "text-gray-500": disabled,
-        } // Estilos cuando está desactivado
+        }
       )}
-      disabled={disabled} // Establece el atributo disabled basado en la prop
+      disabled={disabled}
       {...props}
     >
       {text}

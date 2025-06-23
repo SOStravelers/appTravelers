@@ -40,6 +40,8 @@ export const useStore = create((set) => {
     scrollY: 0, // ⭐ NUEVO: posición Y
     restoreScroll: false, // ⭐ NUEVO: bandera “toca restaurar”
     syncItems: [], // ⭐ NUEVO: caché de vídeos para SyncCarousel
+    indexService: null,
+    stickypoint: 0,
 
     /* ----- setters originales ----- */
     setService: (service) => set({ service }),
@@ -67,5 +69,7 @@ export const useStore = create((set) => {
     setSyncItems: (arr) => set({ syncItems: arr }), // ⭐
     setLastPage: (lastPage) => set({ lastPage }),
     setItemsVideo: (itemsVideo) => set({ itemsVideo }),
+    setIndexService: (indexService) => set({ indexService }),
+    setStickypoint: (stickypoint) => set({ stickypoint }),
   };
 });

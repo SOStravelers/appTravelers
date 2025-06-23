@@ -29,6 +29,8 @@ export default function IconCarousel({
     language,
     filters,
     setFilters,
+    indexService,
+    setIndexService,
   } = useStore();
 
   const [activeIdx, setActiveIdx] = useState(0);
@@ -92,8 +94,7 @@ export default function IconCarousel({
 
   const handleIconClick = (svc, idx) => {
     // setServicesIndexList({ serviceId: svc._id, serviceName: svc.name });
-    console.log("🟢 Scroll fjusto al click", window.scrollY);
-    setActiveIdx(idx);
+    setIndexService(idx);
     // Cookies.remove("homeItemId");
     const updated = { ...filters, service: svc._id };
     setFilters(updated);
@@ -168,87 +169,89 @@ export default function IconCarousel({
         isSticky ? "shadow-xl border-b border-gray-200" : ""
       }`}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2">
-        <h2 className="text-md font-semibold text-gray-800">
-          {languageData.index.explore[language]}
-        </h2>
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={handleViewMore}
-            className="text-sm font-semibold text-blueBorder hover:underline"
-          >
-            {languageData.index.seeAllButton[language]}
-          </button>
-          <button
-            onClick={onOpenFilter}
-            className="text-gray-900 hover:text-gray-700 focus:outline-none"
-          >
-            <IconMapper name="MdTune" size={24} />
-          </button>
-        </div>
-      </div>
-
-      {/* Services carousel */}
-      <div className="relative mx-4">
-        <div
-          ref={scrollRef}
-          className="overflow-x-auto whitespace-nowrap pb-1 "
-        >
-          {Array.isArray(servicesIndexList) &&
-            servicesIndexList.map((service, idx) => (
-              <button
-                key={service._id}
-                onClick={() => handleIconClick(service, idx)}
-                className="inline-flex flex-col items-center mx-3 focus:outline-none"
-              >
-                <IconMapper
-                  name={service.icon}
-                  size={24}
-                  className={
-                    idx === activeIdx ? "text-gray-900" : "text-gray-500"
-                  }
-                />
-                <span
-                  className={`mt-1 text-xs border-b-2 pb-1 transition-colors duration-200 ease-in-out ${
-                    idx === activeIdx
-                      ? "text-gray-900 border-blueBorder"
-                      : "text-gray-500 border-transparent"
-                  }`}
-                >
-                  {service.name[language]}
-                </span>
-              </button>
-            ))}
-        </div>
-        {showLeftBlur && (
-          <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-white to-transparent" />
-        )}
-        {showRightBlur && (
-          <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white to-transparent" />
-        )}
-      </div>
-
-      {/* Filter chips */}
-      {chips.length > 0 && (
-        <div className="flex flex-wrap gap-2 px-4 py-2">
-          {chips.map(({ key, label, onClear }) => (
-            <div
-              key={key}
-              onClick={onClear}
-              className="flex items-center bg-white border border-black border-opacity-40 rounded-md px-3 py-1 text-xs text-gray-700 cursor-pointer"
+      <div className="min-h-[80px]">
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3">
+          <h2 className="text-md font-semibold text-gray-800">
+            {languageData.index.explore[language]}
+          </h2>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={handleViewMore}
+              className="text-sm font-semibold text-blueBorder hover:underline"
             >
-              <span>{label}</span>
-              <button
-                type="button"
-                className="ml-2 focus:outline-none text-gray-500 hover:text-gray-700"
-              >
-                <AiIcons.AiOutlineClose size={16} />
-              </button>
-            </div>
-          ))}
+              {languageData.index.seeAllButton[language]}
+            </button>
+            <button
+              onClick={onOpenFilter}
+              className="text-gray-900 hover:text-gray-700 focus:outline-none"
+            >
+              <IconMapper name="MdTune" size={24} />
+            </button>
+          </div>
         </div>
-      )}
+
+        {/* Services carousel */}
+        <div className="relative mx-4">
+          <div
+            ref={scrollRef}
+            className="overflow-x-auto whitespace-nowrap pb-1 "
+          >
+            {Array.isArray(servicesIndexList) &&
+              servicesIndexList.map((service, idx) => (
+                <button
+                  key={service._id}
+                  onClick={() => handleIconClick(service, idx)}
+                  className="inline-flex flex-col items-center mx-3 focus:outline-none"
+                >
+                  <IconMapper
+                    name={service.icon}
+                    size={24}
+                    className={
+                      idx === indexService ? "text-gray-900" : "text-gray-500"
+                    }
+                  />
+                  <span
+                    className={`mt-1 text-xs border-b-2 pb-1 transition-colors duration-200 ease-in-out ${
+                      idx === indexService
+                        ? "text-gray-900 border-blueBorder"
+                        : "text-gray-500 border-transparent"
+                    }`}
+                  >
+                    {service.name[language]}
+                  </span>
+                </button>
+              ))}
+          </div>
+          {showLeftBlur && (
+            <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-white to-transparent" />
+          )}
+          {showRightBlur && (
+            <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white to-transparent" />
+          )}
+        </div>
+
+        {/* Filter chips */}
+        {chips.length > 0 && (
+          <div className="flex flex-wrap gap-2 px-4 py-2">
+            {chips.map(({ key, label, onClear }) => (
+              <div
+                key={key}
+                onClick={onClear}
+                className="flex items-center bg-white border border-black border-opacity-40 rounded-md px-3 py-1 text-xs text-gray-700 cursor-pointer"
+              >
+                <span>{label}</span>
+                <button
+                  type="button"
+                  className="ml-2 focus:outline-none text-gray-500 hover:text-gray-700"
+                >
+                  <AiIcons.AiOutlineClose size={16} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </nav>
   );
 }

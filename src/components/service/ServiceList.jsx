@@ -99,7 +99,7 @@ export default function ServiceList({ filterKey }) {
 
   useEffect(() => {
     if (safeItems.length === 0 && lastPage !== "preview") {
-      window.scrollTo({ top: 0, behavior: "auto" });
+      // window.scrollTo({ top: 0, behavior: "auto" });
       loadPage(1);
     }
   }, []);

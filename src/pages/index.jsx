@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRef } from "react";
 import clsx from "clsx";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import NotificationService from "@/services/NotificationService";
@@ -20,17 +19,19 @@ export default function Home() {
     lastPage,
     setLastPage,
     listItems,
+    stickypoint,
+    setStickypoint,
   } = store;
   const [scrolled, setScrolled] = useState(true);
   const [filterKey, setFilterKey] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const [stickypoint, SetStickypoint] = useState(0);
+  const [obsFilter, setObsFilter] = useState(false);
 
   const userId = Cookies.get("auth.user_id");
-  const hasMounted = useRef(false);
 
   const handleFilterChange = () => {
     setFilterKey((k) => k + 1);
+    setObsFilter(true);
   };
 
   useEffect(() => {
@@ -42,9 +43,20 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const stickyEl = document.getElementById("icon-carousel");
-    SetStickypoint(stickyEl.getBoundingClientRect().top - 52);
-  }, []);
+    const timerIds = setTimeout(() => {
+      console.log("inicio");
+      if (stickypoint == 0) {
+        const stickyEl = document.getElementById("icon-carousel");
+        console.log("el sticky", stickyEl);
+        const point = stickyEl.getBoundingClientRect().top - 52;
+        console.log("the point", point);
+        setStickypoint(point);
+        console.log("el point1", stickyEl.getBoundingClientRect().top);
+        console.log("el point", stickypoint);
+      }
+    }, 500);
+    return () => clearTimeout(timerIds);
+  }, [stickypoint]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,9 +78,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (lastPage !== "preview") {
+    console.log("acitvando");
+    if (lastPage !== "preview" && obsFilter) {
       setScrolled(true);
-
+      setObsFilter(false);
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           setTimeout(() => {

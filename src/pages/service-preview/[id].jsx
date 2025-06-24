@@ -14,12 +14,13 @@ import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 import languageData from "@/language/subServices.json";
 import { useStore } from "@/store";
-
+import Reservation from "../reservation/[id]";
+import ModalReservationWrapper from "@/components/ServicePreview/ModalReservationWrapper";
 export default function ServicePreviewPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { language } = useStore();
-
+  const { language, setService } = useStore();
+  const [openReservation, setOpenReservation] = useState(false);
   const [subService, setSubservice] = useState({});
   const [loading, setLoading] = useState(true); // <-- loading flag
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
@@ -28,6 +29,21 @@ export default function ServicePreviewPage() {
   useEffect(() => {
     document.title = "Preview Subservice | SOS Travelers";
   }, []);
+
+  const openModal = () => {
+    setService({
+      duration: subService.duration,
+      price: 0,
+      details: subService.details,
+      serviceId: subService.serviceId,
+      serviceName: subService.serviceName,
+      nameSubservice: subService.subService,
+      subServiceId: subService._id,
+      multiple: subService.multiple,
+      workerId: null,
+    });
+    setOpenReservation(true);
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -127,7 +143,12 @@ export default function ServicePreviewPage() {
         subtext={languageData.bookingButton.subtitle[language]}
         tagLine={languageData.bookingButton.cancel[language]}
         buttonText={languageData.bookingButton.goDates[language]}
-        onAction={() => router.push(`/booking/${id}`)}
+        onAction={() => openModal(true)} // <-- abre el modal
+      />
+
+      <ModalReservationWrapper
+        isOpen={openReservation}
+        onClose={() => setOpenReservation(false)}
       />
     </div>
   );

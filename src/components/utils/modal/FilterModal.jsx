@@ -40,6 +40,19 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
     setErrMax("");
   }, [isOpen]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    // Limpieza al desmontar
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isOpen]);
+
   /* ─── validación en caliente ─── */
   useEffect(() => {
     /* keyword */

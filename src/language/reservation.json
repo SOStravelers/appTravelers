@@ -41,6 +41,13 @@
       "fr": "Précédent",
       "de": "Zurück",
       "pt": "Voltar"
+    },
+    "noAvailability": {
+      "en": "No availability",
+      "es": "No hay disponibilidad",
+      "fr": "Pas de disponibilité",
+      "de": "Keine Verfügbarkeit",
+      "pt": "Sem disponibilidade"
     }
   }
 }

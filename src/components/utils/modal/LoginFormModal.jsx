@@ -1,5 +1,6 @@
 // components/utils/LoginFormModal.jsx
 import React from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import LoginForm from "@/components/utils/forms/LoginForm";
 
@@ -20,6 +21,19 @@ export default function LoginFormModal({
       router.push("/");
     }
   };
+
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    // Limpieza al desmontar
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [open]);
 
   return (
     <div

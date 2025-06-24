@@ -9,8 +9,9 @@ import { Rings } from "react-loader-spinner";
 import ScheduleService from "@/services/ScheduleService";
 import { useStore } from "@/store";
 import moment from "moment";
-import { formatISO, sub } from "date-fns";
+import { formatISO } from "date-fns";
 import languageData from "@/language/reservation.json";
+
 function Calendar({ id }) {
   const router = useRouter();
   const { service, setService, isWorker, language } = useStore();
@@ -26,6 +27,7 @@ function Calendar({ id }) {
   const [selectedDay, setSelected] = useState(new Date());
   const [selectedDayWorker, setSelectedWorker] = useState(new Date());
   const [intervals, setIntervals] = useState([]);
+
   const now = new Date();
   const currentTime = now.toLocaleTimeString("en-US", {
     timeZone: "America/Sao_Paulo",
@@ -34,60 +36,31 @@ function Calendar({ id }) {
     hour12: false,
   });
 
-  const locales = {
-    en: enUS,
-    es: es,
-    fr: fr,
-    de: de,
-    pt: ptBR,
-  };
+  const locales = { en: enUS, es, fr, de, pt: ptBR };
 
   useEffect(() => {
-    if (localStorage.getItem("fromFavorite")) {
-      setFromFavorite(true);
-    }
+    if (localStorage.getItem("fromFavorite")) setFromFavorite(true);
     getSchedule();
   }, []);
+
   useEffect(() => {
     if (schedule.length === 0) return;
-    const result = schedule ? getDisabledDays(schedule) : "";
+    const result = getDisabledDays(schedule);
     setDays(result);
   }, [schedule]);
-  useEffect(() => {
-    if (selectedDay) {
-      const date = new Date(selectedDay);
-      const formattedDate =
-        formatISO(date, { representation: "date" }) + "T00:00:00.000";
-      for (let i = 0; i < schedule.length; i++) {
-        let cutDate = schedule[i].day.slice(0, -1);
-        if (cutDate == formattedDate) {
-          setIntervals(schedule[i].intervals);
-          break;
-        }
-      }
-    }
-  }, [selectedDay]);
-  const updateIntervalsFromSelectedDay = (dayToCheck, scheduleData) => {
-    if (!dayToCheck || !scheduleData) return;
 
-    const date = new Date(dayToCheck);
+  useEffect(() => {
+    if (!selectedDay || schedule.length === 0) return;
+    const date = new Date(selectedDay);
     const formattedDate =
       formatISO(date, { representation: "date" }) + "T00:00:00.000";
+    const match = schedule.find((s) => s.day.slice(0, -1) === formattedDate);
+    setIntervals(match ? match.intervals : []);
+  }, [selectedDay, schedule]);
 
-    for (let i = 0; i < scheduleData.length; i++) {
-      let cutDate = scheduleData[i].day.slice(0, -1);
-      if (cutDate === formattedDate) {
-        setIntervals(scheduleData[i].intervals);
-        break;
-      }
-    }
-  };
-  //Función que obtiene el schedule del hostel
   const getSchedule = async () => {
-    if (isWorker) {
-      setLoading(false);
-      return;
-    }
+    if (isWorker) return setLoading(false);
+
     const data = localStorage.getItem("fromFavorite");
     const { serviceId, subServiceId, hostelId, workerId } = service;
     const worker = data ? workerId : null;
@@ -98,202 +71,170 @@ function Calendar({ id }) {
       subServiceId,
       worker
     );
-
-    if (response?.data) {
-      setSchedule(response.data);
-      updateIntervalsFromSelectedDay(selectedDay, response.data); // 👈 se actualiza justo después de obtener el schedule
-    }
-
+    if (response?.data) setSchedule(response.data);
     setLoading(false);
   };
-  //Función que obtiene los días deshabilitados
+
   const getDisabledDays = () => {
-    // Ordena el array por la propiedad 'day'
-    schedule.sort((a, b) => new Date(a.day) - new Date(b.day));
+    const sorted = [...schedule].sort(
+      (a, b) => new Date(a.day) - new Date(b.day)
+    );
+    const firstDate = new Date(sorted[0].day);
+    const lastDate = new Date(sorted[sorted.length - 1].day);
+    const disabledDays = [];
 
-    // Extrae la fecha del primer y último objeto
-    const firstDate = new Date(schedule[0].day);
-    const lastDate = new Date(schedule[schedule.length - 1].day);
-
-    let disabledDays = [];
-
-    // Crea un nuevo objeto Date para cada día entre las dos fechas
     for (
       let d = new Date(firstDate);
       d <= lastDate;
       d.setDate(d.getDate() + 1)
     ) {
-      // Comprueba si la fecha está en el array original
       if (
         !schedule.some((obj) => new Date(obj.day).getTime() === d.getTime())
       ) {
-        // Formatea la fecha y añádela al array
-        let formattedDate = d.toISOString().split("T")[0] + "T00:00:00.000";
-        disabledDays.push(new Date(formattedDate));
+        disabledDays.push(
+          new Date(d.toISOString().split("T")[0] + "T00:00:00.000")
+        );
       }
     }
 
-    // Formatea firstDate y lastDate para eliminar la 'Z' al final
-    let formattedFirstDate = new Date(
-      firstDate.toISOString().split("T")[0] + "T00:00:00.000"
-    );
-    let formattedLastDate = new Date(
-      lastDate.toISOString().split("T")[0] + "T00:00:00.000"
-    );
     return {
-      firstDate: formattedFirstDate,
-      lastDate: formattedLastDate,
-      disabledDays: disabledDays,
+      firstDate: new Date(
+        firstDate.toISOString().split("T")[0] + "T00:00:00.000"
+      ),
+      lastDate: new Date(
+        lastDate.toISOString().split("T")[0] + "T00:00:00.000"
+      ),
+      disabledDays,
     };
   };
-  //Función que setea hora del booking
+
   const selectTime = () => {
+    const dateStr = moment(isWorker ? selectedDayWorker : selectedDay).format(
+      "YYYY-MM-DD"
+    );
+    const now = moment();
+    let startTimeIso, endTimeIso, startTime, endTime;
+
     if (isWorker) {
-      const now = moment();
-      let startTimeIso = now.toISOString();
-      let startTime = now.format("HH:mm");
-      const end = now.add(service.duration, "minutes");
-      let endTimeIso = end.toISOString();
-      let endTime = end.format("HH:mm");
-      const dateStr = moment(selectedDayWorker).format("YYYY-MM-DD");
-      // console.log("el tiempo", time);
-      setService({
-        date: dateStr,
-        startTime: {
-          isoTime: startTimeIso,
-          stringData: startTime,
-        },
-        endTime: {
-          isoTime: endTimeIso,
-          stringData: endTime,
-        },
-      });
-      router.push(`/assign-client`);
-      return;
+      startTimeIso = now.toISOString();
+      startTime = now.format("HH:mm");
+      endTimeIso = now.add(service.duration, "minutes").toISOString();
+      endTime = moment(endTimeIso).format("HH:mm");
+    } else {
+      startTimeIso = time.startTimeIso;
+      endTimeIso = time.endTimeIso;
+      startTime = time.startTime;
+      endTime = time.endTime;
     }
-    const dateStr = moment(selectedDay).format("YYYY-MM-DD");
-    // console.log("el tiempo", time);
+
     setService({
       date: dateStr,
-      startTime: {
-        isoTime: time.startTimeIso,
-        stringData: time.startTime,
-      },
-      endTime: {
-        isoTime: time.endTimeIso,
-        stringData: time.endTime,
-      },
+      startTime: { isoTime: startTimeIso, stringData: startTime },
+      endTime: { isoTime: endTimeIso, stringData: endTime },
     });
-    if (fromFavorite === true) {
-      router.push(`/summary`);
-    } else if (isWorker) {
-      router.push(`/assign-client`);
-    } else if (fromFavorite === false) {
-      router.push(`/workers-found/${id}`);
-    }
+
+    if (isWorker) router.push(`/assign-client`);
+    else if (fromFavorite) router.push(`/summary`);
+    else router.push(`/workers-found/${id}`);
   };
-  const comeBack = () => {
-    router.back();
-  };
-  let footer = <p className="my-5"></p>;
-  if (loading) {
-    footer = (
-      <div className="max-w-lg  flex flex-col items-center justify-center">
-        <Rings
-          width={100}
-          height={100}
-          color="#00A0D5"
-          ariaLabel="infinity-spin-loading"
-        />
-        <p className="mt-2">Searching...</p>
-      </div>
-    );
-  } else if (selectedDay && schedule.length > 0 && !loading && !isWorker) {
-    footer = (
-      <div>
-        <h1 className="font-semibold text-xl mt-2">
-          {languageData.calendar.chooseTime[language]}
-        </h1>
-        <h2 className="font-semibold text-sm mb-1">
-          {languageData.calendar.timeZone[language]}
-        </h2>
-        <div className="w-full flex flex-wrap justify-center mb-2 mt-3">
-          {intervals.length > 0 ? (
-            intervals.map((hour, index) => (
-              <TimeButton
-                key={index}
-                onClick={() => setTime(hour)}
-                text={hour.startTime}
-                selected={time === hour}
+
+  const footer = (() => {
+    if (loading) {
+      return (
+        <div className="max-w-lg flex flex-col items-center justify-center">
+          <Rings width={100} height={100} color="#00A0D5" ariaLabel="loading" />
+          <p className="mt-2">Searching...</p>
+        </div>
+      );
+    } else if (schedule.length === 0) {
+      return (
+        <div className="text-center mt-4">
+          <h2 className="font-semibold text-red-500 text-sm">
+            {languageData.calendar.noAvailability[language] ||
+              "No available dates."}
+          </h2>
+        </div>
+      );
+    } else if (selectedDay && !isWorker) {
+      return (
+        <div>
+          <h1 className="font-semibold text-xl mt-2">
+            {languageData.calendar.chooseTime[language]}
+          </h1>
+          <h2 className="font-semibold text-sm mb-1">
+            {languageData.calendar.timeZone[language]}
+          </h2>
+          <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[300px] mx-auto">
+            {intervals.length > 0 ? (
+              intervals.map((hour, index) => (
+                <TimeButton
+                  key={index}
+                  onClick={() => setTime(hour)}
+                  text={hour.startTime}
+                  selected={time === hour}
+                />
+              ))
+            ) : (
+              <span className="mt-4 text-sm text-gray-600">
+                {languageData.calendar.anotherDay[language]}
+              </span>
+            )}
+          </div>
+          {time && (
+            <div className="w-full flex justify-center">
+              <OutlinedButton
+                text={languageData.calendar.nextButton[language]}
+                onClick={selectTime}
               />
-            ))
-          ) : (
-            <span className="mt-4">
-              {" "}
-              {languageData.calendar.anotherDay[language]}
-            </span>
+            </div>
           )}
         </div>
-        {time && (
-          <OutlinedButton
-            text={languageData.calendar.nextButton[language]}
-            onClick={selectTime}
-          />
-        )}
-      </div>
-    );
-  } else if (schedule.length == 0 && !loading && !isWorker) {
-    footer = (
-      <div>
-        {/*<p className="my-5">You picked {format(selected, "PP")}.</p>*/}
-        <h1 className="font-semibold text-sm mt-2">
-          Not schedule available, choose another.
-        </h1>
-        <OutlinedButton
-          text={languageData.calendar.backButton[language]}
-          onClick={comeBack}
-        />
-      </div>
-    );
-  } else if (isWorker) {
-    footer = (
-      <div className="flex flex-col align-center justify-center">
-        <p className="flex my-4 justify-center text-lg font-semibold">
-          Hora actual: {currentTime}
-        </p>
+      );
+    } else if (isWorker) {
+      return (
+        <div className="flex flex-col items-center">
+          <p className="my-4 text-lg font-semibold">
+            Hora actual: {currentTime}
+          </p>
+          <OutlinedButton text="Continuar" onClick={selectTime} />
+        </div>
+      );
+    }
+    return null;
+  })();
 
-        <OutlinedButton text={"Continuar"} onClick={selectTime} />
-      </div>
-    );
-  }
   return (
     <>
-      {!isWorker ? (
-        <DayPicker
-          mode="single"
-          selected={selectedDay}
-          disabled={days?.disabledDays.length > 0 ? days?.disabledDays : false}
-          fromDate={days?.firstDate || new Date()}
-          toDate={
-            days?.lastDate ||
-            new Date(new Date().setMonth(new Date().getMonth() + 1))
-          }
-          onSelect={setSelected}
-          footer={footer}
-          locale={locales[language]}
-        />
+      {schedule.length === 0 ? (
+        <div className="flex justify-center items-center">
+          <DayPicker
+            mode="single"
+            selected={selectedDay}
+            disabled={[
+              { from: new Date(2000, 0, 1), to: new Date(2100, 0, 1) },
+            ]}
+            onSelect={setSelected}
+            footer={footer}
+            locale={locales[language]}
+            components={{ Navbar: () => null }}
+          />
+        </div>
       ) : (
-        <DayPicker
-          mode="single"
-          selected={selectedDay}
-          fromDate={days?.firstDate || new Date()}
-          toDate={
-            days?.lastDate ||
-            new Date(new Date().setDate(new Date().getDate() + 0))
-          }
-          onSelect={setSelected}
-          footer={footer}
-        />
+        <div className="flex justify-center items-center">
+          <DayPicker
+            mode="single"
+            selected={selectedDay}
+            disabled={days?.disabledDays.length > 0 ? days.disabledDays : false}
+            fromDate={days?.firstDate || new Date()}
+            toDate={
+              days?.lastDate ||
+              new Date(new Date().setMonth(new Date().getMonth() + 1))
+            }
+            onSelect={setSelected}
+            footer={footer}
+            locale={locales[language]}
+          />
+        </div>
       )}
     </>
   );

@@ -32,17 +32,7 @@ export default function ServicePreviewPage() {
 
   const openModal = () => {
     console.log("wena");
-    setService({
-      duration: subService.duration,
-      price: 0,
-      details: subService.details,
-      serviceId: subService.serviceId,
-      serviceName: subService.serviceName,
-      nameSubservice: subService.subService,
-      subServiceId: subService._id,
-      multiple: subService.multiple,
-      workerId: null,
-    });
+    setService(subService);
     setOpenReservation(true);
   };
 

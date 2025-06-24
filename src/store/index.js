@@ -44,7 +44,12 @@ export const useStore = create((set) => {
     stickypoint: 0,
 
     /* ----- setters originales ----- */
-    setService: (service) => set({ service }),
+    setService: (service) =>
+      set((state) => {
+        const data = { service: { ...state.service, ...service } };
+        localStorage.setItem("service", JSON.stringify(data));
+        return data;
+      }),
     setRegister: (register) => set({ register }),
     setHaveNotification: (haveNotification) => set({ haveNotification }),
     setLoginModal: (loginModal) => set({ loginModal }),

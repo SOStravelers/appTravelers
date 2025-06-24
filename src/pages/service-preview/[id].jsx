@@ -31,6 +31,7 @@ export default function ServicePreviewPage() {
   }, []);
 
   const openModal = () => {
+    console.log("wena");
     setService({
       duration: subService.duration,
       price: 0,

@@ -126,7 +126,7 @@ function Calendar({ id }) {
       startTime = time.startTime;
       endTime = time.endTime;
     }
-
+    //minicambio
     setService({
       date: dateStr,
       startTime: { isoTime: startTimeIso, stringData: startTime },

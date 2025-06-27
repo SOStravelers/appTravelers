@@ -170,7 +170,7 @@ function Calendar({ id }) {
       amount: adults,
       amountChildren: children,
     });
-    router.push(`/summary-mini/123`);
+    router.push(`/summary2/confirm-selection/${id}`);
     // if (isWorker) router.push(`/assign-client`);
     // else if (fromFavorite) router.push(`/summary-mini`);
     // else router.push(`/workers-found/${id}`);

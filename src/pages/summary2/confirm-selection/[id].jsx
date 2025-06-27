@@ -4,9 +4,9 @@ import { enUS, es, fr, de, ptBR } from "date-fns/locale";
 import { useStore } from "@/store";
 import { formatearFecha } from "@/utils/format";
 import TravellersDetailsModal from "@/components/utils/modal/TravellersDetailsModal";
-
 export default function SummaryPage() {
   const router = useRouter();
+  const id = router?.query?.id;
   const { service, setService, language } = useStore();
   const {
     imgUrl,
@@ -181,8 +181,8 @@ export default function SummaryPage() {
 
       {/* Botón Siguiente */}
       <button
-        onClick={() => router.push("/next-step")}
-        className="mt-3 bg-black text-white py-3 px-6 rounded-full text-xs hover:opacity-90 transition"
+        onClick={() => router.push(`/summary2/contact-info/${id}`)}
+        className="block w-1/2 mx-auto bg-black text-white rounded-full py-2 text-sm mt-2 hover:opacity-90 transition"
       >
         {language === "es" ? "Siguiente" : "Next"}
       </button>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { DayPicker } from "react-day-picker";
+import { AlertIcon } from "@/constants/icons";
 import { enUS, es, fr, de, ptBR } from "date-fns/locale";
 import TimeButton from "../buttons/TimeButton";
 import OutlinedButton from "../buttons/OutlinedButton";
@@ -15,7 +16,10 @@ import languageData from "@/language/reservation.json";
 function Calendar({ id }) {
   const router = useRouter();
   const { service, setService, isWorker, language } = useStore();
+
+  // time selection
   const [time, setTime] = useState();
+  // schedule fetch & state
   const [fromFavorite, setFromFavorite] = useState(false);
   const [loading, setLoading] = useState(true);
   const [schedule, setSchedule] = useState([]);
@@ -25,8 +29,12 @@ function Calendar({ id }) {
     disabledDays: [],
   });
   const [selectedDay, setSelected] = useState(new Date());
-  const [selectedDayWorker, setSelectedWorker] = useState(new Date());
+  const [selectedDayWorker] = useState(new Date());
   const [intervals, setIntervals] = useState([]);
+
+  // guest counts
+  const [adults, setAdults] = useState(service.amount || 1);
+  const [children, setChildren] = useState(service.amountChildren || 0);
 
   const now = new Date();
   const currentTime = now.toLocaleTimeString("en-US", {
@@ -38,65 +46,92 @@ function Calendar({ id }) {
 
   const locales = { en: enUS, es, fr, de, pt: ptBR };
 
+  // adjust adults count
+  const incAdults = () => {
+    if (service.hasLimit && adults >= service.limit) return;
+    const v = adults + 1;
+    setAdults(v);
+    setService({ ...service, amount: v });
+  };
+  const decAdults = () => {
+    if (adults > 1) {
+      const v = adults - 1;
+      setAdults(v);
+      setService({ ...service, amount: v });
+    }
+  };
+
+  // adjust children count
+  const incChildren = () => {
+    if (service.hasLimit && adults + children + 1 > service.limit) return;
+    const v = children + 1;
+    setChildren(v);
+    setService({ ...service, amountChildren: v });
+  };
+  const decChildren = () => {
+    if (children > 0) {
+      const v = children - 1;
+      setChildren(v);
+      setService({ ...service, amountChildren: v });
+    }
+  };
+
+  // fetch schedule on mount
   useEffect(() => {
     if (localStorage.getItem("fromFavorite")) setFromFavorite(true);
     getSchedule();
   }, []);
 
+  // when schedule loaded, compute disabled days
   useEffect(() => {
-    if (schedule.length === 0) return;
-    const result = getDisabledDays(schedule);
-    setDays(result);
+    if (!schedule.length) return;
+    setDays(computeDisabledDays());
   }, [schedule]);
 
+  // when day changes, pick its intervals
   useEffect(() => {
-    if (!selectedDay || schedule.length === 0) return;
+    if (!selectedDay || !schedule.length) return;
     const date = new Date(selectedDay);
-    const formattedDate =
+    const isoDay =
       formatISO(date, { representation: "date" }) + "T00:00:00.000";
-    const match = schedule.find((s) => s.day.slice(0, -1) === formattedDate);
+    const match = schedule.find((s) => s.day.slice(0, -1) === isoDay);
     setIntervals(match ? match.intervals : []);
   }, [selectedDay, schedule]);
 
   const getSchedule = async () => {
-    if (isWorker) return setLoading(false);
-
+    if (isWorker) {
+      setLoading(false);
+      return;
+    }
     const data = localStorage.getItem("fromFavorite");
-    const { serviceId, subServiceId, hostelId, workerId } = service;
-    const worker = data ? workerId : null;
-
-    const response = await ScheduleService.getScheduleHostel(
-      hostelId,
-      serviceId,
-      subServiceId,
-      worker
+    const res = await ScheduleService.getScheduleHostel(
+      null,
+      service.service._id,
+      service._id,
+      null
     );
-    if (response?.data) setSchedule(response.data);
+    if (res?.data) setSchedule(res.data);
     setLoading(false);
   };
 
-  const getDisabledDays = () => {
+  const computeDisabledDays = () => {
     const sorted = [...schedule].sort(
       (a, b) => new Date(a.day) - new Date(b.day)
     );
     const firstDate = new Date(sorted[0].day);
     const lastDate = new Date(sorted[sorted.length - 1].day);
     const disabledDays = [];
-
     for (
       let d = new Date(firstDate);
       d <= lastDate;
       d.setDate(d.getDate() + 1)
     ) {
-      if (
-        !schedule.some((obj) => new Date(obj.day).getTime() === d.getTime())
-      ) {
+      if (!schedule.some((s) => new Date(s.day).getTime() === d.getTime())) {
         disabledDays.push(
           new Date(d.toISOString().split("T")[0] + "T00:00:00.000")
         );
       }
     }
-
     return {
       firstDate: new Date(
         firstDate.toISOString().split("T")[0] + "T00:00:00.000"
@@ -112,13 +147,13 @@ function Calendar({ id }) {
     const dateStr = moment(isWorker ? selectedDayWorker : selectedDay).format(
       "YYYY-MM-DD"
     );
-    const now = moment();
+    const nowMoment = moment();
     let startTimeIso, endTimeIso, startTime, endTime;
 
     if (isWorker) {
-      startTimeIso = now.toISOString();
-      startTime = now.format("HH:mm");
-      endTimeIso = now.add(service.duration, "minutes").toISOString();
+      startTimeIso = nowMoment.toISOString();
+      startTime = nowMoment.format("HH:mm");
+      endTimeIso = nowMoment.add(service.duration, "minutes").toISOString();
       endTime = moment(endTimeIso).format("HH:mm");
     } else {
       startTimeIso = time.startTimeIso;
@@ -126,19 +161,22 @@ function Calendar({ id }) {
       startTime = time.startTime;
       endTime = time.endTime;
     }
-    //minicambio
+
     setService({
+      ...service,
       date: dateStr,
       startTime: { isoTime: startTimeIso, stringData: startTime },
       endTime: { isoTime: endTimeIso, stringData: endTime },
+      amount: adults,
+      amountChildren: children,
     });
-
-    if (isWorker) router.push(`/assign-client`);
-    else if (fromFavorite) router.push(`/summary`);
-    else router.push(`/workers-found/${id}`);
+    router.push(`/summary-mini/123`);
+    // if (isWorker) router.push(`/assign-client`);
+    // else if (fromFavorite) router.push(`/summary-mini`);
+    // else router.push(`/workers-found/${id}`);
   };
 
-  const footer = (() => {
+  const footer = () => {
     if (loading) {
       return (
         <div className="max-w-lg flex flex-col items-center justify-center">
@@ -146,7 +184,8 @@ function Calendar({ id }) {
           <p className="mt-2">Searching...</p>
         </div>
       );
-    } else if (schedule.length === 0) {
+    }
+    if (!schedule.length) {
       return (
         <div className="text-center mt-4">
           <h2 className="font-semibold text-red-500 text-sm">
@@ -155,20 +194,21 @@ function Calendar({ id }) {
           </h2>
         </div>
       );
-    } else if (selectedDay && !isWorker) {
+    }
+    if (selectedDay && !isWorker) {
       return (
         <div>
-          <h1 className="font-semibold text-xl mt-2">
+          <h1 className="font-semibold text-xs mt-2">
             {languageData.calendar.chooseTime[language]}
           </h1>
-          <h2 className="font-semibold text-sm mb-1">
+          <h2 className="font-semibold text-xs mb-1">
             {languageData.calendar.timeZone[language]}
           </h2>
-          <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[300px] mx-auto">
-            {intervals.length > 0 ? (
-              intervals.map((hour, index) => (
+          <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[200px] mx-auto">
+            {intervals.length ? (
+              intervals.map((hour, i) => (
                 <TimeButton
-                  key={index}
+                  key={i}
                   onClick={() => setTime(hour)}
                   text={hour.startTime}
                   selected={time === hour}
@@ -190,10 +230,11 @@ function Calendar({ id }) {
           )}
         </div>
       );
-    } else if (isWorker) {
+    }
+    if (isWorker) {
       return (
         <div className="flex flex-col items-center">
-          <p className="my-4 text-lg font-semibold">
+          <p className="my-4 text-sm font-semibold">
             Hora actual: {currentTime}
           </p>
           <OutlinedButton text="Continuar" onClick={selectTime} />
@@ -201,41 +242,99 @@ function Calendar({ id }) {
       );
     }
     return null;
-  })();
+  };
 
   return (
     <>
-      {schedule.length === 0 ? (
-        <div className="flex justify-center items-center">
-          <DayPicker
-            mode="single"
-            selected={selectedDay}
-            disabled={[
-              { from: new Date(2000, 0, 1), to: new Date(2100, 0, 1) },
-            ]}
-            onSelect={setSelected}
-            footer={footer}
-            locale={locales[language]}
-            components={{ Navbar: () => null }}
-          />
+      {/* Guests selector */}
+      <div className="w-full max-w-lg mx-auto mb-6 space-y-4">
+        {/* Adults */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="text-sm font-semibold">Adultos</h3>
+            <p className="text-xs text-gray-500">Edad: más de 18</p>
+          </div>
+          <div className="flex items-center justify-center items-center">
+            <button
+              onClick={decAdults}
+              className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+            >
+              –
+            </button>
+            <span className="w-8 text-sm flex items-center justify-center">
+              {adults}
+            </span>
+            <button
+              onClick={incAdults}
+              className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+            >
+              +
+            </button>
+          </div>
         </div>
-      ) : (
-        <div className="flex justify-center items-center">
-          <DayPicker
-            mode="single"
-            selected={selectedDay}
-            disabled={days?.disabledDays.length > 0 ? days.disabledDays : false}
-            fromDate={days?.firstDate || new Date()}
-            toDate={
-              days?.lastDate ||
-              new Date(new Date().setMonth(new Date().getMonth() + 1))
-            }
-            onSelect={setSelected}
-            footer={footer}
-            locale={locales[language]}
-          />
+        {/* Children */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="text-sm font-semibold">Niños</h3>
+            <p className="text-xs text-gray-500">Edad: 2–12 años</p>
+          </div>
+          <div className="flex items-center justify-center items-center">
+            <button
+              onClick={decChildren}
+              className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+            >
+              –
+            </button>
+            <span className="w-8 flex items-center justify-center text-sm">
+              {children}
+            </span>
+            <button
+              onClick={incChildren}
+              className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+            >
+              +
+            </button>
+          </div>
         </div>
-      )}
+      </div>
+
+      <div className="flex items-center justify-center mb-3 mt-1 ">
+        <AlertIcon className="mr-2" />
+        <h2 className="font-semibold text-xs">
+          {languageData.selectDate[language]}
+        </h2>
+        {/* ❌ Botón de cerrar */}
+        {/* <button
+            onClick={onClose}
+            className="absolute  right-3 text-gray-400 hover:text-gray-700 text-xl"
+          >
+            ✕
+          </button> */}
+      </div>
+
+      {/* Calendar */}
+      <div className="flex justify-center items-center">
+        <DayPicker
+          mode="single"
+          className="mini-calendar"
+          selected={selectedDay}
+          disabled={
+            schedule.length === 0
+              ? [{ from: new Date(2000, 0, 1), to: new Date(2100, 0, 1) }]
+              : days.disabledDays
+          }
+          fromDate={schedule.length ? days.firstDate : undefined}
+          toDate={
+            schedule.length
+              ? days.lastDate
+              : new Date(new Date().setMonth(new Date().getMonth() + 1))
+          }
+          onSelect={setSelected}
+          footer={footer()}
+          locale={locales[language]}
+          components={schedule.length ? {} : { Navbar: () => null }}
+        />
+      </div>
     </>
   );
 }

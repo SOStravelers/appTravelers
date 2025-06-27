@@ -57,17 +57,6 @@ export default function ModalReservationWrapper({ isOpen, onClose }) {
         }`}
       >
         {/* 🔔 Encabezado */}
-        <div className="flex items-center justify-center mb-3 mt-1 ">
-          <AlertIcon className="mr-2" />
-          <h2 className="font-semibold">{languageData.selectDate[language]}</h2>
-          {/* ❌ Botón de cerrar */}
-          {/* <button
-            onClick={onClose}
-            className="absolute  right-3 text-gray-400 hover:text-gray-700 text-xl"
-          >
-            ✕
-          </button> */}
-        </div>
 
         {/* 📅 Calendario */}
         <Calendar id={router?.query?.id} />

@@ -48,6 +48,20 @@
       "fr": "Pas de disponibilité",
       "de": "Keine Verfügbarkeit",
       "pt": "Sem disponibilidade"
+    },
+    "adults": {
+      "en": "Adults",
+      "es": "Adultos",
+      "fr": "Adultes",
+      "de": "Erwachsene",
+      "pt": "Adultos"
+    },
+    "children": {
+      "en": "Children",
+      "es": "Niños",
+      "fr": "Enfants",
+      "de": "Kinder",
+      "pt": "Crianças"
     }
   }
 }

@@ -1,22 +1,22 @@
-// components/CountrySelector.jsx
 import { useRef, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import countries from "@/utils/countries.json";
+import countries from "@/utils/countriesFull.json";
 
 export default function CountrySelector({
   language,
   country,
   setCountry,
+  setPhoneCode,
   dropdownOpen,
   setDropdownOpen,
   inputClass,
   error,
 }) {
-  const countryRef = useRef();
+  const ref = useRef();
 
   useEffect(() => {
     const handler = (e) => {
-      if (countryRef.current && !countryRef.current.contains(e.target)) {
+      if (ref.current && !ref.current.contains(e.target)) {
         setDropdownOpen(false);
       }
     };
@@ -25,7 +25,7 @@ export default function CountrySelector({
   }, []);
 
   return (
-    <div ref={countryRef} className="relative">
+    <div ref={ref} className="relative">
       <label className="block text-xs font-medium mb-2">
         {language === "es"
           ? "País"
@@ -51,11 +51,11 @@ export default function CountrySelector({
               key={c.code}
               onClick={() => {
                 setCountry(c.name[language] || c.name.en);
+                setPhoneCode(c.dial_code);
                 setDropdownOpen(false);
               }}
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-2"
+              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
             >
-              <span>{c.emoji}</span>
               <span>{c.name[language] || c.name.en}</span>
             </div>
           ))}

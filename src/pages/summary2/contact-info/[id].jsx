@@ -1,4 +1,3 @@
-// pages/PersonalInfoPage.jsx
 import { useState } from "react";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
@@ -13,7 +12,6 @@ const errInput =
 export default function PersonalInfoPage() {
   const { language } = useStore();
   const router = useRouter();
-  const id = router?.query?.id;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
@@ -26,7 +24,6 @@ export default function PersonalInfoPage() {
   const [errPhone, setErrPhone] = useState(null);
 
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
-  const [codeDropdownOpen, setCodeDropdownOpen] = useState(false);
 
   const labels = {
     es: {
@@ -69,6 +66,7 @@ export default function PersonalInfoPage() {
   return (
     <div className="min-h-screen p-4 ">
       <div className="h-12"></div>
+
       {/* Nombre */}
       <div className="mb-3">
         <label className="block text-xs font-medium mb-2">{t.name}</label>
@@ -99,6 +97,7 @@ export default function PersonalInfoPage() {
           language={language}
           country={country}
           setCountry={setCountry}
+          setPhoneCode={setPhoneCode}
           dropdownOpen={countryDropdownOpen}
           setDropdownOpen={setCountryDropdownOpen}
           inputClass={errCountry ? errInput : okInput}
@@ -110,13 +109,7 @@ export default function PersonalInfoPage() {
       <div className="mb-3">
         <label className="block text-xs font-medium mb-2">{t.phone}</label>
         <div className="flex gap-2">
-          <PhoneCodeSelector
-            phoneCode={phoneCode}
-            setPhoneCode={setPhoneCode}
-            dropdownOpen={codeDropdownOpen}
-            setDropdownOpen={setCodeDropdownOpen}
-            inputClass={okInput}
-          />
+          <PhoneCodeSelector phoneCode={phoneCode} inputClass={okInput} />
           <input
             type="tel"
             value={phone}

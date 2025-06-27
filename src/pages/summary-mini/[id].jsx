@@ -56,8 +56,9 @@ export default function SummaryPage() {
   }`;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 flex flex-col items-center">
-      <h1 className="text-2xl font-bold mb-6">
+    <div className="min-h-screen bg-gray-50 p-4  flex flex-col items-center">
+      <div className="h-12"></div>
+      <h1 className="text-md font-bold mb-1">
         {language === "es" ? "Verificar y continuar" : "Review & continue"}
       </h1>
 
@@ -70,14 +71,16 @@ export default function SummaryPage() {
           <img
             src={imgUrl}
             alt=""
-            className="w-20 h-20 object-cover rounded-lg mr-4 flex-shrink-0"
+            className="w-16 h-16 object-cover rounded-lg mr-4 flex-shrink-0"
           />
           <div className=" flex flex-col ">
-            <h2 className="text-md font-semibold flex-1 line-clamp-2">
+            <h2 className="text-sm font-semibold flex-1 line-clamp-2">
               {name?.[language] || ""}
             </h2>
-            <p className="text-gray-700">Valor: {total.toFixed(2)} € EUR</p>
-            <p className="text-gray-700">
+            <p className="text-gray-700 text-xs">
+              Valor: {total.toFixed(2)} € EUR
+            </p>
+            <p className="text-gray-700 text-xs">
               Pagarás ahora: {total.toFixed(2)} € EUR
             </p>
           </div>
@@ -107,11 +110,11 @@ export default function SummaryPage() {
           <hr />
           {/* Fecha */}
           <div className="space-y-1">
-            <p className="font-semibold">
+            <p className="font-semibold text-sm">
               {language === "es" ? "Fecha" : "Date"}
             </p>
-            <p className="text-gray-700">{displayDate}</p>
-            <p className="text-gray-700">
+            <p className="text-gray-700 text-xs">{displayDate}</p>
+            <p className="text-gray-700 text-xs">
               {language === "es" ? "De" : "From"} {startTime?.stringData || ""}{" "}
               {language === "es" ? "a" : "to"} {endTime?.stringData || ""}
             </p>
@@ -119,10 +122,10 @@ export default function SummaryPage() {
           {/* Viajeros */}
           <div className="flex justify-between items-center">
             <div className="space-y-1">
-              <p className="font-semibold">
+              <p className="font-semibold text-sm">
                 {language === "es" ? "Viajeros" : "Travellers"}
               </p>
-              <p className="text-gray-700">
+              <p className="text-gray-700 text-xs">
                 {adults} {language === "es" ? "adultos" : "adults"}
                 {children > 0 &&
                   `, ${children} ${
@@ -131,7 +134,7 @@ export default function SummaryPage() {
               </p>
             </div>
             <button
-              className="text-blue-600 hover:underline"
+              className="text-blueBorder font-semibold text-xs hover:underline"
               onClick={() => setModalOpen(true)}
             >
               {language === "es" ? "Cambiar" : "Change"}
@@ -140,13 +143,13 @@ export default function SummaryPage() {
           {/* Precio total */}
           <div className="flex justify-between items-center">
             <div className="space-y-1">
-              <p className="font-semibold">
+              <p className="font-semibold text-sm">
                 {language === "es" ? "Precio total" : "Total price"}
               </p>
-              <p className="text-gray-700">{total.toFixed(2)} € EUR</p>
+              <p className="text-gray-700 text-xs">{total.toFixed(2)} € EUR</p>
             </div>
             <button
-              className="text-blue-600 hover:underline"
+              className="text-blueBorder font-semibold hover:underline text-xs"
               onClick={() => setModalOpen(true)}
             >
               {language === "es" ? "Detalles" : "Details"}
@@ -154,20 +157,20 @@ export default function SummaryPage() {
           </div>
           {/* Cancelación gratuita */}
           <div className="space-y-1">
-            <p className="font-semibold text-green-600">
+            <p className="font-semibold text-green-600 text-sm">
               Agenda ahora paga despues
             </p>
-            <p className="text-gray-700 text-sm">
+            <p className="text-gray-700 text-xs">
               {language === "es"
                 ? `Si cancelas antes del ${displayDate} a las ${startTime?.stringData}, recibirás un reembolso completo.`
                 : `If you cancel before ${displayDate} at ${startTime?.stringData}, you’ll get a full refund.`}
             </p>
           </div>
           <div className="space-y-1">
-            <p className="font-semibold text-green-600">
+            <p className="font-semibold text-green-600 text-sm">
               {language === "es" ? "Cancelación gratuita" : "Free cancellation"}
             </p>
-            <p className="text-gray-700 text-sm">
+            <p className="text-gray-700 text-xs">
               {language === "es"
                 ? `Si cancelas antes del ${displayDate} a las ${startTime?.stringData}, recibirás un reembolso completo.`
                 : `If you cancel before ${displayDate} at ${startTime?.stringData}, you’ll get a full refund.`}
@@ -179,7 +182,7 @@ export default function SummaryPage() {
       {/* Botón Siguiente */}
       <button
         onClick={() => router.push("/next-step")}
-        className="mt-6 bg-black text-white py-3 px-8 rounded-full hover:opacity-90 transition"
+        className="mt-3 bg-black text-white py-3 px-6 rounded-full text-xs hover:opacity-90 transition"
       >
         {language === "es" ? "Siguiente" : "Next"}
       </button>

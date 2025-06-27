@@ -1,0 +1,62 @@
+[
+  {
+    "code": "BR",
+    "emoji": "🇧🇷",
+    "name": {
+      "en": "Brazil",
+      "es": "Brasil",
+      "pt": "Brasil",
+      "fr": "Brésil",
+      "de": "Brasilien"
+    },
+    "dial_code": "+55"
+  },
+  {
+    "code": "US",
+    "emoji": "🇺🇸",
+    "name": {
+      "en": "United States",
+      "es": "Estados Unidos",
+      "pt": "Estados Unidos",
+      "fr": "États-Unis",
+      "de": "Vereinigte Staaten"
+    },
+    "dial_code": "+1"
+  },
+  {
+    "code": "DE",
+    "emoji": "🇩🇪",
+    "name": {
+      "en": "Germany",
+      "es": "Alemania",
+      "pt": "Alemanha",
+      "fr": "Allemagne",
+      "de": "Deutschland"
+    },
+    "dial_code": "+49"
+  },
+  {
+    "code": "FR",
+    "emoji": "🇫🇷",
+    "name": {
+      "en": "France",
+      "es": "Francia",
+      "pt": "França",
+      "fr": "France",
+      "de": "Frankreich"
+    },
+    "dial_code": "+33"
+  },
+  {
+    "code": "CL",
+    "emoji": "🇨🇱",
+    "name": {
+      "en": "Chile",
+      "es": "Chile",
+      "pt": "Chile",
+      "fr": "Chili",
+      "de": "Chile"
+    },
+    "dial_code": "+56"
+  }
+]

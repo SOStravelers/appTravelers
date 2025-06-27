@@ -108,31 +108,31 @@ export default function TravellersDetailsModal({ open, onClose }) {
         >
           &times;
         </button>
-        <h3 className="text-lg font-semibold mb-4">
+        <h3 className="text-sm font-semibold mb-4">
           {language === "es" ? "Detalles y viajeros" : "Details & Travellers"}
         </h3>
         <div className="space-y-6">
           {/* Adultos */}
           <div className="flex justify-between items-center">
             <div>
-              <h4 className="text-md font-semibold">
+              <h4 className="text-md font-semibold text-sm">
                 {language === "es" ? "Adultos" : "Adults"}
               </h4>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs text-gray-500">
                 {language === "es" ? "Edad: más de 18" : "Age: over 18"}
               </p>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={decAdults}
-                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xl"
+                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
               >
                 –
               </button>
-              <span className="w-8 text-center text-lg">{adults}</span>
+              <span className="w-8 text-center text-sm">{adults}</span>
               <button
                 onClick={incAdults}
-                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xl"
+                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
               >
                 +
               </button>
@@ -141,55 +141,55 @@ export default function TravellersDetailsModal({ open, onClose }) {
           {/* Niños */}
           <div className="flex justify-between items-center">
             <div>
-              <h4 className="text-md font-semibold">
+              <h4 className="text-md font-semibold text-sm">
                 {language === "es" ? "Niños" : "Children"}
               </h4>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 text-xs">
                 {language === "es" ? "Edad: 2–12 años" : "Age: 2–12 yrs"}
               </p>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={decChildren}
-                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xl"
+                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
               >
                 –
               </button>
-              <span className="w-8 text-center text-lg">{children}</span>
+              <span className="w-8 text-center text-sm">{children}</span>
               <button
                 onClick={incChildren}
-                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-xl"
+                className="w-6 h-6  rounded-full bg-gray-100 flex items-center justify-center text-sm"
               >
                 +
               </button>
             </div>
           </div>
         </div>
-        <hr className="my-6" />
+        <hr className="my-4" />
         {/* Detalles de precio */}
-        <h3 className="text-lg font-semibold mb-2">
+        <h3 className="text-sm font-semibold mb-2">
           {language === "es" ? "Detalle del precio" : "Price breakdown"}
         </h3>
         <div className="space-y-2 mb-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between text-sm">
             <span>{unitLabel}</span>
             <span>{totalAdults.toFixed(2)} €</span>
           </div>
           {childrenLabel && (
-            <div className="flex justify-between">
+            <div className="flex justify-between text-sm">
               <span>{childrenLabel}</span>
               <span>{totalChildren.toFixed(2)} €</span>
             </div>
           )}
           <hr />
-          <div className="flex justify-between font-semibold">
+          <div className="flex justify-between font-semibold text-sm">
             <span>{language === "es" ? "Total" : "Total"} EUR</span>
             <span>{total.toFixed(2)} €</span>
           </div>
         </div>
         <button
           onClick={handleApply}
-          className="block w-full bg-black text-white rounded-full py-3 mt-2 hover:opacity-90 transition"
+          className="block w-1/2 mx-auto bg-black text-white rounded-full py-2 text-sm mt-2 hover:opacity-90 transition"
         >
           {language === "es" ? "Aplicar" : "Apply"}
         </button>

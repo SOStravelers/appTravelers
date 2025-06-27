@@ -1,0 +1,98 @@
+{
+  "contactInfo": {
+    "title": {
+      "en": "Enter your personal details",
+      "es": "Ingresa tus detalles personales",
+      "fr": "Entrez vos détails personnels",
+      "de": "Geben Sie Ihre generellen Details ein",
+      "pt": "Digite seus detalhes pessoais"
+    },
+    "subtitle": {
+      "en": "Checkout is fast and secure",
+      "es": "El checkout es rápido y seguro",
+      "fr": "Le checkout est rapide et sécurisé",
+      "de": "Der Checkout ist schnell und sicher",
+      "pt": "O checkout é rápido e seguro"
+    },
+    "advice": {
+      "en": "We'll only contact you with essential updates or changes to your booking",
+      "es": "Solo contactaremos con actualizaciones esenciales o cambios en tu reserva",
+      "fr": "Nous vous contacterons uniquement en cas de mises à jour essentielles ou de modifications de votre réservation.",
+      "de": "Wir werden Sie nur bei wichtigen Aktualisierungen oder Änderungen Ihrer Buchung kontaktieren.",
+      "pt": "Só entraremos em contato com você em caso de atualizações essenciais ou alterações na sua reserva."
+    },
+    "nameInput": {
+      "title": {
+        "es": "Nombe Completo",
+        "en": "Full Name",
+        "fr": "Nom complet",
+        "de": "Vollständiger Name",
+        "pt": "Nome completo"
+      },
+      "alert": {
+        "en": "Enter your full name using only letters from A to Z, apostrophes ('), and hyphens (-). Example: Mary Smith",
+        "es": "Ingresa tu nombre completo usando solo letras de la A a la Z, apóstrofes (') y guiones (-). Ejemplo: Mary Smith",
+        "fr": "Entrez votre nom complet en utilisant uniquement les lettres de A à Z, les apostrophes (') et les traits d'union (-). Exemple : Mary Smith",
+        "de": "Geben Sie Ihren vollständigen Namen nur mit Buchstaben von A bis Z, Apostrophen (') und Bindestrichen (-) ein. Beispiel: Mary Smith",
+        "pt": "Digite seu nome completo usando apenas letras de A a Z, apóstrofos (') e hífens (-). Exemplo: Mary Smith"
+      }
+    },
+    "emailInput": {
+      "title": {
+        "es": "Correo electrónico",
+        "en": "Email address",
+        "fr": "Adresse e-mail",
+        "de": "E-Mail-Adresse",
+        "pt": "Endereço de e-mail"
+      },
+      "alert": {
+        "en": "Please enter a valid email address (must contain @ and .)",
+        "es": "Por favor, introduce una dirección de correo electrónico válida (debe contener @ y .)",
+        "fr": "Veuillez saisir une adresse e-mail valide (doit contenir @ et .)",
+        "de": "Bitte geben Sie eine gültige E-Mail-Adresse ein (muss @ und . enthalten).",
+        "pt": "Por favor, insira um endereço de e-mail válido (deve conter @ e .)"
+      }
+    },
+    "countryInput": {
+      "title": {
+        "es": "País",
+        "en": "Country",
+        "fr": "Pays",
+        "de": "Land",
+        "pt": "País"
+      },
+      "alert": {
+        "en": "Select a country",
+        "es": "Selecciona un país",
+        "fr": "Sélectionnez un pays",
+        "de": "Wählen Sie ein Land aus",
+        "pt": "Selecione um país"
+      }
+    },
+    "phoneInput": {
+      "title": {
+        "en": "Phone number",
+        "es": "Número de teléfono",
+        "fr": "Numéro de téléphone",
+        "de": "Telefonnummer",
+        "pt": "Número de telefone"
+      },
+      "alert": {
+        "en": "Please enter a phone number for emergency contacts (updates regarding your booking)",
+        "es": "Por favor, introduce un número de teléfono para contactos de emergencia (actualizaciones sobre tu reserva)",
+        "fr": "Veuillez entrer un numéro de téléphone pour les contacts d'urgence (mises à jour concernant votre réservation)",
+        "de": "Bitte geben Sie eine Telefonnummer für Notfallkontakte ein (Aktualisierungen zu Ihrer Buchung)",
+        "pt": "Por favor, insira um número de telefone para contatos de emergência (atualizações sobre sua reserva)"
+      }
+    },
+    "buttons": {
+      "paymentButton": {
+        "en": "Go to payment",
+        "es": "Ir al pago",
+        "fr": "Aller au paiement",
+        "de": "Zur Zahlung",
+        "pt": "Ir para o pagamento"
+      }
+    }
+  }
+}

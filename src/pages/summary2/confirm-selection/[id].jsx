@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import { enUS, es, fr, de, ptBR } from "date-fns/locale";
+import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import { useStore } from "@/store";
 import { formatearFecha } from "@/utils/format";
 import TravellersDetailsModal from "@/components/utils/modal/TravellersDetailsModal";
@@ -180,12 +180,20 @@ export default function SummaryPage() {
       </div>
 
       {/* Botón Siguiente */}
-      <button
+
+      <BookingPopup
+        priceLabel={`wena`}
+        subtext={"hola"}
+        tagLine={"chao"}
+        buttonText={"Next"}
+        onAction={() => router.push(`/summary2/contact-info/${id}`)} // <-- abre el modal
+      />
+      {/* <button
         onClick={() => router.push(`/summary2/contact-info/${id}`)}
         className="block w-1/2 mx-auto bg-black text-white rounded-full py-2 text-sm mt-2 hover:opacity-90 transition"
       >
         {language === "es" ? "Siguiente" : "Next"}
-      </button>
+      </button> */}
 
       {/* MODAL - doble estado y transición más suave */}
 

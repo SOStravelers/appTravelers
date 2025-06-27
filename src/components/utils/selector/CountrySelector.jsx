@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import countries from "@/utils/countriesFull.json";
-
+import languageData from "@/language/newSummary.json";
 export default function CountrySelector({
   language,
   country,
@@ -27,15 +27,7 @@ export default function CountrySelector({
   return (
     <div ref={ref} className="relative">
       <label className="block text-xs font-medium mb-2">
-        {language === "es"
-          ? "País"
-          : language === "pt"
-          ? "País"
-          : language === "fr"
-          ? "Pays"
-          : language === "de"
-          ? "Land"
-          : "Country"}
+        {languageData.contactInfo.countryInput.title[language]}
       </label>
       <div
         onClick={() => setDropdownOpen((prev) => !prev)}

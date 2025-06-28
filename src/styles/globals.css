@@ -10,33 +10,33 @@
 
 
 .mini-calendar {
-  font-size: 12px !important;
+  font-size: 13px !important;
   --rdp-cell-size: 24px !important;
-  max-width: 220px !important;
+  max-width: 270px !important;
 }
 .mini-calendar .rdp {
-  padding: 4px !important;
+  padding: 2px !important;
 }
 .mini-calendar .rdp-caption {
-  font-size: 13px !important;
+  font-size: 10px !important;
   padding: 2px 0 !important;
 }
 .mini-calendar .rdp-caption_label {
-  font-size: 11px !important;  /* <<<<< ESTE ES EL QUE ACHICA "Junio 2025" */
+  font-size: 13px !important;  /* <<<<< ESTE ES EL QUE ACHICA "Junio 2025" */
   padding: 2px 0 !important;
 }
 .mini-calendar .rdp-head_cell,
 .mini-calendar .rdp-day {
-  font-size: 11px !important;
-  width: 24px !important;
-  height: 24px !important;
+  font-size: 14px !important;
+  width: 28px !important;
+  height: 28px !important;
   padding: 0 !important;
   margin: 0 !important;
 }
 .mini-calendar .rdp-nav_button {
-  width: 18px !important;
-  height: 18px !important;
-  font-size: 13px !important;
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 10px !important;
   padding: 0 !important;
 }
 

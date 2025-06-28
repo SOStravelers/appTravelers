@@ -67,8 +67,8 @@ export default function SummaryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4  flex flex-col items-center">
-      <div className="h-12"></div>
+    <div className="min-h-screen bg-gray-50 p-4 flex flex-col items-center">
+      <div className="h-12 md:h-20"></div>
       <h1 className="text-md font-bold mb-1">{thisLanguage.title[language]}</h1>
 
       <div className="bg-white rounded-xl shadow w-full max-w-md overflow-hidden">
@@ -201,8 +201,7 @@ export default function SummaryPage() {
         </div>
       </div>
 
-      {/* Botón Siguiente */}
-
+      {/* Botón Siguiente Flotante */}
       <BookingPopup
         priceLabel={`${thisLanguage.value[language]} ${total.toFixed(2)} € EUR`}
         subtext={""}
@@ -210,15 +209,7 @@ export default function SummaryPage() {
         buttonText={thisLanguage.nextButton[language]}
         onAction={() => router.push(`/summary2/contact-info/${id}`)} // <-- abre el modal
       />
-      {/* <button
-        onClick={() => router.push(`/summary2/contact-info/${id}`)}
-        className="block w-1/2 mx-auto bg-black text-white rounded-full py-2 text-sm mt-2 hover:opacity-90 transition"
-      >
-        {language === "es" ? "Siguiente" : "Next"}
-      </button> */}
-
-      {/* MODAL - doble estado y transición más suave */}
-
+      {/* Modal de detalles  */}
       <TravellersDetailsModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}

@@ -7,12 +7,13 @@ import languageData from "@/language/newSummary.json";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import { MdLock } from "react-icons/md";
 const okInput =
-  "w-full border border-gray-300 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-gray-500 transition";
+  "w-full border border-gray-300 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-blueBorder transition";
 const errInput =
   "w-full border border-red-500 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-red-600 transition";
 
 export default function PersonalInfoPage() {
   const { language } = useStore();
+  const thisLanguage = languageData.contactInfo;
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,22 +31,22 @@ export default function PersonalInfoPage() {
   const validate = () => {
     let valid = true;
     if (!name.trim()) {
-      setErrName(languageData.contactInfo.nameInput.alert[language]);
+      setErrName(thisLanguage.nameInput.alert[language]);
       valid = false;
     } else setErrName(null);
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setErrEmail(languageData.contactInfo.emailInput.alert[language]);
+      setErrEmail(thisLanguage.emailInput.alert[language]);
       valid = false;
     } else setErrEmail(null);
 
     if (!country) {
-      setErrCountry(languageData.contactInfo.countryInput.alert[language]);
+      setErrCountry(thisLanguage.countryInput.alert[language]);
       valid = false;
     } else setErrCountry(null);
 
     if (!/^[0-9]{6,15}$/.test(phone)) {
-      setErrPhone(languageData.contactInfo.phoneInput.alert[language]);
+      setErrPhone(thisLanguage.phoneInput.alert[language]);
       valid = false;
     } else setErrPhone(null);
 
@@ -53,23 +54,23 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <div className="min-h-screen py-4 px-6 bg-gray-50 flex flex-col ">
-      <div className="h-12"></div>
+    <div className="min-h-screen bg-gray-50 py-4 px-6  flex flex-col items-center">
+      <div className="h-12 md:h-20"></div>
       <h1 className="text-md text-center font-bold mb-2">
-        {languageData.contactInfo.title[language]}
+        {thisLanguage.title[language]}
       </h1>
       <div className="flex items-center ml-3 mb-2">
         <MdLock className="text-green-700" size={20} />
         <h1 className="text-sm text-green-700  mt-1">
-          {languageData.contactInfo.subtitle[language]}
+          {thisLanguage.subtitle[language]}
         </h1>
       </div>
 
-      <div className="bg-white rounded-xl  px-3 py-3 shadow w-full max-w-md overflow-hidden">
+      <div className="bg-white rounded-xl  px-3 py-3 shadow w-full max-w-md ">
         {/* Nombre */}
         <div className="mb-3">
           <label className="block text-xs font-medium mb-2">
-            {languageData.contactInfo.nameInput.title[language]}
+            {thisLanguage.nameInput.title[language]}
           </label>
           <input
             type="text"
@@ -83,7 +84,7 @@ export default function PersonalInfoPage() {
         {/* Email */}
         <div className="mb-3">
           <label className="block text-xs font-medium mb-2">
-            {languageData.contactInfo.emailInput.title[language]}
+            {thisLanguage.emailInput.title[language]}
           </label>
           <input
             type="email"
@@ -111,7 +112,7 @@ export default function PersonalInfoPage() {
         {/* Teléfono */}
         <div className="mb-3">
           <label className="block text-xs font-medium mb-2">
-            {languageData.contactInfo.phoneInput.title[language]}
+            {thisLanguage.phoneInput.title[language]}
           </label>
           <div className="flex gap-2">
             <PhoneCodeSelector phoneCode={phoneCode} inputClass={okInput} />
@@ -126,16 +127,16 @@ export default function PersonalInfoPage() {
         </div>
       </div>
 
-      <h3 className="text-sm text-gray-500  mt-3 m-2">
+      <h3 className="text-sm max-w-md text-gray-500  mt-3 m-2">
         {" "}
-        {languageData.contactInfo.advice[language]}
+        {thisLanguage.advice[language]}
       </h3>
 
       <BookingPopup
         priceLabel={`wena`}
         subtext={"hola"}
         tagLine={"chao"}
-        buttonText={languageData.contactInfo.buttons.paymentButton[language]}
+        buttonText={thisLanguage.buttons.paymentButton[language]}
         onAction={validate}
       />
 
@@ -143,7 +144,7 @@ export default function PersonalInfoPage() {
         onClick={validate}
         className="block w-1/2 mx-auto bg-black text-white rounded-full py-2 text-sm mt-2 hover:opacity-90 transition"
       >
-        {languageData.contactInfo.buttons.paymentButton[language]}
+        {thisLanguage.buttons.paymentButton[language]}
       </button> */}
     </div>
   );

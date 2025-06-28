@@ -46,7 +46,7 @@ export default function CountrySelector({
                 setPhoneCode(c.dial_code);
                 setDropdownOpen(false);
               }}
-              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+              className="px-3 py-2 hover:bg-blueBorder/20 cursor-pointer"
             >
               <span>{c.name[language] || c.name.en}</span>
             </div>

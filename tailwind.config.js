@@ -33,6 +33,8 @@ module.exports = {
         // si quieres un gris custom, renómbralo también
         customGrey: "#4e4e4e",
 
+        darkMode: "class",
+
         // si realmente quieres redefinir `white` y `black`, puedes:
         white: defaultColors.white,
         black: defaultColors.black,

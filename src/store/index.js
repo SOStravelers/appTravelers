@@ -19,6 +19,7 @@ export const useStore = create((set) => {
   return {
     /* ----- estado original ----- */
     user: {},
+    loadingGlobal: false,
     language: "en",
     urls: urls(),
     loggedIn: false,
@@ -51,6 +52,8 @@ export const useStore = create((set) => {
         return data;
       }),
     setRegister: (register) => set({ register }),
+    setLoadingGlobal: (loadingGlobal) => set({ loadingGlobal }),
+    setUrls: (urls) => set({ urls }),
     setHaveNotification: (haveNotification) => set({ haveNotification }),
     setLoginModal: (loginModal) => set({ loginModal }),
     setUser: (user) => set({ user: { ...user } }),

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
+import delay from "@/utils/delayFunction";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import { useStore } from "@/store";
 import { formatearFecha } from "@/utils/format";
@@ -9,7 +10,6 @@ export default function SummaryPage() {
   const router = useRouter();
   const id = router?.query?.id;
   const { service, setService, language } = useStore();
-
   const {
     imgUrl,
     name,
@@ -24,7 +24,7 @@ export default function SummaryPage() {
   } = service;
 
   const thisLanguage = languageData.confirmSelection;
-
+  const [loading, setLoading] = useState(true); // <-- loading flag
   const [expanded, setExpanded] = useState(true);
 
   // NUEVO: doble estado
@@ -38,6 +38,13 @@ export default function SummaryPage() {
 
   // Para cerrar: desactivar animación y desmontar cuando termine
   const closeModal = () => setIsVisible(false);
+
+  useEffect(() => {
+    setLoading(true);
+    delay(250, () => {
+      setLoading(false);
+    });
+  }, []);
 
   // Click fuera para cerrar
   useEffect(() => {
@@ -67,7 +74,17 @@ export default function SummaryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 flex flex-col items-center">
+    <div
+      className={`min-h-screen bg-gray-50 p-4 flex flex-col items-center
+          transform transition-all duration-800 ease-out
+          transition-opacity duration-800 ease-out
+          ${
+            loading
+              ? "opacity-0 scale-95 translate-y-4 pointer-events-none"
+              : "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+          }
+        `}
+    >
       <div className="h-12 md:h-20"></div>
       <h1 className="text-md font-bold mb-1">{thisLanguage.title[language]}</h1>
 

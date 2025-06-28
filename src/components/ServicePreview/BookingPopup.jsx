@@ -21,7 +21,7 @@ const BookingPopup = ({
     <div
       className="fixed bottom-11 left-1/2 transform -translate-x-1/2 z-50
     w-full max-w-xl bg-white border border-gray-200
-    flex items-center justify-between px-3 py-2 rounded-xl shadow"
+    flex items-center justify-between px-3 py-2 rounded-xl "
     >
       <div className="flex flex-col">
         <div className="flex items-center">

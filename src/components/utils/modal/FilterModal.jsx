@@ -101,7 +101,7 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
   /* ─── estilos ─── */
   const base =
     "mt-1 block w-full rounded-md px-2 py-1.5 text-xs focus:outline-none focus:ring-0 transition-colors";
-  const okInput = `${base} border border-gray-300 bg-gray-100 focus:border-gray-500`;
+  const okInput = `${base} border border-gray-300 bg-gray-100 focus:border-blueBorder`;
   const errInput = `${base} border border-red-500 bg-gray-100 focus:border-red-600`;
 
   /* ─── UI ─── */
@@ -179,7 +179,7 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
               ${
                 errKeyword || errMax
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-blueBorder hover:bg-blueBorderLight"
+                  : "bg-darkBlue hover:bg-blueBorderLight"
               }`}
           >
             Apply

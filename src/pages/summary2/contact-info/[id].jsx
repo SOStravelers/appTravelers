@@ -56,16 +56,18 @@ export default function PersonalInfoPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-6  flex flex-col items-center">
       <div className="h-12 md:h-20"></div>
+      {/* Titulo */}
       <h1 className="text-md text-center font-bold mb-2">
         {thisLanguage.title[language]}
       </h1>
+      {/* Subtitulo */}
       <div className="flex items-center ml-3 mb-2">
         <MdLock className="text-green-700" size={20} />
         <h1 className="text-sm text-green-700  mt-1">
           {thisLanguage.subtitle[language]}
         </h1>
       </div>
-
+      {/* CONTENEDOR */}
       <div className="bg-white rounded-xl  px-3 py-3 shadow w-full max-w-md ">
         {/* Nombre */}
         <div className="mb-3">
@@ -126,12 +128,12 @@ export default function PersonalInfoPage() {
           {errPhone && <p className="text-red-600 text-xs mt-1">{errPhone}</p>}
         </div>
       </div>
-
+      {/* Aviso */}
       <h3 className="text-sm max-w-md text-gray-500  mt-3 m-2">
         {" "}
         {thisLanguage.advice[language]}
       </h3>
-
+      {/* Botón */}
       <BookingPopup
         priceLabel={`wena`}
         subtext={"hola"}
@@ -139,13 +141,6 @@ export default function PersonalInfoPage() {
         buttonText={thisLanguage.buttons.paymentButton[language]}
         onAction={validate}
       />
-
-      {/* <button
-        onClick={validate}
-        className="block w-1/2 mx-auto bg-black text-white rounded-full py-2 text-sm mt-2 hover:opacity-90 transition"
-      >
-        {thisLanguage.buttons.paymentButton[language]}
-      </button> */}
     </div>
   );
 }

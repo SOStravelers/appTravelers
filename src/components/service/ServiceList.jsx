@@ -45,7 +45,7 @@ export default function ServiceList({ filterKey }) {
   const observerRef = useRef(null);
   const safeItems = Array.isArray(listItems) ? listItems : [];
   const requestedPages = useRef(new Set());
-  const [notRepeated, SetNotRepeated] = useState(false);
+  const [notRepeated, setNotRepeated] = useState(false);
 
   const loadPage = useCallback(
     async (page) => {
@@ -53,6 +53,7 @@ export default function ServiceList({ filterKey }) {
 
       setPreviousPage(page);
       setLoading(true);
+      page == 1 ? setNotRepeated(true) : setNotRepeated(false);
 
       try {
         const res = await SubserviceService.getAll({
@@ -62,10 +63,11 @@ export default function ServiceList({ filterKey }) {
         });
 
         const { docs, hasNextPage } = res.data;
-
+        console.log("pages", page, lastPage);
         if (page === 1) {
           // Reemplazo total sin validar duplicados
           setListItems(docs);
+          console.log("se viene el true");
         } else {
           // Evitar duplicados si es append
           const currentIds = new Set(
@@ -74,10 +76,6 @@ export default function ServiceList({ filterKey }) {
           const newDocs = docs.filter((doc) => !currentIds.has(doc._id));
           if (newDocs.length > 0) {
             appendListItems(newDocs);
-            SetNotRepeated(true);
-            setTimeout(() => {
-              SetNotRepeated(false);
-            }, 50);
           }
         }
 
@@ -154,9 +152,9 @@ export default function ServiceList({ filterKey }) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      {loading && listPage === 1 && notRepeated && (
+      {loading && notRepeated && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 pointer-events-auto">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blueBorder border-solid" />
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid" />
         </div>
       )}
       {safeItems.length === 0 && !loading ? (

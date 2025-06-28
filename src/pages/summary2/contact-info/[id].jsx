@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
-import delay from "@/utils/delayFunction";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 import CountrySelector from "@/components/utils/selector/CountrySelector";
 import PhoneCodeSelector from "@/components/utils/selector/PhoneCodeSelector";
 import languageData from "@/language/newSummary.json";
@@ -66,16 +70,9 @@ export default function ContactInfoPage() {
     <>
       <div
         className={`min-h-screen bg-gray-50 pt-4 px-6  flex flex-col items-center
-          transform transition-all duration-800 ease-out
-          transition-opacity duration-800 ease-out
-          ${
-            loading
-              ? "opacity-0 scale-95 translate-y-4 pointer-events-none"
-              : "opacity-100 scale-100 translate-y-0 pointer-events-auto"
-          }
+          ${loading ? opacityAnimation : displayAnimation}
         `}
       >
-        <div className="h-12 md:h-20"></div>
         {/* Titulo */}
         <h1 className="text-md text-center font-bold mb-2">
           {thisLanguage.title[language]}
@@ -157,7 +154,6 @@ export default function ContactInfoPage() {
           {" "}
           {thisLanguage.advice[language]}
         </h3>
-        <div className="h-32 md:h-10"></div>
       </div>
       {/* Botón */}
       <BookingPopup

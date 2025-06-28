@@ -14,6 +14,11 @@ import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 import languageData from "@/language/subServices.json";
 import { useStore } from "@/store";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 import Reservation from "../reservation/[id]";
 import ModalReservationWrapper from "@/components/ServicePreview/ModalReservationWrapper";
 export default function ServicePreviewPage() {
@@ -63,19 +68,9 @@ export default function ServicePreviewPage() {
   };
 
   return (
-    <div className="mx-auto p-4 md:pl-[240px] py-[52px]">
+    <div className="mx-auto px-4 md:pl-[240px] bg-gray-50 ">
       {/* fade + slide container */}
-      <div
-        className={`
-          transform transition-all duration-800 ease-out
-          transition-opacity duration-800 ease-out
-          ${
-            loading
-              ? "opacity-0 scale-95 translate-y-4 pointer-events-none"
-              : "opacity-100 scale-100 translate-y-0 pointer-events-auto"
-          }
-        `}
-      >
+      <div className={`${loading ? opacityAnimation : displayAnimation}`}>
         {/* Video full-width */}
         {(subService.videoUrl || subService.imgUrl) && (
           <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden mb-2">

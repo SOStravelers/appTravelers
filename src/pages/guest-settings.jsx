@@ -9,6 +9,11 @@ import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import languageData from "@/language/settings.json";
 import { WorldIcon, MailIcon } from "@/constants/icons";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 import { useStore } from "@/store";
 export default function GuestSettings() {
   useEffect(() => {
@@ -16,6 +21,7 @@ export default function GuestSettings() {
   }, []);
   const router = useRouter();
   const store = useStore();
+  const [loading, setLoading] = useState(true); //
   const { setLanguage, language } = store;
   const [isOnUbication, setIsOnUbication] = useState(false);
   const [selection, setSelection] = useState({});
@@ -24,6 +30,13 @@ export default function GuestSettings() {
     setSelection({
       value: language,
       label: languageData.language[language][language],
+    });
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    delay(250, () => {
+      setLoading(false);
     });
   }, []);
 
@@ -53,7 +66,13 @@ export default function GuestSettings() {
   ];
 
   return (
-    <div className="flex flex-col py-24 px-10 md:pl-80">
+    <div
+      className={`min-h-screen bg-gray-50 p-4 flex flex-col 
+          transform transition-all duration-800 ease-out
+          transition-opacity duration-800 ease-out
+         ${loading ? opacityAnimation : displayAnimation}
+        `}
+    >
       {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
 
       <Link href="support" className="block">
@@ -67,7 +86,7 @@ export default function GuestSettings() {
         {languageData.titleLanguage[language]}
       </h1>
       <Select
-        className="w-full max-w-lg rounded-xl my-1 mb-14"
+        className="w-full max-w-lg rounded-xl my-1 mb-6"
         options={optionsSupport}
         value={selection}
         // onBlur={() =>

@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useStore } from "@/store";
+import LoaderGlobal from "@/components/layout/loaderGlobal";
 import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
 import WaveBar from "@/components/layout/WaveBar";
 import TopBarSubMenu from "@/components/layout/TopBarSubMenu";
 import clsx from "clsx";
-import { ThreeDots } from "react-loader-spinner";
-import { LogoSosBlack, LogoSosRelleno } from "@/constants/icons";
 import { isLoginPage, arePrincipalPages } from "@/utils/variables";
 import { Poppins } from "next/font/google";
 import { CustomMiddlewareComponent } from "@/middleware";
+import { useOnlineStatus } from "@/hooks/useOnlineStatus";
+import OfflineScreen from "@/components/layout/offlineScreen";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -22,7 +22,7 @@ function Layout({ children, lang }) {
   const router = useRouter();
 
   const [middlewareCompleted, setMiddlewareCompleted] = useState(false);
-
+  const isOnline = useOnlineStatus();
   const handleMiddlewareComplete = () => {
     // Esta función se llamará desde CustomMiddlewareComponent
     // cuando sus funciones hayan terminado.
@@ -65,6 +65,7 @@ function Layout({ children, lang }) {
   return (
     <>
       <div className={clsx("relative", poppins.className)}>
+        {!isOnline && <OfflineScreen />}
         <CustomMiddlewareComponent
           onMiddlewareComplete={handleMiddlewareComplete}
         />
@@ -81,7 +82,7 @@ function Layout({ children, lang }) {
             content={`https://sostvl.com/assets/logoRedes.png?random=${Math.random()}`}
           />
         </Head>
-        {middlewareCompleted ? (
+        {middlewareCompleted && isOnline ? (
           <>
             {isLoginPage(router) ? (
               <WaveBar />
@@ -90,21 +91,13 @@ function Layout({ children, lang }) {
             ) : (
               !isIntro && !isPaymentConfirm && <TopBarSubMenu />
             )}
+            {router.pathname != "/" && <div className="h-12 md:h-20"></div>}
 
             {children}
+            {router.pathname != "/" && <div className="h-32 md:h-6"></div>}
           </>
         ) : (
-          <div className="w-sreen flex flex-col h-screen  items-center justify-center">
-            <LogoSosRelleno></LogoSosRelleno>
-            <p className=" font-medium mt-4 text-xl">SOS Travelers</p>
-            <ThreeDots
-              wrapperStyle={{ marginTop: "-25px" }}
-              width={100}
-              height={100}
-              color="black"
-              ariaLabel="infinity-spin-loading"
-            />
-          </div>
+          <LoaderGlobal />
         )}
       </div>
     </>

@@ -65,15 +65,15 @@ export default function Home() {
 
         const stickyEl = document.getElementById("icon-carousel");
         if (!stickyEl) return;
-        // window.scrollTo({ top: stickypoint, behavior: "smooth" });
-        window.scrollTo({ top: stickypoint });
+        window.scrollTo({ top: stickypoint, behavior: "smooth" });
+        // window.scrollTo({ top: stickypoint });
         setObsFilter(false);
         // }, 150);
       });
     } else if (!scrolled) {
       console.log("caso2");
 
-      delay(350, () => {
+      delay(400, () => {
         //para efecto al entrar
         setScrolled(true);
       });

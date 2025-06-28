@@ -67,7 +67,7 @@ export default function GuestSettings() {
         {languageData.titleLanguage[language]}
       </h1>
       <Select
-        className="w-full max-w-lg rounded-xl my-1 mb-60"
+        className="w-full max-w-lg rounded-xl my-1 mb-14"
         options={optionsSupport}
         value={selection}
         // onBlur={() =>

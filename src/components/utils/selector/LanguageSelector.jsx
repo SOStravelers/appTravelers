@@ -5,11 +5,11 @@ import { useStore } from "@/store";
 import "flag-icons/css/flag-icons.min.css";
 
 const FLAGS = {
-  es: "es", // 🇪🇸
-  en: "gb", // 🇬🇧
-  pt: "br", // 🇵🇹
-  fr: "fr", // 🇫🇷
-  de: "de", // 🇩🇪
+  es: "es", // España
+  en: "gb", // Estados Unidos
+  pt: "br", // Brasil
+  fr: "fr", // Francia
+  de: "de", // Alemania
 };
 
 const LanguageSelector = () => {
@@ -17,7 +17,7 @@ const LanguageSelector = () => {
   const [open, setOpen] = useState(false);
   const wrapper = useRef(null);
 
-  /* click-fuera ⇒ cerrar */
+  // Cierra el dropdown al hacer click fuera
   useEffect(() => {
     const close = (e) => !wrapper.current?.contains(e.target) && setOpen(false);
     addEventListener("mousedown", close);
@@ -32,17 +32,19 @@ const LanguageSelector = () => {
 
   return (
     <div ref={wrapper} className="relative">
-      {/* ─── Botón principal ─── */}
+      {/* Botón principal */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center justify-center w-7 h-6 rounded
-                   ring-1 ring-white/40 hover:ring-white transition"
+        className="flex items-center justify-center gap-2 w-16 h-8 rounded ring-1 ring-white/40 hover:ring-white transition"
         aria-label="Change language"
       >
-        <span className={`fi fi-${FLAGS[language] ?? "gb"} fis text-lg`} />
+        <span className={`fi fi-${FLAGS[language]} fis text-lg`} />
+        <span className="text-xs font-semibold text-white uppercase">
+          {language}
+        </span>
       </button>
 
-      {/* ─── Pop-over ─── */}
+      {/* Pop-over */}
       {open && (
         <div
           className="absolute right-0 mt-2 flex flex-col gap-1
@@ -54,11 +56,11 @@ const LanguageSelector = () => {
               <button
                 key={code}
                 onClick={() => changeLang(code)}
-                className="flex items-center justify-center w-7 h-6 rounded
-                           hover:bg-gray-100 transition"
+                className="flex items-center gap-2 w-12 h-8 rounded hover:bg-gray-100 transition"
                 aria-label={code}
               >
                 <span className={`fi fi-${iso} fis text-lg`} />
+                <span className="text-xs  uppercase">{code}</span>
               </button>
             ))}
         </div>

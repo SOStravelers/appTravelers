@@ -54,7 +54,7 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-4 px-6  flex flex-col items-center">
+    <div className="min-h-screen bg-gray-50 pt-4 mb-32 px-6  flex flex-col items-center">
       <div className="h-12 md:h-20"></div>
       {/* Titulo */}
       <h1 className="text-md text-center font-bold mb-2">

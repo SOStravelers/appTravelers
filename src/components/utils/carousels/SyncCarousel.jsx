@@ -117,7 +117,10 @@ export default function SyncCarousel() {
           setLoadingCarrouselVideos(true);
         }
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.log(err);
+        setLoadingCarrouselVideos(true);
+      });
   }, [itemsWithVideos.length, setItemsWithVideos]);
   /* -------- sincronizar icono play/pause -------- */
   /* ➊ añade este efecto  — se ejecuta cada vez que cambia activeItem */

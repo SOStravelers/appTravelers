@@ -40,7 +40,6 @@ export default class SubserviceService {
   //Obtener todos los subservicios con paginate
   static async getAll({ page, limit }) {
     const filters = useStore.getState().filters || {};
-
     const params = new URLSearchParams();
     params.append("page", page);
     params.append("limit", limit);

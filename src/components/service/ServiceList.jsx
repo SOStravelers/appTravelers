@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-
+import { NotFoundPicture } from "@/constants/icons";
 import SubserviceService from "@/services/SubserviceService";
 import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
@@ -25,18 +25,7 @@ export default function ServiceList({ filterKey }) {
     lastPage,
     setLastPage,
     filters,
-  } = useStore((s) => ({
-    listItems: s.listItems,
-    listPage: s.listPage,
-    listHasNext: s.listHasNext,
-    setListItems: s.setListItems,
-    appendListItems: s.appendListItems,
-    setListPage: s.setListPage,
-    setListHasNext: s.setListHasNext,
-    setLastPage: s.setLastPage,
-    lastPage: s.lastPage,
-    filters: s.filters,
-  }));
+  } = useStore();
 
   const [loading, setLoading] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
@@ -44,7 +33,6 @@ export default function ServiceList({ filterKey }) {
   const sentinelRef = useRef(null);
   const observerRef = useRef(null);
   const safeItems = Array.isArray(listItems) ? listItems : [];
-  const requestedPages = useRef(new Set());
   const [notRepeated, setNotRepeated] = useState(false);
 
   const loadPage = useCallback(
@@ -158,11 +146,17 @@ export default function ServiceList({ filterKey }) {
         </div>
       )}
       {safeItems.length === 0 && !loading ? (
-        <div className="text-center text-sm text-gray-500 py-10">
-          <p className="text-lg font-medium">No services found</p>
+        <div className="text-center text-sm text-gray-500 py-15">
+          <p className="text-md font-medium">No services found</p>
           <p className="text-sm">
             Try adjusting your filters or come back later.
           </p>
+          <div
+            className="mx-auto w-[170px] max-w-xs"
+            style={{ marginTop: "-40px" }}
+          >
+            <NotFoundPicture />
+          </div>
         </div>
       ) : safeItems.length === 0 && loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full animate-pulse">

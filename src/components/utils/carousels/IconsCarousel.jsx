@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
 import { useStore } from "@/store";
 import languageData from "@/language/subServices.json";
 import ServiceService from "@/services/ServiceService";
@@ -16,13 +15,7 @@ const Icons = {
   ...AiIcons,
 };
 
-export default function IconCarousel({
-  viewMoreLink = "/collections",
-  onViewMoreClick,
-  onOpenFilter,
-  onFilterChange,
-}) {
-  const router = useRouter();
+export default function IconCarousel({ onOpenFilter, onFilterChange }) {
   const {
     servicesIndexList,
     setServicesIndexList,

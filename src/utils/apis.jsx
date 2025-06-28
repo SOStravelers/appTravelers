@@ -3,6 +3,7 @@ function SetLocalStorage(env) {
 
   const apis = new Map();
   apis.set("local", "http://localhost:9000/");
+  apis.set("localMac", "http://192.168.0.3:9000/");
   apis.set("dev", "https://apidev.sostvl.com/");
   apis.set("development", "https://apidev.sostvl.com/");
   apis.set("test", "https://apitest.sostvl.com/");

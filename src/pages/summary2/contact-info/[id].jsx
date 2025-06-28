@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
-import delay from "@/utils/delayFunction";
 import CountrySelector from "@/components/utils/selector/CountrySelector";
 import PhoneCodeSelector from "@/components/utils/selector/PhoneCodeSelector";
 import languageData from "@/language/newSummary.json";
@@ -26,16 +25,8 @@ export default function PersonalInfoPage() {
   const [errEmail, setErrEmail] = useState(null);
   const [errCountry, setErrCountry] = useState(null);
   const [errPhone, setErrPhone] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
-  }, []);
 
   const validate = () => {
     let valid = true;
@@ -63,17 +54,7 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <div
-      className={`min-h-screen bg-gray-50 pt-4 mb-32 px-6  flex flex-col items-center
-          transform transition-all duration-800 ease-out
-          transition-opacity duration-800 ease-out
-          ${
-            loading
-              ? "opacity-0 scale-95 translate-y-4 pointer-events-none"
-              : "opacity-100 scale-100 translate-y-0 pointer-events-auto"
-          }
-        `}
-    >
+    <div className="min-h-screen bg-gray-50 pt-4 mb-32 px-6  flex flex-col items-center">
       <div className="h-12 md:h-20"></div>
       {/* Titulo */}
       <h1 className="text-md text-center font-bold mb-2">

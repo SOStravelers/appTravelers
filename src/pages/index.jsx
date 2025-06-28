@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import delay from "@/utils/delayFunction";
 import IconCarousel from "@/components/utils/carousels/IconsCarousel";
 import NotificationService from "@/services/NotificationService";
 import FloatingWhatsAppButton from "../components/utils/buttons/FloatingWhatsAppButton";
@@ -23,7 +22,7 @@ export default function Home() {
     stickypoint,
     setStickypoint,
   } = store;
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(true);
   const [filterKey, setFilterKey] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [obsFilter, setObsFilter] = useState(false);
@@ -56,28 +55,18 @@ export default function Home() {
   }, [stickypoint]);
 
   useEffect(() => {
-    console.log("activando effect", lastPage, obsFilter);
+    console.log("acitvando");
     if (lastPage !== "preview" && obsFilter) {
-      console.log("caso1");
+      setScrolled(true);
+      setObsFilter(false);
       requestAnimationFrame(() => {
-        // setTimeout(() => {
-        console.log("entra");
-
-        const stickyEl = document.getElementById("icon-carousel");
-        if (!stickyEl) return;
-        window.scrollTo({ top: stickypoint, behavior: "smooth" });
-        // window.scrollTo({ top: stickypoint });
-        setObsFilter(false);
-        // }, 150);
+        setTimeout(() => {
+          const stickyEl = document.getElementById("icon-carousel");
+          if (!stickyEl) return;
+          window.scrollTo({ top: stickypoint, behavior: "smooth" });
+        }, 50);
       });
-    } else if (!scrolled) {
-      console.log("caso2");
-
-      delay(400, () => {
-        //para efecto al entrar
-        setScrolled(true);
-      });
-
+    } else {
       const id = Cookies.get("homeItemId");
       if (!id) return;
       const tryScroll = () => {
@@ -92,12 +81,10 @@ export default function Home() {
           el.getBoundingClientRect().top + window.scrollY - (topBar + nav);
         window.scrollTo({ top: y });
         Cookies.remove("homeItemId");
-        console.log("vamoss");
       };
 
       requestAnimationFrame(tryScroll);
     }
-    console.log("termina");
   }, [listItems.length, filterKey]);
 
   const checkNotification = async () => {
@@ -111,10 +98,9 @@ export default function Home() {
     <main
       className={clsx(
         "flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible",
-        "transform transition-all duration-800 ease-out transition-opacity",
-        scrolled // o loading o show, según tu lógica
-          ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
-          : "opacity-0 scale-80 translate-y-4 pointer-events-none"
+        scrolled
+          ? "opacity-100 transition-opacity duration-300"
+          : "opacity-0 pointer-events-none"
       )}
     >
       <SyncCarousel />

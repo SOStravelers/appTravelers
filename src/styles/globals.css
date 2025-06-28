@@ -210,18 +210,3 @@ body {
     scrollbar-width: none;     /* Firefox */
   }
 }
-
-
-
-/* MOdo oscuro */
-body {
-  @apply bg-white;
-}
-
-html.dark body {
-  background-color: #232B33;
-}
-
-html.dark navbar {
-  background-color: #343B4B;
-}

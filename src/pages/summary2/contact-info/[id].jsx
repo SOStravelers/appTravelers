@@ -157,7 +157,7 @@ export default function ContactInfoPage() {
           {" "}
           {thisLanguage.advice[language]}
         </h3>
-        <div className="h-30 md:h-10"></div>
+        <div className="h-32 md:h-10"></div>
       </div>
       {/* Botón */}
       <BookingPopup

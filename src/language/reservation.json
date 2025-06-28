@@ -28,12 +28,12 @@
       "de": "Wählen Sie einen anderen Tag.",
       "pt": "Escolha outro dia."
     },
-    "nextButton": {
-      "en": "Next",
-      "es": "Siguiente",
-      "fr": "Suivant",
-      "de": "Weiter",
-      "pt": "Próximo"
+    "applyButton": {
+      "en": "Apply",
+      "es": "Aplicar",
+      "fr": "Appliquer",
+      "de": "Anwenden",
+      "pt": "Aplicar"
     },
     "backButton": {
       "en": "Back",

@@ -222,10 +222,18 @@ function Calendar({ id }) {
           </div>
           {time && (
             <div className="w-full flex justify-center">
-              <OutlinedButton
+              {/* <OutlinedButton
                 text={languageData.calendar.nextButton[language]}
                 onClick={selectTime}
-              />
+              /> */}
+
+              <button
+                onClick={selectTime}
+                className={`block w-1/2 mx-auto text-white text-xs px-2 py-2 rounded-full bg-darkBlue hover:bg-blueBorderLight
+             `}
+              >
+                {languageData.calendar.applyButton[language]}
+              </button>
             </div>
           )}
         </div>

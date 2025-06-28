@@ -1,7 +1,7 @@
 // components/utils/FilterModal.jsx
 import React, { useState, useEffect } from "react";
 import { useStore } from "@/store";
-
+import languageData from "@/language/filterModal.json";
 /**
  * Modal de filtros con:
  *  • keyword ≥ 4 caracteres
@@ -10,7 +10,7 @@ import { useStore } from "@/store";
  *  • “0” se usa como *placeholder*; si el usuario escribe 0 se trata como nulo
  */
 export default function FilterModal({ isOpen, onClose, onApply }) {
-  const { filters, setFilters } = useStore();
+  const { filters, setFilters, language } = useStore();
 
   /* estado de inputs */
   const [keyword, setKeyword] = useState("");
@@ -124,7 +124,9 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
       >
         {/* header */}
         <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold">Filter</h3>
+          <h3 className="text-lg font-semibold">
+            {languageData.title[language]}
+          </h3>
           <button onClick={onClose} className="text-gray-500 text-lg">
             ✕
           </button>
@@ -134,7 +136,9 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
         <div className="space-y-4">
           {/* keyword */}
           <div>
-            <label className="block text-xs font-medium">Keyword</label>
+            <label className="block text-xs font-medium">
+              {languageData.keyword[language]}
+            </label>
             <input
               type="text"
               value={keyword}
@@ -149,7 +153,9 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
 
           {/* price */}
           <div>
-            <label className="block text-xs font-medium">Price (USD)</label>
+            <label className="block text-xs font-medium">
+              {languageData.price[language] + " USD"}
+            </label>
             <div className="flex space-x-2 mt-1">
               <input
                 type="number"
@@ -175,14 +181,15 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
           <button
             onClick={handleApply}
             disabled={errKeyword || errMax}
-            className={`block w-1/2 mx-auto text-white text-xs px-2 py-1.5 rounded-full
+            className={`block w-1/2 mx-auto text-white text-xs px-2 py-2 rounded-full
               ${
                 errKeyword || errMax
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-darkBlue hover:bg-blueBorderLight"
               }`}
           >
-            Apply
+            {}
+            {languageData.applyButton[language]}
           </button>
         </div>
       </div>

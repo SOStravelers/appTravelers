@@ -1,4 +1,144 @@
 {
+  "confirmSelection": {
+    "title": {
+      "en": "Review & continue",
+      "es": "Revisión y continuar",
+      "fr": "Vérifier et continuer",
+      "de": "Überprüfen & fortfahren",
+      "pt": "Revisar e continuar"
+    },
+    "value": {
+      "es": "Valor:",
+      "en": "Value:",
+      "fr": "Valeur:",
+      "de": "Wert:",
+      "pt": "Valor:"
+    },
+    "payNow": {
+      "es": "Pagarás ahora:",
+      "en": "You will pay now:",
+      "fr": "Vous paierez maintenant :",
+      "de": "Sie zahlen jetzt:",
+      "pt": "Você pagará agora:"
+    },
+    "nextButton": {
+      "en": "Next",
+      "es": "Siguiente",
+      "fr": "Suivant",
+      "de": "Weiter",
+      "pt": "Próximo"
+    },
+    "cancel": {
+      "es": "Cancelación gratuita",
+      "en": "Free cancellation",
+      "fr": "Annulation gratuite",
+      "de": "Kostenlos stornieren",
+      "pt": "Cancelamento gratuito"
+    },
+    "sections": {
+      "date": {
+        "title": {
+          "en": "Date",
+          "es": "Fecha",
+          "fr": "Date",
+          "de": "Datum",
+          "pt": "Data"
+        },
+        "from": {
+          "es": "Desde",
+          "en": "From",
+          "fr": "De",
+          "de": "Von",
+          "pt": "De"
+        },
+        "to": {
+          "en": "to",
+          "es": "a",
+          "fr": "jusqu'à",
+          "de": "bis",
+          "pt": "até"
+        }
+      },
+      "travellers": {
+        "title": {
+          "es": "Viajeros",
+          "en": "Travellers",
+          "fr": "Voyageurs",
+          "de": "Reisende",
+          "pt": "Viajantes"
+        },
+        "adults": {
+          "es": "adultos",
+          "en": "adults",
+          "fr": "adultes",
+          "de": "erwachsene",
+          "pt": "adultos"
+        },
+        "children": {
+          "es": "Niños",
+          "en": "children",
+          "fr": "enfants",
+          "de": "Kinder",
+          "pt": "crianças"
+        },
+        "changeButton": {
+          "es": "Cambiar",
+          "en": "Change",
+          "fr": "Changer",
+          "de": "Ändern",
+          "pt": "Mudar"
+        }
+      },
+      "totalPrice": {
+        "title": {
+          "en": "Total price",
+          "es": "Precio total",
+          "fr": "Prix total",
+          "de": "Gesamtpreis",
+          "pt": "Preço total"
+        },
+        "detailsButton": {
+          "en": "Details",
+          "es": "Detalles",
+          "fr": "Détails",
+          "de": "Details",
+          "pt": "Detalhes"
+        }
+      },
+      "booking": {
+        "title": {
+          "es": "Agenda ahora, paga después",
+          "en": "Book now, pay later",
+          "fr": "Réservez maintenant, payez plus tard",
+          "de": "Jetzt buchen, später bezahlen",
+          "pt": "Agende agora, pague depois"
+        },
+        "subtitle": {
+          "es": "Si cancelas antes del ${displayDate} a las ${startTime.stringData}, recibirás un reembolso completo.",
+          "en": "If you cancel before ${displayDate} at ${startTime.stringData}, you’ll receive a full refund.",
+          "fr": "Si vous annulez avant le ${displayDate} à ${startTime.stringData}, vous recevrez un remboursement complet.",
+          "de": "Wenn Sie vor dem ${displayDate} um ${startTime.stringData} stornieren, erhalten Sie eine vollständige Rückerstattung.",
+          "pt": "Se você cancelar antes de ${displayDate} às ${startTime.stringData}, receberá um reembolso total."
+        }
+      },
+      "freeCancelation": {
+        "title": {
+          "es": "Cancelación gratuita",
+          "en": "Free cancellation",
+          "fr": "Annulation gratuite",
+          "de": "Kostenlos stornieren",
+          "pt": "Cancelamento gratuito"
+        },
+        "subtitle": {
+          "es": "Si cancelas antes del ${displayDate} a las ${startTime.stringData}, recibirás un reembolso completo.",
+          "en": "If you cancel before ${displayDate} at ${startTime.stringData}, you’ll receive a full refund.",
+          "fr": "Si vous annulez avant le ${displayDate} à ${startTime.stringData}, vous recevrez un remboursement complet.",
+          "de": "Wenn Sie vor dem ${displayDate} um ${startTime.stringData} stornieren, erhalten Sie eine vollständige Rückerstattung.",
+          "pt": "Se você cancelar antes de ${displayDate} às ${startTime.stringData}, receberá um reembolso total."
+        }
+      }
+    }
+  },
   "contactInfo": {
     "title": {
       "en": "Enter your personal details",

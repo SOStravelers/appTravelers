@@ -4,10 +4,12 @@ import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import { useStore } from "@/store";
 import { formatearFecha } from "@/utils/format";
 import TravellersDetailsModal from "@/components/utils/modal/TravellersDetailsModal";
+import languageData from "@/language/newSummary.json";
 export default function SummaryPage() {
   const router = useRouter();
   const id = router?.query?.id;
   const { service, setService, language } = useStore();
+
   const {
     imgUrl,
     name,
@@ -20,6 +22,8 @@ export default function SummaryPage() {
     hasLimit,
     limit,
   } = service;
+
+  const thisLanguage = languageData.confirmSelection;
 
   const [expanded, setExpanded] = useState(true);
 
@@ -55,50 +59,61 @@ export default function SummaryPage() {
     endTime?.stringData || ""
   }`;
 
+  function interpolate(str, vars) {
+    return str.replace(/\$\{(\w+(\.\w+)*)\}/g, (_, key) => {
+      // Permite nested: ej "startTime.stringData"
+      return key.split(".").reduce((o, i) => (o ? o[i] : ""), vars);
+    });
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 p-4  flex flex-col items-center">
       <div className="h-12"></div>
-      <h1 className="text-md font-bold mb-1">
-        {language === "es" ? "Verificar y continuar" : "Review & continue"}
-      </h1>
+      <h1 className="text-md font-bold mb-1">{thisLanguage.title[language]}</h1>
 
       <div className="bg-white rounded-xl shadow w-full max-w-md overflow-hidden">
         {/* HEADER */}
         <div
-          className="flex items-center p-3 cursor-pointer"
+          className="flex items-center justify-between p-3 cursor-pointer"
           onClick={() => setExpanded(!expanded)}
         >
-          <img
-            src={imgUrl}
-            alt=""
-            className="w-16 h-16 object-cover rounded-lg mr-4 flex-shrink-0"
-          />
-          <div className=" flex flex-col ">
-            <h2 className="text-sm font-semibold flex-1 line-clamp-2">
-              {name?.[language] || ""}
-            </h2>
-            <p className="text-gray-700 text-xs">
-              Valor: {total.toFixed(2)} € EUR
-            </p>
-            <p className="text-gray-700 text-xs">
-              Pagarás ahora: {total.toFixed(2)} € EUR
-            </p>
-          </div>
-          <svg
-            className={`w-5 h-5 transform transition-transform ${
-              expanded ? "rotate-180" : ""
-            }`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
+          {/* Contenido principal */}
+          <div className="flex items-center flex-1">
+            <img
+              src={imgUrl}
+              alt=""
+              className="w-16 h-16 object-cover rounded-lg mr-4 flex-shrink-0"
             />
-          </svg>
+            <div className="flex flex-col">
+              <h2 className="text-sm font-semibold flex-1 line-clamp-2">
+                {name?.[language] || ""}
+              </h2>
+              <p className="text-gray-700 text-xs">
+                {thisLanguage.value[language]} {total.toFixed(2)} € EUR
+              </p>
+              <p className="text-gray-700 text-xs">
+                {thisLanguage.payNow[language]} {total.toFixed(2)} € EUR
+              </p>
+            </div>
+          </div>
+          {/* Icono flecha */}
+          <div className="flex-shrink-0 ml-2">
+            <svg
+              className={`w-4 h-4 transform transition-transform ${
+                expanded ? "rotate-180" : ""
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
         </div>
 
         {/* CONTENIDO */}
@@ -107,44 +122,46 @@ export default function SummaryPage() {
             expanded ? "max-h-screen" : "max-h-0"
           }`}
         >
-          <hr />
+          {expanded && <hr />}
+          {!expanded && <div className="mt-5" />}
+
           {/* Fecha */}
           <div className="space-y-1">
             <p className="font-semibold text-sm">
-              {language === "es" ? "Fecha" : "Date"}
+              {thisLanguage.sections.date.title[language]}
             </p>
             <p className="text-gray-700 text-xs">{displayDate}</p>
             <p className="text-gray-700 text-xs">
-              {language === "es" ? "De" : "From"} {startTime?.stringData || ""}{" "}
-              {language === "es" ? "a" : "to"} {endTime?.stringData || ""}
+              {thisLanguage.sections.date.from[language]}{" "}
+              {startTime?.stringData || ""}{" "}
+              {thisLanguage.sections.date.to[language]}{" "}
+              {endTime?.stringData || ""}
             </p>
           </div>
           {/* Viajeros */}
           <div className="flex justify-between items-center">
             <div className="space-y-1">
               <p className="font-semibold text-sm">
-                {language === "es" ? "Viajeros" : "Travellers"}
+                {thisLanguage.sections.travellers.title[language]}
               </p>
               <p className="text-gray-700 text-xs">
-                {adults} {language === "es" ? "adultos" : "adults"}
+                {adults} {thisLanguage.sections.travellers.adults[language]}
                 {children > 0 &&
-                  `, ${children} ${
-                    language === "es" ? "niño(s)" : "child(ren)"
-                  }`}
+                  `, ${children} ${thisLanguage.sections.travellers.children[language]}`}
               </p>
             </div>
             <button
               className="text-blueBorder font-semibold text-xs hover:underline"
               onClick={() => setModalOpen(true)}
             >
-              {language === "es" ? "Cambiar" : "Change"}
+              {thisLanguage.sections.travellers.changeButton[language]}
             </button>
           </div>
           {/* Precio total */}
           <div className="flex justify-between items-center">
             <div className="space-y-1">
               <p className="font-semibold text-sm">
-                {language === "es" ? "Precio total" : "Total price"}
+                {thisLanguage.sections.totalPrice.title[language]}
               </p>
               <p className="text-gray-700 text-xs">{total.toFixed(2)} € EUR</p>
             </div>
@@ -152,28 +169,33 @@ export default function SummaryPage() {
               className="text-blueBorder font-semibold hover:underline text-xs"
               onClick={() => setModalOpen(true)}
             >
-              {language === "es" ? "Detalles" : "Details"}
+              {thisLanguage.sections.totalPrice.detailsButton[language]}
             </button>
           </div>
           {/* Cancelación gratuita */}
           <div className="space-y-1">
             <p className="font-semibold text-green-600 text-sm">
-              Agenda ahora paga despues
+              {thisLanguage.sections.booking.title[language]}
             </p>
             <p className="text-gray-700 text-xs">
-              {language === "es"
-                ? `Si cancelas antes del ${displayDate} a las ${startTime?.stringData}, recibirás un reembolso completo.`
-                : `If you cancel before ${displayDate} at ${startTime?.stringData}, you’ll get a full refund.`}
+              {interpolate(thisLanguage.sections.booking.subtitle[language], {
+                displayDate,
+                startTime,
+              })}
             </p>
           </div>
           <div className="space-y-1">
             <p className="font-semibold text-green-600 text-sm">
-              {language === "es" ? "Cancelación gratuita" : "Free cancellation"}
+              {thisLanguage.sections.freeCancelation.title[language]}
             </p>
             <p className="text-gray-700 text-xs">
-              {language === "es"
-                ? `Si cancelas antes del ${displayDate} a las ${startTime?.stringData}, recibirás un reembolso completo.`
-                : `If you cancel before ${displayDate} at ${startTime?.stringData}, you’ll get a full refund.`}
+              {interpolate(
+                thisLanguage.sections.freeCancelation.subtitle[language],
+                {
+                  displayDate,
+                  startTime,
+                }
+              )}
             </p>
           </div>
         </div>
@@ -182,10 +204,10 @@ export default function SummaryPage() {
       {/* Botón Siguiente */}
 
       <BookingPopup
-        priceLabel={`wena`}
-        subtext={"hola"}
-        tagLine={"chao"}
-        buttonText={"Next"}
+        priceLabel={`${thisLanguage.value[language]} ${total.toFixed(2)} € EUR`}
+        subtext={""}
+        tagLine={thisLanguage.cancel[language]}
+        buttonText={thisLanguage.nextButton[language]}
         onAction={() => router.push(`/summary2/contact-info/${id}`)} // <-- abre el modal
       />
       {/* <button

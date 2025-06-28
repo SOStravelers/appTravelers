@@ -55,12 +55,12 @@ export default function PersonalInfoPage() {
   return (
     <div className="min-h-screen py-4 px-6 bg-gray-50 flex flex-col ">
       <div className="h-12"></div>
-      <h1 className="text-md text-center font-bold mb-4">
+      <h1 className="text-md text-center font-bold mb-2">
         {languageData.contactInfo.title[language]}
       </h1>
       <div className="flex items-center ml-3 mb-2">
         <MdLock className="text-green-700" size={20} />
-        <h1 className="text-md text-green-700  mt-1">
+        <h1 className="text-sm text-green-700  mt-1">
           {languageData.contactInfo.subtitle[language]}
         </h1>
       </div>

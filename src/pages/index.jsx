@@ -59,7 +59,7 @@ export default function Home() {
     console.log("loading index con timer");
     setTimeout(() => {
       setFinalllyLoading(true);
-    }, 350);
+    }, 400);
   }, []);
 
   useEffect(() => {

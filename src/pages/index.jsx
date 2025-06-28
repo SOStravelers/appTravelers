@@ -9,6 +9,8 @@ import { useStore } from "@/store";
 import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import ServiceList from "@/components/service/ServiceList";
 import FilterModal from "@/components/utils/modal/FilterModal";
+import { ThreeDots } from "react-loader-spinner";
+import { LogoSosRelleno } from "@/constants/icons";
 
 export default function Home() {
   const store = useStore();
@@ -102,45 +104,60 @@ export default function Home() {
   };
 
   return (
-    <main
-      className={clsx(
-        "flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible",
-        scrolled && loadingCarrouselVideos
-          ? "opacity-100 transition-opacity duration-300"
-          : "opacity-0 pointer-events-none"
-      )}
-    >
-      <SyncCarousel />
-
-      <section id="icon-carousel" className="sticky top-[52px] z-20 bg-white">
-        <IconCarousel
-          onFilterChange={handleFilterChange}
-          onOpenFilter={() => setFilterOpen(true)}
-        />
-      </section>
-
-      <section className="p-4">
-        <ServiceList filterKey={filterKey} />
-      </section>
-
-      <FilterModal
-        isOpen={isFilterOpen}
-        onClose={() => setFilterOpen(false)}
-        onApply={handleFilterChange}
-      />
-
-      <FloatingWhatsAppButton />
-
-      {process.env.NEXT_PUBLIC_NODE_ENV !== "productionsss" ? (
-        <></>
-      ) : (
-        <div className="flex flex-col justify-center max-w-lg items-center">
-          <NotFoundPicture />
-          <h1 className="mt-10 text-center">
-            We are hard at work to get back into action
-          </h1>
+    <>
+      {!(scrolled && loadingCarrouselVideos) && (
+        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center transition-opacity duration-300 opacity-100">
+          <LogoSosRelleno />
+          <p className="font-medium mt-4 text-xl">SOS Travelers</p>
+          <ThreeDots
+            wrapperStyle={{ marginTop: "-25px" }}
+            width={100}
+            height={100}
+            color="black"
+            ariaLabel="infinity-spin-loading"
+          />
         </div>
       )}
-    </main>
+      <main
+        className={clsx(
+          "flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible",
+          scrolled && loadingCarrouselVideos
+            ? "opacity-100 transition-opacity duration-300"
+            : "opacity-0 pointer-events-none"
+        )}
+      >
+        <SyncCarousel />
+
+        <section id="icon-carousel" className="sticky top-[52px] z-20 bg-white">
+          <IconCarousel
+            onFilterChange={handleFilterChange}
+            onOpenFilter={() => setFilterOpen(true)}
+          />
+        </section>
+
+        <section className="p-4">
+          <ServiceList filterKey={filterKey} />
+        </section>
+
+        <FilterModal
+          isOpen={isFilterOpen}
+          onClose={() => setFilterOpen(false)}
+          onApply={handleFilterChange}
+        />
+
+        <FloatingWhatsAppButton />
+
+        {process.env.NEXT_PUBLIC_NODE_ENV !== "productionsss" ? (
+          <></>
+        ) : (
+          <div className="flex flex-col justify-center max-w-lg items-center">
+            <NotFoundPicture />
+            <h1 className="mt-10 text-center">
+              We are hard at work to get back into action
+            </h1>
+          </div>
+        )}
+      </main>
+    </>
   );
 }

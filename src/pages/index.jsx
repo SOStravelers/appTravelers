@@ -106,7 +106,7 @@ export default function Home() {
   return (
     <>
       {!(scrolled && loadingCarrouselVideos) && (
-        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center transition-opacity duration-300 opacity-100">
+        <div className="fixed inset-0 mt-3 bg-white z-50 flex flex-col items-center justify-center transition-opacity duration-300 opacity-100">
           <LogoSosRelleno />
           <p className="font-medium mt-4 text-xl">SOS Travelers</p>
           <ThreeDots

@@ -12,7 +12,7 @@ const okInput =
 const errInput =
   "w-full border border-red-500 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-red-600 transition";
 
-export default function PersonalInfoPage() {
+export default function ContactInfoPage() {
   const { language } = useStore();
   const thisLanguage = languageData.contactInfo;
   const router = useRouter();

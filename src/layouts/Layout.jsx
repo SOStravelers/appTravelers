@@ -10,7 +10,7 @@ import { isLoginPage, arePrincipalPages } from "@/utils/variables";
 import { Poppins } from "next/font/google";
 import { CustomMiddlewareComponent } from "@/middleware";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
-import OfflineScreen from "@/components/layout/offlineScreen";
+import OfflineScreen from "@/components/layout/OfflineScreen";
 import languageData from "@/language/layout.json";
 
 const poppins = Poppins({

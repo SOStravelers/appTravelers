@@ -96,7 +96,7 @@ export default function LoginFormModal({
                 setOpen(false);
                 router.push("/register");
               }}
-              className="ml-1 font-semibold text-blue-600 hover:underline cursor-pointer"
+              className="ml-1 font-semibold text-blueBorder hover:underline cursor-pointer"
             >
               Register Here!
             </a>

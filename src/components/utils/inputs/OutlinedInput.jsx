@@ -14,7 +14,7 @@ function OutlinedInput({ icon: Icon, width, ...props }) {
         </span>
       )}
       <input
-        className={`border-blueBorder focus:border-blueBorder focus:outline-none border-1 border w-full max-w-lg rounded-xl p-3 my-1 ${
+        className={`border border-gray-300 bg-gray-100 focus:border-blueBorder focus:outline-none border-1 border w-full max-w-lg rounded-md px-2 py-2 my-1 ${
           Icon ? "pl-12" : ""
         }`}
         {...props}

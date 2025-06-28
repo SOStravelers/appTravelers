@@ -17,7 +17,7 @@ function GoogleButton() {
   };
   return (
     <button
-      className="border-2 border-solid max-w-lg text-sm lg:text-lg rounded-xl py-1 w-3/4 mx-auto cursor-pointer bg-greyButton border-darkBlue text-black my-2 flex justify-center items-center px-2"
+      className=" max-w-lg text-sm lg:text-lg rounded-full py-1 w-3/4 mx-auto cursor-pointer bg-gray-200  text-black my-2 flex justify-center items-center px-2"
       type="button"
       onClick={login}
     >

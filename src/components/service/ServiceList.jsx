@@ -149,6 +149,11 @@ export default function ServiceList({ filterKey }) {
 
   return (
     <div className="flex flex-col items-center w-full">
+      {loading && listPage === 1 && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 pointer-events-auto">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blueBorder border-solid" />
+        </div>
+      )}
       {safeItems.length === 0 && !loading ? (
         <div className="text-center text-sm text-gray-500 py-10">
           <p className="text-lg font-medium">No services found</p>

@@ -26,6 +26,7 @@ export default function Home() {
   const [filterKey, setFilterKey] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [obsFilter, setObsFilter] = useState(false);
+  const [finalllyLoading, setFinalllyLoading] = useState(false);
 
   const userId = Cookies.get("auth.user_id");
 
@@ -48,25 +49,39 @@ export default function Home() {
         const stickyEl = document.getElementById("icon-carousel");
         const point = stickyEl.getBoundingClientRect().top - 52;
         setStickypoint(point);
-        console.log("el point", point);
+        console.log("el point guardado de pantalla", point);
       }
     }, 1000);
     return () => clearTimeout(timerIds);
   }, [stickypoint]);
 
   useEffect(() => {
-    console.log("acitvando");
+    console.log("loading index con timer");
+    setTimeout(() => {
+      setFinalllyLoading(true);
+    }, 280);
+  }, []);
+
+  useEffect(() => {
+    console.log("activacion scroll");
     if (lastPage !== "preview" && obsFilter) {
+      console.log("scroll al apretar un filtro");
       setScrolled(true);
       setObsFilter(false);
       requestAnimationFrame(() => {
         setTimeout(() => {
           const stickyEl = document.getElementById("icon-carousel");
           if (!stickyEl) return;
-          window.scrollTo({ top: stickypoint, behavior: "smooth" });
+          console.log("stikcyPoint", window.scrollY, stickypoint);
+          if (window.scrollY >= stickypoint) {
+            window.scrollTo({ top: stickypoint });
+          } else {
+            window.scrollTo({ top: stickypoint, behavior: "smooth" });
+          }
         }, 50);
       });
     } else {
+      console.log("scroll de inicio");
       const id = Cookies.get("homeItemId");
       if (!id) return;
       const tryScroll = () => {
@@ -98,7 +113,7 @@ export default function Home() {
     <main
       className={clsx(
         "flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible",
-        scrolled
+        scrolled && finalllyLoading
           ? "opacity-100 transition-opacity duration-300"
           : "opacity-0 pointer-events-none"
       )}

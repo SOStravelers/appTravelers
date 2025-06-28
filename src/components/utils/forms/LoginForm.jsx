@@ -6,7 +6,7 @@ import { Rings } from "react-loader-spinner";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import GoogleButton from "@/components/utils/buttons/GoogleButton";
-
+import { FaUser, FaLock } from "react-icons/fa";
 import { Field, Form } from "houseform";
 import { z } from "zod";
 import { toast } from "react-toastify";
@@ -16,7 +16,7 @@ import languageData from "@/language/login.json";
 import Cookies from "js-cookie";
 import { set } from "date-fns";
 
-function LoginForm() {
+function LoginForm({ onClose }) {
   const [email, setEmail] = useState("");
   const { setUser, setLoggedIn, service, setWorker, language } = useStore();
   const router = useRouter();
@@ -109,6 +109,12 @@ function LoginForm() {
     }
   };
 
+  const goToforgot = () => {
+    onClose();
+    console.log("casita");
+    router.push("/forgot-password");
+  };
+
   return (
     <Form
       onSubmit={(values) => {
@@ -135,10 +141,10 @@ function LoginForm() {
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
-                    icon={UserIcon}
+                    icon={FaUser}
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-red">
+                    <p key={error} className="text-red-500 text-xs mb-1 ml-2">
                       {error}
                     </p>
                   ))}
@@ -161,7 +167,7 @@ function LoginForm() {
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
-                    icon={LockIcon}
+                    icon={FaLock}
                   />
                   {errors.map((error) => (
                     <p key={error} className="text-red">
@@ -172,11 +178,16 @@ function LoginForm() {
               );
             }}
           </Field>
-          <Link href="/forgot-password">
-            <p className="text-blackButton text-sm mt-1 mb-2 text-right">
+          <div className="flex justify-end w-full">
+            <button
+              type="button"
+              className="bg-transparent border-none text-darkBlue text-sm mt-1 mb-2 cursor-pointer hover:underline"
+              onClick={() => goToforgot()}
+            >
               {languageData.form.forgotPass[language]}
-            </p>
-          </Link>
+            </button>
+          </div>
+
           {loading ? (
             <div className="max-w-lg flex flex-col items-center justify-center">
               <Rings

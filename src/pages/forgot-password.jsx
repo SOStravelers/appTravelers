@@ -105,7 +105,7 @@ export default function ChangePassword() {
             Please check your email: <span> </span>
             <span className="font-semibold">{email}</span>,
           </p>
-          <p className="text-center text-gray-500 mb-5">
+          <p className="text-center text-gray-500 mb-5 text-md">
             for the verification code so you can reset your password.
           </p>
           <OutlinedInput
@@ -126,10 +126,10 @@ export default function ChangePassword() {
         </div>
       ) : (
         <>
-          <h1 className="text-black text-center text-xl font-semibold mb-5 max-w-lg">
+          <h1 className="text-black text-center text-md font-semibold mb-5 max-w-lg">
             Forgot you password?
           </h1>
-          <p className="text-center mb-5 max-w-lg">
+          <p className="text-center mb-5 max-w-lg text-sm">
             Enter your email address below and we&apos;ll send you a code to
             reset your password.
           </p>

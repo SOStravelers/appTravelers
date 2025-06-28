@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import LoginForm from "@/components/utils/forms/LoginForm";
-
+import { useStore } from "@/store";
 export default function LoginFormModal({
   title,
   text,
@@ -13,11 +13,18 @@ export default function LoginFormModal({
   onCancel,
 }) {
   const router = useRouter();
-
+  const store = useStore();
+  const { user } = store;
   const handleCancel = () => {
+    console.log("llego");
     setOpen(false);
     onCancel?.();
-    if (router.pathname !== "/") {
+    console.log("wena", router.pathname, !user, Object.keys(user).length == 0);
+    if (
+      router.pathname.includes("/booking") ||
+      (router.pathname.includes("/favorites") &&
+        (!user || Object.keys(user).length == 0))
+    ) {
       router.push("/");
     }
   };
@@ -75,6 +82,7 @@ export default function LoginFormModal({
 
         {/* Login form */}
         <LoginForm
+          onClose={handleCancel}
           onSubmit={(values) => {
             onAccept?.(values);
             setOpen(false);

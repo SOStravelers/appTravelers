@@ -74,8 +74,9 @@ export default function SummaryPage() {
   }
 
   return (
-    <div
-      className={`min-h-screen bg-gray-50 p-4 flex flex-col items-center
+    <>
+      <div
+        className={`min-h-screen bg-gray-50 p-4 flex flex-col items-center
           transform transition-all duration-800 ease-out
           transition-opacity duration-800 ease-out
           ${
@@ -84,140 +85,144 @@ export default function SummaryPage() {
               : "opacity-100 scale-100 translate-y-0 pointer-events-auto"
           }
         `}
-    >
-      <div className="h-12 md:h-20"></div>
-      <h1 className="text-md font-bold mb-1">{thisLanguage.title[language]}</h1>
+      >
+        <div className="h-12 md:h-20"></div>
+        <h1 className="text-md font-bold mb-1">
+          {thisLanguage.title[language]}
+        </h1>
 
-      <div className="bg-white rounded-xl shadow w-full max-w-md overflow-hidden">
-        {/* HEADER */}
-        <div
-          className="flex items-center justify-between p-3 cursor-pointer"
-          onClick={() => setExpanded(!expanded)}
-        >
-          {/* Contenido principal */}
-          <div className="flex items-center flex-1">
-            <img
-              src={imgUrl}
-              alt=""
-              className="w-16 h-16 object-cover rounded-lg mr-4 flex-shrink-0"
-            />
-            <div className="flex flex-col">
-              <h2 className="text-sm font-semibold flex-1 line-clamp-2">
-                {name?.[language] || ""}
-              </h2>
-              <p className="text-gray-700 text-xs">
-                {thisLanguage.value[language]} {total.toFixed(2)} € EUR
-              </p>
-              <p className="text-gray-700 text-xs">
-                {thisLanguage.payNow[language]} {total.toFixed(2)} € EUR
-              </p>
-            </div>
-          </div>
-          {/* Icono flecha */}
-          <div className="flex-shrink-0 ml-2">
-            <svg
-              className={`w-4 h-4 transform transition-transform ${
-                expanded ? "rotate-180" : ""
-              }`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
+        <div className="bg-white rounded-xl shadow w-full max-w-md overflow-hidden">
+          {/* HEADER */}
+          <div
+            className="flex items-center justify-between p-3 cursor-pointer"
+            onClick={() => setExpanded(!expanded)}
+          >
+            {/* Contenido principal */}
+            <div className="flex items-center flex-1">
+              <img
+                src={imgUrl}
+                alt=""
+                className="w-16 h-16 object-cover rounded-lg mr-4 flex-shrink-0"
               />
-            </svg>
+              <div className="flex flex-col">
+                <h2 className="text-sm font-semibold flex-1 line-clamp-2">
+                  {name?.[language] || ""}
+                </h2>
+                <p className="text-gray-700 text-xs">
+                  {thisLanguage.value[language]} {total.toFixed(2)} € EUR
+                </p>
+                <p className="text-gray-700 text-xs">
+                  {thisLanguage.payNow[language]} {total.toFixed(2)} € EUR
+                </p>
+              </div>
+            </div>
+            {/* Icono flecha */}
+            <div className="flex-shrink-0 ml-2">
+              <svg
+                className={`w-4 h-4 transform transition-transform ${
+                  expanded ? "rotate-180" : ""
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
 
-        {/* CONTENIDO */}
-        <div
-          className={`px-4 pb-4 space-y-4 transition-max-h duration-300 overflow-hidden ${
-            expanded ? "max-h-screen" : "max-h-0"
-          }`}
-        >
-          {expanded && <hr />}
-          {!expanded && <div className="mt-5" />}
+          {/* CONTENIDO */}
+          <div
+            className={`px-4 pb-4 space-y-4 transition-max-h duration-300 overflow-hidden ${
+              expanded ? "max-h-screen" : "max-h-0"
+            }`}
+          >
+            {expanded && <hr />}
+            {!expanded && <div className="mt-5" />}
 
-          {/* Fecha */}
-          <div className="space-y-1">
-            <p className="font-semibold text-sm">
-              {thisLanguage.sections.date.title[language]}
-            </p>
-            <p className="text-gray-700 text-xs">{displayDate}</p>
-            <p className="text-gray-700 text-xs">
-              {thisLanguage.sections.date.from[language]}{" "}
-              {startTime?.stringData || ""}{" "}
-              {thisLanguage.sections.date.to[language]}{" "}
-              {endTime?.stringData || ""}
-            </p>
-          </div>
-          {/* Viajeros */}
-          <div className="flex justify-between items-center">
+            {/* Fecha */}
             <div className="space-y-1">
               <p className="font-semibold text-sm">
-                {thisLanguage.sections.travellers.title[language]}
+                {thisLanguage.sections.date.title[language]}
+              </p>
+              <p className="text-gray-700 text-xs">{displayDate}</p>
+              <p className="text-gray-700 text-xs">
+                {thisLanguage.sections.date.from[language]}{" "}
+                {startTime?.stringData || ""}{" "}
+                {thisLanguage.sections.date.to[language]}{" "}
+                {endTime?.stringData || ""}
+              </p>
+            </div>
+            {/* Viajeros */}
+            <div className="flex justify-between items-center">
+              <div className="space-y-1">
+                <p className="font-semibold text-sm">
+                  {thisLanguage.sections.travellers.title[language]}
+                </p>
+                <p className="text-gray-700 text-xs">
+                  {adults} {thisLanguage.sections.travellers.adults[language]}
+                  {children > 0 &&
+                    `, ${children} ${thisLanguage.sections.travellers.children[language]}`}
+                </p>
+              </div>
+              <button
+                className="text-blueBorder font-semibold text-xs hover:underline"
+                onClick={() => setModalOpen(true)}
+              >
+                {thisLanguage.sections.travellers.changeButton[language]}
+              </button>
+            </div>
+            {/* Precio total */}
+            <div className="flex justify-between items-center">
+              <div className="space-y-1">
+                <p className="font-semibold text-sm">
+                  {thisLanguage.sections.totalPrice.title[language]}
+                </p>
+                <p className="text-gray-700 text-xs">
+                  {total.toFixed(2)} € EUR
+                </p>
+              </div>
+              <button
+                className="text-blueBorder font-semibold hover:underline text-xs"
+                onClick={() => setModalOpen(true)}
+              >
+                {thisLanguage.sections.totalPrice.detailsButton[language]}
+              </button>
+            </div>
+            {/* Cancelación gratuita */}
+            <div className="space-y-1">
+              <p className="font-semibold text-green-600 text-sm">
+                {thisLanguage.sections.booking.title[language]}
               </p>
               <p className="text-gray-700 text-xs">
-                {adults} {thisLanguage.sections.travellers.adults[language]}
-                {children > 0 &&
-                  `, ${children} ${thisLanguage.sections.travellers.children[language]}`}
-              </p>
-            </div>
-            <button
-              className="text-blueBorder font-semibold text-xs hover:underline"
-              onClick={() => setModalOpen(true)}
-            >
-              {thisLanguage.sections.travellers.changeButton[language]}
-            </button>
-          </div>
-          {/* Precio total */}
-          <div className="flex justify-between items-center">
-            <div className="space-y-1">
-              <p className="font-semibold text-sm">
-                {thisLanguage.sections.totalPrice.title[language]}
-              </p>
-              <p className="text-gray-700 text-xs">{total.toFixed(2)} € EUR</p>
-            </div>
-            <button
-              className="text-blueBorder font-semibold hover:underline text-xs"
-              onClick={() => setModalOpen(true)}
-            >
-              {thisLanguage.sections.totalPrice.detailsButton[language]}
-            </button>
-          </div>
-          {/* Cancelación gratuita */}
-          <div className="space-y-1">
-            <p className="font-semibold text-green-600 text-sm">
-              {thisLanguage.sections.booking.title[language]}
-            </p>
-            <p className="text-gray-700 text-xs">
-              {interpolate(thisLanguage.sections.booking.subtitle[language], {
-                displayDate,
-                startTime,
-              })}
-            </p>
-          </div>
-          <div className="space-y-1">
-            <p className="font-semibold text-green-600 text-sm">
-              {thisLanguage.sections.freeCancelation.title[language]}
-            </p>
-            <p className="text-gray-700 text-xs">
-              {interpolate(
-                thisLanguage.sections.freeCancelation.subtitle[language],
-                {
+                {interpolate(thisLanguage.sections.booking.subtitle[language], {
                   displayDate,
                   startTime,
-                }
-              )}
-            </p>
+                })}
+              </p>
+            </div>
+            <div className="space-y-1">
+              <p className="font-semibold text-green-600 text-sm">
+                {thisLanguage.sections.freeCancelation.title[language]}
+              </p>
+              <p className="text-gray-700 text-xs">
+                {interpolate(
+                  thisLanguage.sections.freeCancelation.subtitle[language],
+                  {
+                    displayDate,
+                    startTime,
+                  }
+                )}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-
       {/* Botón Siguiente Flotante */}
       <BookingPopup
         priceLabel={`${thisLanguage.value[language]} ${total.toFixed(2)} € EUR`}
@@ -231,6 +236,6 @@ export default function SummaryPage() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
       />
-    </div>
+    </>
   );
 }

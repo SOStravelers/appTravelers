@@ -21,13 +21,12 @@ export default function Home() {
     listItems,
     stickypoint,
     setStickypoint,
+    loadingCarrouselVideos,
   } = store;
   const [scrolled, setScrolled] = useState(true);
   const [filterKey, setFilterKey] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [obsFilter, setObsFilter] = useState(false);
-  const [finalllyLoading, setFinalllyLoading] = useState(false);
-
   const userId = Cookies.get("auth.user_id");
 
   const handleFilterChange = () => {
@@ -54,13 +53,6 @@ export default function Home() {
     }, 1000);
     return () => clearTimeout(timerIds);
   }, [stickypoint]);
-
-  useEffect(() => {
-    console.log("loading index con timer");
-    setTimeout(() => {
-      setFinalllyLoading(true);
-    }, 400);
-  }, []);
 
   useEffect(() => {
     console.log("activacion scroll");
@@ -113,7 +105,7 @@ export default function Home() {
     <main
       className={clsx(
         "flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible",
-        scrolled && finalllyLoading
+        scrolled && loadingCarrouselVideos
           ? "opacity-100 transition-opacity duration-300"
           : "opacity-0 pointer-events-none"
       )}

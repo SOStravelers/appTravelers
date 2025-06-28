@@ -26,6 +26,7 @@ function Layout({ children, lang }) {
   const handleMiddlewareComplete = () => {
     // Esta función se llamará desde CustomMiddlewareComponent
     // cuando sus funciones hayan terminado.
+
     setMiddlewareCompleted(true);
   };
   // const { socket } = useStore();

@@ -87,6 +87,8 @@ export default function SyncCarousel() {
     setRestoreScroll,
     itemsWithVideos,
     setItemsWithVideos,
+    loadingCarrouselVideos,
+    setLoadingCarrouselVideos,
   } = useStore();
 
   const videoRef = useRef(null);
@@ -112,6 +114,7 @@ export default function SyncCarousel() {
           setItemsWithVideos(data); // guarda global
           setItems(data); // refleja en local
           setActiveIndex(0);
+          setLoadingCarrouselVideos(true);
         }
       })
       .catch(console.error);

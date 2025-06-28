@@ -20,6 +20,7 @@ export const useStore = create((set) => {
     /* ----- estado original ----- */
     user: {},
     language: "en",
+    loadingCarrouselVideos: false,
     urls: urls(),
     loggedIn: false,
     service,
@@ -50,6 +51,8 @@ export const useStore = create((set) => {
         localStorage.setItem("service", JSON.stringify(data));
         return data;
       }),
+    setLoadingCarrouselVideos: (loadingCarrouselVideos) =>
+      set({ loadingCarrouselVideos }),
     setRegister: (register) => set({ register }),
     setHaveNotification: (haveNotification) => set({ haveNotification }),
     setLoginModal: (loginModal) => set({ loginModal }),

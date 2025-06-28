@@ -147,7 +147,7 @@ export default function Home() {
 
         <FloatingWhatsAppButton />
 
-        {process.env.NEXT_PUBLIC_NODE_ENV !== "productionsss" ? (
+        {/* {process.env.NEXT_PUBLIC_NODE_ENV !== "productionsss" (
           <></>
         ) : (
           <div className="flex flex-col justify-center max-w-lg items-center">
@@ -156,7 +156,7 @@ export default function Home() {
               We are hard at work to get back into action
             </h1>
           </div>
-        )}
+        )} */}
       </main>
     </>
   );

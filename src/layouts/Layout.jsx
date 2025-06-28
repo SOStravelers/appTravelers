@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoaderGlobal from "@/components/layout/loaderGlobal";
 import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
@@ -11,6 +11,7 @@ import { Poppins } from "next/font/google";
 import { CustomMiddlewareComponent } from "@/middleware";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 import OfflineScreen from "@/components/layout/offlineScreen";
+import languageData from "@/language/layout.json";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -20,18 +21,16 @@ const poppins = Poppins({
 
 function Layout({ children, lang }) {
   const router = useRouter();
-
   const [middlewareCompleted, setMiddlewareCompleted] = useState(false);
+  //Para saber si está online
   const isOnline = useOnlineStatus();
+  //manejador de autenticacion de usuario
   const handleMiddlewareComplete = () => {
-    // Esta función se llamará desde CustomMiddlewareComponent
     // cuando sus funciones hayan terminado.
-
     setMiddlewareCompleted(true);
   };
-  // const { socket } = useStore();
 
-  let metaDescription = "";
+  // const { socket } = useStore();
 
   let newLang = "en";
   if (
@@ -43,20 +42,9 @@ function Layout({ children, lang }) {
   ) {
     newLang = lang;
   }
-  const language = newLang ? newLang : "en";
-  if (language.includes("fr")) {
-    metaDescription =
-      "Découvrez le meilleur de Rio de Janeiro : réservez des expériences uniques, des visites, des plats locaux et même des billets pour le stade, le tout dans une seule application conviviale. Explorez Rio comme jamais auparavant !";
-  } else if (language.includes("pt")) {
-    metaDescription =
-      "Descubra o melhor do Rio de Janeiro: reserve experiências incríveis, passeios, comidas locais e até ingressos para o estádio — tudo em um só app. Explore o Rio como nunca antes!";
-  } else if (language.includes("es")) {
-    metaDescription =
-      "Descubre lo mejor de Río de Janeiro: reserva experiencias increíbles, tours, comida local e incluso entradas para el estadio, todo desde una sola aplicación. ¡Explora Río como nunca antes!";
-  } else {
-    metaDescription =
-      "Discover the best of Rio de Janeiro: book amazing experiences, tours, local food, and even stadium tickets — all in one friendly app. Explore Rio like never before!";
-  }
+  const language = newLang;
+  let metaDescription = "";
+  metaDescription = languageData.metaDescription[language];
 
   const isIntro = router.pathname === "/intro";
 
@@ -103,5 +91,4 @@ function Layout({ children, lang }) {
     </>
   );
 }
-
 export default Layout;

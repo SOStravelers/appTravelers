@@ -13,6 +13,8 @@ module.exports = {
         // tus colores custom, con nombres únicos para no borrar la paleta por defecto
         lightBlue: "#5B78C7",
         darkBlue: "#001C25",
+        darkBlueSoft: "#253746",
+        darkBlueCard: "#343B4B",
         blueBorder: "#00A0D5",
         newBlue: "#3498db",
         blueBorderTransparent: "rgba(0, 160, 213, 0.3)",

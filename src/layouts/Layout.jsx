@@ -79,10 +79,11 @@ function Layout({ children, lang }) {
             ) : (
               !isIntro && !isPaymentConfirm && <TopBarSubMenu />
             )}
-            {router.pathname != "/" && <div className="h-12 md:h-20"></div>}
-
+            {/* salto por el menu de arriba */}
+            {router.pathname != "/" && (
+              <div className="h-12 md:h-20 bg-gray-50"></div>
+            )}
             {children}
-            {router.pathname != "/" && <div className="h-32 md:h-6"></div>}
           </>
         ) : (
           <LoaderGlobal />

@@ -18,6 +18,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     isWorker,
     service,
     setLanguage,
+    setCurrency,
     setWorker,
     setLoginModal,
   } = store;
@@ -38,6 +39,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const obtenerInformacionUsuario = async () => {
     let cookieAccessToken = Cookies.get("auth.access_token");
     let cookieLanguage = Cookies.get("language");
+    let cookieCurrency = Cookies.get("currency");
 
     const { partner } = router.query;
     if (partner) {
@@ -89,6 +91,32 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     } else {
       setLanguage("en");
       Cookies.set("language", "en");
+    }
+
+    if (cookieCurrency) {
+      console.log("setCurrency", cookieCurrency);
+      if (
+        cookieCurrency != "USD" &&
+        cookieCurrency != "BRL" &&
+        cookieCurrency != "EUR"
+      ) {
+        setCurrency("BRL");
+        Cookies.set("currency", "BRL");
+      } else {
+        setCurrency(cookieCurrency);
+        Cookies.set("currency", cookieCurrency);
+      }
+    } else {
+      if (cookieLanguage == "pt" || cookieLanguage == "es") {
+        setCurrency("BRL");
+        Cookies.set("currency", "BRL");
+      } else if (cookieLanguage == "en") {
+        setCurrency("USD");
+        Cookies.set("currency", "USD");
+      } else {
+        setCurrency("EUR");
+        Cookies.set("currency", "EUR");
+      }
     }
 
     const session = await getSession();

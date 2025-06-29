@@ -1,19 +1,16 @@
-// components/utils/LanguageSelector.jsx
+// components/utils/CurrencySelector.jsx
 import { useState, useRef, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useStore } from "@/store";
-import "flag-icons/css/flag-icons.min.css";
 
-const FLAGS = {
-  es: "es", // España
-  en: "us", // Estados Unidos
-  pt: "br", // Brasil
-  fr: "fr", // Francia
-  de: "de", // Alemania
+const CURRENCIES = {
+  BRL: { symbol: "R$", label: "BRL" },
+  USD: { symbol: "$", label: "USD" },
+  EUR: { symbol: "€", label: "EUR" },
 };
 
-const LanguageSelector = ({ scrolledPastVh }) => {
-  const { language, setLanguage } = useStore();
+const CurrencySelector = ({ scrolledPastVh }) => {
+  const { currency, setCurrency } = useStore();
   const [open, setOpen] = useState(false);
   const wrapper = useRef(null);
 
@@ -24,23 +21,24 @@ const LanguageSelector = ({ scrolledPastVh }) => {
     return () => removeEventListener("mousedown", close);
   }, []);
 
-  const changeLang = (code) => {
-    setLanguage(code);
-    Cookies.set("language", code, { sameSite: "lax", expires: 365 });
+  const changeCurrency = (code) => {
+    setCurrency(code);
+    Cookies.set("currency", code, { sameSite: "lax", expires: 365 });
     setOpen(false);
   };
 
   return (
-    <div ref={wrapper} className="relative">
+    <div ref={wrapper} className="relative mx-2">
       {/* Botón principal */}
       <button
         onClick={() => setOpen((o) => !o)}
         className="flex items-center justify-center gap-2 w-16 h-8 rounded ring-1 ring-white/40 hover:ring-white transition"
-        aria-label="Change language"
       >
-        {/* <span className={`fi fi-${FLAGS[language]} fis text-lg`} /> */}
+        <span className="text-xs font-bold text-white">
+          {CURRENCIES[currency]?.symbol}
+        </span>
         <span className="text-xs font-semibold text-white uppercase">
-          {language}
+          {CURRENCIES[currency]?.label}
         </span>
       </button>
 
@@ -50,17 +48,17 @@ const LanguageSelector = ({ scrolledPastVh }) => {
           className="absolute right-0 mt-2 flex flex-col gap-1
                      p-2 bg-white shadow-lg rounded-lg ring-1 ring-black/10 z-50"
         >
-          {Object.entries(FLAGS)
-            .filter(([code]) => code !== language)
-            .map(([code, iso]) => (
+          {Object.entries(CURRENCIES)
+            .filter(([code]) => code !== currency)
+            .map(([code, { symbol, label }]) => (
               <button
                 key={code}
-                onClick={() => changeLang(code)}
-                className="flex items-center gap-2 w-12 h-8 rounded hover:bg-gray-100 transition"
-                aria-label={code}
+                onClick={() => changeCurrency(code)}
+                className="flex items-center justify-between w-16 h-8 rounded hover:bg-gray-100 transition px-2"
+                aria-label={label}
               >
-                <span className={`fi fi-${iso} fis text-lg`} />
-                <span className="text-xs  uppercase">{code}</span>
+                <span className="text-sm font-bold">{symbol}</span>
+                <span className="text-xs uppercase">{label}</span>
               </button>
             ))}
         </div>
@@ -69,4 +67,4 @@ const LanguageSelector = ({ scrolledPastVh }) => {
   );
 };
 
-export default LanguageSelector;
+export default CurrencySelector;

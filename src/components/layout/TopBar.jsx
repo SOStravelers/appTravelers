@@ -7,7 +7,7 @@ import clsx from "clsx";
 
 import { FiBell, FiBellOff } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
-import { FiMapPin } from "react-icons/fi";
+
 import { random } from "@/lib/utils";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
@@ -18,6 +18,8 @@ import Router from "next/router";
 import languageData from "@/language/menu.json";
 import { validationImg } from "@/utils/validation";
 import LanguageSelector from "@/components/utils/selector/LanguageSelector";
+import CurrencySelector from "@/components/utils/selector/CurrencySelector";
+
 const sound = new Howl({
   src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
 });
@@ -219,12 +221,8 @@ function TopBar() {
               {languageData.join[language]}
             </Link> */}
 
-            <span className="mx-1 text-white">RJ</span>
-
-            <button className="flex items-center justify-center mr-6 text-white hover:text-white/80 transition">
-              <FiMapPin size={16} />
-            </button>
-            <LanguageSelector />
+            <CurrencySelector scrolledPastVh={scrolledPastVh} />
+            <LanguageSelector scrolledPastVh={scrolledPastVh} />
           </>
         )}
       </div>

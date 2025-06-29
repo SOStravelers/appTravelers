@@ -23,6 +23,7 @@ export const useStore = create(
         // ----- estado original -----
         user: {},
         language: "en",
+        currency: "BRL",
         loadingCarrouselVideos: false,
         urls: urls(),
         loggedIn: false,
@@ -70,6 +71,7 @@ export const useStore = create(
         setWorker: (isWorker) => set({ isWorker }, false, "setWorker"),
         setSocket: (socket) => set({ socket }, false, "setSocket"),
         setLanguage: (language) => set({ language }, false, "setLanguage"),
+        setCurrency: (currency) => set({ currency }, false, "setCurrency"),
         setFilters: (filters) => set({ filters }, false, "setFilters"),
         setServicesIndexList: (servicesIndexList) =>
           set({ servicesIndexList }, false, "setServicesIndexList"),

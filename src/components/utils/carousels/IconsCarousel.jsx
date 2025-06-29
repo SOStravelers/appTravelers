@@ -7,7 +7,7 @@ import * as FaIcons from "react-icons/fa";
 import * as GiIcons from "react-icons/gi";
 import * as MdIcons from "react-icons/md";
 import * as AiIcons from "react-icons/ai";
-
+import { FiMapPin } from "react-icons/fi";
 const Icons = {
   ...FaIcons,
   ...GiIcons,
@@ -168,9 +168,16 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
       <div className="min-h-[80px]">
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-2 pb-3">
-          <h2 className="text-md font-semibold text-gray-800">
-            {languageData.index.explore[language]}
-          </h2>
+          <div className="flex items-center">
+            <h2 className="text-md font-semibold text-gray-800">
+              {languageData.index.explore[language]}
+            </h2>
+            <span className="ml-3 mr-1 text-sm text-gray-500">RJ</span>
+
+            <button className="flex items-center  justify-center  ">
+              <FiMapPin className="text-gray-500" size={14} />
+            </button>
+          </div>
           <div className="flex items-center space-x-4">
             <button
               onClick={handleViewMore}

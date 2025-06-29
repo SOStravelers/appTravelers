@@ -22,14 +22,19 @@ export default function GuestSettings() {
   const router = useRouter();
   const store = useStore();
   const [loading, setLoading] = useState(true); //
-  const { setLanguage, language } = store;
+  const { setLanguage, language, currency, setCurrency } = store;
   const [isOnUbication, setIsOnUbication] = useState(false);
   const [selection, setSelection] = useState({});
+  const [selectionCurrency, setSelectionCurrency] = useState({});
 
   useEffect(() => {
     setSelection({
       value: language,
       label: languageData.language[language][language],
+    });
+    setSelectionCurrency({
+      value: currency,
+      label: languageData["currency"][currency][language],
     });
   }, []);
 
@@ -55,7 +60,25 @@ export default function GuestSettings() {
       value: valor.value,
       label: languageData.language[valor.value][valor.value],
     });
+    setSelectionCurrency({
+      value: currency,
+      label: languageData["currency"][currency][valor.value],
+    });
   };
+  const setValueCurrency = (valor) => {
+    setCurrency(valor.value);
+    Cookies.set("currency", valor.value);
+    setSelectionCurrency({
+      value: currency,
+      label: languageData["currency"][currency][language],
+    });
+  };
+
+  const optionsCurency = [
+    { value: "USD", label: languageData["currency"]["USD"][language] },
+    { value: "EUR", label: languageData["currency"]["EUR"][language] },
+    { value: "BRL", label: languageData["currency"]["BRL"][language] },
+  ];
 
   const optionsSupport = [
     { value: "en", label: languageData.language[language]["en"] },
@@ -86,7 +109,7 @@ export default function GuestSettings() {
         {languageData.titleLanguage[language]}
       </h1>
       <Select
-        className="w-full max-w-lg rounded-xl my-1 mb-6"
+        className="w-full max-w-lg rounded-xl my-1 mb-3"
         options={optionsSupport}
         value={selection}
         // onBlur={() =>
@@ -123,6 +146,49 @@ export default function GuestSettings() {
           }),
         }}
       />
+
+      <h1 className={`text-black text-sm font-semibold mt-3 mb-2 `}>
+        {languageData.titleCurrency[language]}
+      </h1>
+      <Select
+        className="w-full max-w-lg rounded-xl my-1 mb-3"
+        options={optionsCurency}
+        value={selectionCurrency}
+        // onBlur={() =>
+        //   setSelection({
+        //     value: "en",
+        //     label: "English",
+        //   })
+        // }
+        onChange={(selectedOption) => setValueCurrency(selectedOption)}
+        isSearchable={false}
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            borderColor: "#00A0D5",
+            borderRadius: "10px",
+            boxShadow: "none",
+            "&:hover": {
+              borderColor: "#00A0D5",
+            },
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            color: state.isSelected ? "#fff" : "#000",
+            backgroundColor: state.isSelected
+              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
+              : state.isFocused
+              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
+              : "#fff", // Fondo blanco por defecto
+            borderRadius: "5px",
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
+            },
+          }),
+        }}
+      />
+
       {/* <div className="flex flex-col my-4">
         <OptionSwitch
           title="Activate Ubication"

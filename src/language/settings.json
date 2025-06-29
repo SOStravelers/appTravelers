@@ -36,6 +36,29 @@
             "pt":"Português"
         }
     },
+     "currency":{
+        "USD":{
+            "en":"US Dollar",
+            "es":"Dólar americano",
+            "fr":"Dollar américain",
+            "de":"Amerikaner Dollar",
+            "pt":"Dólar americano"
+        },
+        "EUR":{
+            "en":"Euro",
+            "es":"Euro",
+            "fr":"Euro",
+            "de":"Euro",
+            "pt":"Euro"
+        },
+        "BRL": {
+            "es": "Real Brasileño",
+            "en": "Brazilian Real",
+            "fr": "Réal brésilien",
+            "pt": "Real Brasileiro",
+            "de": "Brasilianischer Real"
+        }
+    },
     "titleLanguage":{
         "en":"Language",
         "es":"Idioma",
@@ -43,6 +66,13 @@
         "de":"Sprache",
         "pt":"Linguagem"
 
+    },
+    "titleCurrency":{
+        "en":"Currency",
+        "es":"Moneda",
+        "fr":"Devise",
+        "de":"Währung",
+        "pt":"Moeda"
     },
     "sigUpButton":{
         "en":"Sign Up now",

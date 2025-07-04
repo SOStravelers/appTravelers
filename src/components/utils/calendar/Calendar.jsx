@@ -33,8 +33,9 @@ function Calendar({ id }) {
   const [intervals, setIntervals] = useState([]);
 
   // guest counts
-  const [adults, setAdults] = useState(service.amount || 1);
-  const [children, setChildren] = useState(service.amountChildren || 0);
+  const [adults, setAdults] = useState(1);
+  const [children, setChildren] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(1);
 
   const now = new Date();
   const currentTime = now.toLocaleTimeString("en-US", {
@@ -48,31 +49,76 @@ function Calendar({ id }) {
 
   // adjust adults count
   const incAdults = () => {
-    if (service.hasLimit && adults >= service.limit) return;
+    if (
+      service?.tourData?.hasLimit &&
+      service?.tourData?.limit &&
+      totalAmount >= service?.tourData?.limit
+    )
+      return;
     const v = adults + 1;
     setAdults(v);
-    setService({ ...service, amount: v });
+    setTotalAmount(v + children);
+    setService({
+      ...service,
+      selectedData: {
+        amountAdults: v,
+        amountChildren: children,
+        totalAmount: v + children,
+      },
+    });
   };
   const decAdults = () => {
+    console.log("dec adult", totalAmount);
     if (adults > 1) {
       const v = adults - 1;
       setAdults(v);
-      setService({ ...service, amount: v });
+      setTotalAmount(v + children);
+      setService({
+        ...service,
+        selectedData: {
+          amountAdults: v,
+          amountChildren: children,
+          totalAmount: v + children,
+        },
+      });
     }
   };
 
   // adjust children count
   const incChildren = () => {
-    if (service.hasLimit && adults + children + 1 > service.limit) return;
+    console.log("inc child", totalAmount);
+    if (
+      service?.tourData?.hasLimit &&
+      service?.tourData?.limit &&
+      totalAmount >= service?.tourData?.limit
+    )
+      return;
     const v = children + 1;
     setChildren(v);
-    setService({ ...service, amountChildren: v });
+    setTotalAmount(v + adults);
+    setService({
+      ...service,
+      selectedData: {
+        amountAdults: adults,
+        amountChildren: v,
+        totalAmount: v + adults,
+      },
+    });
   };
   const decChildren = () => {
+    console.log("dec child", totalAmount);
     if (children > 0) {
       const v = children - 1;
       setChildren(v);
-      setService({ ...service, amountChildren: v });
+      setTotalAmount(v + adults);
+      setService({
+        ...service,
+        selectedData: {
+          amountAdults: adults,
+          amountChildren: v,
+          totalAmount: v + adults,
+        },
+      });
     }
   };
 
@@ -255,56 +301,58 @@ function Calendar({ id }) {
   return (
     <>
       {/* Guests selector */}
-      <div className="w-full max-w-lg mx-auto mb-6 space-y-4">
-        {/* Adults */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-sm font-semibold">Adultos</h3>
-            <p className="text-xs text-gray-500">Edad: más de 18</p>
+      {service.typeService === "tour" && (
+        <div className="w-full max-w-lg mx-auto mb-6 space-y-4">
+          {/* Adults */}
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-sm font-semibold">Adultos</h3>
+              <p className="text-xs text-gray-500">Edad: más de 18</p>
+            </div>
+            <div className="flex items-center justify-center items-center">
+              <button
+                onClick={decAdults}
+                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+              >
+                –
+              </button>
+              <span className="w-8 text-sm flex items-center justify-center">
+                {adults}
+              </span>
+              <button
+                onClick={incAdults}
+                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+              >
+                +
+              </button>
+            </div>
           </div>
-          <div className="flex items-center justify-center items-center">
-            <button
-              onClick={decAdults}
-              className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
-            >
-              –
-            </button>
-            <span className="w-8 text-sm flex items-center justify-center">
-              {adults}
-            </span>
-            <button
-              onClick={incAdults}
-              className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
-            >
-              +
-            </button>
+          {/* Children */}
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="text-sm font-semibold">Niños</h3>
+              <p className="text-xs text-gray-500">Edad: 2–12 años</p>
+            </div>
+            <div className="flex items-center justify-center items-center">
+              <button
+                onClick={decChildren}
+                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+              >
+                –
+              </button>
+              <span className="w-8 flex items-center justify-center text-sm">
+                {children}
+              </span>
+              <button
+                onClick={incChildren}
+                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
-        {/* Children */}
-        <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-sm font-semibold">Niños</h3>
-            <p className="text-xs text-gray-500">Edad: 2–12 años</p>
-          </div>
-          <div className="flex items-center justify-center items-center">
-            <button
-              onClick={decChildren}
-              className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
-            >
-              –
-            </button>
-            <span className="w-8 flex items-center justify-center text-sm">
-              {children}
-            </span>
-            <button
-              onClick={incChildren}
-              className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
-            >
-              +
-            </button>
-          </div>
-        </div>
-      </div>
+      )}
 
       <div className="flex items-center justify-center mb-3 mt-1 ">
         <AlertIcon className="mr-2" />

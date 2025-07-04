@@ -15,6 +15,7 @@ const BookingPopup = ({
   subtext = "",
   tagLine = "",
   buttonText = "Reservar",
+  isDisabled = false,
   onAction = () => {},
 }) => {
   return (
@@ -36,8 +37,10 @@ const BookingPopup = ({
       </div>
       <button
         onClick={onAction}
-        className="ml-2 bg-darkBlue text-white text-sm px-6 py-2 rounded-full
-    hover:bg-blueBorderLight focus:outline-none min-w-[160px]"
+        disabled={isDisabled} // asegúrate de pasar esta prop o controlarla como quieras
+        className={`ml-2 text-sm px-6 py-2 rounded-full min-w-[160px]
+    text-white bg-darkBlue hover:bg-blueBorderLight focus:outline-none
+    disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-70`}
       >
         {buttonText}
       </button>

@@ -35,6 +35,8 @@ export default function ServicePreviewPage() {
     usd: { value: null, formated: "- USD" },
     brl: { value: null, formated: "R$ -" },
   });
+  const [validPrice, setValidPrice] = useState(false);
+
   useEffect(() => {
     document.title = "Preview Subservice | SOS Travelers";
   }, []);
@@ -70,6 +72,7 @@ export default function ServicePreviewPage() {
     console.log("typeService preview", subService.typeService);
     if (subService.typeService == "tour") {
       setPrice(subService?.tourData?.price);
+      setValidPrice(true);
     } else {
       console.log("entra al otro");
       setPrice({
@@ -77,6 +80,7 @@ export default function ServicePreviewPage() {
         usd: { value: null, formated: "- USD" },
         brl: { value: null, formated: "R$ -" },
       });
+      setValidPrice(false);
     }
   }, [subService, currency]);
 
@@ -148,6 +152,7 @@ export default function ServicePreviewPage() {
         tagLine={languageData.bookingButton.cancel[language]}
         buttonText={languageData.bookingButton.goDates[language]}
         onAction={() => openModal(true)} // <-- abre el modal
+        isDisabled={validPrice && price[currency].value > 0 ? false : true}
       />
 
       <ModalReservationWrapper

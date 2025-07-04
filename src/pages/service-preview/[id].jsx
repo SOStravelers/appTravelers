@@ -24,13 +24,17 @@ import ModalReservationWrapper from "@/components/ServicePreview/ModalReservatio
 export default function ServicePreviewPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { language, setService } = useStore();
+  const { language, setService, currency } = useStore();
   const [openReservation, setOpenReservation] = useState(false);
   const [subService, setSubservice] = useState({});
   const [loading, setLoading] = useState(true); // <-- loading flag
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-
+  const [price, setPrice] = useState({
+    eur: { value: null, formated: "- €" },
+    usd: { value: null, formated: "- USD" },
+    brl: { value: null, formated: "R$ -" },
+  });
   useEffect(() => {
     document.title = "Preview Subservice | SOS Travelers";
   }, []);
@@ -61,6 +65,14 @@ export default function ServicePreviewPage() {
     ...images.map((url) => ({ url, type: "image" })),
     ...videos.map((url) => ({ url, type: "video" })),
   ];
+
+  useEffect(() => {
+    if (subService.typeService == "tour") {
+      setPrice(
+        subService?.tourData?.price[currency] || subService?.tourData?.price.usd
+      );
+    }
+  }, [subService, currency]);
 
   const openCarousel = (idx = 0) => {
     setCurrentMediaIndex(idx);
@@ -123,9 +135,7 @@ export default function ServicePreviewPage() {
         )}
       </div>
       <BookingPopup
-        priceLabel={`${languageData.bookingButton.title[language]} R$${
-          subService.price?.category1 ?? "–"
-        }`}
+        priceLabel={`${languageData.bookingButton.title[language]} ${price.formated}`}
         subtext={languageData.bookingButton.subtitle[language]}
         tagLine={languageData.bookingButton.cancel[language]}
         buttonText={languageData.bookingButton.goDates[language]}

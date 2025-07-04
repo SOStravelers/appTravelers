@@ -10,18 +10,20 @@ export default function Stripe() {
   const { service } = useStore();
   function getFinalCost(service, currency) {
     console.log("el ");
-    // Busca el objeto de precio con la moneda proporcionada
-    const priceObject = service.price.find(
-      (price) => price.currency === currency
-    );
+    // // Busca el objeto de precio con la moneda proporcionada
+    // const priceObject = service.price.find(
+    //   (price) => price.currency === currency
+    // );
 
-    // Si se encontró el objeto de precio, devuelve el costo final
-    if (priceObject) {
-      return priceObject.finalCost;
-    }
+    // // Si se encontró el objeto de precio, devuelve el costo final
+    // if (priceObject) {
+    //   return priceObject.finalCost;
+    // }
+
+    return service.total;
 
     // Si no se encontró el objeto de precio, devuelve null
-    return null;
+    // return null;
   }
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function Stripe() {
       }
 
       const amount = getFinalCost(service, service.currency) * 100;
-      const currency = service.currency?.toLowerCase();
+      const currency = service.currency?.toLowerCase() || "brl";
 
       if (!amount || !currency) {
         throw new Error("Datos insuficientes para crear el pago.");

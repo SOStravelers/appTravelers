@@ -1,5 +1,5 @@
 // ServiceCardRecomendation.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import languageData from "@/language/subServices.json";
@@ -14,25 +14,39 @@ const ServiceCardRecomendation = ({
 }) => {
   const store = useStore();
   const router = useRouter();
-  const { language } = store;
+  const { language, currency } = store;
   const {
     gallery,
     name,
     rate,
     rateCount,
     duration,
-    price,
     isFavorite,
     isPopular,
+    tourData,
+    typeService,
   } = service || {};
 
   const [isFavorited, setIsFavorited] = useState(isFavorite || false);
+  const [price, setPrice] = useState({
+    eur: { value: null, formated: "- €" },
+    usd: { value: null, formated: "- USD" },
+    brl: { value: null, formated: "R$ -" },
+  });
 
   if (!service) return null;
 
   // Preparamos un array de 4 celdas: con URL o null
   const images = gallery?.images || [];
   const gridItems = [0, 1, 2, 3].map((i) => images[i] || null);
+
+  useEffect(() => {
+    console.log("typeService", typeService);
+    if (typeService == "tour") {
+      console.log("wena", tourData.price[currency]);
+      setPrice(tourData.price[currency] || tourData.price.usd);
+    }
+  }, [price, currency]);
 
   const favoriteAction = (state) => {
     console.log("entramos");
@@ -91,7 +105,7 @@ const ServiceCardRecomendation = ({
 
         <div className="flex justify-between items-center">
           <span className="text-xs font-medium text-gray-800">
-            {languageData.card.textPrice1[language]} R${price.category1}{" "}
+            {languageData.card.textPrice1[language]} {price?.formated || "-"}
           </span>
 
           <div className="flex items-center">

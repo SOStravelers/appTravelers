@@ -96,26 +96,26 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     if (cookieCurrency) {
       console.log("setCurrency", cookieCurrency);
       if (
-        cookieCurrency != "USD" &&
-        cookieCurrency != "BRL" &&
-        cookieCurrency != "EUR"
+        cookieCurrency != "usd" &&
+        cookieCurrency != "brl" &&
+        cookieCurrency != "eur"
       ) {
-        setCurrency("BRL");
-        Cookies.set("currency", "BRL");
+        setCurrency("brl");
+        Cookies.set("currency", "brl");
       } else {
         setCurrency(cookieCurrency);
         Cookies.set("currency", cookieCurrency);
       }
     } else {
       if (cookieLanguage == "pt" || cookieLanguage == "es") {
-        setCurrency("BRL");
-        Cookies.set("currency", "BRL");
+        setCurrency("brl");
+        Cookies.set("currency", "brl");
       } else if (cookieLanguage == "en") {
-        setCurrency("USD");
-        Cookies.set("currency", "USD");
+        setCurrency("usd");
+        Cookies.set("currency", "usd");
       } else {
-        setCurrency("EUR");
-        Cookies.set("currency", "EUR");
+        setCurrency("eur");
+        Cookies.set("currency", "eur");
       }
     }
 

@@ -77,6 +77,11 @@ export default function SummaryPage() {
     });
   }
 
+  const setPrice = () => {
+    setService({ ...service, total: 10 });
+    router.push(`/summary2/contact-info/${id}`);
+  };
+
   return (
     <>
       <div
@@ -228,7 +233,7 @@ export default function SummaryPage() {
         subtext={""}
         tagLine={thisLanguage.cancel[language]}
         buttonText={thisLanguage.nextButton[language]}
-        onAction={() => router.push(`/summary2/contact-info/${id}`)} // <-- abre el modal
+        onAction={() => setPrice()} // <-- abre el modal
       />
       {/* Modal de detalles  */}
       <TravellersDetailsModal

@@ -75,9 +75,9 @@ export default function GuestSettings() {
   };
 
   const optionsCurency = [
-    { value: "USD", label: languageData["currency"]["USD"][language] },
-    { value: "EUR", label: languageData["currency"]["EUR"][language] },
-    { value: "BRL", label: languageData["currency"]["BRL"][language] },
+    { value: "usd", label: languageData["currency"]["usd"][language] },
+    { value: "eur", label: languageData["currency"]["eur"][language] },
+    { value: "brl", label: languageData["currency"]["brl"][language] },
   ];
 
   const optionsSupport = [

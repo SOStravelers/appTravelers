@@ -37,21 +37,21 @@
         }
     },
      "currency":{
-        "USD":{
+        "usd":{
             "en":"US Dollar",
             "es":"Dólar americano",
             "fr":"Dollar américain",
             "de":"Amerikaner Dollar",
             "pt":"Dólar americano"
         },
-        "EUR":{
+        "eur":{
             "en":"Euro",
             "es":"Euro",
             "fr":"Euro",
             "de":"Euro",
             "pt":"Euro"
         },
-        "BRL": {
+        "brl": {
             "es": "Real Brasileño",
             "en": "Brazilian Real",
             "fr": "Réal brésilien",

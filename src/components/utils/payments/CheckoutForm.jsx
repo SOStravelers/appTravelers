@@ -62,22 +62,21 @@ export default function CheckoutForm(clientSecret) {
     getFinalCost(service, service.currency);
   }, []);
   function getFinalCost(service, currency) {
-    console.log(currency);
-    // Busca el objeto de precio con la moneda proporcionada
-    const priceObject = service.price.find(
-      (price) => price.currency === currency
-    );
-    // Si se encontró el objeto de precio, devuelve el costo final
-    if (priceObject) {
-      setPrice(priceObject.finalCost);
+    console.log("el ");
+    // // Busca el objeto de precio con la moneda proporcionada
+    // const priceObject = service.price.find(
+    //   (price) => price.currency === currency
+    // );
 
-      return priceObject.finalCost;
-    }
+    // // Si se encontró el objeto de precio, devuelve el costo final
+    // if (priceObject) {
+    //   return priceObject.finalCost;
+    // }
+
+    return service.total;
 
     // Si no se encontró el objeto de precio, devuelve null
-    setPrice(null);
-
-    return null;
+    // return null;
   }
 
   return (

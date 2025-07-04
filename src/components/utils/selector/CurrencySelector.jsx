@@ -4,9 +4,9 @@ import Cookies from "js-cookie";
 import { useStore } from "@/store";
 
 const CURRENCIES = {
-  BRL: { symbol: "R$", label: "BRL" },
-  USD: { symbol: "$", label: "USD" },
-  EUR: { symbol: "€", label: "EUR" },
+  brl: { symbol: "R$", label: "brl" },
+  usd: { symbol: "$", label: "usd" },
+  eur: { symbol: "€", label: "eur" },
 };
 
 const CurrencySelector = ({ scrolledPastVh }) => {

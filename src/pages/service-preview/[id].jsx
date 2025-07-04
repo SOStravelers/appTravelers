@@ -67,10 +67,16 @@ export default function ServicePreviewPage() {
   ];
 
   useEffect(() => {
+    console.log("typeService preview", subService.typeService);
     if (subService.typeService == "tour") {
-      setPrice(
-        subService?.tourData?.price[currency] || subService?.tourData?.price.usd
-      );
+      setPrice(subService?.tourData?.price);
+    } else {
+      console.log("entra al otro");
+      setPrice({
+        eur: { value: null, formated: "- €" },
+        usd: { value: null, formated: "- USD" },
+        brl: { value: null, formated: "R$ -" },
+      });
     }
   }, [subService, currency]);
 
@@ -135,7 +141,9 @@ export default function ServicePreviewPage() {
         )}
       </div>
       <BookingPopup
-        priceLabel={`${languageData.bookingButton.title[language]} ${price.formated}`}
+        priceLabel={`${languageData.bookingButton.title[language]} ${
+          price[currency].formated || price["brl"].formated
+        }`}
         subtext={languageData.bookingButton.subtitle[language]}
         tagLine={languageData.bookingButton.cancel[language]}
         buttonText={languageData.bookingButton.goDates[language]}

@@ -44,9 +44,15 @@ const ServiceCardRecomendation = ({
     console.log("typeService", typeService);
     if (typeService == "tour") {
       console.log("wena", tourData.price[currency]);
-      setPrice(tourData.price[currency] || tourData.price.usd);
+      setPrice(tourData.price);
+    } else {
+      setPrice({
+        eur: { value: null, formated: "- €" },
+        usd: { value: null, formated: "- USD" },
+        brl: { value: null, formated: "R$ -" },
+      });
     }
-  }, [price, currency]);
+  }, [currency]);
 
   const favoriteAction = (state) => {
     console.log("entramos");
@@ -105,7 +111,8 @@ const ServiceCardRecomendation = ({
 
         <div className="flex justify-between items-center">
           <span className="text-xs font-medium text-gray-800">
-            {languageData.card.textPrice1[language]} {price?.formated || "-"}
+            {languageData.card.textPrice1[language]}{" "}
+            {price[currency]?.formated || price["brl"].formated}
           </span>
 
           <div className="flex items-center">

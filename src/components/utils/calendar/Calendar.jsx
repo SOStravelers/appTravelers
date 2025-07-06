@@ -250,7 +250,7 @@ function Calendar({ id }) {
             {intervals.length ? (
               intervals.map((hour, i) => (
                 <>
-                  <p>{hour.startTimeIso}</p>
+                  {/* <p>{hour.startTimeIso}</p> */}
                   <TimeButton
                     key={i}
                     onClick={() => setTime(hour)}

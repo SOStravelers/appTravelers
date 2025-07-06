@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { getSession, signIn } from "next-auth/react";
 import UserService from "@/services/UserService";
-
+import { useStore } from "@/store";
 const GoogleOneTap = () => {
+  const store = useStore();
+  const { user } = store;
   useEffect(() => {
     const initGoogleOneTap = async () => {
       const session = await getSession();
-      if (session) return; // Ya está logueado, no hacemos nada
+      if (session || (user && Object.keys(user).length > 0)) return; // Ya está logueado, no hacemos nada
 
       if (typeof window === "undefined") return;
 

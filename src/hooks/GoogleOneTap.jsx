@@ -1,6 +1,6 @@
+// hooks/GoogleOneTap.js
 import { useEffect } from "react";
 import { getSession } from "next-auth/react";
-import jwtDecode from "jwt-decode";
 import UserService from "@/services/UserService";
 
 const GoogleOneTap = () => {
@@ -13,24 +13,37 @@ const GoogleOneTap = () => {
       script.async = true;
       script.defer = true;
       script.onload = () => {
-        window.google.accounts.id.initialize({
+        window.google?.accounts.id.initialize({
           client_id: process.env.NEXT_PUBLIC_CLIENTID_GOOGLE,
           callback: async (response) => {
             try {
-              const decoded = jwtDecode(response.credential);
-              const { name, email, picture } = decoded;
+              const res = await fetch("/api/auth/onetap", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ credential: response.credential }),
+              });
 
-              await UserService.loginGoogle(name, email, picture);
-            } catch (err) {
-              console.error("Error decoding token", err);
+              if (!res.ok) throw new Error("Error al validar el token");
+
+              const session = await getSession();
+              if (session) {
+                await UserService.loginGoogle(
+                  session.user.name,
+                  session.user.email,
+                  session.user.image
+                );
+              }
+            } catch (error) {
+              console.error("❌ Error One Tap:", error);
             }
           },
           auto_select: false,
           cancel_on_tap_outside: false,
         });
 
-        window.google.accounts.id.prompt();
+        window.google?.accounts.id.prompt();
       };
+
       document.body.appendChild(script);
     });
   }, []);

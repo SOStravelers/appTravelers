@@ -2,7 +2,11 @@
 const nextConfig = {
   reactStrictMode: false,
   images: {
-    domains: ["sosappfiles.s3.amazonaws.com", "lh3.googleusercontent.com"],
+    domains: [
+      "sosappfiles.s3.amazonaws.com",
+      "sosappfiles.s3.us-east-1.amazonaws.com",
+      "lh3.googleusercontent.com",
+    ],
     unoptimized: true,
   },
   publicRuntimeConfig: {
@@ -21,8 +25,9 @@ const nextConfig = {
               default-src 'self';
               script-src 'self' 'unsafe-inline' https://accounts.google.com https://apis.google.com https://www.googletagmanager.com https://vercel.live https://js.stripe.com;
               style-src 'self' 'unsafe-inline' https://accounts.google.com https://js.stripe.com;
-              img-src 'self' data: https://lh3.googleusercontent.com;
-              frame-src https://accounts.google.com https://js.stripe.com https://hooks.stripe.com;
+              img-src 'self' data: https://lh3.googleusercontent.com https://sosappfiles.s3.amazonaws.com https://sosappfiles.s3.us-east-1.amazonaws.com;
+              media-src https://sosappfiles.s3.amazonaws.com https://sosappfiles.s3.us-east-1.amazonaws.com;
+              frame-src https://accounts.google.com https://js.stripe.com https://hooks.stripe.com https://vercel.live;
               connect-src 'self' http://localhost:9000 https://accounts.google.com https://oauth2.googleapis.com https://www.google-analytics.com https://vercel.live https://api.stripe.com;
             `
               .replace(/\s{2,}/g, " ")

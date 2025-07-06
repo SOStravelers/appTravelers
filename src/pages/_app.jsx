@@ -4,10 +4,9 @@ import Navbar from "@/components/layout/Navbar";
 import Head from "next/head";
 import Layout from "../layouts/Layout";
 import Sidebar from "@/components/layout/Sidebar";
-import { ThemeProvider } from "next-themes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import GoogleOneTap from "@/hooks/GoogleOneTap";
 import { renderToString } from "react-dom/server";
 import { LogoSosRelleno } from "@/constants/icons";
 import { routesNavbar, routesSidebar } from "@/utils/variables";
@@ -49,6 +48,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <GoogleOneTap />
       <Head>
         {!shouldIndexRoute || !shouldIndexDomain ? (
           <meta name="robots" content="noindex" />
@@ -78,13 +78,10 @@ export default function App({ Component, pageProps }) {
 
       {/* Layout + único contenedor de toasts */}
       <Layout lang={lang}>
-        {/* <ThemeProvider attribute="class"> */}
-        {renderSidebar()}
         <ToastContainer position="top-right" theme="dark" containerId="bulk" />
+        {renderSidebar()}
         <Component {...pageProps} />
-
         {renderNavbar()}
-        {/* </ThemeProvider> */}
       </Layout>
     </>
   );

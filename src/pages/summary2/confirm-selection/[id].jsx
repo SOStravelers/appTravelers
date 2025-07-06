@@ -7,37 +7,33 @@ import {
 } from "@/utils/delayFunction";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import { useStore } from "@/store";
-import { formatearFecha } from "@/utils/format";
+import {
+  formatearFecha,
+  formatearFechaCompletaDesdeISO,
+  sumarMinutosAISO,
+} from "@/utils/format";
 import TravellersDetailsModal from "@/components/utils/modal/TravellersDetailsModal";
 import languageData from "@/language/newSummary.json";
-import { set } from "zod";
+import { formatPrice } from "@/utils/format";
+
 export default function SummaryPage() {
   const router = useRouter();
   const id = router?.query?.id;
   const { service, setService, language, currency } = useStore();
-  const {
-    imgUrl,
-    name,
-    date,
-    startTime,
-    endTime,
-    amount = 1,
-    amountChildren = 0,
-    price: { category1 = 0, category2 = 0 } = {},
-    hasLimit,
-    limit,
-    tourData,
-    selectedData,
-  } = service;
+  const { imgUrl, name, date, startTime, endTime, tourData, selectedData } =
+    service;
 
   const thisLanguage = languageData.confirmSelection;
   const [loading, setLoading] = useState(true); // <-- loading flag
   const [expanded, setExpanded] = useState(true);
+  const [hasCancel, setHasCancel] = useState(false);
 
   // NUEVO: doble estado
   const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [startDate, setStartDate] = useState({});
+  const [endDate, setEndtDate] = useState({});
 
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
@@ -54,6 +50,62 @@ export default function SummaryPage() {
     });
   }, []);
 
+  useEffect(() => {
+    if (service.canCancel) {
+      const hasCancel = isBeforeHoursThreshold(
+        service.startTime.isoTime,
+        service.timeUntilCancel
+      );
+      console.log("hasCancel", hasCancel);
+      setHasCancel(hasCancel);
+    } else {
+      setHasCancel(false);
+    }
+  }, [service]);
+
+  function isBeforeHoursThreshold(dateString, hoursBefore, language = "pt") {
+    const targetDate = new Date(dateString);
+
+    if (isNaN(targetDate.getTime())) {
+      console.error("❌ Fecha inválida:", dateString);
+      return {
+        isBefore: false,
+        cancelTime: {
+          isoTime: null,
+          stringData: "",
+        },
+      };
+    }
+
+    // Calcular la fecha límite
+    const thresholdDate = new Date(
+      targetDate.getTime() - hoursBefore * 60 * 60 * 1000
+    );
+
+    const now = new Date(); // ya es en UTC
+
+    return {
+      isBefore: now < thresholdDate,
+      cancelTime: formatearFechaCompletaDesdeISO(
+        thresholdDate.toISOString(),
+        language
+      ),
+    };
+  }
+
+  useEffect(() => {
+    const startTime = formatearFechaCompletaDesdeISO(
+      service.startTime.isoTime,
+      language
+    );
+    const endTime = formatearFechaCompletaDesdeISO(
+      sumarMinutosAISO(service.startTime.isoTime, service.duration),
+      language
+    );
+    setStartDate(startTime);
+    setEndtDate(endTime);
+  }, []);
+
   // Click fuera para cerrar
   useEffect(() => {
     const handler = (e) => {
@@ -62,20 +114,6 @@ export default function SummaryPage() {
     if (isMounted) window.addEventListener("mousedown", handler);
     return () => window.removeEventListener("mousedown", handler);
   }, [isMounted]);
-
-  // PRECIOS
-  const totalAdults = adults * category1;
-  const totalChildren = children * category2;
-
-  function formatPrice(price) {
-    if (currency == "eur") {
-      return price + " € EUR";
-    } else if (currency == "usd") {
-      return price + " USD";
-    } else {
-      return "R$ " + price;
-    }
-  }
 
   useEffect(() => {
     if (service.typeService === "tour") {
@@ -88,13 +126,8 @@ export default function SummaryPage() {
     }
   }, [service]);
 
-  // Fecha/hora
-  const displayDate = formatearFecha?.(date, language) || "";
-  const timeLabel = `${startTime?.stringData || ""} – ${
-    endTime?.stringData || ""
-  }`;
-
   function interpolate(str, vars) {
+    console.log("str-->", str, "vars-->", vars);
     return str.replace(/\$\{(\w+(\.\w+)*)\}/g, (_, key) => {
       // Permite nested: ej "startTime.stringData"
       return key.split(".").reduce((o, i) => (o ? o[i] : ""), vars);
@@ -137,11 +170,13 @@ export default function SummaryPage() {
                   {name?.[language] || ""}
                 </h2>
                 <p className="text-gray-700 text-xs">
-                  {thisLanguage.value[language]} {formatPrice(total)}
+                  {thisLanguage.value[language]} {formatPrice(total, currency)}
                 </p>
-                <p className="text-gray-700 text-xs">
-                  {thisLanguage.payNow[language]} {formatPrice(0)}
-                </p>
+                {hasCancel?.isBefore && (
+                  <p className="text-gray-700 text-xs">
+                    {thisLanguage.payNow[language]} {formatPrice(0, currency)}
+                  </p>
+                )}
               </div>
             </div>
             {/* Icono flecha */}
@@ -178,12 +213,12 @@ export default function SummaryPage() {
               <p className="font-semibold text-sm">
                 {thisLanguage.sections.date.title[language]}
               </p>
-              <p className="text-gray-700 text-xs">{displayDate}</p>
+              <p className="text-gray-700 text-xs">{startDate?.data}</p>
               <p className="text-gray-700 text-xs">
                 {thisLanguage.sections.date.from[language]}{" "}
-                {startTime?.stringData || ""}{" "}
+                {startDate?.stringData || ""}{" "}
                 {thisLanguage.sections.date.to[language]}{" "}
-                {endTime?.stringData || ""}
+                {endDate?.stringData || ""}
               </p>
             </div>
             {/* Viajeros */}
@@ -211,7 +246,9 @@ export default function SummaryPage() {
                 <p className="font-semibold text-sm">
                   {thisLanguage.sections.totalPrice.title[language]}
                 </p>
-                <p className="text-gray-700 text-xs">{formatPrice(total)}</p>
+                <p className="text-gray-700 text-xs">
+                  {formatPrice(total, currency)}
+                </p>
               </div>
               <button
                 className="text-blueBorder font-semibold hover:underline text-xs"
@@ -221,39 +258,53 @@ export default function SummaryPage() {
               </button>
             </div>
             {/* Cancelación gratuita */}
-            <div className="space-y-1">
-              <p className="font-semibold text-green-600 text-sm">
-                {thisLanguage.sections.booking.title[language]}
-              </p>
-              <p className="text-gray-700 text-xs">
-                {interpolate(thisLanguage.sections.booking.subtitle[language], {
-                  displayDate,
-                  startTime,
-                })}
-              </p>
-            </div>
-            <div className="space-y-1">
-              <p className="font-semibold text-green-600 text-sm">
-                {thisLanguage.sections.freeCancelation.title[language]}
-              </p>
-              <p className="text-gray-700 text-xs">
-                {interpolate(
-                  thisLanguage.sections.freeCancelation.subtitle[language],
-                  {
-                    displayDate,
-                    startTime,
-                  }
-                )}
-              </p>
-            </div>
+            {hasCancel?.isBefore && (
+              <>
+                <div className="space-y-1">
+                  <p className="font-semibold text-green-600 text-sm">
+                    {thisLanguage.sections.booking.title[language]}
+                  </p>
+                  <p className="text-gray-700 text-xs">
+                    {interpolate(
+                      thisLanguage.sections.booking.subtitle[language],
+                      {
+                        displayDate: hasCancel?.cancelTime?.data,
+                        startTime: {
+                          stringData: hasCancel?.cancelTime?.stringData,
+                        },
+                      }
+                    )}
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="font-semibold text-green-600 text-sm">
+                    {thisLanguage.sections.freeCancelation.title[language]}
+                  </p>
+                  <p className="text-gray-700 text-xs">
+                    {interpolate(
+                      thisLanguage.sections.freeCancelation.subtitle[language],
+                      {
+                        displayDate: hasCancel?.cancelTime?.data,
+                        startTime: {
+                          stringData: hasCancel?.cancelTime?.stringData,
+                        },
+                      }
+                    )}
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
       {/* Botón Siguiente Flotante */}
       <BookingPopup
-        priceLabel={`${thisLanguage.value[language]} ${formatPrice(total)} `}
+        priceLabel={`${thisLanguage.value[language]} ${formatPrice(
+          total,
+          currency
+        )} `}
         subtext={""}
-        tagLine={thisLanguage.cancel[language]}
+        tagLine={hasCancel?.isBefore ? thisLanguage.cancel[language] : ""}
         buttonText={thisLanguage.nextButton[language]}
         onAction={() => setPrice()} // <-- abre el modal
       />

@@ -12,7 +12,7 @@ import { useStore } from "@/store";
 import moment from "moment";
 import { formatISO } from "date-fns";
 import languageData from "@/language/reservation.json";
-
+import { formatearFechaCompletaDesdeISO } from "@/utils/format";
 function Calendar({ id }) {
   const router = useRouter();
   const { service, setService, isWorker, language } = useStore();
@@ -113,11 +113,7 @@ function Calendar({ id }) {
       setTotalAmount(v + adults);
       setService({
         ...service,
-        selectedData: {
-          amountAdults: adults,
-          amountChildren: v,
-          totalAmount: v + adults,
-        },
+        selectedData: { amountChildren: v, totalAmount: v + adults },
       });
     }
   };
@@ -253,12 +249,21 @@ function Calendar({ id }) {
           <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[200px] mx-auto">
             {intervals.length ? (
               intervals.map((hour, i) => (
-                <TimeButton
-                  key={i}
-                  onClick={() => setTime(hour)}
-                  text={hour.startTime}
-                  selected={time === hour}
-                />
+                <>
+                  <p>{hour.startTimeIso}</p>
+                  <TimeButton
+                    key={i}
+                    onClick={() => setTime(hour)}
+                    text={
+                      formatearFechaCompletaDesdeISO(
+                        hour.startTimeIso,
+                        language,
+                        "br"
+                      ).stringData
+                    }
+                    selected={time === hour}
+                  />
+                </>
               ))
             ) : (
               <span className="mt-4 text-sm text-gray-600">

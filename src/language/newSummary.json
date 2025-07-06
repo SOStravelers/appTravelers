@@ -114,11 +114,11 @@
           "pt": "Agende agora, pague depois"
         },
         "subtitle": {
-          "es": "Si cancelas antes del ${displayDate} a las ${startTime.stringData}, recibirás un reembolso completo.",
-          "en": "If you cancel before ${displayDate} at ${startTime.stringData}, you’ll receive a full refund.",
-          "fr": "Si vous annulez avant le ${displayDate} à ${startTime.stringData}, vous recevrez un remboursement complet.",
-          "de": "Wenn Sie vor dem ${displayDate} um ${startTime.stringData} stornieren, erhalten Sie eine vollständige Rückerstattung.",
-          "pt": "Se você cancelar antes de ${displayDate} às ${startTime.stringData}, receberá um reembolso total."
+          "es": "No se te cobrará al momento de reservar. El pago se procesará automáticamente si no cancelas antes del ${displayDate} a las ${startTime.stringData}.",
+          "en": "You won’t be charged at the time of booking. Payment will be processed automatically if you don’t cancel before ${displayDate} at ${startTime.stringData}.",
+          "fr": "Aucun paiement ne sera effectué au moment de la réservation. Le paiement sera automatiquement traité si vous n'annulez pas avant le ${displayDate} à ${startTime.stringData}.",
+          "de": "Bei der Buchung erfolgt keine Zahlung. Die Zahlung wird automatisch verarbeitet, wenn Sie nicht vor dem ${displayDate} um ${startTime.stringData} stornieren.",
+          "pt": "Você não será cobrado no momento da reserva. O pagamento será processado automaticamente caso não cancele antes de ${displayDate} às ${startTime.stringData}."
         }
       },
       "freeCancelation": {
@@ -130,11 +130,11 @@
           "pt": "Cancelamento gratuito"
         },
         "subtitle": {
-          "es": "Si cancelas antes del ${displayDate} a las ${startTime.stringData}, recibirás un reembolso completo.",
-          "en": "If you cancel before ${displayDate} at ${startTime.stringData}, you’ll receive a full refund.",
-          "fr": "Si vous annulez avant le ${displayDate} à ${startTime.stringData}, vous recevrez un remboursement complet.",
-          "de": "Wenn Sie vor dem ${displayDate} um ${startTime.stringData} stornieren, erhalten Sie eine vollständige Rückerstattung.",
-          "pt": "Se você cancelar antes de ${displayDate} às ${startTime.stringData}, receberá um reembolso total."
+          "es": "Puedes cancelar sin costo hasta el ${displayDate} a las ${startTime.stringData}.",
+          "en": "You can cancel free of charge until ${displayDate} at ${startTime.stringData}.",
+          "fr": "Vous pouvez annuler sans frais jusqu’au ${displayDate} à ${startTime.stringData}.",
+          "de": "Kostenlose Stornierung möglich bis zum ${displayDate} um ${startTime.stringData}.",
+          "pt": "Você pode cancelar sem custo até ${displayDate} às ${startTime.stringData}."
         }
       }
     }

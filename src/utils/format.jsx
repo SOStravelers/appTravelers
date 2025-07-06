@@ -253,6 +253,211 @@ export const formatearFecha = (fechaStr, idioma) => {
   return fechaFormateada;
 };
 
+//NUEVAS
+
+export const formatearFechaCompletaDesdeISO = (
+  isoString,
+  idioma = "pt",
+  pais = "br"
+) => {
+  const fechaUTC = new Date(isoString);
+
+  if (isNaN(fechaUTC.getTime())) {
+    return {
+      data: "",
+      stringData: "",
+    };
+  }
+
+  // Mapear país a timezone e identificación para texto
+  const paises = {
+    br: { timeZone: "America/Sao_Paulo", texto: "Brasil" },
+    cl: { timeZone: "America/Santiago", texto: "Chile" },
+    us: { timeZone: "America/New_York", texto: "Estados Unidos" },
+    es: { timeZone: "Europe/Madrid", texto: "España" },
+    de: { timeZone: "Europe/Berlin", texto: "Alemania" },
+    fr: { timeZone: "Europe/Paris", texto: "Francia" },
+    ar: { timeZone: "America/Argentina/Buenos_Aires", texto: "Argentina" },
+    mx: { timeZone: "America/Mexico_City", texto: "México" },
+  };
+
+  const configPais = paises[pais] || paises.br;
+  const timeZone = configPais.timeZone;
+  const paisTexto = configPais.texto;
+
+  // Convertir la fecha al huso horario del país
+  const fechaLocal = new Date(fechaUTC.toLocaleString("en-US", { timeZone }));
+
+  const meses = {
+    en: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    es: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ],
+    fr: [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
+    ],
+    de: [
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember",
+    ],
+    pt: [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ],
+  };
+
+  const diasSemana = {
+    en: [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    es: [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ],
+    fr: [
+      "Dimanche",
+      "Lundi",
+      "Mardi",
+      "Mercredi",
+      "Jeudi",
+      "Vendredi",
+      "Samedi",
+    ],
+    de: [
+      "Sonntag",
+      "Montag",
+      "Dienstag",
+      "Mittwoch",
+      "Donnerstag",
+      "Freitag",
+      "Samstag",
+    ],
+    pt: [
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado",
+    ],
+  };
+
+  const formatos = {
+    en: (d, m, y, dw, pais) => `${dw}, ${m} ${d}, ${y} (local time in ${pais})`,
+    es: (d, m, y, dw, pais) => `${dw}, ${d} de ${m} de ${y} (hora de ${pais})`,
+    fr: (d, m, y, dw, pais) => `${dw} ${d} ${m} ${y} (heure locale ${pais})`,
+    de: (d, m, y, dw, pais) => `${dw}, ${d}. ${m} ${y} (Ortszeit in ${pais})`,
+    pt: (d, m, y, dw, pais) => `${dw}, ${d} de ${m} de ${y} (hora de ${pais})`,
+  };
+
+  const dia = fechaLocal.getDate();
+  const mesTexto = meses[idioma][fechaLocal.getMonth()];
+  const año = fechaLocal.getFullYear();
+  const diaSemanaTexto = diasSemana[idioma][fechaLocal.getDay()];
+  const data = formatos[idioma](dia, mesTexto, año, diaSemanaTexto, paisTexto);
+
+  const locales = {
+    es: "es-CL",
+    en: "en-US",
+    pt: "pt-BR",
+    fr: "fr-FR",
+    de: "de-DE",
+  };
+
+  const stringData = fechaLocal.toLocaleTimeString(locales[idioma], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone,
+  });
+
+  return {
+    data,
+    stringData,
+  };
+};
+
+export const sumarMinutosAISO = (isoString, minutos = 0) => {
+  const fecha = new Date(isoString);
+
+  if (isNaN(fecha.getTime())) {
+    console.error("❌ Fecha inválida:", isoString);
+    return null;
+  }
+
+  // Sumar los minutos en milisegundos
+  const nuevaFecha = new Date(fecha.getTime() + minutos * 60 * 1000);
+
+  return nuevaFecha.toISOString();
+};
+
 export const formatPrice = (price, currency) => {
   if (currency == "eur") {
     return price + " € EUR";

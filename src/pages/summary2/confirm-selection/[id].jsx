@@ -10,10 +10,11 @@ import { useStore } from "@/store";
 import { formatearFecha } from "@/utils/format";
 import TravellersDetailsModal from "@/components/utils/modal/TravellersDetailsModal";
 import languageData from "@/language/newSummary.json";
+import { set } from "zod";
 export default function SummaryPage() {
   const router = useRouter();
   const id = router?.query?.id;
-  const { service, setService, language } = useStore();
+  const { service, setService, language, currency } = useStore();
   const {
     imgUrl,
     name,
@@ -25,6 +26,8 @@ export default function SummaryPage() {
     price: { category1 = 0, category2 = 0 } = {},
     hasLimit,
     limit,
+    tourData,
+    selectedData,
   } = service;
 
   const thisLanguage = languageData.confirmSelection;
@@ -36,8 +39,9 @@ export default function SummaryPage() {
   const [isVisible, setIsVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [adults, setAdults] = useState(amount);
-  const [children, setChildren] = useState(amountChildren);
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [total, setTotal] = useState(0);
   const overlayRef = useRef();
 
   // Para cerrar: desactivar animación y desmontar cuando termine
@@ -62,7 +66,27 @@ export default function SummaryPage() {
   // PRECIOS
   const totalAdults = adults * category1;
   const totalChildren = children * category2;
-  const total = totalAdults + totalChildren;
+
+  function formatPrice(price) {
+    if (currency == "eur") {
+      return price + " € EUR";
+    } else if (currency == "usd") {
+      return price + " USD";
+    } else {
+      return "R$ " + price;
+    }
+  }
+
+  useEffect(() => {
+    if (service.typeService === "tour") {
+      setAdults(selectedData.amountAdults);
+      setChildren(selectedData.amountChildren);
+      const total =
+        selectedData.amountAdults * tourData.adultPrice[currency].value +
+        selectedData.amountChildren * tourData.childrenPrice[currency].value;
+      setTotal(total);
+    }
+  }, [service]);
 
   // Fecha/hora
   const displayDate = formatearFecha?.(date, language) || "";
@@ -113,10 +137,10 @@ export default function SummaryPage() {
                   {name?.[language] || ""}
                 </h2>
                 <p className="text-gray-700 text-xs">
-                  {thisLanguage.value[language]} {total.toFixed(2)} € EUR
+                  {thisLanguage.value[language]} {formatPrice(total)}
                 </p>
                 <p className="text-gray-700 text-xs">
-                  {thisLanguage.payNow[language]} {total.toFixed(2)} € EUR
+                  {thisLanguage.payNow[language]} {formatPrice(0)}
                 </p>
               </div>
             </div>
@@ -187,9 +211,7 @@ export default function SummaryPage() {
                 <p className="font-semibold text-sm">
                   {thisLanguage.sections.totalPrice.title[language]}
                 </p>
-                <p className="text-gray-700 text-xs">
-                  {total.toFixed(2)} € EUR
-                </p>
+                <p className="text-gray-700 text-xs">{formatPrice(total)}</p>
               </div>
               <button
                 className="text-blueBorder font-semibold hover:underline text-xs"
@@ -229,7 +251,7 @@ export default function SummaryPage() {
       </div>
       {/* Botón Siguiente Flotante */}
       <BookingPopup
-        priceLabel={`${thisLanguage.value[language]} ${total.toFixed(2)} € EUR`}
+        priceLabel={`${thisLanguage.value[language]} ${formatPrice(total)} `}
         subtext={""}
         tagLine={thisLanguage.cancel[language]}
         buttonText={thisLanguage.nextButton[language]}

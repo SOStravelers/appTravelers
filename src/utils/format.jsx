@@ -9,7 +9,6 @@ import {
 import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
 import { ptBR, enUS, de, fr, es } from "date-fns/locale";
 import LanguageData from "@/language/booking.json";
-
 export const fullName = (data) => {
   if (!data) return "";
   const { first, last } = data;
@@ -252,4 +251,14 @@ export const formatearFecha = (fechaStr, idioma) => {
   const fechaFormateada = formatear(dia, mesTexto, año, diaTexto);
 
   return fechaFormateada;
+};
+
+export const formatPrice = (price, currency) => {
+  if (currency == "eur") {
+    return price + " € EUR";
+  } else if (currency == "usd") {
+    return price + " USD";
+  } else {
+    return "R$ " + price;
+  }
 };

@@ -1,38 +1,50 @@
 import { useState, useRef, useEffect } from "react";
 import { useStore } from "@/store";
+import { formatPrice } from "@/utils/format";
 
 export default function TravellersDetailsModal({ open, onClose }) {
-  const { service, setService, language } = useStore();
+  const { service, setService, language, currency } = useStore();
 
-  const {
-    amount = 1,
-    amountChildren = 0,
-    price: { category1 = 0, category2 = 0 } = {},
-    hasLimit,
-    limit,
-  } = service || {};
+  const { tourData, selectedData } = service || {};
 
-  const [adults, setAdults] = useState(amount);
-  const [children, setChildren] = useState(amountChildren);
+  const [adults, setAdults] = useState(0);
+  const [totalAdults, setTotalAdults] = useState(5);
+  const [children, setChildren] = useState(6);
+  const [totalChildren, setTotalChildren] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   // Control de animación y montaje
   const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-
   const overlayRef = useRef();
+
+  function setPrices() {
+    const totalA = adults * tourData.adultPrice[currency].value;
+    const totalC = children * tourData.childrenPrice[currency].value;
+    const total = totalA + totalC;
+    setTotalAdults(totalA);
+    setTotalChildren(totalC);
+    setTotalPrice(total);
+  }
+
+  useEffect(() => {
+    setPrices();
+  }, [adults, children]);
 
   // Animaciones de aparición/desaparición
   useEffect(() => {
     if (open) {
       setMounted(true);
-      setAdults(amount);
-      setChildren(amountChildren);
+      setAdults(selectedData.amountAdults);
+      setChildren(selectedData.amountChildren);
+      setTotalAmount(selectedData.totalAmount);
       setTimeout(() => setIsVisible(true), 10); // pequeño delay para trigger transición
     } else {
       setIsVisible(false);
       setTimeout(() => setMounted(false), 400); // 400ms = duración tailwind
     }
-  }, [open, amount, amountChildren]);
+  }, [open]);
 
   // Click fuera para cerrar
   useEffect(() => {
@@ -46,33 +58,65 @@ export default function TravellersDetailsModal({ open, onClose }) {
 
   // Lógica de cantidad
   const incAdults = () => {
-    if (hasLimit && adults + children >= limit) return;
-    setAdults((a) => a + 1);
+    if (
+      service?.tourData?.hasLimit &&
+      service?.tourData?.limit &&
+      totalAmount >= service?.tourData?.limit
+    )
+      return;
+    const v = adults + 1;
+    setAdults(v);
+    setTotalAmount(v + children);
   };
   const decAdults = () => {
-    if (adults > 1) setAdults((a) => a - 1);
+    if (adults > 1) {
+      const v = adults - 1;
+      setAdults(v);
+      setTotalAmount(v + children);
+    }
   };
+  // adjust children count
   const incChildren = () => {
-    if (hasLimit && adults + children >= limit) return;
-    setChildren((c) => c + 1);
+    if (
+      service?.tourData?.hasLimit &&
+      service?.tourData?.limit &&
+      totalAmount >= service?.tourData?.limit
+    )
+      return;
+    const v = children + 1;
+    setChildren(v);
+    setTotalAmount(v + adults);
   };
   const decChildren = () => {
-    if (children > 0) setChildren((c) => c - 1);
+    if (children > 0) {
+      const v = children - 1;
+      setChildren(v);
+      setTotalAmount(v + adults);
+    }
   };
 
   // Labels de precio
-  const totalAdults = adults * category1;
-  const totalChildren = children * category2;
-  const total = totalAdults + totalChildren;
-  const unitLabel = `${category1.toFixed(2)} € por adulto`;
+  const unitLabel = `${tourData.adultPrice[currency].value} € por adulto`;
   const childrenLabel =
     children > 0
-      ? `${category2.toFixed(2)} € por niño${children > 1 ? "s" : ""}`
+      ? `${tourData.childrenPrice[currency].value} € por niño${
+          children > 1 ? "s" : ""
+        }`
       : null;
 
   // Guardar cambios
   const handleApply = () => {
-    setService({ ...service, amount: adults, amountChildren: children });
+    setService({
+      ...service,
+      selectedData: {
+        amountAdults: adults,
+        amountChildren: children,
+        totalAdult: totalAdults,
+        totalChildren: totalChildren,
+        totalAmount: totalAmount,
+        totalPrice: totalPrice,
+      },
+    });
     onClose();
   };
 
@@ -173,18 +217,18 @@ export default function TravellersDetailsModal({ open, onClose }) {
         <div className="space-y-2 mb-4">
           <div className="flex justify-between text-sm">
             <span>{unitLabel}</span>
-            <span>{totalAdults.toFixed(2)} €</span>
+            <span>{formatPrice(totalAdults, currency)}</span>
           </div>
           {childrenLabel && (
             <div className="flex justify-between text-sm">
               <span>{childrenLabel}</span>
-              <span>{totalChildren.toFixed(2)} €</span>
+              <span>{formatPrice(totalChildren, currency)}</span>
             </div>
           )}
           <hr />
           <div className="flex justify-between font-semibold text-sm">
             <span>{language === "es" ? "Total" : "Total"} EUR</span>
-            <span>{total.toFixed(2)} €</span>
+            <span>{formatPrice(totalPrice, currency)}</span>
           </div>
         </div>
         <button

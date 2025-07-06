@@ -71,7 +71,7 @@ export default function ServicePreviewPage() {
   useEffect(() => {
     console.log("typeService preview", subService.typeService);
     if (subService.typeService == "tour") {
-      setPrice(subService?.tourData?.price);
+      setPrice(subService?.tourData?.adultPrice);
       setValidPrice(true);
     } else {
       console.log("entra al otro");

@@ -47,6 +47,17 @@ function Calendar({ id }) {
 
   const locales = { en: enUS, es, fr, de, pt: ptBR };
 
+  // fetch schedule on mount
+  useEffect(() => {
+    setService((prev) => ({
+      ...prev,
+      selectedData: {
+        amountAdults: 1,
+        amountChildren: 0,
+      },
+    }));
+  }, []);
+
   // adjust adults count
   const incAdults = () => {
     if (

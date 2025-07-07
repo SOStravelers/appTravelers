@@ -117,7 +117,7 @@ function Navbar() {
           role="presentation"
           style={{ marginTop: "-2px" }}
           className={clsx(
-            "text-sm",
+            "text-xs",
             router.pathname === "/" || router.pathname === "/worker/home"
               ? "text-blueBorder"
               : "text-greyText"
@@ -139,7 +139,7 @@ function Navbar() {
         <span
           role="presentation"
           className={clsx(
-            "text-sm",
+            "text-xs",
             router.pathname === "/booking" ||
               router.pathname === "/worker/booking"
               ? "text-blueBorder"
@@ -191,7 +191,7 @@ function Navbar() {
           <span
             role="presentation"
             className={clsx(
-              "text-sm",
+              "text-xs",
               router.pathname.includes("favorites")
                 ? "text-blueBorder"
                 : "text-greyText"
@@ -238,9 +238,9 @@ function Navbar() {
           isImageAccessible && user?.img && user?.img.imgUrl ? (
             <>
               <Link
-                className="rounded-xl"
+                className="rounded-md"
                 href={"/profile"}
-                style={{ width: "32px", height: "32px", overflow: "hidden" }}
+                style={{ width: "24px", height: "24px", overflow: "hidden" }}
               >
                 <img
                   src={user.img.imgUrl}

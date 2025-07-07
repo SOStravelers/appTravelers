@@ -58,7 +58,9 @@ export default function ContactInfoPage() {
   useEffect(() => {
     if (!user) return;
     setName(
-      user?.personalData?.name?.first + " " + user?.personalData?.name?.last
+      user?.personalData?.name
+        ? user?.personalData?.name?.first + " " + user?.personalData?.name?.last
+        : ""
     );
     setEmail(user?.email);
   }, [user]);

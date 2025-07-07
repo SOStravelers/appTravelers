@@ -219,11 +219,13 @@ export default function TravellersDetailsModal({ open, onClose }) {
             <span>{unitLabel}</span>
             <span>{formatPrice(totalAdults, currency)}</span>
           </div>
-          {childrenLabel && (
+          {childrenLabel ? (
             <div className="flex justify-between text-sm">
               <span>{childrenLabel}</span>
               <span>{formatPrice(totalChildren, currency)}</span>
             </div>
+          ) : (
+            <div className="flex justify-between h-5 text-sm"></div>
           )}
           <hr />
           <div className="flex justify-between font-semibold text-sm">

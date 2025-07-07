@@ -124,7 +124,7 @@ function TopBarSubMenu() {
         </div>
         <div className="flex justify-center items-center">
           <Link
-            className="my-2"
+            className="my-2 mr-1"
             href={isWorker ? "/worker/home" : "/"}
             scroll={false}
             onClick={() => {

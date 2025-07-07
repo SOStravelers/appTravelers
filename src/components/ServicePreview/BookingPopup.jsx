@@ -20,7 +20,7 @@ const BookingPopup = ({
 }) => {
   return (
     <div
-      className="fixed bottom-11 left-1/2 transform -translate-x-1/2 z-32
+      className="fixed bottom-11 left-1/2 transform -translate-x-1/2 z-30
     w-full max-w-xl bg-white border border-gray-200
     flex items-center justify-between px-3 py-2 rounded-xl "
     >

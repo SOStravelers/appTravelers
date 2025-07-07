@@ -28,7 +28,6 @@ export default function SummaryPage() {
   const [loading, setLoading] = useState(true); // <-- loading flag
   const [expanded, setExpanded] = useState(true);
   const [hasCancel, setHasCancel] = useState(false);
-
   // NUEVO: doble estado
   const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -113,18 +112,27 @@ export default function SummaryPage() {
     <>
       <div
         className={`min-h-screen bg-gray-50 p-4 flex flex-col items-center
-          transform transition-all duration-800 ease-out
-          transition-opacity duration-800 ease-out
-         ${loading ? opacityAnimation : displayAnimation}
-        `}
+    transition-all duration-800 ease-out
+    transition-opacity duration-800 ease-out
+    ${loading ? opacityAnimation : displayAnimation}
+  `}
       >
         <h1 className="text-md font-bold mb-1">
           {thisLanguage.title[language]}
         </h1>
 
         {/* Contendio Tarjeta Summary */}
-        <CardSummaryService status={true} />
+        <CardSummaryService
+          statusExpanded={true}
+          modalOptions={true}
+          openModal={() => setModalOpen(true)}
+        />
       </div>
+      {/* Modal de detalles  */}
+      <TravellersDetailsModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
       {/* Botón Siguiente Flotante */}
       <BookingPopup
         priceLabel={`${thisLanguage.value[language]} ${formatPrice(

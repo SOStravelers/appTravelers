@@ -1,6 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import { delay } from "@/utils/delayFunction";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 import { useStore } from "@/store";
 import {
   formatearFechaCompletaDesdeISO,
@@ -10,7 +14,11 @@ import TravellersDetailsModal from "@/components/utils/modal/TravellersDetailsMo
 import languageData from "@/language/newSummary.json";
 import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
 
-export default function SummaryPage({ status }) {
+export default function SummaryPage({
+  statusExpanded,
+  modalOptions,
+  openModal = () => {},
+}) {
   const router = useRouter();
   const id = router?.query?.id;
   const { service, setService, language, currency } = useStore();
@@ -45,8 +53,8 @@ export default function SummaryPage({ status }) {
   }, []);
 
   useEffect(() => {
-    console.log("el status", status);
-    setExpanded(status);
+    console.log("el status Expanded", statusExpanded);
+    setExpanded(statusExpanded);
   }, []);
 
   useEffect(() => {
@@ -190,12 +198,14 @@ export default function SummaryPage({ status }) {
                   `, ${children} ${thisLanguage.sections.travellers.children[language]}`}
               </p>
             </div>
-            <button
-              className="text-blueBorder font-semibold text-xs hover:underline"
-              onClick={() => setModalOpen(true)}
-            >
-              {thisLanguage.sections.travellers.changeButton[language]}
-            </button>
+            {modalOptions && (
+              <button
+                className="text-blueBorder font-semibold text-xs hover:underline"
+                onClick={() => openModal(true)}
+              >
+                {thisLanguage.sections.travellers.changeButton[language]}
+              </button>
+            )}
           </div>
           {/* Precio total */}
           <div className="flex justify-between items-center">
@@ -207,12 +217,14 @@ export default function SummaryPage({ status }) {
                 {formatPrice(total, currency)}
               </p>
             </div>
-            <button
-              className="text-blueBorder font-semibold hover:underline text-xs"
-              onClick={() => setModalOpen(true)}
-            >
-              {thisLanguage.sections.totalPrice.detailsButton[language]}
-            </button>
+            {modalOptions && (
+              <button
+                className="text-blueBorder font-semibold hover:underline text-xs"
+                onClick={() => openModal(true)}
+              >
+                {thisLanguage.sections.totalPrice.detailsButton[language]}
+              </button>
+            )}
           </div>
           {/* Cancelación gratuita */}
           {hasCancel?.isBefore && (
@@ -253,12 +265,6 @@ export default function SummaryPage({ status }) {
           )}
         </div>
       </div>
-
-      {/* Modal de detalles  */}
-      <TravellersDetailsModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
     </>
   );
 }

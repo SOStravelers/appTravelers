@@ -467,3 +467,37 @@ export const formatPrice = (price, currency) => {
     return "R$ " + price;
   }
 };
+
+export function isBeforeHoursThreshold(
+  dateString,
+  hoursBefore,
+  language = "pt"
+) {
+  const targetDate = new Date(dateString);
+
+  if (isNaN(targetDate.getTime())) {
+    console.error("❌ Fecha inválida:", dateString);
+    return {
+      isBefore: false,
+      cancelTime: {
+        isoTime: null,
+        stringData: "",
+      },
+    };
+  }
+
+  // Calcular la fecha límite
+  const thresholdDate = new Date(
+    targetDate.getTime() - hoursBefore * 60 * 60 * 1000
+  );
+
+  const now = new Date(); // ya es en UTC
+
+  return {
+    isBefore: now < thresholdDate,
+    cancelTime: formatearFechaCompletaDesdeISO(
+      thresholdDate.toISOString(),
+      language
+    ),
+  };
+}

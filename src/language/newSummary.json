@@ -147,6 +147,13 @@
       "de": "Geben Sie Ihre generellen Details ein",
       "pt": "Digite seus detalhes pessoais"
     },
+    "value": {
+      "es": "Valor:",
+      "en": "Value:",
+      "fr": "Valeur:",
+      "de": "Wert:",
+      "pt": "Valor:"
+    },
     "subtitle": {
       "en": "Checkout is fast and secure",
       "es": "El checkout es rápido y seguro",
@@ -224,6 +231,13 @@
         "de": "Bitte geben Sie eine Telefonnummer für Notfallkontakte ein (Aktualisierungen zu Ihrer Buchung)",
         "pt": "Por favor, insira um número de telefone para contatos de emergência (atualizações sobre sua reserva)"
       }
+    },
+    "cancel": {
+      "es": "Cancelación gratuita",
+      "en": "Free cancellation",
+      "fr": "Annulation gratuite",
+      "de": "Kostenlos stornieren",
+      "pt": "Cancelamento gratuito"
     },
     "buttons": {
       "paymentButton": {

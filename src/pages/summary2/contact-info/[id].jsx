@@ -6,18 +6,20 @@ import {
   opacityAnimation,
   displayAnimation,
 } from "@/utils/delayFunction";
+import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
 import CountrySelector from "@/components/utils/selector/CountrySelector";
 import PhoneCodeSelector from "@/components/utils/selector/PhoneCodeSelector";
 import languageData from "@/language/newSummary.json";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import { MdLock } from "react-icons/md";
-const okInput =
-  "w-full border border-gray-300 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-blueBorder transition";
-const errInput =
-  "w-full border border-red-500 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-red-600 transition";
+const disabledStyles = "disabled:opacity-50 disabled:cursor-not-allowed";
+
+const okInput = `w-full border border-gray-300 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-blueBorder transition ${disabledStyles}`;
+
+const errInput = `w-full border border-red-500 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-red-600 transition ${disabledStyles}`;
 
 export default function ContactInfoPage() {
-  const { language, user, service, setService } = useStore();
+  const { language, user, service, setService, currency } = useStore();
   const thisLanguage = languageData.contactInfo;
   const router = useRouter();
   const [name, setName] = useState("");
@@ -25,7 +27,7 @@ export default function ContactInfoPage() {
   const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneCode, setPhoneCode] = useState("+1");
-
+  const [hasCancel, setHasCancel] = useState(false);
   const [errName, setErrName] = useState(null);
   const [errEmail, setErrEmail] = useState(null);
   const [errCountry, setErrCountry] = useState(null);
@@ -42,7 +44,25 @@ export default function ContactInfoPage() {
   }, []);
 
   useEffect(() => {
+    if (service.canCancel) {
+      const hasCancel = isBeforeHoursThreshold(
+        service.startTime.isoTime,
+        service.timeUntilCancel
+      );
+      console.log("hasCancel", hasCancel);
+      setHasCancel(hasCancel);
+    } else {
+      setHasCancel(false);
+    }
+  }, [service]);
+
+  useEffect(() => {
+    console.log("hola", user);
     if (!user) return;
+    setName(
+      user?.personalData?.name?.first + " " + user?.personalData?.name?.last
+    );
+    setEmail(user?.email);
   }, [user]);
 
   const validate = () => {
@@ -67,12 +87,15 @@ export default function ContactInfoPage() {
       valid = false;
     } else setErrPhone(null);
 
-    setService({
-      ...service,
-      clientData: { name, email, country, phone, phoneCode },
-    });
-    router.push(`/payment/stripe`);
-    if (valid) alert("Datos enviados correctamente");
+    if (valid) {
+      setService({
+        ...service,
+        clientData: { name, email, country, phone, phoneCode },
+      });
+      router.push(`/stripe`);
+    }
+
+    // if (valid) alert("Datos enviados correctamente");
   };
 
   return (
@@ -115,6 +138,7 @@ export default function ContactInfoPage() {
               {thisLanguage.emailInput.title[language]}
             </label>
             <input
+              disabled={user?.email}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -166,10 +190,12 @@ export default function ContactInfoPage() {
       </div>
       {/* Botón */}
       <BookingPopup
-        priceLabel={`wena`}
-        subtext={"hola"}
-        tagLine={"chao"}
-        buttonText={thisLanguage.buttons.paymentButton[language]}
+        priceLabel={`${thisLanguage.value[language]} ${formatPrice(
+          service?.selectedData?.totalPrice || null,
+          currency
+        )} `}
+        subtext={""}
+        tagLine={hasCancel?.isBefore ? thisLanguage.cancel[language] : ""}
         onAction={validate}
       />
     </>

@@ -94,7 +94,7 @@ function TopBarSubMenu() {
   return (
     <div
       className={clsx(
-        "w-screen flex items-center justify-between h-18 lg:h-20 xl:h-20 lg:px-20 xl:px-20  px-5 shadow-xl fixed top-0 z-40",
+        "w-screen flex items-center justify-between h-18 lg:h-20 xl:h-20 lg:px-20 xl:px-20  px-1 shadow-xl fixed top-0 z-40",
         "bg-darkBlue"
       )}
     >
@@ -118,36 +118,32 @@ function TopBarSubMenu() {
         onAccept={stateBookingWorker}
         onCancel={cancelWorkerModal}
       />
-      <div onClick={() => router.back()}>
-        <ReturnArrowIcon color="#fff" size="35" />
+      <div className="flex flex-row justify-center items-center">
+        <div onClick={() => router.back()}>
+          <ReturnArrowIcon color="#fff" size="35" />
+        </div>
+        <div className="flex justify-center items-center">
+          <Link
+            className="my-2"
+            href={isWorker ? "/worker/home" : "/"}
+            scroll={false}
+            onClick={() => {
+              setScrollY(window.scrollY); // guardamos Y
+              setRestoreScroll(true); // marcamos que hay que restaurar
+            }}
+          >
+            <LogoWhite
+              // remove the old fontSize (it doesn’t affect SVG paths)
+              size={38} // ← pick the pixel size you want (e.g. 18 × 18 px)
+              color="white"
+              style={{ "&:focus": { outline: "none" } }} // keep any extra styles you need
+            />
+          </Link>
+        </div>
       </div>
       <h1 className={clsx(" text-xl", "text-white")}>{titulo}</h1>
-      {/* <div className="flex items-center">
-        <Link
-          className="text-white border rounded-lg px-2 py-1 text-sm mr-3"
-          href="/login"
-        >
-          {languageData.signIn[language]}
-        </Link>
-        <Link
-          className="my-2"
-          href={isWorker ? "/worker/home" : "/"}
-          scroll={false}
-          onClick={() => {
-            setScrollY(window.scrollY); // guardamos Y
-            setRestoreScroll(true); // marcamos que hay que restaurar
-          }}
-        >
-          <LogoWhite
-            // remove the old fontSize (it doesn’t affect SVG paths)
-            size={38} // ← pick the pixel size you want (e.g. 18 × 18 px)
-            color="white"
-            style={{ "&:focus": { outline: "none" } }} // keep any extra styles you need
-          />
-        </Link>
-      </div> */}
 
-      <div className="flex  h-14 justify-center items-center">
+      <div className="flex  h-14 justify-center items-center mr-3">
         {loggedIn ? (
           <>
             {isImageAccessible && user?.img && user?.img.imgUrl ? (

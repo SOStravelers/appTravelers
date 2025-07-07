@@ -1,12 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import StripeForm from "@/components/utils/payments/StripeForm";
 import { useStore } from "@/store";
+import CardSummaryService from "@/components/summary/cardSummaryService";
 import StripeService from "@/services/StripeService";
 import { useRouter } from "next/router";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 export default function Stripe() {
   const [clientSecret, setClientSecret] = useState(null);
   const router = useRouter();
   const initialized = useRef(false);
+  const [loading, setLoading] = useState(true); // <-- loading flag
   const { service, currency } = useStore();
   function getFinalCost() {
     console.log("el ");
@@ -31,6 +38,13 @@ export default function Stripe() {
     // Si no se encontró el objeto de precio, devuelve null
     // return null;
   }
+
+  useEffect(() => {
+    setLoading(true);
+    delay(250, () => {
+      setLoading(false);
+    });
+  }, []);
 
   useEffect(() => {
     document.title = "Your Payment | SOS Travelers";
@@ -90,8 +104,18 @@ export default function Stripe() {
   };
 
   return (
-    <section className="py-20 md:py-24 px-5 md:pl-80 w-full max-w-2xl">
+    <div
+      className={`min-h-screen bg-gray-50 p-4 mt-2 flex flex-col items-center
+              transform transition-all duration-800 ease-out
+              transition-opacity duration-800 ease-out
+             ${loading ? opacityAnimation : displayAnimation}
+            `}
+    >
+      {/* <h1 className="text-md font-bold mb-1">{thisLanguage.title[language]}</h1> */}
+      {/* Contendio Tarjeta Summary */}
+
+      <CardSummaryService status={false} />
       {clientSecret && <StripeForm clientSecret={clientSecret} />}
-    </section>
+    </div>
   );
 }

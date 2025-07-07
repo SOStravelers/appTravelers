@@ -12,7 +12,7 @@ import StripeService from "@/services/StripeService";
 import SolidButton from "../buttons/SolidButton";
 import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
-
+import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
 export default function CheckoutForm(clientSecret) {
   const secretClient = clientSecret.clientSecret;
   const stripe = useStripe();
@@ -63,8 +63,20 @@ export default function CheckoutForm(clientSecret) {
   }, []);
   function getFinalCost() {
     if (service.typeService == "tour" && service.selectedData) {
-      console.log("entro eentro");
-      setPrice(service.selectedData.totalPrice);
+      if (service.canCancel) {
+        const hasCancel = isBeforeHoursThreshold(
+          service.startTime.isoTime,
+          service.timeUntilCancel
+        );
+        if (hasCancel) {
+          setPrice(formatPrice(0));
+        } else {
+          setPrice(formatPrice(service.selectedData.totalPrice));
+        }
+      } else {
+        setPrice(formatPrice(service.selectedData.totalPrice));
+      }
+
       return;
     } else {
       console.log("sale sale");
@@ -77,10 +89,7 @@ export default function CheckoutForm(clientSecret) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="mb-6 text-center text-sm">
-        {languageData.noStress[language]}
-      </p>
-      <div className="mb-2 text-center  text-md">
+      <div className="mb-2 mt-6 text-center  text-md">
         {languageData.billingDetails[language]}
       </div>
       <LinkAuthenticationElement />
@@ -94,6 +103,7 @@ export default function CheckoutForm(clientSecret) {
       </div>
       <PaymentElement />
       <SolidButton
+        mt={5}
         text={
           isProcessing
             ? "Processing..."
@@ -107,6 +117,9 @@ export default function CheckoutForm(clientSecret) {
         }
         disabled={!stripe || isProcessing}
       ></SolidButton>
+      <p className="mb-6 mt-4 text-center text-sm">
+        {languageData.noStress[language]}
+      </p>
     </form>
   );
 }

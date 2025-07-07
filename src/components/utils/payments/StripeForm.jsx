@@ -2,11 +2,13 @@ import React from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { useStore } from "@/store";
 
 const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
 const stripePromise = loadStripe(stripePublicKey);
 
 export default function StripeForm({ clientSecret }) {
+  const { language, currency, user } = useStore(); // 👈 nuevos
   const appearance = {
     theme: "stripe",
     size: "desktop",
@@ -36,9 +38,13 @@ export default function StripeForm({ clientSecret }) {
     //   },
     // },
   };
-
+  console.log("el gran email", user?.email);
   const options = {
     clientSecret: clientSecret,
+    locale: language || "en", // Idioma que tú usas en tu store
+    defaultValues: {
+      email: user?.email || "",
+    },
   };
 
   return (

@@ -105,6 +105,8 @@ function Calendar({ id }) {
   // when day changes, pick its intervals
   useEffect(() => {
     if (!selectedDay || !schedule.length) return;
+    setTime();
+    console.log("selectDay", selectedDay);
     const date = new Date(selectedDay);
     const isoDay =
       formatISO(date, { representation: "date" }) + "T00:00:00.000";
@@ -254,13 +256,8 @@ function Calendar({ id }) {
               </span>
             )}
           </div>
-          {time && (
-            <div className="w-full flex justify-center">
-              {/* <OutlinedButton
-                text={languageData.calendar.nextButton[language]}
-                onClick={selectTime}
-              /> */}
-
+          <div className="w-full flex justify-center">
+            {time ? (
               <button
                 onClick={selectTime}
                 className={`block w-1/2 mx-auto text-white text-xs px-2 py-2 rounded-full bg-darkBlue hover:bg-blueBorderLight
@@ -268,8 +265,10 @@ function Calendar({ id }) {
               >
                 {languageData.calendar.applyButton[language]}
               </button>
-            </div>
-          )}
+            ) : (
+              <div className="block w-1/2 mx-auto text-white text-xs px-2 py-4 rounded-full " />
+            )}
+          </div>
         </div>
       );
     }

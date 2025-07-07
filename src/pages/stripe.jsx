@@ -16,7 +16,6 @@ export default function Stripe() {
   const [loading, setLoading] = useState(true); // <-- loading flag
   const { service, currency } = useStore();
   function getFinalCost() {
-    console.log("el ");
     // // Busca el objeto de precio con la moneda proporcionada
     // const priceObject = service.price.find(
     //   (price) => price.currency === currency
@@ -28,10 +27,8 @@ export default function Stripe() {
     // }
 
     if (service.typeService == "tour" && service.selectedData) {
-      console.log("entro eentro");
       return service.selectedData.totalPrice;
     } else {
-      console.log("sale sale");
       throw new Error("Datos insuficientes para crear el pago.");
     }
 
@@ -59,7 +56,6 @@ export default function Stripe() {
     }
     if (!initialized.current) {
       initialized.current = true;
-      console.log("se viene");
       createPaymentIntent();
     } else {
       initialized.current = false;
@@ -76,7 +72,6 @@ export default function Stripe() {
       }
 
       const amount = getFinalCost() * 100;
-      console.log("el amount", amount);
       const currencyValue = ["brl", "usd", "eur"].includes(
         currency?.toLowerCase()
       )
@@ -93,10 +88,8 @@ export default function Stripe() {
         selectedData: service.selectedData,
         language: service.language,
       };
-      console.log("la data", laData);
       const response = await StripeService.createPaymentIntent(laData, true);
 
-      console.log("Respuesta de createIntent:", response.data);
       setClientSecret(response.data.clientSecret);
     } catch (error) {
       console.error("Error al crear el PaymentIntent:", error.message);

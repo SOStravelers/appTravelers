@@ -56,7 +56,6 @@ export default function SummaryPage() {
         service.startTime.isoTime,
         service.timeUntilCancel
       );
-      console.log("hasCancel", hasCancel);
       setHasCancel(hasCancel);
     } else {
       setHasCancel(false);

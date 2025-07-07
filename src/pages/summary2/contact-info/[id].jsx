@@ -49,7 +49,6 @@ export default function ContactInfoPage() {
         service.startTime.isoTime,
         service.timeUntilCancel
       );
-      console.log("hasCancel", hasCancel);
       setHasCancel(hasCancel);
     } else {
       setHasCancel(false);
@@ -57,7 +56,6 @@ export default function ContactInfoPage() {
   }, [service]);
 
   useEffect(() => {
-    console.log("hola", user);
     if (!user) return;
     setName(
       user?.personalData?.name?.first + " " + user?.personalData?.name?.last

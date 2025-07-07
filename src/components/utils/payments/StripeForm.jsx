@@ -38,7 +38,6 @@ export default function StripeForm({ clientSecret }) {
     //   },
     // },
   };
-  console.log("el gran email", user?.email);
   const options = {
     clientSecret: clientSecret,
     locale: language || "en", // Idioma que tú usas en tu store

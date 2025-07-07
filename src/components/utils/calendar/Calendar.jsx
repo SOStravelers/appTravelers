@@ -60,7 +60,6 @@ function Calendar({ id }) {
     setTotalAmount(v + children);
   };
   const decAdults = () => {
-    console.log("dec adult", totalAmount);
     if (adults > 1) {
       const v = adults - 1;
       setAdults(v);
@@ -70,7 +69,6 @@ function Calendar({ id }) {
 
   // adjust children count
   const incChildren = () => {
-    console.log("inc child", totalAmount);
     if (
       service?.tourData?.hasLimit &&
       service?.tourData?.limit &&
@@ -82,7 +80,6 @@ function Calendar({ id }) {
     setTotalAmount(v + adults);
   };
   const decChildren = () => {
-    console.log("dec child", totalAmount);
     if (children > 0) {
       const v = children - 1;
       setChildren(v);
@@ -106,7 +103,6 @@ function Calendar({ id }) {
   useEffect(() => {
     if (!selectedDay || !schedule.length) return;
     setTime();
-    console.log("selectDay", selectedDay);
     const date = new Date(selectedDay);
     const isoDay =
       formatISO(date, { representation: "date" }) + "T00:00:00.000";
@@ -234,21 +230,18 @@ function Calendar({ id }) {
           <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[200px] mx-auto">
             {intervals.length ? (
               intervals.map((hour) => (
-                <>
-                  {/* <p>{hour.startTimeIso}</p> */}
-                  <TimeButton
-                    key={hour.startTimeIso}
-                    onClick={() => setTime(hour)}
-                    text={
-                      formatearFechaCompletaDesdeISO(
-                        hour.startTimeIso,
-                        language,
-                        "br"
-                      ).stringData
-                    }
-                    selected={time === hour}
-                  />
-                </>
+                <TimeButton
+                  key={`${selectedDay}-${hour.startTimeIso}`}
+                  onClick={() => setTime(hour)}
+                  text={
+                    formatearFechaCompletaDesdeISO(
+                      hour.startTimeIso,
+                      language,
+                      "br"
+                    ).stringData
+                  }
+                  selected={time === hour}
+                />
               ))
             ) : (
               <span className="mt-4 text-sm text-gray-600">

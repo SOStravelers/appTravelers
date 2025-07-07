@@ -54,7 +54,6 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
     if (!nav) return;
 
     const threshold = stickypoint;
-    console.log("el point", stickypoint);
     // -- Si tu top-bar fija mide 58 px y quieres activar justo cuando el nav
     //    se “pegue” debajo de ella, resta sólo esos 58:
     // const threshold = nav.getBoundingClientRect().top + window.scrollY - 58;

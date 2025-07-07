@@ -22,7 +22,6 @@ function WorkerProfileCard({ name, services, score, numberBookings, avatar }) {
   };
 
   useEffect(() => {
-    console.log("el user", user);
     if (user && Object.keys(user).length > 0) {
       getFavorites();
     }

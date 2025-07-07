@@ -51,11 +51,9 @@ export default function ServiceList({ filterKey }) {
         });
 
         const { docs, hasNextPage } = res.data;
-        console.log("pages", page, lastPage);
         if (page === 1) {
           // Reemplazo total sin validar duplicados
           setListItems(docs);
-          console.log("se viene el true");
         } else {
           // Evitar duplicados si es append
           const currentIds = new Set(

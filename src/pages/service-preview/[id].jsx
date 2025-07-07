@@ -42,7 +42,6 @@ export default function ServicePreviewPage() {
   }, []);
 
   const openModal = () => {
-    console.log("wena");
     setService(subService);
     setOpenReservation(true);
   };
@@ -53,7 +52,6 @@ export default function ServicePreviewPage() {
     SubserviceService.getById(id)
       .then(({ data }) => {
         if (data && typeof data === "object") {
-          console.log("calanaza");
           setSubservice(data);
           setService(data);
         }
@@ -71,12 +69,10 @@ export default function ServicePreviewPage() {
   ];
 
   useEffect(() => {
-    console.log("typeService preview", subService.typeService);
     if (subService.typeService == "tour") {
       setPrice(subService?.tourData?.adultPrice);
       setValidPrice(true);
     } else {
-      console.log("entra al otro");
       setPrice({
         eur: { value: null, formated: "- €" },
         usd: { value: null, formated: "- USD" },

@@ -48,23 +48,19 @@ export default function Home() {
         const stickyEl = document.getElementById("icon-carousel");
         const point = stickyEl.getBoundingClientRect().top - 52;
         setStickypoint(point);
-        console.log("el point guardado de pantalla", point);
       }
     }, 1000);
     return () => clearTimeout(timerIds);
   }, [stickypoint]);
 
   useEffect(() => {
-    console.log("activacion scroll");
     if (lastPage !== "preview" && obsFilter) {
-      console.log("scroll al apretar un filtro");
       setScrolled(true);
       setObsFilter(false);
       requestAnimationFrame(() => {
         setTimeout(() => {
           const stickyEl = document.getElementById("icon-carousel");
           if (!stickyEl) return;
-          console.log("stikcyPoint", window.scrollY, stickypoint);
           if (window.scrollY >= stickypoint) {
             window.scrollTo({ top: stickypoint });
           } else {
@@ -73,7 +69,6 @@ export default function Home() {
         }, 50);
       });
     } else {
-      console.log("scroll de inicio");
       const id = Cookies.get("homeItemId");
       if (!id) return;
       const tryScroll = () => {

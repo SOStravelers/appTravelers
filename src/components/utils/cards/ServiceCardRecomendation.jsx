@@ -41,9 +41,7 @@ const ServiceCardRecomendation = ({
   const gridItems = [0, 1, 2, 3].map((i) => images[i] || null);
 
   useEffect(() => {
-    console.log("typeService", typeService);
     if (typeService == "tour") {
-      console.log("wena", tourData.adultPrice[currency]);
       setPrice(tourData.adultPrice);
     } else {
       setPrice({

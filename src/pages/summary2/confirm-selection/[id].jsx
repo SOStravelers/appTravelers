@@ -6,7 +6,7 @@ import {
   displayAnimation,
 } from "@/utils/delayFunction";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
-import CardSummaryService from "@/components/summary/cardSummaryService";
+import CardSummaryService from "@/components/summary/CardSummaryService";
 import { useStore } from "@/store";
 import {
   formatearFecha,

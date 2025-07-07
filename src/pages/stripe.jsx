@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import StripeForm from "@/components/utils/payments/StripeForm";
 import { useStore } from "@/store";
-import CardSummaryService from "@/components/summary/cardSummaryService";
+import CardSummaryService from "@/components/summary/CardSummaryService";
 import StripeService from "@/services/StripeService";
 import { useRouter } from "next/router";
 import {

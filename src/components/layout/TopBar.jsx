@@ -111,7 +111,7 @@ function TopBar() {
   return (
     <div
       className={clsx(
-        "w-screen z-30 fixed top-0 transition-all duration-500",
+        "w-screen z-40 fixed top-0 transition-all duration-500",
         "lg:px-10 xl:px-10 px-3 flex items-center justify-between h-18 lg:h-16 xl:h-16",
         router.pathname === "/"
           ? scrolledPastVh

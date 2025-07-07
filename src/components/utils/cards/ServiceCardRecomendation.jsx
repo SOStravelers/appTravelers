@@ -43,8 +43,8 @@ const ServiceCardRecomendation = ({
   useEffect(() => {
     console.log("typeService", typeService);
     if (typeService == "tour") {
-      console.log("wena", tourData.price[currency]);
-      setPrice(tourData.price);
+      console.log("wena", tourData.adultPrice[currency]);
+      setPrice(tourData.adultPrice);
     } else {
       setPrice({
         eur: { value: null, formated: "- €" },

@@ -47,17 +47,6 @@ function Calendar({ id }) {
 
   const locales = { en: enUS, es, fr, de, pt: ptBR };
 
-  // fetch schedule on mount
-  useEffect(() => {
-    setService((prev) => ({
-      ...prev,
-      selectedData: {
-        amountAdults: 1,
-        amountChildren: 0,
-      },
-    }));
-  }, []);
-
   // adjust adults count
   const incAdults = () => {
     if (
@@ -69,14 +58,6 @@ function Calendar({ id }) {
     const v = adults + 1;
     setAdults(v);
     setTotalAmount(v + children);
-    setService({
-      ...service,
-      selectedData: {
-        amountAdults: v,
-        amountChildren: children,
-        totalAmount: v + children,
-      },
-    });
   };
   const decAdults = () => {
     console.log("dec adult", totalAmount);
@@ -84,14 +65,6 @@ function Calendar({ id }) {
       const v = adults - 1;
       setAdults(v);
       setTotalAmount(v + children);
-      setService({
-        ...service,
-        selectedData: {
-          amountAdults: v,
-          amountChildren: children,
-          totalAmount: v + children,
-        },
-      });
     }
   };
 
@@ -107,14 +80,6 @@ function Calendar({ id }) {
     const v = children + 1;
     setChildren(v);
     setTotalAmount(v + adults);
-    setService({
-      ...service,
-      selectedData: {
-        amountAdults: adults,
-        amountChildren: v,
-        totalAmount: v + adults,
-      },
-    });
   };
   const decChildren = () => {
     console.log("dec child", totalAmount);
@@ -122,10 +87,6 @@ function Calendar({ id }) {
       const v = children - 1;
       setChildren(v);
       setTotalAmount(v + adults);
-      setService({
-        ...service,
-        selectedData: { amountChildren: v, totalAmount: v + adults },
-      });
     }
   };
 
@@ -220,9 +181,13 @@ function Calendar({ id }) {
       date: dateStr,
       startTime: { isoTime: startTimeIso, stringData: startTime },
       endTime: { isoTime: endTimeIso, stringData: endTime },
-      amount: adults,
-      amountChildren: children,
+      selectedData: {
+        amountAdults: adults,
+        amountChildren: children,
+        totalAmount: children + adults,
+      },
     });
+
     router.push(`/summary2/confirm-selection/${id}`);
     // if (isWorker) router.push(`/assign-client`);
     // else if (fromFavorite) router.push(`/summary-mini`);

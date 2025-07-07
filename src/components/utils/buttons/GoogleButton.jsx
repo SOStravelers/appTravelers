@@ -9,7 +9,9 @@ function GoogleButton() {
   const router = useRouter();
   const login = async () => {
     const { front } = useStore.getState().urls;
-    const result = await signIn("google");
+    const result = await signIn("google", {
+      callbackUrl: window.location.href,
+    });
     // Puedes manejar el resultado de la autenticación aquí
     if (result && result.error) {
       console.error("Error al iniciar sesión:", result.error);

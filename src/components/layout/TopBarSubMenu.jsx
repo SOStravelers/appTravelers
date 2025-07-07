@@ -13,6 +13,7 @@ import { Howl } from "howler";
 import { validationImg } from "@/utils/validation";
 import languageData from "@/language/menu.json";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
+import { FiBell, FiBellOff } from "react-icons/fi";
 const sound = new Howl({
   src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
 });
@@ -24,8 +25,15 @@ function TopBarSubMenu() {
   const socket = useRef();
   const userCookie = Cookies.get("auth.user_id");
   const [isImageAccessible, setIsImageAccessible] = useState(false);
-  const { isWorker, setScrollY, setRestoreScroll, language, loggedIn, user } =
-    useStore(); // 👈 nuevos
+  const {
+    isWorker,
+    setScrollY,
+    setRestoreScroll,
+    language,
+    loggedIn,
+    user,
+    haveNotification,
+  } = useStore(); // 👈 nuevos
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   var userId = Cookies.get("auth.user_id");
   const routeTitles = useDynamicRouteTitles();
@@ -146,26 +154,20 @@ function TopBarSubMenu() {
       <div className="flex  h-14 justify-center items-center mr-3">
         {loggedIn ? (
           <>
-            {isImageAccessible && user?.img && user?.img.imgUrl ? (
-              <Link
-                className="rounded-xl"
-                href={profileUrl}
-                style={{ width: "36px", height: "36px", overflow: "hidden" }}
-              >
-                <img
-                  src={user.img.imgUrl}
-                  alt="Descripción de la imagen"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              </Link>
-            ) : (
-              <Link
-                href="/profile"
-                className="border border-white  text-sm text-white px-3 py-2 text rounded-xl"
-              >
-                {initials()}
-              </Link>
-            )}
+            <Link href="/notifications" className="relative lg:mx-4 xl:mx-5">
+              {/* campana (siempre) */}
+              <FiBell className="w-5 h-5 mr-2 text-white" />
+
+              {/* puntito SOLO cuando existe notificación */}
+              {!haveNotification && (
+                <span className="absolute -top-0.5  inline-flex h-2 w-2">
+                  {/* efecto ping (opcional) */}
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  {/* círculo sólido */}
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                </span>
+              )}
+            </Link>
           </>
         ) : (
           <>

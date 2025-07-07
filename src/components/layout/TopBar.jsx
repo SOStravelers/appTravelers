@@ -175,10 +175,10 @@ function TopBar() {
 
             <Link href="/notifications" className="relative lg:mx-4 xl:mx-5">
               {/* campana (siempre) */}
-              <FiBell className="w-5 h-5 mr-4 text-white" />
+              <FiBell className="w-5 h-5 mr-2 text-white" />
 
               {/* puntito SOLO cuando existe notificación */}
-              {haveNotification && (
+              {!haveNotification && (
                 <span className="absolute -top-0.5  inline-flex h-2 w-2">
                   {/* efecto ping (opcional) */}
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
@@ -188,7 +188,7 @@ function TopBar() {
               )}
             </Link>
 
-            {isImageAccessible && user?.img && user?.img.imgUrl ? (
+            {/* {isImageAccessible && user?.img && user?.img.imgUrl ? (
               <Link
                 className="rounded-xl"
                 href={profileUrl}
@@ -207,7 +207,7 @@ function TopBar() {
               >
                 {initials()}
               </Link>
-            )}
+            )} */}
           </>
         ) : (
           <>

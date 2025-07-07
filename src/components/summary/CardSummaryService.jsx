@@ -14,7 +14,7 @@ import TravellersDetailsModal from "@/components/utils/modal/TravellersDetailsMo
 import languageData from "@/language/newSummary.json";
 import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
 
-export default function SummaryPage({
+export default function CardSummaryService({
   statusExpanded,
   modalOptions,
   openModal = () => {},

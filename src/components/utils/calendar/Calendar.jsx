@@ -15,7 +15,7 @@ import languageData from "@/language/reservation.json";
 import { formatearFechaCompletaDesdeISO } from "@/utils/format";
 function Calendar({ id }) {
   const router = useRouter();
-  const { service, setService, isWorker, language } = useStore();
+  const { service, setService, isWorker, language, currency } = useStore();
 
   // time selection
   const [time, setTime] = useState();
@@ -176,6 +176,10 @@ function Calendar({ id }) {
       endTime = time.endTime;
     }
 
+    const totalA = adults * service.tourData.adultPrice[currency].value;
+    const totalC = children * service.tourData.childrenPrice[currency].value;
+    const total = totalA + totalC;
+
     setService({
       ...service,
       date: dateStr,
@@ -185,6 +189,9 @@ function Calendar({ id }) {
         amountAdults: adults,
         amountChildren: children,
         totalAmount: children + adults,
+        totalAdult: totalA,
+        totalChildren: totalC,
+        totalPrice: total,
       },
     });
 

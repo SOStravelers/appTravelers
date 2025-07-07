@@ -7,8 +7,8 @@ export default function Stripe() {
   const [clientSecret, setClientSecret] = useState(null);
   const router = useRouter();
   const initialized = useRef(false);
-  const { service } = useStore();
-  function getFinalCost(service, currency) {
+  const { service, currency } = useStore();
+  function getFinalCost() {
     console.log("el ");
     // // Busca el objeto de precio con la moneda proporcionada
     // const priceObject = service.price.find(
@@ -20,7 +20,13 @@ export default function Stripe() {
     //   return priceObject.finalCost;
     // }
 
-    return service.total;
+    if (service.typeService == "tour" && service.selectedData) {
+      console.log("entro eentro");
+      return service.selectedData.totalPrice;
+    } else {
+      console.log("sale sale");
+      throw new Error("Datos insuficientes para crear el pago.");
+    }
 
     // Si no se encontró el objeto de precio, devuelve null
     // return null;
@@ -39,6 +45,7 @@ export default function Stripe() {
     }
     if (!initialized.current) {
       initialized.current = true;
+      console.log("se viene");
       createPaymentIntent();
     } else {
       initialized.current = false;
@@ -50,27 +57,30 @@ export default function Stripe() {
       if (!service) {
         throw new Error("El servicio no está definido.");
       }
-
-      const amount = getFinalCost(service, service.currency) * 100;
-      const currency = service.currency?.toLowerCase() || "brl";
-
-      if (!amount || !currency) {
+      if (!currency) {
         throw new Error("Datos insuficientes para crear el pago.");
       }
 
-      const response = await StripeService.createPaymentIntent(
-        {
-          amount,
-          currency,
-          service: service.serviceName,
-          subservice: service.nameSubservice,
-          date: service.date,
-          startTime: service.startTime,
-          clientsNumber: service.clientsNumber,
-          language: service.language,
-        },
-        true
-      );
+      const amount = getFinalCost() * 100;
+      console.log("el amount", amount);
+      const currencyValue = ["brl", "usd", "eur"].includes(
+        currency?.toLowerCase()
+      )
+        ? currency.toLowerCase()
+        : "brl";
+
+      const laData = {
+        amount,
+        currency: currencyValue,
+        service: service.serviceName,
+        subservice: service.nameSubservice,
+        date: service.date,
+        startTime: service.startTime,
+        selectedData: service.selectedData,
+        language: service.language,
+      };
+      console.log("la data", laData);
+      const response = await StripeService.createPaymentIntent(laData, true);
 
       console.log("Respuesta de createIntent:", response.data);
       setClientSecret(response.data.clientSecret);

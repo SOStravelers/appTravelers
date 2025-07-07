@@ -18,7 +18,7 @@ export default function CheckoutForm(clientSecret) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
-  const { service, language } = useStore();
+  const { service, language, currency } = useStore();
   const [price, setPrice] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -59,21 +59,17 @@ export default function CheckoutForm(clientSecret) {
     }
   };
   useEffect(() => {
-    getFinalCost(service, service.currency);
+    getFinalCost();
   }, []);
-  function getFinalCost(service, currency) {
-    console.log("el ");
-    // // Busca el objeto de precio con la moneda proporcionada
-    // const priceObject = service.price.find(
-    //   (price) => price.currency === currency
-    // );
-
-    // // Si se encontró el objeto de precio, devuelve el costo final
-    // if (priceObject) {
-    //   return priceObject.finalCost;
-    // }
-
-    return service.total;
+  function getFinalCost() {
+    if (service.typeService == "tour" && service.selectedData) {
+      console.log("entro eentro");
+      setPrice(service.selectedData.totalPrice);
+      return;
+    } else {
+      console.log("sale sale");
+      throw new Error("Datos insuficientes para crear el pago.");
+    }
 
     // Si no se encontró el objeto de precio, devuelve null
     // return null;
@@ -101,12 +97,12 @@ export default function CheckoutForm(clientSecret) {
         text={
           isProcessing
             ? "Processing..."
-            : service.currency == "BRL"
+            : currency == "brl"
             ? languageData.bookNow[language] + " R$ " + price
-            : service.currency == "USD"
+            : currency == "usd"
             ? languageData.bookNow[language] + " USD " + price
-            : service.currency == "EUR"
-            ? languageData.bookNow[language] + price + " EUR"
+            : currency == "eur"
+            ? languageData.bookNow[language] + " " + price + " EUR"
             : "null"
         }
         disabled={!stripe || isProcessing}

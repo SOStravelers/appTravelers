@@ -17,7 +17,7 @@ const errInput =
   "w-full border border-red-500 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-red-600 transition";
 
 export default function ContactInfoPage() {
-  const { language } = useStore();
+  const { language, user, service, setService } = useStore();
   const thisLanguage = languageData.contactInfo;
   const router = useRouter();
   const [name, setName] = useState("");
@@ -41,6 +41,10 @@ export default function ContactInfoPage() {
     });
   }, []);
 
+  useEffect(() => {
+    if (!user) return;
+  }, [user]);
+
   const validate = () => {
     let valid = true;
     if (!name.trim()) {
@@ -63,6 +67,11 @@ export default function ContactInfoPage() {
       valid = false;
     } else setErrPhone(null);
 
+    setService({
+      ...service,
+      clientData: { name, email, country, phone, phoneCode },
+    });
+    router.push(`/payment/stripe`);
     if (valid) alert("Datos enviados correctamente");
   };
 

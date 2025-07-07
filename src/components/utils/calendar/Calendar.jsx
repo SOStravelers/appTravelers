@@ -231,11 +231,11 @@ function Calendar({ id }) {
           </h2>
           <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[200px] mx-auto">
             {intervals.length ? (
-              intervals.map((hour, i) => (
+              intervals.map((hour) => (
                 <>
                   {/* <p>{hour.startTimeIso}</p> */}
                   <TimeButton
-                    key={i}
+                    key={hour.startTimeIso}
                     onClick={() => setTime(hour)}
                     text={
                       formatearFechaCompletaDesdeISO(

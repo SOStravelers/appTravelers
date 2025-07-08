@@ -39,6 +39,8 @@ export default class SubserviceService {
   }
   //Obtener todos los subservicios con paginate
   static async getAll({ page, limit }) {
+    const { loggedIn } = useStore.getState();
+    console.log("el loguead", loggedIn);
     const filters = useStore.getState().filters || {};
     const params = new URLSearchParams();
     params.append("page", page);
@@ -61,8 +63,10 @@ export default class SubserviceService {
         params.append(key, value);
       }
     });
-
-    return axios.get(`${this.baseUrl}/getAll/paginate?${params.toString()}`);
+    const endpoint = loggedIn ? "getAll/user/paginate" : "getAll/paginate";
+    return axios.get(`${this.baseUrl}/${endpoint}?${params.toString()}`, {
+      headers: this.getHeaders(),
+    });
   }
   //Obtener subservicios que contengan videos
   static async getWithVideos() {

@@ -7,7 +7,7 @@ import SubserviceService from "@/services/SubserviceService";
 import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import { useStore } from "@/store";
-
+import FavoriteService from "@/services/FavoriteService";
 const ITEMS_PER_LOAD = 2;
 
 export default function ServiceList({ filterKey }) {
@@ -34,6 +34,7 @@ export default function ServiceList({ filterKey }) {
   const observerRef = useRef(null);
   const safeItems = Array.isArray(listItems) ? listItems : [];
   const [notRepeated, setNotRepeated] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   const loadPage = useCallback(
     async (page) => {
@@ -122,18 +123,33 @@ export default function ServiceList({ filterKey }) {
     }
   }, [filterKey]);
 
+  useEffect(() => {
+    setLiked(false);
+  }, [liked]);
+
   const handleNavigate = (id) => {
     Cookies.set("homeItemId", id);
     setLastPage("preview");
     router.push(`/service-preview/${id}`, undefined, { scroll: false });
   };
 
-  const likeButton = () => {
+  const likeButton = async (state, id) => {
     if (!user) {
       setOpenLogin(true);
-      return false;
+      return state;
     }
-    return true;
+    try {
+      if (state) {
+        await FavoriteService.removeFavorite(id);
+        return !state;
+      } else {
+        await FavoriteService.addFavorite(id);
+        return !state;
+      }
+    } catch (err) {
+      console.log(err);
+      return state;
+    }
   };
 
   return (

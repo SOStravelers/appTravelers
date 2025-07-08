@@ -52,12 +52,11 @@ const ServiceCardRecomendation = ({
     }
   }, [currency]);
 
-  const favoriteAction = (state) => {
-    console.log("entramos");
-    const shouldToggle = onlikeButton(state, service._id);
-    if (shouldToggle) {
-      setIsFavorited(state);
-    }
+  const favoriteAction = async () => {
+    console.log("entramosss");
+    const shouldToggle = await onlikeButton(isFavorited, service._id);
+    console.log("final", shouldToggle);
+    setIsFavorited(shouldToggle);
   };
 
   return (
@@ -75,7 +74,7 @@ const ServiceCardRecomendation = ({
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          favoriteAction((prev) => !prev);
+          favoriteAction();
         }}
         className="absolute top-2 right-2 z-10 p-1"
       >

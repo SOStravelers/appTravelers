@@ -27,7 +27,7 @@ export default function SharePreview({ id, title, description, image }) {
 }
 
 export async function getServerSideProps(context) {
-  const { id } = context.params;
+  const { id, lang } = context.query;
 
   try {
     const res = await fetch(`${process.env.API_URL}/subservices/${id}`);
@@ -36,9 +36,15 @@ export async function getServerSideProps(context) {
     return {
       props: {
         id,
-        title: data.name || "SOS Travelers",
+        title:
+          lang && data.name
+            ? data.name[lang]
+            : !lang && data.name
+            ? data.name[en]
+            : "SOS Travelers",
         description:
-          data.details?.slice(0, 150) || "Descubre experiencias únicas.",
+          data.details?.slice(0, 150) ||
+          "Discover unique experiences at SOS Travelers.",
         image: data.imgUrl || "https://sostvl.com/assets/logoRedes.png",
       },
     };

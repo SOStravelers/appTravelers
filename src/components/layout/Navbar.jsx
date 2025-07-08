@@ -264,7 +264,18 @@ function Navbar() {
             <>
               <Link
                 href="/profile"
-                className="border border  text-sm  px-3 py-2 text rounded-xl"
+                className={clsx(
+                  "   flex items-center justify-center  text-sm  rounded-md",
+                  router.pathname.includes("profile")
+                    ? "text-white bg-blueBorder border-blueBorder"
+                    : "text-greyText border-gray-500"
+                )}
+                style={{
+                  width: "28px",
+                  height: "28px",
+                  overflow: "hidden",
+                  borderWidth: "1.5px",
+                }}
               >
                 {initials()}
               </Link>
@@ -313,7 +324,7 @@ function Navbar() {
         )}
       </button>
 
-      {!userCookie && (
+      {!loggedIn && (
         <LoginFormModal
           open={openLogin}
           setOpen={setOpenLogin}

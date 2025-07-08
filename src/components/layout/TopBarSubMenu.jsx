@@ -106,7 +106,7 @@ function TopBarSubMenu() {
         "bg-darkBlue"
       )}
     >
-      {!userCookie && (
+      {!loggedIn && (
         <LoginFormModal
           open={openLogin}
           setOpen={setOpenLogin}

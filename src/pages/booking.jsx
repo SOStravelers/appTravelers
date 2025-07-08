@@ -22,7 +22,7 @@ export default function Booking() {
   const store = useStore();
   const [weekDays, setWeekDays] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { loginModal, setLoginModal, setService, language } = store;
+  const { loginModal, setLoginModal, setService, language, loggedIn } = store;
   var user = Cookies.get("auth.user_id");
   const [actualView, setActualView] = useState(SECTION_ONE);
   const [selectedDay, setSelectedDay] = useState(today.format("DD"));
@@ -121,7 +121,7 @@ export default function Booking() {
         <MonthSection />
       ) : null}
 
-      {!user && (
+      {!loggedIn && (
         <LoginFormModal
           open={open}
           setOpen={setOpen}

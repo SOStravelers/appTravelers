@@ -13,6 +13,7 @@ import InclusionsExclusions from "@/components/ServicePreview/InclusionsExclusio
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 import languageData from "@/language/subServices.json";
+import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import { useStore } from "@/store";
 import {
   delay,
@@ -24,7 +25,9 @@ import ModalReservationWrapper from "@/components/ServicePreview/ModalReservatio
 export default function ServicePreviewPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { language, service, setService, currency, user } = useStore();
+  const { language, service, setService, currency, user, loggedIn } =
+    useStore();
+  const [openLogin, setOpenLogin] = useState(true);
   const [openReservation, setOpenReservation] = useState(false);
   const [subService, setSubservice] = useState({});
   const [loading, setLoading] = useState(true); // <-- loading flag
@@ -88,75 +91,88 @@ export default function ServicePreviewPage() {
   };
 
   return (
-    <div className="mx-auto px-4 md:pl-[240px] bg-gray-50 ">
-      {/* fade + slide container */}
-      <div className={`${loading ? opacityAnimation : displayAnimation}`}>
-        {/* Video full-width */}
-        {(subService.videoUrl || subService.imgUrl) && (
-          <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden mb-2">
-            {subService.videoUrl ? (
-              <VideoScreen currentVideo={subService.videoUrl} idService={id} />
-            ) : (
-              <img
-                src={subService.imgUrl}
-                alt={subService.id}
-                className="w-full h-64 object-cover mb-2 rounded-lg cursor-pointer"
-                onClick={() => openCarousel(0)}
+    <>
+      <div className="mx-auto px-4 md:pl-[240px] bg-gray-50 ">
+        {/* fade + slide container */}
+        <div className={`${loading ? opacityAnimation : displayAnimation}`}>
+          {/* Video full-width */}
+          {(subService.videoUrl || subService.imgUrl) && (
+            <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden mb-2">
+              {subService.videoUrl ? (
+                <VideoScreen
+                  currentVideo={subService.videoUrl}
+                  idService={id}
+                  openLoginModal={() => setOpenLogin(true)}
+                />
+              ) : (
+                <img
+                  src={subService.imgUrl}
+                  alt={subService.id}
+                  className="w-full h-64 object-cover mb-2 rounded-lg cursor-pointer"
+                  onClick={() => openCarousel(0)}
+                />
+              )}
+            </div>
+          )}
+
+          <div className="flex flex-col lg:flex-row gap-8 w-full max-w-lg px-2 md:p-8 border-b-2 border-gray-400 bg-softWhite rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
+            <div className="flex-1">
+              <ServiceHeader
+                service={subService}
+                serviceType={subService.service?.name}
               />
-            )}
+              <ServiceInfo service={subService} />
+              <ServiceDescription description={subService.details} />
+              <InclusionsExclusions
+                inclusions={subService.includedList}
+                exclusions={subService.restrictions}
+              />
+              <Gallery
+                images={images}
+                videos={videos}
+                onImageClick={(idx) => openCarousel(idx)}
+                onViewAllClick={() => openCarousel(0)}
+              />
+              <PointsOfInterestList pointsOfInterest={subService.route} />
+              <div className="my-20" />
+            </div>
           </div>
-        )}
 
-        <div className="flex flex-col lg:flex-row gap-8 w-full max-w-lg px-2 md:p-8 border-b-2 border-gray-400 bg-softWhite rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
-          <div className="flex-1">
-            <ServiceHeader
-              service={subService}
-              serviceType={subService.service?.name}
-            />
-            <ServiceInfo service={subService} />
-            <ServiceDescription description={subService.details} />
-            <InclusionsExclusions
-              inclusions={subService.includedList}
-              exclusions={subService.restrictions}
-            />
-            <Gallery
-              images={images}
-              videos={videos}
-              onImageClick={(idx) => openCarousel(idx)}
-              onViewAllClick={() => openCarousel(0)}
-            />
-            <PointsOfInterestList pointsOfInterest={subService.route} />
-            <div className="my-20" />
+          <div className="mt-12 mb-20">
+            <RecomendationCarousel />
           </div>
-        </div>
 
-        <div className="mt-12 mb-20">
-          <RecomendationCarousel />
+          {isCarouselOpen && media.length > 0 && (
+            <FullScreenCarousel
+              media={media}
+              initialIndex={currentMediaIndex}
+              onClose={() => setIsCarouselOpen(false)}
+            />
+          )}
         </div>
-
-        {isCarouselOpen && media.length > 0 && (
-          <FullScreenCarousel
-            media={media}
-            initialIndex={currentMediaIndex}
-            onClose={() => setIsCarouselOpen(false)}
-          />
-        )}
+        <BookingPopup
+          priceLabel={`${languageData.bookingButton.title[language]} ${
+            price[currency].formated || price["brl"].formated
+          }`}
+          subtext={languageData.bookingButton.subtitle[language]}
+          tagLine={languageData.bookingButton.cancel[language]}
+          buttonText={languageData.bookingButton.goDates[language]}
+          onAction={() => openModal(true)} // <-- abre el modal
+          isDisabled={validPrice && price[currency].value > 0 ? false : true}
+        />
       </div>
-      <BookingPopup
-        priceLabel={`${languageData.bookingButton.title[language]} ${
-          price[currency].formated || price["brl"].formated
-        }`}
-        subtext={languageData.bookingButton.subtitle[language]}
-        tagLine={languageData.bookingButton.cancel[language]}
-        buttonText={languageData.bookingButton.goDates[language]}
-        onAction={() => openModal(true)} // <-- abre el modal
-        isDisabled={validPrice && price[currency].value > 0 ? false : true}
-      />
-
       <ModalReservationWrapper
         isOpen={openReservation}
         onClose={() => setOpenReservation(false)}
       />
-    </div>
+
+      {!loggedIn && (
+        <LoginFormModal
+          open={openLogin}
+          setOpen={setOpenLogin}
+          title="Login to continue"
+        />
+      )}
+    </>
   );
 }

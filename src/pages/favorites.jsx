@@ -12,7 +12,7 @@ import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecome
 export default function Favorites() {
   const store = useStore();
   const router = useRouter();
-  const { loginModal, setLoginModal, setService, language } = store;
+  const { loginModal, setLoginModal, setService, language, loggedIn } = store;
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -103,7 +103,7 @@ export default function Favorites() {
         </div>
       )}
 
-      {!user && (
+      {!loggedIn && (
         <LoginFormModal
           open={open}
           setOpen={setOpen}

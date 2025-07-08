@@ -89,6 +89,7 @@ export default function SyncCarousel() {
     setItemsWithVideos,
     loadingCarrouselVideos,
     setLoadingCarrouselVideos,
+    loggedIn,
   } = useStore();
 
   const videoRef = useRef(null);
@@ -300,7 +301,7 @@ export default function SyncCarousel() {
                   </p>
                 )}
               </div>
-              <button
+              {/* <button
                 onClick={(e) => {
                   e.stopPropagation();
                   handleLike(i);
@@ -312,7 +313,7 @@ export default function SyncCarousel() {
                 }`}
               >
                 {likes.includes(i) ? <MdFavorite /> : <MdFavoriteBorder />}
-              </button>
+              </button> */}
             </article>
           ))}
           <div className="flex-shrink-0 w-32" />
@@ -320,7 +321,7 @@ export default function SyncCarousel() {
       </div>
 
       {/* modal login */}
-      {!user && (
+      {!loggedIn && (
         <LoginFormModal
           open={openLogin}
           setOpen={setOpenLogin}

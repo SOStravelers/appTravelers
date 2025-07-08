@@ -8,8 +8,12 @@ import {
 } from "react-icons/md";
 import FavoriteService from "@/services/FavoriteService";
 import { useStore } from "@/store";
-export default function VideoScreen({ currentVideo, idService }) {
-  const { user } = useStore();
+export default function VideoScreen({
+  currentVideo,
+  idService,
+  openLoginModal,
+}) {
+  const { user, loggedIn } = useStore();
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -41,7 +45,7 @@ export default function VideoScreen({ currentVideo, idService }) {
   }, []);
 
   useEffect(() => {
-    if (!user) return;
+    if (!loggedIn) return;
     FavoriteService.isFavorite(idService)
       .then(({ data }) => {
         data && data.isFavorite ? setLiked(true) : setLiked(false);
@@ -50,6 +54,12 @@ export default function VideoScreen({ currentVideo, idService }) {
   }, [user]);
 
   const handleLike = async () => {
+    console.log("va el like", user);
+    if (!loggedIn) {
+      console.log("no user");
+      openLoginModal();
+      return;
+    }
     try {
       !liked
         ? await FavoriteService.addFavorite(idService)

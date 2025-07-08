@@ -1,20 +1,15 @@
 // ServiceCardRecomendation.jsx
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import languageData from "@/language/subServices.json";
 import { useStore } from "@/store";
 import { formatTime } from "@/lib/time";
-
-const ServiceCardRecomendation = ({
-  service,
-  onClick,
-  index,
-  onlikeButton,
-}) => {
+import { useRouter } from "next/router";
+import FavoriteService from "@/services/FavoriteService";
+const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
   const store = useStore();
   const router = useRouter();
-  const { language, currency } = store;
+  const { language, currency, loggedIn } = store;
   const {
     gallery,
     name,
@@ -52,11 +47,21 @@ const ServiceCardRecomendation = ({
     }
   }, [currency]);
 
-  const favoriteAction = async () => {
-    console.log("entramosss");
-    const shouldToggle = await onlikeButton(isFavorited, service._id);
-    console.log("final", shouldToggle);
-    setIsFavorited(shouldToggle);
+  const handleLike = async () => {
+    console.log("va el like");
+    if (!loggedIn) {
+      console.log("no user");
+      openLoginModal();
+      return;
+    }
+    try {
+      !isFavorited
+        ? await FavoriteService.addFavorite(service._id)
+        : await FavoriteService.removeFavorite(service._id);
+      setIsFavorited((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -70,20 +75,22 @@ const ServiceCardRecomendation = ({
       </span>
 
       {/* Corazón de favorito */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          favoriteAction();
-        }}
-        className="absolute top-2 right-2 z-10 p-1"
-      >
-        {isFavorited ? (
-          <MdFavorite size={25} color="tomato" />
-        ) : (
-          <MdFavoriteBorder size={25} />
-        )}
-      </button>
+      {router.pathname == "/" && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleLike();
+          }}
+          className="absolute top-2 right-2 z-10 p-1"
+        >
+          {isFavorited ? (
+            <MdFavorite size={25} color="tomato" />
+          ) : (
+            <MdFavoriteBorder size={25} />
+          )}
+        </button>
+      )}
 
       {/* Collage de imágenes 2x2 */}
       <div className="w-full h-[350px] grid grid-cols-2 grid-rows-2 gap-1 overflow-hidden rounded-xl">

@@ -24,6 +24,7 @@ export default function ServiceList({ filterKey }) {
     setListHasNext,
     lastPage,
     setLastPage,
+    loggedIn,
     filters,
   } = useStore();
 
@@ -133,76 +134,58 @@ export default function ServiceList({ filterKey }) {
     router.push(`/service-preview/${id}`, undefined, { scroll: false });
   };
 
-  const likeButton = async (state, id) => {
-    if (!user) {
-      setOpenLogin(true);
-      return state;
-    }
-    try {
-      if (state) {
-        await FavoriteService.removeFavorite(id);
-        return !state;
-      } else {
-        await FavoriteService.addFavorite(id);
-        return !state;
-      }
-    } catch (err) {
-      console.log(err);
-      return state;
-    }
-  };
-
   return (
-    <div className="flex flex-col items-center w-full">
-      {loading && notRepeated && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 pointer-events-auto">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blueBorder border-solid" />
-        </div>
-      )}
-      {safeItems.length === 0 && !loading ? (
-        <div className="text-center text-sm text-gray-500 py-15">
-          <p className="text-md font-medium">No services found</p>
-          <p className="text-sm">
-            Try adjusting your filters or come back later.
-          </p>
-          <div
-            className="mx-auto w-[170px] max-w-xs"
-            style={{ marginTop: "-40px" }}
-          >
-            <NotFoundPicture />
+    <>
+      <div className="flex flex-col items-center w-full">
+        {loading && notRepeated && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 pointer-events-auto">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blueBorder border-solid" />
           </div>
-        </div>
-      ) : safeItems.length === 0 && loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full animate-pulse">
-          {Array.from({ length: ITEMS_PER_LOAD }).map((_, i) => (
-            <div key={i} className="h-48 bg-gray-200 rounded-md" />
-          ))}
-        </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 w-full">
-            {safeItems.map((svc, i) => (
-              <div key={svc._id} data-item-id={svc._id} className="w-full">
-                <ServiceCardRecomendation
-                  service={svc}
-                  index={i}
-                  onClick={() => handleNavigate(svc._id)}
-                  onlikeButton={likeButton}
-                />
-              </div>
+        )}
+        {safeItems.length === 0 && !loading ? (
+          <div className="text-center text-sm text-gray-500 py-15">
+            <p className="text-md font-medium">No services found</p>
+            <p className="text-sm">
+              Try adjusting your filters or come back later.
+            </p>
+            <div
+              className="mx-auto w-[170px] max-w-xs"
+              style={{ marginTop: "-40px" }}
+            >
+              <NotFoundPicture />
+            </div>
+          </div>
+        ) : safeItems.length === 0 && loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full animate-pulse">
+            {Array.from({ length: ITEMS_PER_LOAD }).map((_, i) => (
+              <div key={i} className="h-48 bg-gray-200 rounded-md" />
             ))}
           </div>
-          {listHasNext && <div ref={sentinelRef} className="h-2 w-full" />}
-        </>
-      )}
-
-      {!user && (
+        ) : (
+          <>
+            <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 w-full">
+              {safeItems.map((svc, i) => (
+                <div key={svc._id} data-item-id={svc._id} className="w-full">
+                  <ServiceCardRecomendation
+                    service={svc}
+                    index={i}
+                    onClick={() => handleNavigate(svc._id)}
+                    openLoginModal={() => setOpenLogin(true)}
+                  />
+                </div>
+              ))}
+            </div>
+            {listHasNext && <div ref={sentinelRef} className="h-2 w-full" />}
+          </>
+        )}
+      </div>
+      {!loggedIn && (
         <LoginFormModal
           open={openLogin}
           setOpen={setOpenLogin}
           title="Login to continue"
         />
       )}
-    </div>
+    </>
   );
 }

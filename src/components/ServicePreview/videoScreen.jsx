@@ -59,6 +59,7 @@ export default function VideoScreen({ currentVideo, idService }) {
       console.log(err);
     }
   };
+  //minicambio
 
   return (
     <div className="relative h-[50vh] flex items-center justify-center bg-black">

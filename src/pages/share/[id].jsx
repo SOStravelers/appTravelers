@@ -1,7 +1,15 @@
-// pages/share/[id].js
+// pages/share/[id].jsx
 import Head from "next/head";
+import { useEffect } from "react";
 
 export default function SharePreview({ id, title, description, image }) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.location.href = `/service-preview/${id}`;
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [id]);
+
   return (
     <>
       <Head>
@@ -16,12 +24,11 @@ export default function SharePreview({ id, title, description, image }) {
         />
       </Head>
 
-      <h1>Redireccionando...</h1>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.location.href = "/service-preview/${id}";`,
-        }}
-      />
+      <h1>Redireccionando…</h1>
+      <noscript>
+        Si no eres redirigido, haz clic{" "}
+        <a href={`/service-preview/${id}`}>aquí</a>
+      </noscript>
     </>
   );
 }
@@ -34,15 +41,12 @@ export async function getServerSideProps(context) {
     const res = await fetch(`${process.env.API_URL}/subservices/${id}`);
     const data = await res.json();
 
+    const language = lang || "en";
+
     return {
       props: {
         id,
-        title:
-          lang && data.name
-            ? data.name[lang]
-            : !lang && data.name
-            ? data.name[en]
-            : "SOS Travelers",
+        title: data.name?.[language] || "SOS Travelers",
         description:
           data.details?.slice(0, 150) ||
           "Discover unique experiences at SOS Travelers.",

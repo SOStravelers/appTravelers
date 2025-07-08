@@ -14,7 +14,7 @@ export default function VideoScreen({ currentVideo, idService }) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [liked, setLiked] = useState(false);
-
+  //buena
   /* cambia src + autoplay cuando llega otro vídeo */
   useEffect(() => {
     const v = videoRef.current;

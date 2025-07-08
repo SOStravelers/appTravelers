@@ -27,7 +27,8 @@ export default function SharePreview({ id, title, description, image }) {
 }
 
 export async function getServerSideProps(context) {
-  const { id, lang } = context.query;
+  const { id } = context.params;
+  const { lang } = context.query;
 
   try {
     const res = await fetch(`${process.env.API_URL}/subservices/${id}`);

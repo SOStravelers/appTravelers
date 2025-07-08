@@ -286,7 +286,8 @@ function Navbar() {
             className="flex mt-1 flex-col items-center justify-center"
             onClick={() => goTo(isWorker ? "/worker/profile" : "/profile")}
           >
-            {router.pathname.includes("profile") ? (
+            {router.pathname.includes("profile") ||
+            router.pathname === "/guest-settings" ? (
               <span className="text-blueBorder">
                 <FaUserAlt size={22} />
               </span>
@@ -298,9 +299,10 @@ function Navbar() {
             <span
               role="presentation"
               className={clsx(
-                "text-sm",
+                "text-xs",
                 router.pathname === "/profile" ||
-                  router.pathname === "/worker/profile"
+                  router.pathname === "/worker/profile" ||
+                  router.pathname === "/guest-settings"
                   ? "text-blueBorder"
                   : "text-greyText"
               )}

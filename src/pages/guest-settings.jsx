@@ -69,8 +69,8 @@ export default function GuestSettings() {
     setCurrency(valor.value);
     Cookies.set("currency", valor.value);
     setSelectionCurrency({
-      value: currency,
-      label: languageData["currency"][currency][language],
+      value: valor.value, // ✅ ahora sí el nuevo valor
+      label: languageData["currency"][valor.value][language],
     });
   };
 

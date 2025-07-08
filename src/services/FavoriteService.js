@@ -21,14 +21,19 @@ export default class FavoriteService {
     });
   }
 
-  static async deleteFavorite(id) {
-    return axios.get(`${this.baseUrl}/delete/${id}`, {
+  static async removeFavorite(id) {
+    return axios.get(`${this.baseUrl}/remove/${id}`, {
       headers: this.getHeaders(),
     });
   }
 
   static async listFavorites() {
     return axios.get(`${this.baseUrl}/getAll`, {
+      headers: this.getHeaders(),
+    });
+  }
+  static async isFavorite(id) {
+    return axios.get(`${this.baseUrl}/isFavorite/${id}`, {
       headers: this.getHeaders(),
     });
   }

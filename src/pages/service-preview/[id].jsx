@@ -24,7 +24,7 @@ import ModalReservationWrapper from "@/components/ServicePreview/ModalReservatio
 export default function ServicePreviewPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { language, service, setService, currency } = useStore();
+  const { language, service, setService, currency, user } = useStore();
   const [openReservation, setOpenReservation] = useState(false);
   const [subService, setSubservice] = useState({});
   const [loading, setLoading] = useState(true); // <-- loading flag

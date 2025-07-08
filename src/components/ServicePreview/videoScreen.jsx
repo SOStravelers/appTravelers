@@ -6,8 +6,10 @@ import {
   MdVolumeUp,
   MdVolumeOff,
 } from "react-icons/md";
-
+import FavoriteService from "@/services/FavoriteService";
+import { useStore } from "@/store";
 export default function VideoScreen({ currentVideo, idService }) {
+  const { user } = useStore();
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -38,6 +40,26 @@ export default function VideoScreen({ currentVideo, idService }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (!user) return;
+    FavoriteService.isFavorite(idService)
+      .then(({ data }) => {
+        data && data.isFavorite ? setLiked(true) : setLiked(false);
+      })
+      .catch(console.error);
+  }, [user]);
+
+  const handleLike = async () => {
+    try {
+      !liked
+        ? await FavoriteService.addFavorite(idService)
+        : await FavoriteService.removeFavorite(idService);
+      setLiked((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="relative h-[50vh] flex items-center justify-center bg-black">
       <video
@@ -54,7 +76,7 @@ export default function VideoScreen({ currentVideo, idService }) {
           const v = videoRef.current;
           isPlaying ? v.pause() : v.play();
         }}
-        className="absolute bottom-[10px] left-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
+        className="absolute bottom-[10px] left-2 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isPlaying ? (
           <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -70,7 +92,7 @@ export default function VideoScreen({ currentVideo, idService }) {
       {/* mute */}
       <button
         onClick={() => setIsMuted((m) => !m)}
-        className="absolute bottom-[10px] right-1 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
+        className="absolute bottom-[10px] right-2 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isMuted ? (
           <MdVolumeOff className="w-6 h-6" />
@@ -81,8 +103,8 @@ export default function VideoScreen({ currentVideo, idService }) {
 
       {/* like */}
       <button
-        onClick={() => setLiked((l) => !l)}
-        className="absolute top-4 right-4 p-2 bg-white/80 rounded-full"
+        onClick={() => handleLike()}
+        className="absolute top-4 right-2 p-2 bg-white/80  opacity-70  rounded-full"
       >
         {liked ? (
           <MdFavorite className="w-6 h-6 text-red-500" />

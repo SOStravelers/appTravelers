@@ -159,3 +159,4 @@ export default function VideoScreen({
     </div>
   );
 }
+console.log("🟢 VideoScreen actualizado");

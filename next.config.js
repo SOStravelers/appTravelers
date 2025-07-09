@@ -1,3 +1,4 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -9,8 +10,20 @@ const nextConfig = {
     nodeEnv: process.env.NEXT_PUBLIC_NODE_ENV,
   },
   eslint: { ignoreDuringBuilds: true },
-
-  // 👇 Esto fuerza a Next a mirar correctamente tus archivos de páginas
   pageExtensions: ["js", "jsx"],
+
+  // 👇 Desactiva la caché para todo el sitio
+  headers: async () => [
+    {
+      source: "/(.*)",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "no-store, max-age=0, must-revalidate",
+        },
+      ],
+    },
+  ],
 };
+
 module.exports = nextConfig;

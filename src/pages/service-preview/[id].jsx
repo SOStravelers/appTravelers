@@ -14,6 +14,7 @@ import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 import languageData from "@/language/subServices.json";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
+import FloatingFavoriteToast from "@/components/utils/modal/FloatingFavoriteToast";
 import { useStore } from "@/store";
 import {
   delay,
@@ -28,11 +29,13 @@ export default function ServicePreviewPage() {
   const { language, service, setService, currency, user, loggedIn } =
     useStore();
   const [openLogin, setOpenLogin] = useState(true);
+  const [showToast, setShowToast] = useState(false);
   const [openReservation, setOpenReservation] = useState(false);
   const [subService, setSubservice] = useState({});
   const [loading, setLoading] = useState(true); // <-- loading flag
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [stateTextFavorite, setStateTextFavorite] = useState("");
   const [price, setPrice] = useState({
     eur: { value: null, formated: "- €" },
     usd: { value: null, formated: "- USD" },
@@ -90,6 +93,11 @@ export default function ServicePreviewPage() {
     setIsCarouselOpen(true);
   };
 
+  const openPopupFavorite = (state, text) => {
+    setShowToast(true);
+    setStateTextFavorite(text);
+  };
+
   return (
     <>
       <div className="mx-auto px-4 md:pl-[240px] bg-gray-50 ">
@@ -103,6 +111,7 @@ export default function ServicePreviewPage() {
                   currentVideo={subService.videoUrl}
                   idService={id}
                   openLoginModal={() => setOpenLogin(true)}
+                  openPopup={openPopupFavorite}
                 />
               ) : (
                 <img
@@ -173,6 +182,13 @@ export default function ServicePreviewPage() {
           title="Login to continue"
         />
       )}
+
+      <FloatingFavoriteToast
+        visible={showToast}
+        onClose={() => setShowToast(false)}
+        imgUrl={service.imgUrl}
+        state={stateTextFavorite}
+      />
     </>
   );
 }

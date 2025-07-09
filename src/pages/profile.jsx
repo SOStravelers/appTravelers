@@ -25,11 +25,12 @@ export default function Profile({ user }) {
     Cookies.remove("auth.refresh_token");
     Cookies.remove("auth.user_id");
     Cookies.remove("service");
+    Cookies.remove("user");
     setWorker(false);
+    setUser({});
     setLoggedIn(false);
     await signOut({ redirect: false });
 
-    setUser(null);
     router.push("/");
   };
 

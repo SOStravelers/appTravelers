@@ -12,5 +12,21 @@
     "fr": "Vous n'avez pas encore de favoris",
     "de": "Du hast noch keine Favoriten",
     "pt": "Você ainda não tem favoritos"
+  },
+  "popUp": {
+    "added": {
+      "en": "Added to favorites",
+      "es": "Agregado a favoritos",
+      "fr": "Ajouté aux favoris",
+      "de": "Zu den Favoriten hinzugefügt",
+      "pt": "Adicionado aos favoritos"
+    },
+    "removed": {
+      "es": "Eliminado de favoritos",
+      "en": "Removed from favorites",
+      "fr": "Retirer des favoris",
+      "de": "Von den Favoriten entfernt",
+      "pt": "Removido dos favoritos"
+    }
   }
 }

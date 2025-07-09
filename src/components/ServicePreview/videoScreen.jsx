@@ -5,6 +5,7 @@ import {
   MdFavoriteBorder,
   MdVolumeUp,
   MdVolumeOff,
+  MdIosShare,
 } from "react-icons/md";
 import FavoriteService from "@/services/FavoriteService";
 import { useStore } from "@/store";
@@ -12,8 +13,9 @@ export default function VideoScreen({
   currentVideo,
   idService,
   openLoginModal,
+  openPopup,
 }) {
-  const { user, loggedIn } = useStore();
+  const { user, loggedIn, language } = useStore();
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
@@ -65,11 +67,33 @@ export default function VideoScreen({
         ? await FavoriteService.addFavorite(idService)
         : await FavoriteService.removeFavorite(idService);
       setLiked((prev) => !prev);
+      !liked ? openPopup(true, "added") : openPopup(true, "removed");
     } catch (err) {
       console.log(err);
     }
   };
-  //minicambio
+
+  const shareLink = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: document.title,
+          text: "¡Mira esta experiencia en SOS Travelers!",
+          url:
+            process.env.NEXTAUTH_URL +
+            "/share/" +
+            idService +
+            "/?lang=" +
+            language,
+        })
+        .then(() => console.log("Compartido con éxito"))
+        .catch((error) => console.error("Error al compartir:", error));
+    } else {
+      // Fallback: Copiar link si no soporta Web Share API
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copiado al portapapeles");
+    }
+  };
 
   return (
     <div className="relative h-[50vh] flex items-center justify-center bg-black">
@@ -115,13 +139,21 @@ export default function VideoScreen({
       {/* like */}
       <button
         onClick={() => handleLike()}
-        className="absolute top-4 right-2 p-2 bg-white/80  opacity-70  rounded-full"
+        className="absolute top-4 right-2 p-2 bg-white/80  opacity-80  rounded-full"
       >
         {liked ? (
           <MdFavorite className="w-6 h-6 text-red-500" />
         ) : (
           <MdFavoriteBorder className="w-6 h-6" />
         )}
+      </button>
+
+      {/* share */}
+      <button
+        onClick={() => shareLink()}
+        className="absolute top-4 right-16 p-2 bg-white/80  opacity-80  rounded-full"
+      >
+        <MdIosShare className="w-6 h-6 " />
       </button>
     </div>
   );

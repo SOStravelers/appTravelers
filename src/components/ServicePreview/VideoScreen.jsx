@@ -81,7 +81,7 @@ export default function VideoScreen({
       navigator
         .share({
           title: document.title,
-          text: languageData.share.text[language],
+          text: languageData.shareText.text[language],
           url: fullShareUrl,
         })
         .then(() => console.log("Compartido con éxito"))

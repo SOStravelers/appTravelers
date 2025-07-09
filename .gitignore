@@ -35,6 +35,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+.next
 
 build/
 dist/
@@ -43,3 +44,4 @@ node_modules/
 .secret-*
 **.sample
 
+.next

@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }) {
 
   const isSharePage = router.pathname.startsWith("/share");
 
-  const renderNavbar = () => routesNavbar(router) && <Navbar />;
+  const renderNavbar = () => routesNavbar(router) && <N1avbar />;
   const renderSidebar = () => routesSidebar(router) && <Sidebar />;
 
   const svgString = renderToString(<LogoSosRelleno />);
@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }) {
     "https://sostvl.com",
     "https://business.sostvl.com",
   ];
-
+  //minicambio
   const shouldIndexRoute = indexableRoutes.includes(router.pathname);
   const shouldIndexDomain =
     typeof window !== "undefined" &&

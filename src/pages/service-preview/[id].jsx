@@ -30,12 +30,13 @@ export default function ServicePreviewPage() {
     useStore();
   const [openLogin, setOpenLogin] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [stateTextFavorite, setStateTextFavorite] = useState("");
+
   const [openReservation, setOpenReservation] = useState(false);
   const [subService, setSubservice] = useState({});
   const [loading, setLoading] = useState(true); // <-- loading flag
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-  const [stateTextFavorite, setStateTextFavorite] = useState("");
   const [price, setPrice] = useState({
     eur: { value: null, formated: "- €" },
     usd: { value: null, formated: "- USD" },

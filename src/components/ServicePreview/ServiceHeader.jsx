@@ -11,7 +11,7 @@ const ServiceHeader = ({ service, serviceType }) => {
   const name = typeof service.name === "object" ? service.name[language] : "";
 
   return (
-    <div className="service-header ">
+    <div className="service-header">
       {serviceType && (
         <span className="text-xxs font-semibold text-gray-600 bg-gray-200 px-1 py-1 rounded">
           {serviceType[language]}

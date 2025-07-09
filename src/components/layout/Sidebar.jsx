@@ -15,12 +15,12 @@ import {
 function Sidebar() {
   const router = useRouter();
 
-  const { isWorker, user, language } = useStore();
+  const { isWorker, user, language, loggedIn } = useStore();
   const goTo = (ruta) => {
     router.push(ruta);
   };
   const goProfile = () => {
-    if (!user || Object.keys(user).length === 0) {
+    if (!loggedIn) {
       router.push("/guest-settings");
     } else {
       goTo(isWorker ? "/worker/profile" : "/profile");

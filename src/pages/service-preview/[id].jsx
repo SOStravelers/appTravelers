@@ -106,7 +106,20 @@ export default function ServicePreviewPage() {
         <div className={`${loading ? opacityAnimation : displayAnimation}`}>
           {/* Video full-width */}
           {(subService.videoUrl || subService.imgUrl) && (
-            <div className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden mb-2">
+            <div
+              className="
+    w-screen
+    -ml-4
+    md:ml-0
+    md:w-full 
+    md:max-w-lg 
+    md:mx-auto 
+    md:rounded-lg
+    md:mt-8
+    mb-2
+    overflow-hidden
+  "
+            >
               {subService.videoUrl ? (
                 <VideoScreen
                   currentVideo={subService.videoUrl}
@@ -118,7 +131,7 @@ export default function ServicePreviewPage() {
                 <img
                   src={subService.imgUrl}
                   alt={subService.id}
-                  className="w-full h-64 object-cover mb-2 rounded-lg cursor-pointer"
+                  className="w-full h-64 object-cover mb-2 rounded-lg cursor-pointer max-w-lg"
                   onClick={() => openCarousel(0)}
                 />
               )}

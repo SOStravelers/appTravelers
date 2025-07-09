@@ -21,7 +21,10 @@ export default function SharePreview({ id, title, description, image }) {
         <meta property="og:description" content={description} />
         <meta property="og:image" content={image} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${NEXTAUTH_URL}/share/${id}`} />
+        <meta
+          property="og:url"
+          content={`${process.env.NEXTAUTH_URL}/share/${id}`}
+        />
       </Head>
 
       <h1>Redireccionando…</h1>
@@ -41,7 +44,8 @@ export async function getServerSideProps(context) {
   const { lang } = context.query;
 
   try {
-    const res = await fetch(`${api}/subservices/byId/${id}`);
+    console.log("la url", `${api}subservices/byId/${id}`);
+    const res = await fetch(`${api}subservices/byId/${id}`);
     const data = await res.json();
 
     const language = lang || "en";

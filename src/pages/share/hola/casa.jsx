@@ -33,6 +33,9 @@ export default function SharePreview({ id, title, description, image }) {
   );
 }
 
+// 👉 Desactiva layout global, middleware, sidebar, etc.
+SharePreview.noLayout = true;
+
 export async function getServerSideProps(context) {
   const { id } = context.params;
   const { lang } = context.query;
@@ -59,4 +62,3 @@ export async function getServerSideProps(context) {
     };
   }
 }
-//minicambio

@@ -14,16 +14,16 @@ import Script from "next/script";
 import GoogleAnalytics from "@bradgarropy/next-google-analytics";
 
 export default function App({ Component, pageProps }) {
+  console.log("inicio");
   const router = useRouter();
 
-  /* ---------- helpers layout ---------- */
+  const isSharePage = router.pathname.startsWith("/share");
+
   const renderNavbar = () => routesNavbar(router) && <Navbar />;
   const renderSidebar = () => routesSidebar(router) && <Sidebar />;
 
-  /* ---------- favicon dinámico ---------- */
   const svgString = renderToString(<LogoSosRelleno />);
 
-  /* ---------- robots: noindex en rutas/dom. ---------- */
   const indexableRoutes = [
     "/",
     "/login",
@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }) {
     typeof window !== "undefined"
       ? window.navigator.userLanguage || window.navigator.language
       : undefined;
-
+  console.log("is Share", isSharePage, router.pathname);
   return (
     <>
       <GoogleOneTap />
@@ -76,13 +76,21 @@ export default function App({ Component, pageProps }) {
       </Script>
       <GoogleAnalytics measurementId="G-RP0PLGCYV9" />
 
-      {/* Layout + único contenedor de toasts */}
-      <Layout lang={lang}>
-        <ToastContainer position="top-right" theme="dark" containerId="bulk" />
-        {renderSidebar()}
+      {/* Si es /share/[id] → no usar Layout */}
+      {Component.noLayout ? (
         <Component {...pageProps} />
-        {renderNavbar()}
-      </Layout>
+      ) : (
+        <Layout lang={lang}>
+          <ToastContainer
+            position="top-right"
+            theme="dark"
+            containerId="bulk"
+          />
+          {renderSidebar()}
+          <Component {...pageProps} />
+          {renderNavbar()}
+        </Layout>
+      )}
     </>
   );
 }

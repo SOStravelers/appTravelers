@@ -12,7 +12,7 @@ import { CustomMiddlewareComponent } from "@/middleware";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 import OfflineScreen from "@/components/layout/OfflineScreen";
 import languageData from "@/language/layout.json";
-
+console.log("empieza layout");
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
@@ -21,6 +21,7 @@ const poppins = Poppins({
 
 function Layout({ children, lang }) {
   const router = useRouter();
+  console.log("router", router.pathname);
   const [middlewareCompleted, setMiddlewareCompleted] = useState(false);
   //Para saber si está online
   const isOnline = useOnlineStatus();
@@ -49,7 +50,7 @@ function Layout({ children, lang }) {
   const isIntro = router.pathname === "/intro";
 
   const isPaymentConfirm = router.pathname === "/payment-confirmation";
-
+  console.log("aqui");
   return (
     <>
       <div className={clsx("relative", poppins.className)}>

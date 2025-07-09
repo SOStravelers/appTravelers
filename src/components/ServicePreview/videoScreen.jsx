@@ -145,7 +145,7 @@ export default function VideoScreen({
         {liked ? (
           <MdFavorite className="w-6 h-6 text-red-500" />
         ) : (
-          <MdFavoriteBorder className="w-6 h-6" />
+          <MdVolumeOff className="w-6 h-6" />
         )}
       </button>
 

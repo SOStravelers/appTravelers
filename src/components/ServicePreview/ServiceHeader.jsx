@@ -24,7 +24,7 @@ const ServiceHeader = ({ service, serviceType }) => {
         {rate && (
           <>
             <span className="text-yellow-500">★</span>
-            <span className="ml-1 text-sm">{rate} wena wean</span>
+            <span className="ml-1 text-sm">{rate} </span>
           </>
         )}
         {rateCount && <span className="ml-2">({rateCount})</span>}

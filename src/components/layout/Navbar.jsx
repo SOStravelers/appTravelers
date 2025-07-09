@@ -47,9 +47,8 @@ function Navbar() {
     setService,
     loggedIn,
   } = useStore();
-  const userId = Cookies.get("auth.user_id");
   const goTo = (ruta) => {
-    if (!userCookie && ruta != "/" && ruta != "/profile") {
+    if (!loggedIn && ruta != "/" && ruta != "/profile") {
       setOpenLogin(true);
       return;
     }
@@ -70,7 +69,7 @@ function Navbar() {
   }, [user]);
 
   const goProfile = () => {
-    if (!user || Object.keys(user).length === 0) {
+    if (!loggedIn) {
       router.push("/guest-settings");
     } else {
       goTo(isWorker ? "/worker/profile" : "/profile");
@@ -78,7 +77,7 @@ function Navbar() {
   };
   const checkNotification = async () => {
     try {
-      if (!userId) return;
+      if (!loggedIn) return;
       const response = await NotificationService.checkNotification();
       setHaveNotification(response.data);
     } catch (error) {
@@ -87,7 +86,7 @@ function Navbar() {
   };
 
   const initials = () => {
-    if (user && Object.keys(user).length === 0) return "";
+    if (loggedIn) return "";
     const name = user?.personalData?.name;
     if (!name) return "";
     const { first, last } = name;
@@ -229,17 +228,11 @@ function Navbar() {
         className="flex mt-1 flex-col items-center justify-center"
         onClick={() => goProfile()}
       >
-        {/* {router.pathname.includes("profile") ? (
-          <ProfileIcon color="#3498db" />
-        ) : (
-          <ProfileIconOutlined color="black" />
-        )} */}
         {loggedIn ? (
           isImageAccessible && user?.img && user?.img.imgUrl ? (
             <>
-              <Link
+              <div
                 className="rounded-md"
-                href={"/profile"}
                 style={{ width: "24px", height: "24px", overflow: "hidden" }}
               >
                 <img
@@ -247,7 +240,7 @@ function Navbar() {
                   alt="Descripción de la imagen"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
-              </Link>
+              </div>
               <span
                 role="presentation"
                 className={clsx(
@@ -262,8 +255,7 @@ function Navbar() {
             </>
           ) : (
             <>
-              <Link
-                href="/profile"
+              <div
                 className={clsx(
                   "   flex items-center justify-center  text-sm  rounded-md",
                   router.pathname.includes("profile")
@@ -278,7 +270,7 @@ function Navbar() {
                 }}
               >
                 {initials()}
-              </Link>
+              </div>
               <span
                 role="presentation"
                 className={clsx(
@@ -293,10 +285,7 @@ function Navbar() {
             </>
           )
         ) : (
-          <button
-            className="flex mt-1 flex-col items-center justify-center"
-            onClick={() => goTo(isWorker ? "/worker/profile" : "/profile")}
-          >
+          <div className="flex mt-1 flex-col items-center justify-center">
             {router.pathname.includes("profile") ||
             router.pathname === "/guest-settings" ? (
               <span className="text-blueBorder">
@@ -320,7 +309,7 @@ function Navbar() {
             >
               {languageData.profile[language]}
             </span>
-          </button>
+          </div>
         )}
       </button>
 

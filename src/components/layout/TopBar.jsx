@@ -92,7 +92,7 @@ function TopBar() {
   };
   const profileUrl = isWorker ? "/worker/profile" : "/profile";
   const initials = () => {
-    if (user && Object.keys(user).length === 0) return "";
+    if (loggedIn) return "";
     const name = user?.personalData?.name;
     if (!name) return "";
     const { first, last } = name;

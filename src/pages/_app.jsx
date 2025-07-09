@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }) {
 
   const isSharePage = router.pathname.startsWith("/share");
 
-  const renderNavbar = () => routesNavbar(router) && <N1avbar />;
+  const renderNavbar = () => routesNavbar(router) && <Navbar />;
   const renderSidebar = () => routesSidebar(router) && <Sidebar />;
 
   const svgString = renderToString(<LogoSosRelleno />);

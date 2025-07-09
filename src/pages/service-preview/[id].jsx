@@ -65,7 +65,7 @@ export default function ServicePreviewPage() {
       .catch(console.error)
       .finally(() => setLoading(false));
   }, [id]);
-
+  //minicambio
   // build combined media array
   const images = subService.gallery?.images || [];
   const videos = subService.gallery?.videos || [];

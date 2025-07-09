@@ -57,13 +57,13 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
       return;
     }
     try {
-      !isFavorited
-        ? await FavoriteService.addFavorite(service._id)
-        : await FavoriteService.removeFavorite(service._id);
       setIsFavorited((prev) => !prev);
       !isFavorited
         ? openPopupFavorite(true, "added")
         : openPopupFavorite(true, "removed");
+      !isFavorited
+        ? await FavoriteService.addFavorite(service._id)
+        : await FavoriteService.removeFavorite(service._id);
     } catch (err) {
       console.log(err);
     }

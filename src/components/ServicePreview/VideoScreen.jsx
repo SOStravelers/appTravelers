@@ -65,11 +65,12 @@ export default function VideoScreen({
       return;
     }
     try {
+      setLiked((prev) => !prev);
+      !liked ? openPopup(true, "added") : openPopup(true, "removed");
+
       !liked
         ? await FavoriteService.addFavorite(idService)
         : await FavoriteService.removeFavorite(idService);
-      setLiked((prev) => !prev);
-      !liked ? openPopup(true, "added") : openPopup(true, "removed");
     } catch (err) {
       console.log(err);
     }

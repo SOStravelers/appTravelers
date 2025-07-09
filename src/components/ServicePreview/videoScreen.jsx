@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from "react";
-//minicambio
+//minicambioss
 import {
   MdFavorite,
   MdFavoriteBorder,

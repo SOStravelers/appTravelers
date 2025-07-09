@@ -86,22 +86,20 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
         </span>
 
         {/* Corazón de favorito */}
-        {router.pathname == "/" && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleLike();
-            }}
-            className="absolute top-2 right-2 z-10 p-1"
-          >
-            {isFavorited ? (
-              <MdFavorite size={25} color="tomato" />
-            ) : (
-              <MdFavoriteBorder size={25} />
-            )}
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleLike();
+          }}
+          className="absolute top-2 right-2 z-10 p-1"
+        >
+          {isFavorited ? (
+            <MdFavorite size={25} color="tomato" />
+          ) : (
+            <MdFavoriteBorder size={25} />
+          )}
+        </button>
 
         {/* Collage de imágenes 2x2 */}
         <div className="w-full h-[350px] grid grid-cols-2 grid-rows-2 gap-1 overflow-hidden rounded-xl">

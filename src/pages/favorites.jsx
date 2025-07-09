@@ -16,7 +16,6 @@ export default function Favorites() {
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
-  var user = Cookies.get("auth.user_id");
 
   useEffect(() => {
     document.title = "My favorites | SOS Travelers";
@@ -25,7 +24,7 @@ export default function Favorites() {
       setOpen(false);
       setLoginModal(false);
     }
-    if (user) {
+    if (loggedIn) {
       getFavorites();
     } else {
       setOpen(true);
@@ -46,28 +45,14 @@ export default function Favorites() {
     setLoading(false);
   };
 
-  const handleDeleteFav = async (id) => {
-    try {
-      const response = await FavoriteService.deleteFavorite(id);
-      // console.log(response);
-      if (response?.status === 200) {
-        setFavorites(
-          favorites.filter((favorite) => favorite.receptor._id !== id)
-        );
-      }
-    } catch (error) {
-      console.error(error);
-    }
+  const handleNavigate = (id) => {
+    // Cookies.set("homeItemId", id);
+    // setLastPage("preview");
+    router.push(`/service-preview/${id}`, undefined, { scroll: false });
   };
-  const likeButton = () => {
-    if (!user) {
-      setOpenLogin(true);
-      return false;
-    }
-    return true;
-  };
+
   return (
-    <div className="p-10 pb-20 flex flex-col py-16 lg:py-24 xl:py-24 px-5 md:pl-80">
+    <div className="mx-auto px-4 md:pl-[240px] bg-gray-50 mb-20">
       <h1 className="my-3 font-semibold text-center max-w-lg">
         {languageData.title[language]}
       </h1>
@@ -83,12 +68,11 @@ export default function Favorites() {
         </div>
       ) : favorites?.length > 0 ? (
         favorites.map((svc, i) => (
-          <div key={svc._id} data-item-id={svc._id} className="w-full">
+          <div key={svc._id} data-item-id={svc._id} className="w-full ">
             <ServiceCardRecomendation
               service={svc.subservice}
               index={i}
               onClick={() => handleNavigate(svc.subservice._id)}
-              onlikeButton={likeButton}
             />
           </div>
         ))

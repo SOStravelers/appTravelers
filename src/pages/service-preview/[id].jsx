@@ -28,7 +28,7 @@ export default function ServicePreviewPage() {
   const { id } = router.query;
   const { language, service, setService, currency, user, loggedIn } =
     useStore();
-  const [openLogin, setOpenLogin] = useState(true);
+  const [openLogin, setOpenLogin] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [openReservation, setOpenReservation] = useState(false);
   const [subService, setSubservice] = useState({});

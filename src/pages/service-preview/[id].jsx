@@ -186,7 +186,7 @@ export default function ServicePreviewPage() {
       <FloatingFavoriteToast
         visible={showToast}
         onClose={() => setShowToast(false)}
-        imgUrl={service.imgUrl}
+        imgUrl={service?.imgUrl}
         state={stateTextFavorite}
       />
     </>

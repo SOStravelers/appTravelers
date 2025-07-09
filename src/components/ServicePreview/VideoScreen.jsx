@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from "react";
+import languageData from "@/language/subServices.json";
 //minicambioss
 import {
   MdFavorite,
@@ -75,23 +76,19 @@ export default function VideoScreen({
   };
 
   const shareLink = () => {
+    const fullShareUrl = `${window.location.origin}/share/${idService}?lang=${language}`;
     if (navigator.share) {
       navigator
         .share({
           title: document.title,
-          text: "¡Mira esta experiencia en SOS Travelers!",
-          url:
-            process.env.NEXTAUTH_URL +
-            "/share/" +
-            idService +
-            "/?lang=" +
-            language,
+          text: languageData.share.text[language],
+          url: fullShareUrl,
         })
         .then(() => console.log("Compartido con éxito"))
         .catch((error) => console.error("Error al compartir:", error));
     } else {
       // Fallback: Copiar link si no soporta Web Share API
-      navigator.clipboard.writeText(window.location.href);
+      navigator.clipboard.writeText(fullShareUrl);
       alert("Link copiado al portapapeles");
     }
   };
@@ -140,19 +137,19 @@ export default function VideoScreen({
       {/* like */}
       <button
         onClick={() => handleLike()}
-        className="absolute top-4 right-2 p-2 bg-white/80  opacity-80  rounded-full"
+        className="absolute top-4 right-2 p-2 bg-white/80  opacity-90  rounded-full"
       >
         {liked ? (
           <MdFavorite className="w-6 h-6 text-red-500" />
         ) : (
-          <MdVolumeOff className="w-6 h-6" />
+          <MdFavoriteBorder className="w-6 h-6" />
         )}
       </button>
 
       {/* share */}
       <button
         onClick={() => shareLink()}
-        className="absolute top-4 right-16 p-2 bg-white/80  opacity-80  rounded-full"
+        className="absolute top-4 right-16 p-2 bg-white/80  opacity-90  rounded-full"
       >
         <MdIosShare className="w-6 h-6 " />
       </button>

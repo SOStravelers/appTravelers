@@ -182,5 +182,14 @@
       "de": "Zeige Datum",
       "pt": "Mostrar datas"
     }
+  },
+  "shareText": {
+    "text": {
+      "es": "¡Mira esta experiencia en SOS Travelers!",
+      "en": "Check out this experience at SOS Travelers!",
+      "fr": "Découvrez cette expérience sur SOS Travelers !",
+      "de": "Schau dir dieses Erlebnis bei SOS Travelers an!",
+      "pt": "Veja esta experiência na SOS Travelers!"
+    }
   }
 }

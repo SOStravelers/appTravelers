@@ -223,7 +223,7 @@ export default function SyncCarousel() {
   if (!items.length) return <div className="text-white">Cargando…</div>;
 
   return (
-    <div className="relative h-[80vh] flex flex-col justify-center items-center overflow-hidden bg-black">
+    <div className="relative h-[80vh] flex flex-col justify-center items-center overflow-hidden bg-backgroundP">
       {/* ----- video ------ */}
       <div className="relative w-full h-full">
         <VideoLoader
@@ -233,7 +233,7 @@ export default function SyncCarousel() {
           isMuted={isMuted}
         />
         <div className="pointer-events-none absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent" />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-white" />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-backgroundP" />
       </div>
 
       {/* botón play/pause */}
@@ -274,7 +274,7 @@ export default function SyncCarousel() {
             <article
               key={i}
               ref={(el) => (cardsRef.current[i] = el)}
-              className="flex-shrink-0 relative w-[300px] max-w-[400px] bg-white/95 backdrop-blur-sm
+              className="flex-shrink-0 relative w-[300px] max-w-[400px] bg-backgroundS backdrop-blur-sm
              rounded-xl p-2 mx-2 shadow-lg flex gap-4 items-center hover:scale-105
              transition-transform duration-150 cursor-pointer"
               onClick={() => {
@@ -290,13 +290,15 @@ export default function SyncCarousel() {
                 className="w-16 h-16 object-cover rounded-lg"
               />
               <div className="flex-1 min-w-0">
-                <p className="text-xs pt-1 text-gray-600 truncate">
-                  <span className="text-red-500">★</span> {it.rate} ·{" "}
+                <p className="text-xs pt-1 text-textColorGray truncate">
+                  <span className="text-yellow-500">★</span> {it.rate} ·{" "}
                   {formatTime(it.duration)}
                 </p>
-                <h3 className="text-xs pt-1 text-black">{it.name[language]}</h3>
+                <h3 className="text-xs pt-1 text-textColor">
+                  {it.name[language]}
+                </h3>
                 {it.partner && (
-                  <p className="text-xxs pt-1 text-gray-600 truncate">
+                  <p className="text-xxs pt-1 text-textColorGray truncate">
                     Partner: {it.partner}
                   </p>
                 )}

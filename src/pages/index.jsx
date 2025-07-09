@@ -101,7 +101,7 @@ export default function Home() {
       {!(scrolled && loadingCarrouselVideos) && <LoaderGlobal />}
       <main
         className={clsx(
-          "flex flex-col w-full bg-white md:pl-[240px] pb-[100px] overflow-x-visible",
+          "flex flex-col w-full bg-backgroundP md:pl-[240px] pb-[100px] overflow-x-visible",
           scrolled && loadingCarrouselVideos
             ? "opacity-100 transition-opacity duration-300"
             : "opacity-0 pointer-events-none"
@@ -109,7 +109,7 @@ export default function Home() {
       >
         <SyncCarousel />
 
-        <section id="icon-carousel" className="sticky top-[52px] z-20 bg-white">
+        <section id="icon-carousel" className="sticky top-[52px] z-20 ">
           <IconCarousel
             onFilterChange={handleFilterChange}
             onOpenFilter={() => setFilterOpen(true)}

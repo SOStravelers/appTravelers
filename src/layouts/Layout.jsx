@@ -82,7 +82,7 @@ function Layout({ children, lang }) {
             )}
             {/* salto por el menu de arriba */}
             {router.pathname != "/" && (
-              <div className="h-12 md:h-20 bg-gray-50"></div>
+              <div className="h-12 md:h-20 bg-backgroundP"></div>
             )}
             {children}
           </>

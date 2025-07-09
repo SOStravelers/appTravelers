@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Head from "next/head";
 import Layout from "../layouts/Layout";
@@ -16,7 +17,7 @@ import GoogleAnalytics from "@bradgarropy/next-google-analytics";
 export default function App({ Component, pageProps }) {
   console.log("inicio");
   const router = useRouter();
-
+  const [darkMode, setDarkMode] = useState(false);
   const isSharePage = router.pathname.startsWith("/share");
 
   const renderNavbar = () => routesNavbar(router) && <Navbar />;
@@ -46,6 +47,22 @@ export default function App({ Component, pageProps }) {
       ? window.navigator.userLanguage || window.navigator.language
       : undefined;
   console.log("is Share", isSharePage, router.pathname);
+
+  useEffect(() => {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setDarkMode(prefersDark); // ← esta línea faltaba
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [darkMode]);
   return (
     <>
       <GoogleOneTap />

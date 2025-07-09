@@ -28,7 +28,7 @@ const Gallery = ({
 
   return (
     <div className="gallery-container mt-8">
-      <h3 className="text-md font-semibold mb-4">
+      <h3 className="text-md text-textColor font-semibold mb-4">
         {languageData.gallery.title[language]}
       </h3>
 

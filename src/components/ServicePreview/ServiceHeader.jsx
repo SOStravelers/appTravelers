@@ -13,14 +13,17 @@ const ServiceHeader = ({ service, serviceType }) => {
   return (
     <div className="service-header">
       {serviceType && (
-        <span className="text-xxs font-semibold text-gray-600 bg-gray-200 px-1 py-1 rounded">
+        <span
+          className="text-xxs font-semibold  bg-chipPrimary
+        px-1 py-1 rounded"
+        >
           {serviceType[language]}
         </span>
       )}
 
-      <h1 className="text-xl font-bold mt-1">{name}</h1>
+      <h1 className="text-xl text-textColor font-bold mt-1">{name}</h1>
       {/* Rating and Review Count */}
-      <div className="flex items-center text-sm text-gray-600 mt-1">
+      <div className="flex items-center text-sm text-textColor mt-1">
         {rate && (
           <>
             <span className="text-yellow-500">★</span>

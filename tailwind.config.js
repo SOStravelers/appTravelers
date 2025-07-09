@@ -7,9 +7,21 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class", // 👈 Asegúrate de esto
+
   theme: {
     extend: {
+      boxShadow: {
+        darkNav: "0 4px 6px rgba(0, 0, 0, 0.5)", // sombra para fondo oscuro
+      },
       colors: {
+        brand: "var(--color-brand)",
+        backgroundP: "var(--color-background-primary)",
+        backgroundS: "var(--color-background-secondary)",
+        textColor: "var(--color-text-color)",
+        textColorGray: "var(--color-text-gray)",
+        chipPrimary: "var(--color-chip-primary)",
+
         // tus colores custom, con nombres únicos para no borrar la paleta por defecto
         lightBlue: "#5B78C7",
         darkBlue: "#001C25",

@@ -49,6 +49,7 @@ export default function ServicePreviewPage() {
   }, []);
 
   const openModal = () => {
+    console.log("wena");
     setService(subService);
     setOpenReservation(true);
   };
@@ -101,25 +102,16 @@ export default function ServicePreviewPage() {
 
   return (
     <>
-      <div className="mx-auto px-4 md:pl-[240px] bg-gray-50 ">
+      <div className="mx-auto px-4 md:pl-[240px] bg-backgroundP">
         {/* fade + slide container */}
-        <div className={`${loading ? opacityAnimation : displayAnimation}`}>
+        <div
+          className={`${
+            loading ? opacityAnimation : displayAnimation
+          }  bg-backgroundP`}
+        >
           {/* Video full-width */}
           {(subService.videoUrl || subService.imgUrl) && (
-            <div
-              className="
-    w-screen
-    -ml-4
-    md:ml-0
-    md:w-full 
-    md:max-w-lg 
-    md:mx-auto 
-    md:rounded-lg
-    md:mt-8
-    mb-2
-    overflow-hidden
-  "
-            >
+            <div className="w-screen-ml-4 md:ml-0 md:w-full md:max-w-lg md:mx-auto md:rounded-lg md:mt-8 mb-2 overflow-hidden">
               {subService.videoUrl ? (
                 <VideoScreen
                   currentVideo={subService.videoUrl}
@@ -138,7 +130,7 @@ export default function ServicePreviewPage() {
             </div>
           )}
 
-          <div className="flex flex-col lg:flex-row gap-8 w-full max-w-lg px-2 md:p-8 border-b-2 border-gray-400 bg-softWhite rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
+          <div className="flex flex-col lg:flex-row gap-8 w-full max-w-lg px-2 md:p-8 border-b-2 border-gray-400 bg-backgroundP rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
             <div className="flex-1">
               <ServiceHeader
                 service={subService}
@@ -173,17 +165,17 @@ export default function ServicePreviewPage() {
             />
           )}
         </div>
-        <BookingPopup
-          priceLabel={`${languageData.bookingButton.title[language]} ${
-            price[currency].formated || price["brl"].formated
-          }`}
-          subtext={languageData.bookingButton.subtitle[language]}
-          tagLine={languageData.bookingButton.cancel[language]}
-          buttonText={languageData.bookingButton.goDates[language]}
-          onAction={() => openModal(true)} // <-- abre el modal
-          isDisabled={validPrice && price[currency].value > 0 ? false : true}
-        />
       </div>
+      <BookingPopup
+        priceLabel={`${languageData.bookingButton.title[language]} ${
+          price[currency].formated || price["brl"].formated
+        }`}
+        subtext={languageData.bookingButton.subtitle[language]}
+        tagLine={languageData.bookingButton.cancel[language]}
+        buttonText={languageData.bookingButton.goDates[language]}
+        onAction={() => openModal(true)} // <-- abre el modal
+        isDisabled={validPrice && price[currency].value > 0 ? false : true}
+      />
       <ModalReservationWrapper
         isOpen={openReservation}
         onClose={() => setOpenReservation(false)}

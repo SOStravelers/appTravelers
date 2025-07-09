@@ -78,7 +78,7 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
     <>
       <div
         onClick={onClick}
-        className="bg-white rounded-lg  w-full relative cursor-pointer"
+        className="bg-backgroundP rounded-lg  w-full relative cursor-pointer"
       >
         {/* Badge “Popular” */}
         <span className="absolute top-2 left-2 z-10 bg-white text-xs font-semibold px-2 py-1 rounded-full shadow">
@@ -113,7 +113,7 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
                 loading="lazy"
               />
             ) : (
-              <div key={idx} className="w-full h-full bg-gray-100" />
+              <div key={idx} className="w-full h-full bg-backgroundS" />
             )
           )}
         </div>
@@ -123,7 +123,7 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
           {/* Precio */}
 
           <div className="flex justify-between items-center">
-            <span className="text-xs font-medium text-gray-800">
+            <span className="text-xs font-medium text-textColor">
               {languageData.card.textPrice1[language]}{" "}
               {price[currency]?.formated || price["brl"].formated}
             </span>
@@ -136,20 +136,20 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
               >
                 <path d="M10 1l2.8 6.3 6.2.9-4.5 4.3 1.1 6-5.6-3.2L4.4 18.5l1.1-6-4.5-4.3 6.2-.9L10 1z" />
               </svg>
-              <span className="text-sm text-gray-600 ml-1">
+              <span className="text-sm text-textColor ml-1">
                 {rate} ({rateCount})
               </span>
             </div>
           </div>
 
           {/* Título */}
-          <h3 className="text-sm font-semibold text-gray-800 ">
+          <h3 className="text-sm font-semibold text-textColor ">
             {name[language]}
           </h3>
 
           {/* Rating */}
 
-          <span className="text-xs text-gray-600">{formatTime(duration)}</span>
+          <span className="text-xs text-textColor">{formatTime(duration)}</span>
         </div>
       </div>
       <FloatingFavoriteToast

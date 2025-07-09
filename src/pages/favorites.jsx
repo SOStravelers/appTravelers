@@ -52,8 +52,8 @@ export default function Favorites() {
   };
 
   return (
-    <div className="mx-auto px-4 md:pl-[240px] bg-gray-50 mb-20">
-      <h1 className="my-3 font-semibold text-center max-w-lg">
+    <div className="mx-auto px-4 md:pl-[240px] bg-backgroundP mb-20">
+      <h1 className="my-3 font-semibold text-center text-textColor max-w-lg">
         {languageData.title[language]}
       </h1>
       {loading ? (

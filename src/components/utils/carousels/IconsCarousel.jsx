@@ -160,21 +160,25 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
   return (
     <nav
       ref={navRef}
-      className={`w-full sticky top-0 z-20 bg-white transition-shadow duration-200 ${
-        isSticky ? "shadow-xl border-b border-gray-200" : ""
-      }`}
+      className={`w-full sticky top-0 z-20 bg-backgroundP transition-shadow duration-200
+    ${
+      isSticky
+        ? "shadow-lg dark:shadow-darkNav border-b border-gray-200 dark:border-gray-800"
+        : ""
+    }
+  `}
     >
       <div className="min-h-[80px]">
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-2 pb-3">
           <div className="flex items-center">
-            <h2 className="text-md font-semibold text-gray-800">
+            <h2 className="text-md font-semibold text-textColor">
               {languageData.index.explore[language]}
             </h2>
-            <span className="ml-3 mr-1 text-sm text-gray-500">RJ</span>
+            <span className="ml-3 mr-1 text-sm text-textColor">RJ</span>
 
             <button className="flex items-center  justify-center  ">
-              <FiMapPin className="text-gray-500" size={14} />
+              <FiMapPin className="text-textColor" size={14} />
             </button>
           </div>
           <div className="flex items-center space-x-4">
@@ -186,7 +190,7 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
             </button>
             <button
               onClick={onOpenFilter}
-              className="text-gray-900 hover:text-gray-700 focus:outline-none"
+              className="text-textColor hover:text-gray-700 focus:outline-none"
             >
               <IconMapper name="MdTune" size={24} />
             </button>
@@ -210,14 +214,16 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
                     name={service.icon}
                     size={24}
                     className={
-                      idx === indexService ? "text-gray-900" : "text-gray-500"
+                      idx === indexService
+                        ? "text-textColor"
+                        : "text-textColorGray"
                     }
                   />
                   <span
                     className={`mt-1 text-xs border-b-2 pb-1 transition-colors duration-200 ease-in-out ${
                       idx === indexService
-                        ? "text-gray-900 border-blueBorder"
-                        : "text-gray-500 border-transparent"
+                        ? "text-textColor border-blueBorder"
+                        : "text-textColorGray border-transparent"
                     }`}
                   >
                     {service.name[language]}
@@ -226,10 +232,10 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
               ))}
           </div>
           {showLeftBlur && (
-            <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-white to-transparent" />
+            <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-backgroundS to-transparent" />
           )}
           {showRightBlur && (
-            <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white to-transparent" />
+            <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-backgroundS to-transparent" />
           )}
         </div>
 

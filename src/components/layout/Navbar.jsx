@@ -95,10 +95,7 @@ function Navbar() {
   };
 
   return (
-    <div
-      className="w-screen h-12 fixed border bottom-0 left-0 z-30 bg-white flex justify-around items-center md:hidden"
-      // style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.2)" }}
-    >
+    <div className="w-screen h-12 fixed  bottom-0 left-0 z-30 bg-darkBlue flex flex justify-around items-center md:hidden">
       <button
         className="customButton flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/home" : "/")}
@@ -108,7 +105,7 @@ function Navbar() {
             <PiHouseFill size={24} />
           </span>
         ) : (
-          <span className="text-gray-500">
+          <span className="text-textColorGray">
             <PiHouse size={24} />
           </span>
         )}
@@ -119,7 +116,7 @@ function Navbar() {
             "text-xs",
             router.pathname === "/" || router.pathname === "/worker/home"
               ? "text-blueBorder"
-              : "text-greyText"
+              : "text-textColorGray"
           )}
         >
           {languageData.home[language]}
@@ -142,7 +139,7 @@ function Navbar() {
             router.pathname === "/booking" ||
               router.pathname === "/worker/booking"
               ? "text-blueBorder"
-              : "text-greyText"
+              : "text-textColorGray"
           )}
         >
           {languageData.bookings[language]}
@@ -182,7 +179,7 @@ function Navbar() {
               <FaHeart size={22} />
             </span>
           ) : (
-            <span className="text-gray-500">
+            <span className="text-textColorGray">
               <FaRegHeart size={22} />
             </span>
           )}
@@ -193,7 +190,7 @@ function Navbar() {
               "text-xs",
               router.pathname.includes("favorites")
                 ? "text-blueBorder"
-                : "text-greyText"
+                : "text-textColorGray"
             )}
           >
             {languageData.favorites[language]}
@@ -247,7 +244,7 @@ function Navbar() {
                   "text-xs",
                   router.pathname.includes("profile")
                     ? "text-blueBorder"
-                    : "text-greyText"
+                    : "text-textColorGray"
                 )}
               >
                 {languageData.profile[language]}
@@ -260,7 +257,7 @@ function Navbar() {
                   "   flex items-center justify-center  text-sm  rounded-md",
                   router.pathname.includes("profile")
                     ? "text-white bg-blueBorder border-blueBorder"
-                    : "text-greyText border-gray-500"
+                    : "text-textColorGray border-gray-500"
                 )}
                 style={{
                   width: "28px",
@@ -277,7 +274,7 @@ function Navbar() {
                   "text-xs",
                   router.pathname.includes("profile")
                     ? "text-blueBorder"
-                    : "text-greyText"
+                    : "text-textColorGray"
                 )}
               >
                 {languageData.profile[language]}
@@ -292,7 +289,7 @@ function Navbar() {
                 <FaUserAlt size={22} />
               </span>
             ) : (
-              <span className="text-gray-500">
+              <span className="text-textColorGray">
                 <FaRegUser size={22} />
               </span>
             )}
@@ -304,7 +301,7 @@ function Navbar() {
                   router.pathname === "/worker/profile" ||
                   router.pathname === "/guest-settings"
                   ? "text-blueBorder"
-                  : "text-greyText"
+                  : "text-textColorGray"
               )}
             >
               {languageData.profile[language]}

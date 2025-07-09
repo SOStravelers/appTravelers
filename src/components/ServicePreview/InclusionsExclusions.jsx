@@ -9,7 +9,7 @@ const InclusionsExclusions = ({ inclusions = [], exclusions = [] }) => {
       {/* Qué incluye */}
       {exclusions.length > 0 && (
         <div className="inclusions mb-6">
-          <h3 className="text-md font-semibold mb-4">
+          <h3 className="text-md text-textColor font-semibold mb-4">
             {languageData.inclusionsList.inclusions.title[language]}
           </h3>
           <ul>
@@ -19,7 +19,7 @@ const InclusionsExclusions = ({ inclusions = [], exclusions = [] }) => {
                 <span className="mr-2 text-green-600 text-md flex-shrink-0">
                   ✓
                 </span>
-                <span className="text-gray-900 text-sm">
+                <span className="text-textColor text-sm">
                   {item.name[language]}
                 </span>
               </li>
@@ -31,7 +31,7 @@ const InclusionsExclusions = ({ inclusions = [], exclusions = [] }) => {
       {/* No apto para */}
       {exclusions.length > 0 && (
         <div className="exclusions">
-          <h3 className="text-md font-semibold mb-4">
+          <h3 className="text-md  text-textColor font-semibold mb-4">
             {languageData.inclusionsList.exclusions.title[language]}
           </h3>
           <ul>
@@ -41,7 +41,7 @@ const InclusionsExclusions = ({ inclusions = [], exclusions = [] }) => {
                 <span className="mr-2 text-red-500 text-md flex-shrink-0">
                   ✕
                 </span>
-                <span className="text-gray-900 text-sm">
+                <span className="text-textColor text-sm">
                   {item.name[language]}
                 </span>
               </li>

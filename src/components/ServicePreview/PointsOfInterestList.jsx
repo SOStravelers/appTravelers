@@ -10,10 +10,10 @@ const PointsOfInterestList = ({ pointsOfInterest = [] }) => {
     <div className="points-of-interest-list mt-8">
       {pointsOfInterest.length > 0 && (
         <>
-          <h3 className="text-md font-semibold mb-2">
+          <h3 className="text-md  text-textColor font-semibold mb-2">
             {languageData.pointInterest.title[language]}
           </h3>
-          <h4 className="text-sm mb-6">
+          <h4 className="text-sm text-textColor mb-6">
             {languageData.pointInterest.subtitle[language]}
           </h4>
         </>
@@ -41,7 +41,9 @@ const PointsOfInterestList = ({ pointsOfInterest = [] }) => {
 
             {/* Contenido del punto */}
             <div className="flex flex-col">
-              <p className=" text-gray-800 text-sm">{point.name[language]}</p>
+              <p className="text-textColorGray text-sm">
+                {point.name[language]}
+              </p>
 
               {point.mapLocation && index === 0 && (
                 <button

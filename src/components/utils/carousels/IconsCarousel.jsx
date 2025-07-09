@@ -169,7 +169,7 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
         <div className="flex items-center justify-between px-4 pt-2 pb-3">
           <div className="flex items-center">
             <h2 className="text-md font-semibold text-gray-800">
-              {languageData.index.explore[language]}
+              {languageData.index.explore[language]} adad
             </h2>
             <span className="ml-3 mr-1 text-sm text-gray-500">RJ</span>
 

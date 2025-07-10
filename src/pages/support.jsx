@@ -89,8 +89,8 @@ export default function SupportPage() {
   }, [formKey]);
 
   return (
-    <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <h1 className="my-3 font-semibold text-center max-w-lg">
+    <div className="mb-10 mt-8 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <h1 className="my-3 font-semibold text-center  text-textColor max-w-lg">
         {languageData.title[language]}
       </h1>
       <Form
@@ -109,7 +109,7 @@ export default function SupportPage() {
           >
             {!loggedIn && (
               <>
-                <div className="mb-3">
+                <div className="mb-3 text-textColor text-sm">
                   <p>{languageData.fullName[language]}</p>
                   <Field
                     name="name"
@@ -133,7 +133,7 @@ export default function SupportPage() {
                             onChange={(e) => setValue(e.target.value)}
                           />
                           {errors.map((error) => (
-                            <p key={error} className="text-red">
+                            <p key={error} className="text-errorColor text-xs">
                               {error}
                             </p>
                           ))}
@@ -143,7 +143,7 @@ export default function SupportPage() {
                   </Field>
                 </div>
 
-                <div className="mb-3">
+                <div className="mb-3 text-textColor text-sm">
                   <p>{languageData.emailAddress[language]}</p>
                   <Field
                     name="email"
@@ -161,7 +161,7 @@ export default function SupportPage() {
                             onChange={(e) => setValue(e.target.value)}
                           />
                           {errors.map((error) => (
-                            <p key={error} className="text-red">
+                            <p key={error} className="text-errorColor text-xs">
                               {error}
                             </p>
                           ))}
@@ -173,7 +173,7 @@ export default function SupportPage() {
               </>
             )}
 
-            <div className="mb-3">
+            <div className="mb-3 text-textColor text-sm">
               <p>{languageData.chooseSubject[language]}</p>
               <Field
                 name="subject"
@@ -242,7 +242,7 @@ export default function SupportPage() {
               </Field>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 text-textColor text-sm">
               <p>{languageData.message[language]}</p>
               <Field
                 name="message"

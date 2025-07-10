@@ -111,7 +111,13 @@ export default function ServicePreviewPage() {
         >
           {/* Video full-width */}
           {(subService.videoUrl || subService.imgUrl) && (
-            <div className="w-screen-ml-4 md:ml-0 md:w-full md:max-w-lg md:mx-auto md:rounded-lg md:mt-8 mb-2 overflow-hidden">
+            <div
+              className="w-screen -ml-4 
+             md:w-full md:ml-0 
+             md:max-w-lg md:mx-auto 
+             md:rounded-lg md:mt-8 
+             mb-2 overflow-hidden"
+            >
               {subService.videoUrl ? (
                 <VideoScreen
                   currentVideo={subService.videoUrl}

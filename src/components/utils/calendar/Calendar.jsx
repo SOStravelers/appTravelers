@@ -12,6 +12,7 @@ import { useStore } from "@/store";
 import moment from "moment";
 import { formatISO } from "date-fns";
 import languageData from "@/language/reservation.json";
+import { FiInfo } from "react-icons/fi";
 import { formatearFechaCompletaDesdeISO } from "@/utils/format";
 function Calendar({ id }) {
   const router = useRouter();
@@ -221,10 +222,10 @@ function Calendar({ id }) {
     if (selectedDay && !isWorker) {
       return (
         <div>
-          <h1 className="font-semibold text-xs mt-2">
+          <h1 className="font-semibold text-xs mt-2 text-textColor">
             {languageData.calendar.chooseTime[language]}
           </h1>
-          <h2 className="font-semibold text-xs mb-1">
+          <h2 className="font-semibold text-xs mb-1 text-textColor">
             {languageData.calendar.timeZone[language]}
           </h2>
           <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[200px] mx-auto">
@@ -286,48 +287,48 @@ function Calendar({ id }) {
           {/* Adults */}
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-sm font-semibold">Adultos</h3>
-              <p className="text-xs text-gray-500">Edad: más de 18</p>
+              <h3 className="text-sm text-textColor font-semibold">Adultos</h3>
+              <p className="text-xs text-textColor">Edad: más de 18</p>
             </div>
             <div className="flex items-center justify-center items-center">
               <button
                 onClick={decAdults}
-                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full bg-backgroundP flex items-center justify-center text-sm"
               >
-                –
+                <p className="text-sm text-textColor">-</p>
               </button>
-              <span className="w-8 text-sm flex items-center justify-center">
+              <span className="w-8 text-sm flex items-center justify-center text-textColor">
                 {adults}
               </span>
               <button
                 onClick={incAdults}
-                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full bg-backgroundP flex items-center justify-center text-sm"
               >
-                +
+                <p className="text-sm text-textColor">+</p>
               </button>
             </div>
           </div>
           {/* Children */}
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-sm font-semibold">Niños</h3>
-              <p className="text-xs text-gray-500">Edad: 2–12 años</p>
+              <h3 className="text-sm font-semibold text-textColor">Niños</h3>
+              <p className="text-xs text-textColor">Edad: 2–12 años</p>
             </div>
             <div className="flex items-center justify-center items-center">
               <button
                 onClick={decChildren}
-                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full bg-backgroundP flex items-center justify-center text-sm"
               >
-                –
+                <p className="text-sm text-textColor">-</p>
               </button>
-              <span className="w-8 flex items-center justify-center text-sm">
+              <span className="w-8 flex items-center justify-center text-sm text-textColor">
                 {children}
               </span>
               <button
                 onClick={incChildren}
-                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full bg-backgroundP flex items-center justify-center text-sm"
               >
-                +
+                <p className="text-sm text-textColor">+</p>
               </button>
             </div>
           </div>
@@ -335,8 +336,8 @@ function Calendar({ id }) {
       )}
 
       <div className="flex items-center justify-center mb-3 mt-1 ">
-        <AlertIcon className="mr-2" />
-        <h2 className="font-semibold text-xs">
+        <FiInfo className="text-textColor text-xl mr-2" />
+        <h2 className="font-semibold text-xs text-textColor">
           {languageData.selectDate[language]}
         </h2>
         {/* ❌ Botón de cerrar */}

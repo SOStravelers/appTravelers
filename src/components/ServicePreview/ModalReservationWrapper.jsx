@@ -50,7 +50,7 @@ export default function ModalReservationWrapper({ isOpen, onClose }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`relative bg-white w-full max-w-3xl rounded-lg p-4 transform transition-all duration-300 ${
+        className={`relative bg-backgroundModal w-full max-w-3xl rounded-lg p-4 transform transition-all duration-300 ${
           animateIn
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 translate-y-4"

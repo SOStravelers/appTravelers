@@ -115,7 +115,7 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`bg-backgroundModal rounded-lg w-full max-w-md p-4 mx-4 transform transition-all
+        className={`bg-backgroundModal rounded-xl w-full max-w-md p-4 mx-4 transform transition-all
           ${
             isOpen
               ? "opacity-100 scale-100"

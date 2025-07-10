@@ -239,7 +239,7 @@ export default function SyncCarousel() {
       {/* botón play/pause */}
       <button
         onClick={togglePlayPause}
-        className="absolute bottom-[110px] left-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
+        className="absolute bottom-[130px] left-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isPlaying ? (
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -255,7 +255,7 @@ export default function SyncCarousel() {
       {/* botón mute */}
       <button
         onClick={() => setIsMuted((m) => !m)}
-        className="absolute bottom-[110px] right-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
+        className="absolute bottom-[130px] right-4 opacity-50 z-10 p-2 bg-white/80 rounded-full shadow-lg hover:bg-white"
       >
         {isMuted ? (
           <MdVolumeOff className="w-5 h-5 text-black" />

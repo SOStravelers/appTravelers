@@ -26,7 +26,7 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(true);
   const [filterKey, setFilterKey] = useState(0);
   const [isFilterOpen, setFilterOpen] = useState(false);
-  const [obsFilter, setObsFilter] = useState(false);
+  const [obsFilter, setObsFilter] = useState(true);
   const userId = Cookies.get("auth.user_id");
 
   const handleFilterChange = () => {

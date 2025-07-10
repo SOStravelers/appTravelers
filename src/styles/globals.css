@@ -21,11 +21,11 @@ body {
   --background-end-rgb: 255, 255, 255;
 
   
-  --color-background-primary:#fefefefe;
+  --color-background-primary:#F7F7F7;
   --color-background-secondary:#f8f8f8fe;
-  --color-background-modal:#f8f8f8fe;
-  --color-background-card:#f8f8f8fe;
-  --color-background-navbar:#f8f8f8fe;
+  --color-background-modal:#fffffffe;
+  --color-background-card:#fffffffe;
+  --color-background-navbar:#fffffffe;
   --color-text-color:#151515fe;
   --color-text-gray:#7c8494;
   --color-text-gray-reverse:#49494a;

@@ -49,11 +49,12 @@ export default function Home() {
       if (stickypoint == 0) {
         console.log("entra");
         const stickyEl = document.getElementById("icon-carousel");
-        const point = stickyEl.getBoundingClientRect().top - 52;
+        // const point = stickyEl.getBoundingClientRect().top - 52;
+        const point = window.innerHeight * 0.8 - 52;
         console.log("el point", point);
         setStickypoint(point);
       }
-    }, 500);
+    }, 100);
     return () => clearTimeout(timerIds);
   }, [stickypoint]);
 

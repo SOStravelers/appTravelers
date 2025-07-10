@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function WaveBar() {
   return (
-    <div className="w-screen flex flex-col justify-center items-center bg-white md:bg-darkBlue md:h-40 object-cover">
+    <div className="w-screen flex flex-col justify-center items-center  md:bg-darkBlue md:h-40 object-cover">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="100vw"
@@ -23,14 +23,14 @@ function WaveBar() {
         width={100}
         color={"white"}
       />
-      {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
+      {/* {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
         <h1 className="text-white  neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
           {process.env.NEXT_PUBLIC_NODE_ENV == "dev" ||
           process.env.NEXT_PUBLIC_NODE_ENV == "development"
             ? "Dev Version"
             : " Test Version"}
         </h1>
-      )}
+      )} */}
     </div>
   );
 }

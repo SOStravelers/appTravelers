@@ -24,7 +24,14 @@ export default function GuestSettings() {
   const router = useRouter();
   const store = useStore();
   const [loading, setLoading] = useState(true); //
-  const { setLanguage, language, currency, setCurrency } = store;
+  const {
+    setLanguage,
+    language,
+    currency,
+    setCurrency,
+    changeTheme,
+    setChangeTheme,
+  } = store;
   const [isOnUbication, setIsOnUbication] = useState(false);
   const [selection, setSelection] = useState({});
   const [selectionCurrency, setSelectionCurrency] = useState({});
@@ -130,6 +137,7 @@ export default function GuestSettings() {
         label: languageData.theme["default"][language],
       });
     }
+    setChangeTheme(!changeTheme);
   };
 
   const optionsCurency = [

@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GoogleOneTap from "@/hooks/GoogleOneTap";
 import { renderToString } from "react-dom/server";
-import { LogoSosRelleno } from "@/constants/icons";
+import { LogoSosRelleno, LogoSosWhite } from "@/constants/icons";
 import { routesNavbar, routesSidebar } from "@/utils/variables";
 import Script from "next/script";
 import GoogleAnalytics from "@bradgarropy/next-google-analytics";
@@ -22,8 +22,6 @@ export default function App({ Component, pageProps }) {
 
   const renderNavbar = () => routesNavbar(router) && <Navbar />;
   const renderSidebar = () => routesSidebar(router) && <Sidebar />;
-
-  const svgString = renderToString(<LogoSosRelleno />);
 
   const indexableRoutes = [
     "/",
@@ -71,6 +69,9 @@ export default function App({ Component, pageProps }) {
       root.classList.remove("dark");
     }
   }, [darkMode]);
+  const svgString = darkMode
+    ? renderToString(<LogoSosWhite />)
+    : renderToString(<LogoSosRelleno />);
   return (
     <>
       <GoogleOneTap />

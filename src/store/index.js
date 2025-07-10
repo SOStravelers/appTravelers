@@ -24,6 +24,7 @@ export const useStore = create(
         user: {},
         language: "en",
         currency: "BRL",
+        changeTheme: false,
         loadingCarrouselVideos: false,
         urls: urls(),
         loggedIn: false,
@@ -72,6 +73,9 @@ export const useStore = create(
         setSocket: (socket) => set({ socket }, false, "setSocket"),
         setLanguage: (language) => set({ language }, false, "setLanguage"),
         setCurrency: (currency) => set({ currency }, false, "setCurrency"),
+        setChangeTheme: (changeTheme) =>
+          set({ changeTheme }, false, "setChangeTheme"),
+
         setFilters: (filters) => set({ filters }, false, "setFilters"),
         setServicesIndexList: (servicesIndexList) =>
           set({ servicesIndexList }, false, "setServicesIndexList"),

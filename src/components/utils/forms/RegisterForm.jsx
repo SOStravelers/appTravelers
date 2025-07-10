@@ -92,7 +92,7 @@ function RegisterForm() {
                     onChange={(e) => setValue(e.target.value)}
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-red">
+                    <p key={error} className="text-errorColor text-xs">
                       {error}
                     </p>
                   ))}
@@ -114,7 +114,7 @@ function RegisterForm() {
                     onChange={(e) => setValue(e.target.value)}
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-red">
+                    <p key={error} className="text-errorColor text-xs">
                       {error}
                     </p>
                   ))}
@@ -143,7 +143,7 @@ function RegisterForm() {
                     type="password"
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-red">
+                    <p key={error} className="text-errorColor text-xs">
                       {error}
                     </p>
                   ))}
@@ -173,7 +173,7 @@ function RegisterForm() {
                     type="password"
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-red">
+                    <p key={error} className="text-errorColor text-xs">
                       {error}
                     </p>
                   ))}
@@ -182,7 +182,7 @@ function RegisterForm() {
             }}
           </Field>
           <Link href="/">
-            <p className="text-blackText mt-1 mb-2 text-right">
+            <p className="text-textColor mt-1 mb-2 text-right">
               {languageData.form.forgotPass[language]}
             </p>
           </Link>

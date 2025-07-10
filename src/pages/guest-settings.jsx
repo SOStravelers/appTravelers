@@ -97,8 +97,9 @@ export default function GuestSettings() {
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
+    console.log("entra", prefersDark);
     setDarkMode(prefersDark); // ← esta línea faltaba
-  }, []);
+  }, [selectionTheme]);
 
   const setValueTheme = (valor) => {
     const root = document.documentElement;
@@ -206,20 +207,21 @@ export default function GuestSettings() {
         />
       </div> */}
       <div className="flex items-center justify-center mb-4  max-w-lg">
-        {selectionTheme.value != "dark" ? (
-          <Image
-            src="/icons/LogoCompleto.svg"
-            width={120}
-            height={120}
-            // className="logo-light"
-            alt="SOS Traveler Logo"
-          />
-        ) : (
+        {selectionTheme.value == "dark" ||
+        (selectionTheme.value == "default" && darkMode) ? (
           <Image
             src="/icons/LogoCompletoBlanco.svg"
             width={120}
             height={120}
             className="logo-light"
+            alt="SOS Traveler Logo"
+          />
+        ) : (
+          <Image
+            src="/icons/LogoCompleto.svg"
+            width={120}
+            height={120}
+            // className="logo-light"
             alt="SOS Traveler Logo"
           />
         )}

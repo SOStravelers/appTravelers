@@ -33,7 +33,7 @@ body {
   --color-input:#eaecf1;
   --color-error:#cd1414;
   --color-warning:#e17912;
-
+  --color-button-light:#001C25
 }
 
 .dark {
@@ -49,8 +49,12 @@ body {
   --color-input:#1f2a30;
   --color-error:#ec7e7e;
   --color-warning:#e1d11c;
+  --color-button-light:#314b57
 }
 
+.logo-light {
+  filter: brightness(4) saturate(0);
+}
 
 .mini-calendar {
   font-size: 13px !important;

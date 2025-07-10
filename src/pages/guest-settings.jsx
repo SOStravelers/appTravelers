@@ -7,6 +7,7 @@ import Select from "react-select";
 import OptionCard from "@/components/utils/cards/OptionCard";
 import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import CustomSelector from "@/components/utils/selector/CustomSelector";
 import languageData from "@/language/settings.json";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import { MdEmail } from "react-icons/md";
@@ -77,6 +78,10 @@ export default function GuestSettings() {
     setSelectionCurrency({
       value: currency,
       label: languageData["currency"][currency][valor.value],
+    });
+    setSelectionTheme({
+      value: selectionTheme.value,
+      label: languageData.theme[selectionTheme.value][valor.value],
     });
   };
   const setValueCurrency = (valor) => {
@@ -165,129 +170,30 @@ export default function GuestSettings() {
       <h1 className={`text-textColor text-sm font-semibold mt-3 mb-2 `}>
         {languageData.titleLanguage[language]}
       </h1>
-      <Select
-        className="w-full max-w-lg rounded-xl my-1 mb-3"
+      <CustomSelector
         options={optionsSupport}
         value={selection}
-        // onBlur={() =>
-        //   setSelection({
-        //     value: "en",
-        //     label: "English",
-        //   })
-        // }
         onChange={(selectedOption) => setValue(selectedOption)}
-        isSearchable={false}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            borderColor: "#00A0D5",
-            borderRadius: "10px",
-
-            boxShadow: "none",
-            "&:hover": {
-              borderColor: "#00A0D5",
-            },
-          }),
-          option: (provided, state) => ({
-            ...provided,
-            color: state.isSelected ? "#fff" : "#000",
-            backgroundColor: state.isSelected
-              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
-              : state.isFocused
-              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
-              : "#fff", // Fondo blanco por defecto
-            borderRadius: "5px",
-            transition: "background-color 0.3s ease",
-            "&:hover": {
-              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
-            },
-          }),
-        }}
       />
 
       <h1 className={`text-textColor text-sm font-semibold mt-3 mb-2 `}>
         {languageData.titleCurrency[language]}
       </h1>
-      <Select
-        className="w-full max-w-lg rounded-xl my-1 mb-3"
+
+      <CustomSelector
         options={optionsCurency}
         value={selectionCurrency}
-        // onBlur={() =>
-        //   setSelection({
-        //     value: "en",
-        //     label: "English",
-        //   })
-        // }
         onChange={(selectedOption) => setValueCurrency(selectedOption)}
-        isSearchable={false}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            borderColor: "#00A0D5",
-            borderRadius: "10px",
-            boxShadow: "none",
-            "&:hover": {
-              borderColor: "#00A0D5",
-            },
-          }),
-          option: (provided, state) => ({
-            ...provided,
-            color: state.isSelected ? "#fff" : "#000",
-            backgroundColor: state.isSelected
-              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
-              : state.isFocused
-              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
-              : "#fff", // Fondo blanco por defecto
-            borderRadius: "5px",
-            transition: "background-color 0.3s ease",
-            "&:hover": {
-              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
-            },
-          }),
-        }}
       />
 
       <h1 className={`text-textColor text-sm font-semibold mt-3 mb-2 `}>
         {languageData.titleTheme[language]}
       </h1>
 
-      <Select
-        className="w-full max-w-lg rounded-xl my-1 mb-3"
+      <CustomSelector
         options={optionsTheme}
         value={selectionTheme}
-        // onBlur={() =>
-        //   setSelection({
-        //     value: "en",
-        //     label: "English",
-        //   })
-        // }
         onChange={(selectedOption) => setValueTheme(selectedOption)}
-        isSearchable={false}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            borderColor: "#00A0D5",
-            borderRadius: "10px",
-            boxShadow: "none",
-            "&:hover": {
-              borderColor: "#00A0D5",
-            },
-          }),
-          option: (provided, state) => ({
-            ...provided,
-            color: state.isSelected ? "#fff" : "#000",
-            backgroundColor: state.isSelected
-              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
-              : state.isFocused
-              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
-              : "#fff", // Fondo blanco por defecto
-            borderRadius: "5px",
-            transition: "background-color 0.3s ease",
-            "&:hover": {
-              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
-            },
-          }),
-        }}
       />
 
       {/* <div className="flex flex-col my-4">
@@ -300,12 +206,23 @@ export default function GuestSettings() {
         />
       </div> */}
       <div className="flex items-center justify-center mb-4  max-w-lg">
-        <Image
-          src="/icons/LogoCompleto.svg"
-          width={120}
-          height={120}
-          alt="SOS Traveler Logo"
-        />
+        {selectionTheme.value != "dark" ? (
+          <Image
+            src="/icons/LogoCompleto.svg"
+            width={120}
+            height={120}
+            // className="logo-light"
+            alt="SOS Traveler Logo"
+          />
+        ) : (
+          <Image
+            src="/icons/LogoCompletoBlanco.svg"
+            width={120}
+            height={120}
+            className="logo-light"
+            alt="SOS Traveler Logo"
+          />
+        )}
       </div>
 
       <OutlinedButton

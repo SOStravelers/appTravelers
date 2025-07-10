@@ -13,19 +13,25 @@ function OutlinedButton({
   return (
     <button
       className={clsx(
-        `max-w-lg text-white bg-darkBlue text-md py-${py} w-3/4 mx-auto rounded-full hover:bg-blueBorderLight cursor-pointer`,
+        `max-w-lg text-white text-md py-${py} w-3/4 mx-auto rounded-full hover:bg-blueBorderLight cursor-pointer`,
         margin ? margin : "my-1",
         secondary
           ? "text-grey border-grey"
           : error
           ? "text-greyText border-lightGrey"
-          : "border-blueBorder text-blackText bg-blueButton",
+          : "border-blueBorder text-blackText",
         {
           "opacity-50 cursor-not-allowed": disabled,
           "bg-darkBlue": disabled,
           "text-gray-500": disabled,
         }
       )}
+      style={{
+        backgroundColor:
+          !secondary && !error && !disabled
+            ? "var(--color-button-light)"
+            : undefined,
+      }}
       disabled={disabled}
       {...props}
     >

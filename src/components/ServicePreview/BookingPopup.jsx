@@ -35,7 +35,9 @@ const BookingPopup = ({
             </span>
           )}
         </div>
-        {tagLine && <span className="text-xxs text-red-500 ">{tagLine}</span>}
+        {tagLine && (
+          <span className="text-xxs text-warningColor ">{tagLine}</span>
+        )}
       </div>
       <button
         onClick={onAction}

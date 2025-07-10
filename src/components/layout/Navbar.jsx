@@ -95,7 +95,7 @@ function Navbar() {
   };
 
   return (
-    <div className="w-screen h-12 fixed  bottom-0 left-0 z-30 bg-darkBlue flex flex justify-around items-center md:hidden">
+    <div className="w-screen h-12 fixed  bottom-0 left-0 z-30 bg-backgroundNavbar flex flex justify-around items-center md:hidden">
       <button
         className="customButton flex mt-1 flex-col items-center justify-center"
         onClick={() => goTo(isWorker ? "/worker/home" : "/")}

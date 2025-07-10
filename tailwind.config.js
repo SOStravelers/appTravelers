@@ -26,6 +26,8 @@ module.exports = {
         chipPrimary: "var(--color-chip-primary)",
         inputColor: "var(--color-input)",
         errorColor: "var(--color-error)",
+        warningColor: "var(--color-warning)",
+        backgroundNavbar: "var(--color-background-navbar)",
 
         // tus colores custom, con nombres únicos para no borrar la paleta por defecto
         lightBlue: "#5B78C7",

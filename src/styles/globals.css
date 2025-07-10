@@ -25,18 +25,21 @@ body {
   --color-background-secondary:#f8f8f8fe;
   --color-background-modal:#f8f8f8fe;
   --color-background-card:#f8f8f8fe;
+  --color-background-navbar:#f8f8f8fe;
   --color-text-color:#151515fe;
   --color-text-gray:#7c8494;
   --color-text-gray-reverse:#49494a;
   --color-chip-primary:#d8dadd;
   --color-input:#eaecf1;
   --color-error:#cd1414;
+  --color-warning:#e17912;
 
 }
 
 .dark {
   --color-background-primary:#0e252d;
   --color-background-secondary:#102c36;
+  --color-background-navbar:#001C25;
   --color-background-modal:#263942;
   --color-background-card:#314b57;
   --color-text-color:#ffffffe1;
@@ -45,6 +48,7 @@ body {
   --color-chip-primary:#dce2e7;
   --color-input:#1f2a30;
   --color-error:#ec7e7e;
+  --color-warning:#e1d11c;
 }
 
 

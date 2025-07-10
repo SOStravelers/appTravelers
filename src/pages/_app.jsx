@@ -19,7 +19,6 @@ export default function App({ Component, pageProps }) {
   console.log("inicio");
   const router = useRouter();
   const [darkMode, setDarkMode] = useState(false);
-  const isSharePage = router.pathname.startsWith("/share");
 
   const renderNavbar = () => routesNavbar(router) && <Navbar />;
   const renderSidebar = () => routesSidebar(router) && <Sidebar />;
@@ -47,7 +46,6 @@ export default function App({ Component, pageProps }) {
     typeof window !== "undefined"
       ? window.navigator.userLanguage || window.navigator.language
       : undefined;
-  console.log("is Share", isSharePage, router.pathname);
 
   useEffect(() => {
     const prefersDark = window.matchMedia(

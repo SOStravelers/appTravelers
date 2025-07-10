@@ -21,7 +21,6 @@ const poppins = Poppins({
 
 function Layout({ children, lang }) {
   const router = useRouter();
-  console.log("router", router.pathname);
   const [middlewareCompleted, setMiddlewareCompleted] = useState(false);
   //Para saber si está online
   const isOnline = useOnlineStatus();
@@ -50,7 +49,6 @@ function Layout({ children, lang }) {
   const isIntro = router.pathname === "/intro";
 
   const isPaymentConfirm = router.pathname === "/payment-confirmation";
-  console.log("aqui");
   return (
     <>
       <div className={clsx("relative", poppins.className)}>

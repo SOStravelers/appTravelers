@@ -59,7 +59,7 @@ export default function LoginFormModal({
       <div
         onClick={(e) => e.stopPropagation()}
         className={`
-          bg-white rounded-2xl w-[90vw] max-w-sm p-5 mx-2
+          bg-backgroundModal rounded-2xl w-[90vw] max-w-sm p-5 mx-2
           transform transition-all duration-200 ease-out
           ${
             open
@@ -71,14 +71,16 @@ export default function LoginFormModal({
         {/* Close button */}
         <button
           onClick={handleCancel}
-          className="absolute top-3 right-3 text-black text-2xl focus:outline-none"
+          className="absolute top-3 right-3 text-textColor text-2xl focus:outline-none"
         >
           &times;
         </button>
 
         {/* Header */}
-        <h1 className="text-lg text-center mb-3">{title}</h1>
-        {text && <p className="text-center text-sm mb-5">{text}</p>}
+        <h1 className="text-lg text-center  text-textColor mb-3">{title}</h1>
+        {text && (
+          <p className="text-center text-sm  text-textColor mb-5">{text}</p>
+        )}
 
         {/* Login form */}
         <LoginForm
@@ -88,7 +90,7 @@ export default function LoginFormModal({
             setOpen(false);
           }}
           inputClassName={`
-            w-full border border-gray-300 bg-gray-100 rounded-md
+            w-full border border-gray-300 bg-backgroundModal rounded-md
             px-3 py-2 text-sm focus:outline-none
             focus:ring-0 focus:border-gray-500
             transition-colors duration-150 ease-in-out
@@ -96,8 +98,8 @@ export default function LoginFormModal({
         />
 
         {/* Footer links */}
-        <div className="mt-6 flex flex-col items-center text-sm text-center space-y-2">
-          <p className="text-gray-700">
+        <div className="mt-6 flex flex-col items-center  text-textColor text-sm text-center space-y-2">
+          <p className="text-textColor">
             New here?
             <a
               onClick={() => {
@@ -113,14 +115,14 @@ export default function LoginFormModal({
             By joining, you agree to our{" "}
             <a
               onClick={() => router.push("/terms-of-service")}
-              className="font-bold text-gray-800 hover:underline cursor-pointer"
+              className="font-bold text-textColor hover:underline cursor-pointer"
             >
               Terms of Service
             </a>{" "}
             and{" "}
             <a
               onClick={() => router.push("/user-policy")}
-              className="font-bold text-gray-800 hover:underline cursor-pointer"
+              className="font-bold text-textColor hover:underline cursor-pointer"
             >
               Use Policy
             </a>

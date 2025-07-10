@@ -18,9 +18,14 @@ module.exports = {
         brand: "var(--color-brand)",
         backgroundP: "var(--color-background-primary)",
         backgroundS: "var(--color-background-secondary)",
+        backgroundModal: "var(--color-background-modal)",
+        backgroundCard: "var(--color-background-card)",
         textColor: "var(--color-text-color)",
         textColorGray: "var(--color-text-gray)",
+        textColorGrayReverse: "var(--color-text-gray-reverse)",
         chipPrimary: "var(--color-chip-primary)",
+        inputColor: "var(--color-input)",
+        errorColor: "var(--color-error)",
 
         // tus colores custom, con nombres únicos para no borrar la paleta por defecto
         lightBlue: "#5B78C7",

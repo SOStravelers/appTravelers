@@ -9,6 +9,7 @@ import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import languageData from "@/language/settings.json";
 import { WorldIcon, MailIcon } from "@/constants/icons";
+import { MdEmail } from "react-icons/md";
 import {
   delay,
   opacityAnimation,
@@ -90,7 +91,7 @@ export default function GuestSettings() {
 
   return (
     <div
-      className={`min-h-screen bg-gray-50 p-4 flex flex-col 
+      className={`min-h-screen bg-backgroundP p-4 flex flex-col 
           transform transition-all duration-800 ease-out
           transition-opacity duration-800 ease-out
          ${loading ? opacityAnimation : displayAnimation}
@@ -102,10 +103,10 @@ export default function GuestSettings() {
         <OptionCard
           title={languageData.support.title[language]}
           subtitle={languageData.support.body[language]}
-          icon={MailIcon}
+          icon={MdEmail}
         ></OptionCard>
       </Link>
-      <h1 className={`text-black text-sm font-semibold mt-3 mb-2 `}>
+      <h1 className={`text-textColor text-sm font-semibold mt-3 mb-2 `}>
         {languageData.titleLanguage[language]}
       </h1>
       <Select
@@ -125,6 +126,7 @@ export default function GuestSettings() {
             ...provided,
             borderColor: "#00A0D5",
             borderRadius: "10px",
+
             boxShadow: "none",
             "&:hover": {
               borderColor: "#00A0D5",
@@ -147,7 +149,7 @@ export default function GuestSettings() {
         }}
       />
 
-      <h1 className={`text-black text-sm font-semibold mt-3 mb-2 `}>
+      <h1 className={`text-textColor text-sm font-semibold mt-3 mb-2 `}>
         {languageData.titleCurrency[language]}
       </h1>
       <Select

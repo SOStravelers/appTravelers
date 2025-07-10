@@ -23,18 +23,28 @@ body {
   
   --color-background-primary:#fefefefe;
   --color-background-secondary:#f8f8f8fe;
+  --color-background-modal:#f8f8f8fe;
+  --color-background-card:#f8f8f8fe;
   --color-text-color:#151515fe;
-  --color-text-gray:#6B7280;
-  --color-chip-primary:#bfc7cf
+  --color-text-gray:#7c8494;
+  --color-text-gray-reverse:#49494a;
+  --color-chip-primary:#d8dadd;
+  --color-input:#eaecf1;
+  --color-error:#cd1414;
 
 }
 
 .dark {
   --color-background-primary:#0e252d;
   --color-background-secondary:#102c36;
-  --color-text-color:#ffffffca;
+  --color-background-modal:#263942;
+  --color-background-card:#314b57;
+  --color-text-color:#ffffffe1;
   --color-text-gray:#8a92a1;
+  --color-text-gray-reverse:#cecece;
   --color-chip-primary:#dce2e7;
+  --color-input:#1f2a30;
+  --color-error:#ec7e7e;
 }
 
 

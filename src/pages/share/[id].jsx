@@ -9,7 +9,7 @@ export default function SharePreview({ id, title, description, image }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       window.location.href = `/service-preview/${id}`;
-    }, 2000);
+    }, 50);
     return () => clearTimeout(timer);
   }, [id]);
 
@@ -27,7 +27,7 @@ export default function SharePreview({ id, title, description, image }) {
         />
       </Head>
 
-      <h1>Redireccionando…</h1>
+      <h1 className="text-textColor mt-2">Redireccionando…</h1>
       <noscript>
         Si no eres redirigido, haz clic{" "}
         <a href={`/service-preview/${id}`}>aquí</a>

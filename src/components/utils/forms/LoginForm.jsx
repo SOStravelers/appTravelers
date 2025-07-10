@@ -144,7 +144,10 @@ function LoginForm({ onClose }) {
                     icon={FaUser}
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-red-500 text-xs mb-1 ml-2">
+                    <p
+                      key={error}
+                      className="text-errorColor text-xs mb-1 ml-2"
+                    >
                       {error}
                     </p>
                   ))}
@@ -170,7 +173,10 @@ function LoginForm({ onClose }) {
                     icon={FaLock}
                   />
                   {errors.map((error) => (
-                    <p key={error} className="text-red">
+                    <p
+                      key={error}
+                      className="text-errorColor text-xs mb-1 ml-2"
+                    >
                       {error}
                     </p>
                   ))}
@@ -181,7 +187,7 @@ function LoginForm({ onClose }) {
           <div className="flex justify-end w-full">
             <button
               type="button"
-              className="bg-transparent border-none text-darkBlue text-sm mt-1 mb-2 cursor-pointer hover:underline"
+              className="bg-transparent border-none text-textColor text-sm mt-1 mb-2 cursor-pointer hover:underline"
               onClick={() => goToforgot()}
             >
               {languageData.form.forgotPass[language]}

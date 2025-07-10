@@ -45,8 +45,8 @@ const CurrencySelector = ({ scrolledPastVh }) => {
       {/* Pop-over */}
       {open && (
         <div
-          className="absolute right-0 mt-2 flex flex-col gap-1
-                     p-2 bg-white shadow-lg rounded-lg ring-1 ring-black/10 z-50"
+          className="absolute right-0 mt-2 border flex flex-col gap-1
+                     p-2 bg-backgroundNavbar shadow-lg rounded-lg ring-1 ring-black/10 z-50"
         >
           {Object.entries(CURRENCIES)
             .filter(([code]) => code !== currency)
@@ -54,11 +54,15 @@ const CurrencySelector = ({ scrolledPastVh }) => {
               <button
                 key={code}
                 onClick={() => changeCurrency(code)}
-                className="flex items-center justify-between w-16 h-8 rounded hover:bg-gray-100 transition px-2"
+                className="flex bg-backgroundNavbar items-center justify-between w-16 h-8 rounded hover:bg-gray-500 transition px-2 hover:text-black"
                 aria-label={label}
               >
-                <span className="text-sm font-bold">{symbol}</span>
-                <span className="text-xs uppercase">{label}</span>
+                <span className="text-sm text-textColor  font-bold">
+                  {symbol}
+                </span>
+                <span className="text-xs text-textColor  uppercase">
+                  {label}
+                </span>
               </button>
             ))}
         </div>

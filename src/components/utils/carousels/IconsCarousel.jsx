@@ -160,7 +160,7 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
   return (
     <nav
       ref={navRef}
-      className={`w-full sticky top-0 z-20 bg-backgroundP transition-shadow duration-200
+      className={`w-full sticky top-0 z-20 bg-backgroundP  transition-shadow duration-200
     ${
       isSticky
         ? "shadow-lg dark:shadow-darkNav border-b border-gray-200 dark:border-gray-800"
@@ -168,10 +168,10 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
     }
   `}
     >
-      <div className="min-h-[80px]">
+      <div className="min-h-[80px] ">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 pt-2 pb-3">
-          <div className="flex items-center">
+        <div className="flex items-center justify-between px-4 pt-2 pb-3 ">
+          <div className="flex items-center md:mt-4">
             <h2 className="text-md font-semibold text-textColor">
               {languageData.index.explore[language]}
             </h2>
@@ -181,7 +181,7 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
               <FiMapPin className="text-textColor" size={14} />
             </button>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 md:mt-4">
             <button
               onClick={handleViewMore}
               className="text-sm font-semibold text-blueBorder hover:underline"

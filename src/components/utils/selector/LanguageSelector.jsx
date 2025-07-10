@@ -47,8 +47,8 @@ const LanguageSelector = ({ scrolledPastVh }) => {
       {/* Pop-over */}
       {open && (
         <div
-          className="absolute right-0 mt-2 flex flex-col gap-1
-                     p-2 bg-white shadow-lg rounded-lg ring-1 ring-black/10 z-50"
+          className="absolute border  bg-backgroundNavbar right-0 mt-2 flex flex-col gap-1
+                     py-2 px-2  shadow-lg rounded-lg ring-1 ring-black/10 z-50"
         >
           {Object.entries(FLAGS)
             .filter(([code]) => code !== language)
@@ -56,11 +56,13 @@ const LanguageSelector = ({ scrolledPastVh }) => {
               <button
                 key={code}
                 onClick={() => changeLang(code)}
-                className="flex items-center gap-2 w-12 h-8 rounded hover:bg-gray-100 transition"
+                className="flex items-center  bg-backgroundNavbar gap-2 w-12 h-8 rounded hover:bg-gray-500  transition"
                 aria-label={code}
               >
                 <span className={`fi fi-${iso} fis text-lg`} />
-                <span className="text-xs  uppercase">{code}</span>
+                <span className="text-xs text-textColor  uppercase">
+                  {code}
+                </span>
               </button>
             ))}
         </div>

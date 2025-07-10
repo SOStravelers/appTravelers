@@ -27,7 +27,8 @@ export default function GuestSettings() {
   const [isOnUbication, setIsOnUbication] = useState(false);
   const [selection, setSelection] = useState({});
   const [selectionCurrency, setSelectionCurrency] = useState({});
-
+  const [selectionTheme, setSelectionTheme] = useState({});
+  const [darkMode, setDarkMode] = useState(false);
   useEffect(() => {
     setSelection({
       value: language,
@@ -37,6 +38,18 @@ export default function GuestSettings() {
       value: currency,
       label: languageData["currency"][currency][language],
     });
+    const theme = Cookies.get("theme");
+    if (theme && (theme == "dark" || theme == "light")) {
+      setSelectionTheme({
+        value: theme,
+        label: languageData.theme[theme][language],
+      });
+    } else {
+      setSelectionTheme({
+        value: "default",
+        label: languageData.theme["default"][language],
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -75,6 +88,44 @@ export default function GuestSettings() {
     });
   };
 
+  useEffect(() => {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setDarkMode(prefersDark); // ← esta línea faltaba
+  }, []);
+
+  const setValueTheme = (valor) => {
+    const root = document.documentElement;
+    if (valor.value == "dark") {
+      Cookies.set("theme", valor.value);
+      root.classList.add("dark");
+      setSelectionTheme({
+        value: valor.value,
+        label: languageData.theme[valor.value][language],
+      });
+    } else if (valor.value == "light") {
+      Cookies.set("theme", valor.value);
+      root.classList.remove("dark");
+      setSelectionTheme({
+        value: valor.value,
+        label: languageData.theme[valor.value][language],
+      });
+    } else {
+      if (darkMode) {
+        Cookies.set("theme", "dark");
+        root.classList.add("dark");
+      } else {
+        Cookies.set("theme", "light");
+        root.classList.remove("dark");
+      }
+      setSelectionTheme({
+        value: "default",
+        label: languageData.theme["default"][language],
+      });
+    }
+  };
+
   const optionsCurency = [
     { value: "usd", label: languageData["currency"]["usd"][language] },
     { value: "eur", label: languageData["currency"]["eur"][language] },
@@ -87,6 +138,11 @@ export default function GuestSettings() {
     { value: "fr", label: languageData.language[language]["fr"] },
     { value: "de", label: languageData.language[language]["de"] },
     { value: "pt", label: languageData.language[language]["pt"] },
+  ];
+  const optionsTheme = [
+    { value: "default", label: languageData.theme.default[language] },
+    { value: "dark", label: languageData.theme.dark[language] },
+    { value: "light", label: languageData.theme.light[language] },
   ];
 
   return (
@@ -163,6 +219,49 @@ export default function GuestSettings() {
         //   })
         // }
         onChange={(selectedOption) => setValueCurrency(selectedOption)}
+        isSearchable={false}
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            borderColor: "#00A0D5",
+            borderRadius: "10px",
+            boxShadow: "none",
+            "&:hover": {
+              borderColor: "#00A0D5",
+            },
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            color: state.isSelected ? "#fff" : "#000",
+            backgroundColor: state.isSelected
+              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
+              : state.isFocused
+              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
+              : "#fff", // Fondo blanco por defecto
+            borderRadius: "5px",
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
+            },
+          }),
+        }}
+      />
+
+      <h1 className={`text-textColor text-sm font-semibold mt-3 mb-2 `}>
+        {languageData.titleTheme[language]}
+      </h1>
+
+      <Select
+        className="w-full max-w-lg rounded-xl my-1 mb-3"
+        options={optionsTheme}
+        value={selectionTheme}
+        // onBlur={() =>
+        //   setSelection({
+        //     value: "en",
+        //     label: "English",
+        //   })
+        // }
+        onChange={(selectedOption) => setValueTheme(selectedOption)}
         isSearchable={false}
         styles={{
           control: (provided) => ({

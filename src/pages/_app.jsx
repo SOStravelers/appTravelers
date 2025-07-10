@@ -13,6 +13,7 @@ import { LogoSosRelleno } from "@/constants/icons";
 import { routesNavbar, routesSidebar } from "@/utils/variables";
 import Script from "next/script";
 import GoogleAnalytics from "@bradgarropy/next-google-analytics";
+import Cookies from "js-cookie";
 
 export default function App({ Component, pageProps }) {
   console.log("inicio");
@@ -57,6 +58,15 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     const root = document.documentElement;
+    let cookieTheme = Cookies.get("theme");
+    if (cookieTheme && cookieTheme == "dark") {
+      root.classList.add("dark");
+      return;
+    }
+    if (cookieTheme && cookieTheme == "light") {
+      root.classList.remove("dark");
+      return;
+    }
     if (darkMode) {
       root.classList.add("dark");
     } else {

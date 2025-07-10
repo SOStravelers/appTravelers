@@ -74,6 +74,36 @@
         "de":"Währung",
         "pt":"Moeda"
     },
+     "titleTheme":{
+        "es":"Apariencia de la app",
+        "en":"App theme",
+        "fr":"Thème de l'application",
+        "de":"App-Thema",
+        "pt":"Tema da app"
+    },
+    "theme":{
+         "dark":{
+        "en":"Dark theme",
+        "es":"Tema oscuro",
+        "fr":"Thème sombre",
+        "de":"Dunkler Thematik",
+        "pt":"Tema escuro"
+        },
+     "light":{
+        "en":"Light theme",
+        "es":"Tema claro",
+        "fr":"Thème clair",
+        "de":"Hell Thematik",
+        "pt":"Tema claro"
+        },
+    "default":{
+        "en":"Default theme",
+        "es":"Tema por defecto",
+        "fr":"Thème par défaut",
+        "de":"Standard Thematik",
+        "pt":"Tema padrão"
+        }
+    },
     "sigUpButton":{
         "en":"Sign Up now",
         "es":"Registrate ahora",

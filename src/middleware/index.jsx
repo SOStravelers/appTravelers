@@ -19,6 +19,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     service,
     setLanguage,
     setCurrency,
+    setTheme,
     setWorker,
     setLoginModal,
   } = store;

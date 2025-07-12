@@ -24,8 +24,9 @@ export default function LoaderGlobal() {
     <div className="fixed inset-0 h-screen w-screen bg-backgroundP z-50 flex flex-col items-center justify-center transition-opacity duration-300 opacity-100">
       {
         // isDark ?
-        <LogoSosWhite className="w-20 h-20" />
-        // : <LogoSosRelleno />
+        // <LogoSosWhite className="w-20 h-20" />
+        // :
+        <LogoSosRelleno />
       }
       <p className="font-medium mt-4 text-textColor text-xl">SOS Travelers</p>
       <div className="w-12 h-12 mt-3 border-4 border-t-transparent border-textColor rounded-full animate-spin"></div>

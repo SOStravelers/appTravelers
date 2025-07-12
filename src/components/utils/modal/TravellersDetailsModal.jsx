@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useStore } from "@/store";
 import { formatPrice } from "@/utils/format";
-
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 export default function TravellersDetailsModal({ open, onClose }) {
   const { service, setService, language, currency } = useStore();
 
@@ -136,7 +136,7 @@ export default function TravellersDetailsModal({ open, onClose }) {
       <div
         onClick={(e) => e.stopPropagation()}
         className={`
-          bg-white rounded-xl w-full max-w-md p-8 mx-4 relative
+          bg-backgroundModal rounded-xl w-full max-w-md p-8 mx-4 relative
           transform transition-all duration-400
           ${
             isVisible
@@ -147,80 +147,84 @@ export default function TravellersDetailsModal({ open, onClose }) {
         style={{ willChange: "transform" }}
       >
         <button
-          className="absolute top-4 right-4 text-gray-500 text-2xl"
+          className="absolute top-4 right-4 text-textColorGray text-2xl"
           onClick={onClose}
         >
           &times;
         </button>
-        <h3 className="text-sm font-semibold mb-4">
+        <h3 className="text-sm text-textColor font-semibold mb-4">
           {language === "es" ? "Detalles y viajeros" : "Details & Travellers"}
         </h3>
         <div className="space-y-6">
           {/* Adultos */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between  items-center">
             <div>
-              <h4 className="text-md font-semibold text-sm">
+              <h4 className=" font-semibold text-textColor text-sm">
                 {language === "es" ? "Adultos" : "Adults"}
               </h4>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-textColorGray">
                 {language === "es" ? "Edad: más de 18" : "Age: over 18"}
               </p>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={decAdults}
-                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+                className="w-6 h-6 rounded-full bg-buttonGray flex items-center justify-center text-sm"
               >
-                –
+                <p className="text-textColor">–</p>
               </button>
-              <span className="w-8 text-center text-sm">{adults}</span>
+              <span className="w-8 text-center text-textColor text-sm">
+                {adults}
+              </span>
               <button
                 onClick={incAdults}
-                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+                className="w-6 h-6 rounded-full bg-buttonGray flex items-center justify-center text-sm"
               >
-                +
+                <p className="text-sm text-textColor">+</p>
               </button>
             </div>
           </div>
           {/* Niños */}
           <div className="flex justify-between items-center">
             <div>
-              <h4 className="text-md font-semibold text-sm">
+              <h4 className="text-textColor font-semibold text-sm">
                 {language === "es" ? "Niños" : "Children"}
               </h4>
-              <p className="text-sm text-gray-500 text-xs">
+              <p className="text-sm text-textColorGray text-xs">
                 {language === "es" ? "Edad: 2–12 años" : "Age: 2–12 yrs"}
               </p>
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={decChildren}
-                className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-sm"
+                className="w-6 h-6 rounded-full bg-buttonGray flex items-center justify-center text-sm"
               >
-                –
+                <p className="text-sm text-textColor">-</p>
               </button>
-              <span className="w-8 text-center text-sm">{children}</span>
+              <span className="w-8 text-center text-textColor text-sm">
+                {children}
+              </span>
               <button
                 onClick={incChildren}
-                className="w-6 h-6  rounded-full bg-gray-100 flex items-center justify-center text-sm"
+                className="w-6 h-6  rounded-full bg-buttonGray flex items-center justify-center text-sm"
               >
-                +
+                <p className="text-sm text-textColor">+</p>
               </button>
             </div>
           </div>
         </div>
         <hr className="my-4" />
         {/* Detalles de precio */}
-        <h3 className="text-sm font-semibold mb-2">
+        <h3 className="text-sm text-textColor font-semibold mb-2">
           {language === "es" ? "Detalle del precio" : "Price breakdown"}
         </h3>
         <div className="space-y-2 mb-4">
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-textColorGray text-sm">
             <span>{unitLabel}</span>
             <span>{formatPrice(totalAdults, currency)}</span>
           </div>
           {childrenLabel ? (
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between text-textColorGray text-sm">
               <span>{childrenLabel}</span>
               <span>{formatPrice(totalChildren, currency)}</span>
             </div>
@@ -228,17 +232,22 @@ export default function TravellersDetailsModal({ open, onClose }) {
             <div className="flex justify-between h-5 text-sm"></div>
           )}
           <hr />
-          <div className="flex justify-between font-semibold text-sm">
+          <div className="flex justify-between  text-textColor font-semibold text-sm">
             <span>{language === "es" ? "Total" : "Total"} EUR</span>
             <span>{formatPrice(totalPrice, currency)}</span>
           </div>
         </div>
-        <button
+
+        <OutlinedButton
           onClick={handleApply}
-          className="block w-1/2 mx-auto bg-black text-white rounded-full py-2 text-sm mt-2 hover:opacity-90 transition"
-        >
-          {language === "es" ? "Aplicar" : "Apply"}
-        </button>
+          text={language === "es" ? "Aplicar" : "Apply"}
+          px={0}
+          py={2}
+          dark="darkHeavy"
+          textSize="text-xs"
+          textColor="text-white"
+          buttonCenter={true}
+        />
       </div>
     </div>
   );

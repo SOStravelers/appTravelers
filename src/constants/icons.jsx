@@ -2767,8 +2767,8 @@ export const LogoSosRelleno = ({ ...props }) => (
       cx="52.3557"
       cy="52"
       r="51"
-      fill="black"
-      stroke="black"
+      fill="#0e252d"
+      stroke="#0e252d"
       strokeWidth="2"
     />
     <path

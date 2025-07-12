@@ -26,7 +26,7 @@ function OutlinedButton({
       className={clsx(
         `max-w-lg rounded-full cursor-pointer px-${px} py-${py}`,
         textSize,
-        buttonCenter ? "w-1/2 mx-auto block" : null,
+        buttonCenter ? "w-1/4 mx-auto block" : null,
         margin,
         {
           "text-grey border-grey": secondary,

@@ -161,7 +161,7 @@ export default function GuestSettings() {
 
   return (
     <div
-      className={`min-h-screen bg-backgroundP px-4 md:pl-[240px] flex flex-col 
+      className={`min-h-screen bg-backgroundP pt-4 px-6  flex flex-col items-center
           transform transition-all duration-800 ease-out
           transition-opacity duration-800 ease-out
          ${loading ? opacityAnimation : displayAnimation}
@@ -169,7 +169,10 @@ export default function GuestSettings() {
     >
       {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
 
-      <Link href="support" className="block">
+      <Link
+        href="support"
+        className="w-full flex justify-center lg:max-w-md mt-3"
+      >
         <OptionCard
           title={languageData.support.title[language]}
           subtitle={languageData.support.body[language]}
@@ -214,7 +217,7 @@ export default function GuestSettings() {
           setIsOn={setIsOnUbication}
         />
       </div> */}
-      <div className="flex items-center justify-center mb-4  max-w-lg">
+      <div className="flex items-center justify-center mb-5 mt-3  max-w-lg">
         {selectionTheme.value == "dark" ||
         (selectionTheme.value == "default" && darkMode) ? (
           <Image

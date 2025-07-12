@@ -2,7 +2,7 @@ import { MdEmail } from "react-icons/md";
 function OptionCard({ title, subtitle, icon: Icon, check = false, ...props }) {
   return (
     <div
-      className="flex items-center my-2 p-3 bg-backgroundCard rounded-xl border border-textColorGray w-full max-w-lg cursor-pointer"
+      className="flex w-full   items-center my-2 p-3 bg-backgroundCard rounded-xl border border-textColorGray  cursor-pointer"
       {...props}
     >
       <div className="h-10 w-10 mr-2 rounded-full border border-textColorGray  flex justify-center items-center">

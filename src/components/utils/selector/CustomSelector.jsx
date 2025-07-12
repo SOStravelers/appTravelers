@@ -10,7 +10,7 @@ export default function CustomSelector({
 }) {
   return (
     <Select
-      className={`w-full max-w-lg my-1 mb-3 ${className}`}
+      className={`w-full max-w-md my-1 mb-3 ${className}`}
       options={options}
       value={value}
       onChange={onChange}

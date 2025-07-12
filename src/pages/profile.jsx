@@ -2,17 +2,29 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { signOut } from "next-auth/react";
 import languageData from "@/language/routeTitles.json";
-
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 export default function Profile({ user }) {
   useEffect(() => {
     document.title = "Profile | SOS Travelers";
   }, []);
+  useEffect(() => {
+    setLoading(true);
+    delay(250, () => {
+      setLoading(false);
+    });
+  }, []);
+
   const router = useRouter();
   const { setUser, setLoggedIn, setWorker, language } = useStore();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     localStorage.removeItem("service");
     localStorage.removeItem("fromFavorite");
@@ -35,7 +47,13 @@ export default function Profile({ user }) {
   };
 
   return (
-    <div className="bg-white h-full flex flex-col w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+    <div
+      className={`min-h-screen bg-backgroundP pt-4 px-6  flex flex-col items-center
+              transform transition-all duration-800 ease-out
+              transition-opacity duration-800 ease-out
+             ${loading ? opacityAnimation : displayAnimation}
+            `}
+    >
       <OutlinedButton
         text={languageData.personalDetails[language]}
         onClick={() => router.push("/personal-details")}
@@ -53,22 +71,3 @@ export default function Profile({ user }) {
     </div>
   );
 }
-
-// export async function getServerSideProps({ req }) {
-//   console.log("weando");
-//   const redirect = {
-//     redirect: {
-//       destination: "/guest-settings",
-//       permanent: false,
-//     },
-//   };
-//   const userId = req.cookies["auth.user_id"];
-//   if (!userId) return redirect;
-
-//   let user = null;
-//   return {
-//     props: {
-//       user: user,
-//     },
-//   };
-// }

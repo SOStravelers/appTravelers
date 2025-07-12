@@ -23,7 +23,7 @@ export default function GuestSettings() {
   }, []);
   const router = useRouter();
   const store = useStore();
-  const [loading, setLoading] = useState(true); //
+  const [loading, setLoading] = useState(true);
   const {
     setLanguage,
     language,
@@ -169,10 +169,7 @@ export default function GuestSettings() {
     >
       {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
 
-      <Link
-        href="support"
-        className="w-full flex justify-center lg:max-w-md mt-3"
-      >
+      <Link href="support" className="w-full flex justify-center max-w-md mt-3">
         <OptionCard
           title={languageData.support.title[language]}
           subtitle={languageData.support.body[language]}
@@ -241,12 +238,12 @@ export default function GuestSettings() {
       <OutlinedButton
         onClick={() => router.push("/register")}
         text={languageData.sigUpButton[language]}
-        px={0}
+        px={20}
         py={2}
         dark="darkLight"
         textSize="text-sm"
         textColor="text-white"
-        buttonCenter={true}
+        buttonCenter={false}
       />
     </div>
   );

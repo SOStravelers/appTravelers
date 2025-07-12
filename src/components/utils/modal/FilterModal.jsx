@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useStore } from "@/store";
 import languageData from "@/language/filterModal.json";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import InputText from "@/components/utils/inputs/InputText";
+
 /**
  * Modal de filtros con:
  *  • keyword ≥ 4 caracteres
@@ -140,23 +142,18 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
             <label className="block text-xs text-textColor mb-2 font-medium">
               {languageData.keyword[language]}
             </label>
-            <input
+
+            <InputText
               type="text"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               placeholder="e.g. beach"
-              className={`w-full px-3 py-2 rounded-md border text-sm
-              ${
-                errKeyword
-                  ? "bg-red-100 text-red-800 border-red-500 placeholder-red-400"
-                  : "bg-inputColor text-textColor  border-gray-300 placeholder-textColorGrayReverse"
-              }
-              focus:outline-none focus:ring-1 focus:ring-textColor transition duration-200
-            `}
+              error={errKeyword}
+              className="w-full"
             />
 
             {errKeyword ? (
-              <p className="text-red-600 text-xs mt-1">{errKeyword}</p>
+              <p className="text-errorColor text-xs mt-1">{errKeyword}</p>
             ) : (
               <p className="h-5"></p>
             )}
@@ -168,39 +165,28 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
               {languageData.price[language] + " USD"}
             </label>
             <div className="flex space-x-2 mt-1">
-              <input
+              <InputText
                 type="number"
-                placeholder="0"
-                min="0"
                 value={minPrice}
                 onChange={(e) => setMinPrice(e.target.value)}
-                className={`w-1/2 px-3 py-2 rounded-md border text-sm
-        ${
-          errMax
-            ? "bg-red-100 text-red-800 border-red-500 placeholder-red-400"
-            : "bg-inputColor text-textColor border-gray-300 placeholder-textColorGrayReverse placeholder-text-sm"
-        }
-        focus:outline-none focus:ring-1 focus:ring-textColor transition duration-200
-      `}
-              />
-              <input
-                type="number"
-                placeholder="100"
+                placeholder="0"
                 min="0"
+                error={errMax}
+                className="w-1/2 placeholder:text-sm"
+              />
+
+              <InputText
+                type="number"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
-                className={`w-1/2 px-3 py-2 rounded-md border text-sm
-        ${
-          errMax
-            ? "bg-red-100 text-red-800 border-red-500 placeholder-red-400"
-            : "bg-inputColor text-textColor border-gray-300 placeholder-textColorGrayReverse"
-        }
-        focus:outline-none focus:ring-1 focus:ring-textColor transition duration-200
-      `}
+                placeholder="0"
+                min="0"
+                error={errMax}
+                className="w-1/2 placeholder:text-sm"
               />
             </div>
             {errMax ? (
-              <p className="text-red-600 text-xs mt-1">{errMax}</p>
+              <p className="text-errorColor text-xs mt-1">{errMax}</p>
             ) : (
               <p className="h-5"></p>
             )}

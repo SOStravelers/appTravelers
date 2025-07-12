@@ -111,7 +111,7 @@ export default function SummaryPage() {
   return (
     <>
       <div
-        className={`min-h-screen bg-backgroundP p-4 flex flex-col items-center
+        className={`min-h-screen bg-backgroundP p-4 mb-28 flex flex-col items-center
     transition-all duration-800 ease-out
     transition-opacity duration-800 ease-out
     ${loading ? opacityAnimation : displayAnimation}

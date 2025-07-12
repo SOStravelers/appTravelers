@@ -5,7 +5,7 @@ function WaveBar() {
   return (
     <div
       className="w-screen flex flex-col justify-center items-center  md:bg-darkBlue md:h-40 object-cover"
-      style={{ marginTop: "-30px" }}
+      style={{ marginTop: "-35px" }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

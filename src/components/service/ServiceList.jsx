@@ -143,7 +143,7 @@ export default function ServiceList({ filterKey }) {
           </div>
         )}
         {safeItems.length === 0 && !loading ? (
-          <div className="text-center text-sm text-gray-500 py-15">
+          <div className="text-center text-sm text-gray-500 py-15 mt-5">
             <p className="text-md font-medium text-textColor">
               No services found
             </p>

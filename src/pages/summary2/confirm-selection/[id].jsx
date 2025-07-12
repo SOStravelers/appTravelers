@@ -7,6 +7,7 @@ import {
 } from "@/utils/delayFunction";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import CardSummaryService from "@/components/summary/CardSummaryService";
+import CardSummaryService2 from "@/components/summary/CardSummaryService2";
 import { useStore } from "@/store";
 import {
   formatearFecha,
@@ -122,6 +123,12 @@ export default function SummaryPage() {
 
         {/* Contendio Tarjeta Summary */}
         <CardSummaryService
+          statusExpanded={true}
+          modalOptions={true}
+          openModal={() => setModalOpen(true)}
+        />
+
+        <CardSummaryService2
           statusExpanded={true}
           modalOptions={true}
           openModal={() => setModalOpen(true)}

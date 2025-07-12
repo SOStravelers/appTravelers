@@ -130,7 +130,7 @@ function Navbar() {
         {router.pathname.includes("booking") ? (
           <FaCalendarAlt size={22} color="#3498db" />
         ) : (
-          <FaRegCalendarAlt size={22} className="text-gray-500" />
+          <FaRegCalendarAlt size={22} className="text-textColorGray" />
         )}
         <span
           role="presentation"

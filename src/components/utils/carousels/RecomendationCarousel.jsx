@@ -45,16 +45,18 @@ const RecomendationCarousel = (services = []) => {
       </div>
       <div
         ref={carouselRef}
-        className="flex overflow-x-auto space-x-4 p-2 scroll-smooth"
+        className="flex overflow-x-auto space-x-4 p-2 scroll-smooth snap-x snap-mandatory"
         style={{ scrollbarWidth: "none" }}
       >
         {servicesToDisplay.map((service, index) => (
-          <ServiceCardRecomendation
-            onClick={() => router.push(`/service-preview/${service._id}`)}
-            key={service._id}
-            service={service}
-            index={index}
-          />
+          <div className="min-w-[280px] max-w-[320px] snap-start">
+            <ServiceCardRecomendation
+              onClick={() => router.push(`/service-preview/${service._id}`)}
+              key={service._id}
+              service={service}
+              index={index}
+            />
+          </div>
         ))}
       </div>
     </div>

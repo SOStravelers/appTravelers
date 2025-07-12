@@ -116,7 +116,7 @@ export default function ServicePreviewPage() {
              md:w-full md:ml-0 
              md:max-w-3xl md:mx-auto 
              md:rounded-lg md:mt-8 
-             mb-2 overflow-hidden"
+             mb-2 overflow-hidden "
             >
               {subService.videoUrl ? (
                 <VideoScreen
@@ -139,7 +139,7 @@ export default function ServicePreviewPage() {
           <div
             className={`min-h-screen bg-backgroundP p-4 lg:max-w-3xl flex flex-col items-center
     transition-all duration-800 ease-out
-    transition-opacity duration-800 ease-out
+    transition-opacity duration-800 ease-out  border-b-2 border-gray-400 rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]
    
   `}
           >

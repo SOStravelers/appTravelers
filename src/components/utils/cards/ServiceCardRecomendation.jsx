@@ -102,7 +102,10 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
         </button>
 
         {/* Collage de imágenes 2x2 */}
-        <div className="w-full h-[350px] grid grid-cols-2 grid-rows-2 gap-1 overflow-hidden rounded-xl">
+        <div
+          className="w-full aspect-square md:aspect-[9/10]   /* 4 × 3 en md+ */
+            grid grid-cols-2 grid-rows-2 gap-1 overflow-hidden rounded-xl"
+        >
           {gridItems.map((imgUrl, idx) =>
             imgUrl ? (
               <img
@@ -113,11 +116,13 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
                 loading="lazy"
               />
             ) : (
-              <div key={idx} className="w-full h-full bg-backgroundS" />
+              <div
+                key={idx}
+                className="w-full h-full bg-backgroundCardSecondary"
+              />
             )
           )}
         </div>
-
         {/* Contenido */}
         <div className="p-2">
           {/* Precio */}
@@ -143,7 +148,7 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
           </div>
 
           {/* Título */}
-          <h3 className="text-sm font-semibold text-textColor ">
+          <h3 className="text-sm sm:text-xs font-semibold text-textColor ">
             {name[language]}
           </h3>
 

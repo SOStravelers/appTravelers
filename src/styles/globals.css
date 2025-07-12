@@ -25,10 +25,11 @@ body {
   --color-background-secondary:#f8f8f8fe;
   --color-background-modal:#fffffffe;
   --color-background-card:#fffffffe;
+  --color-background-card-secondary:#dadada;
   --color-background-navbar:#fffffffe;
   --color-text-color:#151515fe;
   --color-text-colorI:#ffffffe1;
-  --color-text-gray:#505050;
+  --color-text-gray:#5c5b5b;
   --color-text-green:#16a34a;
   --color-text-gray-reverse:#49494a;
   --color-chip-primary:#d8dadd;
@@ -46,9 +47,10 @@ body {
   --color-background-navbar:#001C25;
   --color-background-modal:#223741;
   --color-background-card:#28424e;
+  --color-background-card-secondary:#28424e;
   --color-text-color:#e7e4e4;
   --color-text-colorI:#151515fe;
-  --color-text-gray:#d6d6d6;
+  --color-text-gray:#d7d2d2;
   --color-text-green:#4ade80;;
   --color-text-gray-reverse:#cecece;
   --color-chip-primary:#dce2e7;

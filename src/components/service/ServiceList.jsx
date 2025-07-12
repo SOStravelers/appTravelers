@@ -131,7 +131,7 @@ export default function ServiceList({ filterKey }) {
   const handleNavigate = (id) => {
     Cookies.set("homeItemId", id);
     setLastPage("preview");
-    router.push(`/service-preview/${id}`, undefined, { scroll: false });
+    router.push(`/service-preview/${id}`);
   };
 
   return (

@@ -115,10 +115,10 @@ export default function CardSummaryService({
 
   return (
     <>
-      <div className="bg-backgroundCard rounded-xl shadow w-full max-w-xl overflow-hidden">
+      <div className="bg-backgroundCard rounded-xl mt-2 shadow w-full max-w-xl overflow-hidden">
         {/* HEADER */}
         <div
-          className="flex items-center justify-between p-3 cursor-pointer"
+          className="flex items-center justify-between mt-2  p-3 cursor-pointer"
           onClick={() => setExpanded(!expanded)}
         >
           {/* Contenido principal */}
@@ -145,7 +145,7 @@ export default function CardSummaryService({
           {/* Icono flecha */}
           <div className="flex-shrink-0 ml-2">
             <svg
-              className={`w-4 h-4 transform transition-transform text-[var(--color-text-gray)] ${
+              className={`w-5 h-5 transform transition-transform text-[var(--color-text-gray)] ${
                 expanded ? "rotate-180" : ""
               }`}
               fill="none"

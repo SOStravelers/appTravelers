@@ -170,7 +170,7 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
     >
       <div className="min-h-[80px] ">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 pt-2 pb-3 ">
+        <div className="flex items-center justify-between px-4 md:justify-start  pt-2 pb-3 ">
           <div className="flex items-center md:mt-4">
             <h2 className="text-md font-semibold text-textColor">
               {languageData.index.explore[language]}
@@ -181,7 +181,7 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
               <FiMapPin className="text-textColor" size={14} />
             </button>
           </div>
-          <div className="flex items-center space-x-4 md:mt-4">
+          <div className="flex items-center space-x-4 md:mt-4 md:ml-6">
             <button
               onClick={handleViewMore}
               className="text-sm font-semibold text-blueBorder hover:underline"

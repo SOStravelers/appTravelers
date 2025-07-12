@@ -54,20 +54,43 @@ export default function Profile({ user }) {
              ${loading ? opacityAnimation : displayAnimation}
             `}
     >
-      <OutlinedButton
-        text={languageData.personalDetails[language]}
-        onClick={() => router.push("/personal-details")}
-      />
-      <OutlinedButton
-        text={languageData.settings[language]}
-        onClick={() => router.push("/settings")}
-      />
-      {/* <OutlinedButton text="Invite Friends" /> */}
-      <OutlinedButton
-        secondary
-        text={languageData.logOut[language]}
-        onClick={logout}
-      />
+      <div className="w-full max-w-md flex flex-col self-center">
+        <OutlinedButton
+          onClick={() => router.push("/personal-details")}
+          text={languageData.personalDetails[language]}
+          px={8}
+          py={2}
+          margin={"my-3"}
+          dark="darkLight"
+          textSize="text-sm"
+          textColor="text-white"
+          buttonCenter={true}
+        />
+
+        <OutlinedButton
+          onClick={() => router.push("/settings")}
+          text={languageData.settings[language]}
+          px={8}
+          py={2}
+          margin={"my-3"}
+          dark="darkLight"
+          textSize="text-sm"
+          textColor="text-white"
+          buttonCenter={true}
+        />
+
+        <OutlinedButton
+          onClick={logout}
+          text={languageData.logOut[language]}
+          px={8}
+          margin={"my-3"}
+          py={2}
+          dark="darkLight"
+          textSize="text-sm"
+          textColor="text-white"
+          buttonCenter={true}
+        />
+      </div>
     </div>
   );
 }

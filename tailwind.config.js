@@ -20,6 +20,7 @@ module.exports = {
         backgroundS: "var(--color-background-secondary)",
         backgroundModal: "var(--color-background-modal)",
         backgroundCard: "var(--color-background-card)",
+        backgroundCardSecondary: "var(--color-background-card-secondary)",
         backgroundNavbar: "var(--color-background-navbar)",
         buttonLight: "var(--color-button-light)",
         buttonHeavy: "var(--color-button-heavy)",

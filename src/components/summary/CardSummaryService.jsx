@@ -115,7 +115,7 @@ export default function CardSummaryService({
 
   return (
     <>
-      <div className="bg-backgroundCard rounded-xl shadow w-full max-w-md overflow-hidden">
+      <div className="bg-backgroundCard rounded-xl shadow w-full max-w-xl overflow-hidden">
         {/* HEADER */}
         <div
           className="flex items-center justify-between p-3 cursor-pointer"

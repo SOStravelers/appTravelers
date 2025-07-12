@@ -116,7 +116,7 @@ export default function SummaryPage() {
     ${loading ? opacityAnimation : displayAnimation}
   `}
       >
-        <h1 className="text-md text-textColor font-bold mb-1">
+        <h1 className="text-md text-textColor font-bold mb-3">
           {thisLanguage.title[language]}
         </h1>
 

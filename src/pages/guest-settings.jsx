@@ -161,7 +161,7 @@ export default function GuestSettings() {
 
   return (
     <div
-      className={`min-h-screen bg-backgroundP p-4 flex flex-col 
+      className={`min-h-screen bg-backgroundP px-4 md:pl-[240px] flex flex-col 
           transform transition-all duration-800 ease-out
           transition-opacity duration-800 ease-out
          ${loading ? opacityAnimation : displayAnimation}
@@ -241,7 +241,7 @@ export default function GuestSettings() {
         px={0}
         py={2}
         dark="darkLight"
-        textSize="text-xs"
+        textSize="text-sm"
         textColor="text-white"
         buttonCenter={true}
       />

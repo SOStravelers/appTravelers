@@ -34,7 +34,7 @@ const Gallery = ({
 
       {visible.length > 0 ? (
         <div
-          className={`grid ${gridClasses} gap-2 rounded-lg overflow-hidden mx-auto max-w-xl`}
+          className={`grid ${gridClasses} gap-2 rounded-xl overflow-hidden mx-auto max-w-lg`}
         >
           {visible.map((item, i) => (
             <div

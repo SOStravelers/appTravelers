@@ -283,7 +283,7 @@ function Calendar({ id }) {
     <>
       {/* Guests selector */}
       {service.typeService === "tour" && (
-        <div className="w-full max-w-lg mx-auto mb-6 space-y-4">
+        <div className="w-full max-w-sm mt-4 mx-auto mb-6 space-y-4">
           {/* Adults */}
           <div className="flex justify-between items-center">
             <div>

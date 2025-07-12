@@ -35,7 +35,7 @@ const ServiceDescription = ({ description }) => {
       </h3>
 
       <div
-        className="text-textColor text-xs"
+        className="text-textColorGray text-xs lg:text-sm "
         dangerouslySetInnerHTML={{
           __html: expanded || !shouldShowButton ? detailsHtml : previewText,
         }}

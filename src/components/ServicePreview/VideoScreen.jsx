@@ -95,7 +95,7 @@ export default function VideoScreen({
   };
 
   return (
-    <div className="relative h-[50vh] flex items-center justify-center bg-black  ">
+    <div className="relative h-[50vh] flex items-center justify-center bg-black   ">
       <video
         ref={videoRef}
         className="w-full h-full object-cover"

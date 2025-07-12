@@ -114,7 +114,7 @@ export default function ServicePreviewPage() {
             <div
               className="w-screen -ml-4 
              md:w-full md:ml-0 
-             md:max-w-lg md:mx-auto 
+             md:max-w-3xl md:mx-auto 
              md:rounded-lg md:mt-8 
              mb-2 overflow-hidden"
             >
@@ -136,8 +136,14 @@ export default function ServicePreviewPage() {
             </div>
           )}
 
-          <div className="flex flex-col lg:flex-row gap-8 w-full max-w-lg px-2 md:p-8 border-b-2 border-gray-400 bg-backgroundP rounded-xl shadow-[0_4px_4px_-2px_rgba(0,0,0,0.1)]">
-            <div className="flex-1">
+          <div
+            className={`min-h-screen bg-backgroundP p-4 lg:max-w-3xl flex flex-col items-center
+    transition-all duration-800 ease-out
+    transition-opacity duration-800 ease-out
+   
+  `}
+          >
+            <div className="flex-1 ">
               <ServiceHeader
                 service={subService}
                 serviceType={subService.service?.name}

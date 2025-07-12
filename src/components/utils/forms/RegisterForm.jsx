@@ -182,7 +182,7 @@ function RegisterForm() {
             }}
           </Field>
           <Link href="/">
-            <p className="text-textColor mt-1 mb-2 text-right">
+            <p className="text-textColor text-sm mt-1 mb-2 text-right">
               {languageData.form.forgotPass[language]}
             </p>
           </Link>
@@ -198,6 +198,10 @@ function RegisterForm() {
           ) : (
             <>
               <OutlinedButton
+                buttonCenter={true}
+                dark="darkLight"
+                textSize="text-sm"
+                textColor="text-white"
                 text={languageData.register.title[language]}
                 disabled={!isValid}
               />

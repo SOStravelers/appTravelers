@@ -14,14 +14,17 @@ export default function Registro() {
     document.title = "Register | SOS Travelers";
   }, []);
   return (
-    <div className="bg-backgroundP w-full minh-screen flex flex-col md:items-center px-10">
-      <h1 className="text-textColor font-bold text-2xl mb-2">
+    <div
+      className="bg-backgroundP w-full minh-screen flex flex-col md:items-center px-10"
+      style={{ marginTop: "-60px" }}
+    >
+      <h1 className="text-textColor font-bold text-2xl mb-3">
         {languageData.register.title[language]}
       </h1>
-      <h2 className="text-textColor pb-5">
+      {/* <h2 className="text-textColor pb-5">
         {" "}
         {languageData.register.subtitle[language]}
-      </h2>
+      </h2> */}
       <div className="w-full md:w-80">
         <RegisterForm />
       </div>

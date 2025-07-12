@@ -44,8 +44,9 @@ const BookingPopup = ({
       <OutlinedButton
         onClick={onAction}
         text={buttonText}
-        px={6}
-        py={1}
+        px={4}
+        py={2}
+        minWidth="140px"
         dark="darkHeavy"
         textColor="text-white"
         disabled={isDisabled}

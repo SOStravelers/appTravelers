@@ -101,26 +101,26 @@ export default function ContactInfoPage() {
   return (
     <>
       <div
-        className={`min-h-screen bg-gray-50 pt-4 px-6  flex flex-col items-center
+        className={`min-h-screen bg-backgroundP pt-4 px-6  flex flex-col items-center
           ${loading ? opacityAnimation : displayAnimation}
         `}
       >
         {/* Titulo */}
-        <h1 className="text-md text-center font-bold mb-2">
+        <h1 className="text-md text-center  text-textColor font-bold mb-2">
           {thisLanguage.title[language]}
         </h1>
         {/* Subtitulo */}
         <div className="flex items-center ml-3 mb-2">
-          <MdLock className="text-green-700" size={20} />
-          <h1 className="text-sm text-green-700  mt-1">
+          <MdLock className="text-textColorGreen" size={20} />
+          <h1 className="text-sm text-textColorGreen mt-1">
             {thisLanguage.subtitle[language]}
           </h1>
         </div>
         {/* CONTENEDOR */}
-        <div className="bg-white rounded-xl  px-3 py-3 shadow w-full max-w-md ">
+        <div className="bg-backgroundCard rounded-xl  px-3 py-3 shadow w-full max-w-md ">
           {/* Nombre */}
           <div className="mb-3">
-            <label className="block text-xs font-medium mb-2">
+            <label className="block text-xs text-textColor font-medium mb-2">
               {thisLanguage.nameInput.title[language]}
             </label>
             <input
@@ -134,7 +134,7 @@ export default function ContactInfoPage() {
 
           {/* Email */}
           <div className="mb-3">
-            <label className="block text-xs font-medium mb-2">
+            <label className="block text-xs text-textColor font-medium mb-2">
               {thisLanguage.emailInput.title[language]}
             </label>
             <input
@@ -165,7 +165,7 @@ export default function ContactInfoPage() {
 
           {/* Teléfono */}
           <div className="mb-3">
-            <label className="block text-xs font-medium mb-2">
+            <label className="block text-xs text-textColor  font-medium mb-2">
               {thisLanguage.phoneInput.title[language]}
             </label>
             <div className="flex gap-2">
@@ -183,7 +183,7 @@ export default function ContactInfoPage() {
           </div>
         </div>
         {/* Aviso */}
-        <h3 className="text-sm max-w-md text-gray-500 mb-32 mt-3 m-2">
+        <h3 className="text-sm max-w-md text-textColorGray mb-32 mt-3 m-2">
           {" "}
           {thisLanguage.advice[language]}
         </h3>

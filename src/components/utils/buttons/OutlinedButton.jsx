@@ -13,6 +13,7 @@ function OutlinedButton({
   dark = "darkHeavy", // "darkHeavy" o "darkP"
   margin = "my-1",
   buttonCenter = false,
+  minWidth, // nueva prop
   ...props
 }) {
   const darkBg =
@@ -23,7 +24,7 @@ function OutlinedButton({
   return (
     <button
       className={clsx(
-        `max-w-lg rounded-full  cursor-pointer px-${px} py-${py}`,
+        `max-w-lg rounded-full cursor-pointer px-${px} py-${py}`,
         textSize,
         buttonCenter ? "w-1/2 mx-auto block" : null,
         margin,
@@ -38,6 +39,7 @@ function OutlinedButton({
       )}
       style={{
         backgroundColor: !secondary && !error && !disabled ? darkBg : undefined,
+        minWidth: minWidth || undefined, // aplica minWidth si existe
       }}
       disabled={disabled}
       {...props}

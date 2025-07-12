@@ -26,7 +26,7 @@ export default function CountrySelector({
 
   return (
     <div ref={ref} className="relative">
-      <label className="block text-xs font-medium mb-2">
+      <label className="block text-xs font-medium mb-2 text-textColor">
         {languageData.contactInfo.countryInput.title[language]}
       </label>
       <div

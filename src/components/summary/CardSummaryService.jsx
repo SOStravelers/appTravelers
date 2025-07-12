@@ -115,7 +115,7 @@ export default function CardSummaryService({
 
   return (
     <>
-      <div className="bg-white rounded-xl shadow w-full max-w-md overflow-hidden">
+      <div className="bg-backgroundCard rounded-xl shadow w-full max-w-md overflow-hidden">
         {/* HEADER */}
         <div
           className="flex items-center justify-between p-3 cursor-pointer"
@@ -129,14 +129,14 @@ export default function CardSummaryService({
               className="w-16 h-16 object-cover rounded-lg mr-4 flex-shrink-0"
             />
             <div className="flex flex-col">
-              <h2 className="text-sm font-semibold flex-1 line-clamp-2">
+              <h2 className="text-sm text-textColor font-semibold flex-1 line-clamp-2">
                 {name?.[language] || ""}
               </h2>
-              <p className="text-gray-700 text-xs">
+              <p className="text-textColor text-xs">
                 {thisLanguage.value[language]} {formatPrice(total, currency)}
               </p>
               {hasCancel?.isBefore && (
-                <p className="text-gray-700 text-xs">
+                <p className="text-textColor text-xs">
                   {thisLanguage.payNow[language]} {formatPrice(0, currency)}
                 </p>
               )}
@@ -145,7 +145,7 @@ export default function CardSummaryService({
           {/* Icono flecha */}
           <div className="flex-shrink-0 ml-2">
             <svg
-              className={`w-4 h-4 transform transition-transform ${
+              className={`w-4 h-4 transform transition-transform text-[var(--color-text-gray)] ${
                 expanded ? "rotate-180" : ""
               }`}
               fill="none"
@@ -173,11 +173,11 @@ export default function CardSummaryService({
 
           {/* Fecha */}
           <div className="space-y-1">
-            <p className="font-semibold text-sm">
+            <p className="font-semibold text-textColor text-sm">
               {thisLanguage.sections.date.title[language]}
             </p>
-            <p className="text-gray-700 text-xs">{startDate?.data}</p>
-            <p className="text-gray-700 text-xs">
+            <p className="text-textColorGray text-xs">{startDate?.data}</p>
+            <p className="text-textColorGray text-xs">
               {thisLanguage.sections.date.from[language]}{" "}
               {startDate?.stringData || ""}{" "}
               {thisLanguage.sections.date.to[language]}{" "}
@@ -187,10 +187,10 @@ export default function CardSummaryService({
           {/* Viajeros */}
           <div className="flex justify-between items-center">
             <div className="space-y-1">
-              <p className="font-semibold text-sm">
+              <p className="font-semibold text-textColor text-sm">
                 {thisLanguage.sections.travellers.title[language]}
               </p>
-              <p className="text-gray-700 text-xs">
+              <p className="text-textColorGray text-xs">
                 {adults} {thisLanguage.sections.travellers.adults[language]}
                 {children > 0 &&
                   `, ${children} ${thisLanguage.sections.travellers.children[language]}`}
@@ -208,10 +208,10 @@ export default function CardSummaryService({
           {/* Precio total */}
           <div className="flex justify-between items-center">
             <div className="space-y-1">
-              <p className="font-semibold text-sm">
+              <p className="font-semibold  text-textColor text-sm">
                 {thisLanguage.sections.totalPrice.title[language]}
               </p>
-              <p className="text-gray-700 text-xs">
+              <p className="text-textColorGray text-xs">
                 {formatPrice(total, currency)}
               </p>
             </div>
@@ -228,10 +228,10 @@ export default function CardSummaryService({
           {hasCancel?.isBefore && (
             <>
               <div className="space-y-1">
-                <p className="font-semibold text-green-600 text-sm">
+                <p className="font-semibold text-textColorGreen text-sm">
                   {thisLanguage.sections.booking.title[language]}
                 </p>
-                <p className="text-gray-700 text-xs">
+                <p className="text-textColorGray text-xs">
                   {interpolate(
                     thisLanguage.sections.booking.subtitle[language],
                     {
@@ -244,10 +244,10 @@ export default function CardSummaryService({
                 </p>
               </div>
               <div className="space-y-1">
-                <p className="font-semibold text-green-600 text-sm">
+                <p className="font-semibold text-textColorGreen text-sm">
                   {thisLanguage.sections.freeCancelation.title[language]}
                 </p>
-                <p className="text-gray-700 text-xs">
+                <p className="text-textColorGray text-xs">
                   {interpolate(
                     thisLanguage.sections.freeCancelation.subtitle[language],
                     {

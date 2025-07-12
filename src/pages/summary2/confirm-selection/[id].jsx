@@ -110,13 +110,13 @@ export default function SummaryPage() {
   return (
     <>
       <div
-        className={`min-h-screen bg-gray-50 p-4 flex flex-col items-center
+        className={`min-h-screen bg-backgroundP p-4 flex flex-col items-center
     transition-all duration-800 ease-out
     transition-opacity duration-800 ease-out
     ${loading ? opacityAnimation : displayAnimation}
   `}
       >
-        <h1 className="text-md font-bold mb-1">
+        <h1 className="text-md text-textColor font-bold mb-1">
           {thisLanguage.title[language]}
         </h1>
 

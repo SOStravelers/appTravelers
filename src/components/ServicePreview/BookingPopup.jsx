@@ -1,4 +1,5 @@
 import React from "react";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 
 /**
  * BookingPopup
@@ -21,7 +22,7 @@ const BookingPopup = ({
   return (
     <div
       className="fixed bottom-11 left-1/2 transform -translate-x-1/2 z-30
-    w-full max-w-xl bg-backgroundS border border-backgroundS
+    w-full max-w-xl bg-backgroundModal border border-backgroundS
     flex items-center justify-between px-3 py-2 rounded-xl "
     >
       <div className="flex flex-col">
@@ -39,15 +40,17 @@ const BookingPopup = ({
           <span className="text-xxs text-warningColor ">{tagLine}</span>
         )}
       </div>
-      <button
+      <button disabled={isDisabled} dark={"darkS"}></button>
+      <OutlinedButton
         onClick={onAction}
-        disabled={isDisabled} // asegúrate de pasar esta prop o controlarla como quieras
-        className={`ml-2 text-sm px-6 py-2 rounded-full min-w-[160px]
-    text-white bg-darkBlue hover:bg-blueBorderLight focus:outline-none
-    disabled:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-70`}
-      >
-        {buttonText}
-      </button>
+        text={buttonText}
+        px={6}
+        py={1}
+        dark="darkHeavy"
+        textColor="text-white"
+        disabled={isDisabled}
+        buttonCenter={false}
+      />
     </div>
   );
 };

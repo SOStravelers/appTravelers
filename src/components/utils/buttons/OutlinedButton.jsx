@@ -3,34 +3,41 @@ import clsx from "clsx";
 
 function OutlinedButton({
   text,
-  secondary,
+  secondary = false,
+  error = false,
+  disabled = false,
+  px = 4,
   py = 2,
-  error,
-  disabled,
-  margin,
+  textColor = "text-blackText",
+  textSize = "text-sm",
+  dark = "darkHeavy", // "darkHeavy" o "darkP"
+  margin = "my-1",
+  buttonCenter = false,
   ...props
 }) {
+  const darkBg =
+    dark === "darkHeavy"
+      ? "var(--color-button-heavy)"
+      : "var(--color-button-light)";
+
   return (
     <button
       className={clsx(
-        `max-w-lg text-white text-md py-${py} w-3/4 mx-auto rounded-full hover:bg-blueBorderLight cursor-pointer`,
-        margin ? margin : "my-1",
-        secondary
-          ? "text-grey border-grey"
-          : error
-          ? "text-greyText border-lightGrey"
-          : "border-blueBorder text-blackText",
+        `max-w-lg rounded-full  cursor-pointer px-${px} py-${py}`,
+        textSize,
+        buttonCenter ? "w-1/2 mx-auto block" : null,
+        margin,
         {
-          "opacity-50 cursor-not-allowed": disabled,
-          "bg-darkBlue": disabled,
-          "text-gray-500": disabled,
+          "text-grey border-grey": secondary,
+          "text-greyText border-lightGrey": error,
+          [textColor]: !secondary && !error,
+          "bg-gray-400 border-gray-400 text-gray-500 cursor-not-allowed opacity-60":
+            disabled,
+          "hover:bg-blueBorderLight": !disabled,
         }
       )}
       style={{
-        backgroundColor:
-          !secondary && !error && !disabled
-            ? "var(--color-button-light)"
-            : undefined,
+        backgroundColor: !secondary && !error && !disabled ? darkBg : undefined,
       }}
       disabled={disabled}
       {...props}

@@ -236,8 +236,14 @@ export default function GuestSettings() {
       </div>
 
       <OutlinedButton
-        text={languageData.sigUpButton[language]}
         onClick={() => router.push("/register")}
+        text={languageData.sigUpButton[language]}
+        px={0}
+        py={2}
+        dark="darkLight"
+        textSize="text-xs"
+        textColor="text-white"
+        buttonCenter={true}
       />
     </div>
   );

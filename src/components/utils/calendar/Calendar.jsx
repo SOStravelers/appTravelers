@@ -293,7 +293,7 @@ function Calendar({ id }) {
             <div className="flex items-center justify-center items-center">
               <button
                 onClick={decAdults}
-                className="w-7 h-7 rounded-full bg-backgroundP flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full bg-buttonGray flex items-center justify-center text-sm"
               >
                 <p className="text-sm text-textColor">-</p>
               </button>
@@ -302,7 +302,7 @@ function Calendar({ id }) {
               </span>
               <button
                 onClick={incAdults}
-                className="w-7 h-7 rounded-full bg-backgroundP flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full bg-buttonGray flex items-center justify-center text-sm"
               >
                 <p className="text-sm text-textColor">+</p>
               </button>
@@ -317,7 +317,7 @@ function Calendar({ id }) {
             <div className="flex items-center justify-center items-center">
               <button
                 onClick={decChildren}
-                className="w-7 h-7 rounded-full bg-backgroundP flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full bg-buttonGray flex items-center justify-center text-sm"
               >
                 <p className="text-sm text-textColor">-</p>
               </button>
@@ -326,7 +326,7 @@ function Calendar({ id }) {
               </span>
               <button
                 onClick={incChildren}
-                className="w-7 h-7 rounded-full bg-backgroundP flex items-center justify-center text-sm"
+                className="w-7 h-7 rounded-full bg-buttonGray flex items-center justify-center text-sm"
               >
                 <p className="text-sm text-textColor">+</p>
               </button>

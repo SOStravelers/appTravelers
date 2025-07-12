@@ -27,29 +27,37 @@ body {
   --color-background-card:#fffffffe;
   --color-background-navbar:#fffffffe;
   --color-text-color:#151515fe;
-  --color-text-gray:#7c8494;
+  --color-text-colorI:#ffffffe1;
+  --color-text-gray:#656464;
+  --color-text-green:#16a34a;
   --color-text-gray-reverse:#49494a;
   --color-chip-primary:#d8dadd;
   --color-input:#eaecf1;
   --color-error:#cd1414;
   --color-warning:#e17912;
-  --color-button-light:#001C25
+  --color-button-light:#001C25;
+  --color-button-heavy:#0e252d;
+   --color-button-gray:#e8e8eb;
 }
 
 .dark {
   --color-background-primary:#0e252d;
   --color-background-secondary:#102c36;
   --color-background-navbar:#001C25;
-  --color-background-modal:#263942;
-  --color-background-card:#314b57;
-  --color-text-color:#ffffffe1;
-  --color-text-gray:#8a92a1;
+  --color-background-modal:#223741;
+  --color-background-card:#28424e;
+  --color-text-color:#dddddd;
+  --color-text-colorI:#151515fe;
+  --color-text-gray:#d6d6d6;
+  --color-text-green:#54c47d;
   --color-text-gray-reverse:#cecece;
   --color-chip-primary:#dce2e7;
   --color-input:#1f2a30;
   --color-error:#ec7e7e;
   --color-warning:#e1d11c;
-  --color-button-light:#314b57
+  --color-button-light:#314b57;
+  --color-button-heavy:#001C25;
+  --color-button-gray:#28424e;
 }
 
 .logo-light {
@@ -61,6 +69,12 @@ body {
   --rdp-cell-size: 24px !important;
   max-width: 270px !important;
 }
+.dark .mini-calendar {
+  color: white !important;
+}
+
+
+
 .mini-calendar .rdp {
   padding: 2px !important;
 }

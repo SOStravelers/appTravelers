@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useStore } from "@/store";
 import languageData from "@/language/filterModal.json";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 /**
  * Modal de filtros con:
  *  • keyword ≥ 4 caracteres
@@ -206,19 +207,18 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
           </div>
 
           {/* apply */}
-          <button
+
+          <OutlinedButton
             onClick={handleApply}
+            text={languageData.applyButton[language]}
+            px={0}
+            py={2}
+            dark="darkHeavy"
+            textSize="text-xs"
+            textColor="text-white"
             disabled={errKeyword || errMax}
-            className={`block w-1/2 mx-auto text-white text-xs px-2 py-2 rounded-full
-              ${
-                errKeyword || errMax
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-darkBlue hover:bg-blueBorderLight"
-              }`}
-          >
-            {}
-            {languageData.applyButton[language]}
-          </button>
+            buttonCenter={true}
+          />
         </div>
       </div>
     </div>

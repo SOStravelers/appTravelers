@@ -9,7 +9,7 @@ import CustomSelector from "@/components/utils/selector/CustomSelector";
 import languageData from "@/language/settings.json";
 import { MdEmail } from "react-icons/md";
 import { useStore } from "@/store";
-export default function GuestSettings() {
+export default function SettingsComponent() {
   useEffect(() => {
     document.title = "Settings | SOS Travelers";
   }, []);

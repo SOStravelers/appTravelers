@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Settings from "../components/settings/Settings";
+import SettingsComponent from "../components/settings/Settings";
 import {
   delay,
   opacityAnimation,
@@ -21,7 +21,7 @@ export default function GuestSettings() {
     ${loading ? opacityAnimation : displayAnimation}
   `}
     >
-      <Settings />
+      <SettingsComponent />
     </div>
   );
 }

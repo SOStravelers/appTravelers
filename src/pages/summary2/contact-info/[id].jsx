@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@/store";
 import { useRouter } from "next/router";
+import InputText from "@/components/utils/inputs/InputText";
 import {
   delay,
   opacityAnimation,
@@ -98,6 +99,38 @@ export default function ContactInfoPage() {
     // if (valid) alert("Datos enviados correctamente");
   };
 
+  const evaluateName = (name, change) => {
+    setName(name);
+
+    if (change) {
+      if (name.length >= 4) {
+        setErrName(null);
+      }
+    } else {
+      if (name.length < 4) {
+        setErrName(thisLanguage.nameInput.alert[language]);
+      } else {
+        setErrName(null);
+      }
+    }
+  };
+
+  const evaluateEmail = (email, change) => {
+    setEmail(email);
+
+    if (change) {
+      if (email.length >= 4) {
+        setErrEmail(null);
+      }
+    } else {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setErrEmail(thisLanguage.emailInput.alert[language]);
+      } else {
+        setErrEmail(null);
+      }
+    }
+  };
+
   return (
     <>
       <div
@@ -123,13 +156,20 @@ export default function ContactInfoPage() {
             <label className="block text-xs text-textColor font-medium mb-2">
               {thisLanguage.nameInput.title[language]}
             </label>
-            <input
+
+            <InputText
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              className={errName ? errInput : okInput}
+              onChange={(e) => evaluateName(e.target.value, true)}
+              onBlur={(e) => evaluateName(e.target.value, false)}
+              placeholder="Eg: Neymar Jr"
+              error={errName}
+              className="w-full"
             />
-            {errName && <p className="text-red-600 text-xs mt-1">{errName}</p>}
+
+            {errName && (
+              <p className="text-errorColor text-xs mt-1">{errName}</p>
+            )}
           </div>
 
           {/* Email */}
@@ -137,15 +177,20 @@ export default function ContactInfoPage() {
             <label className="block text-xs text-textColor font-medium mb-2">
               {thisLanguage.emailInput.title[language]}
             </label>
-            <input
-              disabled={user?.email}
+
+            <InputText
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={errEmail ? errInput : okInput}
+              disabled={user?.email}
+              onChange={(e) => evaluateEmail(e.target.value, true)}
+              onBlur={(e) => evaluateEmail(e.target.value, false)}
+              placeholder="tucorreo@example.com"
+              error={errEmail}
+              className="w-full"
             />
+
             {errEmail && (
-              <p className="text-red-600 text-xs mt-1">{errEmail}</p>
+              <p className="text-errorColor text-xs mt-1">{errEmail}</p>
             )}
           </div>
 

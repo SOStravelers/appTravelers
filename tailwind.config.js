@@ -29,6 +29,8 @@ module.exports = {
         textColorI: "var(--color-text-colorI)",
         textColorGray: "var(--color-text-gray)",
         textColorGreen: "var(--color-text-green)",
+        blueBorderDark: "var(--color-text-blueBorderDark)",
+
         textColorGrayReverse: "var(--color-text-gray-reverse)",
         chipPrimary: "var(--color-chip-primary)",
         inputColor: "var(--color-input)",
@@ -88,7 +90,9 @@ module.exports = {
       animation: {
         heartbeat: "heartbeat 2s infinite",
       },
-
+      borderWidth: {
+        1.5: "1.5px",
+      },
       fontSize: {
         xxs: "0.625rem", // 10px
       },

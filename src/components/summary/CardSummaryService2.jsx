@@ -162,7 +162,7 @@ export default function CardSummaryService({ statusExpanded }) {
 
           {/* SECCIONES */}
           {sections.map((section, sIdx) => (
-            <div key={sIdx} className="space-y-2 mb-6">
+            <div key={sIdx} className="space-y-3 mb-6">
               <p className="font-semibold text-textColor text-sm">
                 {section.title[language]}
               </p>
@@ -210,12 +210,12 @@ export default function CardSummaryService({ statusExpanded }) {
                         toggleFreeSelection(sIdx, pIdx, false);
                       }
                     }}
-                    className={`flex items-center border rounded-lg p-2 transition ${
+                    className={`flex items-center border rounded-lg p-1  transition mb-4 ${
                       !product.isActive
                         ? "bg-gray-200 border-gray-300 opacity-50 cursor-not-allowed"
                         : isSelected
-                        ? "border-blueBorder bg-blueBorder/10"
-                        : "border-gray-300 hover:border-blueBorder/50"
+                        ? "border-1.5 border-blue-border-dark bg-blue-border-dark-opacity"
+                        : "border-gray-300 hover:border-gray-400"
                     }`}
                   >
                     <img

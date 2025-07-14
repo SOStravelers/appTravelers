@@ -30,6 +30,8 @@ body {
   --color-text-color:#151515fe;
   --color-text-colorI:#ffffffe1;
   --color-text-gray:#5c5b5b;
+  --color-text-blueBorderDark:#00A0D5;
+    --color-text-blueBorderDark-rgb: 0, 160, 213;
   --color-text-green:#16a34a;
   --color-text-gray-reverse:#49494a;
   --color-chip-primary:#d8dadd;
@@ -51,6 +53,8 @@ body {
   --color-text-color:#e7e4e4;
   --color-text-colorI:#151515fe;
   --color-text-gray:#d7d2d2;
+  --color-text-blueBorderDark:#ffffffe1;
+  --color-text-blueBorderDark-rgb: 255, 255, 255;
   --color-text-green:#4ade80;;
   --color-text-gray-reverse:#cecece;
   --color-chip-primary:#dce2e7;
@@ -60,6 +64,14 @@ body {
   --color-button-light:#314b57;
   --color-button-heavy:#001C25;
   --color-button-gray:#28424e;
+}
+
+.border-blue-border-dark {
+  border-color: var(--color-text-blueBorderDark);
+}
+
+.bg-blue-border-dark-opacity {
+  background-color: rgba(var(--color-text-blueBorderDark-rgb), 0.1); /* 50% opacidad */
 }
 
 .logo-light {

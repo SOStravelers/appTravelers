@@ -31,72 +31,28 @@ export default function CardSummaryService({ statusExpanded }) {
   const [selectedInSelect, setSelectedInSelect] = useState({}); // key = sIdx → pIdx
 
   useEffect(() => {
-    const example = [
-      {
-        name: {
-          es: "Entradas disponibles",
-          en: "Tickets available",
-          pt: "Ingressos disponíveis",
-        },
-        type: "select",
-        products: [
-          {
-            name: "Arquibancada",
-            imgUrl: "/seats/arquibancada.jpg",
-            isActive: true,
-            hasQuantity: true,
-            price: { eur: 10, usd: 12, brl: 120 },
-            max: 10,
-            min: 1,
-          },
-          {
-            name: "Galeria",
-            imgUrl: "/seats/galeria.jpg",
-            isActive: false,
-            hasQuantity: true,
-            price: { eur: 8, usd: 10, brl: 100 },
-            max: 10,
-            min: 1,
-          },
-          {
-            name: "Marquesina",
-            imgUrl: "/seats/marquesina.jpg",
-            isActive: true,
-            hasQuantity: true,
-            price: { eur: 15, usd: 18, brl: 180 },
-            max: 10,
-            min: 1,
-          },
-        ],
-      },
-      {
-        name: {
-          es: "Incluir transporte",
-          en: "Include transport",
-          pt: "Incluir transporte",
-        },
-        // type: "free",
-        type: "select",
-        products: [
-          {
-            name: "Van 14 personas",
-            imgUrl: "/seats/arquibancada.jpg",
-            isActive: true,
-            hasQuantity: false,
-            price: { eur: 90, usd: 95, brl: 600 },
-          },
-          {
-            name: "Van 12 personas",
-            imgUrl: "/seats/arquibancada.jpg",
-            isActive: true,
-            hasQuantity: false,
-            price: { eur: 80, usd: 85, brl: 500 },
-          },
-        ],
-      },
-    ];
-    setSections(example);
-  }, []);
+    if (!startTime?.isoTime || !id) return;
+
+    const fetchSections = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:9000/server/items/get/byService/${id}?date=${encodeURIComponent(
+            "2025-07-14T18:00:00Z"
+          )}`
+        );
+        const data = await res.json();
+        if (res.ok) {
+          setSections(data);
+        } else {
+          console.error("Error fetching sections:", data?.message || data);
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+      }
+    };
+
+    fetchSections();
+  }, [startTime?.isoTime, id]);
 
   useEffect(() => {
     setLoading(true);
@@ -213,7 +169,7 @@ export default function CardSummaryService({ statusExpanded }) {
           {sections.map((section, sIdx) => (
             <div key={sIdx} className="space-y-2 mb-6">
               <p className="font-semibold text-textColor text-sm">
-                {section.name[language]}
+                {section.title[language]}
               </p>
               {section.products.map((product, pIdx) => {
                 const key = `${sIdx}-${pIdx}`;

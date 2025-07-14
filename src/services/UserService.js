@@ -61,7 +61,7 @@ export default class UserService {
   }
   static async createPassword(password, token) {
     return axios.post(
-      `${this.baseUrl}/createPassToken`,
+      `${this.authUrl}/createpass`,
       {
         password: password,
       },

@@ -23,7 +23,6 @@ function RecoveryPassForm({ user }) {
         }, 2000);
       }
     } catch (err) {
-      console.log(err.response.data.message);
       if (err.response && err.response.data) {
         toast.error(err.response.data.error, {
           position: toast.POSITION.BOTTOM_CENTER,

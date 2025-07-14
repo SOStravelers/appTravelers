@@ -10,6 +10,7 @@ import {
   isBeforeHoursThreshold,
 } from "@/utils/format";
 import languageData from "@/language/newSummary.json";
+import ItemService from "@/services/ItemService";
 
 export default function CardSummaryService({ statusExpanded }) {
   const router = useRouter();
@@ -31,28 +32,22 @@ export default function CardSummaryService({ statusExpanded }) {
   const [selectedInSelect, setSelectedInSelect] = useState({}); // key = sIdx → pIdx
 
   useEffect(() => {
-    if (!startTime?.isoTime || !id) return;
-
-    const fetchSections = async () => {
-      try {
-        const res = await fetch(
-          `http://localhost:9000/server/items/get/byService/${id}?date=${encodeURIComponent(
-            "2025-07-14T18:00:00Z"
-          )}`
-        );
-        const data = await res.json();
-        if (res.ok) {
-          setSections(data);
-        } else {
-          console.error("Error fetching sections:", data?.message || data);
-        }
-      } catch (err) {
-        console.error("Network error:", err);
-      }
-    };
-
-    fetchSections();
+    getData();
   }, [startTime?.isoTime, id]);
+
+  const getData = async () => {
+    try {
+      const response = await ItemService.getItemsBySubservice(
+        id,
+        "2025-07-14T15:00:00-03:00"
+      );
+      if (response.data) {
+        setSections(response.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     setLoading(true);

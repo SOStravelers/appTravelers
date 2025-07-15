@@ -27,11 +27,10 @@ export default function Login() {
 
   return (
     <div
-      className={`bg-backgroundP w-full min-h-screen flex flex-col md:items-center px-10
+      className={`bg-backgroundP w-full flex flex-col md:items-center px-10
     transition-all duration-800 ease-out
-    transition-opacity duration-800 ease-out
     ${loading ? opacityAnimation : displayAnimation}`}
-      style={{ marginTop: "-60px" }}
+      // style={{ minHeight: "calc(100vh - 60px)", marginTop: "-60px" }}
     >
       <h1 className="text-textColor font-bold text-2xl py-5">
         {languageData.login.title[language]}
@@ -63,7 +62,7 @@ export default function Login() {
           </Link>
         </p>
         <Link href="/">
-          <p className="text-textColor font-semibold my-5">
+          <p className="text-textColor font-semibold ">
             {languageData.login.skipNow[language]}
           </p>
         </Link>

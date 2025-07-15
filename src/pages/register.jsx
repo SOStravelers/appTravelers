@@ -27,10 +27,10 @@ export default function Registro() {
   }, []);
   return (
     <div
-      className={`bg-backgroundP w-full min-h-screen flex flex-col md:items-center px-10
+      className={`bg-backgroundP w-full flex flex-col md:items-center px-10
     transition-all duration-800 ease-out
     ${loading ? opacityAnimation : displayAnimation}`}
-      style={{ marginTop: "-60px" }}
+      // style={{ minHeight: "calc(100vh - 60px)", marginTop: "-60px" }}
     >
       <h1 className="text-textColor font-bold text-2xl mb-3">
         {languageData.register.title[language]}
@@ -61,7 +61,7 @@ export default function Registro() {
         </p>
         <p
           onClick={() => router.back()}
-          className="text-textColor font-bold my-5 cursor-pointer"
+          className="text-textColor font-bold cursor-pointer"
         >
           {languageData.login.skipNow[language]}
         </p>

@@ -51,7 +51,7 @@ export default function CardSummaryService({ statusExpanded }) {
 
   useEffect(() => {
     setLoading(true);
-    delay(250, () => setLoading(false));
+    return delay(() => setLoading(false));
   }, []);
 
   useEffect(() => setExpanded(statusExpanded), [statusExpanded]);

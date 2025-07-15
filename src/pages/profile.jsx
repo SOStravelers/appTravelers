@@ -17,9 +17,7 @@ export default function Profile({ user }) {
   }, []);
   useEffect(() => {
     setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
+    return delay(() => setLoading(false));
   }, []);
 
   const router = useRouter();

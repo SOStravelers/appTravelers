@@ -39,9 +39,7 @@ export default function ContactInfoPage() {
 
   useEffect(() => {
     setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
+    return delay(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -150,9 +148,9 @@ export default function ContactInfoPage() {
   return (
     <>
       <div
-        className={`min-h-screen bg-backgroundP pt-4 px-6  flex flex-col items-center
-          ${loading ? opacityAnimation : displayAnimation}
-        `}
+        className={`px-6 flex flex-col items-center
+    ${loading ? opacityAnimation : displayAnimation}
+  `}
       >
         {/* Titulo */}
         <h1 className="text-md text-center  text-textColor font-bold mb-2">
@@ -255,7 +253,7 @@ export default function ContactInfoPage() {
           </div>
         </div>
         {/* Aviso */}
-        <h3 className="text-sm max-w-md text-textColorGray mb-32 mt-3 m-2">
+        <h3 className="text-sm max-w-md text-textColorGray  mt-3 m-2">
           {" "}
           {thisLanguage.advice[language]}
         </h3>

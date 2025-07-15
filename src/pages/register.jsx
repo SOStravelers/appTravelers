@@ -21,16 +21,13 @@ export default function Registro() {
   }, []);
   useEffect(() => {
     setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
+    return delay(() => setLoading(false));
   }, []);
   return (
     <div
-      className={`bg-backgroundP w-full flex flex-col md:items-center px-10
-    transition-all duration-800 ease-out
-    ${loading ? opacityAnimation : displayAnimation}`}
-      // style={{ minHeight: "calc(100vh - 60px)", marginTop: "-60px" }}
+      className={`px-6 flex flex-col items-center
+    ${loading ? opacityAnimation : displayAnimation}
+  `}
     >
       <h1 className="text-textColor font-bold text-2xl mb-3">
         {languageData.register.title[language]}

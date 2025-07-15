@@ -20,9 +20,7 @@ export default function Login() {
 
   useEffect(() => {
     setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
+    return delay(() => setLoading(false));
   }, []);
 
   return (

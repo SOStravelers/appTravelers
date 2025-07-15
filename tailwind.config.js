@@ -93,6 +93,9 @@ module.exports = {
       borderWidth: {
         1.5: "1.5px",
       },
+      marginBottom: {
+        "mb-16": "16px",
+      },
       fontSize: {
         xxs: "0.625rem", // 10px
       },

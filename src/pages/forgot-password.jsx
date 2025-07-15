@@ -25,9 +25,7 @@ export default function ChangePassword() {
 
   useEffect(() => {
     setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
+    return delay(() => setLoading(false));
   }, []);
 
   const router = useRouter();
@@ -112,11 +110,9 @@ export default function ChangePassword() {
 
   return (
     <div
-      className={`min-h-screen bg-backgroundP py-8 px-6 mb-28 flex flex-col items-center
-       transition-all duration-800 ease-out
-       transition-opacity duration-800 ease-out
-       ${loading ? opacityAnimation : displayAnimation}
-     `}
+      className={`px-6 flex flex-col items-center
+    ${loading ? opacityAnimation : displayAnimation}
+  `}
     >
       {codeSend ? (
         <div className="max-w-lg">

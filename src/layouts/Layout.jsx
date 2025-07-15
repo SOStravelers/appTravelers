@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoaderGlobal from "@/components/layout/loaderGlobal";
 import Head from "next/head";
 import TopBar from "@/components/layout/TopBar";
@@ -12,6 +12,7 @@ import { CustomMiddlewareComponent } from "@/middleware";
 import { useOnlineStatus } from "@/hooks/useOnlineStatus";
 import OfflineScreen from "@/components/layout/OfflineScreen";
 import languageData from "@/language/layout.json";
+
 console.log("empieza layout");
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -22,6 +23,7 @@ const poppins = Poppins({
 function Layout({ children, lang }) {
   const router = useRouter();
   const [middlewareCompleted, setMiddlewareCompleted] = useState(false);
+  const [loading, setLoading] = useState(true);
   //Para saber si está online
   const isOnline = useOnlineStatus();
   //manejador de autenticacion de usuario
@@ -80,9 +82,9 @@ function Layout({ children, lang }) {
             )}
             {/* salto por el menu de arriba */}
             {router.pathname != "/" && (
-              <div className="h-14  bg-backgroundP"></div>
+              <div className="mb-16  bg-backgroundP"></div>
             )}
-            {children}
+            <div className="bg-backgroundP  ">{children}</div>
           </>
         ) : (
           <LoaderGlobal />

@@ -47,9 +47,7 @@ export default function CardSummaryService({
 
   useEffect(() => {
     setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
+    return delay(() => setLoading(false));
   }, []);
 
   useEffect(() => {

@@ -46,9 +46,7 @@ export default function SummaryPage() {
 
   useEffect(() => {
     setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
+    return delay(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -111,9 +109,7 @@ export default function SummaryPage() {
   return (
     <>
       <div
-        className={`min-h-screen bg-backgroundP p-4 mb-28 flex flex-col items-center
-    transition-all duration-800 ease-out
-    transition-opacity duration-800 ease-out
+        className={`px-6 flex flex-col items-center
     ${loading ? opacityAnimation : displayAnimation}
   `}
       >

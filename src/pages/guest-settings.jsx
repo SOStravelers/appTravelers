@@ -19,15 +19,11 @@ export default function GuestSettings() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     setLoading(true);
-    delay(250, () => {
-      setLoading(false);
-    });
+    return delay(() => setLoading(false));
   }, []);
   return (
     <div
-      className={`min-h-screen bg-backgroundP pt-4 px-6 flex flex-col items-center
-    transform transition-all duration-800 ease-out
-    transition-opacity duration-800 ease-out
+      className={`px-6 flex flex-col items-center
     ${loading ? opacityAnimation : displayAnimation}
   `}
     >

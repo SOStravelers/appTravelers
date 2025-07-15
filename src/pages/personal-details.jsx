@@ -6,6 +6,7 @@ import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import ChangeEmailForm from "@/components/utils/forms/ChangeEmailForm";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { toast } from "react-toastify";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { UserIcon, MailIcon, HouseIcon, LockIcon } from "@/constants/icons";
 import { useStore } from "@/store";
 import Cookies from "js-cookie";
@@ -47,7 +48,7 @@ export default function PersonalDetails() {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }
   const truncarNumero = (word) => {
-    const truncatedValue = word.length > 17 ? word.slice(0, 17) + "..." : word;
+    const truncatedValue = word.length > 28 ? word.slice(0, 28) + "..." : word;
     return truncatedValue;
   };
 
@@ -97,27 +98,28 @@ export default function PersonalDetails() {
 
   return (
     <div className="flex flex-col justify-center py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
+      <p>{user.security.hasPassword}</p>
       {!nameInput ? (
-        <SelectCard
+        <OptionCard
           title={languageData.name[language]}
           onClick={handleNameClick}
-          icon={UserIcon}
+          icon={FaUser}
           edit={true}
           subtitle={nameTrun}
         />
       ) : (
         <OutlinedInput
           placeholder={languageData.name[language]}
-          icon={UserIcon}
+          icon={FaUser}
           value={name}
           // onBlur={onBlur}
           onChange={(e) => setTheName(e.target.value)}
         />
       )}
-      <SelectCard
+      <OptionCard
         title="Email"
         onClick={handleEmailClick}
-        icon={MailIcon}
+        icon={FaEnvelope}
         edit={true}
         subtitle={emailTrun}
       />
@@ -128,18 +130,19 @@ export default function PersonalDetails() {
         edit={true}
         subtitle="Avenida Atlántica 1234, Copacabana, Rio de Janeiro, Brazil"
       /> */}
+
       {user && user.security && user.security.hasPassword ? (
         // Este componente se mostrará si el usuario está autenticado
         <OptionCard
           title={languageData.changePassword[language]}
-          icon={LockIcon}
+          icon={FaLock}
           onClick={() => router.push("/change-password")}
         />
       ) : (
         // Este componente se mostrará si el usuario no está autenticado
         <OptionCard
           title={languageData.createPassword[language]}
-          icon={LockIcon}
+          icon={FaLock}
           onClick={() => router.push("/create-password")}
         />
       )}

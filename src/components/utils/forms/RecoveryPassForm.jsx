@@ -5,7 +5,7 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import UserService from "@/services/UserService";
 import { Field, Form } from "houseform";
 import { toast } from "react-toastify";
-
+import InputText from "@/components/utils/inputs/InputText";
 function RecoveryPassForm({ user }) {
   const router = useRouter();
 
@@ -19,8 +19,8 @@ function RecoveryPassForm({ user }) {
           autoClose: 1800,
         });
         setTimeout(() => {
-          router.push("/login");
-        }, 2000);
+          router.push("/");
+        }, 1500);
       }
     } catch (err) {
       if (err.response && err.response.data) {
@@ -64,7 +64,7 @@ function RecoveryPassForm({ user }) {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder="Password"
                     value={value}
                     icon={LockIcon}
@@ -72,11 +72,15 @@ function RecoveryPassForm({ user }) {
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-red">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -99,7 +103,7 @@ function RecoveryPassForm({ user }) {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder="Confirm Password"
                     value={value}
                     icon={LockIcon}
@@ -107,17 +111,26 @@ function RecoveryPassForm({ user }) {
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-red">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
           </Field>
+
           <OutlinedButton
-            style={{ marginTop: "25px" }}
+            buttonCenter={true}
+            dark="darkLight"
+            textSize="text-sm"
+            margin="mt-5"
+            textColor="text-white"
             text="Change Password"
             disabled={!isValid}
           />

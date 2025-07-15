@@ -35,7 +35,7 @@ export default function Notifications() {
   };
 
   return (
-    <div className="py-20 px-5 md:pl-80">
+    <div className=" px-5 md:pl-80">
       {loading ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings
@@ -64,7 +64,9 @@ export default function Notifications() {
       )}
       {!loading && notifications.length === 0 && (
         <>
-          <p className="text-center max-w-lg mt-10">No more notifications</p>
+          <p className="text-center max-w-lg my-10 text-textColorGray ">
+            you don't have any notifications yet
+          </p>
           <div className="max-w-lg text-xl my-3 flex justify-center">
             <NotificationDraw />
           </div>

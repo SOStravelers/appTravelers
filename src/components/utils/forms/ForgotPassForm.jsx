@@ -1,6 +1,8 @@
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import { MailIcon } from "@/constants/icons";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import InputText from "@/components/utils/inputs/InputText";
 function ForgotPassForm({ errorMsg, setEmail, handleVerifyMail }) {
@@ -8,7 +10,7 @@ function ForgotPassForm({ errorMsg, setEmail, handleVerifyMail }) {
     <form className="w-full flex  flex-col max-w-lg">
       <InputText
         type="email"
-        icon={MailIcon}
+        icon={FaEnvelope}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email address"
         className="w-full"

@@ -12,12 +12,20 @@ import WorkerService from "@/services/WorkerService";
 import Link from "next/link";
 import languageData from "@/language/settings.json";
 import Cookies from "js-cookie";
+import SettingsComponent from "../components/settings/Settings";
+import { MdEmail } from "react-icons/md";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 export default function Settings() {
   const { setWorker, isWorker, setService, language, setLanguage } = useStore();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
   const [isCheckWorker, setisCheckWorker] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [openNotification, setOpenNotification] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -30,6 +38,10 @@ export default function Settings() {
     { value: "de", label: languageData.language[language]["de"] },
     { value: "pt", label: languageData.language[language]["pt"] },
   ];
+  useEffect(() => {
+    setLoading(true);
+    return delay(() => setLoading(false));
+  }, []);
   useEffect(() => {
     setService({});
     document.title = "Settings | SOS Travelers";
@@ -112,50 +124,19 @@ export default function Settings() {
   };
 
   return (
-    <div className="flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <Link href="/support" className="block">
+    <div
+      className={`px-6 flex flex-col items-center
+    ${loading ? opacityAnimation : displayAnimation}
+  `}
+    >
+      <Link href="support" className="w-full flex mt-3">
         <OptionCard
           title={languageData.support.title[language]}
           subtitle={languageData.support.body[language]}
-          icon={MailIcon}
-        ></OptionCard>
+          icon={MdEmail}
+        />
       </Link>
-
-      <h1 className={`text-black text-sm font-semibold mt-3 mb-2 `}>
-        {languageData.titleLanguage[language]}
-      </h1>
-      <Select
-        className="w-full max-w-lg rounded-xl my-1 mb-60"
-        options={optionsSupport}
-        value={selection}
-        onChange={(selectedOption) => setValue(selectedOption)}
-        isSearchable={false}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            borderColor: "#00A0D5",
-            borderRadius: "10px",
-            boxShadow: "none",
-            "&:hover": {
-              borderColor: "#00A0D5",
-            },
-          }),
-          option: (provided, state) => ({
-            ...provided,
-            color: state.isSelected ? "#fff" : "#000",
-            backgroundColor: state.isSelected
-              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
-              : state.isFocused
-              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
-              : "#fff", // Fondo blanco por defecto
-            borderRadius: "5px",
-            transition: "background-color 0.3s ease",
-            "&:hover": {
-              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
-            },
-          }),
-        }}
-      />
+      <SettingsComponent />
 
       <div className="flex flex-col my-4">
         {(process.env.NEXT_PUBLIC_NODE_ENV === "Development" ||

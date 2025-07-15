@@ -9,6 +9,11 @@ import { FavoritePicture } from "@/constants/icons";
 import { Rings } from "react-loader-spinner";
 import languageData from "@/language/favorites.json";
 import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecomendation";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 export default function Favorites() {
   const store = useStore();
   const router = useRouter();
@@ -16,6 +21,11 @@ export default function Favorites() {
   const [open, setOpen] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingData, setLoadingData] = useState(true); // <-- loading flag
+  useEffect(() => {
+    setLoading(true);
+    return delay(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     document.title = "My favorites | SOS Travelers";
@@ -42,7 +52,7 @@ export default function Favorites() {
     } catch (error) {
       console.error(error);
     }
-    setLoading(false);
+    setLoadingData(false);
   };
 
   const handleNavigate = (id) => {
@@ -52,11 +62,15 @@ export default function Favorites() {
   };
 
   return (
-    <div className="mx-auto px-4 md:pl-[240px] bg-backgroundP mb-20">
+    <div
+      className={`px-6 flex flex-col items-center
+        ${loading ? opacityAnimation : displayAnimation}
+      `}
+    >
       <h1 className="my-3 font-semibold text-center text-textColor max-w-lg">
         {languageData.title[language]}
       </h1>
-      {loading ? (
+      {loadingData ? (
         <div className="max-w-lg flex flex-col items-center justify-center">
           <Rings
             width={100}
@@ -78,7 +92,7 @@ export default function Favorites() {
         ))
       ) : (
         <div>
-          <p className="text-center text-greyText max-w-lg  lg:my-4 xl:my-4 mb-2">
+          <p className="text-center text-textColorGray max-w-lg  lg:my-4 xl:my-4 mb-2">
             {languageData.noFavorites[language]}
           </p>
           <div className="max-w-lg text-xl my-3 flex justify-center">

@@ -1,28 +1,42 @@
 import "@/styles/globals.css";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import Navbar from "@/components/layout/Navbar";
 import Head from "next/head";
 import Layout from "../layouts/Layout";
-import Sidebar from "@/components/layout/Sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GoogleOneTap from "@/hooks/GoogleOneTap";
 import { renderToString } from "react-dom/server";
 import { LogoSosRelleno, LogoSosWhite } from "@/constants/icons";
-import { routesNavbar, routesSidebar } from "@/utils/variables";
 import Script from "next/script";
 import GoogleAnalytics from "@bradgarropy/next-google-analytics";
 import Cookies from "js-cookie";
 
 export default function App({ Component, pageProps }) {
-  console.log("inicio");
   const router = useRouter();
   const [darkMode, setDarkMode] = useState(false);
 
-  const renderNavbar = () => routesNavbar(router) && <Navbar />;
-  const renderSidebar = () => routesSidebar(router) && <Sidebar />;
+  /* -------- tema oscuro -------- */
+  useEffect(() => {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setDarkMode(prefersDark);
+  }, []);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    const cookieTheme = Cookies.get("theme");
+    if (cookieTheme === "dark") root.classList.add("dark");
+    else if (cookieTheme === "light") root.classList.remove("dark");
+    else darkMode ? root.classList.add("dark") : root.classList.remove("dark");
+  }, [darkMode]);
+
+  const svgString = darkMode
+    ? renderToString(<LogoSosWhite />)
+    : renderToString(<LogoSosRelleno />);
+
+  /* -------- SEO / indexación -------- */
   const indexableRoutes = [
     "/",
     "/login",
@@ -34,7 +48,6 @@ export default function App({ Component, pageProps }) {
     "https://sostvl.com",
     "https://business.sostvl.com",
   ];
-  //minicambio
   const shouldIndexRoute = indexableRoutes.includes(router.pathname);
   const shouldIndexDomain =
     typeof window !== "undefined" &&
@@ -45,38 +58,11 @@ export default function App({ Component, pageProps }) {
       ? window.navigator.userLanguage || window.navigator.language
       : undefined;
 
-  useEffect(() => {
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    setDarkMode(prefersDark); // ← esta línea faltaba
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    let cookieTheme = Cookies.get("theme");
-    if (cookieTheme && cookieTheme == "dark") {
-      root.classList.add("dark");
-      return;
-    }
-    if (cookieTheme && cookieTheme == "light") {
-      root.classList.remove("dark");
-      return;
-    }
-    if (darkMode) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [darkMode]);
-  // const svgString = darkMode
-  //   ? renderToString(<LogoSosWhite />)
-  //   : renderToString(<LogoSosRelleno />);
-
-  const svgString = renderToString(<LogoSosRelleno />);
+  /* -------- render -------- */
   return (
     <>
       <GoogleOneTap />
+
       <Head>
         {!shouldIndexRoute || !shouldIndexDomain ? (
           <meta name="robots" content="noindex" />
@@ -104,7 +90,7 @@ export default function App({ Component, pageProps }) {
       </Script>
       <GoogleAnalytics measurementId="G-RP0PLGCYV9" />
 
-      {/* Si es /share/[id] → no usar Layout */}
+      {/* /share/[id] no usa Layout */}
       {Component.noLayout ? (
         <Component {...pageProps} />
       ) : (
@@ -114,9 +100,7 @@ export default function App({ Component, pageProps }) {
             theme="dark"
             containerId="bulk"
           />
-          {renderSidebar()}
           <Component {...pageProps} />
-          {renderNavbar()}
         </Layout>
       )}
     </>

@@ -64,7 +64,7 @@ export default function Favorites() {
             color="#00A0D5"
             ariaLabel="infinity-spin-loading"
           />
-          <p className="mt-2">Searching...</p>
+          <p className="mt-2 text-textColor">Searching...</p>
         </div>
       ) : favorites?.length > 0 ? (
         favorites.map((svc, i) => (

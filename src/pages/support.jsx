@@ -13,6 +13,11 @@ import { z } from "zod";
 import InputText from "@/components/utils/inputs/InputText";
 import CustomSelector from "@/components/utils/selector/CustomSelector";
 import { toast } from "react-toastify";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 
 export default function SupportPage() {
   const [formKey, setFormKey] = useState(0);
@@ -21,9 +26,14 @@ export default function SupportPage() {
   const [optionsSupport, setOptionsSupport] = useState([]);
   const router = useRouter();
   const { user, loggedIn, isWorker, language } = useStore();
+  const [loading, setLoading] = useState(true); // <-- loading flag
   const id = router.query.id;
   useEffect(() => {
     document.title = "Support | SOS Travelers";
+  }, []);
+  useEffect(() => {
+    setLoading(true);
+    return delay(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -90,7 +100,11 @@ export default function SupportPage() {
   }, [formKey]);
 
   return (
-    <div className="mb-10 mt-8 lg:py-24 xl:py-24 px-5 md:pl-80">
+    <div
+      className={`px-6 flex flex-col items-center
+      ${loading ? opacityAnimation : displayAnimation}
+    `}
+    >
       <h1 className="my-3 font-semibold text-center  text-textColor max-w-lg">
         {languageData.title[language]}
       </h1>

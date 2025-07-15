@@ -5,8 +5,13 @@ import ForgotPassForm from "@/components/utils/forms/ForgotPassForm";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import SolidButton from "@/components/utils/buttons/SolidButton";
+import InputText from "@/components/utils/inputs/InputText";
 import { toast } from "react-toastify";
-
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 export default function ChangePassword() {
   const [codeSend, setCodeSend] = useState(false);
   const [code, setCode] = useState("");
@@ -16,6 +21,14 @@ export default function ChangePassword() {
   const [errorMsg, setErrorMsg] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
   const [countdown, setCountdown] = useState(30);
+  const [loading, setLoading] = useState(true); // <-- loading flag
+
+  useEffect(() => {
+    setLoading(true);
+    delay(250, () => {
+      setLoading(false);
+    });
+  }, []);
 
   const router = useRouter();
   useEffect(() => {
@@ -98,38 +111,62 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="px-5 py-28 md:pl-80">
+    <div
+      className={`min-h-screen bg-backgroundP py-8 px-6 mb-28 flex flex-col items-center
+       transition-all duration-800 ease-out
+       transition-opacity duration-800 ease-out
+       ${loading ? opacityAnimation : displayAnimation}
+     `}
+    >
       {codeSend ? (
         <div className="max-w-lg">
-          <p className="text-center text-gray-500 mb-5">
+          <p className="text-center text-textColor mb-5">
             Please check your email: <span> </span>
             <span className="font-semibold">{email}</span>,
           </p>
-          <p className="text-center text-gray-500 mb-5 text-md">
+          <p className="text-center text-textColor mb-5 text-md">
             for the verification code so you can reset your password.
           </p>
-          <OutlinedInput
+          <InputText
+            type="number"
+            className="w-1/2 placeholder:text-sm"
             placeholder="Verification code"
             onChange={(e) => setCode(e.target.value)}
           />
           <p className="text-red text-center my-2">{errorMsg}</p>
-          <SolidButton mt={5} text="Verify" onClick={handleVerifyCode} />
           <OutlinedButton
-            secondary
+            text="Verify"
+            px={0}
+            dark="darkLight"
+            py={2}
             disabled={buttonDisabled}
+            margin="my-4"
+            textSize="text-xs"
+            textColor="text-white"
+            buttonCenter={true}
+            onClick={handleVerifyCode}
+          />
+
+          <OutlinedButton
             text="Resend code"
-            mt={5}
+            px={0}
+            dark="darkLight"
+            py={2}
+            disabled={buttonDisabled}
+            margin="my-6"
+            textSize="text-xs"
+            textColor="text-white"
+            buttonCenter={true}
             onClick={handleResendCode}
-            // disabled={buttonDisabled}
           />
           {isDisabled && <span>{countdown}</span>}
         </div>
       ) : (
         <>
-          <h1 className="text-black text-center text-md font-semibold mb-5 max-w-lg">
+          <h1 className="text-textColor text-center text-md font-semibold mb-5 max-w-lg">
             Forgot you password?
           </h1>
-          <p className="text-center mb-5 max-w-lg text-sm">
+          <p className="text-center text-textColorGray mb-5 max-w-lg text-sm">
             Enter your email address below and we&apos;ll send you a code to
             reset your password.
           </p>

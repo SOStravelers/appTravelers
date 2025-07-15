@@ -113,8 +113,6 @@ export default function Settings() {
 
   return (
     <div className="flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
-
       <Link href="/support" className="block">
         <OptionCard
           title={languageData.support.title[language]}
@@ -130,12 +128,6 @@ export default function Settings() {
         className="w-full max-w-lg rounded-xl my-1 mb-60"
         options={optionsSupport}
         value={selection}
-        // onBlur={() =>
-        //   setSelection({
-        //     value: "en",
-        //     label: "English",
-        //   })
-        // }
         onChange={(selectedOption) => setValue(selectedOption)}
         isSearchable={false}
         styles={{
@@ -185,10 +177,7 @@ export default function Settings() {
           setIsOn={setIsOnNotification}
         /> */}
       </div>
-      {/*     <div className="mt-10 flex flex-col">
-       
-        <OutlinedButton text="Delete Account" error />
-      </div> */}
+
       <TextModal
         title={`Activate Worker Mode`}
         text={["Are you sure you want to activate worker mode?"]}
@@ -217,4 +206,3 @@ export default function Settings() {
     </div>
   );
 }
-

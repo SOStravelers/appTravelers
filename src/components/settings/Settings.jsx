@@ -1,19 +1,26 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import Link from "next/link";
 import Cookies from "js-cookie";
-import OptionCard from "@/components/utils/cards/OptionCard";
-import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import CustomSelector from "@/components/utils/selector/CustomSelector";
 import languageData from "@/language/settings.json";
-import { MdEmail } from "react-icons/md";
 import { useStore } from "@/store";
+
+/* ──────────────────────────────────────────────
+   Reutilizable para renderizar selectores
+─────────────────────────────────────────────── */
+function SettingsSelector({ title, options, value, onChange }) {
+  return (
+    <>
+      <h1 className="text-textColor text-sm font-semibold mt-3 mb-2 self-start">
+        {title}
+      </h1>
+      <CustomSelector options={options} value={value} onChange={onChange} />
+    </>
+  );
+}
+
 export default function SettingsComponent() {
-  useEffect(() => {
-    document.title = "Settings | SOS Travelers";
-  }, []);
-  const router = useRouter();
   const store = useStore();
   const {
     setLanguage,
@@ -23,162 +30,146 @@ export default function SettingsComponent() {
     changeTheme,
     setChangeTheme,
   } = store;
-  const [selection, setSelection] = useState({});
-  const [selectionCurrency, setSelectionCurrency] = useState({});
-  const [selectionTheme, setSelectionTheme] = useState({});
-  const [darkMode, setDarkMode] = useState(false);
-  useEffect(() => {
-    setSelection({
-      value: language,
-      label: languageData.language[language][language],
-    });
-    setSelectionCurrency({
-      value: currency,
-      label: languageData["currency"][currency][language],
-    });
-    const theme = Cookies.get("theme");
-    if (theme && (theme == "dark" || theme == "light")) {
-      setSelectionTheme({
-        value: theme,
-        label: languageData.theme[theme][language],
-      });
-    } else {
-      setSelectionTheme({
-        value: "default",
-        label: languageData.theme["default"][language],
-      });
-    }
-  }, []);
 
-  const setValue = (valor) => {
-    setLanguage(valor.value);
-    Cookies.set("language", valor.value);
-    setSelection({
-      value: valor.value,
-      label: languageData.language[valor.value][valor.value],
+  const [darkMode, setDarkMode] = useState(false);
+  const [selections, setSelections] = useState({
+    language: null,
+    currency: null,
+    theme: null,
+  });
+
+  useEffect(() => {
+    document.title = "Settings | SOS Travelers";
+
+    // Set default values
+    const theme = Cookies.get("theme");
+    const actualTheme =
+      theme === "dark" || theme === "light" ? theme : "default";
+
+    setSelections({
+      language: {
+        value: language,
+        label: languageData.language[language][language],
+      },
+      currency: {
+        value: currency,
+        label: languageData.currency[currency][language],
+      },
+      theme: {
+        value: actualTheme,
+        label: languageData.theme[actualTheme][language],
+      },
     });
-    setSelectionCurrency({
-      value: currency,
-      label: languageData["currency"][currency][valor.value],
-    });
-    setSelectionTheme({
-      value: selectionTheme.value,
-      label: languageData.theme[selectionTheme.value][valor.value],
-    });
-  };
-  const setValueCurrency = (valor) => {
-    setCurrency(valor.value);
-    Cookies.set("currency", valor.value);
-    setSelectionCurrency({
-      value: valor.value, // ✅ ahora sí el nuevo valor
-      label: languageData["currency"][valor.value][language],
-    });
-  };
+  }, []);
 
   useEffect(() => {
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-    console.log("entra", prefersDark);
-    setDarkMode(prefersDark); // ← esta línea faltaba
-  }, [selectionTheme]);
+    setDarkMode(prefersDark);
+  }, [selections.theme]);
 
-  const setValueTheme = (valor) => {
-    const root = document.documentElement;
-    if (valor.value == "dark") {
-      Cookies.set("theme", valor.value);
-      root.classList.add("dark");
-      setSelectionTheme({
-        value: valor.value,
-        label: languageData.theme[valor.value][language],
-      });
-    } else if (valor.value == "light") {
-      Cookies.set("theme", valor.value);
-      root.classList.remove("dark");
-      setSelectionTheme({
-        value: valor.value,
-        label: languageData.theme[valor.value][language],
-      });
-    } else {
-      if (darkMode) {
-        Cookies.set("theme", "dark");
-        root.classList.add("dark");
-      } else {
-        Cookies.set("theme", "light");
-        root.classList.remove("dark");
-      }
-      setSelectionTheme({
-        value: "default",
-        label: languageData.theme["default"][language],
+  const handleChange = (key, val) => {
+    const newSelections = { ...selections, [key]: val };
+    setSelections(newSelections);
+
+    if (key === "language") {
+      setLanguage(val.value);
+      Cookies.set("language", val.value);
+
+      // Update all labels with new language
+      setSelections({
+        language: {
+          value: val.value,
+          label: languageData.language[val.value][val.value],
+        },
+        currency: {
+          value: selections.currency?.value,
+          label: languageData.currency[selections.currency?.value][val.value],
+        },
+        theme: {
+          value: selections.theme?.value,
+          label: languageData.theme[selections.theme?.value][val.value],
+        },
       });
     }
-    setChangeTheme(!changeTheme);
+
+    if (key === "currency") {
+      setCurrency(val.value);
+      Cookies.set("currency", val.value);
+    }
+
+    if (key === "theme") {
+      const root = document.documentElement;
+
+      if (val.value === "dark") {
+        Cookies.set("theme", "dark");
+        root.classList.add("dark");
+      } else if (val.value === "light") {
+        Cookies.set("theme", "light");
+        root.classList.remove("dark");
+      } else {
+        // default
+        if (darkMode) {
+          Cookies.set("theme", "dark");
+          root.classList.add("dark");
+        } else {
+          Cookies.set("theme", "light");
+          root.classList.remove("dark");
+        }
+      }
+
+      setChangeTheme(!changeTheme);
+    }
   };
 
-  const optionsCurency = [
-    { value: "usd", label: languageData["currency"]["usd"][language] },
-    { value: "eur", label: languageData["currency"]["eur"][language] },
-    { value: "brl", label: languageData["currency"]["brl"][language] },
-  ];
-
-  const optionsSupport = [
-    { value: "en", label: languageData.language[language]["en"] },
-    { value: "es", label: languageData.language[language]["es"] },
-    { value: "fr", label: languageData.language[language]["fr"] },
-    { value: "de", label: languageData.language[language]["de"] },
-    { value: "pt", label: languageData.language[language]["pt"] },
-  ];
-  const optionsTheme = [
-    { value: "default", label: languageData.theme.default[language] },
-    { value: "dark", label: languageData.theme.dark[language] },
-    { value: "light", label: languageData.theme.light[language] },
+  const config = [
+    {
+      key: "language",
+      title: languageData.titleLanguage[language],
+      options: ["en", "es", "fr", "de", "pt"].map((code) => ({
+        value: code,
+        label: languageData.language[language][code],
+      })),
+    },
+    {
+      key: "currency",
+      title: languageData.titleCurrency[language],
+      options: ["usd", "eur", "brl"].map((code) => ({
+        value: code,
+        label: languageData.currency[code][language],
+      })),
+    },
+    {
+      key: "theme",
+      title: languageData.titleTheme[language],
+      options: ["default", "dark", "light"].map((code) => ({
+        value: code,
+        label: languageData.theme[code][language],
+      })),
+    },
   ];
 
   return (
     <div className="w-full max-w-md flex flex-col self-center">
-      <Link href="support" className="w-full flex mt-3">
-        <OptionCard
-          title={languageData.support.title[language]}
-          subtitle={languageData.support.body[language]}
-          icon={MdEmail}
+      {/* Render all selectors dinamically */}
+      {config.map(({ key, title, options }) => (
+        <SettingsSelector
+          key={key}
+          title={title}
+          options={options}
+          value={selections[key]}
+          onChange={(val) => handleChange(key, val)}
         />
-      </Link>
-
-      <h1 className="text-textColor text-sm font-semibold mt-3 mb-2 self-start">
-        {languageData.titleLanguage[language]}
-      </h1>
-      <CustomSelector
-        options={optionsSupport}
-        value={selection}
-        onChange={(selectedOption) => setValue(selectedOption)}
-      />
-
-      <h1 className="text-textColor text-sm font-semibold mt-3 mb-2 self-start">
-        {languageData.titleCurrency[language]}
-      </h1>
-      <CustomSelector
-        options={optionsCurency}
-        value={selectionCurrency}
-        onChange={(selectedOption) => setValueCurrency(selectedOption)}
-      />
-
-      <h1 className="text-textColor text-sm font-semibold mt-3 mb-2 self-start">
-        {languageData.titleTheme[language]}
-      </h1>
-      <CustomSelector
-        options={optionsTheme}
-        value={selectionTheme}
-        onChange={(selectedOption) => setValueTheme(selectedOption)}
-      />
+      ))}
 
       <div className="flex items-center justify-center mb-5 mt-3">
-        {selectionTheme.value === "dark" ||
-        (selectionTheme.value === "default" && darkMode) ? (
+        {selections.theme?.value === "dark" ||
+        (selections.theme?.value === "default" && darkMode) ? (
           <Image
             src="/icons/LogoCompletoBlanco.svg"
             width={120}
             height={120}
-            className="logo-light"
             alt="SOS Traveler Logo"
           />
         ) : (
@@ -190,17 +181,6 @@ export default function SettingsComponent() {
           />
         )}
       </div>
-
-      <OutlinedButton
-        onClick={() => router.push("/register")}
-        text={languageData.sigUpButton[language]}
-        px={20}
-        py={2}
-        dark="darkLight"
-        textSize="text-sm"
-        textColor="text-white"
-        buttonCenter={true}
-      />
     </div>
   );
 }

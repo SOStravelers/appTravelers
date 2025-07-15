@@ -72,6 +72,7 @@ export default function App({ Component, pageProps }) {
   // const svgString = darkMode
   //   ? renderToString(<LogoSosWhite />)
   //   : renderToString(<LogoSosRelleno />);
+
   const svgString = renderToString(<LogoSosRelleno />);
   return (
     <>

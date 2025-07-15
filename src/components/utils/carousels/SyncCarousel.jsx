@@ -108,7 +108,6 @@ export default function SyncCarousel() {
 
   useEffect(() => {
     if (itemsWithVideos.length) return; // ✅  ya estaban cargados
-
     SubserviceService.getWithVideos()
       .then(({ data }) => {
         if (Array.isArray(data) && data.length) {

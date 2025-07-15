@@ -29,9 +29,8 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       if (!user || Object.keys(user).length == 0) {
         await obtenerInformacionUsuario();
       }
-      setTimeout(() => {
-        onMiddlewareComplete();
-      }, 500);
+      onMiddlewareComplete();
+      setTimeout(() => {}, 100);
     };
 
     fetchData();

@@ -21,7 +21,7 @@ export default function LoaderGlobal() {
     themeCookie === "dark" || (themeCookie === "default" && darkMode);
 
   return (
-    <div className="fixed inset-0 h-screen w-screen bg-backgroundP z-50 flex flex-col items-center justify-center transition-opacity duration-300 opacity-100">
+    <div className="fixed inset-0 h-screen w-screen bg-backgroundP z-1 flex flex-col items-center justify-center transition-opacity duration-300 opacity-100">
       {
         // isDark ?
         // <LogoSosWhite className="w-20 h-20" />

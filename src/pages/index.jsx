@@ -105,7 +105,11 @@ export default function Home() {
 
   return (
     <>
-      {!(scrolled && loadingCarrouselVideos) && <LoaderGlobal />}
+      {!(scrolled && loadingCarrouselVideos) && (
+        <div className="min-h-screen flex items-center justify-center bg-backgroundP">
+          <div className="w-10 h-10 border-4 border-t-transparent border-textColor rounded-full animate-spin"></div>
+        </div>
+      )}
       <main
         className={clsx(
           "flex flex-col w-full bg-backgroundP md:pl-[240px] pb-[100px] overflow-x-visible",

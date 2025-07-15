@@ -13,16 +13,10 @@ body {
   background-color: var(--color-background-primary);
   color: var(--color-text, #000); /* opcional */
 }
-/* animacion fade de entrada del layout */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* bloquear seleccion de texto */
+p,
+h1 {
+  @apply select-none;
 }
 
 .animate-fadeIn {

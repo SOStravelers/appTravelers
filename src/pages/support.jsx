@@ -10,7 +10,8 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedTextArea from "@/components/utils/inputs/OutlinedTextArea";
 import { Field, Form } from "houseform";
 import { z } from "zod";
-
+import InputText from "@/components/utils/inputs/InputText";
+import CustomSelector from "@/components/utils/selector/CustomSelector";
 import { toast } from "react-toastify";
 
 export default function SupportPage() {
@@ -126,17 +127,26 @@ export default function SupportPage() {
                     {({ value, setValue, onBlur, errors }) => {
                       return (
                         <div>
-                          <OutlinedInput
-                            placeholder={languageData.enterName[language]}
+                          <InputText
+                            type="text"
                             value={value}
-                            onBlur={onBlur}
                             onChange={(e) => setValue(e.target.value)}
+                            onBlur={onBlur}
+                            placeholder={languageData.enterName[language]}
+                            className="w-full"
                           />
-                          {errors.map((error) => (
-                            <p key={error} className="text-errorColor text-xs">
-                              {error}
-                            </p>
-                          ))}
+                          {errors.length > 0 ? (
+                            errors.map((error) => (
+                              <p
+                                key={error}
+                                className="text-errorColor text-xs mt-1"
+                              >
+                                {error}
+                              </p>
+                            ))
+                          ) : (
+                            <div className="h-4" />
+                          )}
                         </div>
                       );
                     }}
@@ -154,17 +164,26 @@ export default function SupportPage() {
                     {({ value, setValue, onBlur, errors }) => {
                       return (
                         <div>
-                          <OutlinedInput
-                            placeholder={languageData.enterEmail[language]}
+                          <InputText
+                            type="text"
                             value={value}
-                            onBlur={onBlur}
                             onChange={(e) => setValue(e.target.value)}
+                            onBlur={onBlur}
+                            placeholder={languageData.enterEmail[language]}
+                            className="w-full"
                           />
-                          {errors.map((error) => (
-                            <p key={error} className="text-errorColor text-xs">
-                              {error}
-                            </p>
-                          ))}
+                          {errors.length > 0 ? (
+                            errors.map((error) => (
+                              <p
+                                key={error}
+                                className="text-errorColor text-xs mt-1"
+                              >
+                                {error}
+                              </p>
+                            ))
+                          ) : (
+                            <div className="h-4" />
+                          )}
                         </div>
                       );
                     }}
@@ -186,57 +205,25 @@ export default function SupportPage() {
               >
                 {({ value, setValue, onBlur, errors }) => (
                   <div>
-                    <Select
-                      className="w-full max-w-lg rounded-xl  my-1"
+                    <CustomSelector
                       options={optionsSupport}
                       value={optionsSupport.find(
                         (option) => option.value === value
                       )}
-                      onBlur={onBlur}
                       onChange={(selectedOption) =>
                         setValue(selectedOption.value)
                       }
-                      styles={{
-                        control: (provided) => ({
-                          ...provided,
-                          borderColor: "#00A0D5",
-                          borderRadius: "10px",
-                          boxShadow: "none",
-                          "&:hover": {
-                            borderColor: "#00A0D5",
-                          },
-                        }),
-                        option: (provided, state) => ({
-                          ...provided,
-                          color: state.isSelected ? "#fff" : "#000",
-                          backgroundColor: state.isSelected
-                            ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
-                            : state.isFocused
-                            ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
-                            : "#fff", // Fondo blanco por defecto
-                          borderRadius: "5px",
-                          transition: "background-color 0.3s ease",
-                          "&:hover": {
-                            backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
-                          },
-                        }),
-                      }}
                     />
-                    {/* <select
-                      className="border-grey border w-full max-w-lg rounded-xl p-3 my-1"
-                      value={value}
-                      onBlur={onBlur}
-                      onChange={(e) => setValue(e.target.value)}
-                    >
-                      <option value="">Choose an option</option>
-                      <option value="opcion1">Option 1</option>
-                      <option value="opcion2">Option 2</option>
-                    </select> */}
-                    {errors.map((error) => (
-                      <p key={error} className="text-red">
-                        {error}
-                      </p>
-                    ))}
+
+                    {errors.length > 0 ? (
+                      errors.map((error) => (
+                        <p key={error} className="text-errorColor text-xs mt-1">
+                          {error}
+                        </p>
+                      ))
+                    ) : (
+                      <div className="h-4" />
+                    )}
                   </div>
                 )}
               </Field>
@@ -262,6 +249,7 @@ export default function SupportPage() {
                         onBlur={onBlur}
                         onChange={(e) => setValue(e.target.value)}
                       />
+
                       {errors.map((error) => (
                         <p key={error} className="text-red">
                           {error}
@@ -274,8 +262,14 @@ export default function SupportPage() {
             </div>
             {!sended ? (
               <OutlinedButton
-                text={languageData.sendMessage[language]}
                 disabled={!isValid || isSubmitting}
+                text={languageData.sendMessage[language]}
+                px={20}
+                py={2}
+                dark="darkLight"
+                textSize="text-sm"
+                textColor="text-white"
+                buttonCenter={true}
               />
             ) : (
               <p className="text-sm">

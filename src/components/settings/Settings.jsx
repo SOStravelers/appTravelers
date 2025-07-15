@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import CustomSelector from "@/components/utils/selector/CustomSelector";
 import languageData from "@/language/settings.json";
 import { useStore } from "@/store";
+import { LogoSosRelleno, LogoSosWhite } from "@/constants/icons";
 
 /* ──────────────────────────────────────────────
    Reutilizable para renderizar selectores
@@ -164,7 +165,7 @@ export default function SettingsComponent() {
       ))}
 
       <div className="flex items-center justify-center mb-5 mt-3">
-        {selections.theme?.value === "dark" ||
+        {/* {selections.theme?.value === "dark" ||
         (selections.theme?.value === "default" && darkMode) ? (
           <Image
             src="/icons/LogoCompletoBlanco.svg"
@@ -173,13 +174,14 @@ export default function SettingsComponent() {
             alt="SOS Traveler Logo"
           />
         ) : (
-          <Image
-            src="/icons/LogoCompleto.svg"
-            width={120}
-            height={120}
-            alt="SOS Traveler Logo"
-          />
-        )}
+        )} */}
+        <LogoSosRelleno />
+        {/* <Image
+          src="/icons/LogoCompleto.svg"
+          width={120}
+          height={120}
+          alt="SOS Traveler Logo"
+        /> */}
       </div>
     </div>
   );

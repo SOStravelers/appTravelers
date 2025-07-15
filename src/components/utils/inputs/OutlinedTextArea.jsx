@@ -1,12 +1,67 @@
 import React from "react";
+import clsx from "clsx";
 
-function OutlinedTextArea({ ...props }) {
+function OutlinedTextArea({
+  value,
+  onChange,
+  onBlur,
+  placeholder = "",
+  error = false,
+  className = "",
+  disabled = false,
+  icon: Icon,
+  width,
+  noBorder = false,
+  marginY = "my-1",
+  rows = 5,
+  ...props
+}) {
   return (
-    <div className="relative">
+    <div
+      className={clsx("relative", marginY)}
+      style={{ width: width || "100%" }}
+    >
       <textarea
-        className={`border-blueBorder border focus:outline-none w-full max-w-lg rounded-xl p-3 my-1 h-40 resize-none`}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        disabled={disabled}
+        rows={rows}
+        className={clsx(
+          "px-3 py-2 rounded-md text-sm transition duration-200 focus:outline-none w-full resize-none",
+          Icon ? "pl-11" : "",
+          !noBorder && "border",
+          error
+            ? "bg-red-100 text-red-800 border-red-500 placeholder-red-500"
+            : disabled
+            ? "bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed"
+            : "bg-[var(--color-input)] text-[var(--color-text-color)] border-gray-300 placeholder-[var(--color-text-gray-reverse)] focus:ring-1 focus:ring-[var(--color-text-color)]",
+          className
+        )}
         {...props}
       />
+      {Icon && (
+        <span className="absolute top-2 left-0 flex items-start pl-3 pointer-events-none">
+          <div
+            className={clsx(
+              "rounded-full p-1 flex items-center justify-center transition",
+              error
+                ? "border border-red-500 bg-red-100"
+                : "border border-gray-400 peer-focus:border-[var(--color-border-blue)] peer-focus:bg-[var(--color-border-blue)]/10"
+            )}
+          >
+            <Icon
+              className={clsx(
+                "h-3 w-3 transition",
+                error
+                  ? "text-red-500"
+                  : "text-gray-400 peer-focus:text-[var(--color-border-blue)]"
+              )}
+            />
+          </div>
+        </span>
+      )}
     </div>
   );
 }

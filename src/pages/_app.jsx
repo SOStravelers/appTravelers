@@ -69,9 +69,10 @@ export default function App({ Component, pageProps }) {
       root.classList.remove("dark");
     }
   }, [darkMode]);
-  const svgString = darkMode
-    ? renderToString(<LogoSosWhite />)
-    : renderToString(<LogoSosRelleno />);
+  // const svgString = darkMode
+  //   ? renderToString(<LogoSosWhite />)
+  //   : renderToString(<LogoSosRelleno />);
+  const svgString = renderToString(<LogoSosRelleno />);
   return (
     <>
       <GoogleOneTap />

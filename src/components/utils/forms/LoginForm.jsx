@@ -111,8 +111,6 @@ function LoginForm({ onClose }) {
   };
 
   const goToforgot = () => {
-    onClose();
-    console.log("casita");
     router.push("/forgot-password");
   };
 
@@ -149,11 +147,15 @@ function LoginForm({ onClose }) {
                     className="w-full"
                   />
 
-                  {errors.map((error) => (
-                    <p key={error} className="text-errorColor  text-xs ml-2">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -177,14 +179,15 @@ function LoginForm({ onClose }) {
                     placeholder={languageData.form.password[language]}
                     className="w-full"
                   />
-                  {errors.map((error) => (
-                    <p
-                      key={error}
-                      className="text-errorColor text-xs mb-1 ml-2"
-                    >
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -214,14 +217,15 @@ function LoginForm({ onClose }) {
                 text={languageData.form.emailButton[language]}
                 px={0}
                 py={2}
-                dark="darkHeavy"
+                dark="darkLight"
                 textSize="text-xs"
+                margin="mb-3"
                 textColor="text-white"
                 disabled={!isValid}
                 buttonCenter={true}
               />
 
-              <GoogleButton />
+              <GoogleButton dark="darkLight" />
             </>
           )}
         </form>

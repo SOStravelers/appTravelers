@@ -1,21 +1,35 @@
 import Link from "next/link";
 import RegisterForm from "@/components/utils/forms/RegisterForm";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
 import { useStore } from "@/store";
 import languageData from "@/language/login.json";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 export default function Registro() {
   const store = useStore();
   const router = useRouter();
   const { language } = store;
+  const [loading, setLoading] = useState(true); // <-- loading flag
   useEffect(() => {
     document.title = "Register | SOS Travelers";
   }, []);
+  useEffect(() => {
+    setLoading(true);
+    delay(250, () => {
+      setLoading(false);
+    });
+  }, []);
   return (
     <div
-      className="bg-backgroundP w-full minh-screen flex flex-col md:items-center px-10"
+      className={`bg-backgroundP w-full min-h-screen flex flex-col md:items-center px-10
+    transition-all duration-800 ease-out
+    ${loading ? opacityAnimation : displayAnimation}`}
       style={{ marginTop: "-60px" }}
     >
       <h1 className="text-textColor font-bold text-2xl mb-3">

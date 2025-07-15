@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 function OutlinedButton({
   text,
+  icon: Icon, // ✅ nuevo
   secondary = false,
   error = false,
   disabled = false,
@@ -10,7 +11,7 @@ function OutlinedButton({
   py = 2,
   textColor = "text-blackText",
   textSize = "text-sm",
-  dark = "darkHeavy", // "darkHeavy" o "darkP"
+  dark = "darkHeavy",
   margin = "my-1",
   buttonCenter = false,
   minWidth,
@@ -24,11 +25,11 @@ function OutlinedButton({
   return (
     <button
       className={clsx(
-        "rounded-full cursor-pointer",
+        "rounded-full cursor-pointer flex items-center justify-center gap-2",
         textSize,
-        buttonCenter ? "w-2/3 mx-auto block text-center" : `px-${px}`,
-        `py-${py}`,
         margin,
+        buttonCenter ? "w-2/3 mx-auto" : `px-${px}`,
+        `py-${py}`,
         {
           "text-grey border-grey": secondary,
           "text-greyText border-lightGrey": error,
@@ -45,6 +46,7 @@ function OutlinedButton({
       disabled={disabled}
       {...props}
     >
+      {Icon && <Icon className="h-5 w-5" />} {/* ✅ ícono al inicio */}
       {text}
     </button>
   );

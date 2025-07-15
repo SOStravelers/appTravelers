@@ -15,6 +15,7 @@ import UserService from "@/services/UserService";
 import languageData from "@/language/login.json";
 import Cookies from "js-cookie";
 import { set } from "date-fns";
+import InputText from "@/components/utils/inputs/InputText";
 
 function LoginForm({ onClose }) {
   const [email, setEmail] = useState("");
@@ -136,18 +137,20 @@ function LoginForm({ onClose }) {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
-                    placeholder={languageData.form.email[language]}
-                    value={value}
-                    onBlur={onBlur}
-                    onChange={(e) => setValue(e.target.value)}
+                  <InputText
+                    type="text"
                     icon={FaUser}
+                    value={value}
+                    noBorder
+                    marginY="mb-1"
+                    onChange={(e) => setValue(e.target.value)}
+                    onBlur={onBlur}
+                    placeholder={languageData.form.email[language]}
+                    className="w-full"
                   />
+
                   {errors.map((error) => (
-                    <p
-                      key={error}
-                      className="text-errorColor text-xs mb-1 ml-2"
-                    >
+                    <p key={error} className="text-errorColor  text-xs ml-2">
                       {error}
                     </p>
                   ))}
@@ -164,13 +167,15 @@ function LoginForm({ onClose }) {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
-                    placeholder={languageData.form.password[language]}
-                    value={value}
-                    onBlur={onBlur}
-                    onChange={(e) => setValue(e.target.value)}
+                  <InputText
                     type="password"
                     icon={FaLock}
+                    noBorder
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    onBlur={onBlur}
+                    placeholder={languageData.form.password[language]}
+                    className="w-full"
                   />
                   {errors.map((error) => (
                     <p
@@ -207,7 +212,13 @@ function LoginForm({ onClose }) {
             <>
               <OutlinedButton
                 text={languageData.form.emailButton[language]}
+                px={0}
+                py={2}
+                dark="darkHeavy"
+                textSize="text-xs"
+                textColor="text-white"
                 disabled={!isValid}
+                buttonCenter={true}
               />
 
               <GoogleButton />

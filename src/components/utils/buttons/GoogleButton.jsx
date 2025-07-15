@@ -7,7 +7,7 @@ import { GoogleIcon } from "@/constants/icons";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { FcGoogle } from "react-icons/fc";
 
-function GoogleButton() {
+function GoogleButton({ dark = "darkHeavy" }) {
   const router = useRouter();
   const login = async () => {
     const { front } = useStore.getState().urls;
@@ -32,8 +32,9 @@ function GoogleButton() {
     <OutlinedButton
       text="Continue with Google"
       icon={FcGoogle}
+      onClick={login}
       textColor="text-white"
-      // dark="darkHeavy"
+      dark={dark}
       buttonCenter={true}
       textSize="text-xs"
     />

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Rings } from "react-loader-spinner";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
+import InputText from "@/components/utils/inputs/InputText";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import GoogleButton from "@/components/utils/buttons/GoogleButton";
 import { useState } from "react";
@@ -85,17 +86,21 @@ function RegisterForm() {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={languageData.form.fullName[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-errorColor text-xs">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -107,17 +112,21 @@ function RegisterForm() {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={languageData.form.email[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-errorColor text-xs">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -135,18 +144,22 @@ function RegisterForm() {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={languageData.form.password[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-errorColor text-xs">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -165,27 +178,27 @@ function RegisterForm() {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={languageData.form.confirmPass[language]}
                     value={value}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-errorColor text-xs">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
           </Field>
-          <Link href="/">
-            <p className="text-textColor text-sm mt-1 mb-2 text-right">
-              {languageData.form.forgotPass[language]}
-            </p>
-          </Link>
+
           {loading ? (
             <div className="max-w-lg flex flex-col items-center justify-center">
               <Rings
@@ -201,11 +214,12 @@ function RegisterForm() {
                 buttonCenter={true}
                 dark="darkLight"
                 textSize="text-sm"
+                margin="mb-3"
                 textColor="text-white"
                 text={languageData.register.title[language]}
                 disabled={!isValid}
               />
-              <GoogleButton />
+              <GoogleButton dark="darkLight" />
             </>
           )}
         </form>

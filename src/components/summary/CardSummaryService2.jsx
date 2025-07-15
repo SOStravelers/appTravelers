@@ -115,7 +115,7 @@ export default function CardSummaryService({ statusExpanded }) {
 
   return (
     <>
-      <div className="bg-backgroundCard rounded-xl mt-2 shadow w-full max-w-xl overflow-hidden">
+      <div className="bg-backgroundCard rounded-xl mt-2 mb-32 shadow w-full max-w-xl overflow-hidden">
         {/* HEADER */}
         <div
           className="flex items-center justify-between mt-2 p-3 cursor-pointer"

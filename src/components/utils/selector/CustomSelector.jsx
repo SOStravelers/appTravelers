@@ -20,7 +20,7 @@ export default function CustomSelector({
           ...base,
           backgroundColor: "var(--color-input)",
           color: "var(--color-text-color)",
-          borderRadius: "12px",
+          borderRadius: "6px",
           borderColor: state.isFocused ? "#00A0D5" : "#ccc",
           boxShadow: "none",
           "&:hover": {

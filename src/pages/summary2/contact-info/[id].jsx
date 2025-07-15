@@ -130,6 +130,22 @@ export default function ContactInfoPage() {
       }
     }
   };
+  const evaluatePhone = (val, isChange = false) => {
+    const clean = val.replace(/\D/g, "");
+    setPhone(clean);
+
+    if (isChange) {
+      if (/^[0-9]{6,15}$/.test(clean)) {
+        setErrPhone(null);
+      }
+    } else {
+      if (!/^[0-9]{6,15}$/.test(clean)) {
+        setErrPhone(thisLanguage.phoneInput.alert[language]);
+      } else {
+        setErrPhone(null);
+      }
+    }
+  };
 
   return (
     <>
@@ -167,8 +183,10 @@ export default function ContactInfoPage() {
               className="w-full"
             />
 
-            {errName && (
+            {errName ? (
               <p className="text-errorColor text-xs mt-1">{errName}</p>
+            ) : (
+              <div className="h-4" />
             )}
           </div>
 
@@ -189,8 +207,10 @@ export default function ContactInfoPage() {
               className="w-full"
             />
 
-            {errEmail && (
+            {errEmail ? (
               <p className="text-errorColor text-xs mt-1">{errEmail}</p>
+            ) : (
+              <div className="h-4" />
             )}
           </div>
 
@@ -203,6 +223,7 @@ export default function ContactInfoPage() {
               setPhoneCode={setPhoneCode}
               dropdownOpen={countryDropdownOpen}
               setDropdownOpen={setCountryDropdownOpen}
+              setError={setErrCountry}
               inputClass={errCountry ? errInput : okInput}
               error={errCountry}
             />
@@ -215,15 +236,21 @@ export default function ContactInfoPage() {
             </label>
             <div className="flex gap-2">
               <PhoneCodeSelector phoneCode={phoneCode} inputClass={okInput} />
-              <input
-                type="tel"
+
+              <InputText
+                type="number"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                className={`flex-1 ${errPhone ? errInput : okInput}`}
+                onChange={(e) => evaluatePhone(e.target.value, true)}
+                onBlur={(e) => evaluatePhone(e.target.value, false)}
+                className="w-full"
+                error={errPhone}
               />
             </div>
-            {errPhone && (
-              <p className="text-red-600 text-xs mt-1">{errPhone}</p>
+
+            {errPhone ? (
+              <p className="text-errorColor text-xs mt-1">{errPhone}</p>
+            ) : (
+              <div className="h-4" />
             )}
           </div>
         </div>

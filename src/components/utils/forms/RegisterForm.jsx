@@ -11,7 +11,7 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 import languageData from "@/language/login.json";
 import UserService from "@/services/UserService.js";
-
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import Cookies from "js-cookie";
 import { useStore } from "@/store";
 import { set } from "date-fns";
@@ -89,6 +89,8 @@ function RegisterForm() {
                   <InputText
                     placeholder={languageData.form.fullName[language]}
                     value={value}
+                    icon={FaUser}
+                    noBorder
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                   />
@@ -115,6 +117,8 @@ function RegisterForm() {
                   <InputText
                     placeholder={languageData.form.email[language]}
                     value={value}
+                    icon={FaEnvelope}
+                    noBorder
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                   />
@@ -148,6 +152,8 @@ function RegisterForm() {
                     placeholder={languageData.form.password[language]}
                     value={value}
                     onBlur={onBlur}
+                    noBorder
+                    icon={FaLock}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
@@ -182,6 +188,8 @@ function RegisterForm() {
                     placeholder={languageData.form.confirmPass[language]}
                     value={value}
                     onBlur={onBlur}
+                    noBorder
+                    icon={FaLock}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />

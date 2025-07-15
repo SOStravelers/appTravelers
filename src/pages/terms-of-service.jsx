@@ -10,7 +10,7 @@ export default function TermsOfService() {
     document.title = "Terms of service | SOS Travelers";
   }, []);
   return (
-    <section className=" py-24 mb-16 px-0   md:pl-64 md:pr-5">
+    <section className=" mb-16 px-3  text-textColor  md:pl-64 md:pr-5">
       <h1 className="mb-2 px-2 font-bold text-2xl">
         SOS Travelers Terms of Service
       </h1>
@@ -18,7 +18,7 @@ export default function TermsOfService() {
         <b className="mr-1  px-2">Last update: </b> November 2023
       </p>
       <h2 className="mb-2  px-2 font-bold text-lg">1. Acceptance of Terms.</h2>
-      <p className="mb-2 px-2">
+      <p className="mb-2 px-2 text-textColorGray">
         By accessing and using the SOS Travelers platform, you automatically
         agree to comply with these Terms and all policies and guidelines
         incorporated by reference. This includes the Use Policy, fee and payment
@@ -378,9 +378,15 @@ export default function TermsOfService() {
         conversations.
       </p>
 
-      <div className="bg-white h-full flex flex-col w-screen py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-        <OutlinedButton text="Return" onClick={() => router.back()} />
-      </div>
+      <OutlinedButton
+        dark="darkLight"
+        buttonCenter={true}
+        text="Return"
+        margin="mt-10"
+        textSize="text-sm"
+        textColor="text-white"
+        onClick={() => router.back()}
+      />
     </section>
   );
 }

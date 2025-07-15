@@ -6,7 +6,7 @@ import { Rings } from "react-loader-spinner";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import GoogleButton from "@/components/utils/buttons/GoogleButton";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { Field, Form } from "houseform";
 import { z } from "zod";
 import { toast } from "react-toastify";
@@ -137,7 +137,7 @@ function LoginForm({ onClose }) {
                 <div>
                   <InputText
                     type="text"
-                    icon={FaUser}
+                    icon={FaEnvelope}
                     value={value}
                     noBorder
                     marginY="mb-1"

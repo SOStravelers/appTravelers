@@ -30,10 +30,10 @@ export default function Login() {
     ${loading ? opacityAnimation : displayAnimation}`}
       // style={{ minHeight: "calc(100vh - 60px)", marginTop: "-60px" }}
     >
-      <h1 className="text-textColor font-bold text-2xl py-5">
+      <h1 className="text-textColor font-bold text-2xl my-1">
         {languageData.login.title[language]}
       </h1>
-      <h2 className="text-textColorGray py-5">
+      <h2 className="text-textColorGray mb-3">
         {languageData.login.subtitle[language]}
       </h2>
       <div className="w-full md:w-80">

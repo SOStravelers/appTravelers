@@ -25,7 +25,7 @@ export default function Registro() {
   }, []);
   return (
     <div
-      className={`px-6 flex flex-col items-center
+      className={`px-10 flex flex-col md:items-center
     ${loading ? opacityAnimation : displayAnimation}
   `}
     >

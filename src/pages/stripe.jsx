@@ -96,11 +96,9 @@ export default function Stripe() {
 
   return (
     <div
-      className={`min-h-screen bg-gray-50 p-4 mt-2 flex flex-col items-center
-              transform transition-all duration-800 ease-out
-              transition-opacity duration-800 ease-out
-             ${loading ? opacityAnimation : displayAnimation}
-            `}
+      className={`px-6 flex flex-col items-center
+    ${loading ? opacityAnimation : displayAnimation}
+  `}
     >
       {/* <h1 className="text-md font-bold mb-1">{thisLanguage.title[language]}</h1> */}
       {/* Contendio Tarjeta Summary */}

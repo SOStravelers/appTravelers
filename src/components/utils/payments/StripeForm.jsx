@@ -1,49 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { useStore } from "@/store";
 
-const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
-const stripePromise = loadStripe(stripePublicKey);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 export default function StripeForm({ clientSecret }) {
-  const { language, currency, user } = useStore(); // 👈 nuevos
-  const appearance = {
-    theme: "stripe",
-    size: "desktop",
-    variables: {
-      fontFamily: "Sohne, system-ui, sans-serif",
-      fontWeightNormal: "500",
-      borderRadius: "8px",
-      // colorBackground: "#0A2540",
-      colorPrimary: "#00A0D5",
-      accessibleColorOnColorPrimary: "#1A1B25",
-      // colorText: "white",
-      // colorTextSecondary: "white",
-      // colorTextPlaceholder: "#727F96",
-      // tabIconColor: "white",
-      // logoColor: "dark",
-    },
-    layout: {
-      type: "accordion",
-      defaultCollapsed: false,
-      radios: true,
-      spacedAccordionItems: false,
-    },
-    // rules: {
-    //   ".Input, .Block": {
-    //     backgroundColor: "transparent",
-    //     border: "1.5px solid var(--colorPrimary)",
-    //   },
-    // },
-  };
+  const { language, currency, user } = useStore();
+  const [appearance, setAppearance] = useState(null);
+
+  useEffect(() => {
+    const primaryColor = getComputedCSSVar("--color-text-blueBorderDark");
+    const textColor = getComputedCSSVar("--color-text-color");
+    const textColorGray = getComputedCSSVar("--color-text-gray");
+    const placeholderColor = getComputedCSSVar("--color-text-gray");
+    const bgColor = getComputedCSSVar("--color-background-modal");
+
+    setAppearance({
+      theme: "stripe",
+      variables: {
+        colorPrimary: primaryColor || "#00A0D5",
+        colorText: textColorGray || "#000000",
+        colorTextPlaceholder: placeholderColor || "#999999",
+        colorBackground: bgColor || "#ffffff",
+        borderRadius: "8px",
+        fontFamily: "Sohne, system-ui, sans-serif",
+        fontWeightNormal: "500",
+      },
+      rules: {
+        ".Input, .Block": {
+          backgroundColor: "transparent",
+          border: `1.5px solid ${primaryColor || "#00A0D5"}`,
+          color: textColor || "#000",
+        },
+      },
+    });
+  }, []);
+
+  if (!appearance) return null; // Espera a que cargue
+
   const options = {
-    clientSecret: clientSecret,
-    locale: language || "en", // Idioma que tú usas en tu store
+    clientSecret,
+    locale: language || "en",
     defaultValues: {
       email: user?.email || "",
     },
+    appearance,
   };
 
   return (
@@ -51,4 +54,10 @@ export default function StripeForm({ clientSecret }) {
       <CheckoutForm clientSecret={clientSecret} />
     </Elements>
   );
+}
+
+function getComputedCSSVar(name) {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
 }

@@ -4,15 +4,11 @@ import Cookies from "js-cookie";
 
 export default class StripeService {
   static resource = "payments/stripe";
-  static resourceAuth = "paymentsAuth/stripe";
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${StripeService.resource}`;
   }
-  static get authUrl() {
-    const { api } = useStore.getState().urls;
-    return `${api}${StripeService.resourceAuth}`;
-  }
+
   static getHeaders() {
     let access_token = Cookies.get("auth.access_token");
     return {
@@ -23,7 +19,7 @@ export default class StripeService {
   // Método existente para crear el PaymentIntent
   static async createPaymentIntent(params, auth = false) {
     if (auth) {
-      return axios.post(`${this.authUrl}/payment-intents`, params, {
+      return axios.post(`${this.baseUrl}/payment-intents`, params, {
         headers: this.getHeaders(),
       });
     } else {
@@ -36,7 +32,7 @@ export default class StripeService {
   // Nuevo método para manejar las transferencias
   static async handleTransfers(data, auth = false) {
     if (auth) {
-      return axios.post(`${this.authUrl}/transfer-payments`, data, {
+      return axios.post(`${this.baseUrl}/transfer-payments`, data, {
         headers: this.getHeaders(),
       });
     } else {

@@ -87,9 +87,12 @@ export default function SummaryPage() {
     if (service.typeService === "tour") {
       setAdults(selectedData.amountAdults);
       setChildren(selectedData.amountChildren);
-      const total =
-        selectedData.amountAdults * tourData.adultPrice[currency].value +
-        selectedData.amountChildren * tourData.childrenPrice[currency].value;
+      const total = service.selectedData.totalPrice;
+      // selectedData.amountAdults * tourData.adultPrice[currency].value +
+      // selectedData.amountChildren * tourData.childrenPrice[currency].value;
+      setTotal(total);
+    } else {
+      const total = service.selectedData.totalPrice;
       setTotal(total);
     }
   }, [service]);

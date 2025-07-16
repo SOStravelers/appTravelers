@@ -10,6 +10,8 @@ import {
 } from "@stripe/react-stripe-js";
 import StripeService from "@/services/StripeService";
 import SolidButton from "../buttons/SolidButton";
+import OutlinedButton from "../buttons/OutlinedButton";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
 import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
@@ -89,7 +91,7 @@ export default function CheckoutForm(clientSecret) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mb-2 mt-6 text-center  text-md">
+      <div className="mb-2 mt-6 text-center text-textColor  text-md">
         {languageData.billingDetails[language]}
       </div>
       <LinkAuthenticationElement />
@@ -98,11 +100,11 @@ export default function CheckoutForm(clientSecret) {
           mode: "shipping",
         }}
       /> */}{" "}
-      <div className="mt-4 text-center mb-2 text-md">
+      <div className="mt-4 text-center text-textColor  mb-2 text-md">
         {languageData.paymentMethod[language]}
       </div>
       <PaymentElement />
-      <SolidButton
+      {/* <SolidButton
         mt={5}
         text={
           isProcessing
@@ -116,8 +118,29 @@ export default function CheckoutForm(clientSecret) {
             : "null"
         }
         disabled={!stripe || isProcessing}
-      ></SolidButton>
-      <p className="mb-6 mt-4 text-center text-sm">
+      ></SolidButton> */}
+      <OutlinedButton
+        text={
+          isProcessing
+            ? "Processing..."
+            : currency == "brl"
+            ? languageData.bookNow[language] + " R$ " + price
+            : currency == "usd"
+            ? languageData.bookNow[language] + " USD " + price
+            : currency == "eur"
+            ? languageData.bookNow[language] + " " + price + " EUR"
+            : "null"
+        }
+        px={8}
+        py={3}
+        minWidth="140px"
+        margin="mt-4"
+        dark="darkLight"
+        textColor="text-white"
+        disabled={!stripe || isProcessing}
+        buttonCenter={true}
+      />
+      <p className="mb-6 mt-4 text-center text-textColorGray text-sm">
         {languageData.noStress[language]}
       </p>
     </form>

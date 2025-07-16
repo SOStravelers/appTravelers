@@ -71,14 +71,21 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
+
     const onSideScroll = () => {
       const { scrollLeft, scrollWidth, clientWidth } = el;
-      setShowLeftBlur(scrollLeft > 0);
-      setShowRightBlur(scrollLeft + clientWidth < scrollWidth);
+      const tolerance = 2;
+
+      setShowLeftBlur(scrollLeft > tolerance);
+      setShowRightBlur(
+        Math.ceil(scrollLeft + clientWidth) < scrollWidth - tolerance
+      );
     };
+
     el.addEventListener("scroll", onSideScroll);
     window.addEventListener("resize", onSideScroll);
     onSideScroll();
+
     return () => {
       el.removeEventListener("scroll", onSideScroll);
       window.removeEventListener("resize", onSideScroll);
@@ -232,10 +239,19 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
               ))}
           </div>
           {showLeftBlur && (
-            <div className="pointer-events-none absolute top-0 left-0 h-full w-10 bg-gradient-to-r from-backgroundP to-transparent" />
+            <div
+              className="pointer-events-none absolute inset-y-0 -left-[1px] w-12 z-10
+    bg-gradient-to-r from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent"
+              style={{ willChange: "transform" }}
+            />
           )}
+
           {showRightBlur && (
-            <div className="pointer-events-none absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-backgroundP to-transparent" />
+            <div
+              className="pointer-events-none absolute inset-y-0 -right-[1px] w-12 z-10
+    bg-gradient-to-l from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent"
+              style={{ willChange: "transform" }}
+            />
           )}
         </div>
 

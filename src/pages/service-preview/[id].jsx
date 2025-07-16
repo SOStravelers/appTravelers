@@ -48,6 +48,10 @@ export default function ServicePreviewPage() {
     document.title = "Preview Subservice | SOS Travelers";
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+  }, []);
+
   const openModal = () => {
     console.log("wena");
     setService(subService);
@@ -77,7 +81,10 @@ export default function ServicePreviewPage() {
   ];
 
   useEffect(() => {
-    if (subService.typeService == "tour") {
+    if (
+      subService.typeService == "tour" ||
+      subService.typeService == "product"
+    ) {
       setPrice(subService?.tourData?.adultPrice);
       setValidPrice(true);
     } else {

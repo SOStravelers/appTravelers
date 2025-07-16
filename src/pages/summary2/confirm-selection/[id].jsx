@@ -121,17 +121,20 @@ export default function SummaryPage() {
         </h1>
 
         {/* Contendio Tarjeta Summary */}
-        <CardSummaryService
-          statusExpanded={true}
-          modalOptions={true}
-          openModal={() => setModalOpen(true)}
-        />
 
-        <CardSummaryService2
-          statusExpanded={true}
-          modalOptions={true}
-          openModal={() => setModalOpen(true)}
-        />
+        {service.typeService === "tour" ? (
+          <CardSummaryService
+            statusExpanded={true}
+            modalOptions={true}
+            openModal={() => setModalOpen(true)}
+          />
+        ) : (
+          <CardSummaryService2
+            statusExpanded={true}
+            modalOptions={true}
+            openModal={() => setModalOpen(true)}
+          />
+        )}
       </div>
       {/* Modal de detalles  */}
       <TravellersDetailsModal

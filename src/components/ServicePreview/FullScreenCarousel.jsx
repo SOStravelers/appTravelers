@@ -11,7 +11,7 @@ export default function FullScreenCarousel({
   const [idx, setIdx] = useState(initialIndex);
   const [mounted, setMounted] = useState(false); // portal listo
 
-  /* crear nodo portal solo 1 vez */
+  // Crear nodo portal solo 1 vez
   useEffect(() => {
     const node = document.createElement("div");
     document.body.appendChild(node);
@@ -21,7 +21,7 @@ export default function FullScreenCarousel({
     };
   }, []);
 
-  /* navegación */
+  // Navegación
   const prev = useCallback(
     () => setIdx((i) => (i === 0 ? media.length - 1 : i - 1)),
     [media.length]
@@ -31,7 +31,7 @@ export default function FullScreenCarousel({
     [media.length]
   );
 
-  /* teclado + bloqueo scroll */
+  // Teclado + bloqueo scroll
   useEffect(() => {
     const key = (e) => {
       if (e.key === "Escape") onClose();
@@ -51,13 +51,13 @@ export default function FullScreenCarousel({
   if (!media.length || !mounted) return null; // aún no hay portal
   const current = media[idx];
 
-  /* --- contenido del lightbox --- */
+  // --- contenido del lightbox ---
   const lightbox = (
     <div
       className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/90"
-      onClick={onClose}
+      onClick={onClose} // <-- Clic fuera cierra
     >
-      {/* close */}
+      {/* Botón cerrar */}
       <button
         onClick={onClose}
         className="absolute top-4 right-4 text-white text-3xl z-10"
@@ -65,7 +65,7 @@ export default function FullScreenCarousel({
         &times;
       </button>
 
-      {/* arrows */}
+      {/* Flechas de navegación */}
       {media.length > 1 && (
         <>
           <button
@@ -91,10 +91,10 @@ export default function FullScreenCarousel({
         </>
       )}
 
-      {/* media */}
+      {/* Imagen o video */}
       <div
-        className="w-screen h-screen flex items-center justify-center"
-        onClick={(e) => e.stopPropagation()}
+        className="max-w-[95vw] max-h-[95vh] flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()} // <-- clic dentro NO cierra
       >
         {current.type === "video" ? (
           <video
@@ -114,6 +114,6 @@ export default function FullScreenCarousel({
     </div>
   );
 
-  /* --- render en portal --- */
+  // --- render en portal ---
   return createPortal(lightbox, mounted);
 }

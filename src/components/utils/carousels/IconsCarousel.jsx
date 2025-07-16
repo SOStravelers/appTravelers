@@ -232,10 +232,10 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
               ))}
           </div>
           {showLeftBlur && (
-            <div className="pointer-events-none absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-backgroundS to-transparent" />
+            <div className="pointer-events-none absolute top-0 left-0 h-full w-10 bg-gradient-to-r from-backgroundP to-transparent" />
           )}
           {showRightBlur && (
-            <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-backgroundS to-transparent" />
+            <div className="pointer-events-none absolute top-0 right-0 h-full w-10 bg-gradient-to-l from-backgroundP to-transparent" />
           )}
         </div>
 

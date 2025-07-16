@@ -26,7 +26,10 @@ export default function Stripe() {
     //   return priceObject.finalCost;
     // }
 
-    if (service.typeService == "tour" && service.selectedData) {
+    if (
+      (service.typeService == "tour" || service.typeService == "product") &&
+      service.selectedData
+    ) {
       return service.selectedData.totalPrice;
     } else {
       throw new Error("Datos insuficientes para crear el pago.");

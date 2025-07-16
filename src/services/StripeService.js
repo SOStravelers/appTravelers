@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useStore } from "../store/index";
 import Cookies from "js-cookie";
-
+let access_token = Cookies.get("auth.access_token");
 export default class StripeService {
   static resource = "payments/stripe";
   static get baseUrl() {
@@ -10,7 +10,6 @@ export default class StripeService {
   }
 
   static getHeaders() {
-    let access_token = Cookies.get("auth.access_token");
     return {
       Authorization: access_token ? access_token : {},
     };
@@ -18,12 +17,13 @@ export default class StripeService {
 
   // Método existente para crear el PaymentIntent
   static async createPaymentIntent(params, auth = false) {
-    if (auth) {
+    console.log("wena", access_token);
+    if (access_token) {
       return axios.post(`${this.baseUrl}/payment-intents`, params, {
         headers: this.getHeaders(),
       });
     } else {
-      return axios.post(`${this.baseUrl}/payment-intents`, params, {
+      return axios.post(`${this.baseUrl}/noAuth/payment-intents`, params, {
         headers: this.getHeaders(),
       });
     }

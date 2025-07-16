@@ -64,7 +64,10 @@ export default function CheckoutForm(clientSecret) {
     getFinalCost();
   }, []);
   function getFinalCost() {
-    if (service.typeService == "tour" && service.selectedData) {
+    if (
+      (service.typeService == "tour" || service.typeService == "product") &&
+      service.selectedData
+    ) {
       if (service.canCancel) {
         const hasCancel = isBeforeHoursThreshold(
           service.startTime.isoTime,

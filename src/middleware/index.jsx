@@ -51,9 +51,9 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     const result = await fp.get();
 
     // Guardar visitorId
-    if (result.visitorId != null) {
-      PartnerService.sentIdClient(result.visitorId, partner);
-    }
+    // if (result.visitorId != null) {
+    //   PartnerService.sentIdClient(result.visitorId, partner);
+    // }
 
     if (typeof window !== "undefined") {
       //cambio lenguage∂

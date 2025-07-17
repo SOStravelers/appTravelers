@@ -6,6 +6,7 @@ import { useStore } from "@/store";
 import { formatTime } from "@/lib/time";
 import { useRouter } from "next/router";
 import FavoriteService from "@/services/FavoriteService";
+import { formatPrice } from "@/utils/format";
 import FloatingFavoriteToast from "@/components/utils/modal/FloatingFavoriteToast";
 const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
   const store = useStore();
@@ -19,6 +20,7 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
     duration,
     isFavorite,
     isPopular,
+    refPrice,
     tourData,
     typeService,
   } = service || {};
@@ -26,9 +28,9 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
   const [stateTextFavorite, setStateTextFavorite] = useState("");
   const [isFavorited, setIsFavorited] = useState(isFavorite || false);
   const [price, setPrice] = useState({
-    eur: { value: null, formated: "- €" },
-    usd: { value: null, formated: "- USD" },
-    brl: { value: null, formated: "R$ -" },
+    eur: "- €",
+    usd: "- USD",
+    brl: "R$ -",
   });
 
   if (!service) return null;
@@ -38,15 +40,8 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
   const gridItems = [0, 1, 2, 3].map((i) => images[i] || null);
 
   useEffect(() => {
-    if (typeService == "tour") {
-      setPrice(tourData.adultPrice);
-    } else {
-      setPrice({
-        eur: { value: null, formated: "- €" },
-        usd: { value: null, formated: "- USD" },
-        brl: { value: null, formated: "R$ -" },
-      });
-    }
+    console.log("wena", refPrice, "chao", service.refPrice, "pelao", service);
+    refPrice ? setPrice(refPrice) : null;
   }, [currency]);
 
   const handleLike = async () => {
@@ -130,7 +125,7 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
           <div className="flex justify-between items-center">
             <span className="text-xs font-medium text-textColor">
               {languageData.card.textPrice1[language]}{" "}
-              {price[currency]?.formated || price["brl"].formated}
+              {formatPrice(price[currency], currency)}
             </span>
 
             <div className="flex items-center">

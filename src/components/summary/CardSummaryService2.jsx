@@ -10,21 +10,15 @@ import {
   isBeforeHoursThreshold,
 } from "@/utils/format";
 import languageData from "@/language/newSummary.json";
-import ItemService from "@/services/ItemService";
+import SubserviceService from "@/services/SubserviceService";
 
 export default function CardSummaryService({ statusExpanded }) {
-  /* ---------------------------------------------------------------- *\
-     STORE / ROUTER
-  \* ---------------------------------------------------------------- */
   const router = useRouter();
   const id = router?.query?.id;
   const { service, setService, language, currency } = useStore();
   const { imgUrl, name, startTime, duration, canCancel, timeUntilCancel } =
     service;
 
-  /* ---------------------------------------------------------------- *\
-     LOCAL UI STATE
-  \* ---------------------------------------------------------------- */
   const thisLanguage = languageData.confirmSelection;
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
@@ -32,32 +26,62 @@ export default function CardSummaryService({ statusExpanded }) {
   const [startDate, setStartDate] = useState({});
   const [endDate, setEndDate] = useState({});
   const [openImage, setOpenImage] = useState(null);
-
-  /* items & user selections */
   const [sections, setSections] = useState([]);
-  const [selections, setSelections] = useState({}); // key = `${sIdx}-${pIdx}` → qty OR 1
-  const [selectedInSelect, setSelectedInSelect] = useState({}); // key = sIdx → pIdx
+  const [selections, setSelections] = useState({});
+  const [selectedInSelect, setSelectedInSelect] = useState({});
 
-  /* ---------------------------------------------------------------- *\
-     FETCH AVAILABLE ITEMS
-  \* ---------------------------------------------------------------- */
   useEffect(() => {
     (async () => {
       try {
-        const res = await ItemService.getItemsBySubservice(
+        const res = await SubserviceService.getItemsBySubservice(
           id,
           "2025-07-14T15:00:00-03:00"
         );
-        setSections(res.data || []);
+        const sectionsFromBackend = res.data || [];
+        setSections(sectionsFromBackend);
+
+        // RECONSTRUIR SELECCIONES SI YA EXISTÍAN
+        if (service?.selectedData?.length) {
+          const newSelections = {};
+          const newSelectedInSelect = {};
+
+          sectionsFromBackend.forEach((section, sIdx) => {
+            const storedSection = service.selectedData.find(
+              (s) => s.sectionId === section.category._id
+            );
+            console.log("wena", storedSection);
+            if (!storedSection) return;
+            console.log("avanza");
+            section.products.forEach((product, pIdx) => {
+              const storedProduct = storedSection.products.find(
+                (p) => p.productId === product._id
+              );
+              console.log("hay product", storedProduct);
+              if (!storedProduct) return;
+              console.log("avanza2");
+              const key = `${sIdx}-${pIdx}`;
+              if (section.category.type === "select") {
+                newSelectedInSelect[sIdx] = pIdx;
+                newSelections[key] = product.hasQuantity
+                  ? storedProduct.qty
+                  : 1;
+              } else if (section.category.type === "free") {
+                newSelections[key] = product.hasQuantity
+                  ? storedProduct.qty
+                  : 1;
+              }
+            });
+          });
+
+          setSelections(newSelections);
+          setSelectedInSelect(newSelectedInSelect);
+        }
       } catch (err) {
         console.error(err);
       }
     })();
   }, [id, startTime?.isoTime]);
 
-  /* ---------------------------------------------------------------- *\
-     HOUSEKEEPING
-  \* ---------------------------------------------------------------- */
   useEffect(() => {
     setLoading(true);
     return delay(() => setLoading(false));
@@ -81,20 +105,16 @@ export default function CardSummaryService({ statusExpanded }) {
     );
   }, [startTime, duration, language]);
 
-  /* ---------------------------------------------------------------- *\
-     TOTAL PRICE  (memoised so it recalculates only on deps change)
-  \* ---------------------------------------------------------------- */
   const totalPrice = useMemo(() => {
     return sections.reduce((t, section, sIdx) => {
       return (
         t +
         section.products.reduce((sub, product, pIdx) => {
           if (!product.isActive) return sub;
-
           const key = `${sIdx}-${pIdx}`;
           const price = product.price?.[currency] || 0;
 
-          if (section.type === "select") {
+          if (section.category?.type === "select") {
             if (selectedInSelect[sIdx] === pIdx) {
               return (
                 sub +
@@ -104,7 +124,6 @@ export default function CardSummaryService({ statusExpanded }) {
             return sub;
           }
 
-          // free
           if (product.hasQuantity) {
             return sub + (selections[key] || 0) * price;
           }
@@ -114,23 +133,19 @@ export default function CardSummaryService({ statusExpanded }) {
     }, 0);
   }, [sections, selections, selectedInSelect, currency]);
 
-  /* ---------------------------------------------------------------- *\
-     PERSIST CHOICES INTO THE STORE  ➜  service.selectedData + totalPrice
-  \* ---------------------------------------------------------------- */
   useEffect(() => {
-    // build selectedData in the exact shape you need
     const selectedData = sections.reduce((acc, section, sIdx) => {
       const sel = [];
 
       section.products.forEach((product, pIdx) => {
         if (!product.isActive) return;
         const key = `${sIdx}-${pIdx}`;
+        const sectionType = section.category?.type;
 
-        // item chosen in “select”
-        if (section.type === "select") {
+        if (sectionType === "select") {
           if (selectedInSelect[sIdx] !== pIdx) return;
           sel.push({
-            sectionId: section._id,
+            sectionId: section.category?._id,
             productId: product._id,
             name: product.name,
             qty: product.hasQuantity ? selections[key] || 0 : 1,
@@ -139,8 +154,7 @@ export default function CardSummaryService({ statusExpanded }) {
           return;
         }
 
-        // toggled items in “free”
-        if (section.type === "free") {
+        if (sectionType === "free") {
           const qty = product.hasQuantity
             ? selections[key] || 0
             : selections[key]
@@ -148,7 +162,7 @@ export default function CardSummaryService({ statusExpanded }) {
             : 0;
           if (qty) {
             sel.push({
-              sectionId: section._id,
+              sectionId: section.category?._id,
               productId: product._id,
               name: product.name,
               qty,
@@ -160,41 +174,29 @@ export default function CardSummaryService({ statusExpanded }) {
 
       if (sel.length) {
         acc.push({
-          sectionId: section._id,
-          title: section.title,
+          sectionId: section.category?._id,
+          title: section.category?.title,
           products: sel,
         });
       }
       return acc;
     }, []);
-    console.log("a cambiar", totalPrice, selectedData);
     selectedData.totalPrice = totalPrice;
-    setService({
-      ...service,
-      selectedData,
-    });
+    setService({ ...service, selectedData });
   }, [sections, selections, selectedInSelect, totalPrice, setService]);
 
-  /* ---------------------------------------------------------------- *\
-     INTERNAL HELPERS
-  \* ---------------------------------------------------------------- */
-  const toggleFreeSelection = (sIdx, pIdx, hasQty) => {
+  const toggleFreeSelection = (sIdx, pIdx) => {
     const key = `${sIdx}-${pIdx}`;
     setSelections((prev) => {
       const current = prev[key] || 0;
-      const next = hasQty ? (current > 0 ? 0 : 1) : current ? 0 : 1;
+      const next = current ? 0 : 1;
       return { ...prev, [key]: next };
     });
   };
 
-  /* ---------------------------------------------------------------- *\
-     RENDER
-  \* ---------------------------------------------------------------- */
   return (
     <>
-      {/* ------------ CARD CONTAINER ------------ */}
       <div className="bg-backgroundCard rounded-xl mt-2 mb-32 shadow w-full max-w-xl overflow-hidden">
-        {/* HEADER */}
         <div
           className="flex items-center justify-between mt-2 p-3 cursor-pointer"
           onClick={() => setExpanded(!expanded)}
@@ -217,15 +219,12 @@ export default function CardSummaryService({ statusExpanded }) {
           </div>
         </div>
 
-        {/* BODY (collapsible) */}
         <div
           className={`px-4 pb-4 transition-max-h duration-300 overflow-hidden ${
             expanded ? "max-h-screen" : "max-h-0"
           }`}
         >
           <hr className="my-2" />
-
-          {/* DATE */}
           <div className="mb-4">
             <p className="font-semibold text-textColor text-sm mb-1">
               {thisLanguage.sections.date.title[language]}
@@ -238,17 +237,16 @@ export default function CardSummaryService({ statusExpanded }) {
             </p>
           </div>
 
-          {/* SECTIONS + PRODUCTS */}
           {sections.map((section, sIdx) => (
             <div key={sIdx} className="space-y-3 mb-6">
               <p className="font-semibold text-textColor text-sm">
-                {section.title[language]}
+                {section.category?.title?.[language]}
               </p>
 
               {section.products.map((product, pIdx) => {
                 const key = `${sIdx}-${pIdx}`;
                 const isSelected =
-                  section.type === "select"
+                  section.category?.type === "select"
                     ? selectedInSelect[sIdx] === pIdx
                     : selections[key] > 0;
 
@@ -258,12 +256,9 @@ export default function CardSummaryService({ statusExpanded }) {
                     onClick={() => {
                       if (!product.isActive) return;
 
-                      /* ----------------------  “SELECT”  -------------------- */
-                      if (section.type === "select") {
+                      if (section.category?.type === "select") {
                         const same = selectedInSelect[sIdx] === pIdx;
-
                         if (same) {
-                          // unselect
                           setSelectedInSelect((prev) => {
                             const v = { ...prev };
                             delete v[sIdx];
@@ -275,7 +270,6 @@ export default function CardSummaryService({ statusExpanded }) {
                             return v;
                           });
                         } else {
-                          // select new
                           setSelectedInSelect((prev) => ({
                             ...prev,
                             [sIdx]: pIdx,
@@ -287,9 +281,11 @@ export default function CardSummaryService({ statusExpanded }) {
                         }
                       }
 
-                      /* -----------------------  “FREE”  ---------------------- */
-                      if (section.type === "free" && !product.hasQuantity) {
-                        toggleFreeSelection(sIdx, pIdx, false);
+                      if (
+                        section.category?.type === "free" &&
+                        !product.hasQuantity
+                      ) {
+                        toggleFreeSelection(sIdx, pIdx);
                       }
                     }}
                     className={`flex items-center border rounded-lg p-1 transition mb-4 ${
@@ -300,7 +296,6 @@ export default function CardSummaryService({ statusExpanded }) {
                         : "border-gray-300 hover:border-gray-400"
                     }`}
                   >
-                    {/* image */}
                     <img
                       src={product.imgUrl}
                       alt={product.name}
@@ -311,17 +306,15 @@ export default function CardSummaryService({ statusExpanded }) {
                       className="w-12 h-12 object-cover rounded-lg mr-3 cursor-zoom-in"
                     />
 
-                    {/* description */}
                     <div className="flex flex-col flex-1">
                       <span className="text-sm text-textColor font-medium">
                         {product.name}
                       </span>
                       <span className="text-xs text-textColorGray">
-                        {formatPrice(product.price[currency], currency)}
+                        {formatPrice(product.price?.[currency], currency)}
                       </span>
                     </div>
 
-                    {/* quantity counter */}
                     {product.hasQuantity && isSelected && (
                       <div className="flex items-center space-x-2">
                         <button
@@ -359,7 +352,6 @@ export default function CardSummaryService({ statusExpanded }) {
             </div>
           ))}
 
-          {/* TOTAL */}
           <div className="flex justify-between items-center mt-2">
             <p className="font-semibold text-textColor text-sm">
               {thisLanguage.sections.totalPrice.title[language]}
@@ -371,7 +363,6 @@ export default function CardSummaryService({ statusExpanded }) {
         </div>
       </div>
 
-      {/* FULL‑SCREEN IMAGE VIEWER */}
       {openImage && (
         <ImageFullScreenViewer
           src={openImage}

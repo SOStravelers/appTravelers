@@ -15,6 +15,7 @@ import RecomendationCarousel from "@/components/utils/carousels/RecomendationCar
 import languageData from "@/language/subServices.json";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import FloatingFavoriteToast from "@/components/utils/modal/FloatingFavoriteToast";
+import { formatPrice } from "@/utils/format";
 import { useStore } from "@/store";
 import {
   delay,
@@ -38,9 +39,9 @@ export default function ServicePreviewPage() {
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [price, setPrice] = useState({
-    eur: { value: null, formated: "- €" },
-    usd: { value: null, formated: "- USD" },
-    brl: { value: null, formated: "R$ -" },
+    eur: "- €",
+    usd: "- USD",
+    brl: "R$ -",
   });
   const [validPrice, setValidPrice] = useState(false);
 
@@ -81,18 +82,10 @@ export default function ServicePreviewPage() {
   ];
 
   useEffect(() => {
-    if (
-      subService.typeService == "tour" ||
-      subService.typeService == "product"
-    ) {
-      setPrice(subService?.tourData?.adultPrice);
+    if (subService.refPrice) {
+      setPrice(subService.refPrice);
       setValidPrice(true);
     } else {
-      setPrice({
-        eur: { value: null, formated: "- €" },
-        usd: { value: null, formated: "- USD" },
-        brl: { value: null, formated: "R$ -" },
-      });
       setValidPrice(false);
     }
   }, [subService, currency]);
@@ -186,14 +179,14 @@ export default function ServicePreviewPage() {
         </div>
       </div>
       <BookingPopup
-        priceLabel={`${languageData.bookingButton.title[language]} ${
-          price[currency].formated || price["brl"].formated
-        }`}
+        priceLabel={`${
+          languageData.bookingButton.title[language]
+        } ${formatPrice(price[currency], currency)}`}
         subtext={languageData.bookingButton.subtitle[language]}
         tagLine={languageData.bookingButton.cancel[language]}
         buttonText={languageData.bookingButton.goDates[language]}
         onAction={() => openModal(true)} // <-- abre el modal
-        isDisabled={validPrice && price[currency].value > 0 ? false : true}
+        isDisabled={validPrice && price[currency] > 0 ? false : true}
       />
       <ModalReservationWrapper
         isOpen={openReservation}

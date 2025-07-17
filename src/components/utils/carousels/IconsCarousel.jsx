@@ -8,6 +8,7 @@ import * as GiIcons from "react-icons/gi";
 import * as MdIcons from "react-icons/md";
 import * as AiIcons from "react-icons/ai";
 import { FiMapPin } from "react-icons/fi";
+
 const Icons = {
   ...FaIcons,
   ...GiIcons,
@@ -34,40 +35,28 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
   const navRef = useRef(null);
   const scrollRef = useRef(null);
 
-  // Fetch services once
   useEffect(() => {
-    // ‼️  Si el store ya tiene datos, no hagas nada
     if (servicesIndexList.length > 0) return;
 
     ServiceService.list({ isActive: true, page: 1 })
       .then((res) => setServicesIndexList(res.data.docs))
       .catch(console.error);
-
-    // 👉  Dependencias:
-    //     — `services.length`  para que sólo vuelva a disparar
-    //       si se vacía explícitamente desde otro sitio.
   }, [servicesIndexList.length, setServicesIndexList]);
 
-  // Sticky shadow threshold (accounting for parent top-[58px])
   useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;
-
     const threshold = stickypoint;
-    // -- Si tu top-bar fija mide 58 px y quieres activar justo cuando el nav
-    //    se “pegue” debajo de ella, resta sólo esos 58:
-    // const threshold = nav.getBoundingClientRect().top + window.scrollY - 58;
 
     const onScroll = () => {
       setIsSticky(window.scrollY >= threshold);
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
 
-    onScroll(); // calcula una vez al montar con el valor correcto
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, [stickypoint]);
 
-  // Side‐blurs for horizontal scroll
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
@@ -100,10 +89,14 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
   };
 
   const handleViewMore = () => {
-    // if (onViewMoreClick) onViewMoreClick();
-    // else router.push(viewMoreLink);
     setIndexService(null);
-    const updated = { keyword: null, maxPrice: 0, minPrice: 0, service: null };
+    const updated = {
+      keyword: null,
+      maxPrice: 0,
+      minPrice: 0,
+      service: null,
+      currency: null,
+    };
     setFilters(updated);
     onFilterChange(updated);
   };
@@ -117,8 +110,11 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
   const { keyword, minPrice, maxPrice, service } = filters;
   const chips = [];
 
-  if (minPrice > 0 && maxPrice > 0) {
-    const updated = { ...filters, minPrice: 0, maxPrice: 0 };
+  const hasMin = minPrice > 0;
+  const hasMax = maxPrice > 0;
+
+  if (hasMin && hasMax) {
+    const updated = { ...filters, minPrice: 0, maxPrice: 0, currency: null };
     chips.push({
       key: "priceRange",
       label: `$${minPrice} - $${maxPrice}`,
@@ -128,8 +124,12 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
       },
     });
   } else {
-    if (minPrice > 0) {
-      const updated = { ...filters, minPrice: 0 };
+    if (hasMin) {
+      const updated = {
+        ...filters,
+        minPrice: 0,
+        ...(hasMax ? {} : { currency: null }),
+      };
       chips.push({
         key: "minPrice",
         label: `Above $${minPrice}`,
@@ -139,8 +139,12 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
         },
       });
     }
-    if (maxPrice > 0) {
-      const updated = { ...filters, maxPrice: 0 };
+    if (hasMax) {
+      const updated = {
+        ...filters,
+        maxPrice: 0,
+        ...(hasMin ? {} : { currency: null }),
+      };
       chips.push({
         key: "maxPrice",
         label: `$${maxPrice} and below`,
@@ -163,28 +167,24 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
       },
     });
   }
-  //minicambio
+
   return (
     <nav
       ref={navRef}
-      className={`w-full sticky top-0 z-20 bg-backgroundP  transition-shadow duration-200
-    ${
-      isSticky
-        ? "shadow-lg dark:shadow-darkNav border-b border-gray-200 dark:border-gray-800"
-        : ""
-    }
-  `}
+      className={`w-full sticky top-0 z-20 bg-backgroundP transition-shadow duration-200 ${
+        isSticky
+          ? "shadow-lg dark:shadow-darkNav border-b border-gray-200 dark:border-gray-800"
+          : ""
+      }`}
     >
-      <div className="min-h-[80px] ">
-        {/* Header */}
-        <div className="flex items-center justify-between px-4 md:justify-start  pt-2 pb-3 ">
+      <div className="min-h-[80px]">
+        <div className="flex items-center justify-between px-4 md:justify-start pt-2 pb-3">
           <div className="flex items-center md:mt-4">
             <h2 className="text-md font-semibold text-textColor">
               {languageData.index.explore[language]}
             </h2>
             <span className="ml-3 mr-1 text-sm text-textColor">RJ</span>
-
-            <button className="flex items-center  justify-center  ">
+            <button className="flex items-center justify-center">
               <FiMapPin className="text-textColor" size={14} />
             </button>
           </div>
@@ -204,11 +204,10 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
           </div>
         </div>
 
-        {/* Services carousel */}
         <div className="relative mx-4">
           <div
             ref={scrollRef}
-            className="overflow-x-auto whitespace-nowrap pb-1 "
+            className="overflow-x-auto whitespace-nowrap pb-1"
           >
             {Array.isArray(servicesIndexList) &&
               servicesIndexList.map((service, idx) => (
@@ -238,24 +237,15 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
                 </button>
               ))}
           </div>
-          {showLeftBlur && (
-            <div
-              className="pointer-events-none absolute inset-y-0 -left-[1px] w-12 z-10
-    bg-gradient-to-r from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent"
-              style={{ willChange: "transform" }}
-            />
-          )}
 
+          {showLeftBlur && (
+            <div className="pointer-events-none absolute inset-y-0 -left-[1px] w-12 z-10 bg-gradient-to-r from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent" />
+          )}
           {showRightBlur && (
-            <div
-              className="pointer-events-none absolute inset-y-0 -right-[1px] w-12 z-10
-    bg-gradient-to-l from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent"
-              style={{ willChange: "transform" }}
-            />
+            <div className="pointer-events-none absolute inset-y-0 -right-[1px] w-12 z-10 bg-gradient-to-l from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent" />
           )}
         </div>
 
-        {/* Filter chips */}
         {chips.length > 0 && (
           <div className="flex flex-wrap gap-2 px-4 py-2">
             {chips.map(({ key, label, onClear }) => (

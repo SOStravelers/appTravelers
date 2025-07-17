@@ -107,4 +107,20 @@ export default class SubserviceService {
       `${this.baseUrl}/data/byWorker/?user=${data.user}&subservice=${data.subservice}&onlySubservice=${onlySubservice}`
     );
   }
+
+  static async getItemsBySubservice(id, date) {
+    try {
+      if (!id) throw new Error("missing id");
+      const params = new URLSearchParams();
+      params.append("id", id);
+      if (date) params.append("date", date);
+      console.log("params", params.toString());
+      const url = `${this.baseUrl}/getProducts?${params.toString()}`;
+      return axios.get(url, {
+        headers: this.getHeaders(),
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }

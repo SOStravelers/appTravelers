@@ -459,6 +459,8 @@ export const sumarMinutosAISO = (isoString, minutos = 0) => {
 };
 
 export const formatPrice = (price, currency) => {
+  typeof price !== "number" && (price = "-");
+
   if (currency == "eur") {
     return price + " € EUR";
   } else if (currency == "usd") {

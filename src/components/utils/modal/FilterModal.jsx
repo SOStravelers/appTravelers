@@ -13,7 +13,7 @@ import InputText from "@/components/utils/inputs/InputText";
  *  • “0” se usa como *placeholder*; si el usuario escribe 0 se trata como nulo
  */
 export default function FilterModal({ isOpen, onClose, onApply }) {
-  const { filters, setFilters, language } = useStore();
+  const { filters, setFilters, language, currency } = useStore();
 
   /* estado de inputs */
   const [keyword, setKeyword] = useState("");
@@ -90,13 +90,24 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
     if (errKeyword || errMax) return;
 
     const toNum = (v) => (v === "" || Number(v) === 0 ? null : Number(v)); // 0 ≈ null
+    const min = toNum(minPrice);
+    const max = toNum(maxPrice);
 
-    setFilters({
+    const newFilters = {
       ...filters,
       keyword: keyword.trim(),
-      minPrice: toNum(minPrice),
-      maxPrice: toNum(maxPrice),
-    });
+      minPrice: min,
+      maxPrice: max,
+    };
+
+    // Solo incluir currency si alguno de los dos tiene valor numérico válido
+    if (min != null || max != null) {
+      newFilters.currency = currency;
+    } else {
+      delete newFilters.currency;
+    }
+
+    setFilters(newFilters);
     onApply();
     onClose();
   };

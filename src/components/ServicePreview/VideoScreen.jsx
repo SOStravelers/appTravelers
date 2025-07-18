@@ -24,16 +24,22 @@ export default function VideoScreen({
   const [liked, setLiked] = useState(false);
   //buena
   /* cambia src + autoplay cuando llega otro vídeo */
+  // SOLO cuando cambia el video
   useEffect(() => {
     const v = videoRef.current;
     if (!v || !currentVideo) return;
     v.pause();
     v.src = currentVideo;
     v.load();
-    v.muted = isMuted;
     v.play().catch(() => {});
-  }, [currentVideo, isMuted]);
+  }, [currentVideo]);
 
+  // SOLO cuando cambia mute
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = isMuted;
+  }, [isMuted]);
   /* sync play/pause estado local */
   useEffect(() => {
     const v = videoRef.current;

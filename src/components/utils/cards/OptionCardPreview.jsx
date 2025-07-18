@@ -1,41 +1,44 @@
-import { MdEmail } from "react-icons/md";
+import * as MdIcons from "react-icons/md";
+import { MdHelpOutline } from "react-icons/md"; // fallback si no existe el icono
 
 function OptionCardPreview({
   title,
   subtitle,
   description,
   subDescription,
-  icon: Icon,
-  check = false,
+  iconName, // nombre del icono como string para el subtitle
   ...props
 }) {
+  // Obtener el ícono dinámicamente desde react-icons/md
+  const Icon = iconName && MdIcons[iconName] ? MdIcons[iconName] : null;
+
   return (
     <div
-      className="flex w-full items-center my-2 p-3 bg-backgroundCard rounded-xl border border-textColorGray dark:border-none cursor-pointer"
+      className="flex w-full items-start my-2 py-2 px-4 bg-backgroundCard rounded-xl border border-textColorGray dark:border-none cursor-pointer"
       {...props}
     >
-      {Icon && (
-        <div className="h-10 w-10 mr-2 rounded-full border border-textColorGray dark:border-none flex justify-center items-center">
-          <Icon className="text-textColor text-xl" />
-        </div>
-      )}
-      <div>
-        <h1 className="text-textColor text-xxs ">{title}</h1>
-        <h2 className="text-textColor mt-1 text-md font-semibold">
-          {subtitle}
-        </h2>
-        <p className="text-textColor mt-1  text-xs font-semibold">
-          {description}
-        </p>
-        <p className="text-textColor  text-xs font-semibold">
-          {subDescription}
-        </p>
+      <div className="flex flex-col flex-1">
+        <h1 className="text-textColor text-xxs font-medium">{title}</h1>
+
+        {(subtitle || Icon) && (
+          <div className="flex items-center gap-2 mt-1">
+            {Icon && <Icon className="text-textColor text-xl" />}
+            <h2 className="text-textColor text-md font-semibold">{subtitle}</h2>
+          </div>
+        )}
+
+        {description && (
+          <p className="text-textColor mt-1 text-xs font-semibold">
+            {description}
+          </p>
+        )}
+
+        {subDescription && (
+          <p className="text-textColor text-sm font-semibold">
+            {subDescription}
+          </p>
+        )}
       </div>
-      {check && (
-        <div className="ml-auto">
-          <CheckIcon />
-        </div>
-      )}
     </div>
   );
 }

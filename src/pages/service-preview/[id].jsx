@@ -181,8 +181,9 @@ export default function ServicePreviewPage() {
                   <OptionCardPreview
                     title="Proximo evento"
                     subtitle={subService?.eventData?.name[language]}
-                    description={dataEvent?.data}
-                    subDescription={dataEvent?.stringData}
+                    description={dataEvent?.formatedDate}
+                    subDescription={dataEvent?.formatedTime}
+                    iconName="MdEvent"
                   />
                 )}
               <ServiceInfo service={subService} />

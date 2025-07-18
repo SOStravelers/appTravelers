@@ -124,7 +124,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       return;
     }
     let route = router.pathname;
-    if (route == "/login") {
+    if (route == "/login" || route == "/register") {
       if (
         (!user || Object.keys(user).length == 0) &&
         !cookieAccessToken &&

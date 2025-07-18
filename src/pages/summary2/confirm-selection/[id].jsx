@@ -17,6 +17,7 @@ import {
 import TravellersDetailsModal from "@/components/utils/modal/TravellersDetailsModal";
 import languageData from "@/language/newSummary.json";
 import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
+import Cookies from "js-cookie";
 
 export default function SummaryPage() {
   const router = useRouter();
@@ -46,6 +47,8 @@ export default function SummaryPage() {
 
   useEffect(() => {
     setLoading(true);
+    const isoTime = new Date().toISOString();
+    Cookies.set("newDate", isoTime);
     return delay(() => setLoading(false));
   }, []);
 
@@ -101,14 +104,8 @@ export default function SummaryPage() {
     if (service.typeService === "tour") {
       setAdults(selectedData.amountAdults);
       setChildren(selectedData.amountChildren);
-      const total = service.selectedData.totalPrice;
-      // selectedData.amountAdults * tourData.adultPrice[currency].value +
-      // selectedData.amountChildren * tourData.childrenPrice[currency].value;
-      setTotal(total);
-    } else {
-      const total = service?.selectedData?.totalPrice || 0;
-      setTotal(total);
     }
+    setTotal(service.totalPrice);
   }, [service]);
 
   function interpolate(str, vars) {
@@ -119,10 +116,14 @@ export default function SummaryPage() {
   }
 
   const setPrice = () => {
-    setService({ ...service, total: 10 });
+    setService({
+      ...service,
+      selectedData: selectedData,
+      totalPrice: total,
+    });
+
     router.push(`/summary2/contact-info/${id}`);
   };
-
   return (
     <>
       <div

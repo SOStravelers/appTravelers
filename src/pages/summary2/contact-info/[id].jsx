@@ -87,6 +87,8 @@ export default function ContactInfoPage() {
     } else setErrPhone(null);
 
     if (valid) {
+      localStorage.setItem("fromContactInfo", "true");
+
       setService({
         ...service,
         clientData: { name, email, country, phone, phoneCode },
@@ -261,7 +263,7 @@ export default function ContactInfoPage() {
       {/* Botón */}
       <BookingPopup
         priceLabel={`${thisLanguage.value[language]} ${formatPrice(
-          service?.selectedData?.totalPrice || null,
+          service?.totalPrice || null,
           currency
         )} `}
         subtext={""}

@@ -57,7 +57,7 @@ export const useStore = create(
               localStorage.setItem("service", JSON.stringify(data));
               return data;
             },
-            false,
+            false, //--> borra todo el estado anterior
             "setService"
           ),
         setLoadingCarrouselVideos: (loadingCarrouselVideos) =>

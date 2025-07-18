@@ -186,6 +186,7 @@ function Calendar({ id }) {
         totalChildren: totalC,
         totalPrice: total,
       },
+      totalPrice: total,
     });
 
     router.push(`/summary2/confirm-selection/${id}`);

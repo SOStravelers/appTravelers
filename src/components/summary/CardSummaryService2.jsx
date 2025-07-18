@@ -187,8 +187,8 @@ export default function CardSummaryService({ statusExpanded }) {
       }
       return acc;
     }, []);
-    selectedData.totalPrice = totalPrice;
-    setService({ ...service, selectedData });
+    selectedData["totalPrice"] = totalPrice;
+    setService({ ...service, selectedData, totalPrice: totalPrice });
   }, [sections, selections, selectedInSelect, totalPrice, setService]);
 
   const toggleFreeSelection = (sIdx, pIdx) => {

@@ -58,6 +58,8 @@ export default function ServicePreviewPage() {
     } else {
       setService({
         ...service,
+        selectedData: {},
+        totalPrice: price[currency],
         startTime: {
           isoTime: dataEvent.isoTime,
           formatedDate: dataEvent.formatedDate,
@@ -71,6 +73,7 @@ export default function ServicePreviewPage() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
+    setService({});
     SubserviceService.getById(id)
       .then(({ data }) => {
         if (data && typeof data === "object") {

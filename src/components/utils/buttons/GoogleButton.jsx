@@ -1,34 +1,38 @@
 import React from "react";
-import { useStore } from "/src/store/index";
-import clsx from "clsx";
+import { useStore } from "@/store"; // ajustado correctamente
 import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { GoogleIcon } from "@/constants/icons";
+import { signIn } from "next-auth/react";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { FcGoogle } from "react-icons/fc";
 
 function GoogleButton({ dark = "darkHeavy" }) {
   const router = useRouter();
+  const currentPath = router.pathname;
+
   const login = async () => {
-    const { front } = useStore.getState().urls;
-    const result = await signIn("google", {
-      callbackUrl: window.location.href,
-    });
-    // Puedes manejar el resultado de la autenticación aquí
-    if (result && result.error) {
-      console.error("Error al iniciar sesión:", result.error);
+    try {
+      const result = await signIn("google", {
+        redirect: false, // manejamos el redirect manualmente
+      });
+
+      if (result?.ok) {
+        // Si viene de login o register → ir a "/"
+        if (["/login", "/register", "/guest-settings"].includes(currentPath)) {
+          router.push("/");
+        } else {
+          router.push(currentPath); // volver a donde estaba
+        }
+      } else {
+        // Falló login → enviar a /login
+        router.push("/login");
+      }
+    } catch (err) {
+      console.error("Error durante login con Google", err);
+      router.push("/login");
     }
   };
-  return (
-    // <button
-    //   className=" max-w-lg text-sm lg:text-lg rounded-full py-1 w-3/4 mx-auto cursor-pointer bg-gray-200  text-black my-2 flex justify-center items-center px-1"
-    //   type="button"
-    //   onClick={login}
-    // >
-    //   <GoogleIcon />
-    //   <p className=" text-md">Continue with Google</p>
-    // </button>
 
+  return (
     <OutlinedButton
       text="Continue with Google"
       icon={FcGoogle}

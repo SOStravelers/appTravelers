@@ -16,7 +16,8 @@ import { set } from "date-fns";
 import StripeService from "@/services/StripeService";
 export default function PaymentConfirmation() {
   const router = useRouter();
-  const { service, user, isWorker, resetService, language } = useStore();
+  const { service, user, isWorker, resetService, language, currency } =
+    useStore();
   const initialized = useRef(false);
   const [complete, setComplete] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -35,22 +36,19 @@ export default function PaymentConfirmation() {
       router.push("/");
       return;
     }
-    console.log("conect socket booking");
-    const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-    socket.current = io(host);
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
-    };
+    // console.log("conect socket booking");
+    // const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
+    // socket.current = io(host);
+    // return () => {
+    //   if (socket.current) {
+    //     socket.current.disconnect();
+    //   }
+    // };
   }, []);
   useEffect(() => {
     console.log("el servicio", service);
     const paymentIntent = router.query.payment_intent;
-
-    if (isWorker) {
-      createBooking(null); // Si es un trabajador, no requiere paymentIntent
-    } else if (paymentIntent && !initialized.current) {
+    if (paymentIntent && !initialized.current) {
       initialized.current = true;
       createBooking(paymentIntent); // Procesar transferencias y reserva
     } else {
@@ -66,73 +64,68 @@ export default function PaymentConfirmation() {
     const clientId = user._id || null;
     const params = {
       subservice: service._id,
-      clientUser: service.clientData,
+      language: language,
+      clientData: service.clientData,
+      startTime: service.startTime,
       clientId: clientId,
       selectedData: service.selectedData,
       payment: {
         paymentId: paymentIntent,
-        currency: service.currency,
-        price: priceObject.finalCost,
         priceBRL: null,
         method: "stripe",
         status: "pending",
       },
-      startTime: service.startTime,
-      language: language,
       endTime: service.endTime,
     };
 
     try {
       // 1. Realizar las transferencias antes de crear la reserva
-      console.log(
-        "Realizando transferencias para el paymentIntent:",
-        paymentIntent
-      );
-      const partner = Cookies.get("partner");
-      const timePartner = Cookies.get("timePartner");
+      // console.log(
+      //   "Realizando transferencias para el paymentIntent:",
+      //   paymentIntent
+      // );
+      // const partner = Cookies.get("partner");
+      // const timePartner = Cookies.get("timePartner");
 
-      function estaEnUltimos15Dias(isoString) {
-        const fechaGuardada = new Date(isoString);
-        const ahora = new Date();
+      // function estaEnUltimos15Dias(isoString) {
+      //   const fechaGuardada = new Date(isoString);
+      //   const ahora = new Date();
 
-        // 15 días en milisegundos
-        const quinceDias = 15 * 24 * 60 * 60 * 1000;
+      //   // 15 días en milisegundos
+      //   const quinceDias = 15 * 24 * 60 * 60 * 1000;
 
-        // Calculamos el límite inferior (hace 15 días)
-        const limiteInferior = new Date(ahora - quinceDias);
+      //   // Calculamos el límite inferior (hace 15 días)
+      //   const limiteInferior = new Date(ahora - quinceDias);
 
-        return fechaGuardada >= limiteInferior && fechaGuardada <= ahora;
-      }
+      //   return fechaGuardada >= limiteInferior && fechaGuardada <= ahora;
+      // }
 
-      const tiempoMax = estaEnUltimos15Dias(timePartner);
+      // const tiempoMax = estaEnUltimos15Dias(timePartner);
 
-      const data = {
-        paymentIntentId: paymentIntent,
-        partner: tiempoMax ? partner : null,
-        workerUser: service.workerId,
-        service: service.serviceId,
-        subService: service.subServiceId,
-      };
-      tiempoMax ? (data.partner = partner) : "";
-      tiempoMax ? (params.payment.partner = partner) : "";
-      const result = await StripeService.handleTransfers(data, true);
-      console.log("resultado", result, result.data);
-      params.payment.priceBRL = result.data.priceBRL;
+      // const data = {
+      //   paymentIntentId: paymentIntent,
+      //   partner: tiempoMax ? partner : null,
+      //   workerUser: service.workerId,
+      //   service: service.serviceId,
+      //   subService: service.subServiceId,
+      // };
+      // tiempoMax ? (data.partner = partner) : "";
+      // tiempoMax ? (params.payment.partner = partner) : "";
+      // const result = await StripeService.handleTransfers(data, true);
+      // console.log("resultado", result, result.data);
+      // params.payment.priceBRL = result.data.priceBRL;
 
-      // 2. Crear la reserva después de las transferencias
-      const response = isWorker
-        ? await BookingService.createWorkerBooking(params)
-        : await BookingService.create(params);
+      await BookingService.create(params);
 
       if (response.data) {
         setBooking(response.data.booking);
         console.log("booking", response.data.booking);
         localStorage.removeItem("service");
-        resetService();
+        // resetService();
 
-        !isWorker
-          ? socket.current.emit("send-booking", { data: response.data.booking })
-          : "";
+        // !isWorker
+        //   ? socket.current.emit("send-booking", { data: response.data.booking })
+        //   : "";
         setComplete(true);
         setLoading(false);
       }

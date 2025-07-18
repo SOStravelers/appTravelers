@@ -91,6 +91,7 @@ export default function CardSummaryService({ statusExpanded }) {
 
   useEffect(() => {
     if (canCancel) {
+      console.log("entra");
       setHasCancel(isBeforeHoursThreshold(eventData.isoTime, timeUntilCancel));
     }
   }, [canCancel, eventData, timeUntilCancel]);
@@ -362,6 +363,41 @@ export default function CardSummaryService({ statusExpanded }) {
           </div>
         </div>
       </div>
+
+      {/* Cancelación gratuita */}
+      {hasCancel?.isBefore && (
+        <>
+          <div className="space-y-1">
+            <p className="font-semibold text-textColorGreen text-sm">
+              {thisLanguage.sections.booking.title[language]}
+            </p>
+            <p className="text-textColorGray text-xs">
+              {interpolate(thisLanguage.sections.booking.subtitle[language], {
+                displayDate: hasCancel?.cancelTime?.data,
+                startTime: {
+                  stringData: hasCancel?.cancelTime?.stringData,
+                },
+              })}
+            </p>
+          </div>
+          <div className="space-y-1">
+            <p className="font-semibold text-textColorGreen text-sm">
+              {thisLanguage.sections.freeCancelation.title[language]}
+            </p>
+            <p className="text-textColorGray text-xs">
+              {interpolate(
+                thisLanguage.sections.freeCancelation.subtitle[language],
+                {
+                  displayDate: hasCancel?.cancelTime?.data,
+                  startTime: {
+                    stringData: hasCancel?.cancelTime?.stringData,
+                  },
+                }
+              )}
+            </p>
+          </div>
+        </>
+      )}
 
       {openImage && (
         <ImageFullScreenViewer

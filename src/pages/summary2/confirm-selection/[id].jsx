@@ -51,11 +51,23 @@ export default function SummaryPage() {
 
   useEffect(() => {
     if (service.canCancel) {
-      const hasCancel = isBeforeHoursThreshold(
-        service.startTime.isoTime,
-        service.timeUntilCancel
-      );
-      setHasCancel(hasCancel);
+      if (service.typeService == "tour") {
+        const hasCancel = isBeforeHoursThreshold(
+          service.startTime.isoTime,
+          service.timeUntilCancel
+        );
+        setHasCancel(hasCancel);
+      } else if (service.typeService == "product") {
+        if (service.eventData && service.eventData.isoTime) {
+          const hasCancel = isBeforeHoursThreshold(
+            service.eventData.isoTime,
+            service.timeUntilCancel
+          );
+          setHasCancel(hasCancel);
+        }
+      } else {
+        setHasCancel(false);
+      }
     } else {
       setHasCancel(false);
     }

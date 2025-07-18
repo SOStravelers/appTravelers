@@ -21,13 +21,13 @@ function OptionCardPreview({
       )}
       <div>
         <h1 className="text-textColor text-xxs ">{title}</h1>
-        <h2 className="text-textColor mt-1 text-sm font-semibold">
+        <h2 className="text-textColor mt-1 text-md font-semibold">
           {subtitle}
         </h2>
-        <p className="text-textColor mt-1  text-xxs font-semibold">
+        <p className="text-textColor mt-1  text-xs font-semibold">
           {description}
         </p>
-        <p className="text-textColor  text-xxs font-semibold">
+        <p className="text-textColor  text-xs font-semibold">
           {subDescription}
         </p>
       </div>

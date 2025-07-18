@@ -19,7 +19,6 @@ export default function LoginFormModal({
     console.log("llego");
     setOpen(false);
     onCancel?.();
-    console.log("wena", router.pathname, !user, Object.keys(user).length == 0);
     if (
       router.pathname.includes("/booking") ||
       (router.pathname.includes("/favorites") &&

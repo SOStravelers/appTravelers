@@ -20,8 +20,8 @@ export default function TravellersDetailsModal({ open, onClose }) {
   const overlayRef = useRef();
 
   function setPrices() {
-    const totalA = adults * tourData.adultPrice[currency].value;
-    const totalC = children * tourData.childrenPrice[currency].value;
+    const totalA = adults * tourData.adultPrice[currency];
+    const totalC = children * tourData.childrenPrice[currency];
     const total = totalA + totalC;
     setTotalAdults(totalA);
     setTotalChildren(totalC);
@@ -96,10 +96,10 @@ export default function TravellersDetailsModal({ open, onClose }) {
   };
 
   // Labels de precio
-  const unitLabel = `${tourData.adultPrice[currency].value} € por adulto`;
+  const unitLabel = `${tourData.adultPrice[currency]} € por adulto`;
   const childrenLabel =
     children > 0
-      ? `${tourData.childrenPrice[currency].value} € por niño${
+      ? `${tourData.childrenPrice[currency]} € por niño${
           children > 1 ? "s" : ""
         }`
       : null;
@@ -185,33 +185,35 @@ export default function TravellersDetailsModal({ open, onClose }) {
             </div>
           </div>
           {/* Niños */}
-          <div className="flex justify-between items-center">
-            <div>
-              <h4 className="text-textColor font-semibold text-sm">
-                {language === "es" ? "Niños" : "Children"}
-              </h4>
-              <p className="text-sm text-textColorGray text-xs">
-                {language === "es" ? "Edad: 2–12 años" : "Age: 2–12 yrs"}
-              </p>
+          {service.tourData && service.tourData.hasChildren && (
+            <div className="flex justify-between items-center">
+              <div>
+                <h4 className="text-textColor font-semibold text-sm">
+                  {language === "es" ? "Niños" : "Children"}
+                </h4>
+                <p className="text-sm text-textColorGray text-xs">
+                  {language === "es" ? "Edad: 2–12 años" : "Age: 2–12 yrs"}
+                </p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={decChildren}
+                  className="w-6 h-6 rounded-full bg-buttonGray flex items-center justify-center text-sm"
+                >
+                  <p className="text-sm text-textColor">-</p>
+                </button>
+                <span className="w-8 text-center text-textColor text-sm">
+                  {children}
+                </span>
+                <button
+                  onClick={incChildren}
+                  className="w-6 h-6  rounded-full bg-buttonGray flex items-center justify-center text-sm"
+                >
+                  <p className="text-sm text-textColor">+</p>
+                </button>
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={decChildren}
-                className="w-6 h-6 rounded-full bg-buttonGray flex items-center justify-center text-sm"
-              >
-                <p className="text-sm text-textColor">-</p>
-              </button>
-              <span className="w-8 text-center text-textColor text-sm">
-                {children}
-              </span>
-              <button
-                onClick={incChildren}
-                className="w-6 h-6  rounded-full bg-buttonGray flex items-center justify-center text-sm"
-              >
-                <p className="text-sm text-textColor">+</p>
-              </button>
-            </div>
-          </div>
+          )}
         </div>
         <hr className="my-4" />
         {/* Detalles de precio */}

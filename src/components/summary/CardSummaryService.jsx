@@ -67,14 +67,6 @@ export default function CardSummaryService({
   }, [service]);
 
   useEffect(() => {
-    const startTime = formatearFechaCompletaDesdeISO(
-      service.startTime.isoTime,
-      language
-    );
-    const endTime = formatearFechaCompletaDesdeISO(
-      sumarMinutosAISO(service.startTime.isoTime, service.duration),
-      language
-    );
     setStartDate(startTime);
     setEndtDate(endTime);
   }, []);
@@ -89,14 +81,12 @@ export default function CardSummaryService({
   }, [isMounted]);
 
   useEffect(() => {
-    if (service.typeService === "tour") {
-      setAdults(selectedData.amountAdults);
-      setChildren(selectedData.amountChildren);
-      const total =
-        selectedData.amountAdults * tourData.adultPrice[currency].value +
-        selectedData.amountChildren * tourData.childrenPrice[currency].value;
-      setTotal(total);
-    }
+    setAdults(selectedData.amountAdults);
+    setChildren(selectedData.amountChildren);
+    const total =
+      selectedData.amountAdults * tourData.adultPrice[currency] +
+      selectedData.amountChildren * tourData.childrenPrice[currency];
+    setTotal(total);
   }, [service]);
 
   function interpolate(str, vars) {
@@ -131,7 +121,8 @@ export default function CardSummaryService({
                 {name?.[language] || ""}
               </h2>
               <p className="text-textColor text-xs">
-                {thisLanguage.value[language]} {formatPrice(total, currency)}
+                {thisLanguage.value[language]}{" "}
+                {formatPrice(selectedData.totalPrice, currency)}
               </p>
               {hasCancel?.isBefore && (
                 <p className="text-textColor text-xs">

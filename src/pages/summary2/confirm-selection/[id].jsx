@@ -106,7 +106,7 @@ export default function SummaryPage() {
       // selectedData.amountChildren * tourData.childrenPrice[currency].value;
       setTotal(total);
     } else {
-      const total = service.selectedData.totalPrice;
+      const total = service?.selectedData?.totalPrice || 0;
       setTotal(total);
     }
   }, [service]);

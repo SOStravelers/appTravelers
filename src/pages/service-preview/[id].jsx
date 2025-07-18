@@ -18,16 +18,8 @@ import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import FloatingFavoriteToast from "@/components/utils/modal/FloatingFavoriteToast";
 import { formatPrice } from "@/utils/format";
 import { useStore } from "@/store";
-import {
-  formatearFecha,
-  formatearFechaCompletaDesdeISO,
-  sumarMinutosAISO,
-} from "@/utils/format";
-import {
-  delay,
-  opacityAnimation,
-  displayAnimation,
-} from "@/utils/delayFunction";
+import { formatearFechaCompletaDesdeISO } from "@/utils/format";
+import { opacityAnimation, displayAnimation } from "@/utils/delayFunction";
 import ModalReservationWrapper from "@/components/ServicePreview/ModalReservationWrapper";
 export default function ServicePreviewPage() {
   const router = useRouter();
@@ -65,6 +57,14 @@ export default function ServicePreviewPage() {
       setService(subService);
       setOpenReservation(true);
     } else {
+      setService({
+        ...service,
+        startTime: {
+          isoTime: dataEvent.isoTime,
+          formatedDate: dataEvent.formatedDate,
+          formatedTime: dataEvent.formatedTime,
+        },
+      });
       router.push(`/summary2/confirm-selection/${id}`);
     }
   };
@@ -102,8 +102,12 @@ export default function ServicePreviewPage() {
             subService.eventData.isoTime,
             language
           );
-          console.log("la fecha", data);
-          setDataEvent(data);
+          setDataEvent({
+            isoTime: subService.eventData.isoTime,
+            formatedDate: data.formatedDate,
+            formatedTime: data.formatedTime,
+          });
+
           setValidPrice(true);
         } else {
           setValidPrice(false);
@@ -217,7 +221,11 @@ export default function ServicePreviewPage() {
           languageData.bookingButton.title[language]
         } ${formatPrice(price[currency], currency)}`}
         subtext={languageData.bookingButton.subtitle[language]}
-        tagLine={languageData.bookingButton.cancel[language]}
+        tagLine={
+          subService.canCancel
+            ? languageData.bookingButton.cancel[language]
+            : ""
+        }
         buttonText={
           !subService.multiple
             ? languageData.bookingButton.nextButton[language]

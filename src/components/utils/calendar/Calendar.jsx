@@ -90,7 +90,6 @@ function Calendar({ id }) {
 
   // fetch schedule on mount
   useEffect(() => {
-    if (localStorage.getItem("fromFavorite")) setFromFavorite(true);
     getSchedule();
   }, []);
 
@@ -112,11 +111,6 @@ function Calendar({ id }) {
   }, [selectedDay, schedule]);
 
   const getSchedule = async () => {
-    if (isWorker) {
-      setLoading(false);
-      return;
-    }
-    const data = localStorage.getItem("fromFavorite");
     const res = await ScheduleService.getScheduleHostel(
       null,
       service.service._id,
@@ -157,33 +151,33 @@ function Calendar({ id }) {
   };
 
   const selectTime = () => {
-    const dateStr = moment(isWorker ? selectedDayWorker : selectedDay).format(
-      "YYYY-MM-DD"
-    );
-    const nowMoment = moment();
+    const dateStr = moment(selectedDay).format("YYYY-MM-DD");
     let startTimeIso, endTimeIso, startTime, endTime;
 
-    if (isWorker) {
-      startTimeIso = nowMoment.toISOString();
-      startTime = nowMoment.format("HH:mm");
-      endTimeIso = nowMoment.add(service.duration, "minutes").toISOString();
-      endTime = moment(endTimeIso).format("HH:mm");
-    } else {
-      startTimeIso = time.startTimeIso;
-      endTimeIso = time.endTimeIso;
-      startTime = time.startTime;
-      endTime = time.endTime;
-    }
+    startTimeIso = time.startTimeIso;
+    endTimeIso = time.endTimeIso;
+    startTime = time.startTime;
+    endTime = time.endTime;
 
-    const totalA = adults * service.tourData.adultPrice[currency].value;
-    const totalC = children * service.tourData.childrenPrice[currency].value;
+    const totalA = adults * service.tourData.adultPrice[currency];
+    const totalC = children * service.tourData.childrenPrice[currency];
     const total = totalA + totalC;
+    console.log("el total", total);
+    const data = formatearFechaCompletaDesdeISO(startTimeIso, language);
+    const endData = formatearFechaCompletaDesdeISO(endTimeIso, language);
 
     setService({
       ...service,
-      date: dateStr,
-      startTime: { isoTime: startTimeIso, stringData: startTime },
-      endTime: { isoTime: endTimeIso, stringData: endTime },
+      startTime: {
+        isoTime: startTimeIso,
+        formatedDate: data.formatedDate,
+        formatedTime: data.formatedTime,
+      },
+      endTime: {
+        isoTime: endTimeIso,
+        formatedDate: endData.formatedDate,
+        formatedTime: endData.formatedTime,
+      },
       selectedData: {
         amountAdults: adults,
         amountChildren: children,
@@ -219,76 +213,63 @@ function Calendar({ id }) {
         </div>
       );
     }
-    if (selectedDay && !isWorker) {
-      return (
-        <div>
-          <h1 className="font-semibold text-xs mt-2 text-textColor">
-            {languageData.calendar.chooseTime[language]}
-          </h1>
-          <h2 className="font-semibold text-xs mb-1 text-textColor">
-            {languageData.calendar.timeZone[language]}
-          </h2>
-          <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[200px] mx-auto">
-            {intervals.length ? (
-              intervals.map((hour) => (
-                <TimeButton
-                  key={`${selectedDay}-${hour.startTimeIso}`}
-                  onClick={() => setTime(hour)}
-                  text={
-                    formatearFechaCompletaDesdeISO(
-                      hour.startTimeIso,
-                      language,
-                      "br"
-                    ).stringData
-                  }
-                  selected={time === hour}
-                />
-              ))
-            ) : (
-              <span className="mt-4 text-sm text-gray-600">
-                {languageData.calendar.anotherDay[language]}
-              </span>
-            )}
-          </div>
-          <div className="w-full flex justify-center">
-            {time ? (
-              <button
-                onClick={selectTime}
-                className={`block w-1/2 mx-auto text-white text-xs px-2 py-2 rounded-full bg-darkBlue hover:bg-blueBorderLight
+    return (
+      <div>
+        <h1 className="font-semibold text-xs mt-2 text-textColor">
+          {languageData.calendar.chooseTime[language]}
+        </h1>
+        <h2 className="font-semibold text-xs mb-1 text-textColor">
+          {languageData.calendar.timeZone[language]}
+        </h2>
+        <div className="w-full flex flex-wrap justify-center mb-2 mt-3 max-w-[200px] mx-auto">
+          {intervals.length ? (
+            intervals.map((hour) => (
+              <TimeButton
+                key={`${selectedDay}-${hour}`}
+                onClick={() => setTime(hour)}
+                text={
+                  formatearFechaCompletaDesdeISO(
+                    hour.startTimeIso,
+                    language,
+                    "br"
+                  ).formatedTime
+                }
+                selected={time === hour}
+              />
+            ))
+          ) : (
+            <span className="mt-4 text-sm text-gray-600">
+              {languageData.calendar.anotherDay[language]}
+            </span>
+          )}
+        </div>
+        <div className="w-full flex justify-center">
+          {time ? (
+            <button
+              onClick={selectTime}
+              className={`block w-1/2 mx-auto text-white text-xs px-2 py-2 rounded-full bg-darkBlue hover:bg-blueBorderLight
              `}
-              >
-                {languageData.calendar.applyButton[language]}
-              </button>
-            ) : (
-              <div className="block w-1/2 mx-auto text-white text-xs px-2 py-4 rounded-full " />
-            )}
-          </div>
+            >
+              {languageData.calendar.applyButton[language]}
+            </button>
+          ) : (
+            <div className="block w-1/2 mx-auto text-white text-xs px-2 py-4 rounded-full " />
+          )}
         </div>
-      );
-    }
-    if (isWorker) {
-      return (
-        <div className="flex flex-col items-center">
-          <p className="my-4 text-sm font-semibold">
-            Hora actual: {currentTime}
-          </p>
-          <OutlinedButton text="Continuar" onClick={selectTime} />
-        </div>
-      );
-    }
-    return null;
+      </div>
+    );
   };
 
   return (
     <>
       {/* Guests selector */}
-      {service.typeService === "tour" && (
+      {service.typeService === "tour" && service.tourData && (
         <div className="w-full max-w-sm mt-4 mx-auto mb-6 space-y-4">
           {/* Adults */}
           <div className="flex justify-between items-center">
             <div>
               <h3 className="text-sm text-textColor font-semibold">Adultos</h3>
-              <p className="text-xs text-textColor">Edad: más de 18</p>
+              {/* <p className="text-xs text-textColor">Edad: más de 18</p> */}
             </div>
             <div className="flex items-center justify-center items-center">
               <button
@@ -309,29 +290,31 @@ function Calendar({ id }) {
             </div>
           </div>
           {/* Children */}
-          <div className="flex justify-between items-center">
-            <div>
-              <h3 className="text-sm font-semibold text-textColor">Niños</h3>
-              <p className="text-xs text-textColor">Edad: 2–12 años</p>
+          {service.tourData.hasChildren && (
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="text-sm font-semibold text-textColor">Niños</h3>
+                <p className="text-xs text-textColor">Edad: 2–12 años</p>
+              </div>
+              <div className="flex items-center justify-center items-center">
+                <button
+                  onClick={decChildren}
+                  className="w-7 h-7 rounded-full bg-buttonGray flex items-center justify-center text-sm"
+                >
+                  <p className="text-sm text-textColor">-</p>
+                </button>
+                <span className="w-8 flex items-center justify-center text-sm text-textColor">
+                  {children}
+                </span>
+                <button
+                  onClick={incChildren}
+                  className="w-7 h-7 rounded-full bg-buttonGray flex items-center justify-center text-sm"
+                >
+                  <p className="text-sm text-textColor">+</p>
+                </button>
+              </div>
             </div>
-            <div className="flex items-center justify-center items-center">
-              <button
-                onClick={decChildren}
-                className="w-7 h-7 rounded-full bg-buttonGray flex items-center justify-center text-sm"
-              >
-                <p className="text-sm text-textColor">-</p>
-              </button>
-              <span className="w-8 flex items-center justify-center text-sm text-textColor">
-                {children}
-              </span>
-              <button
-                onClick={incChildren}
-                className="w-7 h-7 rounded-full bg-buttonGray flex items-center justify-center text-sm"
-              >
-                <p className="text-sm text-textColor">+</p>
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       )}
 

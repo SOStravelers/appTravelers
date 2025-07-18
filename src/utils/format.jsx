@@ -265,8 +265,8 @@ export const formatearFechaCompletaDesdeISO = (
 
   if (isNaN(fechaUTC.getTime())) {
     return {
-      data: "",
-      stringData: "",
+      formatedDate: "",
+      formatedTime: "",
     };
   }
 
@@ -445,7 +445,13 @@ export const formatearFechaCompletaDesdeISO = (
   const mesTexto = meses[idioma][fechaLocal.getMonth()];
   const año = fechaLocal.getFullYear();
   const diaSemanaTexto = diasSemana[idioma][fechaLocal.getDay()];
-  const data = formatos[idioma](dia, mesTexto, año, diaSemanaTexto, paisTexto);
+  const formatedDate = formatos[idioma](
+    dia,
+    mesTexto,
+    año,
+    diaSemanaTexto,
+    paisTexto
+  );
 
   const locales = {
     es: "es-CL",
@@ -455,7 +461,7 @@ export const formatearFechaCompletaDesdeISO = (
     de: "de-DE",
   };
 
-  const stringData = fechaLocal.toLocaleTimeString(locales[idioma], {
+  const formatedTime = fechaLocal.toLocaleTimeString(locales[idioma], {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
@@ -463,8 +469,8 @@ export const formatearFechaCompletaDesdeISO = (
   });
 
   return {
-    data,
-    stringData,
+    formatedDate,
+    formatedTime,
   };
 };
 

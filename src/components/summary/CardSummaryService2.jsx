@@ -16,8 +16,15 @@ export default function CardSummaryService({ statusExpanded }) {
   const router = useRouter();
   const id = router?.query?.id;
   const { service, setService, language, currency } = useStore();
-  const { imgUrl, name, eventData, duration, canCancel, timeUntilCancel } =
-    service;
+  const {
+    imgUrl,
+    name,
+    eventData,
+    duration,
+    canCancel,
+    timeUntilCancel,
+    startTime,
+  } = service;
 
   const thisLanguage = languageData.confirmSelection;
   const [loading, setLoading] = useState(true);
@@ -33,10 +40,7 @@ export default function CardSummaryService({ statusExpanded }) {
   useEffect(() => {
     (async () => {
       try {
-        const res = await SubserviceService.getItemsBySubservice(
-          id,
-          "2025-07-14T15:00:00-03:00"
-        );
+        const res = await SubserviceService.getItemsBySubservice(id);
         const sectionsFromBackend = res.data || [];
         setSections(sectionsFromBackend);
 
@@ -80,7 +84,7 @@ export default function CardSummaryService({ statusExpanded }) {
         console.error(err);
       }
     })();
-  }, [id, eventData?.isoTime]);
+  }, [id, startTime]);
 
   useEffect(() => {
     setLoading(true);
@@ -98,19 +102,19 @@ export default function CardSummaryService({ statusExpanded }) {
   useEffect(() => {
     if (canCancel) {
       console.log("entra");
-      setHasCancel(isBeforeHoursThreshold(eventData.isoTime, timeUntilCancel));
+      setHasCancel(isBeforeHoursThreshold(startTime.isoTime, timeUntilCancel));
     }
-  }, [canCancel, eventData, timeUntilCancel]);
+  }, [canCancel, startTime, timeUntilCancel]);
 
   useEffect(() => {
-    setStartDate(formatearFechaCompletaDesdeISO(eventData.isoTime, language));
+    setStartDate(startTime.formatedDate);
     setEndDate(
       formatearFechaCompletaDesdeISO(
-        sumarMinutosAISO(eventData.isoTime, duration),
+        sumarMinutosAISO(startTime.isoTime, duration),
         language
       )
     );
-  }, [eventData, duration, language]);
+  }, [startTime, duration, language]);
 
   const totalPrice = useMemo(() => {
     return sections.reduce((t, section, sIdx) => {
@@ -236,11 +240,13 @@ export default function CardSummaryService({ statusExpanded }) {
             <p className="font-semibold text-textColor text-sm mb-1">
               {thisLanguage.sections.date.title[language]}
             </p>
-            <p className="text-textColorGray text-xs">{startDate?.data}</p>
+            <p className="text-textColorGray text-xs">
+              {startTime?.formatedDate}
+            </p>
             <p className="text-textColorGray text-xs">
               {thisLanguage.sections.date.from[language]}{" "}
-              {startDate?.stringData} {thisLanguage.sections.date.to[language]}{" "}
-              {endDate?.stringData}
+              {startTime?.formatedTime}{" "}
+              {thisLanguage.sections.date.to[language]} {endDate.formatedTime}
             </p>
           </div>
 
@@ -368,42 +374,47 @@ export default function CardSummaryService({ statusExpanded }) {
             </p>
           </div>
         </div>
-      </div>
 
-      {/* Cancelación gratuita */}
-      {hasCancel?.isBefore && (
-        <>
-          <div className="space-y-1">
-            <p className="font-semibold text-textColorGreen text-sm">
-              {thisLanguage.sections.booking.title[language]}
-            </p>
-            <p className="text-textColorGray text-xs">
-              {interpolate(thisLanguage.sections.booking.subtitle[language], {
-                displayDate: hasCancel?.cancelTime?.data,
-                startTime: {
-                  stringData: hasCancel?.cancelTime?.stringData,
-                },
-              })}
-            </p>
-          </div>
-          <div className="space-y-1">
-            <p className="font-semibold text-textColorGreen text-sm">
-              {thisLanguage.sections.freeCancelation.title[language]}
-            </p>
-            <p className="text-textColorGray text-xs">
-              {interpolate(
-                thisLanguage.sections.freeCancelation.subtitle[language],
-                {
-                  displayDate: hasCancel?.cancelTime?.data,
-                  startTime: {
-                    stringData: hasCancel?.cancelTime?.stringData,
-                  },
-                }
-              )}
-            </p>
-          </div>
-        </>
-      )}
+        <div className=" px-3 mb-16 mt-4">
+          {/* Cancelación gratuita */}
+          {hasCancel?.isBefore && (
+            <>
+              <div className="space-y-1 mb-3">
+                <p className="font-semibold text-textColorGreen text-sm">
+                  {thisLanguage.sections.booking.title[language]}
+                </p>
+                <p className="text-textColorGray text-xs">
+                  {interpolate(
+                    thisLanguage.sections.booking.subtitle[language],
+                    {
+                      displayDate: hasCancel?.cancelTime?.formatedDate,
+                      startTime: {
+                        stringData: hasCancel?.cancelTime?.formatedTime,
+                      },
+                    }
+                  )}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold text-textColorGreen text-sm">
+                  {thisLanguage.sections.freeCancelation.title[language]}
+                </p>
+                <p className="text-textColorGray text-xs">
+                  {interpolate(
+                    thisLanguage.sections.freeCancelation.subtitle[language],
+                    {
+                      displayDate: hasCancel?.cancelTime?.formatedDate,
+                      startTime: {
+                        stringData: hasCancel?.cancelTime?.formatedTime,
+                      },
+                    }
+                  )}
+                </p>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
 
       {openImage && (
         <ImageFullScreenViewer

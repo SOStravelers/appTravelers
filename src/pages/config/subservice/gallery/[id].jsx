@@ -17,6 +17,7 @@ export default function UploadAssetsPage() {
     "image/jpg",
     "image/png",
     "image/gif",
+    "image/webp",
   ];
 
   const [existingImgUrl, setExistingImgUrl] = useState("");
@@ -82,7 +83,7 @@ export default function UploadAssetsPage() {
       err.galleryImages = `Imágenes totales deben ser 4–8 (tienes ${totImgs})`;
     if (
       galleryImages.some(
-        (f) => !SUPPORTED_IMG_TYPES.includes(f.type) || f.size > bytes(20)
+        (f) => !SUPPORTED_IMG_TYPES.includes(f.type) || f.size > bytes(30)
       )
     )
       err.galleryImages = "Cada imagen (JPG/PNG/GIF) ≤20 MB";
@@ -92,8 +93,8 @@ export default function UploadAssetsPage() {
       (_, i) => !removeGalleryVideos.has(i)
     );
     const totVids = currVids.length + galleryVideos.length;
-    if (totVids < 1 || totVids > 3)
-      err.galleryVideos = `Vídeos totales deben ser 1–3 (tienes ${totVids})`;
+    // if (totVids < 1 || totVids > 3)
+    //   err.galleryVideos = `Vídeos totales deben ser 1–3 (tienes ${totVids})`;
     if (
       galleryVideos.some(
         (f) => !f.type.startsWith("video/") || f.size > bytes(50)
@@ -266,7 +267,7 @@ export default function UploadAssetsPage() {
                   Elegir
                   <input
                     type="file"
-                    accept="image/jpeg,image/png,image/jpg,image/gif"
+                    accept="image/jpeg,image/png,image/jpg,image/gif,image/webp"
                     className="hidden"
                     onChange={(e) => setImgFile(e.target.files[0] || null)}
                   />
@@ -390,7 +391,7 @@ export default function UploadAssetsPage() {
                 Sube imgs
                 <input
                   type="file"
-                  accept="image/jpeg,image/png,image/jpg,image/gif"
+                  accept="image/jpeg,image/png,image/jpg,image/gif,image/webp"
                   multiple
                   className="hidden"
                   onChange={(e) => setGalleryImages(Array.from(e.target.files))}

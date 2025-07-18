@@ -13,16 +13,21 @@ import InclusionsExclusions from "@/components/ServicePreview/InclusionsExclusio
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import RecomendationCarousel from "@/components/utils/carousels/RecomendationCarousel";
 import languageData from "@/language/subServices.json";
+import OptionCardPreview from "@/components/utils/cards/OptionCardPreview";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import FloatingFavoriteToast from "@/components/utils/modal/FloatingFavoriteToast";
 import { formatPrice } from "@/utils/format";
 import { useStore } from "@/store";
 import {
+  formatearFecha,
+  formatearFechaCompletaDesdeISO,
+  sumarMinutosAISO,
+} from "@/utils/format";
+import {
   delay,
   opacityAnimation,
   displayAnimation,
 } from "@/utils/delayFunction";
-import Reservation from "../reservation/[id]";
 import ModalReservationWrapper from "@/components/ServicePreview/ModalReservationWrapper";
 export default function ServicePreviewPage() {
   const router = useRouter();
@@ -38,6 +43,7 @@ export default function ServicePreviewPage() {
   const [loading, setLoading] = useState(true); // <-- loading flag
   const [isCarouselOpen, setIsCarouselOpen] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [dataEvent, setDataEvent] = useState({});
   const [price, setPrice] = useState({
     eur: "- €",
     usd: "- USD",
@@ -54,9 +60,13 @@ export default function ServicePreviewPage() {
   }, []);
 
   const openModal = () => {
-    console.log("wena");
-    setService(subService);
-    setOpenReservation(true);
+    if (subService.multiple) {
+      console.log("wena");
+      setService(subService);
+      setOpenReservation(true);
+    } else {
+      router.push(`/summary2/confirm-selection/${id}`);
+    }
   };
 
   useEffect(() => {
@@ -84,7 +94,21 @@ export default function ServicePreviewPage() {
   useEffect(() => {
     if (subService.refPrice) {
       setPrice(subService.refPrice);
-      setValidPrice(true);
+      if (subService.typeService == "tour") {
+        setValidPrice(true);
+      } else if (subService.typeService == "product") {
+        if (subService?.eventData.available) {
+          const data = formatearFechaCompletaDesdeISO(
+            subService.eventData.isoTime,
+            language
+          );
+          console.log("la fecha", data);
+          setDataEvent(data);
+          setValidPrice(true);
+        } else {
+          setValidPrice(false);
+        }
+      }
     } else {
       setValidPrice(false);
     }
@@ -115,8 +139,9 @@ export default function ServicePreviewPage() {
               className="w-screen -ml-4 
              md:w-full md:ml-0 
              md:max-w-3xl md:mx-auto 
-             md:rounded-lg md:mt-8 
+             md:rounded-lg md:mt-8
              mb-2 overflow-hidden "
+              style={{ marginTop: "-8px" }}
             >
               {subService.videoUrl ? (
                 <VideoScreen
@@ -148,6 +173,15 @@ export default function ServicePreviewPage() {
                 service={subService}
                 serviceType={subService.service?.name}
               />
+              {subService.typeService === "product" &&
+                subService.eventData.available && (
+                  <OptionCardPreview
+                    title="Proximo evento"
+                    subtitle={subService?.eventData?.name[language]}
+                    description={dataEvent?.data}
+                    subDescription={dataEvent?.stringData}
+                  />
+                )}
               <ServiceInfo service={subService} />
               <ServiceDescription description={subService.details} />
               <InclusionsExclusions
@@ -184,7 +218,11 @@ export default function ServicePreviewPage() {
         } ${formatPrice(price[currency], currency)}`}
         subtext={languageData.bookingButton.subtitle[language]}
         tagLine={languageData.bookingButton.cancel[language]}
-        buttonText={languageData.bookingButton.goDates[language]}
+        buttonText={
+          !subService.multiple
+            ? languageData.bookingButton.nextButton[language]
+            : languageData.bookingButton.goDates[language]
+        }
         onAction={() => openModal(true)} // <-- abre el modal
         isDisabled={validPrice && price[currency] > 0 ? false : true}
       />

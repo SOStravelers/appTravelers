@@ -260,6 +260,7 @@ export const formatearFechaCompletaDesdeISO = (
   idioma = "pt",
   pais = "br"
 ) => {
+  console.log("data", isoString, idioma, pais);
   const fechaUTC = new Date(isoString);
 
   if (isNaN(fechaUTC.getTime())) {
@@ -285,8 +286,31 @@ export const formatearFechaCompletaDesdeISO = (
   const timeZone = configPais.timeZone;
   const paisTexto = configPais.texto;
 
-  // Convertir la fecha al huso horario del país
-  const fechaLocal = new Date(fechaUTC.toLocaleString("en-US", { timeZone }));
+  // Obtener partes de fecha local correctamente desde UTC
+  const partes = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(fechaUTC);
+
+  const valores = {};
+  for (const p of partes) {
+    if (p.type !== "literal") valores[p.type] = parseInt(p.value, 10);
+  }
+
+  const fechaLocal = new Date(
+    valores.year,
+    valores.month - 1,
+    valores.day,
+    valores.hour,
+    valores.minute,
+    valores.second
+  );
 
   const meses = {
     en: [

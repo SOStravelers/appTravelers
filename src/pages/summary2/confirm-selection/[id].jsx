@@ -62,16 +62,18 @@ export default function SummaryPage() {
   }, [service]);
 
   useEffect(() => {
-    const startTime = formatearFechaCompletaDesdeISO(
-      service.startTime.isoTime,
-      language
-    );
-    const endTime = formatearFechaCompletaDesdeISO(
-      sumarMinutosAISO(service.startTime.isoTime, service.duration),
-      language
-    );
-    setStartDate(startTime);
-    setEndtDate(endTime);
+    if (service.typeService === "tour") {
+      const startTime = formatearFechaCompletaDesdeISO(
+        service.startTime.isoTime,
+        language
+      );
+      const endTime = formatearFechaCompletaDesdeISO(
+        sumarMinutosAISO(service.startTime.isoTime, service.duration),
+        language
+      );
+      setStartDate(startTime);
+      setEndtDate(endTime);
+    }
   }, []);
 
   // Click fuera para cerrar
@@ -137,10 +139,12 @@ export default function SummaryPage() {
         )}
       </div>
       {/* Modal de detalles  */}
-      <TravellersDetailsModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-      />
+      {service.typeService === "tour" && (
+        <TravellersDetailsModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
       {/* Botón Siguiente Flotante */}
       <BookingPopup
         priceLabel={`${thisLanguage.value[language]} ${formatPrice(

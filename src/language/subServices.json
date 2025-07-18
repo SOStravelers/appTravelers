@@ -181,6 +181,13 @@
       "fr": "Afficher les dates",
       "de": "Zeige Datum",
       "pt": "Mostrar datas"
+    },
+    "nextButton": {
+      "en": "Next",
+      "es": "Siguiente",
+      "fr": "Suivant",
+      "de": "Weiter",
+      "pt": "Próximo"
     }
   },
   "shareText": {

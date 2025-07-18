@@ -106,7 +106,7 @@ export default function Stripe() {
       {/* <h1 className="text-md font-bold mb-1">{thisLanguage.title[language]}</h1> */}
       {/* Contendio Tarjeta Summary */}
 
-      <CardSummaryService modalOptions={false} statusExpanded={false} />
+      {/* <CardSummaryService modalOptions={false} statusExpanded={false} /> */}
       {clientSecret && <StripeForm clientSecret={clientSecret} />}
     </div>
   );

@@ -23,6 +23,7 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
     refPrice,
     tourData,
     typeService,
+    chipData,
   } = service || {};
   const [showToast, setShowToast] = useState(false);
   const [stateTextFavorite, setStateTextFavorite] = useState("");
@@ -77,7 +78,7 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
       >
         {/* Badge “Popular” */}
         <span className="absolute top-2 left-2 z-10 bg-white text-xs font-semibold px-2 py-1 rounded-full shadow">
-          Popular
+          {chipData ? chipData[language] : "Popular"}
         </span>
 
         {/* Corazón de favorito */}

@@ -16,7 +16,7 @@ export default function CardSummaryService({ statusExpanded }) {
   const router = useRouter();
   const id = router?.query?.id;
   const { service, setService, language, currency } = useStore();
-  const { imgUrl, name, startTime, duration, canCancel, timeUntilCancel } =
+  const { imgUrl, name, eventData, duration, canCancel, timeUntilCancel } =
     service;
 
   const thisLanguage = languageData.confirmSelection;
@@ -80,7 +80,7 @@ export default function CardSummaryService({ statusExpanded }) {
         console.error(err);
       }
     })();
-  }, [id, startTime?.isoTime]);
+  }, [id, eventData?.isoTime]);
 
   useEffect(() => {
     setLoading(true);
@@ -91,19 +91,19 @@ export default function CardSummaryService({ statusExpanded }) {
 
   useEffect(() => {
     if (canCancel) {
-      setHasCancel(isBeforeHoursThreshold(startTime.isoTime, timeUntilCancel));
+      setHasCancel(isBeforeHoursThreshold(eventData.isoTime, timeUntilCancel));
     }
-  }, [canCancel, startTime, timeUntilCancel]);
+  }, [canCancel, eventData, timeUntilCancel]);
 
   useEffect(() => {
-    setStartDate(formatearFechaCompletaDesdeISO(startTime.isoTime, language));
+    setStartDate(formatearFechaCompletaDesdeISO(eventData.isoTime, language));
     setEndDate(
       formatearFechaCompletaDesdeISO(
-        sumarMinutosAISO(startTime.isoTime, duration),
+        sumarMinutosAISO(eventData.isoTime, duration),
         language
       )
     );
-  }, [startTime, duration, language]);
+  }, [eventData, duration, language]);
 
   const totalPrice = useMemo(() => {
     return sections.reduce((t, section, sIdx) => {
@@ -288,7 +288,7 @@ export default function CardSummaryService({ statusExpanded }) {
                         toggleFreeSelection(sIdx, pIdx);
                       }
                     }}
-                    className={`flex items-center border rounded-lg p-1 transition mb-4 ${
+                    className={`flex items-center border rounded-lg p-1 px-2 transition mb-4 ${
                       !product.isActive
                         ? "bg-gray-200 border-gray-300 opacity-50 cursor-not-allowed"
                         : isSelected
@@ -296,7 +296,7 @@ export default function CardSummaryService({ statusExpanded }) {
                         : "border-gray-300 hover:border-gray-400"
                     }`}
                   >
-                    <img
+                    {/* <img
                       src={product.imgUrl}
                       alt={product.name}
                       onClick={(e) => {
@@ -304,7 +304,7 @@ export default function CardSummaryService({ statusExpanded }) {
                         setOpenImage(product.imgUrl);
                       }}
                       className="w-12 h-12 object-cover rounded-lg mr-3 cursor-zoom-in"
-                    />
+                    /> */}
 
                     <div className="flex flex-col flex-1">
                       <span className="text-sm text-textColor font-medium">

@@ -53,16 +53,12 @@ export default function CardSummaryService({ statusExpanded }) {
             const storedSection = service.selectedData.find(
               (s) => s.sectionId === section.category._id
             );
-            console.log("wena", storedSection);
             if (!storedSection) return;
-            console.log("avanza");
             section.products.forEach((product, pIdx) => {
               const storedProduct = storedSection.products.find(
                 (p) => p.productId === product._id
               );
-              console.log("hay product", storedProduct);
               if (!storedProduct) return;
-              console.log("avanza2");
               const key = `${sIdx}-${pIdx}`;
               if (section.category.type === "select") {
                 newSelectedInSelect[sIdx] = pIdx;
@@ -101,7 +97,6 @@ export default function CardSummaryService({ statusExpanded }) {
 
   useEffect(() => {
     if (canCancel) {
-      console.log("entra");
       setHasCancel(isBeforeHoursThreshold(startTime.isoTime, timeUntilCancel));
     }
   }, [canCancel, startTime, timeUntilCancel]);

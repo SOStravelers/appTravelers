@@ -105,8 +105,6 @@ export default function Summary() {
         user: workerId,
         subservice: subServiceId,
       }).then((response) => {
-        console.log("wena wena wena", response.data);
-
         setPrice(response.data.prices.valuesToday[0].finalCost);
 
         setService({

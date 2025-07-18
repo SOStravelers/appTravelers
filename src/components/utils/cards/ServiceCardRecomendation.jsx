@@ -41,7 +41,6 @@ const ServiceCardRecomendation = ({ service, onClick, openLoginModal }) => {
   const gridItems = [0, 1, 2, 3].map((i) => images[i] || null);
 
   useEffect(() => {
-    console.log("wena", refPrice, "chao", service.refPrice, "pelao", service);
     refPrice ? setPrice(refPrice) : null;
   }, [currency]);
 

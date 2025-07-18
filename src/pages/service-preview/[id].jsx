@@ -53,7 +53,6 @@ export default function ServicePreviewPage() {
 
   const openModal = () => {
     if (subService.multiple) {
-      console.log("wena");
       setService(subService);
       setOpenReservation(true);
     } else {

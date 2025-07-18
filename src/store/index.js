@@ -54,7 +54,6 @@ export const useStore = create(
           set(
             (state) => {
               const data = { service: { ...state.service, ...service } };
-              console.log("casa", data);
               localStorage.setItem("service", JSON.stringify(data));
               return data;
             },

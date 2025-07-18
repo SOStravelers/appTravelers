@@ -260,7 +260,6 @@ export const formatearFechaCompletaDesdeISO = (
   idioma = "pt",
   pais = "br"
 ) => {
-  console.log("data", isoString, idioma, pais);
   const fechaUTC = new Date(isoString);
 
   if (isNaN(fechaUTC.getTime())) {

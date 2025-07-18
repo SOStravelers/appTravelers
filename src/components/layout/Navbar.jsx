@@ -60,9 +60,7 @@ function Navbar() {
   };
   useEffect(() => {
     const checkImage = async () => {
-      console.log("checkeando", user);
       const validImg = await validationImg(user?.img?.imgUrl);
-      console.log("validando", validImg);
       setIsImageAccessible(validImg);
     };
     checkImage();

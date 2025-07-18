@@ -15,11 +15,8 @@ const RecomendationCarousel = (services = []) => {
       try {
         const response = await SubserviceService.getRecommended();
         const data = response.data;
-        console.log("llega bien la data", data);
         if (data && Array.isArray(data)) {
           setServicesToDisplay(data);
-
-          console.log("llega la data", servicesToDisplay);
         } else {
           console.warn("La respuesta no es un array:", data);
         }

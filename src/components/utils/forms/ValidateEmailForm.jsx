@@ -32,7 +32,6 @@ function ValidateEmailForm({ email, userId, change = false }) {
         // updateEmail();
       }
     } catch (err) {
-      console.log("wena");
       console.log(err);
       setErrorMsg("code its not valid");
     }

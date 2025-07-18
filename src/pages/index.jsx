@@ -47,7 +47,6 @@ export default function Home() {
       console.log("activo");
       setLastPage("");
       if (stickypoint == 0) {
-        console.log("entra");
         const stickyEl = document.getElementById("icon-carousel");
         // const point = stickyEl.getBoundingClientRect().top - 52;
         const point = window.innerHeight * 0.8 - 52;

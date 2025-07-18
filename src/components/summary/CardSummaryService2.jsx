@@ -88,6 +88,12 @@ export default function CardSummaryService({ statusExpanded }) {
   }, []);
 
   useEffect(() => setExpanded(statusExpanded), [statusExpanded]);
+  function interpolate(str, vars) {
+    return str.replace(/\$\{(\w+(\.\w+)*)\}/g, (_, key) => {
+      // Permite nested: ej "startTime.stringData"
+      return key.split(".").reduce((o, i) => (o ? o[i] : ""), vars);
+    });
+  }
 
   useEffect(() => {
     if (canCancel) {

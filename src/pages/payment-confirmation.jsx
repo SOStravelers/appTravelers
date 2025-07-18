@@ -63,13 +63,12 @@ export default function PaymentConfirmation() {
   };
 
   const createBooking = async (paymentIntent) => {
-    const client = user._id;
-    const priceObject = service.price.find(
-      (price) => price.currency === service.currency
-    );
+    const clientId = user._id || null;
     const params = {
-      workerUser: service.workerId,
-      clientUser: client,
+      subservice: service._id,
+      clientUser: service.clientData,
+      clientId: clientId,
+      selectedData: service.selectedData,
       payment: {
         paymentId: paymentIntent,
         currency: service.currency,
@@ -78,30 +77,9 @@ export default function PaymentConfirmation() {
         method: "stripe",
         status: "pending",
       },
-      creatorUser: user._id,
-      locationInfo: service.locationInfo,
-      details: service.details,
-      businessUser: service.hostelId,
-      mapUrl: service.mapUrl,
-      price: service.price.number,
-      priceUnitService: service.priceUnitService,
       startTime: service.startTime,
-      duration: service.duration,
-      language: service.language,
+      language: language,
       endTime: service.endTime,
-      //number
-      clientPhone: service.phoneNumber,
-      date: {
-        stringData: service.date,
-        isoDate: service.startTime.isoTime,
-      },
-      subservice: service.subServiceId,
-      service: service.serviceId,
-      clients: service.clients,
-      clientsNumber: service.clientsNumber,
-      multiple: service.multiple,
-      clientName: service.clientName || null,
-      clientEmail: service.clientEmail || null,
     };
 
     try {

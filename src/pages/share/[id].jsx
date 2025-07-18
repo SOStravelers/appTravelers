@@ -1,17 +1,24 @@
 // pages/share/[id].jsx
 import Head from "next/head";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import SetLocalStorage from "../../utils/apis";
 const env = process.env.NEXT_PUBLIC_NODE_ENV || "dev";
 const api = SetLocalStorage(env).api;
 // console.log("la api", api);
 export default function SharePreview({ id, title, description, image }) {
+  const router = useRouter();
   useEffect(() => {
     const timer = setTimeout(() => {
-      window.location.href = `/service-preview/${id}`;
+      // window.location.href = `/service-preview/${id}`;
+      goToPage();
     }, 50);
     return () => clearTimeout(timer);
   }, [id]);
+
+  const goToPage = () => {
+    router.push(`/service-preview/${id}`);
+  };
 
   return (
     <>
@@ -27,10 +34,11 @@ export default function SharePreview({ id, title, description, image }) {
         />
       </Head>
 
-      <h1 className="text-textColor mt-2">Redireccionando…</h1>
+      <div className="min-h-screen flex items-center justify-center bg-backgroundP">
+        <div className="w-10 h-10 border-4 border-t-transparent border-textColor rounded-full animate-spin"></div>
+      </div>
       <noscript>
-        Si no eres redirigido, haz clic{" "}
-        <a href={`/service-preview/${id}`}>aquí</a>
+        Si no eres redirigido, haz clic <p onClick={goToPage}>aquí</p>
       </noscript>
     </>
   );

@@ -16,16 +16,6 @@ export default function Stripe() {
   const [loading, setLoading] = useState(true); // <-- loading flag
   const { service, currency } = useStore();
   function getFinalCost() {
-    // // Busca el objeto de precio con la moneda proporcionada
-    // const priceObject = service.price.find(
-    //   (price) => price.currency === currency
-    // );
-
-    // // Si se encontró el objeto de precio, devuelve el costo final
-    // if (priceObject) {
-    //   return priceObject.finalCost;
-    // }
-
     if (
       (service.typeService == "tour" || service.typeService == "product") &&
       service.selectedData
@@ -34,9 +24,6 @@ export default function Stripe() {
     } else {
       throw new Error("Datos insuficientes para crear el pago.");
     }
-
-    // Si no se encontró el objeto de precio, devuelve null
-    // return null;
   }
 
   useEffect(() => {
@@ -82,12 +69,11 @@ export default function Stripe() {
       const laData = {
         amount,
         currency: currencyValue,
-        service: service.serviceName,
-        subservice: service.nameSubservice,
-        date: service.date,
+        clientData: service.clientData,
         startTime: service.startTime,
         selectedData: service.selectedData,
         language: service.language,
+        subservice: service._id,
       };
       const response = await StripeService.createPaymentIntent(laData, true);
 

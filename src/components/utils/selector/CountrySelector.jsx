@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import countries from "@/utils/countriesFull.json";
 import languageData from "@/language/newSummary.json";
@@ -70,6 +71,15 @@ export default function CountrySelector({
   setError: setErrCountry,
   error,
 }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      setIsMobile(isTouch && window.innerWidth < 768); // puedes ajustar el breakpoint si quieres
+    }
+  }, []);
+
   const options = countries.map((c) => ({
     value: c.code,
     label: `${c.emoji ? c.emoji + " " : ""}${c.name[language] || c.name.en}`,
@@ -96,8 +106,10 @@ export default function CountrySelector({
           setPhoneCode(opt.dialCode);
           if (error) setErrCountry(null);
         }}
-        isSearchable
         styles={selectStyles(error)}
+        isSearchable={!isMobile} // ❌ desactiva búsqueda en móviles
+        openMenuOnFocus={!isMobile} // ❌ evita abrir el teclado en móviles
+        menuShouldScrollIntoView={false}
       />
 
       {error && <p className="text-red-600 text-xs mt-1">{error}</p>}

@@ -5,6 +5,7 @@ import NotificationService from "@/services/NotificationService";
 import FloatingWhatsAppButton from "../components/utils/buttons/FloatingWhatsAppButton";
 import Cookies from "js-cookie";
 import LoaderGlobal from "@/components/layout/loaderGlobal";
+import SuccessPurchaseModal from "@/components/utils/modal/SuccessPurchaseModal"; // o ajusta la ruta
 import { useStore } from "@/store";
 import SyncCarousel from "@/components/utils/carousels/SyncCarousel";
 import ServiceList from "@/components/service/ServiceList";
@@ -137,6 +138,7 @@ export default function Home() {
         />
 
         <FloatingWhatsAppButton />
+        <SuccessPurchaseModal />
       </main>
     </>
   );

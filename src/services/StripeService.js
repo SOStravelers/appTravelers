@@ -45,4 +45,11 @@ export default class StripeService {
       );
     }
   }
+
+  // Create payment link
+  static async createCheckoutLink(params) {
+    return axios.post(`${this.baseUrl}/create-checkout-link`, params, {
+      headers: this.getHeaders(),
+    });
+  }
 }

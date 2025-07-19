@@ -32,6 +32,7 @@ module.exports = {
         blueBorderDark: "var(--color-text-blueBorderDark)",
 
         textColorGrayReverse: "var(--color-text-gray-reverse)",
+        textColorGraySoft: "var(--color-text-gray-soft)",
         chipPrimary: "var(--color-chip-primary)",
         inputColor: "var(--color-input)",
         errorColor: "var(--color-error)",

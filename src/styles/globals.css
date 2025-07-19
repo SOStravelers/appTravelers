@@ -39,6 +39,7 @@ h1 {
   --color-text-color:#151515fe;
   --color-text-colorI:#ffffffe1;
   --color-text-gray:#5c5b5b;
+    --color-text-gray-soft:#929292;
   --color-text-blueBorderDark:#00A0D5;
     --color-text-blueBorderDark-rgb: 0, 160, 213;
   --color-text-green:#16a34a;
@@ -62,6 +63,7 @@ h1 {
   --color-text-color:#e7e4e4;
   --color-text-colorI:#151515fe;
   --color-text-gray:#d7d2d2;
+    --color-text-gray-soft:#5c5b5b;
   --color-text-blueBorderDark:#ffffffe1;
   --color-text-blueBorderDark-rgb: 255, 255, 255;
   --color-text-green:#4ade80;;

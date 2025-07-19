@@ -53,6 +53,7 @@ export default function Notifications() {
             key={index}
             isRead={notification.isRead}
             title={notification.title}
+            imgUrl={notification.imgUrl}
             body={notification.body}
             link={
               notification.booking

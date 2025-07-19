@@ -13,16 +13,16 @@ import { io } from "socket.io-client";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import TextModal from "@/components/utils/modal/TextModal";
-import { Howl } from "howler";
+// import { Howl } from "howler";
 import Router from "next/router";
 import languageData from "@/language/menu.json";
 import { validationImg } from "@/utils/validation";
 import LanguageSelector from "@/components/utils/selector/LanguageSelector";
 import CurrencySelector from "@/components/utils/selector/CurrencySelector";
 
-const sound = new Howl({
-  src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
-});
+// const sound = new Howl({
+//   src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
+// });
 import { useStore } from "@/store";
 function TopBar() {
   const router = Router;
@@ -62,26 +62,28 @@ function TopBar() {
       setUser[newUser];
     }
   }, [user]);
-  useEffect(() => {
-    if (isWorker) {
-      console.log("conect socket worker");
-      const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-      socket.current = io(host);
-      socket.current.emit("add-user", userId);
 
-      socket.current.on("booking-recieve", (data) => {
-        console.log("booking recibido", data);
-        setBooking(data.data);
-        sound.play();
-        setOpenWorkerModal(true);
-      });
-    }
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
-    };
-  }, [isWorker]);
+  // useEffect(() => {
+  //   if (isWorker) {
+  //     console.log("conect socket worker");
+  //     const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
+  //     socket.current = io(host);
+  //     socket.current.emit("add-user", userId);
+
+  //     socket.current.on("booking-recieve", (data) => {
+  //       console.log("booking recibido", data);
+  //       setBooking(data.data);
+  //       sound.play();
+  //       setOpenWorkerModal(true);
+  //     });
+  //   }
+  //   return () => {
+  //     if (socket.current) {
+  //       socket.current.disconnect();
+  //     }
+  //   };
+  // }, [isWorker]);
+
   const stateBookingWorker = async () => {
     console.log("stateBookingWorker");
     router.push(`/service-details/${booking._id}`);

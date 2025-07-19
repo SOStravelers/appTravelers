@@ -69,6 +69,7 @@ export default function PaymentConfirmation() {
       startTime: service.startTime,
       clientId: clientId,
       selectedData: service.selectedData,
+      eventData: service.eventData,
       payment: {
         paymentId: paymentIntent,
         priceBRL: null,

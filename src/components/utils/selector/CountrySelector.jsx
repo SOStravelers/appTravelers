@@ -2,6 +2,7 @@ import Select from "react-select";
 import countries from "@/utils/countriesFull.json";
 import languageData from "@/language/newSummary.json";
 
+// Estilos personalizados para react-select
 const selectStyles = (error) => ({
   control: (base, state) => ({
     ...base,
@@ -12,6 +13,7 @@ const selectStyles = (error) => ({
     boxShadow: "none",
     minHeight: 42,
     fontSize: 14,
+    transition: "all 0.2s",
     "&:hover": {
       borderColor: "#00A0D5",
     },
@@ -46,6 +48,17 @@ const selectStyles = (error) => ({
     display: "flex",
     gap: "0.5rem",
     fontSize: 14,
+    cursor: "pointer",
+  }),
+  dropdownIndicator: (base, state) => ({
+    ...base,
+    color: state.isFocused ? "#00A0D5" : "#999",
+    "&:hover": {
+      color: "#00A0D5",
+    },
+  }),
+  indicatorSeparator: () => ({
+    display: "none",
   }),
 });
 
@@ -81,7 +94,7 @@ export default function CountrySelector({
           const name = opt.label.replace(/^[^\p{L}\p{N}]+/u, "");
           setCountry(name);
           setPhoneCode(opt.dialCode);
-          if (error) setErrCountry(null); // ✅ limpia el error
+          if (error) setErrCountry(null);
         }}
         isSearchable
         styles={selectStyles(error)}

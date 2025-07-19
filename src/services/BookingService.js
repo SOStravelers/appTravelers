@@ -3,7 +3,7 @@ import { useStore } from "../store/index";
 import Cookies from "js-cookie";
 
 export default class BookingService {
-  static resource = "bookingAuth";
+  static resource = "bookings";
 
   static get baseUrl() {
     const { api } = useStore.getState().urls;

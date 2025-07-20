@@ -76,7 +76,7 @@ export default function PurchasePage() {
 
   return (
     <div
-      className={`min-h-screen px-4 py-12 flex flex-col items-center justify-center bg-gray-50
+      className={`min-h-screen px-4 py-12 flex flex-col items-center justify-center bg-backgroundP
       ${loading ? opacityAnimation : displayAnimation}`}
     >
       <div className="bg-white shadow-md rounded-2xl max-w-2xl w-full p-6 md:p-10 border border-gray-200">

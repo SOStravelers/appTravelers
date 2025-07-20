@@ -36,7 +36,7 @@ const selectStyles = (error) => ({
     backgroundColor: "var(--color-input)",
     borderRadius: "10px",
     marginTop: 4,
-    zIndex: 20,
+    zIndex: 40,
   }),
   option: (base, state) => ({
     ...base,

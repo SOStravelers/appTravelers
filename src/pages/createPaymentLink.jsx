@@ -73,10 +73,6 @@ export default function CreateCheckoutLink() {
       if (data.url) {
         setCheckoutUrl(data.url);
         setShowModal(true);
-        toast.success("Link generado con éxito", {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 1500,
-        });
       } else {
         toast.error(data.error || "Error generando link", {
           position: toast.POSITION.BOTTOM_RIGHT,
@@ -118,7 +114,7 @@ export default function CreateCheckoutLink() {
                 <h2 className="text-xl text-textColor mr-3 text-center font-bold ">
                   Crear link de pago
                 </h2>
-                <FaCcStripe className="text-black dark:text-white" size={35} />
+                <FaCcStripe className="text-black dark:text-white" size={40} />
               </div>
 
               <Field

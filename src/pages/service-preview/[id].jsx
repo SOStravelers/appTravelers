@@ -181,13 +181,15 @@ export default function ServicePreviewPage() {
               />
               {subService.typeService === "product" &&
                 subService.eventData.available && (
-                  <OptionCardPreview
-                    title="Proximo evento"
-                    subtitle={subService?.eventData?.name[language]}
-                    description={dataEvent?.formatedDate}
-                    subDescription={dataEvent?.formatedTime}
-                    iconName="MdEvent"
-                  />
+                  <div className="max-w-md mx-auto">
+                    <OptionCardPreview
+                      title="Proximo evento"
+                      subtitle={subService?.eventData?.name[language]}
+                      description={dataEvent?.formatedDate}
+                      subDescription={dataEvent?.formatedTime}
+                      iconName="MdEvent"
+                    />
+                  </div>
                 )}
               <ServiceInfo service={subService} />
               <ServiceDescription description={subService.details} />

@@ -165,6 +165,7 @@ export default function SummaryPage() {
           currency
         )} `}
         subtext={""}
+        isDisabled={total && total > 0 ? false : true}
         tagLine={hasCancel?.isBefore ? thisLanguage.cancel[language] : ""}
         buttonText={thisLanguage.nextButton[language]}
         onAction={() => setPrice()} // <-- abre el modal

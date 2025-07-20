@@ -38,7 +38,7 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
   useEffect(() => {
     if (servicesIndexList.length > 0) return;
 
-    ServiceService.list({ isActive: true, page: 1 })
+    ServiceService.list()
       .then((res) => setServicesIndexList(res.data.docs))
       .catch(console.error);
   }, [servicesIndexList.length, setServicesIndexList]);

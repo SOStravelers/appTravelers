@@ -22,7 +22,7 @@ const BookingPopup = ({
   return (
     <div
       className="fixed bottom-11 left-1/2 transform -translate-x-1/2 z-30
-    w-full max-w-xl bg-backgroundModal border border-backgroundS
+    w-full max-w-lg mx-auto bg-backgroundModal border border-backgroundS
     flex items-center justify-between px-3 py-2 rounded-xl "
     >
       <div className="flex flex-col">

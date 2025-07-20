@@ -119,6 +119,7 @@ export default function PaymentConfirmation() {
       await BookingService.create(params);
 
       if (response.data) {
+        console.log("hasta aqui todo bien");
         setBooking(response.data.booking);
         console.log("booking", response.data.booking);
         localStorage.removeItem("service");

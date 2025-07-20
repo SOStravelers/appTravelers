@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useStore } from "../store/index";
 import Cookies from "js-cookie";
-
+let access_token = Cookies.get("auth.access_token");
 export default class BookingService {
   static resource = "bookings";
 
@@ -9,11 +9,22 @@ export default class BookingService {
     const { api } = useStore.getState().urls;
     return `${api}${BookingService.resource}`;
   }
+  static getHeaders() {
+    return {
+      Authorization: access_token ? access_token : {},
+    };
+  }
 
   static async create(params) {
-    return axios.post(`${this.baseUrl}`, params, {
-      headers: this.getHeaders(),
-    });
+    if (access_token) {
+      return axios.post(`${this.baseUrl}/create`, params, {
+        headers: this.getHeaders(),
+      });
+    } else {
+      return axios.post(`${this.baseUrl}/noAuth/create`, params, {
+        headers: this.getHeaders(),
+      });
+    }
   }
   static async createWorkerBooking(params) {
     console.log("agendando");

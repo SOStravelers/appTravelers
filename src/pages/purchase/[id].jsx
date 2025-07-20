@@ -31,13 +31,24 @@ export default function PurchasePage() {
   };
 
   const reservation = {
-    paymentConfirmed: false, // Cambia a true para simular una compra pagada
+    paymentConfirmed: true, // Cambia a true para simular una compra pagada
     paymentDueDate: "2025-07-25T23:00:00", // Solo importa si no está pagado
   };
   const payment = {
     total: 150,
     net: 120,
     currency: "BRL",
+  };
+  const operator = {
+    name: "Carlos Duarte",
+    email: "carlos.duarte@sostravelers.com",
+    phone: "+55 21 91234-5678",
+    avatar: "/images/operator-carlos.jpg", // foto circular
+  };
+  const getWhatsappLink = (phone, name) => {
+    const rawPhone = phone.replace(/\D/g, ""); // Elimina espacios y símbolos
+    const message = `Hola ${name}, tengo una consulta sobre mi reserva en SOS Travelers.`;
+    return `https://wa.me/${rawPhone}?text=${encodeURIComponent(message)}`;
   };
 
   const eventDate = new Date(event.date);
@@ -203,6 +214,46 @@ export default function PurchasePage() {
             </div>
           </div>
         )}
+
+        {/* Datos del operador */}
+        <div className="mt-10 text-sm text-gray-800 border-t pt-6 border-gray-200">
+          <h2 className="text-base font-semibold mb-4 text-center">
+            Operador responsable del servicio
+          </h2>
+
+          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center">
+            <img
+              src={operator.avatar}
+              alt={operator.name}
+              className="w-20 h-20 rounded-full object-cover border-2 border-blue-500 shadow-sm"
+            />
+            <div className="text-center md:text-left">
+              <p className="font-semibold text-lg">{operator.name}</p>
+              <p className="text-sm text-gray-600">
+                <a href={`tel:${operator.phone}`} className="hover:underline">
+                  📞 {operator.phone}
+                </a>
+              </p>
+              <p className="text-sm text-gray-600">
+                <a
+                  href={`mailto:${operator.email}`}
+                  className="hover:underline"
+                >
+                  ✉️ {operator.email}
+                </a>
+              </p>
+
+              <a
+                href={getWhatsappLink(operator.phone, operator.name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-2 bg-green-500 text-white px-4 py-2 rounded-md text-sm hover:bg-green-600 transition"
+              >
+                💬 Hablar por WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
 
         {/* Acciones */}
         <div className="mt-10 flex flex-col md:flex-row justify-center gap-4">

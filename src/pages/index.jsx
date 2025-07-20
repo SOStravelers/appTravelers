@@ -34,7 +34,6 @@ export default function Home() {
     setFilterKey((k) => k + 1);
     setObsFilter(true);
   };
-  //minicambio
 
   useEffect(() => {
     document.title = "Home | SOS Travelers";

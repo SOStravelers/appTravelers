@@ -10,24 +10,32 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import StripeService from "@/services/StripeService";
-import SolidButton from "../buttons/SolidButton";
 import OutlinedButton from "../buttons/OutlinedButton";
+import BookingService from "@/services/BookingService";
 import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
-import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
+import FancyLoader from "../loaders/FancyLoader";
+
+const messages = [
+  "Agendando tu experiencia",
+  "Preparando tu guía local",
+  "Verificando disponibilidad",
+];
 export default function CheckoutForm({
   clientSecret,
   intentType,
   data,
   customer,
+  paymentIntent,
 }) {
   const router = useRouter();
-  const secretClient = clientSecret.clientSecret;
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
   const { service, language, currency } = useStore();
   const [price, setPrice] = useState(null);
+  const [loadingBooking, setLoadingBooking] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,119 +51,115 @@ export default function CheckoutForm({
           elements,
           confirmParams: {
             // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
-            return_url: `${window.location.origin}/purchase/123123?type=stripe`,
           },
           redirect: "if_required", // 👈 esto evita redirigir si no hace falta (ideal)
         });
-        console.log("el payment Intent", data);
-        data.customerId = customer;
-        await StripeService.chargeSavedCard(data);
-        router.push("/purchase/123123?type=stripe");
+        // data.customerId = customer;
+        // await StripeService.chargeSavedCard(data);
       } else {
         const { paymentIntent, error } = await stripe.confirmPayment({
           elements,
           confirmParams: {
             // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
-            return_url: `${window.location.origin}/purchase/123123?type=stripe`,
           },
           redirect: "if_required", // 👈 esto evita redirigir si no hace falta (ideal)
         });
-        router.push("/purchase/123123?type=stripe");
       }
+      setLoadingBooking(true);
+      data.customer = customer;
+      data.intentType = intentType;
+      data.paymentIntent = paymentIntent;
+      await BookingService.create(data);
+      setTimeout(() => {
+        router.push("/purchase/123123?type=stripe");
+      }, 4000);
     } catch (error) {
       console.error("Error en el flujo de pago:", error.message);
       toast.error(error.message);
+      setError(true);
     } finally {
       setIsProcessing(false);
     }
   };
-  useEffect(() => {
-    getFinalCost();
-  }, []);
-  function getFinalCost() {
-    if (
-      (service.typeService == "tour" || service.typeService == "product") &&
-      service.selectedData
-    ) {
-      if (service.canCancel) {
-        const hasCancel = isBeforeHoursThreshold(
-          service.startTime.isoTime,
-          service.timeUntilCancel
-        );
-        if (hasCancel) {
-          setPrice(formatPrice(0));
-        } else {
-          setPrice(formatPrice(service.selectedData.totalPrice));
-        }
-      } else {
-        setPrice(formatPrice(service.selectedData.totalPrice));
-      }
 
-      return;
-    } else {
-      console.log("sale sale");
-      throw new Error("Datos insuficientes para crear el pago.");
-    }
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-24 text-center px-4">
+        <p className="text-lg font-semibold text-textColor mb-4">
+          Hubo un error al procesar tu pago. Por favor, inténtalo de nuevo.
+        </p>
 
-    // Si no se encontró el objeto de precio, devuelve null
-    // return null;
+        <OutlinedButton
+          text="Volver al inicio"
+          onClick={() => router.push("/")}
+          textColor="text-white"
+          dark={"darkLight"}
+          buttonCenter={true}
+          textSize="text-xs"
+        />
+      </div>
+    );
+  } else {
+    return (
+      <>
+        {loadingBooking && <FancyLoader messages={messages} />}
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-2 mt-6 text-center text-textColor  text-md">
+            {languageData.billingDetails[language]}
+          </div>
+          {/*<LinkAuthenticationElement />
+      
+            <AddressElement
+              options={{
+                mode: "shipping",
+              }}
+            /> */}{" "}
+          <div className="mt-4 text-center text-textColor  mb-2 text-md">
+            {languageData.paymentMethod[language]}
+          </div>
+          <PaymentElement />
+          {/* <SolidButton
+              mt={5}
+              text={
+                isProcessing
+                  ? "Processing..."
+                  : currency == "brl"
+                  ? languageData.bookNow[language] + " R$ " + price
+                  : currency == "usd"
+                  ? languageData.bookNow[language] + " USD " + price
+                  : currency == "eur"
+                  ? languageData.bookNow[language] + " " + price + " EUR"
+                  : "null"
+              }
+              disabled={!stripe || isProcessing}
+            ></SolidButton> */}
+          <OutlinedButton
+            text={
+              isProcessing
+                ? "Processing..."
+                : currency == "brl"
+                ? languageData.bookNow[language] + " R$ " + price
+                : currency == "usd"
+                ? languageData.bookNow[language] + " USD " + price
+                : currency == "eur"
+                ? languageData.bookNow[language] + " " + price + " EUR"
+                : "null"
+            }
+            px={8}
+            py={3}
+            minWidth="140px"
+            margin="mt-4"
+            dark="darkLight"
+            textColor="text-white"
+            disabled={!stripe || isProcessing}
+            buttonCenter={true}
+          />
+          <p className="mb-6 mt-4 text-center text-textColorGray text-sm">
+            {languageData.noStress[language]}
+          </p>
+        </form>
+      </>
+    );
   }
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-2 mt-6 text-center text-textColor  text-md">
-        {languageData.billingDetails[language]}
-      </div>
-      {/*<LinkAuthenticationElement />
-
-      <AddressElement
-        options={{
-          mode: "shipping",
-        }}
-      /> */}{" "}
-      <div className="mt-4 text-center text-textColor  mb-2 text-md">
-        {languageData.paymentMethod[language]}
-      </div>
-      <PaymentElement />
-      {/* <SolidButton
-        mt={5}
-        text={
-          isProcessing
-            ? "Processing..."
-            : currency == "brl"
-            ? languageData.bookNow[language] + " R$ " + price
-            : currency == "usd"
-            ? languageData.bookNow[language] + " USD " + price
-            : currency == "eur"
-            ? languageData.bookNow[language] + " " + price + " EUR"
-            : "null"
-        }
-        disabled={!stripe || isProcessing}
-      ></SolidButton> */}
-      <OutlinedButton
-        text={
-          isProcessing
-            ? "Processing..."
-            : currency == "brl"
-            ? languageData.bookNow[language] + " R$ " + price
-            : currency == "usd"
-            ? languageData.bookNow[language] + " USD " + price
-            : currency == "eur"
-            ? languageData.bookNow[language] + " " + price + " EUR"
-            : "null"
-        }
-        px={8}
-        py={3}
-        minWidth="140px"
-        margin="mt-4"
-        dark="darkLight"
-        textColor="text-white"
-        disabled={!stripe || isProcessing}
-        buttonCenter={true}
-      />
-      <p className="mb-6 mt-4 text-center text-textColorGray text-sm">
-        {languageData.noStress[language]}
-      </p>
-    </form>
-  );
 }

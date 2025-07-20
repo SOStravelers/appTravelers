@@ -11,6 +11,7 @@ export default function StripeForm({
   intentType,
   data,
   customer,
+  paymentIntent,
 }) {
   const { language, currency, user } = useStore();
   const [appearance, setAppearance] = useState(null);
@@ -61,6 +62,7 @@ export default function StripeForm({
         intentType={intentType}
         data={data}
         customer={customer}
+        paymentIntent={paymentIntent}
       />
     </Elements>
   );

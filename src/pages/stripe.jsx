@@ -15,6 +15,7 @@ export default function Stripe() {
   const [intentType, setIntentType] = useState(null);
   const [customer, setCustomer] = useState(null);
   const [data, setData] = useState(null);
+  const [paymentIntent, setPaymentIntent] = useState(null);
   const router = useRouter();
   const initialized = useRef(false);
   const [loading, setLoading] = useState(true);
@@ -92,6 +93,7 @@ export default function Stripe() {
       setClientSecret(response.data.clientSecret);
       setIntentType(response.data.intentType);
       setCustomer(response.data.customer);
+      setPaymentIntent(response.data.paymentIntent);
     } catch (error) {
       console.error("Error al crear el PaymentIntent:", error.message);
       setError(true);
@@ -115,25 +117,30 @@ export default function Stripe() {
         />
       </div>
     );
+  } else {
+    return (
+      <div
+        className={`px-6 flex flex-col items-center
+        ${loading ? opacityAnimation : displayAnimation}
+      `}
+      >
+        {clientSecret ? (
+          <StripeForm
+            clientSecret={clientSecret}
+            intentType={intentType}
+            customer={customer}
+            paymentIntent={paymentIntent}
+            data={data}
+            onPaymentSuccess={() => {
+              localStorage.removeItem("fromContactInfo");
+            }}
+          />
+        ) : (
+          <div className="min-h-screen flex items-center justify-center bg-backgroundP">
+            <div className="w-10 h-10 border-4 border-t-transparent border-textColor rounded-full animate-spin"></div>
+          </div>
+        )}
+      </div>
+    );
   }
-
-  return (
-    <div
-      className={`px-6 flex flex-col items-center
-      ${loading ? opacityAnimation : displayAnimation}
-    `}
-    >
-      {clientSecret && (
-        <StripeForm
-          clientSecret={clientSecret}
-          intentType={intentType}
-          customer={customer}
-          data={data}
-          onPaymentSuccess={() => {
-            localStorage.removeItem("fromContactInfo");
-          }}
-        />
-      )}
-    </div>
-  );
 }

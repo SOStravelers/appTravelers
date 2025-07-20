@@ -106,8 +106,9 @@ export default function CheckoutForm({
       <div className="mb-2 mt-6 text-center text-textColor  text-md">
         {languageData.billingDetails[language]}
       </div>
-      <LinkAuthenticationElement />
-      {/* <AddressElement
+      {/*<LinkAuthenticationElement />
+
+      <AddressElement
         options={{
           mode: "shipping",
         }}

@@ -6,7 +6,12 @@ import { useStore } from "@/store";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-export default function StripeForm({ clientSecret }) {
+export default function StripeForm({
+  clientSecret,
+  intentType,
+  data,
+  customer,
+}) {
   const { language, currency, user } = useStore();
   const [appearance, setAppearance] = useState(null);
 
@@ -51,7 +56,12 @@ export default function StripeForm({ clientSecret }) {
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <CheckoutForm clientSecret={clientSecret} />
+      <CheckoutForm
+        clientSecret={clientSecret}
+        intentType={intentType}
+        data={data}
+        customer={customer}
+      />
     </Elements>
   );
 }

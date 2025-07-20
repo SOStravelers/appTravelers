@@ -12,12 +12,15 @@ import {
 
 export default function Stripe() {
   const [clientSecret, setClientSecret] = useState(null);
+  const [intentType, setIntentType] = useState(null);
+  const [customer, setCustomer] = useState(null);
+  const [data, setData] = useState(null);
   const router = useRouter();
   const initialized = useRef(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const { service, currency } = useStore();
+  const { service, currency, language } = useStore();
 
   function getFinalCost() {
     if (
@@ -80,13 +83,15 @@ export default function Stripe() {
         clientData: service.clientData,
         startTime: service.startTime,
         selectedData: service.selectedData,
-        language: service.language,
+        language: language,
         subservice: service._id,
       };
-
+      setData(laData);
       const response = await StripeService.createPaymentIntent(laData, true);
       console.log("wena54", response.data);
       setClientSecret(response.data.clientSecret);
+      setIntentType(response.data.intentType);
+      setCustomer(response.data.customer);
     } catch (error) {
       console.error("Error al crear el PaymentIntent:", error.message);
       setError(true);
@@ -121,6 +126,9 @@ export default function Stripe() {
       {clientSecret && (
         <StripeForm
           clientSecret={clientSecret}
+          intentType={intentType}
+          customer={customer}
+          data={data}
           onPaymentSuccess={() => {
             localStorage.removeItem("fromContactInfo");
           }}

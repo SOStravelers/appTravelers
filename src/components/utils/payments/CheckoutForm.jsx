@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 import {
   PaymentElement,
   AddressElement,
@@ -11,11 +12,16 @@ import {
 import StripeService from "@/services/StripeService";
 import SolidButton from "../buttons/SolidButton";
 import OutlinedButton from "../buttons/OutlinedButton";
-import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
 import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
-export default function CheckoutForm(clientSecret) {
+export default function CheckoutForm({
+  clientSecret,
+  intentType,
+  data,
+  customer,
+}) {
+  const router = useRouter();
   const secretClient = clientSecret.clientSecret;
   const stripe = useStripe();
   const elements = useElements();
@@ -32,28 +38,30 @@ export default function CheckoutForm(clientSecret) {
 
     try {
       // Confirmar el pago con return_url
-      const { paymentIntent, error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
-          return_url: `${window.location.origin}/purchase/123123?type=stripe`,
-        },
-      });
-
-      if (error) {
-        console.error("Error confirmando el pago:", error.message);
-        toast.error("Hubo un error al procesar el pago.");
-        setIsProcessing(false);
-        return;
+      if (intentType == "setup") {
+        const { paymentIntent, error } = await stripe.confirmSetup({
+          elements,
+          confirmParams: {
+            // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
+            return_url: `${window.location.origin}/purchase/123123?type=stripe`,
+          },
+          redirect: "if_required", // 👈 esto evita redirigir si no hace falta (ideal)
+        });
+        console.log("el payment Intent", data);
+        data.customerId = customer;
+        await StripeService.chargeSavedCard(data);
+        router.push("/purchase/123123?type=stripe");
+      } else {
+        const { paymentIntent, error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
+            return_url: `${window.location.origin}/purchase/123123?type=stripe`,
+          },
+          redirect: "if_required", // 👈 esto evita redirigir si no hace falta (ideal)
+        });
+        router.push("/purchase/123123?type=stripe");
       }
-
-      console.log("Pago confirmado:", paymentIntent.id);
-
-      // Llamar a StripeService para manejar las transferencias
-      await StripeService.handleTransfers(paymentIntent.id);
-
-      console.log("Transferencias realizadas con éxito.");
-      toast.success("Pago y transferencias realizadas con éxito.");
     } catch (error) {
       console.error("Error en el flujo de pago:", error.message);
       toast.error(error.message);

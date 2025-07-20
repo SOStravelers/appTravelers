@@ -29,6 +29,20 @@ export default class StripeService {
     }
   }
 
+  // Método existente para crear el PaymentIntent
+  static async chargeSavedCard(params, auth = false) {
+    console.log("wena", access_token);
+    if (access_token) {
+      return axios.post(`${this.baseUrl}/paymentIntent/client`, params, {
+        headers: this.getHeaders(),
+      });
+    } else {
+      return axios.post(`${this.baseUrl}/paymentIntent/client`, params, {
+        headers: this.getHeaders(),
+      });
+    }
+  }
+
   // Nuevo método para manejar las transferencias
   static async handleTransfers(data, auth = false) {
     if (auth) {

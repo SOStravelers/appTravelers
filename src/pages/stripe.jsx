@@ -67,7 +67,7 @@ export default function Stripe() {
         throw new Error("Datos insuficientes para crear el pago.");
       }
 
-      const amount = getFinalCost() * 100;
+      const amount = getFinalCost();
       const currencyValue = ["brl", "usd", "eur"].includes(
         currency?.toLowerCase()
       )
@@ -85,6 +85,7 @@ export default function Stripe() {
       };
 
       const response = await StripeService.createPaymentIntent(laData, true);
+      console.log("wena54", response.data);
       setClientSecret(response.data.clientSecret);
     } catch (error) {
       console.error("Error al crear el PaymentIntent:", error.message);

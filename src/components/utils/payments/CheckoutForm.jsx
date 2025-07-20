@@ -35,7 +35,8 @@ export default function CheckoutForm(clientSecret) {
       const { paymentIntent, error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
+          // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
+          return_url: `${window.location.origin}/purchase/123123?type=stripe`,
         },
       });
 

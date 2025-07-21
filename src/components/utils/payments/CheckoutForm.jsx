@@ -103,7 +103,7 @@ export default function CheckoutForm({
   } else {
     return (
       <>
-        {loadingBooking && <FancyLoader messages={messages} />}
+        {!loadingBooking && <FancyLoader messages={messages} />}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-2 mt-6 text-center text-textColor  text-md">

@@ -28,7 +28,7 @@ export default function FancyLoader({ messages = ["Cargando..."] }) {
   const dots = ".".repeat(dotCount);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-backgroundP">
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-backgroundP z-10">
       {/* Spinner con glow */}
       <div className="relative">
         <div className="absolute inset-0 w-12 h-12 rounded-full bg-gradient-to-tr from-textColor to-transparent blur-xl opacity-30 animate-spin-slow"></div>

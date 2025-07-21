@@ -70,6 +70,7 @@ export default function CheckoutForm({
       data.customer = customer;
       data.intentType = intentType;
       data.paymentIntent = paymentIntent;
+      data.language = language;
       const response = await BookingService.create(data);
       setTimeout(() => {
         router.push("/purchase/" + response.data);

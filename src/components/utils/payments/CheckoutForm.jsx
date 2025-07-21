@@ -70,10 +70,10 @@ export default function CheckoutForm({
       data.customer = customer;
       data.intentType = intentType;
       data.paymentIntent = paymentIntent;
-      await BookingService.create(data);
+      const response = await BookingService.create(data);
       setTimeout(() => {
-        router.push("/purchase/123123?type=stripe");
-      }, 4000);
+        router.push("/purchase/" + response.data);
+      }, 3500);
     } catch (error) {
       console.error("Error en el flujo de pago:", error.message);
       toast.error(error.message);
@@ -103,7 +103,7 @@ export default function CheckoutForm({
   } else {
     return (
       <>
-        {!loadingBooking && <FancyLoader messages={messages} />}
+        {loadingBooking && <FancyLoader messages={messages} />}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-2 mt-6 text-center text-textColor  text-md">

@@ -3,6 +3,7 @@ import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import EventCard from "@/components/utils/cards/EventCard";
 import AddToCalendarButton from "@/components/utils/buttons/AddToCalendarButton";
+import BookingService from "@/services/BookingService";
 import {
   delay,
   opacityAnimation,
@@ -67,6 +68,22 @@ export default function PurchasePage() {
     setLoading(true);
     return delay(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    getBooking();
+  }, []);
+
+  const getBooking = async () => {
+    try {
+      console.log("wena");
+      const id = router.query.id;
+
+      const response = await BookingService.getByToken(id);
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const shareLink = () => {
     const text = `¡Ya tengo mi entrada para ${event.title} en ${event.location}, el ${formattedDate} a las ${formattedTime}! Nos vemos ahí 🚀`;

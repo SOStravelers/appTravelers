@@ -26,6 +26,12 @@ export default class BookingService {
       });
     }
   }
+
+  static async getByToken(id) {
+    return axios.get(`${this.baseUrl}/getData?token=${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
   static async createWorkerBooking(params) {
     console.log("agendando");
     return axios.post(`${this.baseUrl}/worker/create`, params, {

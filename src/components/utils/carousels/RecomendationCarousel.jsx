@@ -4,12 +4,14 @@ import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecome
 import SubserviceService from "@/services/SubserviceService";
 import { useStore } from "@/store";
 import languageData from "@/language/subServices.json";
-const RecomendationCarousel = (services = []) => {
+
+const RecomendationCarousel = () => {
   const store = useStore();
   const router = useRouter();
   const { language } = store;
   const carouselRef = useRef(null);
   const [servicesToDisplay, setServicesToDisplay] = useState([]);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -42,14 +44,15 @@ const RecomendationCarousel = (services = []) => {
       </div>
       <div
         ref={carouselRef}
-        className="flex overflow-x-auto space-x-4 p-2 scroll-smooth snap-x snap-mandatory"
-        style={{ scrollbarWidth: "none" }}
+        className="flex overflow-x-auto space-x-4 p-2 scroll-smooth snap-x snap-mandatory no-scrollbar"
       >
         {servicesToDisplay.map((service, index) => (
-          <div className="min-w-[280px] max-w-[320px] snap-start">
+          <div
+            key={service._id}
+            className="min-w-[280px] max-w-[320px] snap-start"
+          >
             <ServiceCardRecomendation
               onClick={() => router.push(`/service-preview/${service._id}`)}
-              key={service._id}
               service={service}
               index={index}
             />

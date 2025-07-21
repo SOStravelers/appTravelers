@@ -2679,11 +2679,11 @@ export const LogoSos = ({ ...props }) => (
         y2="177.227"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#0057FF" stop-opacity="0.15" />
-        <stop offset="0.07" stopColor="#0056FD" stop-opacity="0.3" />
-        <stop offset="0.51" stopColor="#00A0D5" stop-opacity="0.9" />
-        <stop offset="0.93" stopColor="#0056FD" stop-opacity="0.3" />
-        <stop offset="1" stopColor="#0056FD" stop-opacity="0.15" />
+        <stop stopColor="#0057FF" stopOpacity="0.15" />
+        <stop offset="0.07" stopColor="#0056FD" stopOpacity="0.3" />
+        <stop offset="0.51" stopColor="#00A0D5" stopOpacity="0.9" />
+        <stop offset="0.93" stopColor="#0056FD" stopOpacity="0.3" />
+        <stop offset="1" stopColor="#0056FD" stopOpacity="0.15" />
       </linearGradient>
     </defs>
   </svg>
@@ -2713,11 +2713,11 @@ export const LogoSosWhite = ({ ...props }) => (
         y2="177.227"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#0057FF" stop-opacity="0.15" />
-        <stop offset="0.07" stopColor="#0056FD" stop-opacity="0.3" />
-        <stop offset="0.51" stopColor="#00A0D5" stop-opacity="0.9" />
-        <stop offset="0.93" stopColor="#0056FD" stop-opacity="0.3" />
-        <stop offset="1" stopColor="#0056FD" stop-opacity="0.15" />
+        <stop stopColor="#0057FF" stopOpacity="0.15" />
+        <stop offset="0.07" stopColor="#0056FD" stopOpacity="0.3" />
+        <stop offset="0.51" stopColor="#00A0D5" stopOpacity="0.9" />
+        <stop offset="0.93" stopColor="#0056FD" stopOpacity="0.3" />
+        <stop offset="1" stopColor="#0056FD" stopOpacity="0.15" />
       </linearGradient>
     </defs>
   </svg>

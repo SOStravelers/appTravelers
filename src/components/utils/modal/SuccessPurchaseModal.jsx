@@ -11,7 +11,6 @@ export default function SuccessPurchaseModal() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("la superQuery", router.query);
     if (router.query.success) {
       setVisible(true);
     }

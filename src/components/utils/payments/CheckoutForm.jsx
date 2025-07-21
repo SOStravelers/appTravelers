@@ -10,6 +10,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import StripeService from "@/services/StripeService";
+import { formatPrice } from "@/utils/format";
 import OutlinedButton from "../buttons/OutlinedButton";
 import BookingService from "@/services/BookingService";
 import { toast } from "react-toastify";
@@ -119,32 +120,13 @@ export default function CheckoutForm({
             {languageData.paymentMethod[language]}
           </div>
           <PaymentElement />
-          {/* <SolidButton
-              mt={5}
-              text={
-                isProcessing
-                  ? "Processing..."
-                  : currency == "brl"
-                  ? languageData.bookNow[language] + " R$ " + price
-                  : currency == "usd"
-                  ? languageData.bookNow[language] + " USD " + price
-                  : currency == "eur"
-                  ? languageData.bookNow[language] + " " + price + " EUR"
-                  : "null"
-              }
-              disabled={!stripe || isProcessing}
-            ></SolidButton> */}
           <OutlinedButton
             text={
               isProcessing
                 ? "Processing..."
-                : currency == "brl"
-                ? languageData.bookNow[language] + " R$ " + price
-                : currency == "usd"
-                ? languageData.bookNow[language] + " USD " + price
-                : currency == "eur"
-                ? languageData.bookNow[language] + " " + price + " EUR"
-                : "null"
+                : languageData.bookNow[language] +
+                  ":  " +
+                  formatPrice(0, currency)
             }
             px={8}
             py={3}
@@ -155,7 +137,7 @@ export default function CheckoutForm({
             disabled={!stripe || isProcessing}
             buttonCenter={true}
           />
-          <p className="mb-6 mt-4 text-center text-textColorGray text-sm">
+          <p className="mb-6 mt-4 text-textColorGray text-sm">
             {languageData.noStress[language]}
           </p>
         </form>

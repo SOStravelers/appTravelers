@@ -225,7 +225,7 @@ export default function ServicePreviewPage() {
         priceLabel={`${
           languageData.bookingButton.title[language]
         } ${formatPrice(price[currency], currency)}`}
-        subtext={languageData.bookingButton.subtitle[language]}
+        // subtext={languageData.bookingButton.subtitle[language]}
         tagLine={
           subService.canCancel
             ? languageData.bookingButton.cancel[language]

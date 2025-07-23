@@ -1,0 +1,52 @@
+{
+  "priceTab": {
+    "title": {
+      "pending": {
+        "es": "Resumen del próximo cobro",
+        "en": "Summary of the upcoming charge",
+        "pt": "Resumo da próxima cobrança",
+        "fr": "Résumé du prochain paiement",
+        "de": "Übersicht der nächsten Abbuchung"
+      },
+      "confirmed": {
+        "es": "Pago confirmado",
+        "en": "Payment confirmed",
+        "pt": "Pagamento confirmado",
+        "fr": "Paiement confirmé",
+        "de": "Zahlung bestätigt"
+      }
+    },
+    "table": {
+      "section1": {
+        "es": "Valor del servicio",
+        "en": "Service value",
+        "pt": "Valor do serviço",
+        "fr": "Valeur du service",
+        "de": "Servicewert"
+      },
+      "section2": {
+        "es": "Tasas y comisiones",
+        "en": "Taxes and commissions",
+        "pt": "Taxas e comissões",
+        "fr": "Taxes et commissions",
+        "de": "Steuern und Provisionen"
+      },
+      "total": {
+        "confirmed": {
+          "es": "Total pagado",
+          "en": "Total paid",
+          "pt": "Total pago",
+          "fr": "Total payé",
+          "de": "Gesamtbetrag"
+        },
+        "pending": {
+          "es": "Total a cobrar",
+          "en": "Total to charge",
+          "pt": "Total a cobrar",
+          "fr": "Total à payer",
+          "de": "Gesamtbetrag"
+        }
+      }
+    }
+  }
+}

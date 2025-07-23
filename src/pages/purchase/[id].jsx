@@ -3,7 +3,9 @@ import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import EventCard from "@/components/utils/cards/EventCard";
 import AddToCalendarButton from "@/components/utils/buttons/AddToCalendarButton";
+import TablePriceSummary from "@/components/utils/cards/tablePrice";
 import BookingService from "@/services/BookingService";
+import languageData from "@/language/purchase.json";
 import {
   delay,
   opacityAnimation,
@@ -20,9 +22,10 @@ import {
 } from "react-icons/fa";
 
 export default function PurchasePage() {
-  const { language, user } = useStore();
+  const { language, user, currency } = useStore();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [booking, setBooking] = useState(null);
 
   const event = {
     title: "Soldierbeat",
@@ -32,7 +35,7 @@ export default function PurchasePage() {
   };
 
   const reservation = {
-    paymentConfirmed: true, // Cambia a true para simular una compra pagada
+    paymentConfirmed: false, // Cambia a true para simular una compra pagada
     paymentDueDate: "2025-07-25T23:00:00", // Solo importa si no está pagado
   };
   const payment = {
@@ -80,6 +83,7 @@ export default function PurchasePage() {
 
       const response = await BookingService.getByToken(id);
       console.log(response.data);
+      setBooking(response.data);
     } catch (err) {
       console.log(err);
     }
@@ -96,16 +100,16 @@ export default function PurchasePage() {
       className={`min-h-screen px-4 py-12 flex flex-col items-center justify-center bg-backgroundP
       ${loading ? opacityAnimation : displayAnimation}`}
     >
-      <div className="bg-white shadow-md rounded-2xl max-w-2xl w-full p-6 md:p-10 border border-gray-200">
+      <div className="bg-backgroundS shadow-md rounded-2xl max-w-2xl w-full p-6 md:p-10 border border-gray-200">
         {/* Encabezado */}
         <div className="text-center mb-8">
           <FaCheckCircle className="text-green-500 text-5xl mx-auto mb-3" />
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+          <h1 className="text-3xl md:text-4xl font-bold text-textColor">
             {reservation.paymentConfirmed
               ? "¡Compra confirmada!"
               : "¡Reserva realizada!"}
           </h1>
-          <p className="text-gray-600 mt-2 text-sm md:text-base">
+          <p className="text-textColorGray mt-2 text-sm md:text-base">
             {reservation.paymentConfirmed
               ? "Tu entrada ha sido procesada exitosamente."
               : "Tu lugar ha sido reservado, el pago se realizará más adelante."}
@@ -113,7 +117,7 @@ export default function PurchasePage() {
         </div>
 
         {/* Tarjeta del evento */}
-        <EventCard {...event} isClosed={true} onClick={() => {}} />
+        <EventCard {...booking} isClosed={true} onClick={() => {}} />
 
         {/* Detalles visuales */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
@@ -144,15 +148,15 @@ export default function PurchasePage() {
         </div>
 
         {/* Estado de pago */}
-        <div className="mt-6">
+        <div className="mt-6 ">
           {reservation.paymentConfirmed ? (
-            <div className="flex items-center gap-2 text-green-600 text-sm">
+            <div className="flex items-center gap-2 text-green-500 text-sm">
               <FaCheckCircle />
               <span className="font-semibold">Pago confirmado</span>
             </div>
           ) : (
-            <div className="flex items-start gap-2 text-yellow-700 bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-sm mt-2">
-              <FaRegCalendarAlt className="mt-1" />
+            <div className="flex items-start gap-2 text-yellow-700 bg-yellow-100 p-4 rounded-lg border border-yellow-200 text-sm ">
+              <FaRegCalendarAlt size={40} style={{ marginTop: "-10px" }} />
               <div>
                 <p className="font-semibold">Pago pendiente</p>
                 <p className="mt-1 text-gray-700">
@@ -178,43 +182,10 @@ export default function PurchasePage() {
 
         {/* Resumen del monto */}
         {/* Desglose contable */}
-        <div className="mt-6 bg-gray-50 border border-gray-200 rounded-lg p-5 text-sm text-gray-800">
-          <p className="font-semibold text-base mb-4">
-            {reservation.paymentConfirmed
-              ? "Resumen del pago"
-              : "Resumen del próximo cobro"}
-          </p>
-
-          <div className="flex justify-between py-1 border-b border-dashed border-gray-300">
-            <span>Valor del servicio</span>
-            <span>R$ {payment.net.toFixed(2)}</span>
-          </div>
-
-          <div className="flex justify-between py-1 border-b border-dashed border-gray-300">
-            <span>
-              Tasas y comisiones
-              <span className="text-gray-500 text-xs ml-1">
-                (
-                {(
-                  ((payment.fee || payment.total - payment.net) /
-                    payment.total) *
-                  100
-                ).toFixed(1)}
-                %)
-              </span>
-            </span>
-            <span>
-              R$ {(payment.fee || payment.total - payment.net).toFixed(2)}
-            </span>
-          </div>
-
-          <div className="flex justify-between py-2 mt-2 font-bold text-base text-gray-900">
-            <span>
-              {reservation.paymentConfirmed ? "Total pagado" : "Total a cobrar"}
-            </span>
-            <span>R$ {payment.total.toFixed(2)}</span>
-          </div>
-        </div>
+        <TablePriceSummary
+          confirmed={booking?.statusn || "confirmed"}
+          price={booking?.price || {}}
+        />
 
         {/* Código QR (si está pagado) */}
         {reservation.paymentConfirmed && (

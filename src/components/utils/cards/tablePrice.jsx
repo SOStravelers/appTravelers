@@ -1,7 +1,7 @@
 import { useStore } from "@/store";
 import languageData from "@/language/purchase.json";
 import { formatPrice } from "@/utils/format";
-export default function tablePrice({ confirmed, price }) {
+export default function TablePriceSummary({ confirmed, price }) {
   const { language, currency } = useStore();
   return (
     <div className="mt-6 bg-backgroundModal border dark:border-gray-500 rounded-lg p-5 text-sm text-textColor">
@@ -19,7 +19,7 @@ export default function tablePrice({ confirmed, price }) {
         <div className="w-[70%]">
           {languageData.priceTab.table.section2[language]}
           <span className="text-gray-400 text-xs ml-1">
-            ({price.percentage.toFixed(1)}%)
+            ({price?.percentage?.toFixed(1)}%)
           </span>
         </div>
         <div className="w-[30%] text-right">

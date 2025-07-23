@@ -2,6 +2,8 @@ import { FaTicketAlt } from "react-icons/fa";
 import Image from "next/image";
 import clsx from "clsx";
 import { useStore } from "@/store";
+import { formatearFechaCortaDesdeISO } from "@/utils/format";
+
 export default function EventCard({
   subserviceData,
   date, // formato ISO: "2025-07-17T22:00:00"

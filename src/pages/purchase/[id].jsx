@@ -35,7 +35,7 @@ export default function PurchasePage() {
   };
 
   const reservation = {
-    paymentConfirmed: false, // Cambia a true para simular una compra pagada
+    paymentConfirmed: true, // Cambia a true para simular una compra pagada
     paymentDueDate: "2025-07-25T23:00:00", // Solo importa si no está pagado
   };
   const payment = {

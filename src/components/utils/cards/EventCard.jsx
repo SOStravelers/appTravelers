@@ -2,18 +2,21 @@ import { FaTicketAlt } from "react-icons/fa";
 import Image from "next/image";
 import clsx from "clsx";
 import { useStore } from "@/store";
-import { formatearFechaCortaDesdeISO } from "@/utils/format";
+import {
+  formatearFechaCortaDesdeISO,
+  formatearFechaCortaInteligente,
+} from "@/utils/format";
 
 export default function EventCard({
   subserviceData,
-  date, // formato ISO: "2025-07-17T22:00:00"
+  startTime,
   location,
   imgUrl,
   isClosed = false,
   onClick,
 }) {
   const { language } = useStore();
-  const eventDate = new Date(date);
+  const eventDate = new Date(startTime?.isoTime || null);
   const formattedDate = eventDate.toLocaleDateString("pt-BR", {
     day: "2-digit",
     month: "long",
@@ -37,10 +40,8 @@ export default function EventCard({
       <div className="px-2 py-3">
         <h3 className="text-lg text-textColor font-semibold mb-1">
           {subserviceData?.name[language]} |{" "}
-          {eventDate.toLocaleDateString("pt-BR", { weekday: "long" })} |{" "}
-          {eventDate.getDate()}{" "}
-          {eventDate.toLocaleDateString("pt-BR", { month: "long" })} |{" "}
-          {location}
+          {formatearFechaCortaInteligente(startTime?.isoTime).fechaInteligente}{" "}
+          | {startTime.formatedTime}
         </h3>
 
         <p className="text-gray-600 text-sm mb-2">

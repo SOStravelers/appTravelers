@@ -10,6 +10,23 @@ import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
 import { ptBR, enUS, de, fr, es } from "date-fns/locale";
 import LanguageData from "@/language/booking.json";
 
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+// Extensiones necesarias
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(localizedFormat);
+
+// Idiomas
+import "dayjs/locale/es";
+import "dayjs/locale/pt";
+import "dayjs/locale/fr";
+import "dayjs/locale/de";
+import "dayjs/locale/en"; // importante para compatibilidad
+
 export const fullName = (data) => {
   if (!data) return "";
   const { first, last } = data;
@@ -95,13 +112,163 @@ export const getDayOfWeek = (date, language) => {
 
 //NUEVAS
 
+export const zonas = {
+  br: "America/Sao_Paulo",
+  cl: "America/Santiago",
+  us: "America/New_York",
+  es: "Europe/Madrid",
+  de: "Europe/Berlin",
+  fr: "Europe/Paris",
+  ar: "America/Argentina/Buenos_Aires",
+  mx: "America/Mexico_City",
+};
+
+export const locales = {
+  es: "es-ES",
+  pt: "pt-BR",
+  fr: "fr-FR",
+  de: "de-DE",
+  en: "en-US",
+};
+
+export const diasSemana = {
+  es: [
+    "domingo",
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado",
+  ],
+  pt: [
+    "domingo",
+    "segunda-feira",
+    "terça-feira",
+    "quarta-feira",
+    "quinta-feira",
+    "sexta-feira",
+    "sábado",
+  ],
+  fr: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+  de: [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag",
+  ],
+  en: [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ],
+};
+
+export const meses = {
+  es: [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ],
+  pt: [
+    "janeiro",
+    "fevereiro",
+    "março",
+    "abril",
+    "maio",
+    "junho",
+    "julho",
+    "agosto",
+    "setembro",
+    "outubro",
+    "novembro",
+    "dezembro",
+  ],
+  fr: [
+    "janvier",
+    "février",
+    "mars",
+    "avril",
+    "mai",
+    "juin",
+    "juillet",
+    "août",
+    "septembre",
+    "octobre",
+    "novembre",
+    "décembre",
+  ],
+  de: [
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember",
+  ],
+  en: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
+};
+
+const nombresPaises = {
+  br: "Brasil",
+  cl: "Chile",
+  us: "Estados Unidos",
+  es: "España",
+  de: "Alemania",
+  fr: "Francia",
+  ar: "Argentina",
+  mx: "México",
+};
+
+const formatos = {
+  en: (d, m, y, dw, pais) => `${dw}, ${m} ${d}, ${y} (local time in ${pais})`,
+  es: (d, m, y, dw, pais) => `${dw}, ${d} de ${m} de ${y} (hora de ${pais})`,
+  fr: (d, m, y, dw, pais) => `${dw} ${d} ${m} ${y} (heure locale ${pais})`,
+  de: (d, m, y, dw, pais) => `${dw}, ${d}. ${m} ${y} (Ortszeit in ${pais})`,
+  pt: (d, m, y, dw, pais) => `${dw}, ${d} de ${m} de ${y} (hora de ${pais})`,
+};
+
 export const formatearFechaCompletaDesdeISO = (
   isoString,
   idioma = "pt",
   pais = "br"
 ) => {
   const fechaUTC = new Date(isoString);
-
   if (isNaN(fechaUTC.getTime())) {
     return {
       formatedDate: "",
@@ -109,23 +276,9 @@ export const formatearFechaCompletaDesdeISO = (
     };
   }
 
-  // Mapear país a timezone e identificación para texto
-  const paises = {
-    br: { timeZone: "America/Sao_Paulo", texto: "Brasil" },
-    cl: { timeZone: "America/Santiago", texto: "Chile" },
-    us: { timeZone: "America/New_York", texto: "Estados Unidos" },
-    es: { timeZone: "Europe/Madrid", texto: "España" },
-    de: { timeZone: "Europe/Berlin", texto: "Alemania" },
-    fr: { timeZone: "Europe/Paris", texto: "Francia" },
-    ar: { timeZone: "America/Argentina/Buenos_Aires", texto: "Argentina" },
-    mx: { timeZone: "America/Mexico_City", texto: "México" },
-  };
+  const timeZone = zonas[pais] || zonas.br;
+  const paisTexto = nombresPaises[pais] || "Brasil";
 
-  const configPais = paises[pais] || paises.br;
-  const timeZone = configPais.timeZone;
-  const paisTexto = configPais.texto;
-
-  // Obtener partes de fecha local correctamente desde UTC
   const partes = new Intl.DateTimeFormat("en-US", {
     timeZone,
     year: "numeric",
@@ -151,161 +304,23 @@ export const formatearFechaCompletaDesdeISO = (
     valores.second
   );
 
-  const meses = {
-    en: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ],
-    es: [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ],
-    fr: [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
-    ],
-    de: [
-      "Januar",
-      "Februar",
-      "März",
-      "April",
-      "Mai",
-      "Juni",
-      "Juli",
-      "August",
-      "September",
-      "Oktober",
-      "November",
-      "Dezember",
-    ],
-    pt: [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ],
-  };
-
-  const diasSemana = {
-    en: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ],
-    es: [
-      "Domingo",
-      "Lunes",
-      "Martes",
-      "Miércoles",
-      "Jueves",
-      "Viernes",
-      "Sábado",
-    ],
-    fr: [
-      "Dimanche",
-      "Lundi",
-      "Mardi",
-      "Mercredi",
-      "Jeudi",
-      "Vendredi",
-      "Samedi",
-    ],
-    de: [
-      "Sonntag",
-      "Montag",
-      "Dienstag",
-      "Mittwoch",
-      "Donnerstag",
-      "Freitag",
-      "Samstag",
-    ],
-    pt: [
-      "Domingo",
-      "Segunda-feira",
-      "Terça-feira",
-      "Quarta-feira",
-      "Quinta-feira",
-      "Sexta-feira",
-      "Sábado",
-    ],
-  };
-
-  const formatos = {
-    en: (d, m, y, dw, pais) => `${dw}, ${m} ${d}, ${y} (local time in ${pais})`,
-    es: (d, m, y, dw, pais) => `${dw}, ${d} de ${m} de ${y} (hora de ${pais})`,
-    fr: (d, m, y, dw, pais) => `${dw} ${d} ${m} ${y} (heure locale ${pais})`,
-    de: (d, m, y, dw, pais) => `${dw}, ${d}. ${m} ${y} (Ortszeit in ${pais})`,
-    pt: (d, m, y, dw, pais) => `${dw}, ${d} de ${m} de ${y} (hora de ${pais})`,
-  };
-
   const dia = fechaLocal.getDate();
-  const mesTexto = meses[idioma][fechaLocal.getMonth()];
+  const mesTexto = meses[idioma]?.[fechaLocal.getMonth()] || "";
   const año = fechaLocal.getFullYear();
-  const diaSemanaTexto = diasSemana[idioma][fechaLocal.getDay()];
-  const formatedDate = formatos[idioma](
-    dia,
-    mesTexto,
-    año,
-    diaSemanaTexto,
-    paisTexto
+  const diaSemanaTexto = diasSemana[idioma]?.[fechaLocal.getDay()] || "";
+
+  const formatedDate =
+    formatos[idioma]?.(dia, mesTexto, año, diaSemanaTexto, paisTexto) || "";
+
+  const formatedTime = fechaLocal.toLocaleTimeString(
+    locales[idioma] || "pt-BR",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone,
+    }
   );
-
-  const locales = {
-    es: "es-CL",
-    en: "en-US",
-    pt: "pt-BR",
-    fr: "fr-FR",
-    de: "de-DE",
-  };
-
-  const formatedTime = fechaLocal.toLocaleTimeString(locales[idioma], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone,
-  });
 
   return {
     formatedDate,
@@ -375,7 +390,6 @@ export const formatearFechaCortaDesdeISO = (
   pais = "br"
 ) => {
   const fechaUTC = new Date(isoString);
-
   if (isNaN(fechaUTC.getTime())) {
     return {
       formatedDate: "",
@@ -384,28 +398,9 @@ export const formatearFechaCortaDesdeISO = (
     };
   }
 
-  const paises = {
-    br: { timeZone: "America/Sao_Paulo", texto: "Brasil" },
-    cl: { timeZone: "America/Santiago", texto: "Chile" },
-    us: { timeZone: "America/New_York", texto: "Estados Unidos" },
-    es: { timeZone: "Europe/Madrid", texto: "España" },
-    de: { timeZone: "Europe/Berlin", texto: "Alemania" },
-    fr: { timeZone: "Europe/Paris", texto: "Francia" },
-    ar: { timeZone: "America/Argentina/Buenos_Aires", texto: "Argentina" },
-    mx: { timeZone: "America/Mexico_City", texto: "México" },
-  };
-
-  const locales = {
-    es: "es-ES",
-    en: "en-US",
-    pt: "pt-BR",
-    fr: "fr-FR",
-    de: "de-DE",
-  };
-
-  const configPais = paises[pais] || paises.br;
-  const timeZone = configPais.timeZone;
-  const paisTexto = configPais.texto;
+  const timeZone = zonas[pais] || zonas.br;
+  const paisTexto = nombresPaises[pais] || "Brasil";
+  const locale = locales[idioma] || "pt-BR";
 
   const partes = new Intl.DateTimeFormat("en-US", {
     timeZone,
@@ -432,155 +427,22 @@ export const formatearFechaCortaDesdeISO = (
     valores.second
   );
 
-  const meses = {
-    en: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ],
-    es: [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ],
-    fr: [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
-    ],
-    de: [
-      "Januar",
-      "Februar",
-      "März",
-      "April",
-      "Mai",
-      "Juni",
-      "Juli",
-      "August",
-      "September",
-      "Oktober",
-      "November",
-      "Dezember",
-    ],
-    pt: [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
-    ],
-  };
-
-  const diasSemana = {
-    en: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ],
-    es: [
-      "Domingo",
-      "Lunes",
-      "Martes",
-      "Miércoles",
-      "Jueves",
-      "Viernes",
-      "Sábado",
-    ],
-    fr: [
-      "Dimanche",
-      "Lundi",
-      "Mardi",
-      "Mercredi",
-      "Jeudi",
-      "Vendredi",
-      "Samedi",
-    ],
-    de: [
-      "Sonntag",
-      "Montag",
-      "Dienstag",
-      "Mittwoch",
-      "Donnerstag",
-      "Freitag",
-      "Samstag",
-    ],
-    pt: [
-      "Domingo",
-      "Segunda-feira",
-      "Terça-feira",
-      "Quarta-feira",
-      "Quinta-feira",
-      "Sexta-feira",
-      "Sábado",
-    ],
-  };
-
-  const formatos = {
-    en: (d, m, y, dw, pais) => `${dw}, ${m} ${d}, ${y} (local time in ${pais})`,
-    es: (d, m, y, dw, pais) => `${dw}, ${d} de ${m} de ${y} (hora de ${pais})`,
-    fr: (d, m, y, dw, pais) => `${dw} ${d} ${m} ${y} (heure locale ${pais})`,
-    de: (d, m, y, dw, pais) => `${dw}, ${d}. ${m} ${y} (Ortszeit in ${pais})`,
-    pt: (d, m, y, dw, pais) => `${dw}, ${d} de ${m} de ${y} (hora de ${pais})`,
-  };
-
   const dia = fechaLocal.getDate();
-  const mesTexto = meses[idioma][fechaLocal.getMonth()];
+  const mesTexto = meses[idioma]?.[fechaLocal.getMonth()] ?? "";
   const año = fechaLocal.getFullYear();
-  const diaSemanaTexto = diasSemana[idioma][fechaLocal.getDay()];
-  const formatedDate = formatos[idioma](
-    dia,
-    mesTexto,
-    año,
-    diaSemanaTexto,
-    paisTexto
-  );
+  const diaSemanaTexto = diasSemana[idioma]?.[fechaLocal.getDay()] ?? "";
 
-  const formatedTime = fechaLocal.toLocaleTimeString(locales[idioma], {
+  const formatedDate =
+    formatos[idioma]?.(dia, mesTexto, año, diaSemanaTexto, paisTexto) || "";
+
+  const formatedTime = fechaLocal.toLocaleTimeString(locale, {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
     timeZone,
   });
 
-  const formatedDateShort = fechaLocal.toLocaleDateString(locales[idioma], {
+  const formatedDateShort = fechaLocal.toLocaleDateString(locale, {
     timeZone,
   });
 
@@ -589,4 +451,80 @@ export const formatearFechaCortaDesdeISO = (
     formatedTime,
     formatedDateShort,
   };
+};
+
+export const formatearFechaCortaInteligente = (
+  isoString,
+  idioma = "pt",
+  pais = "br"
+) => {
+  const fechaUTC = new Date(isoString);
+  if (isNaN(fechaUTC.getTime())) {
+    return { fechaInteligente: "" };
+  }
+
+  const timeZone = zonas[pais] || zonas.br;
+  const locale = locales[idioma] || "pt-BR";
+
+  // Obtener partes locales (en UTC para extraer partes seguras)
+  const partes = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).formatToParts(fechaUTC);
+
+  const valores = {};
+  for (const p of partes) {
+    if (p.type !== "literal") valores[p.type] = parseInt(p.value, 10);
+  }
+
+  const fechaLocal = new Date(
+    valores.year,
+    valores.month - 1,
+    valores.day,
+    valores.hour,
+    valores.minute,
+    valores.second
+  );
+
+  const ahora = new Date();
+  const ahoraPartes = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).formatToParts(ahora);
+
+  const hoyValores = {};
+  for (const p of ahoraPartes) {
+    if (p.type !== "literal") hoyValores[p.type] = parseInt(p.value, 10);
+  }
+
+  const esFuturo = fechaLocal.getTime() > ahora.getTime();
+  const esMismoMes =
+    valores.year === hoyValores.year && valores.month === hoyValores.month;
+  const esMismoAño = valores.year === hoyValores.year;
+
+  const dia = fechaLocal.getDate();
+  const mesTexto = meses[idioma]?.[fechaLocal.getMonth()] ?? "";
+  const diaSemanaTexto = diasSemana[idioma]?.[fechaLocal.getDay()] ?? "";
+
+  if (esFuturo && esMismoMes) {
+    return { fechaInteligente: `${diaSemanaTexto} ${dia}` };
+  }
+
+  if (esFuturo && esMismoAño) {
+    return { fechaInteligente: `${dia} de ${mesTexto}` };
+  }
+
+  const formatoCorto = fechaLocal.toLocaleDateString(locale, {
+    timeZone,
+  });
+
+  return { fechaInteligente: formatoCorto };
 };

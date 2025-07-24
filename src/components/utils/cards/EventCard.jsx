@@ -14,6 +14,8 @@ export default function EventCard({
   imgUrl,
   isClosed = false,
   onClick,
+  fullWidth = false, // nueva prop
+  details = true,
 }) {
   const { language } = useStore();
   const eventDate = new Date(startTime?.isoTime || null);
@@ -28,8 +30,13 @@ export default function EventCard({
   });
 
   return (
-    <div className="bg-backgroundModal shadow-md rounded-xl p-2 max-w-sm mx-auto ">
-      <div className="rounded-lg overflow-hidden">
+    <div
+      className={clsx(
+        "bg-backgroundModal shadow-md rounded-xl p-3",
+        fullWidth ? "w-full" : "max-w-sm mx-auto"
+      )}
+    >
+      <div className="rounded-lg  overflow-hidden">
         <img
           src={imgUrl}
           alt={subserviceData?.name[language]}
@@ -40,33 +47,39 @@ export default function EventCard({
       <div className="px-2 py-3">
         <h3 className="text-lg text-textColor font-semibold mb-1">
           {subserviceData?.name[language]} |{" "}
-          {formatearFechaCortaInteligente(startTime?.isoTime).fechaInteligente}{" "}
-          | {startTime.formatedTime}
+          {
+            formatearFechaCortaInteligente(startTime?.isoTime, language)
+              .fechaInteligente
+          }{" "}
+          | {startTime?.formatedTime}
         </h3>
 
-        <p className="text-gray-600 text-sm mb-2">
-          {formattedDate} - {formattedTime}
-        </p>
+        {details && (
+          <>
+            <p className="text-gray-600 text-sm mb-2">
+              {formattedDate} - {formattedTime}
+            </p>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center text-sm text-gray-700">
+                <FaTicketAlt className="mr-1" />
+                {isClosed ? <span>Encerrado</span> : <span>Disponible</span>}
+              </div>
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center text-sm text-gray-700">
-            <FaTicketAlt className="mr-1" />
-            {isClosed ? <span>Encerrado</span> : <span>Disponible</span>}
-          </div>
-
-          <button
-            onClick={onClick}
-            disabled={isClosed}
-            className={clsx(
-              "px-4 py-1 text-sm rounded border font-semibold",
-              isClosed
-                ? "text-gray-400 border-gray-300 cursor-not-allowed"
-                : "text-blue-600 border-blue-500 hover:bg-blue-100"
-            )}
-          >
-            Ingresso
-          </button>
-        </div>
+              <button
+                onClick={onClick}
+                disabled={isClosed}
+                className={clsx(
+                  "px-4 py-1 text-sm rounded border font-semibold",
+                  isClosed
+                    ? "text-gray-400 border-gray-300 cursor-not-allowed"
+                    : "text-blue-600 border-blue-500 hover:bg-blue-100"
+                )}
+              >
+                Ingresso
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

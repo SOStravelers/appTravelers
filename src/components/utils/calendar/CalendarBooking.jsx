@@ -9,6 +9,7 @@ import WorkerCardBooking from "../cards/WorkerCardBooking";
 import { useStore } from "@/store";
 import moment from "moment";
 import LanguageData from "@/language/booking.json";
+import { getUserTimeData } from "@/lib/time/index.js";
 function CalendarBooking() {
   const store = useStore();
   const { language } = store;
@@ -54,22 +55,18 @@ function CalendarBooking() {
   }, [selected]);
 
   useEffect(() => {
-    if (month) {
-      const dateString = moment({
-        year: month.getFullYear(),
-        month: month.getMonth(),
-        day: month.getDate(),
-      }).format("YYYY-MM-DD");
-      getBookings(dateString);
-    }
-  }, [month]);
+    getBookings();
+  }, []);
 
-  const getBookings = (day) => {
-    BookingService.getBookingsByMonth(day).then((res) => {
+  const getBookings = () => {
+    const data = getUserTimeData(language);
+    data.range = "month";
+    console.log("wena");
+    BookingService.getBookingsByMonth(data).then((res) => {
       if (res) {
-        setBookings(res.data.docs);
-        const bookings = res.data.docs.map((booking) => {
-          return new Date(booking.date.isoDate);
+        setBookings(res.data);
+        const bookings = res.data.map((booking) => {
+          return new Date(booking.startTime.isoTime);
         });
         setBookedDays(bookings);
       }

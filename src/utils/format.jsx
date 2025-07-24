@@ -463,10 +463,9 @@ export const formatearFechaCortaInteligente = (
     return { fechaInteligente: "" };
   }
 
-  const timeZone = zonas[pais] || zonas.br;
-  const locale = locales[idioma] || "pt-BR";
+  const timeZone = zonas?.[pais] || zonas.br || "America/Sao_Paulo";
+  const locale = locales?.[idioma] || "pt-BR";
 
-  // Obtener partes locales (en UTC para extraer partes seguras)
   const partes = new Intl.DateTimeFormat("en-US", {
     timeZone,
     year: "numeric",
@@ -480,16 +479,23 @@ export const formatearFechaCortaInteligente = (
 
   const valores = {};
   for (const p of partes) {
-    if (p.type !== "literal") valores[p.type] = parseInt(p.value, 10);
+    if (p.type !== "literal") {
+      valores[p.type] = parseInt(p.value, 10);
+    }
+  }
+
+  // Si falta alguna parte, abortamos
+  if (!valores.year || !valores.month || !valores.day) {
+    return { fechaInteligente: "" };
   }
 
   const fechaLocal = new Date(
     valores.year,
     valores.month - 1,
     valores.day,
-    valores.hour,
-    valores.minute,
-    valores.second
+    valores.hour || 0,
+    valores.minute || 0,
+    valores.second || 0
   );
 
   const ahora = new Date();
@@ -510,21 +516,29 @@ export const formatearFechaCortaInteligente = (
     valores.year === hoyValores.year && valores.month === hoyValores.month;
   const esMismoAño = valores.year === hoyValores.year;
 
-  const dia = fechaLocal.getDate();
-  const mesTexto = meses[idioma]?.[fechaLocal.getMonth()] ?? "";
-  const diaSemanaTexto = diasSemana[idioma]?.[fechaLocal.getDay()] ?? "";
-
   if (esFuturo && esMismoMes) {
-    return { fechaInteligente: `${diaSemanaTexto} ${dia}` };
+    return {
+      fechaInteligente: fechaLocal.toLocaleDateString(locale, {
+        weekday: "long",
+        day: "numeric",
+        timeZone,
+      }),
+    };
   }
 
   if (esFuturo && esMismoAño) {
-    return { fechaInteligente: `${dia} de ${mesTexto}` };
+    return {
+      fechaInteligente: fechaLocal.toLocaleDateString(locale, {
+        day: "numeric",
+        month: "long",
+        timeZone,
+      }),
+    };
   }
 
-  const formatoCorto = fechaLocal.toLocaleDateString(locale, {
-    timeZone,
-  });
-
-  return { fechaInteligente: formatoCorto };
+  return {
+    fechaInteligente: fechaLocal.toLocaleDateString(locale, {
+      timeZone,
+    }),
+  };
 };

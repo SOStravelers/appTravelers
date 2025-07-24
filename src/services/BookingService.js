@@ -2,6 +2,7 @@ import axios from "axios";
 import { useStore } from "../store/index";
 import Cookies from "js-cookie";
 let access_token = Cookies.get("auth.access_token");
+import { buildQueryParams } from "@/helpers/apiHelpers";
 export default class BookingService {
   static resource = "bookings";
 
@@ -11,11 +12,12 @@ export default class BookingService {
   }
   static getHeaders() {
     return {
-      Authorization: access_token ? access_token : {},
+      Authorization: access_token ? access_token : null,
     };
   }
 
   static async create(params) {
+    console.log("hay token", access_token);
     if (access_token) {
       return axios.post(`${this.baseUrl}/create`, params, {
         headers: this.getHeaders(),
@@ -48,13 +50,11 @@ export default class BookingService {
 
   // USER BOOKINGS
 
-  static async getBookingsByMonth(date) {
-    return axios.get(
-      `${this.baseUrl}/client/month?date=${date}&page=1&limit=100`,
-      {
-        headers: this.getHeaders(),
-      }
-    );
+  static async getBookingsByMonth(data) {
+    const queryString = buildQueryParams(data);
+    return axios.get(`${this.baseUrl}/list/client?${queryString}`, {
+      headers: this.getHeaders(),
+    });
   }
 
   static async getBookingsByDay(date) {

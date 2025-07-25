@@ -10,6 +10,7 @@ import { useStore } from "@/store";
 import moment from "moment";
 import LanguageData from "@/language/booking.json";
 import { getUserTimeData } from "@/lib/time/index.js";
+import EventCard from "@/components/utils/cards/EventCard";
 function CalendarBooking() {
   const store = useStore();
   const { language } = store;
@@ -59,36 +60,47 @@ function CalendarBooking() {
   }, []);
 
   const getBookings = () => {
-    const data = getUserTimeData(language);
-    data.range = "month";
-    console.log("wena");
-    BookingService.getBookingsByMonth(data).then((res) => {
+    const baseData = getUserTimeData(language);
+    const now = moment();
+    const threeMonthsLater = moment().add(2, "months").endOf("month");
+
+    const data = {
+      ...baseData,
+      range: "custom", // puede ser cualquier valor que evite el `switch default: month`
+      start: now.startOf("day").toISOString(),
+      end: threeMonthsLater.toISOString(),
+    };
+
+    BookingService.getBookingsByRange(data).then((res) => {
       if (res) {
         setBookings(res.data);
-        const bookings = res.data.map((booking) => {
-          return new Date(booking.startTime.isoTime);
-        });
+        const bookings = res.data.map(
+          (booking) => new Date(booking.startTime.isoTime)
+        );
         setBookedDays(bookings);
       }
     });
   };
 
   const handleDayClick = (day, modifiers) => {
+    console.log("wena", day, modifiers);
     setShowBookings([]);
-    if (modifiers.booked) {
-      const dateString = moment({
-        year: day.getFullYear(),
-        month: day.getMonth(),
-        day: day.getDate(),
-      }).format("YYYY-MM-DD");
 
-      const filteredbookings = [];
-      bookings.forEach((booking) => {
-        if (booking.date.stringData === dateString) {
-          filteredbookings.push(booking);
-        }
-      });
-      setShowBookings(filteredbookings);
+    if (modifiers.booked) {
+      const clickedDate = moment(day).format("YYYY-MM-DD");
+
+      const filteredBookings = bookings
+        .filter((booking) => {
+          const bookingDate = moment(booking.startTime.isoTime).format(
+            "YYYY-MM-DD"
+          );
+          return bookingDate === clickedDate;
+        })
+        .sort((a, b) => {
+          return new Date(a.startTime.isoTime) - new Date(b.startTime.isoTime);
+        });
+
+      setShowBookings(filteredBookings);
     }
   };
 
@@ -102,56 +114,79 @@ function CalendarBooking() {
   };
 
   let footer = (
-    <p className="my-2 text-center">
+    <p className="my-2  text-textColorGray  text-center">
       {LanguageData.section3.pickDay[language]}
     </p>
   );
-  if (showBookings.length > 0) {
-    footer = <div className="w-full "></div>;
-  }
+  // if (showBookings.length > 0) {
+  //   footer = <div className="w-full "></div>;
+  // }
   return (
-    <div className="flex flex-col flex-grow justify-center">
-      <DayPicker
-        className="flex justify-center"
-        mode="single"
-        selected={selected}
-        onSelect={setSelected}
-        fromDate={fromDate}
-        toDate={toDate}
-        footer={footer}
-        modifiers={{ booked: bookedDays }}
-        modifiersStyles={{ booked: bookedStyle }}
-        onDayClick={handleDayClick}
-        onMonthChange={setMonth}
-        locale={locales[language]} // Aquí asignamos el idioma
-      />
-      <div className="justify-center md:px-10  mt-4 ">
-        {showBookings.map((booking) => (
-          <WorkerCardBooking
-            key={booking._id}
-            booking={booking}
-            subService={booking.subservice.name[language]}
-            // avatar={booking?.workerUser?.img?.imgUrl}
-            avatar={
-              booking.businessUser
-                ? booking?.businessUser?.img?.imgUrl
-                : booking?.subservice?.imgUrl
-            }
-            // status={booking.status}
-            status={booking.status}
-            date={booking.date.stringData}
-            hour={booking.startTime.stringData}
-            name={`${booking.subservice.name[language]}`}
-            location={booking?.businessUser?.businessData?.name}
-          />
-        ))}
+    <div className="w-full flex flex-col ">
+      <div className="flex justify-center items-center">
+        <DayPicker
+          className="mini-calendar  flex justify-center"
+          mode="single"
+          selected={selected}
+          onSelect={setSelected}
+          fromDate={fromDate}
+          toDate={toDate}
+          footer={footer}
+          modifiers={{ booked: bookedDays }}
+          modifiersStyles={{ booked: bookedStyle }}
+          onDayClick={handleDayClick}
+          onMonthChange={setMonth}
+          locale={locales[language]}
+          disabled={(date) => {
+            const formatted = moment(date).format("YYYY-MM-DD");
+            return !bookedDays.some(
+              (d) => moment(d).format("YYYY-MM-DD") === formatted
+            );
+          }}
+        />
       </div>
-      <div className="justify-center mt-14 px-10 md:px-20 ">
+
+      <div className="justify-center mt-3 px-10 md:px-20 ">
         <Link href={`/service-history`}>
           <OutlinedButton
             text={LanguageData.section3.buttonRecords[language]}
+            px={0}
+            py={2}
+            dark="darkLight"
+            textSize="text-sm"
+            textColor="text-white"
+            buttonCenter={true}
           />
         </Link>
+      </div>
+
+      <div className="lg:px-10  mt-4 ">
+        {showBookings.map((booking) => (
+          <EventCard
+            {...booking}
+            fullWidth={false}
+            isClosed={true}
+            onClick={() => {}}
+            details={true}
+          />
+          // <WorkerCardBooking
+          //   key={booking._id}
+          //   booking={booking}
+          //   subService={booking.subservice.name[language]}
+          //   // avatar={booking?.workerUser?.img?.imgUrl}
+          //   avatar={
+          //     booking.businessUser
+          //       ? booking?.businessUser?.img?.imgUrl
+          //       : booking?.subservice?.imgUrl
+          //   }
+          //   // status={booking.status}
+          //   status={booking.status}
+          //   date={booking.date.stringData}
+          //   hour={booking.startTime.stringData}
+          //   name={`${booking.subservice.name[language]}`}
+          //   location={booking?.businessUser?.businessData?.name}
+          // />
+        ))}
       </div>
     </div>
   );

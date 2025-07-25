@@ -1,33 +1,30 @@
-import { useState, useEffect, useCallback } from "react";
-import dayjs from "dayjs";
+import { useState, useEffect } from "react";
 import BookingService from "@/services/BookingService";
-import WorkerCardBooking from "@/components/utils/cards/WorkerCardBooking";
 import { Rings } from "react-loader-spinner";
 import { useStore } from "@/store";
 import LanguageData from "@/language/booking.json";
 import { getUserTimeData } from "@/lib/time/index.js";
+import EventCard from "@/components/utils/cards/EventCard";
+import { diasSemana } from "@/utils/format";
+
 function ListSection() {
   const [bookingsDay, setBookingsDay] = useState([]);
   const [bookingsWeek, setBookingsWeek] = useState([]);
+  const [nextBooking, setNextBooking] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { isWorker, user, language } = useStore();
+  const { language } = useStore();
 
   const getBookings = (range) => {
-    console.log("el dia");
     const data = getUserTimeData(language);
     data.range = range;
-    console.log("wena");
-    BookingService.getBookingsByMonth(data)
+    BookingService.getBookingsByRange(data)
       .then((response) => {
-        if (range == "day") {
-          setBookingsDay(response.data);
-        } else if (range == "week") {
-          setBookingsWeek(response.data);
-        }
+        if (range === "day") setBookingsDay(response.data);
+        else if (range === "week") setBookingsWeek(response.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         setLoading(false);
       });
   };
@@ -35,98 +32,109 @@ function ListSection() {
   useEffect(() => {
     getBookings("day");
     getBookings("week");
+    BookingService.getNextBooking()
+      .then((res) => setNextBooking(res.data || null))
+      .catch((err) =>
+        console.error("Error al obtener el próximo booking:", err)
+      );
   }, []);
 
+  const filteredBookingsWeek = bookingsWeek.filter(
+    (w) => !bookingsDay.some((d) => d._id === w._id)
+  );
+
+  const groupedByDay = {};
+  filteredBookingsWeek.forEach((booking) => {
+    const day = new Date(booking.startTime.isoTime).getDay();
+    if (!groupedByDay[day]) groupedByDay[day] = [];
+    groupedByDay[day].push(booking);
+  });
+
   return (
-    <div className="mt-10">
-      <h1 className="text-center max-w-lg text-xl my-5">
-        {LanguageData.section1.today[language]}
-      </h1>
+    <div className="mt-5 mb-24 flex flex-col">
+      <BookingSection
+        loading={loading}
+        title={LanguageData.section1.nextBooking[language]}
+        bookings={nextBooking ? [nextBooking] : []}
+        noDataText={LanguageData.section1.noBookings.next[language]}
+      />
+
+      <BookingSection
+        loading={loading}
+        title={LanguageData.section1.today[language]}
+        bookings={bookingsDay}
+        noDataText={LanguageData.section1.noBookings.today[language]}
+      />
+
       <div className="flex flex-col">
-        {loading ? (
-          <div className="max-w-lg flex flex-col items-center justify-center">
-            <Rings
-              width={100}
-              height={100}
-              color="#00A0D5"
-              ariaLabel="infinity-spin-loading"
-            />
-          </div>
-        ) : (
-          bookingsDay.map((booking) => (
-            <WorkerCardBooking
-              key={booking._id}
-              booking={booking}
-              subService={booking.subservice.name[language]}
-              status={booking.status}
-              service={booking.service.name[language]}
-              avatar={
-                booking.businessUser
-                  ? booking?.businessUser?.img?.imgUrl
-                  : booking?.subservice?.imgUrl
-              }
-              date={booking.date.stringData}
-              hour={booking.startTime.stringData}
-              name={`${
-                booking.businessUser
-                  ? booking?.businessUser?.businessData?.name
-                  : booking?.workerUser?.personalData?.name?.first +
-                    " " +
-                    booking?.workerUser?.personalData?.name?.last
-              }`}
-              // name={`${booking?.businessUser?.businessData?.name}`}
-            />
-          ))
-        )}
-        {!loading && bookingsDay.length === 0 && (
-          <p className="text-center text-greyText max-w-lg my-3">
-            {LanguageData.section1.noBookings.today[language]}
-          </p>
-        )}
-        <h1 className="text-center max-w-lg text-xl my-5">
+        <h1 className="text-center text-textColor max-w-lg text-xl my-5">
           {LanguageData.section1.nextDays[language]}
         </h1>
+
         {loading ? (
-          <div className="max-w-lg flex flex-col items-center justify-center">
-            <Rings
-              width={100}
-              height={100}
-              color="#00A0D5"
-              ariaLabel="infinity-spin-loading"
-            />
-          </div>
+          <Loader />
         ) : (
-          bookingsWeek.map((booking) => (
-            <WorkerCardBooking
-              key={booking._id}
-              booking={booking}
-              subService={booking.subserviceData.name[language]}
-              status={booking.status}
-              service={booking.serviceData.name[language]}
-              avatar={
-                booking.businessUser
-                  ? booking?.businessUser?.img?.imgUrl
-                  : booking?.subservice?.imgUrl
-              }
-              date={booking.startTime.formatedDate}
-              hour={booking.startTime.formatedTime}
-              // name={`${booking?.businessUser?.businessData?.name}`}
-              name={`${
-                booking.businessUser
-                  ? booking?.businessUser?.businessData?.name
-                  : booking?.workerUser?.personalData?.name?.first +
-                    " " +
-                    booking?.workerUser?.personalData?.name?.last
-              }`}
-            />
+          Object.keys(groupedByDay).map((dayKey) => (
+            <div key={dayKey} className="mb-6">
+              <h2 className="text-textColor font-semibold mb-2 text-center">
+                🗓️ {diasSemana[language]?.[dayKey] || ""}
+              </h2>
+              {groupedByDay[dayKey].map((booking) => (
+                <EventCard
+                  key={booking._id}
+                  {...booking}
+                  fullWidth={false}
+                  isClosed={true}
+                  onClick={() => {}}
+                  details={true}
+                />
+              ))}
+            </div>
           ))
         )}
-        {!loading && bookingsWeek.length === 0 && (
-          <p className="text-center text-greyText max-w-lg my-10">
+
+        {!loading && filteredBookingsWeek.length === 0 && (
+          <p className="text-center text-textColorGray max-w-lg my-10">
             {LanguageData.section1.noBookings.nextDays[language]}
           </p>
         )}
       </div>
+    </div>
+  );
+}
+
+function BookingSection({ title, bookings, loading, noDataText }) {
+  return (
+    <div className="flex flex-col my-5">
+      <h1 className="text-center text-textColor font-semibold text-xl mb-3">
+        {title}
+      </h1>
+      {loading ? (
+        <Loader />
+      ) : bookings.length > 0 ? (
+        bookings.map((booking) => (
+          <EventCard
+            key={booking._id}
+            {...booking}
+            fullWidth={false}
+            isClosed={true}
+            onClick={() => {}}
+            details={true}
+          />
+        ))
+      ) : (
+        <p className="text-center text-textColorGray max-w-lg my-3">
+          {noDataText}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function Loader() {
+  return (
+    <div className="max-w-lg flex flex-col items-center justify-center">
+      <Rings width={100} height={100} color="#00A0D5" ariaLabel="loading" />
     </div>
   );
 }

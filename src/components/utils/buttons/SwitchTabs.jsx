@@ -5,14 +5,14 @@ export default function SwitchTabs({
   actualView,
   setActualView,
   className = "",
-  activeClass = "bg-blueBorder text-white",
-  inactiveClass = "text-blueBorder",
+  activeClass = "bg-blueBorder  text-white",
+  inactiveClass = "text-blueBorder text-white",
 }) {
   return (
     <div className="w-full flex justify-center">
       <div
         className={clsx(
-          "bg-transparentBlue h-10 flex rounded-xl overflow-hidden",
+          "bg-transparentBlue dark:bg-backgroundModal h-10  flex rounded-xl overflow-hidden",
           "w-72 sm:w-full sm:max-w-lg",
           className
         )}

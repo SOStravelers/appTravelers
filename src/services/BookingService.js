@@ -50,9 +50,15 @@ export default class BookingService {
 
   // USER BOOKINGS
 
-  static async getBookingsByMonth(data) {
+  static async getBookingsByRange(data) {
     const queryString = buildQueryParams(data);
     return axios.get(`${this.baseUrl}/list/client?${queryString}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getNextBooking() {
+    return axios.get(`${this.baseUrl}/next/client`, {
       headers: this.getHeaders(),
     });
   }

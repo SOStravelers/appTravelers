@@ -21,13 +21,15 @@ import {
   FaClock,
   FaShareAlt,
   FaDownload,
+  FaArrowLeft,
 } from "react-icons/fa";
 
 export default function MyBookingPage() {
   const { language, user, currency } = useStore();
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
   const [booking, setBooking] = useState(null);
+  const [notAllowed, setNotAllowed] = useState(false);
+  const router = useRouter();
 
   const event = {
     title: "Soldierbeat",
@@ -37,25 +39,44 @@ export default function MyBookingPage() {
   };
 
   const reservation = {
-    paymentConfirmed: false, // Cambia a true para simular una compra pagada
-    paymentDueDate: "2025-07-25T23:00:00", // Solo importa si no está pagado
+    paymentConfirmed: false,
+    paymentDueDate: "2025-07-25T23:00:00",
   };
-  const payment = {
-    total: 150,
-    net: 120,
-    currency: "BRL",
-  };
+
   const operator = {
     name: "Carlos Duarte",
     email: "carlos.duarte@sostravelers.com",
     phone: "+55 21 91234-5678",
-    avatar: "/images/operator-carlos.jpg", // foto circular
+    avatar: "/images/operator-carlos.jpg",
   };
+
   const getWhatsappLink = (phone, name) => {
-    const rawPhone = phone.replace(/\D/g, ""); // Elimina espacios y símbolos
+    const rawPhone = phone.replace(/\D/g, "");
     const message = `Hola ${name}, tengo una consulta sobre mi reserva en SOS Travelers.`;
     return `https://wa.me/${rawPhone}?text=${encodeURIComponent(message)}`;
   };
+
+  const getBooking = async () => {
+    try {
+      const id = router.query.id;
+      const response = await BookingService.getMyBooking(id);
+      setBooking(response.data);
+    } catch (err) {
+      if (err?.response?.status === 401) {
+        setNotAllowed(true);
+      } else {
+        console.error("Error al obtener booking:", err);
+        setNotAllowed(true);
+      }
+    } finally {
+      delay(() => setLoading(false));
+    }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    getBooking();
+  }, []);
 
   const eventDate = new Date(event.date);
   const formattedDate = eventDate.toLocaleDateString("pt-BR", {
@@ -69,40 +90,47 @@ export default function MyBookingPage() {
     minute: "2-digit",
   });
 
-  useEffect(() => {
-    setLoading(true);
-    return delay(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    getBooking();
-  }, []);
-
-  const getBooking = async () => {
-    try {
-      console.log("wena");
-      const id = router.query.id;
-      const response = await BookingService.getMyBooking(id);
-      console.log(response.data);
-      setBooking(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const shareLink = () => {
     const text = `¡Ya tengo mi entrada para ${event.title} en ${event.location}, el ${formattedDate} a las ${formattedTime}! Nos vemos ahí 🚀`;
     const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
   };
 
+  if (notAllowed && !loading) {
+    return (
+      <div
+        className={` px-4 flex flex-col mt-12 items-center justify-center bg-backgroundP ${
+          loading ? opacityAnimation : displayAnimation
+        }`}
+      >
+        <div className="bg-backgroundS text-center px-4 shadow-md rounded-2xl py-8 max-w-lg w-full">
+          <FaRegCalendarAlt className="text-4xl mb-4 text-textColor mx-auto" />
+          <h2 className="text-xl text-textColor font-semibold mb-2">
+            This booking is not available
+          </h2>
+          <p className="text-sm text-textColorGray">
+            The reservation you’re trying to access is no longer available or
+            you don’t have permission to view it.
+          </p>
+          <button
+            onClick={() => router.push("/")}
+            className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-md border border-gray-300 text-sm text-blue-600 hover:bg-blue-50 transition"
+          >
+            <FaArrowLeft className="text-textColorGray" />
+            <p className="text-textColorGray">Return to homepage</p>
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
-      className={`min-h-screen px-4 py-12 flex flex-col items-center  justify-center bg-backgroundP
-      ${loading ? opacityAnimation : displayAnimation}`}
+      className={`min-h-screen px-4 py-12 flex flex-col items-center justify-center bg-backgroundP ${
+        loading ? opacityAnimation : displayAnimation
+      }`}
     >
-      <div className="bg-backgroundS shadow-md rounded-2xl  py-8 max-w-3xl w-full  ">
-        {/* Encabezado */}
+      <div className="bg-backgroundS shadow-md rounded-2xl py-8 max-w-3xl w-full">
         <div className="text-center mb-8">
           <FaCheckCircle className="text-green-500 text-5xl mx-auto mb-3" />
           <h1 className="text-2xl md:text-4xl font-bold text-textColor">
@@ -117,7 +145,6 @@ export default function MyBookingPage() {
           </p>
         </div>
 
-        {/* Tarjeta del evento */}
         <EventCard
           {...booking}
           fullWidth={true}
@@ -127,7 +154,6 @@ export default function MyBookingPage() {
         />
 
         <div className="mx-5 md:mx-12">
-          {/* Detalles visuales */}
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
             <InfoItem
               icon={FaUser}
@@ -167,15 +193,15 @@ export default function MyBookingPage() {
               bg="bg-backgroundModal"
             />
           </div>
-          {/* Estado de pago */}
-          <div className="mt-6 ">
+
+          <div className="mt-6">
             {reservation.paymentConfirmed ? (
               <div className="flex items-center gap-2 text-green-500 text-sm">
                 <FaCheckCircle />
                 <span className="font-semibold">Pago confirmado</span>
               </div>
             ) : (
-              <div className="flex items-start gap-2 text-yellow-700 bg-yellow-100 p-4 rounded-lg border border-yellow-200 text-sm ">
+              <div className="flex items-start gap-2 text-yellow-700 bg-yellow-100 p-4 rounded-lg border border-yellow-200 text-sm">
                 <FaRegCalendarAlt size={40} style={{ marginTop: "-10px" }} />
                 <div>
                   <p className="font-semibold">Pago pendiente</p>
@@ -200,14 +226,11 @@ export default function MyBookingPage() {
             )}
           </div>
 
-          {/* Resumen del monto */}
-          {/* Desglose contable */}
           <TablePriceSummary
             confirmed={booking?.statusn || "confirmed"}
             price={booking?.price || {}}
           />
 
-          {/* Código QR (si está pagado) */}
           {reservation.paymentConfirmed && (
             <div className="mt-8 flex justify-center">
               <div className="bg-gray-100 p-4 rounded-lg shadow-inner text-center">
@@ -223,12 +246,10 @@ export default function MyBookingPage() {
             </div>
           )}
 
-          {/* Datos del operador */}
           <div className="mt-10 text-sm text-gray-800 border-t pt-6 border-gray-200">
             <h2 className="text-base font-semibold mb-4 text-center">
               Operador responsable del servicio
             </h2>
-
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center">
               <img
                 src={operator.avatar}
@@ -250,7 +271,6 @@ export default function MyBookingPage() {
                     ✉️ {operator.email}
                   </a>
                 </p>
-
                 <a
                   href={getWhatsappLink(operator.phone, operator.name)}
                   target="_blank"
@@ -263,7 +283,6 @@ export default function MyBookingPage() {
             </div>
           </div>
 
-          {/* Acciones */}
           <div className="mt-10 flex flex-col md:flex-row justify-center gap-4">
             {reservation.paymentConfirmed ? (
               <>
@@ -271,15 +290,13 @@ export default function MyBookingPage() {
                   onClick={() => alert("Descargando entrada...")}
                   className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
                 >
-                  <FaDownload />
-                  Descargar entrada
+                  <FaDownload /> Descargar entrada
                 </button>
                 <button
                   onClick={shareLink}
                   className="flex items-center justify-center gap-2 border border-gray-400 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-100 transition"
                 >
-                  <FaShareAlt />
-                  Compartir en WhatsApp
+                  <FaShareAlt /> Compartir en WhatsApp
                 </button>
                 <AddToCalendarButton
                   title="Soldierbeat"
@@ -297,7 +314,6 @@ export default function MyBookingPage() {
             )}
           </div>
 
-          {/* Link volver */}
           <div className="mt-6 text-center">
             <button
               onClick={() => router.push("/")}

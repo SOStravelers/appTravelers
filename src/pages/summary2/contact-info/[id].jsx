@@ -255,7 +255,7 @@ export default function ContactInfoPage() {
           </div>
         </div>
         {/* Aviso */}
-        <h3 className="text-sm max-w-md text-textColorGray  mt-3 m-2">
+        <h3 className="text-sm max-w-md text-textColorGray mb-24  mt-3 m-2">
           {" "}
           {thisLanguage.advice[language]}
         </h3>

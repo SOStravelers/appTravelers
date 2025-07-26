@@ -1,11 +1,8 @@
+import { useState } from "react";
 import { FaTicketAlt } from "react-icons/fa";
-import Image from "next/image";
 import clsx from "clsx";
 import { useStore } from "@/store";
-import {
-  formatearFechaCortaDesdeISO,
-  formatearFechaCortaInteligente,
-} from "@/utils/format";
+import { formatearFechaCortaInteligente } from "@/utils/format";
 
 export default function EventCard({
   subserviceData,
@@ -14,10 +11,12 @@ export default function EventCard({
   imgUrl,
   isClosed = false,
   onClick,
-  fullWidth = false, // nueva prop
+  fullWidth = false,
   details = true,
 }) {
   const { language } = useStore();
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const eventDate = new Date(startTime?.isoTime || null);
   const formattedDate = eventDate.toLocaleDateString("pt-BR", {
     day: "2-digit",
@@ -33,14 +32,16 @@ export default function EventCard({
     <div
       className={clsx(
         "bg-backgroundModal shadow-md rounded-xl p-3",
-        fullWidth ? "w-full" : "max-w-sm mx-auto"
+        fullWidth ? "w-full" : "max-w-sm mx-auto",
+        !imageLoaded && "hidden" // Oculta hasta que cargue la imagen
       )}
     >
-      <div className="rounded-lg  overflow-hidden">
+      <div className="rounded-lg overflow-hidden">
         <img
           src={imgUrl}
           alt={subserviceData?.name[language]}
           className="w-full h-50 object-cover"
+          onLoad={() => setImageLoaded(true)}
         />
       </div>
 
@@ -72,10 +73,10 @@ export default function EventCard({
                   "px-4 py-1 text-sm rounded border font-semibold",
                   isClosed
                     ? "text-gray-400 border-gray-300 cursor-not-allowed"
-                    : "text-blue-600 border-blue-500 hover:bg-blue-100"
+                    : "text-textColor  "
                 )}
               >
-                Ingresso
+                See details
               </button>
             </div>
           </>

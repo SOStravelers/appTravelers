@@ -165,7 +165,7 @@ function CalendarBooking() {
           <EventCard
             {...booking}
             fullWidth={false}
-            isClosed={true}
+            isClosed={false}
             onClick={() => {}}
             details={true}
           />

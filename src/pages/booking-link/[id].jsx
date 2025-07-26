@@ -16,6 +16,8 @@ export default function BookingLink({ id, title, image, tokenId, bookingId }) {
       let tokenAuth = Cookies.get("auth.access_token");
       if (tokenAuth) {
         goToPage(1);
+      } else {
+        goToPage(2);
       }
     }, 50);
     return () => clearTimeout(timer);

@@ -137,7 +137,7 @@ export default function Stripe() {
           />
         ) : (
           <>
-            <div className="fixed inset-0 flex items-center justify-center bg-backgroundP z-10">
+            <div className="fixed inset-0 flex items-center justify-center bg-backgroundP z-10 ">
               <div className="w-10 h-10 border-4 border-t-transparent border-textColor rounded-full animate-spin"></div>
             </div>
           </>

@@ -86,7 +86,7 @@ export default function CheckoutForm({
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center mt-24 text-center px-4">
+      <div className="flex flex-col items-center justify-center mt-24 text-center max-w-lg px-4">
         <p className="text-lg font-semibold text-textColor mb-4">
           Hubo un error al procesar tu pago. Por favor, inténtalo de nuevo.
         </p>
@@ -106,8 +106,8 @@ export default function CheckoutForm({
       <>
         {loadingBooking && <FancyLoader messages={messages} />}
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-2 mt-6 text-center text-textColor  text-md">
+        <form onSubmit={handleSubmit} className="max-w-lg">
+          <div className="mb-2 mt-6 text-center text-textColor   text-md">
             {languageData.billingDetails[language]}
           </div>
           {/*<LinkAuthenticationElement />

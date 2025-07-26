@@ -6,8 +6,9 @@ import LanguageData from "@/language/booking.json";
 import { getUserTimeData } from "@/lib/time/index.js";
 import EventCard from "@/components/utils/cards/EventCard";
 import { diasSemana } from "@/utils/format";
-
+import { useRouter } from "next/router";
 function ListSection() {
+  const router = useRouter();
   const [bookingsDay, setBookingsDay] = useState([]);
   const [bookingsWeek, setBookingsWeek] = useState([]);
   const [nextBooking, setNextBooking] = useState(null);
@@ -84,8 +85,8 @@ function ListSection() {
                   key={booking._id}
                   {...booking}
                   fullWidth={false}
-                  isClosed={true}
-                  onClick={() => {}}
+                  isClosed={false}
+                  onClick={() => router.push(`/my-booking/${booking._id}`)}
                   details={true}
                 />
               ))}
@@ -104,6 +105,7 @@ function ListSection() {
 }
 
 function BookingSection({ title, bookings, loading, noDataText }) {
+  const router = useRouter();
   return (
     <div className="flex flex-col my-5">
       <h1 className="text-center text-textColor font-semibold text-xl mb-3">
@@ -117,8 +119,8 @@ function BookingSection({ title, bookings, loading, noDataText }) {
             key={booking._id}
             {...booking}
             fullWidth={false}
-            isClosed={true}
-            onClick={() => {}}
+            isClosed={false}
+            onClick={() => router.push(`/my-booking/${booking._id}`)}
             details={true}
           />
         ))

@@ -11,8 +11,9 @@ export default class BookingService {
     return `${api}${BookingService.resource}`;
   }
   static getHeaders() {
+    let access_token = Cookies.get("auth.access_token");
     return {
-      Authorization: access_token ? access_token : null,
+      Authorization: access_token ? access_token : {},
     };
   }
 
@@ -30,25 +31,17 @@ export default class BookingService {
   }
 
   static async getByToken(id) {
-    return axios.get(`${this.baseUrl}/getData?token=${id}`, {
-      headers: this.getHeaders(),
-    });
-  }
-  static async createWorkerBooking(params) {
-    console.log("agendando");
-    return axios.post(`${this.baseUrl}/worker/create`, params, {
+    return axios.get(`${this.baseUrl}/purchase/data/?token=${id}`, {
       headers: this.getHeaders(),
     });
   }
 
-  static getHeaders() {
-    let access_token = Cookies.get("auth.access_token");
-    return {
-      Authorization: access_token ? access_token : {},
-    };
+  static async getMyBooking(id) {
+    console.log("la id", id);
+    return axios.get(`${this.baseUrl}/mybooking/${id}`, {
+      headers: this.getHeaders(),
+    });
   }
-
-  // USER BOOKINGS
 
   static async getBookingsByRange(data) {
     const queryString = buildQueryParams(data);
@@ -63,6 +56,14 @@ export default class BookingService {
     });
   }
 
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
   static async getBookingsByDay(date) {
     return axios.get(
       `${this.baseUrl}/client/day?date=${date}&page=1&limit=100`,
@@ -219,6 +220,12 @@ export default class BookingService {
   static async getWeekWorker(date) {
     console.log("...getWeekWorker");
     return axios.get(`${this.baseUrl}/worker/week?date=${date}`, {
+      headers: this.getHeaders(),
+    });
+  }
+  static async createWorkerBooking(params) {
+    console.log("agendando");
+    return axios.post(`${this.baseUrl}/worker/create`, params, {
       headers: this.getHeaders(),
     });
   }

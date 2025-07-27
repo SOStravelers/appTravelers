@@ -227,7 +227,7 @@ export default function MyBookingPage() {
           </div>
 
           <TablePriceSummary
-            confirmed={booking?.statusn || "confirmed"}
+            confirmed={booking?.status || "confirmed"}
             price={booking?.price || {}}
           />
 

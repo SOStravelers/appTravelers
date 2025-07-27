@@ -56,6 +56,11 @@ export default class BookingService {
     });
   }
 
+  static async getByRange(data) {
+    const queryString = buildQueryParams(data);
+    return axios.get(`${this.baseUrl}/list/admin-user?${queryString}`);
+  }
+
   ///-----------------------------
   ///-----------------------------
   ///-----------------------------

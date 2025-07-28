@@ -1,19 +1,26 @@
 {
   "priceTab": {
     "title": {
-      "pending": {
+      "unpaid": {
         "es": "Resumen del próximo cobro",
         "en": "Summary of the upcoming charge",
         "pt": "Resumo da próxima cobrança",
         "fr": "Résumé du prochain paiement",
         "de": "Übersicht der nächsten Abbuchung"
       },
-      "confirmed": {
+      "paid": {
         "es": "Pago confirmado",
         "en": "Payment confirmed",
         "pt": "Pagamento confirmado",
         "fr": "Paiement confirmé",
         "de": "Zahlung bestätigt"
+      },
+      "refund": {
+        "es": "Pago reebolsado",
+        "en": "Payment refunded",
+        "pt": "Pagamento reembolsado",
+        "fr": "Paiement remboursé",
+        "de": "Zahlung zurückgegeben"
       }
     },
     "table": {
@@ -32,19 +39,26 @@
         "de": "Steuern und Provisionen"
       },
       "total": {
-        "confirmed": {
+        "paid": {
           "es": "Total pagado",
           "en": "Total paid",
           "pt": "Total pago",
           "fr": "Total payé",
           "de": "Gesamtbetrag"
         },
-        "pending": {
+        "unpaid": {
           "es": "Total a cobrar",
           "en": "Total to charge",
           "pt": "Total a cobrar",
           "fr": "Total à payer",
           "de": "Gesamtbetrag"
+        },
+        "refund": {
+          "es": "total reembolsado",
+          "en": "total refunded",
+          "pt": "total reembolsado",
+          "fr": "total remboursé",
+          "de": "gesamt zurückgegeben"
         }
       }
     }

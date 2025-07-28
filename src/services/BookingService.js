@@ -61,6 +61,13 @@ export default class BookingService {
     return axios.get(`${this.baseUrl}/list/admin-user?${queryString}`);
   }
 
+  static async confirm(id) {
+    return axios.put(`${this.baseUrl}/confirm/${id}`);
+  }
+  static async cancel(id) {
+    return axios.put(`${this.baseUrl}/cancel/${id}`);
+  }
+
   ///-----------------------------
   ///-----------------------------
   ///-----------------------------

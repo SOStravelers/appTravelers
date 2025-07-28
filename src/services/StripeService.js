@@ -66,4 +66,9 @@ export default class StripeService {
       headers: this.getHeaders(),
     });
   }
+
+  // Create payment link
+  static async chargeBooking(id) {
+    return axios.get(`${this.baseUrl}/chargeBooking/${id}`);
+  }
 }

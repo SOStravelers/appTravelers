@@ -356,6 +356,7 @@ export function isBeforeHoursThreshold(
   hoursBefore,
   language = "pt"
 ) {
+  console.log("wenas", dateString, hoursBefore, language);
   const targetDate = new Date(dateString);
 
   if (isNaN(targetDate.getTime())) {

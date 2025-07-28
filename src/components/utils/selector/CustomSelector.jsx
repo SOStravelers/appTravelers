@@ -10,11 +10,12 @@ export default function CustomSelector({
 }) {
   return (
     <Select
-      className={`w-full z-40 max-w-md my-1 mb-3 ${className}`}
+      className={`w-full max-w-md my-1 mb-3 ${className}`}
       options={options}
       value={value}
       onChange={onChange}
       isSearchable={isSearchable}
+      menuPortalTarget={document.body} // Renderiza el menú fuera del flujo normal
       styles={{
         control: (base, state) => ({
           ...base,
@@ -26,6 +27,7 @@ export default function CustomSelector({
           "&:hover": {
             borderColor: "#00A0D5",
           },
+          zIndex: "auto", // Evita z-index elevado en el control
         }),
         singleValue: (base) => ({
           ...base,
@@ -53,6 +55,10 @@ export default function CustomSelector({
             ? "rgba(0, 119, 182, 0.2)"
             : "transparent",
           color: state.isSelected ? "#fff" : "var(--color-text-color)",
+        }),
+        menuPortal: (base) => ({
+          ...base,
+          zIndex: 30, // Solo el menú tiene z-index alto
         }),
       }}
       {...rest}

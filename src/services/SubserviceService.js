@@ -28,6 +28,14 @@ export default class SubserviceService {
       headers: this.getHeaders(),
     });
   }
+
+  //actualizar un subservicio con toda la data
+  static async updateProductData(data) {
+    console.log("updating product data subservice");
+    return axios.put(`${this.baseUrl}/productData/${data._id}`, data, {
+      headers: this.getHeaders(),
+    });
+  }
   //actualizar informacion de las fotos y videos
   static async updateGallery(id, formData) {
     return axios.post(`${this.baseUrl}/assets/${id}`, formData, {
@@ -80,6 +88,11 @@ export default class SubserviceService {
   static async getById(id) {
     return axios.get(`${this.baseUrl}/byId/${id}`);
   }
+  //Obtener todos los subservicio agrupados en servicios
+  static async getByService(id) {
+    return axios.get(`${this.baseUrl}/byService/${id}`);
+  }
+
   //Obtener todos los subservicio agrupados en servicios
   static async getAllByService() {
     return axios.get(`${this.baseUrl}/all/byService`);

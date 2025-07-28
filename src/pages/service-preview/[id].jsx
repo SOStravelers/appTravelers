@@ -18,7 +18,10 @@ import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import FloatingFavoriteToast from "@/components/utils/modal/FloatingFavoriteToast";
 import { formatPrice } from "@/utils/format";
 import { useStore } from "@/store";
-import { formatearFechaCompletaDesdeISO } from "@/utils/format";
+import {
+  formatearFechaCompletaDesdeISO,
+  isBeforeHoursThreshold,
+} from "@/utils/format";
 import { opacityAnimation, displayAnimation } from "@/utils/delayFunction";
 import ModalReservationWrapper from "@/components/ServicePreview/ModalReservationWrapper";
 export default function ServicePreviewPage() {
@@ -96,24 +99,32 @@ export default function ServicePreviewPage() {
   useEffect(() => {
     if (subService.refPrice) {
       setPrice(subService.refPrice);
+
       if (subService.typeService == "tour") {
         setValidPrice(true);
       } else if (subService.typeService == "product") {
-        if (subService?.eventData.available) {
-          const data = formatearFechaCompletaDesdeISO(
-            subService.eventData.isoTime,
-            language
-          );
-          setDataEvent({
-            isoTime: subService.eventData.isoTime,
-            formatedDate: data.formatedDate,
-            formatedTime: data.formatedTime,
-          });
-
-          setValidPrice(true);
+        let isoTime = null;
+        if (
+          subService.hasEvent &&
+          subService?.eventData.available &&
+          subService?.eventData.isoTime
+        ) {
+          isoTime = subService?.eventData.isoTime;
         } else {
-          setValidPrice(false);
+          isoTime = subService.startTime.isoTime;
         }
+        const limitBook = subService.timeLimitBook || 0;
+        const canBook = isBeforeHoursThreshold(isoTime, limitBook, language);
+        setValidPrice(canBook.isBefore);
+
+        const data = formatearFechaCompletaDesdeISO(isoTime, language);
+        setDataEvent({
+          isoTime: subService.eventData.isoTime,
+          formatedDate: data.formatedDate,
+          formatedTime: data.formatedTime,
+        });
+      } else {
+        setValidPrice(false);
       }
     } else {
       setValidPrice(false);

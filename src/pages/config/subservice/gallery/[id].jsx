@@ -59,7 +59,7 @@ export default function UploadAssetsPage() {
   const validate = () => {
     const err = {};
     if (!existingImgUrl && !imgFile) err.img = "Imagen requerida";
-    if (!existingVideoUrl && !videoFile) err.video = "Vídeo requerido";
+    // if (!existingVideoUrl && !videoFile) err.video = "Vídeo requerido";
 
     /* ─── Imagen principal ─── */
     if (imgFile) {

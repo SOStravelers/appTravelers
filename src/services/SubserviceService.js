@@ -16,8 +16,8 @@ export default class SubserviceService {
   }
 
   //Crear subservicio con toda la data
-  static async post(id, data) {
-    return axios.post(`${this.baseUrl}/allData/${id}`, data, {
+  static async post(data) {
+    return axios.post(`${this.baseUrl}/`, data, {
       headers: this.getHeaders(),
     });
   }

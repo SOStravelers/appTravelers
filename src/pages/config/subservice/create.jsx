@@ -7,7 +7,7 @@ import { useStore } from "@/store";
 import SubserviceService from "@/services/SubserviceService";
 import ServiceService from "@/services/ServiceService";
 import "react-quill/dist/quill.snow.css";
-
+import { toast, ToastContainer } from "react-toastify";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const LANGS = ["es", "en", "pt", "fr", "de"];
@@ -160,8 +160,12 @@ export default function NewSubservicePage() {
       isActive: true,
     };
     console.log("Payload:", payload);
-    await SubserviceService.create(payload);
-    // router.push('/subservices');
+    await SubserviceService.post(payload);
+    toast.success("Creado con éxito", {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 1200,
+    });
+    router.push("/config/subservice");
   };
 
   const updateArray = (arr, setter, idx, key, value) =>

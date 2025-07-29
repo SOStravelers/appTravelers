@@ -185,10 +185,11 @@ export default function EditSubservicePage() {
   /* ——— submit ——— */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (saving) return; // evita doble clic
+    if (saving) return;
     setSubmitted(true);
 
-    if (!validate()) {
+    const isValid = validate();
+    if (!isValid) {
       setShowModal(true);
       toast.error("Completa los campos obligatorios.");
       return;
@@ -206,7 +207,7 @@ export default function EditSubservicePage() {
       isActive: true,
     };
 
-    setSaving(true); // bloquea el botón
+    setSaving(true);
     try {
       await SubserviceService.updateById(id, payload);
       toast.success("Actualizado con éxito", {
@@ -214,12 +215,17 @@ export default function EditSubservicePage() {
         autoClose: 1200,
       });
     } catch (error) {
-      toast.error("Ocurrió un error", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 1200,
-      });
+      console.error("Error al guardar:", error);
+      toast.error(
+        "Ocurrió un error. Revisa tu conexión o intenta nuevamente.",
+        {
+          position: toast.POSITION.BOTTOM_RIGHT,
+          autoClose: 3000,
+        }
+      );
+      // Aquí NO se limpia nada, ni se toca `details`
     } finally {
-      setSaving(false); // libera el botón
+      setSaving(false);
     }
   };
 

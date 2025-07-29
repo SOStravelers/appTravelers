@@ -209,8 +209,6 @@ export default function MatchSubservicesConfigPage() {
       })),
     };
     console.log("payload", payload);
-    payload.hasEvent = true;
-    payload.typeService = "product";
     await SubserviceService.updateProductData(payload);
     alert("Cambios guardados correctamente");
   };

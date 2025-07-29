@@ -173,7 +173,8 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
           {/* price */}
           <div>
             <label className="block text-xs text-textColor font-medium">
-              {languageData.price[language] + " USD"}
+              {`${languageData.price[language]} [${currency.toUpperCase()}]`}
+              <div className="uppercase"></div>
             </label>
             <div className="flex space-x-2 mt-1">
               <InputText

@@ -61,6 +61,7 @@ function Navbar() {
   useEffect(() => {
     const checkImage = async () => {
       const validImg = await validationImg(user?.img?.imgUrl);
+      console.log("validando", validImg);
       setIsImageAccessible(validImg);
     };
     checkImage();
@@ -86,6 +87,7 @@ function Navbar() {
   const initials = () => {
     if (loggedIn) return "";
     const name = user?.personalData?.name;
+    console.log("el name", name);
     if (!name) return "";
     const { first, last } = name;
     const str = `${first.charAt(0)}${last ? last.charAt(0) : ""}`.toUpperCase();
@@ -224,7 +226,7 @@ function Navbar() {
         onClick={() => goProfile()}
       >
         {loggedIn ? (
-          isImageAccessible && user?.img && user?.img.imgUrl ? (
+          isImageAccessible ? (
             <>
               <div
                 className="rounded-md"

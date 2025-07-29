@@ -76,19 +76,17 @@ export default function CountrySelector({
   useEffect(() => {
     if (typeof window !== "undefined") {
       const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-      setIsMobile(isTouch && window.innerWidth < 768); // puedes ajustar el breakpoint si quieres
+      setIsMobile(isTouch && window.innerWidth < 768);
     }
   }, []);
 
   const options = countries.map((c) => ({
-    value: c.code,
-    label: `${c.emoji ? c.emoji + " " : ""}${c.name[language] || c.name.en}`,
-    dialCode: c.dial_code,
+    value: c.code, // "AI"
+    label: `${c.emoji ? c.emoji + " " : ""}${c.name[language] || c.name.en}`, // "🇦🇮 Anguila"
+    dialCode: c.dial_code, // "+1264"
   }));
 
-  const currentOption = options.find((o) =>
-    country ? o.label.includes(country) : false
-  );
+  const currentOption = options.find((o) => o.value === country); // ✅ match por code
 
   return (
     <div className="w-full max-w-md my-1">
@@ -101,14 +99,13 @@ export default function CountrySelector({
         options={options}
         value={currentOption || null}
         onChange={(opt) => {
-          const name = opt.label.replace(/^[^\p{L}\p{N}]+/u, "");
-          setCountry(name);
-          setPhoneCode(opt.dialCode);
+          setCountry(opt.value); // ✅ setea code: "AI"
+          setPhoneCode(opt.dialCode); // ✅ setea "+1264"
           if (error) setErrCountry(null);
         }}
         styles={selectStyles(error)}
-        isSearchable={!isMobile} // ❌ desactiva búsqueda en móviles
-        openMenuOnFocus={!isMobile} // ❌ evita abrir el teclado en móviles
+        isSearchable={!isMobile}
+        openMenuOnFocus={!isMobile}
         menuShouldScrollIntoView={false}
       />
 

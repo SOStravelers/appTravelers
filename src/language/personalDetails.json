@@ -13,6 +13,13 @@
     "de": "E-Mail",
     "pt": "E-mail"
   },
+  "phone": {
+    "en": "Phone",
+    "es": "Teléfono",
+    "fr": "Téléphone",
+    "de": "Telefon",
+    "pt": "Telefone"
+  },
   "changePassword": {
     "en": "Change Password",
     "es": "Cambiar contraseña",

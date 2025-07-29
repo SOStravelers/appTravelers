@@ -13,6 +13,8 @@ import PhoneCodeSelector from "@/components/utils/selector/PhoneCodeSelector";
 import languageData from "@/language/newSummary.json";
 import BookingPopup from "@/components/ServicePreview/BookingPopup";
 import { MdLock } from "react-icons/md";
+import countries from "@/utils/countriesFull.json";
+
 const disabledStyles = "disabled:opacity-50 disabled:cursor-not-allowed";
 
 const okInput = `w-full border border-gray-300 bg-gray-100 rounded-md px-3 py-3 text-sm focus:outline-none focus:border-blueBorder transition ${disabledStyles}`;
@@ -23,11 +25,13 @@ export default function ContactInfoPage() {
   const { language, user, service, setService, currency } = useStore();
   const thisLanguage = languageData.contactInfo;
   const router = useRouter();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneCode, setPhoneCode] = useState("+1");
+
   const [hasCancel, setHasCancel] = useState(false);
   const [errName, setErrName] = useState(null);
   const [errEmail, setErrEmail] = useState(null);
@@ -56,16 +60,40 @@ export default function ContactInfoPage() {
 
   useEffect(() => {
     if (!user) return;
-    setName(
-      user?.personalData?.name
-        ? user?.personalData?.name?.first + " " + user?.personalData?.name?.last
-        : ""
-    );
-    setEmail(user?.email);
+
+    const fullName = user?.personalData?.name
+      ? `${user.personalData.name.first} ${user.personalData.name.last}`
+      : "";
+    setName(fullName);
+    setEmail(user.email);
+    setPhone(user.phone || "");
+
+    let code = user.phoneCode?.trim() || "";
+    let countryCode = user.phoneCountry || "";
+
+    console.log("PHONE DEBUG", {
+      phone: user.phone,
+      code: code,
+      countryCode: countryCode,
+      match: countries.find((c) => c.dial_code === code),
+    });
+
+    if (countryCode) {
+      setCountry(countryCode);
+    } else if (code) {
+      const match = countries.find((c) => c.dial_code === code);
+      if (match) {
+        setCountry(match.code);
+        countryCode = match.code;
+      }
+    }
+
+    if (code) setPhoneCode(code);
   }, [user]);
 
   const validate = () => {
     let valid = true;
+
     if (!name.trim()) {
       setErrName(thisLanguage.nameInput.alert[language]);
       valid = false;
@@ -88,101 +116,80 @@ export default function ContactInfoPage() {
 
     if (valid) {
       localStorage.setItem("fromContactInfo", "true");
-
       setService({
         ...service,
         clientData: { name, email, country, phone, phoneCode },
       });
       router.push(`/stripe`);
     }
-
-    // if (valid) alert("Datos enviados correctamente");
   };
 
-  const evaluateName = (name, change) => {
-    setName(name);
-
+  const evaluateName = (val, change) => {
+    setName(val);
     if (change) {
-      if (name.length >= 4) {
-        setErrName(null);
-      }
+      if (val.length >= 4) setErrName(null);
     } else {
-      if (name.length < 4) {
-        setErrName(thisLanguage.nameInput.alert[language]);
-      } else {
-        setErrName(null);
-      }
+      if (val.length < 4) setErrName(thisLanguage.nameInput.alert[language]);
+      else setErrName(null);
     }
   };
 
-  const evaluateEmail = (email, change) => {
-    setEmail(email);
-
+  const evaluateEmail = (val, change) => {
+    setEmail(val);
     if (change) {
-      if (email.length >= 4) {
-        setErrEmail(null);
-      }
+      if (val.length >= 4) setErrEmail(null);
     } else {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val))
         setErrEmail(thisLanguage.emailInput.alert[language]);
-      } else {
-        setErrEmail(null);
-      }
+      else setErrEmail(null);
     }
   };
-  const evaluatePhone = (val, isChange = false) => {
+
+  const evaluatePhone = (val, change = false) => {
     const clean = val.replace(/\D/g, "");
     setPhone(clean);
-
-    if (isChange) {
-      if (/^[0-9]{6,15}$/.test(clean)) {
-        setErrPhone(null);
-      }
+    if (change) {
+      if (/^[0-9]{6,15}$/.test(clean)) setErrPhone(null);
     } else {
-      if (!/^[0-9]{6,15}$/.test(clean)) {
+      if (!/^[0-9]{6,15}$/.test(clean))
         setErrPhone(thisLanguage.phoneInput.alert[language]);
-      } else {
-        setErrPhone(null);
-      }
+      else setErrPhone(null);
     }
   };
 
   return (
     <>
       <div
-        className={`px-6 flex flex-col items-center
-    ${loading ? opacityAnimation : displayAnimation}
-  `}
+        className={`px-6 flex flex-col items-center ${
+          loading ? opacityAnimation : displayAnimation
+        }`}
       >
-        {/* Titulo */}
-        <h1 className="text-md text-center  text-textColor font-bold mb-2">
+        <h1 className="text-md text-center text-textColor font-bold mb-2">
           {thisLanguage.title[language]}
         </h1>
-        {/* Subtitulo */}
+
         <div className="flex items-center ml-3 mb-2">
           <MdLock className="text-textColorGreen" size={20} />
           <h1 className="text-sm text-textColorGreen mt-1">
             {thisLanguage.subtitle[language]}
           </h1>
         </div>
-        {/* CONTENEDOR */}
-        <div className="bg-backgroundCard rounded-xl  px-3 py-3 shadow w-full max-w-md ">
+
+        <div className="bg-backgroundCard rounded-xl px-3 py-3 shadow w-full max-w-md">
           {/* Nombre */}
           <div className="mb-3">
             <label className="block text-xs text-textColor font-medium mb-2">
               {thisLanguage.nameInput.title[language]}
             </label>
-
             <InputText
               type="text"
               value={name}
               onChange={(e) => evaluateName(e.target.value, true)}
               onBlur={(e) => evaluateName(e.target.value, false)}
-              placeholder="Eg: Neymar Jr"
+              placeholder="Ej: Neymar Jr"
               error={errName}
               className="w-full"
             />
-
             {errName ? (
               <p className="text-errorColor text-xs mt-1">{errName}</p>
             ) : (
@@ -195,7 +202,6 @@ export default function ContactInfoPage() {
             <label className="block text-xs text-textColor font-medium mb-2">
               {thisLanguage.emailInput.title[language]}
             </label>
-
             <InputText
               type="email"
               value={email}
@@ -206,7 +212,6 @@ export default function ContactInfoPage() {
               error={errEmail}
               className="w-full"
             />
-
             {errEmail ? (
               <p className="text-errorColor text-xs mt-1">{errEmail}</p>
             ) : (
@@ -231,12 +236,11 @@ export default function ContactInfoPage() {
 
           {/* Teléfono */}
           <div className="mb-3">
-            <label className="block text-xs text-textColor  font-medium mb-2">
+            <label className="block text-xs text-textColor font-medium mb-2">
               {thisLanguage.phoneInput.title[language]}
             </label>
             <div className="flex gap-2">
               <PhoneCodeSelector phoneCode={phoneCode} inputClass={okInput} />
-
               <InputText
                 type="number"
                 value={phone}
@@ -246,7 +250,6 @@ export default function ContactInfoPage() {
                 error={errPhone}
               />
             </div>
-
             {errPhone ? (
               <p className="text-errorColor text-xs mt-1">{errPhone}</p>
             ) : (
@@ -254,19 +257,18 @@ export default function ContactInfoPage() {
             )}
           </div>
         </div>
-        {/* Aviso */}
-        <h3 className="text-sm max-w-md text-textColorGray mb-24  mt-3 m-2">
-          {" "}
+
+        <h3 className="text-sm max-w-md text-textColorGray mb-24 mt-3 m-2">
           {thisLanguage.advice[language]}
         </h3>
       </div>
-      {/* Botón */}
+
       <BookingPopup
         priceLabel={`${thisLanguage.value[language]} ${formatPrice(
           service?.totalPrice || null,
           currency
-        )} `}
-        subtext={""}
+        )}`}
+        subtext=""
         tagLine={hasCancel?.isBefore ? thisLanguage.cancel[language] : ""}
         onAction={validate}
       />

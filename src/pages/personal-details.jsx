@@ -1,157 +1,120 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import SelectCard from "@/components/utils/cards/SelectCard";
 import OptionCard from "@/components/utils/cards/OptionCard";
-import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
-import ChangeEmailForm from "@/components/utils/forms/ChangeEmailForm";
-import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
-import { toast } from "react-toastify";
-import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
-import { UserIcon, MailIcon, HouseIcon, LockIcon } from "@/constants/icons";
+import { FaUser, FaLock, FaEnvelope, FaPhone } from "react-icons/fa";
 import { useStore } from "@/store";
 import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
 import languageData from "@/language/personalDetails.json";
+import EditNameModal from "@/components/utils/modal/EditNameModal";
+import EditPhoneModal from "@/components/utils/modal/EditPhoneModal";
+
 export default function PersonalDetails() {
   const router = useRouter();
-  const { user, setUser, setLoggedIn, isWorker, language } = useStore();
-  const [name, setName] = useState(null);
-  const [nameTrun, setNameTrun] = useState(null);
-  const [emailTrun, setEmailTrun] = useState(null);
-  const [nameInput, setNameInput] = useState(false);
-  const [emailInput, setEmailInput] = useState(false);
-  const [email, setEmail] = useState(false);
-  const [save, setSave] = useState(false);
+  const { user, setUser, language } = useStore();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const [modalNameOpen, setModalNameOpen] = useState(false);
+  const [modalPhoneOpen, setModalPhoneOpen] = useState(false);
+
   useEffect(() => {
     document.title = "Personal Details | SOS Travelers";
   }, []);
+
   useEffect(() => {
     if (user) {
-      const name =
-        capitalizeFirstLetter(user?.personalData?.name?.first) +
-        " " +
-        capitalizeFirstLetter(user?.personalData?.name?.last);
-      setName(name);
-      setNameTrun(truncarNumero(name));
+      const fullName = `${capitalize(
+        user?.personalData?.name?.first || ""
+      )} ${capitalize(user?.personalData?.name?.last || "")}`;
+      setName(fullName.trim());
       setEmail(user.email);
-      setEmailTrun(truncarNumero(user.email));
+      const phoneLabel = `${user.phoneCode || ""} ${user.phone || ""}`;
+      setPhone(phoneLabel.trim());
     }
   }, [user]);
-  function separarNombre(nombre) {
-    const nombreSinEspacios = nombre.trim();
-    const indicePrimerEspacio = nombreSinEspacios.indexOf(" ");
-    const primerNombre = nombreSinEspacios.slice(0, indicePrimerEspacio);
-    const segundoNombre = nombreSinEspacios.slice(indicePrimerEspacio + 1);
-    return [primerNombre, segundoNombre];
-  }
-  function capitalizeFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }
-  const truncarNumero = (word) => {
-    const truncatedValue = word.length > 28 ? word.slice(0, 28) + "..." : word;
-    return truncatedValue;
-  };
 
-  const handleNameClick = () => {
-    setNameInput(true);
-    setEmailInput(false);
-    setSave(true);
-  };
-  const handleEmailClick = () => {
-    router.push("/change-email");
-  };
-
-  function setTheName(name) {
-    setName(name);
-    setNameTrun(truncarNumero(name));
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  const saveAll = async () => {
-    const newUser = { ...user };
-    console.log("el name", name);
-    const arrayName = separarNombre(name);
-    if (nameInput == true) {
-      try {
-        newUser.personalData.name.first = capitalizeFirstLetter(arrayName[0]);
-        newUser.personalData.name.last = capitalizeFirstLetter(arrayName[1]);
-        const response = await UserService.updateUser(newUser);
+  function truncate(str) {
+    return str?.length > 28 ? str.slice(0, 28) + "..." : str;
+  }
 
-        if (response.data) {
-          localStorage.setItem("auth.user", JSON.stringify(response.data.user));
-          Cookies.set("auth.user", JSON.stringify(response.data.user));
-          toast.info("Saved.", {
-            position: toast.POSITION.BOTTOM_CENTER,
-            autoClose: 1500,
-          });
-        }
-      } catch (err) {
-        toast.error("Internal Server Error. Please try again later.", {
-          position: toast.POSITION.BOTTOM_CENTER,
-          autoClose: 1800,
-        });
+  const handleSaveName = async (newName) => {
+    const [first, ...rest] = newName.split(" ");
+    const last = rest.join(" ");
+    const updatedUser = { ...user };
+    updatedUser.personalData.name.first = capitalize(first);
+    updatedUser.personalData.name.last = capitalize(last);
+
+    try {
+      const response = await UserService.updateUser(updatedUser);
+      if (response.data) {
+        localStorage.setItem("auth.user", JSON.stringify(response.data.user));
+        Cookies.set("auth.user", JSON.stringify(response.data.user));
+        setUser(response.data.user);
       }
+    } catch (err) {
+      console.error("Error al guardar el nombre", err);
     }
-    setNameInput(false);
-    setEmailInput(false);
-    setSave(false);
+
+    setModalNameOpen(false);
   };
 
   return (
-    <div className="flex flex-col justify-center py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <p>{user.security.hasPassword}</p>
-      {!nameInput ? (
-        <OptionCard
-          title={languageData.name[language]}
-          onClick={handleNameClick}
-          icon={FaUser}
-          edit={true}
-          subtitle={nameTrun}
-        />
-      ) : (
-        <OutlinedInput
-          placeholder={languageData.name[language]}
-          icon={FaUser}
-          value={name}
-          // onBlur={onBlur}
-          onChange={(e) => setTheName(e.target.value)}
-        />
-      )}
+    <div className="flex flex-col justify-center py-20 px-5 md:pl-80">
+      {/* Nombre */}
       <OptionCard
-        title="Email"
-        onClick={handleEmailClick}
-        icon={FaEnvelope}
-        edit={true}
-        subtitle={emailTrun}
+        title={languageData.name[language]}
+        subtitle={truncate(name)}
+        icon={FaUser}
+        onClick={() => setModalNameOpen(true)}
       />
 
-      {/* <SelectCard
-        title="Address"
-        icon={HouseIcon}
-        edit={true}
-        subtitle="Avenida Atlántica 1234, Copacabana, Rio de Janeiro, Brazil"
-      /> */}
+      {/* Teléfono */}
+      <OptionCard
+        title={languageData.phone[language]}
+        subtitle={truncate(phone)}
+        icon={FaPhone}
+        onClick={() => setModalPhoneOpen(true)}
+      />
 
-      {user && user.security && user.security.hasPassword ? (
-        // Este componente se mostrará si el usuario está autenticado
+      {/* Email */}
+      <OptionCard
+        title="Email"
+        subtitle={truncate(email)}
+        icon={FaEnvelope}
+        onClick={() => router.push("/change-email")}
+      />
+
+      {user?.security?.hasPassword ? (
         <OptionCard
           title={languageData.changePassword[language]}
           icon={FaLock}
           onClick={() => router.push("/change-password")}
         />
       ) : (
-        // Este componente se mostrará si el usuario no está autenticado
         <OptionCard
           title={languageData.createPassword[language]}
           icon={FaLock}
           onClick={() => router.push("/create-password")}
         />
       )}
-      {save && (
-        <OutlinedButton
-          text={languageData.saveChanges[language]}
-          onClick={saveAll}
-        />
-      )}
+
+      <EditNameModal
+        isOpen={modalNameOpen}
+        onClose={() => setModalNameOpen(false)}
+        onSave={handleSaveName}
+        defaultName={name}
+      />
+
+      <EditPhoneModal
+        isOpen={modalPhoneOpen}
+        onClose={() => setModalPhoneOpen(false)}
+      />
     </div>
   );
 }

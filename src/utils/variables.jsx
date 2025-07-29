@@ -14,7 +14,7 @@ export const routesNavbar = (router) => {
     router.pathname !== "/worker/my-schedules" &&
     router.pathname !== "/worker/settings" &&
     router.pathname !== "/settings" &&
-    router.pathname !== "/personal-details" &&
+    // router.pathname !== "/personal-details" &&
     router.pathname !== "/change-password" &&
     router.pathname !== "/create-password" &&
     router.pathname !== "/worker/profile-config" &&

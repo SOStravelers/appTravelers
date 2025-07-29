@@ -8,7 +8,7 @@ import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecome
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import { useStore } from "@/store";
 import FavoriteService from "@/services/FavoriteService";
-const ITEMS_PER_LOAD = 10;
+const ITEMS_PER_LOAD = 15;
 
 export default function ServiceList({ filterKey }) {
   const router = useRouter();
@@ -39,6 +39,7 @@ export default function ServiceList({ filterKey }) {
 
   const loadPage = useCallback(
     async (page) => {
+      console.log("check", lastPage);
       if (loading || (lastPage === "preview" && page === 1)) return;
 
       setPreviousPage(page);
@@ -89,6 +90,7 @@ export default function ServiceList({ filterKey }) {
   );
 
   useEffect(() => {
+    console.log("inicio");
     if (safeItems.length === 0 && lastPage !== "preview") {
       // window.scrollTo({ top: 0, behavior: "auto" });
       loadPage(1);
@@ -96,31 +98,34 @@ export default function ServiceList({ filterKey }) {
   }, []);
 
   useEffect(() => {
+    console.log("activa", sentinelRef.current);
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && listHasNext && !loading) {
+          console.log("📦 Scroll detectado: cargando más...");
           loadPage(listPage + 1);
         }
       },
-      { rootMargin: "50px" }
+      { rootMargin: "300px" } // ← mayor margen mejora el trigger anticipado
     );
 
-    const sentinel = sentinelRef.current;
-    if (sentinel) {
-      observer.observe(sentinel);
-      observerRef.current = observer;
-    }
+    observer.observe(sentinel);
+    observerRef.current = observer;
 
     return () => observer.disconnect();
-  }, [listHasNext, listPage, loading, loadPage]);
+  }, [listItems, listHasNext, listPage, loading, loadPage]);
 
   useEffect(() => {
+    console.log("filteres");
     if (lastPage !== "preview") {
       // requestedPages.current.clear();
       // setListItems([]);
-      setListHasNext(true);
       // window.scrollTo({ top: 0, behavior: "auto" });
       loadPage(1);
+      setListHasNext(true);
     }
   }, [filterKey]);
 
@@ -177,7 +182,7 @@ export default function ServiceList({ filterKey }) {
                 </div>
               ))}
             </div>
-            {listHasNext && <div ref={sentinelRef} className="h-2 w-full" />}
+            {<div ref={sentinelRef} className="h-2 w-full" />}
           </>
         )}
       </div>

@@ -216,7 +216,7 @@ export default function MatchSubservicesConfigPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 pt-4 mb-32">
       <h1 className="text-2xl font-bold mb-6">Configuración de Partidos</h1>
 
       <div className="mb-6">

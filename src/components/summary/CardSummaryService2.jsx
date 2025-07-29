@@ -316,7 +316,7 @@ export default function CardSummaryService({ statusExpanded }) {
 
                     <div className="flex flex-col flex-1">
                       <span className="text-sm text-textColor font-medium">
-                        {product.name}
+                        {product.name[language]}
                       </span>
                       <span className="text-xs text-textColorGray">
                         {formatPrice(product.price?.[currency], currency)}

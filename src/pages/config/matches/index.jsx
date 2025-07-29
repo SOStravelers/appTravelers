@@ -331,19 +331,29 @@ export default function MatchSubservicesConfigPage() {
                     {c.products.map((p, j) => (
                       <div
                         key={j}
-                        className="grid grid-cols-1 sm:grid-cols-10 gap-2 items-center text-sm mb-8"
+                        className="grid grid-cols-1  gap-2 items-center text-sm mb-8"
                       >
-                        <div className="col-span-2 flex items-center justify-between font-medium">
-                          <div className="text-md">{p.product.name}</div>
-
-                          <FaTimes
-                            onClick={() => removeProductFromCategory(i, j)}
-                            className="text-red-500 cursor-pointer"
-                            size={20}
-                          />
+                        <div className="grid grid-cols-3  gap-3 items-center text-sm mb-8">
+                          <div className="text-md">
+                            {p.product.name[language]}
+                          </div>
+                          <div className="flex items-center justify-center">
+                            <div className="mr-1">Default:</div>
+                            <NewSwitch
+                              checked={p.default}
+                              onChange={() => handleProductDefault(i, j)}
+                            />
+                          </div>
+                          <div className="flex items-center justify-end">
+                            <FaTimes
+                              onClick={() => removeProductFromCategory(i, j)}
+                              className="text-red-500 cursor-pointer"
+                              size={20}
+                            />
+                          </div>
                         </div>
                         {["usd", "eur", "brl"].map((cur) => (
-                          <div key={cur} className="flex flex-col">
+                          <div key={cur} className="grid grid-cols-3 ">
                             <label className="text-xs text-gray-600 uppercase">
                               {cur}
                             </label>
@@ -353,39 +363,36 @@ export default function MatchSubservicesConfigPage() {
                               onChange={(e) =>
                                 handlePriceChange(i, j, cur, e.target.value)
                               }
-                              className="border rounded px-2 py-1"
+                              className="border rounded px-2 py-1 min-w-[60px]"
                             />
                           </div>
                         ))}
-                        <div className="flex gap-1 items-center">
-                          <div className="mr-1">Default:</div>
-                          <NewSwitch
-                            checked={p.default}
-                            onChange={() => handleProductDefault(i, j)}
-                          />
-                        </div>
                       </div>
                     ))}
-
-                    <CustomSelector
-                      placeholder="Agregar producto"
-                      value={null}
-                      options={
-                        allCategoriesWithProducts
-                          .find((cat) => cat.category._id === c.category._id)
-                          ?.products.filter(
-                            (p) =>
-                              !c.products.some(
-                                (cp) =>
-                                  (typeof cp.product === "string"
-                                    ? cp.product
-                                    : cp.product._id) === p._id
-                              )
-                          )
-                          .map((p) => ({ value: p._id, label: p.name })) || []
-                      }
-                      onChange={(val) => addProductToCategory(i, val.value)}
-                    />
+                    <div className="pt-5 sm:w-1/3">
+                      <CustomSelector
+                        placeholder="Agregar producto"
+                        value={null}
+                        options={
+                          allCategoriesWithProducts
+                            .find((cat) => cat.category._id === c.category._id)
+                            ?.products.filter(
+                              (p) =>
+                                !c.products.some(
+                                  (cp) =>
+                                    (typeof cp.product === "string"
+                                      ? cp.product
+                                      : cp.product._id) === p._id
+                                )
+                            )
+                            .map((p) => ({
+                              value: p._id,
+                              label: p.name[language],
+                            })) || []
+                        }
+                        onChange={(val) => addProductToCategory(i, val.value)}
+                      />
+                    </div>
                   </div>
                 )}
               </div>

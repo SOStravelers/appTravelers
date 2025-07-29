@@ -11,6 +11,7 @@ import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
+import { formatPrice } from "@/utils/format";
 
 /* ---------- Componente que carga/gestiona el vídeo ---------- */
 const VideoLoader = ({ activeItem, videoRef, isMuted }) => {
@@ -90,6 +91,7 @@ export default function SyncCarousel() {
     loadingCarrouselVideos,
     setLoadingCarrouselVideos,
     loggedIn,
+    currency,
   } = useStore();
 
   const videoRef = useRef(null);
@@ -296,9 +298,12 @@ export default function SyncCarousel() {
                 <h3 className="text-xs pt-1 text-textColor">
                   {it.name[language]}
                 </h3>
-                {it.partner && (
+                {it.refPrice && (
+                  // <p className="text-xxs pt-1 text-textColorGray truncate">
+                  //   Partner: {it.partner}
+                  // </p>
                   <p className="text-xxs pt-1 text-textColorGray truncate">
-                    Partner: {it.partner}
+                    {formatPrice(it.refPrice[currency], currency)}
                   </p>
                 )}
               </div>

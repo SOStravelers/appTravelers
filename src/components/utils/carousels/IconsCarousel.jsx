@@ -239,10 +239,11 @@ export default function IconCarousel({ onOpenFilter, onFilterChange }) {
           </div>
 
           {showLeftBlur && (
-            <div className="pointer-events-none absolute inset-y-0 -left-[1px] w-12 z-10 bg-gradient-to-r from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 -left-[1px] w-12 z-10 bg-gradient-to-r from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent md:hidden" />
           )}
+
           {showRightBlur && (
-            <div className="pointer-events-none absolute inset-y-0 -right-[1px] w-12 z-10 bg-gradient-to-l from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 -right-[1px] w-12 z-10 bg-gradient-to-l from-[rgba(247,247,247,1)] dark:from-[rgba(14,37,45,1)] to-transparent md:hidden" />
           )}
         </div>
 

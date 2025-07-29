@@ -231,8 +231,8 @@ export default function SyncCarousel() {
           videoRef={videoRef}
           isMuted={isMuted}
         />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent" />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-backgroundP" />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent md:hidden" />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-backgroundP md:hidden" />
       </div>
 
       {/* botón play/pause */}

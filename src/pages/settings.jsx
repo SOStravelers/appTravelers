@@ -125,65 +125,69 @@ export default function Settings() {
 
   return (
     <div
-      className={`px-6 flex flex-col items-center
-    ${loading ? opacityAnimation : displayAnimation}
-  `}
+      className={`min-h-screen bg-backgroundP pt-4 px-6  flex flex-col items-center
+              transform transition-all duration-800 ease-out
+              transition-opacity duration-800 ease-out
+             ${loading ? opacityAnimation : displayAnimation}
+            `}
     >
-      <Link href="support" className="w-full flex mt-3">
-        <OptionCard
-          title={languageData.support.title[language]}
-          subtitle={languageData.support.body[language]}
-          icon={MdEmail}
-        />
-      </Link>
-      <SettingsComponent />
-
-      <div className="flex flex-col my-4">
-        {(process.env.NEXT_PUBLIC_NODE_ENV === "Development" ||
-          process.env.NODE_ENV === "dev") && (
-          <OptionSwitch
-            title="Worker Mode"
-            onFunction={workerModeOn}
-            offFunction={workerModeOff}
-            initialState={isWorker}
-            isOn={isOnWorker}
-            setIsOn={setIsOnWorker}
+      <div className="w-full max-w-md flex flex-col self-center">
+        <Link href="support" className="w-full flex mt-3">
+          <OptionCard
+            title={languageData.support.title[language]}
+            subtitle={languageData.support.body[language]}
+            icon={MdEmail}
           />
-        )}
-        {/* <OptionSwitch
+        </Link>
+        <SettingsComponent />
+
+        <div className="flex flex-col my-4">
+          {(process.env.NEXT_PUBLIC_NODE_ENV === "Development" ||
+            process.env.NODE_ENV === "dev") && (
+            <OptionSwitch
+              title="Worker Mode"
+              onFunction={workerModeOn}
+              offFunction={workerModeOff}
+              initialState={isWorker}
+              isOn={isOnWorker}
+              setIsOn={setIsOnWorker}
+            />
+          )}
+          {/* <OptionSwitch
           title="Notifications"
           onFunction={notificationModeOn}
           offFunction={notificationModeOff}
           isOn={isOnNotification}
           setIsOn={setIsOnNotification}
         /> */}
-      </div>
+        </div>
 
-      <TextModal
-        title={`Activate Worker Mode`}
-        text={["Are you sure you want to activate worker mode?"]}
-        buttonText="Let's go"
-        open={open}
-        setOpen={setOpen}
-        onAccept={confirmChangeWorkerMode}
-        onCancel={cancelChangeWorkerMode}
-      />
-      <TextModal
-        title={`Disable notifications`}
-        text={["Which notifications would you like to deactivate?", ""]}
-        buttonText="Accept"
-        open={openNotification}
-        selectOptions={[
-          "Email notifications",
-          "Push notifications",
-          "WhatsApp notifications",
-          "SOS team notifications",
-          "All",
-        ]}
-        setOpen={setOpenNotification}
-        onAccept={confirmNotification}
-        onCancel={cancelNotification}
-      />
+        <TextModal
+          title={`Activate Worker Mode`}
+          text={["Are you sure you want to activate worker mode?"]}
+          buttonText="Let's go"
+          open={open}
+          setOpen={setOpen}
+          onAccept={confirmChangeWorkerMode}
+          onCancel={cancelChangeWorkerMode}
+        />
+        <TextModal
+          title={`Disable notifications`}
+          text={["Which notifications would you like to deactivate?", ""]}
+          buttonText="Accept"
+          open={openNotification}
+          selectOptions={[
+            "Email notifications",
+            "Push notifications",
+            "WhatsApp notifications",
+            "SOS team notifications",
+            "All",
+          ]}
+          setOpen={setOpenNotification}
+          onAccept={confirmNotification}
+          onCancel={cancelNotification}
+        />
+      </div>
     </div>
   );
 }

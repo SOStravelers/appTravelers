@@ -80,7 +80,7 @@ export default function EditPhoneModal({ isOpen, onClose }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`bg-white rounded-xl w-full max-w-md p-4 mx-4 transform transition-all ${
+        className={`bg-backgroundModal rounded-xl w-full max-w-md p-4 mx-4 transform transition-all ${
           isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 translate-y-4"
         }`}
       >

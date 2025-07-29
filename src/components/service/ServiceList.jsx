@@ -109,7 +109,7 @@ export default function ServiceList({ filterKey }) {
           loadPage(listPage + 1);
         }
       },
-      { rootMargin: "300px" } // ← mayor margen mejora el trigger anticipado
+      { rootMargin: "350px" } // ← mayor margen mejora el trigger anticipado
     );
 
     observer.observe(sentinel);

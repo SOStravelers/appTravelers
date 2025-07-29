@@ -6,7 +6,7 @@ import CustomSelector from "@/components/utils/selector/CustomSelector";
 import NewSwitch from "@/components/utils/switch/NewSwitch";
 import { useStore } from "@/store";
 import { DateTime } from "luxon";
-
+import { FaTimes } from "react-icons/fa";
 export default function MatchSubservicesConfigPage() {
   const { language } = useStore();
   const [matchSubservices, setMatchSubservices] = useState([]);
@@ -209,6 +209,8 @@ export default function MatchSubservicesConfigPage() {
       })),
     };
     console.log("payload", payload);
+    payload.hasEvent = true;
+    payload.typeService = "product";
     await SubserviceService.updateProductData(payload);
     alert("Cambios guardados correctamente");
   };
@@ -282,17 +284,24 @@ export default function MatchSubservicesConfigPage() {
                     onChange={(val) => updateCategory(i, val.value)}
                   />
                 ) : (
-                  <div className="flex justify-between items-center mb-3">
-                    <div>
+                  <>
+                    <div className="flex justify-between mb-3">
                       <h2 className="font-semibold text-lg">
                         {c.category.title?.[language]}
                       </h2>
-                      <div className="flex gap-2 items-center mt-1">
+                      <FaTimes
+                        onClick={() => removeCategory(i)}
+                        className="text-red-500 cursor-pointer"
+                        size={28}
+                      />
+                    </div>
+                    <div className="flex justify-between mb-10">
+                      <div className="flex items-center mt-1 gap-2">
                         <span className="text-sm text-gray-600 italic">
                           Tipo:
                         </span>
                         <CustomSelector
-                          className="w-32"
+                          className="w-48" // antes era w-40 o w-32, ahora es más ancho
                           value={{
                             value: c.category.type,
                             label: c.category.type,
@@ -306,15 +315,7 @@ export default function MatchSubservicesConfigPage() {
                           }
                         />
                       </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <button
-                        onClick={() => removeCategory(i)}
-                        className="text-red-600 text-sm"
-                      >
-                        Eliminar
-                      </button>
-                      <div className="text-sm flex gap-1 items-center">
+                      <div className="text-sm flex items-center gap-2">
                         Default:
                         <NewSwitch
                           checked={c.default}
@@ -322,7 +323,7 @@ export default function MatchSubservicesConfigPage() {
                         />
                       </div>
                     </div>
-                  </div>
+                  </>
                 )}
 
                 {c.category && (
@@ -330,10 +331,16 @@ export default function MatchSubservicesConfigPage() {
                     {c.products.map((p, j) => (
                       <div
                         key={j}
-                        className="grid grid-cols-1 sm:grid-cols-10 gap-2 items-center text-sm"
+                        className="grid grid-cols-1 sm:grid-cols-10 gap-2 items-center text-sm mb-8"
                       >
-                        <div className="col-span-2 font-medium">
-                          {p.product.name}
+                        <div className="col-span-2 flex items-center justify-between font-medium">
+                          <div className="text-md">{p.product.name}</div>
+
+                          <FaTimes
+                            onClick={() => removeProductFromCategory(i, j)}
+                            className="text-red-500 cursor-pointer"
+                            size={20}
+                          />
                         </div>
                         {["usd", "eur", "brl"].map((cur) => (
                           <div key={cur} className="flex flex-col">
@@ -351,18 +358,12 @@ export default function MatchSubservicesConfigPage() {
                           </div>
                         ))}
                         <div className="flex gap-1 items-center">
-                          Default:
+                          <div className="mr-1">Default:</div>
                           <NewSwitch
                             checked={p.default}
                             onChange={() => handleProductDefault(i, j)}
                           />
                         </div>
-                        <button
-                          onClick={() => removeProductFromCategory(i, j)}
-                          className="text-red-500 text-xs"
-                        >
-                          Quitar
-                        </button>
                       </div>
                     ))}
 

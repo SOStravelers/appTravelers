@@ -8,7 +8,7 @@ import ServiceCardRecomendation from "@/components/utils/cards/ServiceCardRecome
 import LoginFormModal from "@/components/utils/modal/LoginFormModal";
 import { useStore } from "@/store";
 import FavoriteService from "@/services/FavoriteService";
-const ITEMS_PER_LOAD = 15;
+const ITEMS_PER_LOAD = 5;
 
 export default function ServiceList({ filterKey }) {
   const router = useRouter();

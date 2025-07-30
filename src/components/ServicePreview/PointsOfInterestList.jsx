@@ -56,7 +56,7 @@ const PointsOfInterestList = ({ pointsOfInterest = [] }) => {
                 {point.name?.[language]}
               </p>
 
-              {index === 0 && point.mapLocation && (
+              {point.mapLocation && (
                 <button
                   onClick={() => {
                     if (isMobileDevice()) {

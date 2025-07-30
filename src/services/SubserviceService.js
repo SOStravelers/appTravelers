@@ -81,8 +81,8 @@ export default class SubserviceService {
     return axios.get(`${this.baseUrl}/get/withVideos`);
   }
   //Obtener recomendados
-  static async getRecommended() {
-    return axios.get(`${this.baseUrl}/get/recommended`);
+  static async getRecommended(id) {
+    return axios.get(`${this.baseUrl}/get/recommended?subservice=${id}`);
   }
   //Obtener subservicio por id
   static async getById(id) {

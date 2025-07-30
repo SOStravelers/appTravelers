@@ -56,12 +56,26 @@
       "de": "Erwachsene",
       "pt": "Adultos"
     },
+    "people": {
+      "en": "People",
+      "es": "Personas",
+      "fr": "Personnes",
+      "de": "Personen",
+      "pt": "Pessoas"
+    },
     "children": {
       "en": "Children",
       "es": "Niños",
       "fr": "Enfants",
       "de": "Kinder",
       "pt": "Crianças"
+    },
+    "ageRange_2_12": {
+      "en": "Age: 2–12 years",
+      "es": "Edad: 2–12 años",
+      "fr": "Âge : 2 à 12 ans",
+      "de": "Alter: 2–12 Jahre",
+      "pt": "Idade: 2–12 anos"
     }
   }
 }

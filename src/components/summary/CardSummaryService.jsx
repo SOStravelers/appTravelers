@@ -180,7 +180,10 @@ export default function CardSummaryService({
                 {thisLanguage.sections.travellers.title[language]}
               </p>
               <p className="text-textColorGray text-xs">
-                {adults} {thisLanguage.sections.travellers.adults[language]}
+                {adults}{" "}
+                {service.tourData.hasChildren
+                  ? thisLanguage.sections.travellers.adults[language]
+                  : thisLanguage.sections.travellers.people[language]}
                 {children > 0 &&
                   `, ${children} ${thisLanguage.sections.travellers.children[language]}`}
               </p>

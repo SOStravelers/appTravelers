@@ -39,7 +39,7 @@ const RecomendationCarousel = () => {
   }, [servicesToDisplay]);
 
   return (
-    <div className="w-full py-2">
+    <div className="w-full py-2 mb-8">
       <div className="flex justify-start items-center">
         <h2 className="text-xl font-semibold text-textColor">
           {languageData.index.recommended[language]}

@@ -269,7 +269,11 @@ function Calendar({ id }) {
           {/* Adults */}
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-sm text-textColor font-semibold">Adultos</h3>
+              <h3 className="text-sm text-textColor font-semibold">
+                {service.tourData.hasChildren
+                  ? languageData.calendar.adults[language]
+                  : languageData.calendar.people[language]}
+              </h3>
               {/* <p className="text-xs text-textColor">Edad: más de 18</p> */}
             </div>
             <div className="flex items-center justify-center items-center">
@@ -294,8 +298,13 @@ function Calendar({ id }) {
           {service.tourData.hasChildren && (
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-sm font-semibold text-textColor">Niños</h3>
-                <p className="text-xs text-textColor">Edad: 2–12 años</p>
+                <h3 className="text-sm font-semibold text-textColor">
+                  {languageData.calendar.children[language]}
+                </h3>
+                <p className="text-xs text-textColor">
+                  {" "}
+                  {languageData.calendar.ageRange_2_12[language]}
+                </p>
               </div>
               <div className="flex items-center justify-center items-center">
                 <button

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useStore } from "@/store";
 import { formatPrice } from "@/utils/format";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import languageData from "@/language/reservation.json";
 export default function TravellersDetailsModal({ open, onClose }) {
   const { service, setService, language, currency } = useStore();
 
@@ -160,11 +161,13 @@ export default function TravellersDetailsModal({ open, onClose }) {
           <div className="flex justify-between  items-center">
             <div>
               <h4 className=" font-semibold text-textColor text-sm">
-                {language === "es" ? "Adultos" : "Adults"}
+                {service.tourData.hasChildren
+                  ? languageData.calendar.adults[language]
+                  : languageData.calendar.people[language]}
               </h4>
-              <p className="text-xs text-textColorGray">
+              {/* <p className="text-xs text-textColorGray">
                 {language === "es" ? "Edad: más de 18" : "Age: over 18"}
-              </p>
+              </p> */}
             </div>
             <div className="flex items-center space-x-2">
               <button
@@ -189,10 +192,10 @@ export default function TravellersDetailsModal({ open, onClose }) {
             <div className="flex justify-between items-center">
               <div>
                 <h4 className="text-textColor font-semibold text-sm">
-                  {language === "es" ? "Niños" : "Children"}
+                  {languageData.calendar.children[language]}
                 </h4>
                 <p className="text-sm text-textColorGray text-xs">
-                  {language === "es" ? "Edad: 2–12 años" : "Age: 2–12 yrs"}
+                  {languageData.calendar.ageRange_2_12[language]}
                 </p>
               </div>
               <div className="flex items-center space-x-2">

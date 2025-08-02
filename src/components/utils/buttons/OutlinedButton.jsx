@@ -28,7 +28,7 @@ function OutlinedButton({
         "rounded-full cursor-pointer flex items-center justify-center gap-2",
         textSize,
         margin,
-        buttonCenter ? "w-2/3 mx-auto" : `px-${px}`,
+        buttonCenter ? "w-2/3 mx-auto md:w-2/5 " : `px-${px}`,
         `py-${py}`,
         {
           "text-grey border-grey": secondary,
@@ -46,7 +46,8 @@ function OutlinedButton({
       disabled={disabled}
       {...props}
     >
-      {Icon && <Icon className="h-5 w-5" />} {/* ✅ ícono al inicio */}
+      {Icon && <Icon className={`h-5 w-5 ${textColor}`} />}{" "}
+      {/* ← ícono visible */}
       {text}
     </button>
   );

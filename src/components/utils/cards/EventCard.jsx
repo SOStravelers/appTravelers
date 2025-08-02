@@ -31,8 +31,8 @@ export default function EventCard({
   return (
     <div
       className={clsx(
-        "bg-backgroundModal shadow-md rounded-xl p-3",
-        fullWidth ? "w-full" : "max-w-sm mx-auto",
+        "bg-backgroundModal shadow-md rounded-xl p-3 ",
+        fullWidth ? "max-w-lg " : "max-w-sm mx-auto",
         !imageLoaded && "hidden" // Oculta hasta que cargue la imagen
       )}
     >

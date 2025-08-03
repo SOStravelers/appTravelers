@@ -102,9 +102,6 @@ END:VCALENDAR
         buttonCenter={true}
         minWidth="260px"
       />
-      {localTimeText && (
-        <p className="text-xs text-gray-500 mt-1">{localTimeText}</p>
-      )}
     </div>
   );
 }

@@ -60,7 +60,7 @@ export default function EventCard({
             {/* <p className="text-gray-600 text-sm mb-2">
               {formattedDate} - {formattedTime}
             </p> */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-end">
               {/* <div className="flex items-center text-sm text-gray-700">
                 <FaTicketAlt className="mr-1" />
                 {isClosed ? <span>Encerrado</span> : <span>Disponible</span>}

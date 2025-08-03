@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import EventCard from "@/components/utils/cards/EventCard";
 import AddToCalendarButton from "@/components/utils/buttons/AddToCalendarButton";
 import BookingService from "@/services/BookingService";
-import languageData from "@/language/purchase.json";
+import languageData from "@/language/bookingDetails.json";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
 import { formatearFechaCompletaDesdeISO } from "@/utils/format";
@@ -33,16 +33,36 @@ export default function PurchasePage() {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [paymentData, setPaymentData] = useState({});
 
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [modalImageUrl, setModalImageUrl] = useState(null);
+
   const operator = {
     name: "Carlos Duarte",
     email: "carlos.duarte@sostravelers.com",
     phone: "+55 21 91234-5678",
     avatar: "/images/operator-carlos.jpg", // foto circular
   };
-  const getWhatsappLink = (phone, name) => {
-    const rawPhone = phone.replace(/\D/g, ""); // Elimina espacios y símbolos
-    const message = `Hola ${name}, tengo una consulta sobre mi reserva en SOS Travelers.`;
-    return `https://wa.me/${rawPhone}?text=${encodeURIComponent(message)}`;
+  const openImageModal = (url) => {
+    setModalImageUrl(url);
+    setIsImageModalOpen(true);
+  };
+  const getWhatsappLink = ({ phone, phoneCode, name, subservice }) => {
+    console.log("wena", phone, phoneCode, name, subservice);
+    const rawPhone = String(phone || "").replace(/\D/g, "");
+    const rawPhoneCode = String(phoneCode || "").replace(/\D/g, "");
+    const phoneComplete = rawPhoneCode + rawPhone;
+    // const message = `Hola ${name}, tengo una consulta sobre mi reserva en SOS Travelers.`;
+    // return `https://wa.me/${phoneComplete}?text=${encodeURIComponent(message)}`;
+
+    const message =
+      languageData.msgWhatsapp1[language] +
+      " " +
+      subservice?.name[language] +
+      " " +
+      languageData.msgWhatsapp2[language]; // Mensaje opcional
+    const encodedMessage = encodeURIComponent(message);
+
+    return `https://wa.me/${phoneComplete}?text=${encodedMessage}`;
   };
 
   useEffect(() => {
@@ -217,31 +237,40 @@ export default function PurchasePage() {
 
               <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center">
                 <img
-                  src={operator.avatar}
+                  src={booking?.providerId?.imgUrl}
                   alt={operator.name}
-                  className="w-20 h-20 rounded-full object-cover border-2 border-blue-500 shadow-sm"
+                  onClick={() => openImageModal(booking?.providerId?.imgUrl)}
+                  className="w-20 h-20 rounded-full object-cover border-2 border-blue-500 shadow-sm cursor-pointer hover:opacity-80 transition"
                 />
                 <div className="text-center md:text-left">
-                  <p className="font-semibold text-lg">{operator.name}</p>
+                  <p className="font-semibold text-lg">
+                    {booking?.providerId?.name}
+                  </p>
                   <p className="text-sm text-gray-600">
                     <a
                       href={`tel:${operator.phone}`}
                       className="hover:underline"
                     >
-                      📞 {operator.phone}
+                      📞 +{booking?.providerId?.phoneCode}{" "}
+                      {booking?.providerId?.phone}
                     </a>
                   </p>
                   <p className="text-sm text-gray-600">
                     <a
-                      href={`mailto:${operator.email}`}
+                      href={`mailto:${booking?.providerId?.email}`}
                       className="hover:underline"
                     >
-                      ✉️ {operator.email}
+                      ✉️ {booking?.providerId?.email}
                     </a>
                   </p>
 
                   <a
-                    href={getWhatsappLink(operator.phone, operator.name)}
+                    href={getWhatsappLink({
+                      phone: booking?.providerId?.phone,
+                      phoneCode: booking?.providerId?.phoneCode,
+                      name: booking?.providerId?.name,
+                      subservice: booking?.subserviceData,
+                    })}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block mt-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm hover:bg-green-600 transition"
@@ -304,6 +333,23 @@ export default function PurchasePage() {
         isOpen={isFilterOpen}
         onClose={() => setFilterOpen(false)}
       />
+      {isImageModalOpen && (
+        <div
+          className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-md"
+          onClick={() => setIsImageModalOpen(false)}
+        >
+          <div
+            className="animate-fadeInScale"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={modalImageUrl}
+              alt="Imagen ampliada"
+              className="w-60 h-60 object-cover rounded-full shadow-xl"
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }

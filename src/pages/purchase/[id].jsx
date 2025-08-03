@@ -6,7 +6,7 @@ import BookingService from "@/services/BookingService";
 import languageData from "@/language/bookingDetails.json";
 import { isBeforeHoursThreshold } from "@/utils/format";
 import OrderModal from "@/components/utils/modal/OrderModal";
-import PurchaseDetail from "./purchaseDetail";
+import PurchaseDetail from "./PurchaseDetail";
 
 import {
   delay,

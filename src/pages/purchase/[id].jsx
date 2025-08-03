@@ -23,6 +23,8 @@ import {
   FaShareAlt,
   FaClipboardList,
   FaDownload,
+  FaPhoneAlt,
+  FaEnvelope,
 } from "react-icons/fa";
 
 export default function PurchasePage() {
@@ -231,7 +233,7 @@ export default function PurchasePage() {
 
             {/* Datos del operador */}
             <div className="mt-10 text-sm text-gray-800 border-t pt-6 border-gray-200">
-              <h2 className="text-base font-semibold mb-4 text-center">
+              <h2 className="text-base font-semibold mb-4 text-textColor text-center">
                 Operador responsable del servicio
               </h2>
 
@@ -240,27 +242,29 @@ export default function PurchasePage() {
                   src={booking?.providerId?.imgUrl}
                   alt={operator.name}
                   onClick={() => openImageModal(booking?.providerId?.imgUrl)}
-                  className="w-20 h-20 rounded-full object-cover border-2 border-textColor shadow-sm cursor-pointer hover:opacity-80 transition"
+                  className="w-24 h-24 rounded-full object-cover border-2 border-textColor shadow-sm cursor-pointer hover:opacity-80 transition"
                 />
                 <div className="text-center md:text-left">
                   <p className="font-semibold text-textColor text-lg">
                     {booking?.providerId?.name}
                   </p>
-                  <p className="text-sm text-textColorGray">
+                  <p className="text-sm text-textColorGray flex items-center gap-2">
+                    <FaPhoneAlt className="text-base text-textColor" />
                     <a
-                      href={`tel:${operator.phone}`}
+                      href={`tel:${booking?.providerId?.phoneCode}${booking?.providerId?.phone}`}
                       className="hover:underline"
                     >
-                      📞 +{booking?.providerId?.phoneCode}{" "}
+                      +{booking?.providerId?.phoneCode}{" "}
                       {booking?.providerId?.phone}
                     </a>
                   </p>
-                  <p className="text-sm text-textColorGray">
+                  <p className="text-sm text-textColorGray flex items-center gap-2 mt-1">
+                    <FaEnvelope className="text-base text-textColor" />
                     <a
                       href={`mailto:${booking?.providerId?.email}`}
                       className="hover:underline"
                     >
-                      ✉️ {booking?.providerId?.email}
+                      {booking?.providerId?.email}
                     </a>
                   </p>
 

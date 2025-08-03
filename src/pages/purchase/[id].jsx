@@ -10,6 +10,8 @@ import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
 import { formatearFechaCompletaDesdeISO } from "@/utils/format";
 import InfoItem from "@/components/utils/cards/InfoItem";
 import OrderModal from "@/components/utils/modal/OrderModal";
+import ProviderCard from "@/components/utils/cards/ProviderCard";
+
 import {
   delay,
   opacityAnimation,
@@ -20,52 +22,17 @@ import {
   FaRegCalendarAlt,
   FaMapMarkerAlt,
   FaClock,
-  FaShareAlt,
+  FaArrowLeft,
   FaClipboardList,
-  FaDownload,
-  FaPhoneAlt,
-  FaEnvelope,
 } from "react-icons/fa";
 
 export default function PurchasePage() {
-  const { language, user, currency } = useStore();
+  const { language, currency } = useStore();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const [booking, setBooking] = useState(null);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [paymentData, setPaymentData] = useState({});
-
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [modalImageUrl, setModalImageUrl] = useState(null);
-
-  const operator = {
-    name: "Carlos Duarte",
-    email: "carlos.duarte@sostravelers.com",
-    phone: "+55 21 91234-5678",
-    avatar: "/images/operator-carlos.jpg", // foto circular
-  };
-  const openImageModal = (url) => {
-    setModalImageUrl(url);
-    setIsImageModalOpen(true);
-  };
-  const getWhatsappLink = ({ phone, phoneCode, name, subservice }) => {
-    console.log("wena", phone, phoneCode, name, subservice);
-    const rawPhone = String(phone || "").replace(/\D/g, "");
-    const rawPhoneCode = String(phoneCode || "").replace(/\D/g, "");
-    const phoneComplete = rawPhoneCode + rawPhone;
-    // const message = `Hola ${name}, tengo una consulta sobre mi reserva en SOS Travelers.`;
-    // return `https://wa.me/${phoneComplete}?text=${encodeURIComponent(message)}`;
-
-    const message =
-      languageData.msgWhatsapp1[language] +
-      " " +
-      subservice?.name[language] +
-      " " +
-      languageData.msgWhatsapp2[language]; // Mensaje opcional
-    const encodedMessage = encodeURIComponent(message);
-
-    return `https://wa.me/${phoneComplete}?text=${encodedMessage}`;
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -93,7 +60,7 @@ export default function PurchasePage() {
         language
       );
       cancelData.paymentStatus = booking.paymentStatus;
-      // cancelData.paymentStatus = "unpaid";
+      cancelData.paymentStatus = "paid";
       setPaymentData(cancelData);
     } catch (err) {
       console.log(err);
@@ -215,8 +182,14 @@ export default function PurchasePage() {
               minWidth="260px"
             />
 
+            <AddToCalendarButton
+              title={booking?.subserviceData?.name[language]}
+              location="Rj"
+              date={booking?.startTime?.isoTime || null}
+            />
+
             {/* Código QR (si está pagado) */}
-            {paymentData.paymentStatus === "paid" && (
+            {/* {paymentData.paymentStatus === "paid" && (
               <div className="mt-8 flex justify-center">
                 <div className="bg-gray-100 p-4 rounded-lg shadow-inner text-center">
                   <img
@@ -229,86 +202,20 @@ export default function PurchasePage() {
                   </p>
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Datos del operador */}
-            <div className="mt-10 text-sm text-gray-800 border-t pt-6 border-gray-200">
-              <h2 className="text-base font-semibold mb-4 text-textColor text-center">
-                Operador responsable del servicio
-              </h2>
-
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center">
-                <img
-                  src={booking?.providerId?.imgUrl}
-                  alt={operator.name}
-                  onClick={() => openImageModal(booking?.providerId?.imgUrl)}
-                  className="w-24 h-24 rounded-full object-cover border-2 border-textColor shadow-sm cursor-pointer hover:opacity-80 transition"
-                />
-                <div className="text-center md:text-left">
-                  <p className="font-semibold text-textColor text-lg">
-                    {booking?.providerId?.name}
-                  </p>
-                  <p className="text-sm text-textColorGray flex items-center gap-2">
-                    <FaPhoneAlt className="text-base text-textColor" />
-                    <a
-                      href={`tel:${booking?.providerId?.phoneCode}${booking?.providerId?.phone}`}
-                      className="hover:underline"
-                    >
-                      +{booking?.providerId?.phoneCode}{" "}
-                      {booking?.providerId?.phone}
-                    </a>
-                  </p>
-                  <p className="text-sm text-textColorGray flex items-center gap-2 mt-1">
-                    <FaEnvelope className="text-base text-textColor" />
-                    <a
-                      href={`mailto:${booking?.providerId?.email}`}
-                      className="hover:underline"
-                    >
-                      {booking?.providerId?.email}
-                    </a>
-                  </p>
-
-                  <a
-                    href={getWhatsappLink({
-                      phone: booking?.providerId?.phone,
-                      phoneCode: booking?.providerId?.phoneCode,
-                      name: booking?.providerId?.name,
-                      subservice: booking?.subserviceData,
-                    })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm hover:bg-green-600 transition"
-                  >
-                    💬 Hablar por WhatsApp
-                  </a>
-                </div>
-              </div>
-            </div>
+            {booking?.providerId && (
+              <ProviderCard
+                provider={booking?.providerId}
+                subservice={booking?.subserviceData}
+              />
+            )}
 
             {/* Acciones */}
             <div className="mt-10 flex flex-col md:flex-row justify-center gap-4">
               {paymentData.paymentStatus === "paid" ? (
-                <>
-                  <button
-                    onClick={() => alert("Descargando entrada...")}
-                    className="flex items-center justify-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition"
-                  >
-                    <FaDownload />
-                    Descargar entrada
-                  </button>
-                  <button
-                    onClick={shareLink}
-                    className="flex items-center justify-center gap-2 border border-gray-400 text-gray-700 py-2 px-4 rounded-full hover:bg-gray-100 transition"
-                  >
-                    <FaShareAlt />
-                    Compartir en WhatsApp
-                  </button>
-                  <AddToCalendarButton
-                    title="Soldierbeat"
-                    location="TAU"
-                    date="2025-07-17T22:00:00"
-                  />
-                </>
+                <></>
               ) : (
                 <button
                   onClick={() => alert("Cancelar reserva")}
@@ -323,9 +230,10 @@ export default function PurchasePage() {
             <div className="mt-6 text-center">
               <button
                 onClick={() => router.push("/")}
-                className="text-sm text-blue-600 hover:underline"
+                className="text-sm text-textColor hover:underline flex align-items text-center"
               >
-                Volver al inicio
+                <FaArrowLeft size={18} />
+                <p>Volver al inicio</p>
               </button>
             </div>
           </div>
@@ -337,23 +245,6 @@ export default function PurchasePage() {
         isOpen={isFilterOpen}
         onClose={() => setFilterOpen(false)}
       />
-      {isImageModalOpen && (
-        <div
-          className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-md"
-          onClick={() => setIsImageModalOpen(false)}
-        >
-          <div
-            className="animate-fadeInScale"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={modalImageUrl}
-              alt="Imagen ampliada"
-              className="w-60 h-60 object-cover rounded-full shadow-xl"
-            />
-          </div>
-        </div>
-      )}
     </>
   );
 }

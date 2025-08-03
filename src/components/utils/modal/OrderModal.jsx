@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useStore } from "@/store";
 import { formatPrice } from "@/utils/format";
 import TablePriceSummary from "@/components/utils/cards/tablePrice";
+import { FaRegClipboard } from "react-icons/fa";
 export default function OrderModal({ isOpen, onClose, booking }) {
   const { filters, setFilters, language, currency } = useStore();
 
   const [keyword, setKeyword] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-
+  const [copied, setCopied] = useState(false);
   const [errKeyword, setErrKeyword] = useState("");
   const [errMax, setErrMax] = useState("");
-
+  const [copiedVisible, setCopiedVisible] = useState(false);
   useEffect(() => {
     if (!isOpen) return;
 
@@ -58,35 +59,13 @@ export default function OrderModal({ isOpen, onClose, booking }) {
     }
   }, [keyword, minPrice, maxPrice]);
 
-  const handleApply = () => {
-    if (errKeyword || errMax) return;
-
-    const toNum = (v) => (v === "" || Number(v) === 0 ? null : Number(v));
-    const min = toNum(minPrice);
-    const max = toNum(maxPrice);
-
-    const newFilters = {
-      ...filters,
-      keyword: keyword.trim(),
-      minPrice: min,
-      maxPrice: max,
-    };
-
-    if (min != null || max != null) {
-      newFilters.currency = currency;
-    } else {
-      delete newFilters.currency;
-    }
-
-    setFilters(newFilters);
-    onApply();
-    onClose();
+  const handleCopy = () => {
+    navigator.clipboard.writeText(booking?.purchaseOrder || "");
+    setCopied(true);
+    setCopiedVisible(true);
+    setTimeout(() => setCopiedVisible(false), 1300); // empieza fade-out
+    setTimeout(() => setCopied(false), 1500); // luego remueve el tooltip
   };
-
-  const base =
-    "mt-1 block w-full rounded-md px-2 py-1.5 text-xs focus:outline-none focus:ring-0 transition-colors";
-  const okInput = `${base} border border-gray-300 bg-gray-100 focus:border-blueBorder`;
-  const errInput = `${base} border border-red-500 bg-gray-100 focus:border-red-600`;
 
   return (
     <div
@@ -111,9 +90,26 @@ export default function OrderModal({ isOpen, onClose, booking }) {
       >
         {/* header */}
         <div className="flex justify-between items-center mb-6 mt-3">
-          <h1 className="text-xl text-textColor font-semibold">
-            Pedido N° : {booking?.purchaseOrder}
-          </h1>
+          <div className="relative flex items-center gap-2 text-xl text-textColor font-semibold">
+            <span>Pedido N°: {booking?.purchaseOrder}</span>
+            <button
+              onClick={handleCopy}
+              title="Copiar al portapapeles"
+              className="text-textColor hover:text-blueBorder transition relative"
+            >
+              <FaRegClipboard size={18} />
+              {copied && (
+                <div
+                  className={`absolute left-1/2 -translate-x-1/2 top-7 text-xs bg-black text-white rounded px-2 py-1 shadow-lg z-10 pointer-events-none ${
+                    copiedVisible ? "fade-slide-in" : "fade-slide-out"
+                  }`}
+                >
+                  Copiado
+                </div>
+              )}
+            </button>
+          </div>
+
           <button
             onClick={onClose}
             className="text-textColor font-semibold text-2xl"

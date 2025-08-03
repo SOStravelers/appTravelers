@@ -30,6 +30,7 @@ function OutlinedButton({
         margin,
         buttonCenter ? "w-2/3 mx-auto md:w-2/5 " : `px-${px}`,
         `py-${py}`,
+        "hover:brightness-200 transition duration-200", // ← efecto de iluminación
         {
           "text-grey border-grey": secondary,
           "text-greyText border-lightGrey": error,

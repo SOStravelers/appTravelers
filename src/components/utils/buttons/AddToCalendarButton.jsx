@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-
+import { FaRegCalendarPlus } from "react-icons/fa";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 export default function AddToCalendarButton({ title, location, date }) {
   const [isApple, setIsApple] = useState(false);
 
@@ -17,16 +18,16 @@ export default function AddToCalendarButton({ title, location, date }) {
   const handleClick = () => {
     if (isApple) {
       const icsContent = `
-BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:${title}
-DTSTART:${dtStart}
-DTEND:${dtEnd}
-LOCATION:${location}
-DESCRIPTION:Evento reservado vía SOS Travelers
-END:VEVENT
-END:VCALENDAR
+        BEGIN:VCALENDAR
+        VERSION:2.0
+        BEGIN:VEVENT
+        SUMMARY:${title}
+        DTSTART:${dtStart}
+        DTEND:${dtEnd}
+        LOCATION:${location}
+        DESCRIPTION:Evento reservado vía SOS Travelers
+        END:VEVENT
+        END:VCALENDAR
       `.trim();
 
       const blob = new Blob([icsContent], { type: "text/calendar" });
@@ -49,11 +50,17 @@ END:VCALENDAR
   };
 
   return (
-    <button
+    <OutlinedButton
       onClick={handleClick}
-      className="flex items-center justify-center gap-2 border border-green-600 text-green-700 py-2 px-4 rounded-lg hover:bg-green-100 transition text-sm"
-    >
-      📅 Añadir al calendario
-    </button>
+      text="Añadir al calendario"
+      py={3}
+      margin="my-5"
+      icon={FaRegCalendarPlus}
+      dark="darkLight"
+      textSize="text-md"
+      textColor="text-white"
+      buttonCenter={true}
+      minWidth="260px"
+    />
   );
 }

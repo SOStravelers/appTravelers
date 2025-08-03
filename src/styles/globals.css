@@ -314,3 +314,34 @@ body {
 .animate-bounce-slow {
   animation: bounce-slow 2.5s infinite;
 }
+
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+.fade-slide-in {
+  animation: fadeSlideIn 0.2s ease-out forwards;
+}
+
+.fade-slide-out {
+  animation: fadeSlideOut 0.2s ease-in forwards;
+}

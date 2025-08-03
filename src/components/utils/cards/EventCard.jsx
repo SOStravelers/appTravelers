@@ -31,7 +31,7 @@ export default function EventCard({
   return (
     <div
       className={clsx(
-        "bg-backgroundModal shadow-md rounded-xl p-3 ",
+        "bg-backgroundModal shadow-md rounded-xl p-3  mb-6",
         fullWidth ? "max-w-lg " : "max-w-sm mx-auto",
         !imageLoaded && "hidden" // Oculta hasta que cargue la imagen
       )}
@@ -45,7 +45,7 @@ export default function EventCard({
         />
       </div>
 
-      <div className="px-2 py-3">
+      <div className="px-2 py-3 ">
         <h3 className="text-lg text-textColor font-semibold mb-1">
           {subserviceData?.name[language]} |{" "}
           {
@@ -73,10 +73,10 @@ export default function EventCard({
                   "px-4 py-1 mt-1 text-sm rounded border font-semibold",
                   isClosed
                     ? "text-gray-400 border-gray-300 cursor-not-allowed"
-                    : "text-textColor  "
+                    : "text-textColor"
                 )}
               >
-                See details
+                Info del servicio
               </button>
             </div>
           </>

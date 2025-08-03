@@ -84,7 +84,9 @@ export default function PurchasePage() {
             {...booking}
             fullWidth={true}
             isClosed={false}
-            onClick={() => {}}
+            onClick={() =>
+              router.push(`/service-preview/${booking?.subserviceId?._id}`)
+            }
             details={true}
           />
 

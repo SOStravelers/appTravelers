@@ -7,6 +7,7 @@ import { getUserTimeData } from "@/lib/time/index.js";
 import EventCard from "@/components/utils/cards/EventCard";
 import { diasSemana } from "@/utils/format";
 import { useRouter } from "next/router";
+import { FaRegCalendarPlus } from "react-icons/fa";
 function ListSection() {
   const router = useRouter();
   const [bookingsDay, setBookingsDay] = useState([]);
@@ -77,8 +78,9 @@ function ListSection() {
         ) : (
           Object.keys(groupedByDay).map((dayKey) => (
             <div key={dayKey} className="mb-6">
-              <h2 className="text-textColor font-semibold mb-2 text-center">
-                🗓️ {diasSemana[language]?.[dayKey] || ""}
+              <h2 className=" flex align-items justify-center text-textColor font-semibold mb-2 text-center">
+                <FaRegCalendarPlus size={24} className="mr-2" />
+                <div>{diasSemana[language]?.[dayKey] || ""}</div>
               </h2>
               {groupedByDay[dayKey].map((booking) => (
                 <EventCard

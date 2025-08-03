@@ -4,24 +4,11 @@ import { formatPrice } from "@/utils/format";
 import TablePriceSummary from "@/components/utils/cards/tablePrice";
 import { FaRegClipboard } from "react-icons/fa";
 export default function OrderModal({ isOpen, onClose, booking }) {
-  const { filters, setFilters, language, currency } = useStore();
+  const { language, currency } = useStore();
 
-  const [keyword, setKeyword] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
   const [copied, setCopied] = useState(false);
-  const [errKeyword, setErrKeyword] = useState("");
-  const [errMax, setErrMax] = useState("");
-  const [copiedVisible, setCopiedVisible] = useState(false);
-  useEffect(() => {
-    if (!isOpen) return;
 
-    setKeyword(filters.keyword || "");
-    setMinPrice(filters.minPrice ? String(filters.minPrice) : "");
-    setMaxPrice(filters.maxPrice ? String(filters.maxPrice) : "");
-    setErrKeyword("");
-    setErrMax("");
-  }, [isOpen]);
+  const [copiedVisible, setCopiedVisible] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -33,31 +20,6 @@ export default function OrderModal({ isOpen, onClose, booking }) {
       document.body.classList.remove("overflow-hidden");
     };
   }, [isOpen]);
-
-  useEffect(() => {
-    if (keyword.trim() && keyword.trim().length < 4) {
-      setErrKeyword("Min. 4 caracteres");
-    } else {
-      setErrKeyword("");
-    }
-
-    const toNum = (v) => (v === "" || Number(v) === 0 ? null : Number(v));
-    const min = toNum(minPrice);
-    const max = toNum(maxPrice);
-    setErrMax("");
-
-    if (
-      (min != null && (Number.isNaN(min) || min < 0)) ||
-      (max != null && (Number.isNaN(max) || max < 0))
-    ) {
-      setErrMax("Solo números positivos");
-      return;
-    }
-
-    if (min != null && max != null && max < min) {
-      setErrMax("must be greater than starting price");
-    }
-  }, [keyword, minPrice, maxPrice]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(booking?.purchaseOrder || "");
@@ -74,7 +36,7 @@ export default function OrderModal({ isOpen, onClose, booking }) {
       }`}
       onClick={onClose}
     >
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm " />
 
       <div
         onClick={(e) => e.stopPropagation()}
@@ -119,16 +81,16 @@ export default function OrderModal({ isOpen, onClose, booking }) {
         </div>
 
         {/* body */}
-        <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-6rem)]">
+        <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-6rem)] px-1">
           {/* Detalles Cliente */}
           <div className="mb-6">
             <h2 className="text-lg text-textColor font-semibold mb-2">
               Datos Cliente
             </h2>
-            <div className="text-sm text-textColor px-3  mb-2">
+            <div className="text-sm text-textColor px-2  mb-2">
               Name: {booking?.clientData?.name}
             </div>
-            <div className="text-sm text-textColor px-3  ">
+            <div className="text-sm text-textColor px-2  ">
               Email: {booking?.clientData?.email}
             </div>
           </div>
@@ -139,14 +101,14 @@ export default function OrderModal({ isOpen, onClose, booking }) {
             </h2>
             {booking?.typeService === "product" &&
               booking.categories.map((category) => (
-                <div key={category.id}>
-                  <div className="text-md text-textColor font-semibold mb-2">
+                <div key={category.id} className="mb-3">
+                  <div className="text-md text-textColor font-semibold  px-2">
                     {category.title[language]}
                   </div>
                   {category.products.map((product) => (
                     <div
                       key={product.id}
-                      className="flex items-center gap-2 py-1 text-textColor text-sm px-3"
+                      className="flex items-center gap-2 py-1 text-textColor text-sm px-4"
                     >
                       <div className="flex-[2]">{product.name[language]}</div>
                       <div className="flex-[1] text-center">{product.qty}</div>

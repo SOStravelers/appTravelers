@@ -240,13 +240,13 @@ export default function PurchasePage() {
                   src={booking?.providerId?.imgUrl}
                   alt={operator.name}
                   onClick={() => openImageModal(booking?.providerId?.imgUrl)}
-                  className="w-20 h-20 rounded-full object-cover border-2 border-blue-500 shadow-sm cursor-pointer hover:opacity-80 transition"
+                  className="w-20 h-20 rounded-full object-cover border-2 border-textColor shadow-sm cursor-pointer hover:opacity-80 transition"
                 />
                 <div className="text-center md:text-left">
-                  <p className="font-semibold text-lg">
+                  <p className="font-semibold text-textColor text-lg">
                     {booking?.providerId?.name}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-textColorGray">
                     <a
                       href={`tel:${operator.phone}`}
                       className="hover:underline"
@@ -255,7 +255,7 @@ export default function PurchasePage() {
                       {booking?.providerId?.phone}
                     </a>
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-textColorGray">
                     <a
                       href={`mailto:${booking?.providerId?.email}`}
                       className="hover:underline"

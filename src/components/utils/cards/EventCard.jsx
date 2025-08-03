@@ -57,20 +57,20 @@ export default function EventCard({
 
         {details && (
           <>
-            <p className="text-gray-600 text-sm mb-2">
+            {/* <p className="text-gray-600 text-sm mb-2">
               {formattedDate} - {formattedTime}
-            </p>
+            </p> */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center text-sm text-gray-700">
+              {/* <div className="flex items-center text-sm text-gray-700">
                 <FaTicketAlt className="mr-1" />
                 {isClosed ? <span>Encerrado</span> : <span>Disponible</span>}
-              </div>
+              </div> */}
 
               <button
                 onClick={onClick}
                 disabled={isClosed}
                 className={clsx(
-                  "px-4 py-1 text-sm rounded border font-semibold",
+                  "px-4 py-1 mt-1 text-sm rounded border font-semibold",
                   isClosed
                     ? "text-gray-400 border-gray-300 cursor-not-allowed"
                     : "text-textColor  "

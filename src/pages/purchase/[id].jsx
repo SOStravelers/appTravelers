@@ -60,7 +60,7 @@ export default function PurchasePage() {
         language
       );
       cancelData.paymentStatus = booking.paymentStatus;
-      cancelData.paymentStatus = "paid";
+      cancelData.paymentStatus = "unpaid";
       setPaymentData(cancelData);
     } catch (err) {
       console.log(err);
@@ -106,7 +106,7 @@ export default function PurchasePage() {
             fullWidth={true}
             isClosed={false}
             onClick={() => {}}
-            details={false}
+            details={true}
           />
 
           <div className="mx-5 md:mx-12">
@@ -217,12 +217,17 @@ export default function PurchasePage() {
               {paymentData.paymentStatus === "paid" ? (
                 <></>
               ) : (
-                <button
-                  onClick={() => alert("Cancelar reserva")}
-                  className="flex items-center justify-center gap-2 border border-red-500 text-red-600 py-2 px-4 rounded-lg hover:bg-red-100 transition"
-                >
-                  Cancelar reserva
-                </button>
+                <OutlinedButton
+                  onClick={() => setFilterOpen(true)}
+                  text=" Cancelar reserva"
+                  py={3}
+                  margin="mt-12"
+                  dark="darkLight"
+                  textSize="text-md"
+                  textColor="text-white"
+                  buttonCenter={true}
+                  minWidth="260px"
+                />
               )}
             </div>
 

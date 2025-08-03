@@ -123,7 +123,7 @@ export default function OrderModal({ isOpen, onClose, booking }) {
               ))}
           </div>
           {/* Resumen Pago */}
-          <div className="mx-5">
+          <div className="mx-2">
             <TablePriceSummary
               confirmed={booking?.status || "confirmed"}
               price={booking?.price || {}}

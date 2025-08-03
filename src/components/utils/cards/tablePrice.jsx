@@ -23,14 +23,14 @@ export default function TablePriceSummary({ status, price }) {
       </p>
 
       <div className="flex text-textColorGray justify-between py-1 border-b border-dashed border-gray-300">
-        <span className="font-bold underline">
+        <span className="font-bold ">
           {languageData.priceTab.table.section1[language]}
         </span>
         <span>{formatPrice(price?.netAmount || null, currency)}</span>
       </div>
 
       <div className="flex justify-between items-end py-1 border-b border-dashed border-gray-300 text-textColorGray">
-        <div className="w-[70%] font-bold underline">
+        <div className="w-[70%] font-bold ">
           {languageData.priceTab.table.section2[language]}
           <span className="text-gray-400 text-xs ml-1">
             ({price?.percentage?.toFixed(1)}%)

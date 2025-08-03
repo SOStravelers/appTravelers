@@ -57,7 +57,7 @@ export default function Notifications() {
             body={notification.body}
             link={
               notification.booking
-                ? `/service-details/${notification.booking._id}`
+                ? `/my-booking/${notification.booking}`
                 : "/notifications"
             }
           />

@@ -6,13 +6,11 @@ export default function ProviderCard({ provider, subservice }) {
   const { language } = useStore();
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState(null);
-  console.log("hola", provider, subservice);
   const openImageModal = (url) => {
     setModalImageUrl(url);
     setIsImageModalOpen(true);
   };
   const getWhatsappLink = ({ phone, phoneCode, name, subservice }) => {
-    console.log("wena", phone, phoneCode, name, subservice);
     const rawPhone = String(phone || "").replace(/\D/g, "");
     const rawPhoneCode = String(phoneCode || "").replace(/\D/g, "");
     const phoneComplete = rawPhoneCode + rawPhone;

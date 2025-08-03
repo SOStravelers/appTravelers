@@ -49,6 +49,8 @@ export default function PurchasePage() {
         language
       );
       cancelData.paymentStatus = booking.paymentStatus;
+      cancelData.paymentStatus = "unpaid";
+      cancelData.isBefore = true;
       setPaymentData(cancelData);
     } catch (err) {
       console.log(err);

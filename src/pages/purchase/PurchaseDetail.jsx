@@ -6,28 +6,25 @@ import {
   FaClipboardList,
 } from "react-icons/fa";
 import languageData from "@/language/bookingDetails.json";
-import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
+import { formatPrice } from "@/utils/format";
 import { formatearFechaCompletaDesdeISO } from "@/utils/format";
 import InfoItem from "@/components/utils/cards/InfoItem";
 import OrderModal from "@/components/utils/modal/OrderModal";
 import ProviderCard from "@/components/utils/cards/ProviderCard";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import AddToCalendarButton from "@/components/utils/buttons/AddToCalendarButton";
+import ConfirmModalClient from "@/components/utils/modal/ConfirmModalClient";
 import { useState } from "react";
 import { useStore } from "@/store";
 export default function PurchaseDetail({ booking, paymentData }) {
   const { language, currency } = useStore();
-  const [isFilterOpen, setFilterOpen] = useState(false);
-  //   const shareLink = () => {
-  //     const text = `¡Ya tengo mi entrada para ${
-  //       booking?.subserviceData?.name[language]
-  //     } en ${"Rj"}, el ${
-  //       formatearFechaCompletaDesdeISO(booking?.startTime?.isoTime, language)
-  //         .formatedDate
-  //     } a las ${booking?.startTime?.formatedTime}! Nos vemos ahí 🚀`;
-  //     const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-  //     window.open(url, "_blank");
-  //   };
+  const [isOrderModal, setOrderModal] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+
+  const cancelBooking = async () => {
+    console.log("a cancelar");
+    setOpenConfirmModal(false);
+  };
 
   return (
     <>
@@ -91,7 +88,7 @@ export default function PurchaseDetail({ booking, paymentData }) {
         </div>
 
         <OutlinedButton
-          onClick={() => setFilterOpen(true)}
+          onClick={() => setOrderModal(true)}
           text=" Ver detalles de orden"
           py={3}
           margin="my-5"
@@ -133,9 +130,9 @@ export default function PurchaseDetail({ booking, paymentData }) {
 
         {/* Acciones */}
         <div className="mt-10 flex flex-col md:flex-row justify-center gap-4">
-          {paymentData.paymentStatus === "unPaid" && paymentData.isBefore && (
+          {paymentData.paymentStatus === "unpaid" && paymentData.isBefore && (
             <OutlinedButton
-              onClick={() => setFilterOpen(true)}
+              onClick={() => setOpenConfirmModal(true)}
               text=" Cancelar reserva"
               py={3}
               margin="mt-12"
@@ -150,8 +147,15 @@ export default function PurchaseDetail({ booking, paymentData }) {
       </div>
       <OrderModal
         booking={booking}
-        isOpen={isFilterOpen}
-        onClose={() => setFilterOpen(false)}
+        isOpen={isOrderModal}
+        onClose={() => setOrderModal(false)}
+      />
+      <ConfirmModalClient
+        isOpen={openConfirmModal}
+        onClose={() => setOpenConfirmModal(false)}
+        onApply={() => cancelBooking()}
+        title={"titulo"}
+        body={"cuerpo"}
       />
     </>
   );

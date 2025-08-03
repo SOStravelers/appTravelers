@@ -354,7 +354,8 @@ export const formatPrice = (price, currency) => {
 export function isBeforeHoursThreshold(
   dateString,
   hoursBefore,
-  language = "pt"
+  language = "pt",
+  country = "br"
 ) {
   console.log("wenas", dateString, hoursBefore, language);
   const targetDate = new Date(dateString);
@@ -381,7 +382,8 @@ export function isBeforeHoursThreshold(
     isBefore: now < thresholdDate,
     cancelTime: formatearFechaCompletaDesdeISO(
       thresholdDate.toISOString(),
-      language
+      language,
+      country
     ),
   };
 }

@@ -126,6 +126,33 @@ export default function OrderModal({ isOpen, onClose, booking }) {
                   ))}
                 </div>
               ))}
+
+            {booking?.typeService === "tour" && (
+              <>
+                <div className="flex items-center gap-2 py-1 text-textColor text-sm px-4">
+                  <div className="flex-[2]">Adults</div>
+                  <div className="flex-[1] text-center">
+                    {booking?.tourData?.amountAdults}
+                  </div>
+                  <div className="flex-[1] text-right">
+                    {booking?.tourData?.totalAdult != null
+                      ? formatPrice(booking?.tourData?.totalAdult, currency)
+                      : formatPrice(0, currency)}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 py-1 text-textColor text-sm px-4">
+                  <div className="flex-[2]">Children</div>
+                  <div className="flex-[1] text-center">
+                    {booking?.tourData?.amountChildren}
+                  </div>
+                  <div className="flex-[1] text-right">
+                    {booking?.tourData?.totalAdult != null
+                      ? formatPrice(booking?.tourData?.totalChildren, currency)
+                      : formatPrice(0, currency)}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
           {/* Resumen Pago */}
           <div className="mx-2">

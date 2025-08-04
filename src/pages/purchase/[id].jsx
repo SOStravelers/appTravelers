@@ -72,7 +72,7 @@ export default function PurchasePage() {
                 ? languageData.title.confirmed[language]
                 : languageData.title.requested[language]}
             </h1>
-            <p className="text-textColorGray mt-2 text-sm md:text-base">
+            <p className="text-textColorGray mt-2 text-xs md:text-sm">
               {booking?.status === "requested"
                 ? languageData.subtitle.requested[language]
                 : paymentData?.paymentStatus === "unpaid"

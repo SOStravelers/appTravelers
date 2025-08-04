@@ -75,16 +75,10 @@ export default function PurchaseDetail({ booking, paymentData }) {
         </div>
         {/* Estado de pago */}
 
-        <div className="mt-6 ">
-          {paymentData.paymentStatus === "paid" ? (
-            <div
-              className={`flex items-center gap-2 text-sm ${statusData.color}`}
-            >
-              {statusData.icon}
-              <span className="font-semibold">{statusData.text}</span>
-            </div>
-          ) : (
-            <div className="flex items-start gap-2 text-yellow-700 bg-yellow-100 p-4 rounded-lg border border-yellow-200 text-sm ">
+        {booking?.paymentStatus === "unpaid" &&
+          (booking?.status == "confirmed" ||
+            booking?.status == "confirmed") && (
+            <div className="flex my-8 items-start gap-2 text-yellow-700 bg-yellow-100 p-4 rounded-lg border border-yellow-200 text-sm ">
               <FaRegCalendarAlt size={40} style={{ marginTop: "-10px" }} />
               <div>
                 <p className="font-semibold">
@@ -103,7 +97,9 @@ export default function PurchaseDetail({ booking, paymentData }) {
               </div>
             </div>
           )}
-        </div>
+
+        {/* {booking.status === "canceled" && ()}
+              {booking.status === "canceled" && ()} */}
 
         <OutlinedButton
           onClick={() => setOrderModal(true)}
@@ -141,10 +137,13 @@ export default function PurchaseDetail({ booking, paymentData }) {
             )} */}
 
         {/* Datos del operador */}
-        <ProviderCard
-          provider={booking?.providerId}
-          subservice={booking?.subserviceData}
-        />
+        {(booking.status === "confirmed" || booking.status === "completed") && (
+          <ProviderCard
+            provider={booking?.providerId}
+            subservice={booking?.subserviceData}
+            status={booking?.status || "completed"}
+          />
+        )}
 
         {/* Acciones */}
         <div className="mt-10 flex flex-col md:flex-row justify-center gap-4">
@@ -172,8 +171,9 @@ export default function PurchaseDetail({ booking, paymentData }) {
         isOpen={openConfirmModal}
         onClose={() => setOpenConfirmModal(false)}
         onApply={() => cancelBooking()}
-        title={"titulo"}
-        body={"cuerpo"}
+        title={languageData.cancelModal.title[language]}
+        body={languageData.cancelModal.subtitle[language]}
+        apply={languageData.cancelModal.cancel[language]}
       />
     </>
   );

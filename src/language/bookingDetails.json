@@ -151,6 +151,29 @@
       "de": "Reservierung stornieren"
     }
   },
+  "cancelModal": {
+    "title": {
+      "es": "¿Estás seguro que quieres cancelar la reserva?",
+      "en": "Are you sure you want to cancel the booking?",
+      "pt": "Tem certeza de que deseja cancelar a reserva?",
+      "fr": "Êtes-vous sûr de vouloir annuler la réservation ?",
+      "de": "Bist du sicher, dass du die Buchung stornieren möchtest?"
+    },
+    "subtitle": {
+      "es": "Si cancelas ahora, perderás esta reserva y tu lugar podría ser ocupado por otra persona. No te preocupes, no se te cobrará nada.",
+      "en": "If you cancel now, you'll lose this booking and your spot may be taken by someone else. Don’t worry, you won’t be charged anything.",
+      "pt": "Se você cancelar agora, perderá esta reserva e sua vaga poderá ser ocupada por outra pessoa. Fique tranquilo, nada será cobrado.",
+      "fr": "Si vous annulez maintenant, vous perdrez cette réservation et votre place pourrait être prise par quelqu’un d’autre. Pas d’inquiétude, aucun frais ne vous sera facturé.",
+      "de": "Wenn du jetzt stornierst, verlierst du diese Buchung und dein Platz könnte anderweitig vergeben werden. Keine Sorge, es wird dir nichts berechnet."
+    },
+    "cancel": {
+      "es": "Cancelar reserva",
+      "en": "Cancel booking",
+      "pt": "Cancelar reserva",
+      "fr": "Annuler la réservation",
+      "de": "Buchung stornieren"
+    }
+  },
   "provider": {
     "operator": {
       "es": "Operador responsable del servicio",

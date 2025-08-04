@@ -3,7 +3,7 @@ import { useStore } from "@/store";
 import { useRouter } from "next/router";
 import EventCard from "@/components/utils/cards/EventCard";
 import BookingService from "@/services/BookingService";
-import languageData from "@/language/bookingDetails.json";
+import languageData from "@/language/purchase.json";
 import { isBeforeHoursThreshold } from "@/utils/format";
 import OrderModal from "@/components/utils/modal/OrderModal";
 import PurchaseDetail from "./PurchaseDetail";
@@ -65,17 +65,21 @@ export default function PurchasePage() {
       >
         <div className="bg-backgroundS shadow-md rounded-2xl px-2 flex flex-col  items-center py-8 max-w-3xl w-full  ">
           {/* Encabezado */}
-          <div className="text-center mb-8">
-            <FaCheckCircle className="text-green-500 text-5xl mx-auto mb-3" />
+          <div className="text-center mb-6">
+            <FaCheckCircle className="text-green-500 text-3xl mx-auto mb-2" />
             <h1 className="text-2xl md:text-4xl font-bold text-textColor">
-              {paymentData.paymentStatus === "paid"
-                ? "¡Compra confirmada!"
-                : "¡Reserva realizada!"}
+              {booking?.status === "confirmed"
+                ? languageData.title.confirmed[language]
+                : languageData.title.requested[language]}
             </h1>
             <p className="text-textColorGray mt-2 text-md md:text-base">
-              {paymentData.paymentStatus === "paid"
-                ? "Tu entrada ha sido procesada exitosamente."
-                : "Tu lugar ha sido reservado, el pago se realizará más adelante."}
+              {booking?.status === "requested"
+                ? languageData.subtitle.requested[language]
+                : paymentData?.paymentStatus === "unpaid"
+                ? languageData.subtitle.unpaid[language]
+                : paymentData?.paymentStatus === "paid"
+                ? languageData.subtitle.paid[language]
+                : ""}
             </p>
           </div>
 
@@ -101,7 +105,7 @@ export default function PurchasePage() {
               className="text-sm text-textColor hover:underline flex align-items text-center"
             >
               <FaArrowLeft size={18} />
-              <p>Volver al inicio</p>
+              <p className="ml-2">{languageData.comeback[language]}</p>
             </button>
           </div>
         </div>

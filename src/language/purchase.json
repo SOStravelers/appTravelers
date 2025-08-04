@@ -13,6 +13,45 @@
     "fr": "Copié",
     "de": "Kopiert"
   },
+  "title": {
+    "confirmed": {
+      "es": "Reserva confirmada",
+      "en": "Booking confirmed",
+      "pt": "Reserva confirmada",
+      "fr": "Réservation confirmée",
+      "de": "Reservierung bestätigt"
+    },
+    "requested": {
+      "es": "Reserva solicitada",
+      "en": "Booking requested",
+      "pt": "Reserva solicitada",
+      "fr": "Réservation demandée",
+      "de": "Reservierung angefordert"
+    }
+  },
+  "subtitle": {
+    "paid": {
+      "es": "¡Está todo listo en tu reserva!",
+      "en": "Everything is ready for your booking!",
+      "pt": "Está tudo pronto na sua reserva!",
+      "fr": "Tout est prêt pour votre réservation !",
+      "de": "Alles ist bereit für deine Buchung!"
+    },
+    "unpaid": {
+      "es": "Tu reserva está lista, ya puedes comunicarte con nuestro proveedor seleccionado. El cobro se realizará en la fecha indicada. ¡Que disfrutes tu experiencia!",
+      "en": "Your booking is ready, you can now contact our selected provider. The payment will be charged on the scheduled date. Enjoy your experience!",
+      "pt": "Sua reserva está pronta, você já pode entrar em contato com nosso fornecedor selecionado. A cobrança será feita na data indicada. Aproveite a experiência!",
+      "fr": "Votre réservation est prête, vous pouvez maintenant contacter notre prestataire sélectionné. Le paiement sera effectué à la date prévue. Profitez bien de votre expérience !",
+      "de": "Deine Buchung ist bereit, du kannst nun unseren ausgewählten Anbieter kontaktieren. Die Zahlung erfolgt zum angegebenen Datum. Genieße dein Erlebnis!"
+    },
+    "requested": {
+      "es": "Tu reserva ha sido solicitada, estamos confirmando con nuestros proveedores. Tranquilo, solo tomará unos momentos, vuelve más tarde.",
+      "en": "Your booking has been requested. We are confirming with our providers. Don't worry, it will only take a moment — check back later.",
+      "pt": "Sua reserva foi solicitada. Estamos confirmando com nossos fornecedores. Fique tranquilo, vai levar apenas alguns instantes — volte mais tarde.",
+      "fr": "Votre réservation a été demandée. Nous confirmons avec nos prestataires. Pas d'inquiétude, cela ne prendra que quelques instants — revenez plus tard.",
+      "de": "Deine Buchung wurde angefragt. Wir bestätigen gerade mit unseren Partnern. Keine Sorge, es dauert nur einen Moment – schau später noch einmal vorbei."
+    }
+  },
   "body": {
     "clientData": {
       "es": "Datos cliente",
@@ -106,5 +145,12 @@
         }
       }
     }
+  },
+  "comeback": {
+    "es": "Volver al inicio",
+    "en": "Back to home",
+    "pt": "Voltar para o início",
+    "fr": "Retour à la maison",
+    "de": "Zurück zur Startseite"
   }
 }

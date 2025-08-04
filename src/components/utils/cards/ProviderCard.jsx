@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useStore } from "@/store";
 import { FaPhoneAlt, FaEnvelope, FaWhatsapp } from "react-icons/fa";
 import languageData from "@/language/bookingDetails.json";
-export default function ProviderCard({ provider, subservice }) {
+export default function ProviderCard({ provider, subservice, status }) {
   const { language } = useStore();
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState(null);
@@ -43,36 +43,42 @@ export default function ProviderCard({ provider, subservice }) {
             <p className="font-semibold text-textColor text-lg">
               {provider?.name}
             </p>
-            <p className="text-sm text-textColorGray flex items-center gap-2">
-              <FaPhoneAlt className="text-base text-textColor" />
-              <a
-                href={`tel:${provider?.phoneCode}${provider?.phone}`}
-                className="hover:underline"
-              >
-                +{provider?.phoneCode} {provider?.phone}
-              </a>
-            </p>
-            <p className="text-sm text-textColorGray flex items-center gap-2 mt-1">
-              <FaEnvelope className="text-base text-textColor" />
-              <a href={`mailto:${provider?.email}`} className="hover:underline">
-                {provider?.email}
-              </a>
-            </p>
-
-            <a
-              href={getWhatsappLink({
-                phone: provider?.phone,
-                phoneCode: provider?.phoneCode,
-                name: provider?.name,
-                subservice: subservice,
-              })}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm hover:bg-green-600 transition"
-            >
-              <FaWhatsapp size={24} />
-              <span> {languageData?.provider?.whatsapp[language]}</span>
-            </a>
+            {status == "confirmed" && (
+              <>
+                <p className="text-sm text-textColorGray flex items-center my-2 gap-2">
+                  <FaPhoneAlt className="text-base text-textColor" />
+                  <a
+                    href={`tel:${provider?.phoneCode}${provider?.phone}`}
+                    className="hover:underline"
+                  >
+                    +{provider?.phoneCode} {provider?.phone}
+                  </a>
+                </p>
+                <p className="text-sm text-textColorGray flex items-center mb-2 gap-2 mt-1">
+                  <FaEnvelope className="text-base text-textColor" />
+                  <a
+                    href={`mailto:${provider?.email}`}
+                    className="hover:underline"
+                  >
+                    {provider?.email}
+                  </a>
+                </p>
+                <a
+                  href={getWhatsappLink({
+                    phone: provider?.phone,
+                    phoneCode: provider?.phoneCode,
+                    name: provider?.name,
+                    subservice: subservice,
+                  })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm hover:bg-green-600 transition"
+                >
+                  <FaWhatsapp size={24} />
+                  <span> {languageData?.provider?.whatsapp[language]}</span>
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>

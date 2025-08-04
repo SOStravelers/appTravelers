@@ -1,6 +1,5 @@
 // components/utils/FilterModal.jsx
 import { useStore } from "@/store";
-import languageData from "@/language/filterModal.json";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 
 export default function ConfirmModalClient({
@@ -9,6 +8,7 @@ export default function ConfirmModalClient({
   onApply,
   title,
   body,
+  apply,
 }) {
   const { language, currency } = useStore();
 
@@ -31,21 +31,21 @@ export default function ConfirmModalClient({
       >
         {/* header */}
         <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg text-textColor font-semibold">{title}</h3>
-          <button onClick={onClose} className="text-textColorGray text-lg">
+          <h3 className="text-md text-textColor font-semibold">{title}</h3>
+          <button onClick={onClose} className="text-textColorGray text-md">
             ✕
           </button>
         </div>
 
         {/* body */}
         <div className="space-y-4 text-textColorGray ">
-          <p>{body}</p>
+          <p className="text-sm mb-12 mt-8">{body}</p>
 
           {/* apply */}
 
           <OutlinedButton
             onClick={onApply}
-            text={languageData.applyButton[language]}
+            text={apply || "Confirm"}
             px={0}
             py={2}
             dark="darkHeavy"

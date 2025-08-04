@@ -29,7 +29,7 @@ export default function ProviderCard({ provider, subservice }) {
     <>
       <div className="mt-10 text-sm text-gray-800 border-t pt-6 border-gray-200">
         <h2 className="text-base font-semibold mb-4 text-textColor text-center">
-          Operador responsable del servicio
+          {languageData?.provider?.operator[language]}
         </h2>
 
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center">
@@ -71,7 +71,7 @@ export default function ProviderCard({ provider, subservice }) {
               className="inline-flex items-center gap-2 mt-2 bg-green-500 text-white px-4 py-2 rounded-full text-sm hover:bg-green-600 transition"
             >
               <FaWhatsapp size={24} />
-              <span>Hablar por WhatsApp</span>
+              <span> {languageData?.provider?.whatsapp[language]}</span>
             </a>
           </div>
         </div>

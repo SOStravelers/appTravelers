@@ -1,10 +1,10 @@
 {
   "bookingNumber": {
-    "en": "Booking Number",
-    "es": "Número de Reserva",
-    "fr": "Numéro de Réservation",
+    "en": "Booking number",
+    "es": "Número de reserva",
+    "fr": "Numéro de réservation",
     "de": "Buchungsnummer",
-    "pt": "Número da Reserva"
+    "pt": "Número da reserva"
   },
   "status": {
     "confirmed": {
@@ -126,6 +126,45 @@
         "fr": "Vous pouvez annuler avant cette date sans frais",
         "de": "Du kannst vor diesem Datum kostenlos stornieren"
       }
+    }
+  },
+  "buttons": {
+    "orderDetails": {
+      "es": "Ver detalles del pedido",
+      "en": "View order details",
+      "pt": "Ver detalhes do pedido",
+      "fr": "Voir les détails de la commande",
+      "de": "Bestelldetails ansehen"
+    },
+    "calendar": {
+      "es": "Agregar al calendario",
+      "en": "Add to calendar",
+      "pt": "Adicionar ao calendário",
+      "fr": "Ajouter au calendrier",
+      "de": "Zum Kalender hinzufügen"
+    },
+    "cancel": {
+      "es": "Cancelar reserva",
+      "en": "Cancel booking",
+      "pt": "Cancelar reserva",
+      "fr": "Annuler la réservation",
+      "de": "Reservierung stornieren"
+    }
+  },
+  "provider": {
+    "operator": {
+      "es": "Operador responsable del servicio",
+      "en": "Operator responsible for the service",
+      "pt": "Operador responsável pelo serviço",
+      "fr": "Opérateur responsable du service",
+      "de": "Verantwortlicher Betreiber des Services"
+    },
+    "whatsapp": {
+      "es": "Hablar por WhatsApp",
+      "en": "Chat on WhatsApp",
+      "pt": "Falar no WhatsApp",
+      "fr": "Parler sur WhatsApp",
+      "de": "Auf WhatsApp chatten"
     }
   },
 

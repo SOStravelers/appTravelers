@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import { FaRegCalendarPlus } from "react-icons/fa";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
-
+import languageData from "@/language/bookingDetails.json";
+import { useStore } from "@/store";
 const timeZones = {
   br: "America/Sao_Paulo",
   cl: "America/Santiago",
@@ -20,7 +21,6 @@ const countryLabels = {
   de: "hora de Alemania",
   fr: "hora de Francia",
 };
-
 export default function AddToCalendarButton({
   title,
   location,
@@ -28,6 +28,7 @@ export default function AddToCalendarButton({
   duration = 60,
   country = "br",
 }) {
+  const { language } = useStore();
   const [isApple, setIsApple] = useState(false);
   const [localTimeText, setLocalTimeText] = useState("");
 
@@ -92,7 +93,7 @@ END:VCALENDAR
     <div className="text-center">
       <OutlinedButton
         onClick={handleClick}
-        text="Añadir al calendario"
+        text={languageData.buttons.calendar[language]}
         py={3}
         margin="my-5"
         icon={FaRegCalendarPlus}

@@ -107,7 +107,7 @@ export default function PurchaseDetail({ booking, paymentData }) {
 
         <OutlinedButton
           onClick={() => setOrderModal(true)}
-          text=" Ver detalles de orden"
+          text={languageData.buttons.orderDetails[language]}
           py={3}
           margin="my-5"
           icon={FaClipboardList}
@@ -151,7 +151,7 @@ export default function PurchaseDetail({ booking, paymentData }) {
           {paymentData.paymentStatus === "unpaid" && paymentData.isBefore && (
             <OutlinedButton
               onClick={() => setOpenConfirmModal(true)}
-              text=" Cancelar reserva"
+              text={languageData.buttons.cancel[language]}
               py={3}
               margin="mt-12"
               dark="darkLight"

@@ -31,18 +31,18 @@
   },
   "subtitle": {
     "paid": {
-      "es": "¡Está todo listo en tu reserva!",
-      "en": "Everything is ready for your booking!",
-      "pt": "Está tudo pronto na sua reserva!",
-      "fr": "Tout est prêt pour votre réservation !",
-      "de": "Alles ist bereit für deine Buchung!"
-    },
-    "unpaid": {
       "es": "Tu reserva está lista, ya puedes comunicarte con nuestro proveedor seleccionado. El cobro se realizará en la fecha indicada. ¡Que disfrutes tu experiencia!",
       "en": "Your booking is ready, you can now contact our selected provider. The payment will be charged on the scheduled date. Enjoy your experience!",
       "pt": "Sua reserva está pronta, você já pode entrar em contato com nosso fornecedor selecionado. A cobrança será feita na data indicada. Aproveite a experiência!",
       "fr": "Votre réservation est prête, vous pouvez maintenant contacter notre prestataire sélectionné. Le paiement sera effectué à la date prévue. Profitez bien de votre expérience !",
       "de": "Deine Buchung ist bereit, du kannst nun unseren ausgewählten Anbieter kontaktieren. Die Zahlung erfolgt zum angegebenen Datum. Genieße dein Erlebnis!"
+    },
+    "unpaid": {
+      "es": "¡Todo confirmado! Podrás comunicarte con nuestro proveedor una vez que se realice el pago en la fecha indicada. Vuelve cuando se acerque el día... ¡Se viene una gran experiencia!",
+      "en": "Everything's confirmed! You'll be able to contact our provider once the payment is processed on the scheduled date. Come back closer to the day… An amazing experience awaits!",
+      "pt": "Tudo confirmado! Você poderá falar com nosso fornecedor assim que o pagamento for realizado na data indicada. Volte quando a data estiver próxima… Uma experiência incrível te espera!",
+      "fr": "Tout est confirmé ! Vous pourrez contacter notre prestataire une fois le paiement effectué à la date prévue. Revenez à l’approche du jour J… Une superbe expérience vous attend !",
+      "de": "Alles ist bestätigt! Du kannst unseren Anbieter kontaktieren, sobald die Zahlung am angegebenen Datum erfolgt ist. Schau kurz vor dem Termin wieder rein… Ein tolles Erlebnis wartet auf dich!"
     },
     "requested": {
       "es": "Tu reserva ha sido solicitada, estamos confirmando con nuestros proveedores. Tranquilo, solo tomará unos momentos, vuelve más tarde.",

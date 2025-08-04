@@ -114,11 +114,13 @@ export default function PurchaseDetail({ booking, paymentData }) {
           minWidth="260px"
         />
 
-        <AddToCalendarButton
-          title={booking?.subserviceData?.name[language]}
-          location="Rj"
-          date={booking?.startTime?.isoTime || null}
-        />
+        {(booking.status === "confirmed" || booking.status === "completed") && (
+          <AddToCalendarButton
+            title={booking?.subserviceData?.name[language]}
+            location="Rj"
+            date={booking?.startTime?.isoTime || null}
+          />
+        )}
 
         {/* Código QR (si está pagado) */}
         {/* {paymentData.paymentStatus === "paid" && (

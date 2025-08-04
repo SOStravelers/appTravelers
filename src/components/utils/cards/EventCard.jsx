@@ -123,14 +123,16 @@ export default function EventCard({
                   <span className="text-md">{statusData.icon}</span>
                   <span>{statusData.text}</span>
                 </div>
-                <div
-                  className={`flex items-center gap-2 text-md ${paymentStatusMap[paymentStatus].color}`}
-                >
-                  <span className="text-md">
-                    {paymentStatusMap[paymentStatus].icon}
-                  </span>
-                  <span>{paymentStatusMap[paymentStatus].text}</span>
-                </div>
+                {status != "requested" && status != "canceled" && (
+                  <div
+                    className={`flex items-center gap-2 text-md ${paymentStatusMap[paymentStatus].color}`}
+                  >
+                    <span className="text-md">
+                      {paymentStatusMap[paymentStatus].icon}
+                    </span>
+                    <span>{paymentStatusMap[paymentStatus].text}</span>
+                  </div>
+                )}
               </div>
 
               <button

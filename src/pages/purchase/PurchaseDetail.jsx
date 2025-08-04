@@ -104,14 +104,14 @@ export default function PurchaseDetail({ booking, paymentData }) {
         <OutlinedButton
           onClick={() => setOrderModal(true)}
           text={languageData.buttons.orderDetails[language]}
-          py={3}
+          py={2}
           margin="my-5"
           icon={FaClipboardList}
           dark="darkLight"
-          textSize="text-md"
+          textSize="text-sm"
           textColor="text-white"
           buttonCenter={true}
-          minWidth="260px"
+          minWidth="200px"
         />
 
         {(booking.status === "confirmed" || booking.status === "completed") && (
@@ -153,13 +153,13 @@ export default function PurchaseDetail({ booking, paymentData }) {
             <OutlinedButton
               onClick={() => setOpenConfirmModal(true)}
               text={languageData.buttons.cancel[language]}
-              py={3}
+              py={2}
               margin="mt-12"
               dark="darkLight"
-              textSize="text-md"
+              textSize="text-sm"
               textColor="text-white"
               buttonCenter={true}
-              minWidth="260px"
+              minWidth="200px"
             />
           )}
         </div>

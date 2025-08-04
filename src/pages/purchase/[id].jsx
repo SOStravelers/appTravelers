@@ -63,16 +63,16 @@ export default function PurchasePage() {
         className={`min-h-screen px-4 mb-32 flex flex-col items-center  justify-center bg-backgroundP
       ${loading ? opacityAnimation : displayAnimation}`}
       >
-        <div className="bg-backgroundS shadow-md rounded-2xl px-2 flex flex-col  items-center py-8 max-w-3xl w-full  ">
+        <div className="bg-backgroundS shadow-md rounded-2xl px-2 flex flex-col  items-center py-4 max-w-3xl w-full  ">
           {/* Encabezado */}
           <div className="text-center mb-6">
-            <FaCheckCircle className="text-green-500 text-3xl mx-auto mb-2" />
-            <h1 className="text-2xl md:text-4xl font-bold text-textColor">
+            <FaCheckCircle className="text-green-500 text-2xl mx-auto mb-2" />
+            <h1 className="text-xl md:text-3xl font-bold text-textColor">
               {booking?.status === "confirmed"
                 ? languageData.title.confirmed[language]
                 : languageData.title.requested[language]}
             </h1>
-            <p className="text-textColorGray mt-2 text-md md:text-base">
+            <p className="text-textColorGray mt-2 text-sm md:text-base">
               {booking?.status === "requested"
                 ? languageData.subtitle.requested[language]
                 : paymentData?.paymentStatus === "unpaid"

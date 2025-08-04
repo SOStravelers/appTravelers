@@ -52,17 +52,17 @@ export default function EventCard({
 
   const paymentStatusMap = {
     paid: {
-      icon: <FaCheckCircle className="text-lg" />,
+      icon: <FaCheckCircle />,
       text: languageData.paymentStatus.paid[language],
       color: "text-green-500",
     },
     unpaid: {
-      icon: <FaRegClock className="text-lg" />,
+      icon: <FaRegClock />,
       text: languageData.paymentStatus.unpaid[language],
       color: "text-yellow-500",
     },
     refund: {
-      icon: <FaUndoAlt className="text-lg" />,
+      icon: <FaUndoAlt />,
       text: languageData.paymentStatus.refund[language],
       color: "text-blue-500",
     },
@@ -97,7 +97,7 @@ export default function EventCard({
       </div>
 
       <div className="px-2 py-3 ">
-        <h3 className="text-lg text-textColor font-semibold mb-1">
+        <h3 className="text-md text-textColor font-semibold mb-1">
           {subserviceData?.name[language]} |{" "}
           {
             formatearFechaCortaInteligente(startTime?.isoTime, language)
@@ -118,16 +118,16 @@ export default function EventCard({
               </div> */}
               <div>
                 <div
-                  className={`flex items-center gap-2  my-2 text-md ${statusData.color}`}
+                  className={`flex items-center gap-2  my-2 text-sm ${statusData.color}`}
                 >
-                  <span className="text-md">{statusData.icon}</span>
+                  <span className="text-sm">{statusData.icon}</span>
                   <span>{statusData.text}</span>
                 </div>
                 {status != "requested" && status != "canceled" && (
                   <div
-                    className={`flex items-center gap-2 text-md ${paymentStatusMap[paymentStatus].color}`}
+                    className={`flex items-center gap-2 text-sm ${paymentStatusMap[paymentStatus].color}`}
                   >
-                    <span className="text-md">
+                    <span className="text-sm">
                       {paymentStatusMap[paymentStatus].icon}
                     </span>
                     <span>{paymentStatusMap[paymentStatus].text}</span>

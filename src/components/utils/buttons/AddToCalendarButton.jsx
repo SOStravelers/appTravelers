@@ -94,14 +94,14 @@ END:VCALENDAR
       <OutlinedButton
         onClick={handleClick}
         text={languageData.buttons.calendar[language]}
-        py={3}
+        py={2}
         margin="my-5"
         icon={FaRegCalendarPlus}
         dark="darkLight"
-        textSize="text-md"
+        textSize="text-sm"
         textColor="text-white"
         buttonCenter={true}
-        minWidth="260px"
+        minWidth="200px"
       />
     </div>
   );

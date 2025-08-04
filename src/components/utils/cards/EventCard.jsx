@@ -97,7 +97,7 @@ export default function EventCard({
       </div>
 
       <div className="px-2 py-3 ">
-        <h3 className="text-md text-textColor font-semibold mb-1">
+        <h3 className="text-sm text-textColor font-semibold mb-1">
           {subserviceData?.name[language]} |{" "}
           {
             formatearFechaCortaInteligente(startTime?.isoTime, language)

@@ -118,14 +118,14 @@ export default function EventCard({
               </div> */}
               <div>
                 <div
-                  className={`flex items-center gap-2  my-2 text-sm ${statusData.color}`}
+                  className={`flex items-center gap-2  my-2 text-xs ${statusData.color}`}
                 >
                   <span className="text-sm">{statusData.icon}</span>
                   <span>{statusData.text}</span>
                 </div>
                 {status != "requested" && status != "canceled" && (
                   <div
-                    className={`flex items-center gap-2 text-sm ${paymentStatusMap[paymentStatus].color}`}
+                    className={`flex items-center gap-2 text-xs ${paymentStatusMap[paymentStatus].color}`}
                   >
                     <span className="text-sm">
                       {paymentStatusMap[paymentStatus].icon}

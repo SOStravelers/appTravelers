@@ -45,27 +45,33 @@ export default function CheckoutForm({
 
     setIsProcessing(true);
 
+    // ✅ Validar errores de formulario antes de continuar
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      toast.error(submitError.message);
+      setIsProcessing(false);
+      return;
+    }
+
     try {
-      // Confirmar el pago con return_url
-      if (intentType == "setup") {
+      if (intentType === "setup") {
         const { paymentIntent, error } = await stripe.confirmSetup({
           elements,
           confirmParams: {
             // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
           },
-          redirect: "if_required", // 👈 esto evita redirigir si no hace falta (ideal)
+          redirect: "if_required",
         });
-        // data.customerId = customer;
-        // await StripeService.chargeSavedCard(data);
       } else {
         const { paymentIntent, error } = await stripe.confirmPayment({
           elements,
           confirmParams: {
             // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
           },
-          redirect: "if_required", // 👈 esto evita redirigir si no hace falta (ideal)
+          redirect: "if_required",
         });
       }
+
       setLoadingBooking(true);
       data.customer = customer;
       data.intentType = intentType;

@@ -11,21 +11,24 @@ function GoogleButton({ dark = "darkHeavy" }) {
 
   const login = async () => {
     try {
-      const result = await signIn("google", {
-        redirect: false, // manejamos el redirect manualmente
+      // const result = await signIn("google", {
+      //   redirect: false, // manejamos el redirect manualmente
+      // });
+      signIn("google", {
+        callbackUrl: "/",
       });
 
-      if (result?.ok) {
-        // Si viene de login o register → ir a "/"
-        if (["/login", "/register", "/guest-settings"].includes(currentPath)) {
-          router.push("/");
-        } else {
-          router.push(currentPath); // volver a donde estaba
-        }
-      } else {
-        // Falló login → enviar a /login
-        router.push("/login");
-      }
+      // if (result?.ok) {
+      //   // Si viene de login o register → ir a "/"
+      //   if (["/login", "/register", "/guest-settings"].includes(currentPath)) {
+      //     router.push("/");
+      //   } else {
+      //     router.push(currentPath); // volver a donde estaba
+      //   }
+      // } else {
+      //   // Falló login → enviar a /login
+      //   router.push("/login");
+      // }
     } catch (err) {
       console.error("Error durante login con Google", err);
       router.push("/login");

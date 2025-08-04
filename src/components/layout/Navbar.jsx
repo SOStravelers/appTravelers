@@ -15,6 +15,8 @@ import {
   FaHeart,
   FaRegHeart,
   FaRegUser,
+  FaCog,
+  FaRegSun,
 } from "react-icons/fa";
 import { HiMiniHome } from "react-icons/hi2"; // sólido
 import { HiOutlineHome } from "react-icons/hi"; // contorno
@@ -286,11 +288,13 @@ function Navbar() {
             {router.pathname.includes("profile") ||
             router.pathname === "/guest-settings" ? (
               <span className="text-blueBorder">
-                <FaUserAlt size={22} />
+                {/* <FaUserAlt size={22} /> */}
+                <FaCog size={22} />
               </span>
             ) : (
               <span className="text-textColorGray">
-                <FaRegUser size={22} />
+                {/* <FaRegUser size={22} /> */}
+                <FaRegSun size={22} />
               </span>
             )}
             <span
@@ -304,7 +308,8 @@ function Navbar() {
                   : "text-textColorGray"
               )}
             >
-              {languageData.profile[language]}
+              {/* {languageData.profile[language]} */}
+              Config
             </span>
           </div>
         )}

@@ -12,7 +12,7 @@ export default function InfoItem({
   return (
     <div
       className={clsx(
-        "flex items-center gap-3 p-3 rounded-lg",
+        "flex items-center gap-3 p-1 rounded-lg",
         // border && borderColor,
         // border && "border",
         // bg,

@@ -33,10 +33,11 @@ export default function PurchaseDetail({ booking, paymentData }) {
     <>
       <div className="mx-5 md:mx-12">
         {/* Detalles visuales */}
-        <div className=" grid grid-cols-1 md:grid-cols-2 gap-1 text-sm text-gray-700">
+        <div className=" grid grid-cols-1 md:grid-cols-2 gap-x-1 gap-y-[1px] text-sm text-gray-700">
           <InfoItem
             icon={FaRegCalendarAlt}
             label={languageData.infoService.date[language]}
+            x
             value={
               formatearFechaCompletaDesdeISO(
                 booking?.startTime?.isoTime,
@@ -85,7 +86,7 @@ export default function PurchaseDetail({ booking, paymentData }) {
                   {languageData.cardPendingPayment.title[language]}{" "}
                   {formatPrice(booking?.price?.grossAmount, currency)}
                 </p>
-                <p className="mt-1 text-gray-700">
+                <p className="mt-1 text-gray-700 text-xs">
                   {languageData.cardPendingPayment.body.one[language]}{" "}
                   <strong>{paymentData?.cancelTime?.formatedDate}</strong>{" "}
                   {languageData.cardPendingPayment.body.two[language]}{" "}

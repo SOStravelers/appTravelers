@@ -139,7 +139,7 @@ export default function EventCard({
                 onClick={onClick}
                 disabled={isClosed}
                 className={clsx(
-                  "px-4 py-1 mt-1 text-sm rounded border font-semibold",
+                  "px-4 py-1 mt-1 text-xs rounded border font-semibold",
                   isClosed
                     ? "text-gray-400 border-gray-300 cursor-not-allowed"
                     : "text-textColor"

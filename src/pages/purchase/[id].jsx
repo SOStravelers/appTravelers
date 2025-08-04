@@ -63,7 +63,7 @@ export default function PurchasePage() {
         className={`min-h-screen px-4 mb-32 flex flex-col items-center  justify-center bg-backgroundP
       ${loading ? opacityAnimation : displayAnimation}`}
       >
-        <div className="bg-backgroundS shadow-md rounded-2xl px-2 flex flex-col  items-center py-4 max-w-3xl w-full  ">
+        <div className="bg-backgroundS shadow-md rounded-2xl px-2 flex flex-col  items-center py-3 max-w-3xl w-full  ">
           {/* Encabezado */}
           <div className="text-center mb-6">
             <FaCheckCircle className="text-green-500 text-2xl mx-auto mb-2" />

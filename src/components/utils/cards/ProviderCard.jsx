@@ -40,7 +40,7 @@ export default function ProviderCard({ provider, subservice, status }) {
             className="w-24 h-24 rounded-full object-cover border-2 border-textColor shadow-sm cursor-pointer hover:opacity-80 transition"
           />
           <div className="text-center md:text-left">
-            <p className="font-semibold text-textColor text-lg">
+            <p className="font-semibold text-textColor text-md">
               {provider?.name}
             </p>
             {status == "confirmed" && (

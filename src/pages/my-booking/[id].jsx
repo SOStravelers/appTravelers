@@ -65,17 +65,12 @@ export default function PurchasePage() {
       >
         <div className="bg-backgroundS shadow-md rounded-2xl px-2 flex flex-col  items-center py-8 max-w-3xl w-full  ">
           {/* Encabezado */}
-          <div className="text-center mb-8">
-            <FaCheckCircle className="text-green-500 text-5xl mx-auto mb-3" />
-            <h1 className="text-2xl md:text-4xl font-bold text-textColor">
-              {paymentData.paymentStatus === "paid"
-                ? "¡Compra confirmada!"
-                : "¡Reserva realizada!"}
+          <div className="flex flex-row align-end justify-end mb-3">
+            <h1 className="text-lg mr-2   text-textColor">
+              {languageData.bookingNumber[language]}:
             </h1>
-            <p className="text-textColorGray mt-2 text-md md:text-base">
-              {paymentData.paymentStatus === "paid"
-                ? "Tu entrada ha sido procesada exitosamente."
-                : "Tu lugar ha sido reservado, el pago se realizará más adelante."}
+            <p className="text-textColorGray text-lg">
+              {booking?.purchaseOrder}
             </p>
           </div>
 
@@ -93,17 +88,6 @@ export default function PurchasePage() {
           {booking && paymentData && (
             <PurchaseDetail booking={booking} paymentData={paymentData} />
           )}
-
-          {/* Link volver */}
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => router.push("/")}
-              className="text-sm text-textColor hover:underline flex align-items text-center"
-            >
-              <FaArrowLeft size={18} />
-              <p>Volver al inicio</p>
-            </button>
-          </div>
         </div>
       </div>
 

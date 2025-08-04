@@ -13,13 +13,13 @@ export default function InfoItem({
     <div
       className={clsx(
         "flex items-center gap-3 p-3 rounded-lg",
-        border && borderColor,
-        border && "border",
-        bg,
+        // border && borderColor,
+        // border && "border",
+        // bg,
         className
       )}
     >
-      {Icon && <Icon className="text-textColor" />}
+      {Icon && <Icon className="text-textColor text-lg" />}
       <span className="font-medium text-textColorGray">
         {label}: <strong>{value}</strong>
       </span>

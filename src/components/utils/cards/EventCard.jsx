@@ -1,8 +1,17 @@
 import { useState } from "react";
-import { FaTicketAlt } from "react-icons/fa";
+import {
+  FaTicketAlt,
+  FaHourglassHalf,
+  FaTimesCircle,
+  FaClipboardCheck,
+  FaCheckCircle,
+  FaRegClock,
+  FaUndoAlt,
+} from "react-icons/fa";
 import clsx from "clsx";
 import { useStore } from "@/store";
 import { formatearFechaCortaInteligente } from "@/utils/format";
+import languageData from "@/language/bookingDetails.json";
 
 export default function EventCard({
   subserviceData,
@@ -12,11 +21,53 @@ export default function EventCard({
   isClosed = false,
   onClick,
   fullWidth = false,
+  paymentStatus = "unpaid",
   details = true,
+  status = "requested",
 }) {
   const { language } = useStore();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const statusIcon = {
+    requested: {
+      icon: <FaHourglassHalf />,
+      text: languageData.status.requested[language],
+      color: "text-yellow-500",
+    },
+    canceled: {
+      icon: <FaTimesCircle />,
+      text: languageData.status.canceled[language],
+      color: "text-red-500",
+    },
+    confirmed: {
+      icon: <FaCheckCircle />,
+      text: languageData.status.confirmed[language],
+      color: "text-green-500",
+    },
+    completed: {
+      icon: <FaClipboardCheck />,
+      text: languageData.status.completed[language],
+      color: "text-blue-400",
+    },
+  };
 
+  const paymentStatusMap = {
+    paid: {
+      icon: <FaCheckCircle className="text-lg" />,
+      text: languageData.paymentStatus.paid[language],
+      color: "text-green-500",
+    },
+    unpaid: {
+      icon: <FaRegClock className="text-lg" />,
+      text: languageData.paymentStatus.unpaid[language],
+      color: "text-yellow-500",
+    },
+    refund: {
+      icon: <FaUndoAlt className="text-lg" />,
+      text: languageData.paymentStatus.refund[language],
+      color: "text-blue-500",
+    },
+  };
+  const statusData = statusIcon[status];
   const eventDate = new Date(startTime?.isoTime || null);
   const formattedDate = eventDate.toLocaleDateString("pt-BR", {
     day: "2-digit",
@@ -60,11 +111,27 @@ export default function EventCard({
             {/* <p className="text-gray-600 text-sm mb-2">
               {formattedDate} - {formattedTime}
             </p> */}
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-between ">
               {/* <div className="flex items-center text-sm text-gray-700">
                 <FaTicketAlt className="mr-1" />
                 {isClosed ? <span>Encerrado</span> : <span>Disponible</span>}
               </div> */}
+              <div>
+                <div
+                  className={`flex items-center gap-2  my-2 text-md ${statusData.color}`}
+                >
+                  <span className="text-md">{statusData.icon}</span>
+                  <span>{statusData.text}</span>
+                </div>
+                <div
+                  className={`flex items-center gap-2 text-md ${paymentStatusMap[paymentStatus].color}`}
+                >
+                  <span className="text-md">
+                    {paymentStatusMap[paymentStatus].icon}
+                  </span>
+                  <span>{paymentStatusMap[paymentStatus].text}</span>
+                </div>
+              </div>
 
               <button
                 onClick={onClick}
@@ -76,7 +143,7 @@ export default function EventCard({
                     : "text-textColor"
                 )}
               >
-                Info del servicio
+                {languageData.eventButton[language]}
               </button>
             </div>
           </>

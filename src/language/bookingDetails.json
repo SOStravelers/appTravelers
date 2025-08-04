@@ -6,6 +6,129 @@
     "de": "Buchungsnummer",
     "pt": "Número da Reserva"
   },
+  "status": {
+    "confirmed": {
+      "en": "Confirmed",
+      "es": "Confirmado",
+      "fr": "Confirmé",
+      "de": "Bestätigt",
+      "pt": "Confirmado"
+    },
+    "requested": {
+      "en": "Requested",
+      "es": "Solicitado",
+      "fr": "Demandé",
+      "de": "Angefordert",
+      "pt": "Solicitado"
+    },
+    "completed": {
+      "en": "Completed",
+      "es": "Completado",
+      "fr": "Terminé",
+      "de": "Abgeschlossen",
+      "pt": "Completado"
+    },
+    "canceled": {
+      "en": "Canceled",
+      "es": "Cancelado",
+      "fr": "Annulé",
+      "de": "Abgesagt",
+      "pt": "Cancelado"
+    }
+  },
+  "paymentStatus": {
+    "paid": {
+      "es": "Pago confirmado",
+      "en": "Payment confirmed",
+      "pt": "Pagamento confirmado",
+      "fr": "Paiement confirmé",
+      "de": "Zahlung bestätigt"
+    },
+    "unpaid": {
+      "es": "Pago pendiente",
+      "en": "Pending payment",
+      "pt": "Pagamento pendente",
+      "fr": "Paiement en attente",
+      "de": "Ausstehende Zahlung"
+    },
+    "refund": {
+      "es": "Pago reembolsado",
+      "en": "Payment refunded",
+      "pt": "Pagamento reembolsado",
+      "fr": "Paiement remboursé",
+      "de": "Zahlung erstattet"
+    }
+  },
+  "eventButton": {
+    "es": "Info del servicio",
+    "en": "Service Info",
+    "pt": "Info do serviço",
+    "fr": "Infos du service",
+    "de": "Service-Info"
+  },
+  "infoService": {
+    "date": {
+      "en": "Date",
+      "es": "Fecha",
+      "fr": "Date",
+      "de": "Datum",
+      "pt": "Data"
+    },
+    "duration": {
+      "en": "Duration",
+      "es": "Duración",
+      "fr": "Durée",
+      "de": "Dauer",
+      "pt": "Duração"
+    },
+    "time": {
+      "en": "Time",
+      "es": "Hora",
+      "fr": "Heure",
+      "de": "Uhrzeit",
+      "pt": "Hora"
+    },
+    "location": {
+      "en": "Location",
+      "es": "Ubicación",
+      "fr": "Lieu",
+      "de": "Ort",
+      "pt": "Localização"
+    }
+  },
+  "cardPendingPayment": {
+    "title": {
+      "es": "Pago pendiente de",
+      "en": "Pending payment of",
+      "pt": "Pagamento pendente de",
+      "fr": "Paiement en attente de",
+      "de": "Ausstehende Zahlung"
+    },
+    "body": {
+      "one": {
+        "es": "Se realizará el día",
+        "en": "Scheduled for",
+        "pt": "Marcado para",
+        "fr": "Prévu pour",
+        "de": "Geplant für"
+      },
+      "two": {
+        "es": "a las",
+        "en": "at",
+        "pt": "às",
+        "fr": "à",
+        "de": "um"
+      },
+      "three": {
+        "es": "Puedes cancelar antes de esa fecha sin cargos",
+        "en": "You can cancel before that date with no charges",
+        "pt": "Você pode cancelar antes dessa data sem custos",
+        "fr": "Vous pouvez annuler avant cette date sans frais",
+        "de": "Du kannst vor diesem Datum kostenlos stornieren"
+      }
+    }
+  },
+
   "service": {
     "en": "Service",
     "es": "Servicio",
@@ -40,13 +163,6 @@
     "fr": "Frais totaux du service",
     "de": "Gesamtkosten der Dienstleistung",
     "pt": "Taxa total do serviço"
-  },
-  "status": {
-    "en": "Status",
-    "es": "Estado",
-    "fr": "Statut",
-    "de": "Status",
-    "pt": "Status"
   },
 
   "from": {

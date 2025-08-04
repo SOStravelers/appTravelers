@@ -2,11 +2,15 @@ import {
   FaCheckCircle,
   FaRegCalendarAlt,
   FaMapMarkerAlt,
-  FaClock,
+  FaUndoAlt,
   FaClipboardList,
+  FaRegClock,
+  FaHourglassHalf,
 } from "react-icons/fa";
+
 import languageData from "@/language/bookingDetails.json";
 import { formatPrice } from "@/utils/format";
+import { formatTime } from "@/lib/time";
 import { formatearFechaCompletaDesdeISO } from "@/utils/format";
 import InfoItem from "@/components/utils/cards/InfoItem";
 import OrderModal from "@/components/utils/modal/OrderModal";
@@ -20,7 +24,6 @@ export default function PurchaseDetail({ booking, paymentData }) {
   const { language, currency } = useStore();
   const [isOrderModal, setOrderModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
-
   const cancelBooking = async () => {
     console.log("a cancelar");
     setOpenConfirmModal(false);
@@ -30,10 +33,10 @@ export default function PurchaseDetail({ booking, paymentData }) {
     <>
       <div className="mx-5 md:mx-12">
         {/* Detalles visuales */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+        <div className=" grid grid-cols-1 md:grid-cols-2 gap-1 text-sm text-gray-700">
           <InfoItem
             icon={FaRegCalendarAlt}
-            label="Fecha"
+            label={languageData.infoService.date[language]}
             value={
               formatearFechaCompletaDesdeISO(
                 booking?.startTime?.isoTime,
@@ -44,43 +47,58 @@ export default function PurchaseDetail({ booking, paymentData }) {
             borderColor="border-gray-500"
             bg="bg-backgroundModal"
           />
+
           <InfoItem
-            icon={FaClock}
-            label="Hora"
+            icon={FaRegClock}
+            label={languageData.infoService.time[language]}
             value={booking?.startTime?.formatedTime}
             border={true}
             borderColor="border-gray-500"
             bg="bg-backgroundModal"
           />
           <InfoItem
+            icon={FaHourglassHalf}
+            label={languageData.infoService.duration[language]}
+            value={formatTime(booking?.duration)}
+            border={true}
+            borderColor="border-gray-500"
+            bg="bg-backgroundModal"
+          />
+          <InfoItem
             icon={FaMapMarkerAlt}
-            label="Lugar"
-            value={"Rj"}
+            label={languageData.infoService.location[language]}
+            value={booking?.location || "Rio de Janeiro"}
             border={true}
             borderColor="border-gray-500"
             bg="bg-backgroundModal"
           />
         </div>
         {/* Estado de pago */}
+
         <div className="mt-6 ">
           {paymentData.paymentStatus === "paid" ? (
-            <div className="flex items-center gap-2 text-green-500 text-sm">
-              <FaCheckCircle />
-              <span className="font-semibold">Pago confirmado</span>
+            <div
+              className={`flex items-center gap-2 text-sm ${statusData.color}`}
+            >
+              {statusData.icon}
+              <span className="font-semibold">{statusData.text}</span>
             </div>
           ) : (
             <div className="flex items-start gap-2 text-yellow-700 bg-yellow-100 p-4 rounded-lg border border-yellow-200 text-sm ">
               <FaRegCalendarAlt size={40} style={{ marginTop: "-10px" }} />
               <div>
                 <p className="font-semibold">
-                  Pago pendiente de{" "}
+                  {languageData.cardPendingPayment.title[language]}{" "}
                   {formatPrice(booking?.price?.grossAmount, currency)}
                 </p>
                 <p className="mt-1 text-gray-700">
-                  Se realizará el{" "}
-                  <strong>{paymentData?.cancelTime?.formatedDate}</strong>. a
-                  las, <strong>{paymentData?.cancelTime?.formatedTime}</strong>.
-                  <div>Puedes cancelar antes de esa fecha.</div>
+                  {languageData.cardPendingPayment.body.one[language]}{" "}
+                  <strong>{paymentData?.cancelTime?.formatedDate}</strong>{" "}
+                  {languageData.cardPendingPayment.body.two[language]}{" "}
+                  <strong>{paymentData?.cancelTime?.formatedTime}</strong>.
+                  <div>
+                    {languageData.cardPendingPayment.body.three[language]}.
+                  </div>
                 </p>
               </div>
             </div>

@@ -1,4 +1,48 @@
 {
+  "orderNumber": {
+    "es": "Pedido n°",
+    "en": "Order #",
+    "pt": "Pedido nº",
+    "fr": "Commande n°",
+    "de": "Bestellung Nr."
+  },
+  "copied": {
+    "es": "Copiado",
+    "en": "Copied",
+    "pt": "Copiado",
+    "fr": "Copié",
+    "de": "Kopiert"
+  },
+  "body": {
+    "clientData": {
+      "es": "Datos cliente",
+      "en": "Client data",
+      "pt": "Dados do cliente",
+      "fr": "Données du client",
+      "de": "Kundendaten"
+    },
+    "name": {
+      "es": "Nombre",
+      "en": "Name",
+      "pt": "Nome",
+      "fr": "Nom",
+      "de": "Name"
+    },
+    "email": {
+      "es": "Correo electrónico",
+      "en": "Email",
+      "pt": "E-mail",
+      "fr": "E-mail",
+      "de": "E-Mail"
+    },
+    "summary": {
+      "es": "Resumen de compra",
+      "en": "Purchase summary",
+      "pt": "Resumo da compra",
+      "fr": "Résumé de la commande",
+      "de": "Zusammenfassung"
+    }
+  },
   "priceTab": {
     "title": {
       "unpaid": {

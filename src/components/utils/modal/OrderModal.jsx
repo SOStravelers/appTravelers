@@ -3,6 +3,7 @@ import { useStore } from "@/store";
 import { formatPrice } from "@/utils/format";
 import TablePriceSummary from "@/components/utils/cards/tablePrice";
 import { FaRegClipboard } from "react-icons/fa";
+import languageData from "@/language/purchase.json";
 export default function OrderModal({ isOpen, onClose, booking }) {
   const { language, currency } = useStore();
 
@@ -53,7 +54,9 @@ export default function OrderModal({ isOpen, onClose, booking }) {
         {/* header */}
         <div className="flex justify-between items-center mb-6 mt-3">
           <div className="relative flex items-center gap-2 text-xl text-textColor font-semibold">
-            <span>Pedido N°: {booking?.purchaseOrder}</span>
+            <span>
+              {languageData.orderNumber[language]} {booking?.purchaseOrder}
+            </span>
             <button
               onClick={handleCopy}
               title="Copiar al portapapeles"
@@ -66,7 +69,7 @@ export default function OrderModal({ isOpen, onClose, booking }) {
                     copiedVisible ? "fade-slide-in" : "fade-slide-out"
                   }`}
                 >
-                  Copiado
+                  {languageData.copied[language]}
                 </div>
               )}
             </button>
@@ -85,19 +88,21 @@ export default function OrderModal({ isOpen, onClose, booking }) {
           {/* Detalles Cliente */}
           <div className="mb-6">
             <h2 className="text-lg text-textColor font-semibold mb-2">
-              Datos Cliente
+              {languageData?.body?.clientData[language]}
             </h2>
             <div className="text-sm text-textColor px-2  mb-2">
-              Name: {booking?.clientData?.name}
+              {languageData?.body?.name[language]}: {""}
+              {booking?.clientData?.name}
             </div>
             <div className="text-sm text-textColor px-2  ">
-              Email: {booking?.clientData?.email}
+              {languageData?.body?.email[language]}: {""}{" "}
+              {booking?.clientData?.email}
             </div>
           </div>
           {/* Detalles Compra */}
           <div className="mb-6">
             <h2 className="text-lg text-textColor font-semibold mb-2">
-              Resumen de compra
+              {languageData?.body?.summary[language]}
             </h2>
             {booking?.typeService === "product" &&
               booking.categories.map((category) => (

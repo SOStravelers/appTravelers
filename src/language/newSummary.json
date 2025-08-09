@@ -133,6 +133,13 @@
           "fr": "Aucun paiement ne sera effectué au moment de la réservation. Le paiement sera automatiquement traité si vous n'annulez pas avant le ${displayDate} à ${startTime.stringData}.",
           "de": "Bei der Buchung erfolgt keine Zahlung. Die Zahlung wird automatisch verarbeitet, wenn Sie nicht vor dem ${displayDate} um ${startTime.stringData} stornieren.",
           "pt": "Você não será cobrado no momento da reserva. O pagamento será processado automaticamente caso não cancele antes de ${displayDate} às ${startTime.stringData}."
+        },
+        "subtitleMatch": {
+          "es": "No pagarás nada al agendar; solo se te cobrará cuando se realice tu registro facial.",
+          "en": "You won’t pay anything when booking; you’ll only be charged once your facial registration is completed.",
+          "fr": "Aucun paiement à la réservation ; vous ne serez débité qu’une fois votre enregistrement facial effectué.",
+          "de": "Bei der Buchung zahlen Sie nichts; die Abbuchung erfolgt erst nach Abschluss Ihrer Gesichtserfassung.",
+          "pt": "Você não pagará nada ao agendar; a cobrança será feita apenas quando seu cadastro facial for realizado."
         }
       },
       "freeCancelation": {
@@ -149,6 +156,13 @@
           "fr": "Vous pouvez annuler sans frais jusqu’au ${displayDate} à ${startTime.stringData}.",
           "de": "Kostenlose Stornierung möglich bis zum ${displayDate} um ${startTime.stringData}.",
           "pt": "Você pode cancelar sem custo até ${displayDate} às ${startTime.stringData}."
+        },
+        "subtitleMatch": {
+          "es": "Podrás cancelar sin inconvenientes hasta que el proveedor complete tu registro facial para el estadio y compre la entrada.",
+          "en": "You can cancel without any issues until the provider completes your facial registration for the stadium and purchases the ticket.",
+          "fr": "Vous pourrez annuler sans problème jusqu’à ce que le prestataire termine votre enregistrement facial pour le stade et achète le billet.",
+          "de": "Sie können stornieren, bis der Anbieter Ihre Gesichtserfassung für das Stadion abgeschlossen und das Ticket gekauft hat.",
+          "pt": "Você poderá cancelar sem problemas até que o fornecedor conclua seu cadastro facial para o estádio e compre o ingresso."
         }
       }
     }

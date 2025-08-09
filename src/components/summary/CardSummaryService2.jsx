@@ -372,22 +372,14 @@ export default function CardSummaryService({ statusExpanded }) {
 
         <div className=" px-3 mb-16 mt-4">
           {/* Cancelación gratuita */}
-          {hasCancel?.isBefore && (
+          {service.service._id == "67c11c4917c3a7a2c353cb1b" && ( // servicio tipo partido
             <>
               <div className="space-y-1 mb-3">
                 <p className="font-semibold text-textColorGreen text-sm">
                   {thisLanguage.sections.booking.title[language]}
                 </p>
                 <p className="text-textColorGray text-xs">
-                  {interpolate(
-                    thisLanguage.sections.booking.subtitle[language],
-                    {
-                      displayDate: hasCancel?.cancelTime?.formatedDate,
-                      startTime: {
-                        stringData: hasCancel?.cancelTime?.formatedTime,
-                      },
-                    }
-                  )}
+                  {thisLanguage.sections.booking.subtitleMatch[language]}
                 </p>
               </div>
               <div className="space-y-1">
@@ -395,15 +387,11 @@ export default function CardSummaryService({ statusExpanded }) {
                   {thisLanguage.sections.freeCancelation.title[language]}
                 </p>
                 <p className="text-textColorGray text-xs">
-                  {interpolate(
-                    thisLanguage.sections.freeCancelation.subtitle[language],
-                    {
-                      displayDate: hasCancel?.cancelTime?.formatedDate,
-                      startTime: {
-                        stringData: hasCancel?.cancelTime?.formatedTime,
-                      },
-                    }
-                  )}
+                  {
+                    thisLanguage.sections.freeCancelation.subtitleMatch[
+                      language
+                    ]
+                  }
                 </p>
               </div>
             </>

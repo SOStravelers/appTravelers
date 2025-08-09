@@ -135,8 +135,8 @@ export default function CheckoutForm({
                   ":  " +
                   formatPrice(0, currency)
             }
-            px={8}
-            py={3}
+            px={2}
+            py="py-2"
             minWidth="140px"
             margin="mt-4"
             dark="darkLight"

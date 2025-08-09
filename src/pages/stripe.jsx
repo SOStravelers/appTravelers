@@ -4,6 +4,7 @@ import { useStore } from "@/store";
 import StripeService from "@/services/StripeService";
 import { useRouter } from "next/router";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import languageData from "@/language/payment.json";
 import {
   delay,
   opacityAnimation,
@@ -104,7 +105,7 @@ export default function Stripe() {
     return (
       <div className="flex flex-col items-center justify-center mt-24 text-center px-4">
         <p className="text-lg font-semibold text-textColor mb-4">
-          No hay información suficiente para mostrar la pasarela de pago.
+          {languageData.stripe.notAvailable[language]}
         </p>
 
         <OutlinedButton

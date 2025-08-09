@@ -188,6 +188,13 @@
       "fr": "Suivant",
       "de": "Weiter",
       "pt": "Próximo"
+    },
+    "notAvailable": {
+      "en": "Not available",
+      "es": "No disponible",
+      "fr": "Non disponible",
+      "de": "Nicht verfügbar",
+      "pt": "Não disponível"
     }
   },
   "shareText": {

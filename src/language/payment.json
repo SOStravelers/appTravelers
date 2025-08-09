@@ -47,5 +47,14 @@
     "fr": "Réservez maintenant",
     "de": "Jetzt buchen",
     "pt": "Agende agora"
+  },
+  "stripe": {
+    "notAvailable": {
+      "en": "This Service its not available, try another one",
+      "es": "Este servicio no está disponible, prueba otro",
+      "fr": "Ce service n'est pas disponible, essayez un autre",
+      "de": "Dieser Service ist nicht verfügbar, versuchen Sie einen anderen",
+      "pt": "Este serviço não está disponível, tente outro"
+    }
   }
 }

@@ -109,9 +109,9 @@ export default function ServicePreviewPage() {
           subService?.eventData.available &&
           subService?.eventData.isoTime
         ) {
-          isoTime = subService?.eventData.isoTime;
+          isoTime = subService?.eventData?.isoTime;
         } else {
-          isoTime = subService.startTime.isoTime;
+          isoTime = subService?.startTime?.isoTime;
         }
         const limitBook = subService.timeLimitBook || 0;
         const canBook = isBeforeHoursThreshold(isoTime, limitBook, language);
@@ -243,7 +243,9 @@ export default function ServicePreviewPage() {
             : ""
         }
         buttonText={
-          !subService.multiple
+          !validPrice || price[currency] == 0
+            ? languageData.bookingButton.notAvailable[language]
+            : !subService.multiple
             ? languageData.bookingButton.nextButton[language]
             : languageData.bookingButton.goDates[language]
         }

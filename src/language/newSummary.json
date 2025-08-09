@@ -128,11 +128,11 @@
           "pt": "Agende agora, pague depois"
         },
         "subtitle": {
-          "es": "No se te cobrará al momento de reservar. El pago se procesará automáticamente si no cancelas antes del ${displayDate} a las ${startTime.stringData}.",
-          "en": "You won’t be charged at the time of booking. Payment will be processed automatically if you don’t cancel before ${displayDate} at ${startTime.stringData}.",
-          "fr": "Aucun paiement ne sera effectué au moment de la réservation. Le paiement sera automatiquement traité si vous n'annulez pas avant le ${displayDate} à ${startTime.stringData}.",
-          "de": "Bei der Buchung erfolgt keine Zahlung. Die Zahlung wird automatisch verarbeitet, wenn Sie nicht vor dem ${displayDate} um ${startTime.stringData} stornieren.",
-          "pt": "Você não será cobrado no momento da reserva. O pagamento será processado automaticamente caso não cancele antes de ${displayDate} às ${startTime.stringData}."
+          "es": "Reserva ahora gratis y solo se te cobrará después del ${displayDate} a las ${displayTime} hrs.",
+          "en": "Book now for free and you’ll only be charged after ${displayDate} at ${displayTime} hrs.",
+          "fr": "Réservez maintenant gratuitement et vous ne serez débité qu’après le ${displayDate} à ${displayTime} h.",
+          "de": "Jetzt kostenlos reservieren – die Abbuchung erfolgt erst nach dem ${displayDate} um ${displayTime} Uhr.",
+          "pt": "Reserve agora grátis e só será cobrado após ${displayDate} às ${displayTime}h."
         },
         "subtitleMatch": {
           "es": "No pagarás nada al agendar; solo se te cobrará cuando se realice tu registro facial.",
@@ -151,18 +151,18 @@
           "pt": "Cancelamento gratuito"
         },
         "subtitle": {
-          "es": "Puedes cancelar sin costo hasta el ${displayDate} a las ${startTime.stringData}.",
-          "en": "You can cancel free of charge until ${displayDate} at ${startTime.stringData}.",
-          "fr": "Vous pouvez annuler sans frais jusqu’au ${displayDate} à ${startTime.stringData}.",
-          "de": "Kostenlose Stornierung möglich bis zum ${displayDate} um ${startTime.stringData}.",
-          "pt": "Você pode cancelar sem custo até ${displayDate} às ${startTime.stringData}."
+          "es": "Puedes cancelar en cualquier momento sin ningún cargo hasta el ${displayDate} a las ${displayTime} hrs.",
+          "en": "You can cancel at any time without any charge until ${displayDate} at ${displayTime} hrs.",
+          "fr": "Vous pouvez annuler à tout moment sans frais jusqu’au ${displayDate} à ${displayTime} h.",
+          "de": "Sie können jederzeit kostenlos stornieren, bis zum ${displayDate} um ${displayTime} Uhr.",
+          "pt": "Você pode cancelar a qualquer momento sem custo até ${displayDate} às ${displayTime}h."
         },
         "subtitleMatch": {
-          "es": "Podrás cancelar sin inconvenientes hasta que el proveedor complete tu registro facial para el estadio y compre la entrada.",
-          "en": "You can cancel without any issues until the provider completes your facial registration for the stadium and purchases the ticket.",
-          "fr": "Vous pourrez annuler sans problème jusqu’à ce que le prestataire termine votre enregistrement facial pour le stade et achète le billet.",
-          "de": "Sie können stornieren, bis der Anbieter Ihre Gesichtserfassung für das Stadion abgeschlossen und das Ticket gekauft hat.",
-          "pt": "Você poderá cancelar sem problemas até que o fornecedor conclua seu cadastro facial para o estádio e compre o ingresso."
+          "es": "Podrás cancelar sin cargo hasta que el proveedor complete tu registro facial para el estadio y compre la entrada.",
+          "en": "You can cancel free of charge until the provider completes your facial registration for the stadium and purchases the ticket.",
+          "fr": "Vous pourrez annuler sans frais jusqu’à ce que le prestataire termine votre enregistrement facial pour le stade et achète le billet.",
+          "de": "Sie können kostenlos stornieren, bis der Anbieter Ihre Gesichtserfassung für das Stadion abgeschlossen und das Ticket gekauft hat.",
+          "pt": "Você poderá cancelar sem custo até que o fornecedor conclua seu cadastro facial para o estádio e compre o ingresso."
         }
       }
     }

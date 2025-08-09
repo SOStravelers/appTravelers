@@ -28,11 +28,25 @@
     "pt": "Detalhes de faturamento"
   },
   "noStress": {
-    "en": " No stress! We charge your card only after a successful service. Your satisfaction is guaranteed. Relax, and let us handle it. Cheers to success!",
-    "es": "¡Sin estrés! Solo cobramos tu tarjeta después de un servicio exitoso. Tu satisfacción está garantizada. Relájate y déjanos encargarnos de todo. ¡Por el éxito!",
-    "fr": "Pas de stress ! Nous débitons votre carte uniquement après un service réussi. Votre satisfaction est garantie. Détendez-vous et laissez-nous faire. À votre succès !",
-    "de": "Kein Stress! Wir belasten Ihre Karte erst nach einem erfolgreichen Service. Ihre Zufriedenheit ist garantiert. Entspannen Sie sich und überlassen Sie uns den Rest. Auf den Erfolg!",
-    "pt": "Sem estresse! Só cobramos no seu cartão após um serviço bem-sucedido. Sua satisfação é garantida. Relaxe e deixe conosco. Um brinde ao sucesso!"
+    "en": "No stress! We’ll only charge your card once the service provider is confirmed. Your satisfaction is guaranteed. Relax, and let us handle everything. Cheers to a great experience!",
+    "es": "¡Sin estrés! Solo cobramos tu tarjeta cuando el proveedor del servicio esté confirmado. Tu satisfacción está garantizada. Relájate y déjanos encargarnos de todo. ¡Por una gran experiencia!",
+    "fr": "Pas de stress ! Nous débitons votre carte uniquement lorsque le prestataire de service est confirmé. Votre satisfaction est garantie. Détendez-vous et laissez-nous tout gérer. À une belle expérience !",
+    "de": "Kein Stress! Wir belasten Ihre Karte erst, wenn der Dienstleister bestätigt ist. Ihre Zufriedenheit ist garantiert. Entspannen Sie sich und überlassen Sie uns alles. Auf ein tolles Erlebnis!",
+    "pt": "Sem estresse! Só cobramos no seu cartão quando o fornecedor do serviço estiver confirmado. Sua satisfação é garantida. Relaxe e deixe tudo com a gente. Um brinde a uma ótima experiência!"
+  },
+  "noStressMatch": {
+    "en": "No stress! We’ll only charge your card once the service provider has successfully completed your facial registration.",
+    "es": "¡Sin estrés! Solo cobramos tu tarjeta una vez que el proveedor haya completado con éxito tu registro facial.",
+    "fr": "Pas de stress ! Nous débitons votre carte uniquement une fois que le prestataire de service aura terminé avec succès votre enregistrement facial.",
+    "de": "Kein Stress! Wir belasten Ihre Karte erst, nachdem der Dienstleister Ihre Gesichtserfassung erfolgreich abgeschlossen hat.",
+    "pt": "Sem estresse! Só cobramos no seu cartão depois que o fornecedor do serviço concluir com sucesso o seu cadastro facial."
+  },
+  "noStressCancel": {
+    "en": "No stress! You won’t be charged until ${displayDate} at ${displayTime} hrs, and you can cancel free of charge before then.",
+    "es": "¡Sin estrés! No se te cobrará nada hasta el ${displayDate} a las ${displayTime} hrs, y podrás cancelar sin cargo antes de ese momento.",
+    "fr": "Pas de stress ! Aucun paiement ne sera effectué avant le ${displayDate} à ${displayTime} h, et vous pourrez annuler sans frais avant ce moment.",
+    "de": "Kein Stress! Es erfolgt keine Abbuchung vor dem ${displayDate} um ${displayTime} Uhr, und Sie können bis dahin kostenlos stornieren.",
+    "pt": "Sem estresse! Nada será cobrado até ${displayDate} às ${displayTime}h, e você poderá cancelar sem custo antes desse momento."
   },
   "paymentMethod": {
     "en": "Payment Method",

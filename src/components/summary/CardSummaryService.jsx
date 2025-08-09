@@ -55,11 +55,14 @@ export default function CardSummaryService({
   }, []);
 
   useEffect(() => {
+    console.log("seteando");
     if (service.canCancel) {
       const hasCancel = isBeforeHoursThreshold(
         service.startTime.isoTime,
-        service.timeUntilCancel
+        service.timeUntilCancel,
+        language
       );
+      console.log(hasCancel);
       setHasCancel(hasCancel);
     } else {
       setHasCancel(false);
@@ -95,11 +98,6 @@ export default function CardSummaryService({
       return key.split(".").reduce((o, i) => (o ? o[i] : ""), vars);
     });
   }
-
-  const setPrice = () => {
-    setService({ ...service, total: 10 });
-    router.push(`/summary2/contact-info/${id}`);
-  };
 
   return (
     <>
@@ -227,10 +225,8 @@ export default function CardSummaryService({
                   {interpolate(
                     thisLanguage.sections.booking.subtitle[language],
                     {
-                      displayDate: hasCancel?.cancelTime?.data,
-                      startTime: {
-                        stringData: hasCancel?.cancelTime?.stringData,
-                      },
+                      displayDate: hasCancel?.cancelTime?.formatedDate,
+                      displayTime: hasCancel?.cancelTime?.formatedTime,
                     }
                   )}
                 </p>
@@ -243,10 +239,8 @@ export default function CardSummaryService({
                   {interpolate(
                     thisLanguage.sections.freeCancelation.subtitle[language],
                     {
-                      displayDate: hasCancel?.cancelTime?.data,
-                      startTime: {
-                        stringData: hasCancel?.cancelTime?.stringData,
-                      },
+                      displayDate: hasCancel?.cancelTime?.formatedDate,
+                      displayTime: hasCancel?.cancelTime?.formatedTime,
                     }
                   )}
                 </p>

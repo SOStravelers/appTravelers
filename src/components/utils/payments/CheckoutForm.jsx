@@ -10,7 +10,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import StripeService from "@/services/StripeService";
-import { formatPrice } from "@/utils/format";
+import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
 import OutlinedButton from "../buttons/OutlinedButton";
 import BookingService from "@/services/BookingService";
 import { toast } from "react-toastify";
@@ -37,6 +37,7 @@ export default function CheckoutForm({
   const [price, setPrice] = useState(null);
   const [loadingBooking, setLoadingBooking] = useState(false);
   const [error, setError] = useState(false);
+  const [hasCancel, setHasCancel] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,6 +90,27 @@ export default function CheckoutForm({
       setIsProcessing(false);
     }
   };
+  function interpolate(str, vars) {
+    return str.replace(/\$\{(\w+(\.\w+)*)\}/g, (_, key) => {
+      // Permite nested: ej "startTime.stringData"
+      return key.split(".").reduce((o, i) => (o ? o[i] : ""), vars);
+    });
+  }
+
+  useEffect(() => {
+    console.log("seteando");
+    if (service.canCancel) {
+      const hasCancel = isBeforeHoursThreshold(
+        service.startTime.isoTime,
+        service.timeUntilCancel,
+        language
+      );
+      console.log(hasCancel);
+      setHasCancel(hasCancel);
+    } else {
+      setHasCancel(false);
+    }
+  }, [service]);
 
   if (error) {
     return (
@@ -131,9 +153,12 @@ export default function CheckoutForm({
             text={
               isProcessing
                 ? "Processing..."
-                : languageData.bookNow[language] +
+                : hasCancel?.isBefore ||
+                  service.service._id == "67c11c4917c3a7a2c353cb1b"
+                ? languageData.bookNow[language] +
                   ":  " +
                   formatPrice(0, currency)
+                : languageData.bookNow[language]
             }
             px={2}
             py="py-2"
@@ -144,8 +169,15 @@ export default function CheckoutForm({
             disabled={!stripe || isProcessing}
             buttonCenter={true}
           />
-          <p className="mb-6 mt-4 text-textColorGray text-sm">
-            {languageData.noStress[language]}
+          <p className="mb-6 mt-6 text-textColorGray text-sm">
+            {service.service._id == "67c11c4917c3a7a2c353cb1b"
+              ? languageData.noStressMatch[language]
+              : hasCancel?.isBefore
+              ? interpolate(languageData.noStressCancel[language], {
+                  displayDate: hasCancel?.cancelTime?.formatedDate,
+                  displayTime: hasCancel?.cancelTime?.formatedTime,
+                })
+              : languageData.noStress[language]}
           </p>
         </form>
       </>

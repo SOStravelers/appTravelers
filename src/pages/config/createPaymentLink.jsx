@@ -312,7 +312,7 @@ export default function CreateCheckoutLink() {
                   text="Generar link"
                   disabled={!isValid}
                   px={2}
-                  py={2}
+                  py="py-2"
                   dark="darkHeavy"
                   textColor="text-white"
                   textSize="text-sm"

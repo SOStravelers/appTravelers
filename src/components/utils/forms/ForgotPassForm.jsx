@@ -23,7 +23,7 @@ function ForgotPassForm({ errorMsg, setEmail, handleVerifyMail }) {
         text="Change Password"
         px={0}
         dark="darkLight"
-        py={2}
+        py="py-2"
         margin="my-4"
         textSize="text-xs"
         textColor="text-white"

@@ -247,7 +247,7 @@ export default function TravellersDetailsModal({ open, onClose }) {
           onClick={handleApply}
           text={language === "es" ? "Aplicar" : "Apply"}
           px={0}
-          py={2}
+          py="py-2"
           dark="darkHeavy"
           textSize="text-xs"
           textColor="text-white"

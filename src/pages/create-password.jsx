@@ -84,7 +84,7 @@ export default function CreatePassword() {
               <OutlinedButton
                 onClick={handleVerifyCode}
                 px={20}
-                py={2}
+                py="py-2"
                 dark="darkLight"
                 textSize="text-sm"
                 textColor="text-white"
@@ -96,7 +96,7 @@ export default function CreatePassword() {
             <OutlinedButton
               onClick={handleSendVerificationCode}
               px={20}
-              py={2}
+              py="py-2"
               dark="darkLight"
               textSize="text-sm"
               text="Create password"

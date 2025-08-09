@@ -2,57 +2,69 @@ import React, { useState, useEffect } from "react";
 import { useStore } from "@/store";
 import InputText from "@/components/utils/inputs/InputText";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import UserService from "@/services/UserService";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 import languageData from "@/language/personalDetails.json";
 
-export default function EditNameModal({
-  isOpen,
-  onClose,
-  onSave,
-  defaultName,
-}) {
-  const { language } = useStore();
+export default function EditNameModal({ isOpen, onClose, defaultName }) {
+  const { user, setUser, language } = useStore();
   const [name, setName] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (isOpen) {
-      setName(defaultName || "");
+      setName(defaultName || buildFullNameFromUser(user) || "");
       setError("");
       document.body.classList.add("overflow-hidden");
     } else {
       document.body.classList.remove("overflow-hidden");
     }
-
     return () => document.body.classList.remove("overflow-hidden");
-  }, [isOpen, defaultName]);
+  }, [isOpen, defaultName, user]);
 
-  const handleSave = async (newName) => {
-    const [first, ...rest] = newName.trim().split(" ");
+  const capitalizeWords = (s = "") =>
+    s
+      .trim()
+      .split(/\s+/)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+      .join(" ");
+
+  const handleSave = async (rawName) => {
+    if (typeof rawName !== "string" || !rawName.trim()) {
+      setError(languageData.missingData?.[language] || "MissingData");
+      return;
+    }
+
+    const [first, ...rest] = rawName.trim().split(/\s+/);
     const last = rest.join(" ");
 
     const personalData = {
       name: {
-        first: capitalize(first),
-        last: capitalize(last),
+        first: capitalizeWords(first),
+        last: capitalizeWords(last),
       },
     };
 
     try {
-      const response = await UserService.updateUser({ personalData });
+      const response = await UserService.updateInfoUser({ personalData });
 
-      if (response.data?.user) {
-        setUser(response.data.user);
-        localStorage.setItem("auth.user", JSON.stringify(response.data.user));
-        Cookies.set("auth.user", JSON.stringify(response.data.user));
-        toast.success("Nombre guardado");
+      if (response?.data) {
+        setUser(response.data);
+        localStorage.setItem("auth.user", JSON.stringify(response.data));
+        Cookies.set("auth.user", JSON.stringify(response.data));
+        toast.success(languageData.updated?.[language] || "Nombre guardado", {
+          autoClose: 1000,
+        });
+        onClose(); // cerrar modal
       } else {
         throw new Error("No data returned");
       }
     } catch (err) {
-      toast.error("Error al guardar el nombre");
+      toast.error(
+        languageData.errorSaving?.[language] || "Error al guardar el nombre"
+      );
     }
-
-    setModalOpen(false);
   };
 
   return (
@@ -70,7 +82,7 @@ export default function EditNameModal({
       >
         <div className="flex justify-between items-center mb-3">
           <h3 className="text-lg text-textColor font-semibold">
-            {languageData.name[language]}
+            {languageData.name?.[language] || "Nombre"}
           </h3>
           <button onClick={onClose} className="text-textColorGray text-lg">
             ✕
@@ -81,15 +93,20 @@ export default function EditNameModal({
           <InputText
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              if (error) setError("");
+            }}
             placeholder="Ej. Juan Pérez"
             error={error}
             className="w-full"
           />
+
           {error && <p className="text-errorColor text-xs">{error}</p>}
+
           <OutlinedButton
-            text={languageData.saveChanges[language]}
-            onClick={handleSave}
+            text={languageData.saveChanges?.[language] || "Guardar cambios"}
+            onClick={() => handleSave(name)}
             py="py-2"
             textSize="text-sm"
             textColor="text-white"
@@ -99,4 +116,13 @@ export default function EditNameModal({
       </div>
     </div>
   );
+}
+
+function buildFullNameFromUser(user) {
+  const first =
+    user?.personalData?.name?.first ?? user?.name?.first ?? user?.first ?? "";
+  const last =
+    user?.personalData?.name?.last ?? user?.name?.last ?? user?.last ?? "";
+  const joined = [first, last].filter(Boolean).join(" ").trim();
+  return joined || "";
 }

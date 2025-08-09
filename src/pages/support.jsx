@@ -279,7 +279,7 @@ export default function SupportPage() {
                 disabled={!isValid || isSubmitting}
                 text={languageData.sendMessage[language]}
                 px={20}
-                py={2}
+                py="py-2"
                 dark="darkLight"
                 textSize="text-sm"
                 textColor="text-white"

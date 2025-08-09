@@ -41,7 +41,7 @@ export default function Profile({ user }) {
           onClick={() => router.push("/config/subservice")}
           text={"Config Subservicios"}
           px={8}
-          py={2}
+          py="py-2"
           margin={"my-3"}
           dark="darkLight"
           textSize="text-sm"
@@ -52,7 +52,7 @@ export default function Profile({ user }) {
           onClick={() => router.push("/config/subservice/create")}
           text={"Crear Subservicio"}
           px={8}
-          py={2}
+          py="py-2"
           margin={"my-3"}
           dark="darkLight"
           textSize="text-sm"
@@ -64,7 +64,7 @@ export default function Profile({ user }) {
           onClick={() => router.push("/config/matches")}
           text={"Config Partidos"}
           px={8}
-          py={2}
+          py="py-2"
           margin={"my-3"}
           dark="darkLight"
           textSize="text-sm"
@@ -79,7 +79,7 @@ export default function Profile({ user }) {
           text={"Agenda de bookings"}
           px={8}
           margin={"my-3"}
-          py={2}
+          py="py-2"
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
@@ -90,7 +90,7 @@ export default function Profile({ user }) {
           text={"Generar Link Stripe"}
           px={8}
           margin={"my-3"}
-          py={2}
+          py="py-2"
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"

@@ -134,7 +134,7 @@ export default function ChangePassword() {
             text="Verify"
             px={0}
             dark="darkLight"
-            py={2}
+            py="py-2"
             disabled={buttonDisabled}
             margin="my-4"
             textSize="text-xs"
@@ -147,7 +147,7 @@ export default function ChangePassword() {
             text="Resend code"
             px={0}
             dark="darkLight"
-            py={2}
+            py="py-2"
             disabled={buttonDisabled}
             margin="my-6"
             textSize="text-xs"

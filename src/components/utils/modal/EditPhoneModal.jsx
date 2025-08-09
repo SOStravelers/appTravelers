@@ -48,14 +48,14 @@ export default function EditPhoneModal({ isOpen, onClose }) {
       return;
     }
 
-    const personalData = {
+    const data = {
       phone: cleaned,
       phoneCode,
       phoneCountry: country,
     };
 
     try {
-      const response = await UserService.updateInfoUser({ personalData });
+      const response = await UserService.updateInfoUser(data);
 
       if (response.data) {
         console.log("entra");

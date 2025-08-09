@@ -151,7 +151,7 @@ function CalendarBooking() {
           <OutlinedButton
             text={LanguageData.section3.buttonRecords[language]}
             px={0}
-            py={2}
+            py="py-2"
             dark="darkLight"
             textSize="text-sm"
             textColor="text-white"

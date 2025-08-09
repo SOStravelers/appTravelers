@@ -94,7 +94,7 @@ END:VCALENDAR
       <OutlinedButton
         onClick={handleClick}
         text={languageData.buttons.calendar[language]}
-        py={2}
+        py="py-2"
         margin="my-5"
         icon={FaRegCalendarPlus}
         dark="darkLight"

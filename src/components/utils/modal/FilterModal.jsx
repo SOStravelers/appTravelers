@@ -210,7 +210,7 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
             onClick={handleApply}
             text={languageData.applyButton[language]}
             px={0}
-            py={2}
+            py="py-2"
             dark="darkHeavy"
             textSize="text-xs"
             textColor="text-white"

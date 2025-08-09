@@ -105,7 +105,7 @@ export default function PurchaseDetail({ booking, paymentData }) {
         <OutlinedButton
           onClick={() => setOrderModal(true)}
           text={languageData.buttons.orderDetails[language]}
-          py={2}
+          py="py-2"
           margin="my-5"
           icon={FaClipboardList}
           dark="darkLight"
@@ -154,7 +154,7 @@ export default function PurchaseDetail({ booking, paymentData }) {
             <OutlinedButton
               onClick={() => setOpenConfirmModal(true)}
               text={languageData.buttons.cancel[language]}
-              py={2}
+              py="py-2"
               margin="mt-12"
               dark="darkLight"
               textSize="text-sm"

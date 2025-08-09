@@ -53,27 +53,6 @@ export default function PersonalDetails() {
     return str?.length > 28 ? str.slice(0, 28) + "..." : str;
   }
 
-  const handleSaveName = async (newName) => {
-    const [first, ...rest] = newName.split(" ");
-    const last = rest.join(" ");
-    const updatedUser = { ...user };
-    updatedUser.personalData.name.first = capitalize(first);
-    updatedUser.personalData.name.last = capitalize(last);
-
-    try {
-      const response = await UserService.updateUser(updatedUser);
-      if (response.data) {
-        localStorage.setItem("auth.user", JSON.stringify(response.data.user));
-        Cookies.set("auth.user", JSON.stringify(response.data.user));
-        setUser(response.data.user);
-      }
-    } catch (err) {
-      console.error("Error al guardar el nombre", err);
-    }
-
-    setModalNameOpen(false);
-  };
-
   return (
     <>
       <div
@@ -126,7 +105,6 @@ export default function PersonalDetails() {
       <EditNameModal
         isOpen={modalNameOpen}
         onClose={() => setModalNameOpen(false)}
-        onSave={handleSaveName}
         defaultName={name}
       />
 

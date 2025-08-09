@@ -28,7 +28,7 @@ export default function GuestSettings() {
     ${loading ? opacityAnimation : displayAnimation}
   `}
     >
-      <Link href="support" className="w-full flex mt-3">
+      <Link href="support" className="w-full max-w-md   flex mt-3">
         <OptionCard
           title={languageData.support.title[language]}
           subtitle={languageData.support.body[language]}
@@ -44,8 +44,9 @@ export default function GuestSettings() {
       <OutlinedButton
         onClick={() => router.push("/register")}
         text={languageData.sigUpButton[language]}
-        px={20}
-        py={2}
+        px="px-10"
+        py="py-3"
+        margin={"mx-auto"}
         dark="darkLight"
         textSize="text-sm"
         textColor="text-white"

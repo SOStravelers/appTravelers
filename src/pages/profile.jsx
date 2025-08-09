@@ -56,8 +56,8 @@ export default function Profile({ user }) {
         <OutlinedButton
           onClick={() => router.push("/personal-details")}
           text={languageData.personalDetails[language]}
-          px={8}
-          py={2}
+          px="px-10"
+          py="py-3"
           margin={"my-3"}
           dark="darkLight"
           textSize="text-sm"
@@ -68,8 +68,8 @@ export default function Profile({ user }) {
         <OutlinedButton
           onClick={() => router.push("/settings")}
           text={languageData.settings[language]}
-          px={8}
-          py={2}
+          px="px-10"
+          py="py-3"
           margin={"my-3"}
           dark="darkLight"
           textSize="text-sm"
@@ -80,9 +80,9 @@ export default function Profile({ user }) {
         <OutlinedButton
           onClick={logout}
           text={languageData.logOut[language]}
-          px={8}
+          px="px-10"
+          py="py-3"
           margin={"my-3"}
-          py={2}
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"

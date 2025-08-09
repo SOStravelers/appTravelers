@@ -40,5 +40,12 @@
     "fr": "Enregistrer les modifications",
     "de": "Änderungen speichern",
     "pt": "Salvar alterações"
+  },
+  "updated": {
+    "en": "Updated",
+    "es": "Actualizado",
+    "fr": "Mis à jour",
+    "de": "Aktualisiert",
+    "pt": "Atualizado"
   }
 }

@@ -133,6 +133,12 @@ export default class UserService {
       headers: this.getHeaders(),
     });
   }
+  static async updateInfoUser(data) {
+    // console.log("el userr", user);
+    return axios.put(`${this.baseUrl}/info/user`, data, {
+      headers: this.getHeaders(),
+    });
+  }
   static async changeProfileImg(file) {
     console.log("fotito", this.getHeaders());
     const formData = new FormData();

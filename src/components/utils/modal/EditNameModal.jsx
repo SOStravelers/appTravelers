@@ -90,8 +90,7 @@ export default function EditNameModal({
           <OutlinedButton
             text={languageData.saveChanges[language]}
             onClick={handleSave}
-            px={0}
-            py={2}
+            py="py-2"
             textSize="text-sm"
             textColor="text-white"
             buttonCenter={true}

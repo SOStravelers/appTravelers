@@ -44,7 +44,7 @@ export default function EditPhoneModal({ isOpen, onClose }) {
     const cleaned = phone.replace(/\D/g, "");
 
     if (!country || !/^[0-9]{6,15}$/.test(cleaned)) {
-      setError(languageData.phoneInput.alert[language]);
+      setError("Missing data");
       return;
     }
 
@@ -55,13 +55,16 @@ export default function EditPhoneModal({ isOpen, onClose }) {
     };
 
     try {
-      const response = await UserService.updateUser({ personalData });
+      const response = await UserService.updateInfoUser({ personalData });
 
-      if (response.data?.user) {
-        setUser(response.data.user);
-        localStorage.setItem("auth.user", JSON.stringify(response.data.user));
-        Cookies.set("auth.user", JSON.stringify(response.data.user));
-        toast.success(languageData.phoneSaved[language] || "Teléfono guardado");
+      if (response.data) {
+        console.log("entra");
+        setUser(response.data);
+        localStorage.setItem("auth.user", JSON.stringify(response.data));
+        Cookies.set("auth.user", JSON.stringify(response.data));
+        toast.success(languageData.updated[language] || "Teléfono guardado", {
+          autoClose: 1000,
+        });
         onClose();
       } else {
         throw new Error("No data returned");
@@ -122,8 +125,8 @@ export default function EditPhoneModal({ isOpen, onClose }) {
           <OutlinedButton
             text={languageData.saveChanges[language]}
             onClick={handleSave}
-            px={0}
-            py={2}
+            py="py-2"
+            margin="my-20"
             textSize="text-sm"
             textColor="text-white"
             buttonCenter={true}

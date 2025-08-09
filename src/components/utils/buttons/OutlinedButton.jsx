@@ -3,12 +3,12 @@ import clsx from "clsx";
 
 function OutlinedButton({
   text,
-  icon: Icon, // ✅ nuevo
+  icon: Icon,
   secondary = false,
   error = false,
   disabled = false,
-  px = 4,
-  py = 2,
+  px = "px-4", // ahora recibe la clase completa
+  py = "py-2", // igual que margin
   textColor = "text-blackText",
   textSize = "text-sm",
   dark = "darkHeavy",
@@ -25,12 +25,12 @@ function OutlinedButton({
   return (
     <button
       className={clsx(
-        "rounded-full cursor-pointer flex items-center justify-center gap-2",
+        "rounded-full max-w-md cursor-pointer flex items-center justify-center gap-2",
         textSize,
         margin,
-        buttonCenter ? "w-2/3 mx-auto md:w-2/5 " : `px-${px}`,
-        `py-${py}`,
-        "hover:brightness-200 transition duration-200", // ← efecto de iluminación
+        buttonCenter ? "w-2/3 mx-auto md:w-1/2" : px,
+        py,
+        "hover:brightness-200 transition duration-200",
         {
           "text-grey border-grey": secondary,
           "text-greyText border-lightGrey": error,
@@ -47,8 +47,7 @@ function OutlinedButton({
       disabled={disabled}
       {...props}
     >
-      {Icon && <Icon className={`h-5 w-5 ${textColor}`} />}{" "}
-      {/* ← ícono visible */}
+      {Icon && <Icon className={`h-5 w-5 ${textColor}`} />}
       {text}
     </button>
   );

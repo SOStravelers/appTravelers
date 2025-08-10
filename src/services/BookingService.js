@@ -60,6 +60,12 @@ export default class BookingService {
     const queryString = buildQueryParams(data);
     return axios.get(`${this.baseUrl}/list/admin-user?${queryString}`);
   }
+  static async getHistory(params) {
+    const queryString = buildQueryParams(params);
+    return axios.get(`${this.baseUrl}/client/history?${queryString}`, {
+      headers: this.getHeaders(),
+    });
+  }
 
   static async confirm(id) {
     return axios.put(`${this.baseUrl}/confirm/${id}`);

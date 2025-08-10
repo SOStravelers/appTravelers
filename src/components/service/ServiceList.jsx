@@ -39,7 +39,6 @@ export default function ServiceList({ filterKey }) {
 
   const loadPage = useCallback(
     async (page) => {
-      console.log("check", lastPage);
       if (loading || (lastPage === "preview" && page === 1)) return;
 
       setPreviousPage(page);
@@ -90,7 +89,6 @@ export default function ServiceList({ filterKey }) {
   );
 
   useEffect(() => {
-    console.log("inicio");
     if (safeItems.length === 0 && lastPage !== "preview") {
       // window.scrollTo({ top: 0, behavior: "auto" });
       loadPage(1);
@@ -98,7 +96,6 @@ export default function ServiceList({ filterKey }) {
   }, []);
 
   useEffect(() => {
-    console.log("activa", sentinelRef.current);
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
 
@@ -119,7 +116,6 @@ export default function ServiceList({ filterKey }) {
   }, [listItems, listHasNext, listPage, loading, loadPage]);
 
   useEffect(() => {
-    console.log("filteres");
     if (lastPage !== "preview") {
       // requestedPages.current.clear();
       // setListItems([]);

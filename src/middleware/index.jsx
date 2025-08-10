@@ -144,7 +144,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       if (!user || Object.keys(user).length == 0) {
         if (cookieAccessToken) {
           const user = await UserService.getUserByToken();
-          console.log("el user", user);
           if (user) {
             if (user.data.type == "business") {
               localStorage.removeItem("access_tokenB");

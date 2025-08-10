@@ -44,7 +44,6 @@ export default function Home() {
   }, []);
   useEffect(() => {
     const timerIds = setTimeout(() => {
-      console.log("activo");
       setLastPage("");
       if (stickypoint == 0) {
         const stickyEl = document.getElementById("icon-carousel");
@@ -73,9 +72,7 @@ export default function Home() {
         }, 50);
       });
     } else {
-      console.log("cva aqui");
       const id = Cookies.get("homeItemId");
-      console.log("id", id);
       if (!id) return;
       const tryScroll = () => {
         const el = document.querySelector(`[data-item-id='${id}']`);

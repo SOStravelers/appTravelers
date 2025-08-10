@@ -11,7 +11,8 @@ import { LogoSosRelleno, LogoSosWhite } from "@/constants/icons";
 import Script from "next/script";
 import GoogleAnalytics from "@bradgarropy/next-google-analytics";
 import Cookies from "js-cookie";
-
+import { alertError } from "@/utils/alerts.jsx";
+globalThis.alertError = alertError;
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [darkMode, setDarkMode] = useState(false);

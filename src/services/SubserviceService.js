@@ -48,7 +48,6 @@ export default class SubserviceService {
   //Obtener todos los subservicios con paginate
   static async getAll({ page, limit }) {
     const { loggedIn } = useStore.getState();
-    console.log("el loguead", loggedIn);
     const filters = useStore.getState().filters || {};
     const params = new URLSearchParams();
     params.append("page", page);
@@ -127,7 +126,6 @@ export default class SubserviceService {
       const params = new URLSearchParams();
       params.append("id", id);
       if (date) params.append("date", date);
-      console.log("params", params.toString());
       const url = `${this.baseUrl}/getProducts?${params.toString()}`;
       return axios.get(url, {
         headers: this.getHeaders(),

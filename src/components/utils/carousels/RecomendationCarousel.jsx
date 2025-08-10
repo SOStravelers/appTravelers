@@ -15,7 +15,6 @@ const RecomendationCarousel = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        console.log("req", router.query.id);
         const response = await SubserviceService.getRecommended(
           router.query.id
         );

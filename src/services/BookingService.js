@@ -37,7 +37,6 @@ export default class BookingService {
   }
 
   static async getMyBooking(id) {
-    console.log("la id", id);
     return axios.get(`${this.baseUrl}/mybooking/${id}`, {
       headers: this.getHeaders(),
     });
@@ -79,7 +78,6 @@ export default class BookingService {
   }
   //Cancela booking de user mediante id de booking -> /my-booking/:id
   static async cancelById(id) {
-    console.log("la id", id);
     return axios.put(
       `${this.baseUrl}/cancel/booking/${id}`,
       {},

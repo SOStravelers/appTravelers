@@ -8,7 +8,6 @@ export default function Reservation({ asModal = false, id, onClose }) {
   const { language } = useStore();
   const router = useRouter();
   useEffect(() => {
-    console.log("la id", router?.query?.id);
     if (!asModal) {
       document.title = "Reservation | SOS Travelers";
     }

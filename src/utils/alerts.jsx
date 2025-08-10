@@ -1,6 +1,6 @@
 import { toast, Zoom, Flip, Slide, Bounce } from "react-toastify";
 export const alertError = ({
-  message = "Error to change, try later",
+  message = "Error Server, try later",
   autoClose = 1000,
 }) => {
   toast.error(message, {

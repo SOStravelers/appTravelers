@@ -345,3 +345,6 @@ body {
 .fade-slide-out {
   animation: fadeSlideOut 0.2s ease-in forwards;
 }
+
+@keyframes spin-slow { to { transform: rotate(360deg) } }
+.animate-spin-slow { animation: spin-slow 1.2s linear infinite; }

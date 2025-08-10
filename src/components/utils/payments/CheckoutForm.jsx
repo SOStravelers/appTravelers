@@ -160,14 +160,10 @@ export default function CheckoutForm({
                   formatPrice(0, currency)
                 : languageData.bookNow[language]
             }
-            px={2}
-            py="py-2"
-            minWidth="140px"
-            margin="mt-4"
             dark="darkLight"
             textColor="text-white"
             disabled={!stripe || isProcessing}
-            buttonCenter={true}
+            centerWide
           />
           <p className="mb-6 mt-6 text-textColorGray text-sm">
             {service.service._id == "67c11c4917c3a7a2c353cb1b"

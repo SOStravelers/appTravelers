@@ -138,13 +138,10 @@ export default function MyBooking() {
                       <OutlinedButton
                         onClick={() => setOpenConfirmModal(true)}
                         text={languageData.buttons.cancel[language]}
-                        py="py-2"
-                        margin="mt-12"
+                        centerWide
                         dark="darkLight"
                         textSize="text-sm"
                         textColor="text-white"
-                        buttonCenter={true}
-                        minWidth="200px"
                       />
                     )}
                 </div>

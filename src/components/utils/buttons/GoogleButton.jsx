@@ -42,8 +42,10 @@ function GoogleButton({ dark = "darkHeavy" }) {
       onClick={login}
       textColor="text-white"
       dark={dark}
-      buttonCenter={true}
-      textSize="text-xs"
+      align="center"
+      padding=" py-2"
+      minWidth="230px"
+      textSize="text-sm"
     />
   );
 }

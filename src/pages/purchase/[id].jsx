@@ -153,16 +153,20 @@ export default function PurchasePage() {
                   paymentData.isBefore &&
                   (booking?.status === "confirmed" ||
                     booking?.status === "requested") && (
+                    // <OutlinedButton
+                    //   onClick={() => setOpenConfirmModal(true)}
+                    //   text={languageData.cancel[language]}
+                    //   padding="px-6 py-3"
+                    //   align="center"
+                    //   margin="my-5"
+                    //   minWidth="200px"
+                    //   dark="darkLight"
+                    //   textColor="text-white"
+                    // />
                     <OutlinedButton
                       onClick={() => setOpenConfirmModal(true)}
                       text={languageData.cancel[language]}
-                      py="py-2"
-                      margin="mt-12"
-                      dark="darkLight"
-                      textSize="text-sm"
-                      textColor="text-white"
-                      buttonCenter={true}
-                      minWidth="200px"
+                      centerWide
                     />
                   )}
               </div>

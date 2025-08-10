@@ -41,17 +41,25 @@ export default function GuestSettings() {
         <LogoSosRelleno />
       </div>
 
-      <OutlinedButton
-        onClick={() => router.push("/register")}
-        text={languageData.sigUpButton[language]}
-        px="px-10"
-        py="py-3"
-        margin={"mx-auto"}
-        dark="darkLight"
-        textSize="text-sm"
-        textColor="text-white"
-        buttonCenter={true}
-      />
+      <div className="max-w-lg">
+        <OutlinedButton
+          onClick={() => router.push("/register")}
+          text={languageData.sigUpButton[language]}
+          dark="darkLight"
+          textSize="text-sm"
+          textColor="text-white"
+          centerWide
+        />
+        <p className="text-textColor my-3 text-center">Or</p>
+        <OutlinedButton
+          onClick={() => router.push("/login")}
+          text={languageData.loginButton[language]}
+          dark="darkLight"
+          textSize="text-sm"
+          textColor="text-white"
+          centerWide
+        />
+      </div>
     </div>
   );
 }

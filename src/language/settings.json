@@ -111,6 +111,14 @@
         "de":"Jetzt registrieren",
         "pt":"Cadastre-se agora"
     },
+    "loginButton":{
+        "en":"Log in",
+        "es":"Iniciar sesión",
+        "fr":"Se connecter",
+        "de":"Einloggen",
+        "pt":"Entrar"
+            
+    },
     "support":{
         "title":{
             "en":"Support",

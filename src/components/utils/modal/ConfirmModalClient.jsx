@@ -21,17 +21,17 @@ export default function ConfirmModalClient({
       onClick={onClose}
     >
       <div
-        className={`bg-backgroundModal rounded-xl w-full max-w-md p-4 mx-8 transform transition-all relative
+        className={`bg-backgroundModal rounded-xl py-5 w-full max-w-md p-4 mx-8 transform transition-all relative
     ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 translate-y-4"}`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Botón de cerrar */}
-        <button
+        {/* <button
           onClick={onClose}
           className="absolute top-3 right-3 text-textColorGray text-lg hover:text-textColor transition-colors"
         >
           ✕
-        </button>
+        </button> */}
 
         {/* header */}
         <div className="mb-3 mx-1">
@@ -45,12 +45,10 @@ export default function ConfirmModalClient({
           <OutlinedButton
             onClick={onApply}
             text={apply || "Confirm"}
-            px={0}
-            py="py-2"
+            centerWide
             dark="darkHeavy"
             textSize="text-xs"
             textColor="text-white"
-            buttonCenter={true}
           />
         </div>
       </div>

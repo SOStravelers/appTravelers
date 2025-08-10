@@ -206,14 +206,14 @@ function LoginForm({ onClose }) {
             ) : (
               <OutlinedButton
                 text={languageData.form.emailButton[language]}
-                px="px-10"
-                py="py-2"
+                align="center"
+                minWidth="230px"
+                padding="py-2"
                 dark="darkLight"
                 textSize="text-sm"
-                margin="mb-3"
+                margin="mb-3 mt-3"
                 textColor="text-white"
                 disabled={!isValid}
-                buttonCenter={true}
               />
             )}
           </form>

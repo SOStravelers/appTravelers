@@ -90,19 +90,15 @@ END:VCALENDAR
   };
 
   return (
-    <div className="text-center">
-      <OutlinedButton
-        onClick={handleClick}
-        text={languageData.buttons.calendar[language]}
-        py="py-2"
-        margin="my-5"
-        icon={FaRegCalendarPlus}
-        dark="darkLight"
-        textSize="text-sm"
-        textColor="text-white"
-        buttonCenter={true}
-        minWidth="200px"
-      />
-    </div>
+    <OutlinedButton
+      onClick={handleClick}
+      text={languageData.buttons.calendar[language]}
+      centerWide
+      margin="mt-6"
+      icon={FaRegCalendarPlus}
+      dark="darkLight"
+      textSize="text-sm"
+      textColor="text-white"
+    />
   );
 }

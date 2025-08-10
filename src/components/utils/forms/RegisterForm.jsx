@@ -219,10 +219,12 @@ function RegisterForm() {
               </div>
             ) : (
               <OutlinedButton
-                buttonCenter={true}
+                align="center"
+                padding="py-2"
+                margin="mb-3 mt-3"
+                minWidth="230px"
                 dark="darkLight"
                 textSize="text-sm"
-                margin="mb-3"
                 textColor="text-white"
                 text={languageData.register.title[language]}
                 disabled={!isValid}

@@ -56,37 +56,30 @@ export default function Profile({ user }) {
         <OutlinedButton
           onClick={() => router.push("/personal-details")}
           text={languageData.personalDetails[language]}
-          px="px-10"
-          py="py-3"
-          margin={"my-3"}
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
-          buttonCenter={true}
+          centerWide
+          margin="mb-3"
         />
 
         <OutlinedButton
           onClick={() => router.push("/settings")}
           text={languageData.settings[language]}
-          px="px-10"
-          py="py-3"
-          margin={"my-3"}
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
-          buttonCenter={true}
+          centerWide
+          margin="mb-3"
         />
 
         <OutlinedButton
           onClick={logout}
           text={languageData.logOut[language]}
-          px="px-10"
-          py="py-3"
-          margin={"my-3"}
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
-          buttonCenter={true}
+          centerWide
         />
       </div>
     </div>

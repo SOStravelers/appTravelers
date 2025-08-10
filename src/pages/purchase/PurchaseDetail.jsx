@@ -94,20 +94,13 @@ export default function PurchaseDetail({ booking, paymentData }) {
             </div>
           )}
 
-        {/* {booking.status === "canceled" && ()}
-              {booking.status === "canceled" && ()} */}
-
         <OutlinedButton
           onClick={() => setOrderModal(true)}
+          centerWide
           text={languageData.buttons.orderDetails[language]}
-          py="py-2"
-          margin="my-5"
           icon={FaClipboardList}
           dark="darkLight"
-          textSize="text-sm"
           textColor="text-white"
-          buttonCenter={true}
-          minWidth="200px"
         />
 
         {(booking.status === "confirmed" || booking.status === "completed") && (

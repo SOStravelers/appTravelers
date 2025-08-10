@@ -209,13 +209,12 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
           <OutlinedButton
             onClick={handleApply}
             text={languageData.applyButton[language]}
-            px={0}
-            py="py-2"
             dark="darkHeavy"
             textSize="text-xs"
             textColor="text-white"
             disabled={errKeyword || errMax}
-            buttonCenter={true}
+            align="center"
+            padding="px-20 py-2"
           />
         </div>
       </div>

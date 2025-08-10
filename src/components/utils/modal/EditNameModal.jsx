@@ -103,16 +103,17 @@ export default function EditNameModal({ isOpen, onClose, defaultName }) {
           />
 
           {error && <p className="text-errorColor text-xs">{error}</p>}
-
-          <OutlinedButton
-            text={languageData.saveChanges?.[language] || "Guardar cambios"}
-            onClick={() => handleSave(name)}
-            py="py-2"
-            textSize="text-sm"
-            textColor="text-white"
-            buttonCenter={true}
-          />
         </div>
+        <OutlinedButton
+          text={languageData.saveChanges?.[language] || "Guardar cambios"}
+          onClick={() => handleSave(name)}
+          align="center"
+          minWidth="200px"
+          textSize="text-sm"
+          textColor="text-white"
+          padding="px-2 py-2"
+          margin="mt-6"
+        />
       </div>
     </div>
   );

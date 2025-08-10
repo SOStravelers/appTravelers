@@ -121,17 +121,17 @@ export default function EditPhoneModal({ isOpen, onClose }) {
           </div>
 
           {error && <p className="text-errorColor text-xs">{error}</p>}
-
-          <OutlinedButton
-            text={languageData.saveChanges[language]}
-            onClick={handleSave}
-            py="py-2"
-            margin="my-20"
-            textSize="text-sm"
-            textColor="text-white"
-            buttonCenter={true}
-          />
         </div>
+        <OutlinedButton
+          text={languageData.saveChanges[language]}
+          onClick={handleSave}
+          align="center"
+          minWidth="200px"
+          textSize="text-sm"
+          textColor="text-white"
+          padding="px-2 py-2"
+          margin="mt-6"
+        />
       </div>
     </div>
   );

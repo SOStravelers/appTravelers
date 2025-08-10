@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { DayPicker } from "react-day-picker";
-import { AlertIcon } from "@/constants/icons";
 import { enUS, es, fr, de, ptBR } from "date-fns/locale";
 import TimeButton from "../buttons/TimeButton";
 import OutlinedButton from "../buttons/OutlinedButton";
@@ -10,10 +9,11 @@ import { Rings } from "react-loader-spinner";
 import ScheduleService from "@/services/ScheduleService";
 import { useStore } from "@/store";
 import moment from "moment";
-import { formatISO } from "date-fns";
+import { formatISO, addMonths } from "date-fns";
 import languageData from "@/language/reservation.json";
 import { FiInfo } from "react-icons/fi";
 import { formatearFechaCompletaDesdeISO } from "@/utils/format";
+
 function Calendar({ id }) {
   const router = useRouter();
   const { service, setService, isWorker, language, currency } = useStore();
@@ -27,24 +27,16 @@ function Calendar({ id }) {
   const [days, setDays] = useState({
     firstDate: null,
     lastDate: null,
+    extendedLastDate: null,
     disabledDays: [],
   });
   const [selectedDay, setSelected] = useState(new Date());
-  const [selectedDayWorker] = useState(new Date());
   const [intervals, setIntervals] = useState([]);
 
   // guest counts
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [totalAmount, setTotalAmount] = useState(1);
-
-  const now = new Date();
-  const currentTime = now.toLocaleTimeString("en-US", {
-    timeZone: "America/Sao_Paulo",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
 
   const locales = { en: enUS, es, fr, de, pt: ptBR };
 
@@ -91,6 +83,7 @@ function Calendar({ id }) {
   // fetch schedule on mount
   useEffect(() => {
     getSchedule();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // when schedule loaded, compute disabled days
@@ -121,48 +114,48 @@ function Calendar({ id }) {
     setLoading(false);
   };
 
-  const computeDisabledDays = () => {
+  // 👉 Extiende SIEMPRE hasta hoy + 6 meses (no desde la última fecha del schedule)
+  const computeDisabledDays = (extendMonths = 8) => {
     const sorted = [...schedule].sort(
       (a, b) => new Date(a.day) - new Date(b.day)
     );
-    const firstDate = new Date(sorted[0].day);
-    const lastDate = new Date(sorted[sorted.length - 1].day);
+
+    const norm = (d) =>
+      new Date(new Date(d).toISOString().split("T")[0] + "T00:00:00.000");
+
+    const firstDate = norm(sorted[0].day);
+    const lastDate = norm(sorted[sorted.length - 1].day);
+    const extendedLastDate = norm(addMonths(new Date(), extendMonths)); // ← hoy + 6m
+
+    // Set de fechas habilitadas por schedule
+    const scheduledSet = new Set(schedule.map((s) => norm(s.day).getTime()));
+
     const disabledDays = [];
-    for (
-      let d = new Date(firstDate);
-      d <= lastDate;
-      d.setDate(d.getDate() + 1)
-    ) {
-      if (!schedule.some((s) => new Date(s.day).getTime() === d.getTime())) {
-        disabledDays.push(
-          new Date(d.toISOString().split("T")[0] + "T00:00:00.000")
-        );
+    // si firstDate estuviera después de extendedLastDate, no iteramos
+    if (firstDate <= extendedLastDate) {
+      for (
+        let d = new Date(firstDate);
+        d <= extendedLastDate;
+        d.setDate(d.getDate() + 1)
+      ) {
+        const t = d.getTime();
+        if (!scheduledSet.has(t)) {
+          disabledDays.push(new Date(d));
+        }
       }
     }
-    return {
-      firstDate: new Date(
-        firstDate.toISOString().split("T")[0] + "T00:00:00.000"
-      ),
-      lastDate: new Date(
-        lastDate.toISOString().split("T")[0] + "T00:00:00.000"
-      ),
-      disabledDays,
-    };
+
+    return { firstDate, lastDate, extendedLastDate, disabledDays };
   };
 
   const selectTime = () => {
-    const dateStr = moment(selectedDay).format("YYYY-MM-DD");
-    let startTimeIso, endTimeIso, startTime, endTime;
-
-    startTimeIso = time.startTimeIso;
-    endTimeIso = time.endTimeIso;
-    startTime = time.startTime;
-    endTime = time.endTime;
+    const startTimeIso = time.startTimeIso;
+    const endTimeIso = time.endTimeIso;
 
     const totalA = adults * service.tourData.adultPrice[currency];
     const totalC = children * service.tourData.childrenPrice[currency];
     const total = totalA + totalC;
-    console.log("el total", total);
+
     const data = formatearFechaCompletaDesdeISO(startTimeIso, language);
     const endData = formatearFechaCompletaDesdeISO(endTimeIso, language);
 
@@ -190,9 +183,6 @@ function Calendar({ id }) {
     });
 
     router.push(`/summary2/confirm-selection/${id}`);
-    // if (isWorker) router.push(`/assign-client`);
-    // else if (fromFavorite) router.push(`/summary-mini`);
-    // else router.push(`/workers-found/${id}`);
   };
 
   const footer = () => {
@@ -226,7 +216,7 @@ function Calendar({ id }) {
           {intervals.length ? (
             intervals.map((hour) => (
               <TimeButton
-                key={`${selectedDay}-${hour}`}
+                key={`${selectedDay}-${hour.startTimeIso}`}
                 onClick={() => setTime(hour)}
                 text={
                   formatearFechaCompletaDesdeISO(
@@ -248,8 +238,7 @@ function Calendar({ id }) {
           {time ? (
             <button
               onClick={selectTime}
-              className={`block w-1/2 mx-auto text-white text-xs px-2 py-2 rounded-full bg-darkBlue hover:bg-blueBorderLight
-             `}
+              className="block w-1/2 mx-auto text-white text-xs px-2 py-2 rounded-full bg-darkBlue hover:bg-blueBorderLight"
             >
               {languageData.calendar.applyButton[language]}
             </button>
@@ -274,7 +263,6 @@ function Calendar({ id }) {
                   ? languageData.calendar.adults[language]
                   : languageData.calendar.people[language]}
               </h3>
-              {/* <p className="text-xs text-textColor">Edad: más de 18</p> */}
             </div>
             <div className="flex items-center justify-center items-center">
               <button
@@ -302,7 +290,6 @@ function Calendar({ id }) {
                   {languageData.calendar.children[language]}
                 </h3>
                 <p className="text-xs text-textColor">
-                  {" "}
                   {languageData.calendar.ageRange_2_12[language]}
                 </p>
               </div>
@@ -333,13 +320,6 @@ function Calendar({ id }) {
         <h2 className="font-semibold text-xs text-textColor">
           {languageData.selectDate[language]}
         </h2>
-        {/* ❌ Botón de cerrar */}
-        {/* <button
-            onClick={onClose}
-            className="absolute  right-3 text-gray-400 hover:text-gray-700 text-xl"
-          >
-            ✕
-          </button> */}
       </div>
 
       {/* Calendar */}
@@ -350,14 +330,12 @@ function Calendar({ id }) {
           selected={selectedDay}
           disabled={
             schedule.length === 0
-              ? [{ from: new Date(2000, 0, 1), to: new Date(2100, 0, 1) }]
+              ? [{ from: new Date(2000, 0, 1), to: addMonths(new Date(), 6) }]
               : days.disabledDays
           }
           fromDate={schedule.length ? days.firstDate : undefined}
           toDate={
-            schedule.length
-              ? days.lastDate
-              : new Date(new Date().setMonth(new Date().getMonth() + 1))
+            schedule.length ? days.extendedLastDate : addMonths(new Date(), 6)
           }
           onSelect={setSelected}
           footer={footer()}

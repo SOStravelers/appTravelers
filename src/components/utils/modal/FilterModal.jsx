@@ -214,7 +214,8 @@ export default function FilterModal({ isOpen, onClose, onApply }) {
             textColor="text-white"
             disabled={errKeyword || errMax}
             align="center"
-            padding="px-20 py-2"
+            padding="px-2 py-2"
+            minWidth="200px"
           />
         </div>
       </div>

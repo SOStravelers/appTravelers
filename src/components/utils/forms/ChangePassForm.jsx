@@ -195,9 +195,12 @@ function ChangePassForm() {
           <OutlinedButton
             buttonCenter={true}
             dark="darkLight"
-            textSize="text-sm"
-            margin="mt-5"
             textColor="text-white"
+            textSize="text-xs"
+            align="center"
+            minWidth="200px"
+            padding="px-2 py-2"
+            margin="mt-6"
             text={isWorker ? "Salvar alterações" : "Save Changes"}
             disabled={!isValid}
           />

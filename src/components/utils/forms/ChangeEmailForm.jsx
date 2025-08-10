@@ -189,11 +189,12 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
             disabled={!isValid}
             px={0}
             dark="darkLight"
-            py="py-2"
-            margin="my-4"
-            textSize="text-xs"
             textColor="text-white"
-            buttonCenter={true}
+            textSize="text-xs"
+            align="center"
+            minWidth="200px"
+            padding="px-2 py-2"
+            margin="mt-6"
           />
         </form>
       )}

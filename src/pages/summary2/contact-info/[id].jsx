@@ -270,6 +270,7 @@ export default function ContactInfoPage() {
         )}`}
         subtext=""
         tagLine={hasCancel?.isBefore ? thisLanguage.cancel[language] : ""}
+        buttonText={thisLanguage.buttons.paymentButton[language]}
         onAction={validate}
       />
     </>

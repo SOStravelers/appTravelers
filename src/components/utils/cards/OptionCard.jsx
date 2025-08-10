@@ -7,7 +7,7 @@ function OptionCard({ title, subtitle, icon: Icon, check = false, ...props }) {
     >
       {Icon && (
         <div className="h-10 w-10 mr-2 rounded-full border border-textColorGray  flex justify-center items-center">
-          <Icon className="text-textColor text-xl" />
+          <Icon className="text-textColor text-md" />
         </div>
       )}
       <div>

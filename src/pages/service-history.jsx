@@ -6,10 +6,26 @@ import { getUserTimeData } from "@/lib/time/index.js";
 import BookingService from "@/services/BookingService";
 import { Rings } from "react-loader-spinner";
 
-/** Obtiene {year, month} respetando locale/timeZone */
-function getYearMonthParts(iso, locale, timeZone) {
+/* =========================
+   Helpers de tiempo
+   ========================= */
+
+/** Toma la TZ del booking; fallback a UTC si no hay nada. */
+function getBookingTimeZone(b) {
+  return (
+    b?.countryData?.timeZone ||
+    b?.startTime?.timeZone ||
+    b?.timeZone ||
+    b?.subservice?.timeZone ||
+    b?.service?.timeZone ||
+    "UTC"
+  );
+}
+
+/** Devuelve 'YYYY-MM' calculado en la TZ del booking. */
+function getYYYYMMInTZ(iso, timeZone) {
   const dt = new Date(iso);
-  const fmt = new Intl.DateTimeFormat(locale, {
+  const fmt = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "2-digit",
     timeZone,
@@ -17,18 +33,18 @@ function getYearMonthParts(iso, locale, timeZone) {
   const parts = fmt.formatToParts(dt);
   const year = parts.find((p) => p.type === "year")?.value || "0000";
   const month = parts.find((p) => p.type === "month")?.value || "01";
-  return { year, month };
+  return `${year}-${month}`;
 }
 
-/** Label “MMMM YYYY” según locale/timeZone */
-function getMonthLabel(yyyyMM, locale, timeZone) {
-  const date = new Date(`${yyyyMM}-01T00:00:00Z`);
+/** Label “MMMM YYYY” seguro (día 15 a las 12:00 UTC para no retroceder de mes). */
+function monthLabelFromKey(yyyyMM, locale) {
+  const safeMidMonth = new Date(`${yyyyMM}-15T12:00:00Z`);
   const fmt = new Intl.DateTimeFormat(locale, {
     month: "long",
     year: "numeric",
-    timeZone,
+    timeZone: "UTC", // da igual la TZ al usar día 15 12:00Z
   });
-  const label = fmt.format(date);
+  const label = fmt.format(safeMidMonth);
   return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
@@ -47,7 +63,7 @@ export default function ServiceHistoryPage() {
   const lastRequestedPageRef = useRef(0); // evita pedir dos veces la misma página
   const idSetRef = useRef(new Set()); // de-dup por _id
 
-  // reset cuando cambia el idioma
+  // reset cuando cambia el idioma (solo re-renderiza labels)
   useEffect(() => {
     setItems([]);
     idSetRef.current = new Set();
@@ -123,21 +139,17 @@ export default function ServiceHistoryPage() {
     return () => obs.disconnect();
   }, [loading, hasMore]);
 
-  // Agrupar por mes (según zona/locale del usuario)
-  const { locale, timeZone } = getUserTimeData(language);
+  // Agrupar por mes según la TZ de CADA booking
+  const { locale } = getUserTimeData(language);
   const grouped = useMemo(() => {
     const g = {};
     for (const b of items) {
-      const { year, month } = getYearMonthParts(
-        b.startTime.isoTime,
-        locale,
-        timeZone
-      );
-      const key = `${year}-${month}`; // YYYY-MM
+      const tz = getBookingTimeZone(b);
+      const key = getYYYYMMInTZ(b?.startTime?.isoTime, tz);
       (g[key] ||= []).push(b);
     }
     return g;
-  }, [items, locale, timeZone]);
+  }, [items]);
 
   // Orden de meses: descendente
   const monthKeys = useMemo(
@@ -156,8 +168,8 @@ export default function ServiceHistoryPage() {
       </h1>
 
       {monthKeys.map((k) => {
-        const title = getMonthLabel(k, locale, timeZone);
-        // Orden interno del mes: más recientes primero
+        const title = monthLabelFromKey(k, locale);
+        // Orden interno del mes: más recientes primero (por fecha real del booking)
         const list = [...grouped[k]].sort(
           (a, b) =>
             new Date(b.startTime.isoTime).getTime() -

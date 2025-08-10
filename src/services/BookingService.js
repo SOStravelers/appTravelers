@@ -79,6 +79,7 @@ export default class BookingService {
   }
   //Cancela booking de user mediante id de booking -> /my-booking/:id
   static async cancelById(id) {
+    console.log("la id", id);
     return axios.put(
       `${this.baseUrl}/cancel/booking/${id}`,
       {},

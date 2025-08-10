@@ -9,6 +9,7 @@ import OrderModal from "@/components/utils/modal/OrderModal";
 import PurchaseDetail from "@/pages/purchase/PurchaseDetail";
 import ConfirmModalClient from "@/components/utils/modal/ConfirmModalClient";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import { alertError } from "@/utils/alerts.jsx";
 import {
   delay,
   opacityAnimation,
@@ -59,12 +60,9 @@ export default function PurchasePage() {
 
   const cancelBooking = async () => {
     try {
-      console.log("a cancelar", router.name, router.pathname, router.query);
-      if (router.pathname.includes("purchase")) {
-        const response = await BookingService.cancelById(router.query.id);
-        if (response && response.data) {
-          setBooking({ ...booking, status: "canceled" });
-        }
+      const response = await BookingService.cancelById(router.query.id);
+      if (response && response.data) {
+        setBooking({ ...booking, status: "canceled" });
       }
       setOpenConfirmModal(false);
     } catch (err) {

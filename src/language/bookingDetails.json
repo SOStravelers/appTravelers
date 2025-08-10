@@ -66,6 +66,13 @@
     "fr": "Infos du service",
     "de": "Service-Info"
   },
+  "bookingButton": {
+    "es": "Ver reserva",
+    "en": "View booking",
+    "pt": "Ver reserva",
+    "fr": "Voir la réservation",
+    "de": "Reservierung ansehen"
+  },
   "infoService": {
     "date": {
       "en": "Date",

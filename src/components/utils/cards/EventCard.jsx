@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import {
   FaTicketAlt,
   FaHourglassHalf,
@@ -25,6 +26,7 @@ export default function EventCard({
   details = true,
   status = "requested",
 }) {
+  const router = useRouter();
   const { language } = useStore();
   const [imageLoaded, setImageLoaded] = useState(false);
   const statusIcon = {
@@ -145,7 +147,10 @@ export default function EventCard({
                     : "text-textColor"
                 )}
               >
-                {languageData.eventButton[language]}
+                {router.pathname == "/booking" ||
+                router.pathname == "/service-history"
+                  ? languageData.bookingButton[language]
+                  : languageData.eventButton[language]}
               </button>
             </div>
           </>

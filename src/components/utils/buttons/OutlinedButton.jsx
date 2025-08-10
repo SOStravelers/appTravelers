@@ -39,7 +39,7 @@ function OutlinedButton({
   return (
     <button
       className={clsx(
-        "flex items-center justify-center gap-2 rounded-full",
+        "flex items-center justify-center gap-2 rounded-xl",
         "transition duration-200 hover:brightness-200",
         textSize,
         textColor,

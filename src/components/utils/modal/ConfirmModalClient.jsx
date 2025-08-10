@@ -21,27 +21,26 @@ export default function ConfirmModalClient({
       onClick={onClose}
     >
       <div
+        className={`bg-backgroundModal rounded-xl w-full max-w-md p-4 mx-8 transform transition-all relative
+    ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 translate-y-4"}`}
         onClick={(e) => e.stopPropagation()}
-        className={`bg-backgroundModal rounded-xl w-full max-w-md p-4  mx-8 transform transition-all
-          ${
-            isOpen
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-95 translate-y-4"
-          }`}
       >
+        {/* Botón de cerrar */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-textColorGray text-lg hover:text-textColor transition-colors"
+        >
+          ✕
+        </button>
+
         {/* header */}
-        <div className="flex justify-between items-center mb-3">
+        <div className="mb-3 mx-1">
           <h3 className="text-md text-textColor font-semibold">{title}</h3>
-          <button onClick={onClose} className="text-textColorGray text-md">
-            ✕
-          </button>
         </div>
 
         {/* body */}
-        <div className="space-y-4 text-textColorGray ">
-          <p className="text-sm mb-12 mt-8">{body}</p>
-
-          {/* apply */}
+        <div className="space-y-4 text-textColorGray">
+          <p className="text-sm mb-12 mt-8 mx-3">{body}</p>
 
           <OutlinedButton
             onClick={onApply}

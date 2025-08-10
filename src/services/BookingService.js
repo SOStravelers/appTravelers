@@ -73,8 +73,19 @@ export default class BookingService {
   static async cancel(id) {
     return axios.put(`${this.baseUrl}/cancel/${id}`);
   }
+  //Cancela booking de user mediante token de -> /purchase/:token
   static async cancelByToken(token, id) {
     return axios.put(`${this.baseUrl}/cancel/id/${token}`, {});
+  }
+  //Cancela booking de user mediante id de booking -> /my-booking/:id
+  static async cancelById(id) {
+    return axios.put(
+      `${this.baseUrl}/cancel/booking/${id}`,
+      {},
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 
   ///-----------------------------

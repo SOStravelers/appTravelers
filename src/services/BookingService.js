@@ -67,6 +67,9 @@ export default class BookingService {
   static async cancel(id) {
     return axios.put(`${this.baseUrl}/cancel/${id}`);
   }
+  static async cancelByToken(token, id) {
+    return axios.put(`${this.baseUrl}/cancel/id/${token}`, {});
+  }
 
   ///-----------------------------
   ///-----------------------------

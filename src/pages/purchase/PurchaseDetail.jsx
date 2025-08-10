@@ -17,17 +17,12 @@ import OrderModal from "@/components/utils/modal/OrderModal";
 import ProviderCard from "@/components/utils/cards/ProviderCard";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import AddToCalendarButton from "@/components/utils/buttons/AddToCalendarButton";
-import ConfirmModalClient from "@/components/utils/modal/ConfirmModalClient";
 import { useState } from "react";
 import { useStore } from "@/store";
+
 export default function PurchaseDetail({ booking, paymentData }) {
   const { language, currency } = useStore();
   const [isOrderModal, setOrderModal] = useState(false);
-  const [openConfirmModal, setOpenConfirmModal] = useState(false);
-  const cancelBooking = async () => {
-    console.log("a cancelar");
-    setOpenConfirmModal(false);
-  };
 
   return (
     <>
@@ -147,36 +142,11 @@ export default function PurchaseDetail({ booking, paymentData }) {
             status={booking?.status || "completed"}
           />
         )}
-
-        {/* Acciones */}
-        <div className="mt-10 flex flex-col md:flex-row justify-center gap-4">
-          {paymentData.paymentStatus === "unpaid" && paymentData.isBefore && (
-            <OutlinedButton
-              onClick={() => setOpenConfirmModal(true)}
-              text={languageData.buttons.cancel[language]}
-              py="py-2"
-              margin="mt-12"
-              dark="darkLight"
-              textSize="text-sm"
-              textColor="text-white"
-              buttonCenter={true}
-              minWidth="200px"
-            />
-          )}
-        </div>
       </div>
       <OrderModal
         booking={booking}
         isOpen={isOrderModal}
         onClose={() => setOrderModal(false)}
-      />
-      <ConfirmModalClient
-        isOpen={openConfirmModal}
-        onClose={() => setOpenConfirmModal(false)}
-        onApply={() => cancelBooking()}
-        title={languageData.cancelModal.title[language]}
-        body={languageData.cancelModal.subtitle[language]}
-        apply={languageData.cancelModal.cancel[language]}
       />
     </>
   );

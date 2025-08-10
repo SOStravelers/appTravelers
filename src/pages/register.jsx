@@ -58,7 +58,7 @@ export default function Registro() {
         </p>
         <p
           onClick={() => router.back()}
-          className="text-textColor font-bold cursor-pointer"
+          className="text-textColor font-bold cursor-pointer mt-5"
         >
           {languageData.login.skipNow[language]}
         </p>

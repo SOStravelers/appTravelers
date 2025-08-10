@@ -60,7 +60,7 @@ export default function Login() {
           </Link>
         </p>
         <Link href="/">
-          <p className="text-textColor font-semibold ">
+          <p className="text-textColor font-semibold mt-5">
             {languageData.login.skipNow[language]}
           </p>
         </Link>

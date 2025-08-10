@@ -13,7 +13,7 @@ export const routesNavbar = (router) => {
     router.pathname !== "/paypal" &&
     router.pathname !== "/worker/my-schedules" &&
     router.pathname !== "/worker/settings" &&
-    router.pathname !== "/settings" &&
+    // router.pathname !== "/settings" &&
     // router.pathname !== "/personal-details" &&
     router.pathname !== "/change-password" &&
     router.pathname !== "/create-password" &&
@@ -63,4 +63,6 @@ export const arePrincipalPages = (router) =>
   router.pathname === "/profile" ||
   router.pathname === "/payment-confirmation" ||
   router.pathname === "/guest-settings" ||
+  router.pathname === "/service-history" ||
+  router.pathname === "/settings" ||
   router.pathname === "/summary";

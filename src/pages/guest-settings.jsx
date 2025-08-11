@@ -36,11 +36,10 @@ export default function GuestSettings() {
         />
       </Link>
       <SettingsComponent />
-
       {/* <div className="flex items-center justify-center  mt-3">
         <LogoSosRelleno width={90} height={90} />
       </div> */}
-
+      {/* //minicambio */}
       <div className="max-w-lg mt-5">
         <OutlinedButton
           onClick={() => router.push("/register")}

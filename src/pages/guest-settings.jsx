@@ -24,7 +24,7 @@ export default function GuestSettings() {
   }, []);
   return (
     <div
-      className={`px-6 flex flex-col items-center
+      className={`px-6 mb-32 flex flex-col items-center
     ${loading ? opacityAnimation : displayAnimation}
   `}
     >
@@ -37,11 +37,11 @@ export default function GuestSettings() {
       </Link>
       <SettingsComponent />
 
-      <div className="flex items-center justify-center mb-5 mt-3">
-        <LogoSosRelleno />
-      </div>
+      {/* <div className="flex items-center justify-center  mt-3">
+        <LogoSosRelleno width={90} height={90} />
+      </div> */}
 
-      <div className="max-w-lg">
+      <div className="max-w-lg mt-5">
         <OutlinedButton
           onClick={() => router.push("/register")}
           text={languageData.sigUpButton[language]}

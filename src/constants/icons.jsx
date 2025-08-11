@@ -2756,10 +2756,10 @@ export const LogoSosBlack = ({ ...props }) => (
   </svg>
 );
 
-export const LogoSosRelleno = ({ ...props }) => (
+export const LogoSosRelleno = ({ width = 105, height = 104, ...props }) => (
   <svg
-    width="105"
-    height="104"
+    width={width}
+    height={height}
     viewBox="0 0 105 104"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

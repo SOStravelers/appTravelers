@@ -167,6 +167,7 @@ export default function PurchasePage() {
                       onClick={() => setOpenConfirmModal(true)}
                       text={languageData.cancel[language]}
                       centerWide
+                      dark="darkLight"
                     />
                   )}
               </div>

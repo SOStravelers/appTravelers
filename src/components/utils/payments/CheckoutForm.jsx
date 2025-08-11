@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@/store";
+import { useRouter } from "next/router";
 import {
   PaymentElement,
   AddressElement,
@@ -9,17 +10,34 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import StripeService from "@/services/StripeService";
-import SolidButton from "../buttons/SolidButton";
+import { formatPrice, isBeforeHoursThreshold } from "@/utils/format";
+import OutlinedButton from "../buttons/OutlinedButton";
+import BookingService from "@/services/BookingService";
 import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
+import FancyLoader from "../loaders/FancyLoader";
 
-export default function CheckoutForm(clientSecret) {
-  const secretClient = clientSecret.clientSecret;
+const messages = [
+  "Agendando tu experiencia",
+  "Preparando tu guía local",
+  "Verificando disponibilidad",
+];
+export default function CheckoutForm({
+  clientSecret,
+  intentType,
+  data,
+  customer,
+  paymentIntent,
+}) {
+  const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
-  const { service, language } = useStore();
+  const { service, language, currency } = useStore();
   const [price, setPrice] = useState(null);
+  const [loadingBooking, setLoadingBooking] = useState(false);
+  const [error, setError] = useState(false);
+  const [hasCancel, setHasCancel] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,90 +46,137 @@ export default function CheckoutForm(clientSecret) {
 
     setIsProcessing(true);
 
-    try {
-      // Confirmar el pago con return_url
-      const { paymentIntent, error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
-        },
-      });
+    // ✅ Validar errores de formulario antes de continuar
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      toast.error(submitError.message);
+      setIsProcessing(false);
+      return;
+    }
 
-      if (error) {
-        console.error("Error confirmando el pago:", error.message);
-        toast.error("Hubo un error al procesar el pago.");
-        setIsProcessing(false);
-        return;
+    try {
+      if (intentType === "setup") {
+        const { paymentIntent, error } = await stripe.confirmSetup({
+          elements,
+          confirmParams: {
+            // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
+          },
+          redirect: "if_required",
+        });
+      } else {
+        const { paymentIntent, error } = await stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            // return_url: `${window.location.origin}/payment-confirmation?type=stripe`,
+          },
+          redirect: "if_required",
+        });
       }
 
-      console.log("Pago confirmado:", paymentIntent.id);
-
-      // Llamar a StripeService para manejar las transferencias
-      await StripeService.handleTransfers(paymentIntent.id);
-
-      console.log("Transferencias realizadas con éxito.");
-      toast.success("Pago y transferencias realizadas con éxito.");
+      setLoadingBooking(true);
+      data.customer = customer;
+      data.intentType = intentType;
+      data.paymentIntent = paymentIntent;
+      data.language = language;
+      const response = await BookingService.create(data);
+      setTimeout(() => {
+        router.push("/purchase/" + response.data);
+      }, 3500);
     } catch (error) {
       console.error("Error en el flujo de pago:", error.message);
       toast.error(error.message);
+      setError(true);
     } finally {
       setIsProcessing(false);
     }
   };
-  useEffect(() => {
-    getFinalCost(service, service.currency);
-  }, []);
-  function getFinalCost(service, currency) {
-    console.log(currency);
-    // Busca el objeto de precio con la moneda proporcionada
-    const priceObject = service.price.find(
-      (price) => price.currency === currency
-    );
-    // Si se encontró el objeto de precio, devuelve el costo final
-    if (priceObject) {
-      setPrice(priceObject.finalCost);
-
-      return priceObject.finalCost;
-    }
-
-    // Si no se encontró el objeto de precio, devuelve null
-    setPrice(null);
-
-    return null;
+  function interpolate(str, vars) {
+    return str.replace(/\$\{(\w+(\.\w+)*)\}/g, (_, key) => {
+      // Permite nested: ej "startTime.stringData"
+      return key.split(".").reduce((o, i) => (o ? o[i] : ""), vars);
+    });
   }
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <p className="mb-6 text-center text-sm">
-        {languageData.noStress[language]}
-      </p>
-      <div className="mb-2 text-center  text-md">
-        {languageData.billingDetails[language]}
+  useEffect(() => {
+    console.log("seteando");
+    if (service.canCancel) {
+      const hasCancel = isBeforeHoursThreshold(
+        service.startTime.isoTime,
+        service.timeUntilCancel,
+        language
+      );
+      console.log(hasCancel);
+      setHasCancel(hasCancel);
+    } else {
+      setHasCancel(false);
+    }
+  }, [service]);
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-24 text-center max-w-lg px-4">
+        <p className="text-lg font-semibold text-textColor mb-4">
+          Hubo un error al procesar tu pago. Por favor, inténtalo de nuevo.
+        </p>
+
+        <OutlinedButton
+          text="Volver al inicio"
+          onClick={() => router.push("/")}
+          textColor="text-white"
+          dark={"darkLight"}
+          buttonCenter={true}
+          textSize="text-xs"
+        />
       </div>
-      <LinkAuthenticationElement />
-      {/* <AddressElement
-        options={{
-          mode: "shipping",
-        }}
-      /> */}{" "}
-      <div className="mt-4 text-center mb-2 text-md">
-        {languageData.paymentMethod[language]}
-      </div>
-      <PaymentElement />
-      <SolidButton
-        text={
-          isProcessing
-            ? "Processing..."
-            : service.currency == "BRL"
-            ? languageData.bookNow[language] + " R$ " + price
-            : service.currency == "USD"
-            ? languageData.bookNow[language] + " USD " + price
-            : service.currency == "EUR"
-            ? languageData.bookNow[language] + price + " EUR"
-            : "null"
-        }
-        disabled={!stripe || isProcessing}
-      ></SolidButton>
-    </form>
-  );
+    );
+  } else {
+    return (
+      <>
+        {loadingBooking && <FancyLoader messages={messages} />}
+
+        <form onSubmit={handleSubmit} className="max-w-lg">
+          <div className="mb-2 mt-6 text-center text-textColor   text-md">
+            {languageData.billingDetails[language]}
+          </div>
+          {/*<LinkAuthenticationElement />
+      
+            <AddressElement
+              options={{
+                mode: "shipping",
+              }}
+            /> */}{" "}
+          <div className="mt-4 text-center text-textColor  mb-2 text-md">
+            {languageData.paymentMethod[language]}
+          </div>
+          <PaymentElement />
+          <OutlinedButton
+            text={
+              isProcessing
+                ? "Processing..."
+                : hasCancel?.isBefore ||
+                  service.service._id == "67c11c4917c3a7a2c353cb1b"
+                ? languageData.bookNow[language] +
+                  ":  " +
+                  formatPrice(0, currency)
+                : languageData.bookNow[language]
+            }
+            dark="darkLight"
+            textColor="text-white"
+            disabled={!stripe || isProcessing}
+            centerWide
+          />
+          <p className="mb-6 mt-6 text-textColorGray text-sm">
+            {service.service._id == "67c11c4917c3a7a2c353cb1b"
+              ? languageData.noStressMatch[language]
+              : hasCancel?.isBefore
+              ? interpolate(languageData.noStressCancel[language], {
+                  displayDate: hasCancel?.cancelTime?.formatedDate,
+                  displayTime: hasCancel?.cancelTime?.formatedTime,
+                })
+              : languageData.noStress[language]}
+          </p>
+        </form>
+      </>
+    );
+  }
 }

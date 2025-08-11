@@ -12,5 +12,198 @@
     "fr": "Pour cette option, nous vous mettrons en contact avec l'un de nos partenaires validés !",
     "de": "Für diese Option verbinden wir Sie mit einem unserer geprüften Partner!",
     "pt": "Para esta opção, vamos te conectar com um dos nossos parceiros validados!"
+  },
+  "index": {
+    "explore": {
+      "pt": "Explore ",
+      "en": "Explore ",
+      "es": "Explora ",
+      "fr": "Explorez ",
+      "de": "Erkunden"
+    },
+    "recommended": {
+      "de": "Empfohlen für dich,",
+      "es": "Recomendado para ti",
+      "en": "Recommended for you",
+      "fr": "Recommandé pour toi",
+      "pt": "Recomendado para você"
+    },
+    "seeAllButton": {
+      "en": "See all",
+      "es": "Ver todo",
+      "fr": "Voir tout",
+      "de": "Alle sehen",
+      "pt": "Ver tudo"
+    }
+  },
+  "card": {
+    "textPrice1": {
+      "en": "From",
+      "es": "Desde",
+      "fr": "À partir  de",
+      "de": "Ab",
+      "pt": "A partir de"
+    },
+    "textPrice2": {
+      "en": "per person",
+      "es": "por persona",
+      "fr": "par personne",
+      "de": "pro Person",
+      "pt": "por pessoa"
+    }
+  },
+
+  "serviceInfo": {
+    "languageTitle": {
+      "es": "Idioma",
+      "en": "Language",
+      "fr": "Langue",
+      "de": "Sprache",
+      "pt": "Idioma"
+    },
+    "duration": {
+      "es": "Duración",
+      "en": "Duration",
+      "fr": "Durée",
+      "de": "Dauer",
+      "pt": "Duração"
+    },
+    "highRate": {
+      "es": "Gran Valoración",
+      "en": "High Rating",
+      "fr": "Note élevée",
+      "de": "Hohe Bewertung",
+      "pt": "Nota alta"
+    },
+    "languages": {
+      "es": "Español, Inglés, Portugués",
+      "en": "English, Spanish, Portuguese",
+      "fr": "Français, Anglais, Portugais,",
+      "de": "Deutsch, Englisch, Portugiesisch",
+      "pt": "Português, Inglês, Espanhol"
+    }
+  },
+  "serviceDescription": {
+    "title": {
+      "es": "Descripción del servicio",
+      "en": "Service description",
+      "fr": "Description du service",
+      "de": "Beschreibung der Dienstleistung",
+      "pt": "Descrição do serviço"
+    },
+    "button": {
+      "showMore": {
+        "es": "Mostrar más",
+        "en": "Show more",
+        "fr": "Afficher plus",
+        "de": "Mehr sehen",
+        "pt": "Mostrar mais"
+      },
+      "showLess": {
+        "es": "Mostrar menos",
+        "en": "Show less",
+        "fr": "Afficher moins",
+        "de": "Weniger sehen",
+        "pt": "Mostrar menos"
+      }
+    }
+  },
+  "inclusionsList": {
+    "inclusions": {
+      "title": {
+        "es": "Qué incluye",
+        "en": "What includes",
+        "fr": "Que comprend",
+        "de": "Was beinhaltet",
+        "pt": "O que inclui"
+      }
+    },
+    "exclusions": {
+      "title": {
+        "es": "No apto para",
+        "en": "Not suitable for",
+        "fr": "Ne convient pas à",
+        "de": "Nicht geeignet für",
+        "pt": "Não é indicado para"
+      }
+    }
+  },
+  "pointInterest": {
+    "title": {
+      "es": "Puntos de destacados",
+      "en": "Highlighted Points",
+      "fr": "Points mis en évidence",
+      "de": "Wichtige Punkte",
+      "pt": "Pontos destacados"
+    },
+    "subtitle": {
+      "es": "Qué veremos en este tour",
+      "en": "What we will see in this tour",
+      "fr": "Que nous verrons dans ce tour",
+      "de": "Was wir in diesem Tour sehen werden",
+      "pt": "O que veremos neste passeio"
+    }
+  },
+  "gallery": {
+    "title": {
+      "es": "Galería",
+      "en": "Gallery",
+      "fr": "Galerie",
+      "de": "Galerie",
+      "pt": "Galeria"
+    }
+  },
+  "bookingButton": {
+    "title": {
+      "es": "Desde",
+      "en": "From",
+      "fr": "De",
+      "de": "Von",
+      "pt": "De"
+    },
+    "subtitle": {
+      "es": "por viajero",
+      "en": "per person",
+      "fr": "par personne",
+      "de": "pro Person",
+      "pt": "por pessoa"
+    },
+    "cancel": {
+      "es": "Cancelación gratuita",
+      "en": "Free cancellation",
+      "fr": "Annulation gratuite",
+      "de": "Kostenlos stornieren",
+      "pt": "Cancelamento gratuito"
+    },
+    "goDates": {
+      "es": "Mostrar fechas",
+      "en": "Show dates",
+      "fr": "Afficher les dates",
+      "de": "Zeige Datum",
+      "pt": "Mostrar datas"
+    },
+    "nextButton": {
+      "en": "Next",
+      "es": "Siguiente",
+      "fr": "Suivant",
+      "de": "Weiter",
+      "pt": "Próximo"
+    },
+    "notAvailable": {
+      "en": "Not available",
+      "es": "No disponible",
+      "fr": "Non disponible",
+      "de": "Nicht verfügbar",
+      "pt": "Não disponível"
+    }
+  },
+  "shareText": {
+    "text": {
+      "es": "¡Mira esta experiencia en SOS Travelers!",
+      "en": "Check out this experience at SOS Travelers!",
+      "fr": "Découvrez cette expérience sur SOS Travelers !",
+      "de": "Schau dir dieses Erlebnis bei SOS Travelers an!",
+      "pt": "Veja esta experiência na SOS Travelers!"
+    }
   }
 }

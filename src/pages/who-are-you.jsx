@@ -3,7 +3,6 @@ import SolidButton from "@/components/utils/buttons/SolidButton";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 
 export default function WhoAreYou() {
-  console.log("wenas");
   return (
     <section className="h-screen w-screen flex flex-col items-center justify-center bg-white px-10">
       <Image className="mb-10" src={"/logo.png"} alt="logo" />

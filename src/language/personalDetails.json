@@ -13,6 +13,13 @@
     "de": "E-Mail",
     "pt": "E-mail"
   },
+  "phone": {
+    "en": "Phone",
+    "es": "Teléfono",
+    "fr": "Téléphone",
+    "de": "Telefon",
+    "pt": "Telefone"
+  },
   "changePassword": {
     "en": "Change Password",
     "es": "Cambiar contraseña",
@@ -33,5 +40,12 @@
     "fr": "Enregistrer les modifications",
     "de": "Änderungen speichern",
     "pt": "Salvar alterações"
+  },
+  "updated": {
+    "en": "Updated",
+    "es": "Actualizado",
+    "fr": "Mis à jour",
+    "de": "Aktualisiert",
+    "pt": "Atualizado"
   }
 }

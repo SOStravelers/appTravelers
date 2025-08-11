@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import ThreeSwitchButtons from "@/components/utils/buttons/ThreeSwitchButtons";
+import ThreeSwitchButtons from "@/components/utils/buttons/SwitchTabs";
 import DaySection from "@/components/bookingWorker/DaySection";
 import ListSection from "@/components/bookingWorker/ListSection";
 import MonthSection from "@/components/bookingWorker/MonthSection";

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { random } from "@/lib/utils";
+
 import { validationImg } from "@/utils/validation";
 import { useStore } from "@/store";
 import languageBooking from "@/language/bookingDetails.json";

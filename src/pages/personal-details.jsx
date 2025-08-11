@@ -1,154 +1,117 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import SelectCard from "@/components/utils/cards/SelectCard";
 import OptionCard from "@/components/utils/cards/OptionCard";
-import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
-import ChangeEmailForm from "@/components/utils/forms/ChangeEmailForm";
-import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
-import { toast } from "react-toastify";
-import { UserIcon, MailIcon, HouseIcon, LockIcon } from "@/constants/icons";
+import { FaUser, FaLock, FaEnvelope, FaPhone } from "react-icons/fa";
 import { useStore } from "@/store";
 import Cookies from "js-cookie";
 import UserService from "@/services/UserService";
 import languageData from "@/language/personalDetails.json";
+import EditNameModal from "@/components/utils/modal/EditNameModal";
+import EditPhoneModal from "@/components/utils/modal/EditPhoneModal";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 export default function PersonalDetails() {
   const router = useRouter();
-  const { user, setUser, setLoggedIn, isWorker, language } = useStore();
-  const [name, setName] = useState(null);
-  const [nameTrun, setNameTrun] = useState(null);
-  const [emailTrun, setEmailTrun] = useState(null);
-  const [nameInput, setNameInput] = useState(false);
-  const [emailInput, setEmailInput] = useState(false);
-  const [email, setEmail] = useState(false);
-  const [save, setSave] = useState(false);
+  const { user, setUser, language } = useStore();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  const [modalNameOpen, setModalNameOpen] = useState(false);
+  const [modalPhoneOpen, setModalPhoneOpen] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    return delay(() => setLoading(false));
+  }, []);
+
   useEffect(() => {
     document.title = "Personal Details | SOS Travelers";
   }, []);
+
   useEffect(() => {
     if (user) {
-      const name =
-        capitalizeFirstLetter(user?.personalData?.name?.first) +
-        " " +
-        capitalizeFirstLetter(user?.personalData?.name?.last);
-      setName(name);
-      setNameTrun(truncarNumero(name));
+      const fullName = `${capitalize(
+        user?.personalData?.name?.first || ""
+      )} ${capitalize(user?.personalData?.name?.last || "")}`;
+      setName(fullName.trim());
       setEmail(user.email);
-      setEmailTrun(truncarNumero(user.email));
+      const phoneLabel = `${user.phoneCode || ""} ${user.phone || ""}`;
+      setPhone(phoneLabel.trim());
     }
   }, [user]);
-  function separarNombre(nombre) {
-    const nombreSinEspacios = nombre.trim();
-    const indicePrimerEspacio = nombreSinEspacios.indexOf(" ");
-    const primerNombre = nombreSinEspacios.slice(0, indicePrimerEspacio);
-    const segundoNombre = nombreSinEspacios.slice(indicePrimerEspacio + 1);
-    return [primerNombre, segundoNombre];
-  }
-  function capitalizeFirstLetter(word) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }
-  const truncarNumero = (word) => {
-    const truncatedValue = word.length > 17 ? word.slice(0, 17) + "..." : word;
-    return truncatedValue;
-  };
 
-  const handleNameClick = () => {
-    setNameInput(true);
-    setEmailInput(false);
-    setSave(true);
-  };
-  const handleEmailClick = () => {
-    router.push("/change-email");
-  };
-
-  function setTheName(name) {
-    setName(name);
-    setNameTrun(truncarNumero(name));
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  const saveAll = async () => {
-    const newUser = { ...user };
-    console.log("el name", name);
-    const arrayName = separarNombre(name);
-    if (nameInput == true) {
-      try {
-        newUser.personalData.name.first = capitalizeFirstLetter(arrayName[0]);
-        newUser.personalData.name.last = capitalizeFirstLetter(arrayName[1]);
-        const response = await UserService.updateUser(newUser);
-
-        if (response.data) {
-          localStorage.setItem("auth.user", JSON.stringify(response.data.user));
-          Cookies.set("auth.user", JSON.stringify(response.data.user));
-          toast.info("Saved.", {
-            position: toast.POSITION.BOTTOM_CENTER,
-            autoClose: 1500,
-          });
-        }
-      } catch (err) {
-        toast.error("Internal Server Error. Please try again later.", {
-          position: toast.POSITION.BOTTOM_CENTER,
-          autoClose: 1800,
-        });
-      }
-    }
-    setNameInput(false);
-    setEmailInput(false);
-    setSave(false);
-  };
+  function truncate(str) {
+    return str?.length > 28 ? str.slice(0, 28) + "..." : str;
+  }
 
   return (
-    <div className="flex flex-col justify-center py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      {!nameInput ? (
-        <SelectCard
-          title={languageData.name[language]}
-          onClick={handleNameClick}
-          icon={UserIcon}
-          edit={true}
-          subtitle={nameTrun}
-        />
-      ) : (
-        <OutlinedInput
-          placeholder={languageData.name[language]}
-          icon={UserIcon}
-          value={name}
-          // onBlur={onBlur}
-          onChange={(e) => setTheName(e.target.value)}
-        />
-      )}
-      <SelectCard
-        title="Email"
-        onClick={handleEmailClick}
-        icon={MailIcon}
-        edit={true}
-        subtitle={emailTrun}
+    <>
+      <div
+        className={`min-h-screen bg-backgroundP pt-4 px-6  flex flex-col items-center
+              transform transition-all duration-800 ease-out
+              transition-opacity duration-800 ease-out
+             ${loading ? opacityAnimation : displayAnimation}
+            `}
+      >
+        <div className="w-full max-w-md flex flex-col self-center">
+          {/* Nombre */}
+          <OptionCard
+            title={languageData.name[language]}
+            subtitle={truncate(name)}
+            icon={FaUser}
+            onClick={() => setModalNameOpen(true)}
+          />
+
+          {/* Teléfono */}
+          <OptionCard
+            title={languageData.phone[language]}
+            subtitle={truncate(phone)}
+            icon={FaPhone}
+            onClick={() => setModalPhoneOpen(true)}
+          />
+
+          {/* Email */}
+          <OptionCard
+            title="Email"
+            subtitle={truncate(email)}
+            icon={FaEnvelope}
+            onClick={() => router.push("/change-email")}
+          />
+
+          {user?.security?.hasPassword ? (
+            <OptionCard
+              title={languageData.changePassword[language]}
+              icon={FaLock}
+              onClick={() => router.push("/change-password")}
+            />
+          ) : (
+            <OptionCard
+              title={languageData.createPassword[language]}
+              icon={FaLock}
+              onClick={() => router.push("/create-password")}
+            />
+          )}
+        </div>
+      </div>
+      <EditNameModal
+        isOpen={modalNameOpen}
+        onClose={() => setModalNameOpen(false)}
+        defaultName={name}
       />
 
-      {/* <SelectCard
-        title="Address"
-        icon={HouseIcon}
-        edit={true}
-        subtitle="Avenida Atlántica 1234, Copacabana, Rio de Janeiro, Brazil"
-      /> */}
-      {user && user.security && user.security.hasPassword ? (
-        // Este componente se mostrará si el usuario está autenticado
-        <OptionCard
-          title={languageData.changePassword[language]}
-          icon={LockIcon}
-          onClick={() => router.push("/change-password")}
-        />
-      ) : (
-        // Este componente se mostrará si el usuario no está autenticado
-        <OptionCard
-          title={languageData.createPassword[language]}
-          icon={LockIcon}
-          onClick={() => router.push("/create-password")}
-        />
-      )}
-      {save && (
-        <OutlinedButton
-          text={languageData.saveChanges[language]}
-          onClick={saveAll}
-        />
-      )}
-    </div>
+      <EditPhoneModal
+        isOpen={modalPhoneOpen}
+        onClose={() => setModalPhoneOpen(false)}
+      />
+    </>
   );
 }

@@ -10,8 +10,13 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedTextArea from "@/components/utils/inputs/OutlinedTextArea";
 import { Field, Form } from "houseform";
 import { z } from "zod";
-
-import { toast } from "react-toastify";
+import InputText from "@/components/utils/inputs/InputText";
+import CustomSelector from "@/components/utils/selector/CustomSelector";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 
 export default function SupportPage() {
   const [formKey, setFormKey] = useState(0);
@@ -20,24 +25,24 @@ export default function SupportPage() {
   const [optionsSupport, setOptionsSupport] = useState([]);
   const router = useRouter();
   const { user, loggedIn, isWorker, language } = useStore();
+  const [loading, setLoading] = useState(true); // <-- loading flag
   const id = router.query.id;
   useEffect(() => {
     document.title = "Support | SOS Travelers";
   }, []);
   useEffect(() => {
-    let array = [];
-    console.log("wena", languageData.issues);
-    for (let item of languageData.issues) {
-      array.push(item[language]);
-    }
-    console.log("aaray", array);
-    const final = array.map((issue) => ({
-      value: issue,
-      label: issue,
-    }));
-    console.log("final", final);
-    setOptionsSupport(final);
+    setLoading(true);
+    return delay(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    const opts = languageData.issues.map((issue) => {
+      const label = issue[language];
+      return { value: label, label };
+    });
+    setOptionsSupport(opts);
+  }, [language]);
+
   const supportEmail = async (values) => {
     try {
       if (isSubmitting) {
@@ -60,22 +65,14 @@ export default function SupportPage() {
       console.log(response.data);
       setFormKey((prevKey) => prevKey + 1);
       setSended(true);
-      toast.success("Message sent Successfully", {
-        position: "top-right",
-        // Configuración de la notificación de éxito
-      });
-    } catch (error) {
-      // Manejo de errores
-      let message = "Error sending message";
-      if (error?.response?.status === 409)
-        message = error?.response?.data?.message;
-      else if (error?.response?.status === 400)
-        message = error?.response?.data?.result;
 
-      toast.error(message, {
-        position: "top-right",
-        // Configuración de la notificación de error
-      });
+      alertToast({ message: "Message sent Successfully", type: "success" });
+    } catch (err) {
+      if (err.status == 500) {
+        alertToast({});
+      } else {
+        alertToast({ message: err?.response?.data?.error || "Error" });
+      }
     } finally {
       setIsSubmitting(false); // Establece el estado de envío del formulario a false después de finalizar
     }
@@ -94,8 +91,12 @@ export default function SupportPage() {
   }, [formKey]);
 
   return (
-    <div className="py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      <h1 className="my-3 font-semibold text-center max-w-lg">
+    <div
+      className={`px-6 flex flex-col items-center
+      ${loading ? opacityAnimation : displayAnimation}
+    `}
+    >
+      <h1 className="my-3 font-semibold text-center  text-textColor max-w-lg">
         {languageData.title[language]}
       </h1>
       <Form
@@ -114,7 +115,7 @@ export default function SupportPage() {
           >
             {!loggedIn && (
               <>
-                <div className="mb-3">
+                <div className="mb-3 text-textColor text-sm">
                   <p>{languageData.fullName[language]}</p>
                   <Field
                     name="name"
@@ -131,24 +132,33 @@ export default function SupportPage() {
                     {({ value, setValue, onBlur, errors }) => {
                       return (
                         <div>
-                          <OutlinedInput
-                            placeholder={languageData.enterName[language]}
+                          <InputText
+                            type="text"
                             value={value}
-                            onBlur={onBlur}
                             onChange={(e) => setValue(e.target.value)}
+                            onBlur={onBlur}
+                            placeholder={languageData.enterName[language]}
+                            className="w-full"
                           />
-                          {errors.map((error) => (
-                            <p key={error} className="text-red">
-                              {error}
-                            </p>
-                          ))}
+                          {errors.length > 0 ? (
+                            errors.map((error) => (
+                              <p
+                                key={error}
+                                className="text-errorColor text-xs mt-1"
+                              >
+                                {error}
+                              </p>
+                            ))
+                          ) : (
+                            <div className="h-4" />
+                          )}
                         </div>
                       );
                     }}
                   </Field>
                 </div>
 
-                <div className="mb-3">
+                <div className="mb-3 text-textColor text-sm">
                   <p>{languageData.emailAddress[language]}</p>
                   <Field
                     name="email"
@@ -159,17 +169,26 @@ export default function SupportPage() {
                     {({ value, setValue, onBlur, errors }) => {
                       return (
                         <div>
-                          <OutlinedInput
-                            placeholder={languageData.enterEmail[language]}
+                          <InputText
+                            type="text"
                             value={value}
-                            onBlur={onBlur}
                             onChange={(e) => setValue(e.target.value)}
+                            onBlur={onBlur}
+                            placeholder={languageData.enterEmail[language]}
+                            className="w-full"
                           />
-                          {errors.map((error) => (
-                            <p key={error} className="text-red">
-                              {error}
-                            </p>
-                          ))}
+                          {errors.length > 0 ? (
+                            errors.map((error) => (
+                              <p
+                                key={error}
+                                className="text-errorColor text-xs mt-1"
+                              >
+                                {error}
+                              </p>
+                            ))
+                          ) : (
+                            <div className="h-4" />
+                          )}
                         </div>
                       );
                     }}
@@ -178,7 +197,7 @@ export default function SupportPage() {
               </>
             )}
 
-            <div className="mb-3">
+            <div className="mb-3 text-textColor text-sm">
               <p>{languageData.chooseSubject[language]}</p>
               <Field
                 name="subject"
@@ -191,63 +210,31 @@ export default function SupportPage() {
               >
                 {({ value, setValue, onBlur, errors }) => (
                   <div>
-                    <Select
-                      className="w-full max-w-lg rounded-xl  my-1"
+                    <CustomSelector
                       options={optionsSupport}
                       value={optionsSupport.find(
                         (option) => option.value === value
                       )}
-                      onBlur={onBlur}
                       onChange={(selectedOption) =>
                         setValue(selectedOption.value)
                       }
-                      styles={{
-                        control: (provided) => ({
-                          ...provided,
-                          borderColor: "#00A0D5",
-                          borderRadius: "10px",
-                          boxShadow: "none",
-                          "&:hover": {
-                            borderColor: "#00A0D5",
-                          },
-                        }),
-                        option: (provided, state) => ({
-                          ...provided,
-                          color: state.isSelected ? "#fff" : "#000",
-                          backgroundColor: state.isSelected
-                            ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
-                            : state.isFocused
-                            ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
-                            : "#fff", // Fondo blanco por defecto
-                          borderRadius: "5px",
-                          transition: "background-color 0.3s ease",
-                          "&:hover": {
-                            backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
-                          },
-                        }),
-                      }}
                     />
-                    {/* <select
-                      className="border-grey border w-full max-w-lg rounded-xl p-3 my-1"
-                      value={value}
-                      onBlur={onBlur}
-                      onChange={(e) => setValue(e.target.value)}
-                    >
-                      <option value="">Choose an option</option>
-                      <option value="opcion1">Option 1</option>
-                      <option value="opcion2">Option 2</option>
-                    </select> */}
-                    {errors.map((error) => (
-                      <p key={error} className="text-red">
-                        {error}
-                      </p>
-                    ))}
+
+                    {errors.length > 0 ? (
+                      errors.map((error) => (
+                        <p key={error} className="text-errorColor text-xs mt-1">
+                          {error}
+                        </p>
+                      ))
+                    ) : (
+                      <div className="h-4" />
+                    )}
                   </div>
                 )}
               </Field>
             </div>
 
-            <div className="mb-3">
+            <div className="mb-3 text-textColor text-sm">
               <p>{languageData.message[language]}</p>
               <Field
                 name="message"
@@ -267,6 +254,7 @@ export default function SupportPage() {
                         onBlur={onBlur}
                         onChange={(e) => setValue(e.target.value)}
                       />
+
                       {errors.map((error) => (
                         <p key={error} className="text-red">
                           {error}
@@ -279,8 +267,14 @@ export default function SupportPage() {
             </div>
             {!sended ? (
               <OutlinedButton
-                text={languageData.sendMessage[language]}
                 disabled={!isValid || isSubmitting}
+                text={languageData.sendMessage[language]}
+                px={20}
+                py="py-2"
+                dark="darkLight"
+                textSize="text-sm"
+                textColor="text-white"
+                buttonCenter={true}
               />
             ) : (
               <p className="text-sm">

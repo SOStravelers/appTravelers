@@ -1,7 +1,9 @@
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import Link from "next/link";
 import SolidButton from "@/components/utils/buttons/SolidButton";
+import InputText from "@/components/utils/inputs/InputText";
 import { LockIcon } from "@/constants/icons";
+import { FaLock } from "react-icons/fa";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import UserService from "@/services/UserService";
 import Cookies from "js-cookie";
@@ -48,6 +50,9 @@ function ChangePassForm() {
       }
     }
   };
+  const goToforgot = () => {
+    router.push("/forgot-password");
+  };
   return (
     <Form
       onSubmit={(values) => {
@@ -72,19 +77,23 @@ function ChangePassForm() {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={isWorker ? "Senha atual" : "Current password"}
                     value={value}
-                    icon={LockIcon}
+                    icon={FaLock}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-red">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -105,19 +114,23 @@ function ChangePassForm() {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={isWorker ? "Nova senha" : "New password"}
                     value={value}
-                    icon={LockIcon}
+                    icon={FaLock}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-red">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -145,29 +158,49 @@ function ChangePassForm() {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={
                       isWorker ? "Confirmar nova senha" : "Confirm new password"
                     }
                     value={value}
-                    icon={LockIcon}
+                    icon={FaLock}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-red">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
           </Field>
 
+          <div className="flex justify-end w-full">
+            <button
+              type="button"
+              className="bg-transparent border-none text-textColor text-sm mt-1 mb-2 cursor-pointer hover:underline"
+              onClick={() => goToforgot()}
+            >
+              Forgot password?
+            </button>
+          </div>
+
           <OutlinedButton
-            style={{ marginTop: "25px" }}
-            text={isWorker ? "Salvar alterações" : "Save Changes"}
+            text={"Save Changes"}
+            dark="darkLight"
+            textColor="text-white"
+            textSize="text-xs"
+            align="center"
+            minWidth="200px"
+            padding="px-2 py-2"
+            margin="mt-6"
             disabled={!isValid}
           />
         </form>

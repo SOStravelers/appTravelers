@@ -4,7 +4,6 @@ import OptionSwitch from "@/components/utils/switch/OptionSwitch";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import TextModal from "@/components/utils/modal/TextModal";
 import { useStore } from "@/store";
-import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { WorldIcon, MailIcon } from "@/constants/icons";
 import UserService from "@/services/UserService";

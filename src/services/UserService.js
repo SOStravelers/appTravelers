@@ -61,7 +61,7 @@ export default class UserService {
   }
   static async createPassword(password, token) {
     return axios.post(
-      `${this.baseUrl}/createPassToken`,
+      `${this.authUrl}/createpass`,
       {
         password: password,
       },
@@ -130,6 +130,12 @@ export default class UserService {
   static async updateDataUser(data) {
     // console.log("el userr", user);
     return axios.put(`${this.baseUrl}/data/user`, data, {
+      headers: this.getHeaders(),
+    });
+  }
+  static async updateInfoUser(data) {
+    // console.log("el userr", user);
+    return axios.put(`${this.baseUrl}/info/user`, data, {
       headers: this.getHeaders(),
     });
   }

@@ -1,163 +1,137 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { DayPicker } from "react-day-picker";
 import { enUS, es, fr, de, ptBR } from "date-fns/locale";
 import OutlinedButton from "../buttons/OutlinedButton";
 import "react-day-picker/dist/style.css";
 import Link from "next/link";
 import BookingService from "@/services/BookingService";
-import WorkerCardBooking from "../cards/WorkerCardBooking";
 import { useStore } from "@/store";
 import moment from "moment";
 import LanguageData from "@/language/booking.json";
+import { getUserTimeData } from "@/lib/time/index.js";
+import EventCard from "@/components/utils/cards/EventCard";
 function CalendarBooking() {
-  const store = useStore();
-  const { language } = store;
-  const [selected, setSelected] = useState("");
-  const [fromDate, setFromDate] = useState();
-  const [toDate, setToDate] = useState();
-  const [month, setMonth] = useState();
+  const { language } = useStore();
+
+  const [selected, setSelected] = useState(null);
+  const [visibleMonth, setVisibleMonth] = useState(new Date());
   const [bookedDays, setBookedDays] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [showBookings, setShowBookings] = useState([]);
-  // const bookedStyle = { border: "2px solid black" };
 
   const bookedStyle = {
     border: "1px solid black",
-    borderColor: "#00A0D5 ",
+    borderColor: "#00A0D5",
     borderRadius: "50%",
     padding: "0px",
     boxSizing: "border-box",
   };
 
-  const locales = {
-    en: enUS,
-    es: es,
-    fr: fr,
-    de: de,
-    pt: ptBR,
-  };
+  const locales = { en: enUS, es, fr, de, pt: ptBR };
 
   useEffect(() => {
-    initialize();
-    setMonth(new Date());
+    // carga inicial (mes actual)
+    fetchMonthBookings(visibleMonth);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (selected) {
-      const dateString = moment({
-        year: selected.getFullYear(),
-        month: selected.getMonth(),
-        day: selected.getDate(),
-      }).format("YYYY-MM-DD");
-      initialize(dateString);
-    }
-  }, [selected]);
+    // cuando cambia el mes visible, volvemos a pedir al back ese mes
+    if (!visibleMonth) return;
+    fetchMonthBookings(visibleMonth);
+    setSelected(null);
+    setShowBookings([]);
+  }, [visibleMonth, language]);
 
   useEffect(() => {
-    if (month) {
-      const dateString = moment({
-        year: month.getFullYear(),
-        month: month.getMonth(),
-        day: month.getDate(),
-      }).format("YYYY-MM-DD");
-      getBookings(dateString);
-    }
-  }, [month]);
+    if (!selected) return setShowBookings([]);
+    const dayStr = moment(selected).format("YYYY-MM-DD");
+    const filtered = bookings
+      .filter((b) => moment(b.startTime.isoTime).isSame(dayStr, "day"))
+      .sort(
+        (a, b) => new Date(a.startTime.isoTime) - new Date(b.startTime.isoTime)
+      );
+    setShowBookings(filtered);
+  }, [selected, bookings]);
 
-  const getBookings = (day) => {
-    BookingService.getBookingsByMonth(day).then((res) => {
-      if (res) {
-        setBookings(res.data.docs);
-        const bookings = res.data.docs.map((booking) => {
-          return new Date(booking.date.isoDate);
-        });
-        setBookedDays(bookings);
-      }
-    });
-  };
-
-  const handleDayClick = (day, modifiers) => {
-    setShowBookings([]);
-    if (modifiers.booked) {
-      const dateString = moment({
-        year: day.getFullYear(),
-        month: day.getMonth(),
-        day: day.getDate(),
-      }).format("YYYY-MM-DD");
-
-      const filteredbookings = [];
-      bookings.forEach((booking) => {
-        if (booking.date.stringData === dateString) {
-          filteredbookings.push(booking);
-        }
-      });
-      setShowBookings(filteredbookings);
+  const fetchMonthBookings = async (monthDate) => {
+    const baseData = getUserTimeData(language); // { isoTime, timeZone, language, ... }
+    const payload = {
+      ...baseData,
+      range: "month",
+      month: { year: monthDate.getFullYear(), month: monthDate.getMonth() + 1 }, // 1-12
+    };
+    try {
+      const res = await BookingService.getBookingsByRange(payload);
+      const data = Array.isArray(res?.data) ? res.data : [];
+      setBookings(data);
+      setBookedDays(data.map((b) => new Date(b.startTime.isoTime)));
+    } catch (e) {
+      console.error("Error al cargar bookings del mes:", e);
+      setBookings([]);
+      setBookedDays([]);
     }
   };
 
-  const initialize = (dateString = "") => {
-    const now = moment();
-    if (dateString === now.format("YYYY-MM-DD") || selected === "") {
-      // if (!selected) setSelected(now.toDate());
-      setFromDate(now.toDate());
-      setToDate(now.add(2, "months").toDate());
-    }
-  };
-
-  let footer = (
-    <p className="my-2 text-center">
+  const footer = (
+    <p className="my-2 text-textColorGray text-center">
       {LanguageData.section3.pickDay[language]}
     </p>
   );
-  if (showBookings.length > 0) {
-    footer = <div className="w-full "></div>;
-  }
+
   return (
-    <div className="flex flex-col flex-grow justify-center">
-      <DayPicker
-        className="flex justify-center"
-        mode="single"
-        selected={selected}
-        onSelect={setSelected}
-        fromDate={fromDate}
-        toDate={toDate}
-        footer={footer}
-        modifiers={{ booked: bookedDays }}
-        modifiersStyles={{ booked: bookedStyle }}
-        onDayClick={handleDayClick}
-        onMonthChange={setMonth}
-        locale={locales[language]} // Aquí asignamos el idioma
-      />
-      <div className="justify-center md:px-10  mt-4 ">
-        {showBookings.map((booking) => (
-          <WorkerCardBooking
-            key={booking._id}
-            booking={booking}
-            subService={booking.subservice.name[language]}
-            // avatar={booking?.workerUser?.img?.imgUrl}
-            avatar={
-              booking.businessUser
-                ? booking?.businessUser?.img?.imgUrl
-                : booking?.subservice?.imgUrl
-            }
-            // status={booking.status}
-            status={booking.status}
-            date={booking.date.stringData}
-            hour={booking.startTime.stringData}
-            name={`${booking.subservice.name[language]}`}
-            location={booking?.businessUser?.businessData?.name}
-          />
-        ))}
+    <div className="w-full flex flex-col">
+      <div className="flex justify-center items-center">
+        <DayPicker
+          className="mini-calendar flex justify-center"
+          mode="single"
+          month={visibleMonth}
+          onMonthChange={setVisibleMonth}
+          selected={selected}
+          onSelect={setSelected}
+          modifiers={{ booked: bookedDays }}
+          modifiersStyles={{ booked: bookedStyle }}
+          locale={locales[language]}
+          onDayClick={(day, modifiers) => {
+            if (!modifiers.disabled) setSelected(day);
+          }}
+          disabled={(date) => {
+            const formatted = moment(date).format("YYYY-MM-DD");
+            return !bookedDays.some(
+              (d) => moment(d).format("YYYY-MM-DD") === formatted
+            );
+          }}
+          footer={footer}
+        />
       </div>
-      <div className="justify-center mt-14 px-10 md:px-20 ">
+
+      <div className="justify-center mt-3 px-10 md:px-20">
         <Link href={`/service-history`}>
           <OutlinedButton
             text={LanguageData.section3.buttonRecords[language]}
+            px={0}
+            py="py-2"
+            dark="darkLight"
+            textSize="text-sm"
+            textColor="text-white"
+            buttonCenter={true}
           />
         </Link>
+      </div>
+
+      <div className="lg:px-10 mt-4">
+        {showBookings.map((booking) => (
+          <EventCard
+            key={booking._id}
+            {...booking}
+            fullWidth={false}
+            isClosed={false}
+            onClick={() => {}}
+            details={true}
+          />
+        ))}
       </div>
     </div>
   );
 }
-
 export default CalendarBooking;

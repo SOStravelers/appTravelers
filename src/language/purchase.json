@@ -1,0 +1,193 @@
+{
+  "orderNumber": {
+    "es": "Pedido n°",
+    "en": "Order #",
+    "pt": "Pedido nº",
+    "fr": "Commande n°",
+    "de": "Bestellung Nr."
+  },
+  "copied": {
+    "es": "Copiado",
+    "en": "Copied",
+    "pt": "Copiado",
+    "fr": "Copié",
+    "de": "Kopiert"
+  },
+  "title": {
+    "confirmed": {
+      "es": "Reserva confirmada",
+      "en": "Booking confirmed",
+      "pt": "Reserva confirmada",
+      "fr": "Réservation confirmée",
+      "de": "Reservierung bestätigt"
+    },
+    "requested": {
+      "es": "Reserva solicitada",
+      "en": "Booking requested",
+      "pt": "Reserva solicitada",
+      "fr": "Réservation demandée",
+      "de": "Reservierung angefordert"
+    },
+    "canceled": {
+      "es": "Reserva cancelada",
+      "en": "Booking canceled",
+      "pt": "Reserva cancelada",
+      "fr": "Réservation annulée",
+      "de": "Reservierung storniert"
+    }
+  },
+  "subtitle": {
+    "paid": {
+      "es": "Tu reserva está lista, ya puedes comunicarte con nuestro proveedor seleccionado. El cobro se realizará en la fecha indicada. ¡Que disfrutes tu experiencia!",
+      "en": "Your booking is ready, you can now contact our selected provider. The payment will be charged on the scheduled date. Enjoy your experience!",
+      "pt": "Sua reserva está pronta, você já pode entrar em contato com nosso fornecedor selecionado. A cobrança será feita na data indicada. Aproveite a experiência!",
+      "fr": "Votre réservation est prête, vous pouvez maintenant contacter notre prestataire sélectionné. Le paiement sera effectué à la date prévue. Profitez bien de votre expérience !",
+      "de": "Deine Buchung ist bereit, du kannst nun unseren ausgewählten Anbieter kontaktieren. Die Zahlung erfolgt zum angegebenen Datum. Genieße dein Erlebnis!"
+    },
+    "unpaid": {
+      "es": "¡Todo confirmado! Podrás comunicarte con nuestro proveedor una vez que se realice el pago en la fecha indicada. Vuelve cuando se acerque el día... ¡Se viene una gran experiencia!",
+      "en": "Everything's confirmed! You'll be able to contact our provider once the payment is processed on the scheduled date. Come back closer to the day… An amazing experience awaits!",
+      "pt": "Tudo confirmado! Você poderá falar com nosso fornecedor assim que o pagamento for realizado na data indicada. Volte quando a data estiver próxima… Uma experiência incrível te espera!",
+      "fr": "Tout est confirmé ! Vous pourrez contacter notre prestataire une fois le paiement effectué à la date prévue. Revenez à l’approche du jour J… Une superbe expérience vous attend !",
+      "de": "Alles ist bestätigt! Du kannst unseren Anbieter kontaktieren, sobald die Zahlung am angegebenen Datum erfolgt ist. Schau kurz vor dem Termin wieder rein… Ein tolles Erlebnis wartet auf dich!"
+    },
+    "requested": {
+      "es": "Tu reserva ha sido solicitada, estamos confirmando con nuestros proveedores. Tranquilo, solo tomará unos momentos, vuelve más tarde.",
+      "en": "Your booking has been requested. We are confirming with our providers. Don't worry, it will only take a moment — check back later.",
+      "pt": "Sua reserva foi solicitada. Estamos confirmando com nossos fornecedores. Fique tranquilo, vai levar apenas alguns instantes — volte mais tarde.",
+      "fr": "Votre réservation a été demandée. Nous confirmons avec nos prestataires. Pas d'inquiétude, cela ne prendra que quelques instants — revenez plus tard.",
+      "de": "Deine Buchung wurde angefragt. Wir bestätigen gerade mit unseren Partnern. Keine Sorge, es dauert nur einen Moment – schau später noch einmal vorbei."
+    }
+  },
+  "body": {
+    "clientData": {
+      "es": "Datos cliente",
+      "en": "Client data",
+      "pt": "Dados do cliente",
+      "fr": "Données du client",
+      "de": "Kundendaten"
+    },
+    "name": {
+      "es": "Nombre",
+      "en": "Name",
+      "pt": "Nome",
+      "fr": "Nom",
+      "de": "Name"
+    },
+    "email": {
+      "es": "Correo electrónico",
+      "en": "Email",
+      "pt": "E-mail",
+      "fr": "E-mail",
+      "de": "E-Mail"
+    },
+    "summary": {
+      "es": "Resumen de compra",
+      "en": "Purchase summary",
+      "pt": "Resumo da compra",
+      "fr": "Résumé de la commande",
+      "de": "Zusammenfassung"
+    }
+  },
+  "priceTab": {
+    "title": {
+      "unpaid": {
+        "es": "Resumen del próximo cobro",
+        "en": "Summary of the upcoming charge",
+        "pt": "Resumo da próxima cobrança",
+        "fr": "Résumé du prochain paiement",
+        "de": "Übersicht der nächsten Abbuchung"
+      },
+      "paid": {
+        "es": "Pago confirmado",
+        "en": "Payment confirmed",
+        "pt": "Pagamento confirmado",
+        "fr": "Paiement confirmé",
+        "de": "Zahlung bestätigt"
+      },
+      "refund": {
+        "es": "Pago reebolsado",
+        "en": "Payment refunded",
+        "pt": "Pagamento reembolsado",
+        "fr": "Paiement remboursé",
+        "de": "Zahlung zurückgegeben"
+      }
+    },
+    "table": {
+      "section1": {
+        "es": "Valor del servicio",
+        "en": "Service value",
+        "pt": "Valor do serviço",
+        "fr": "Valeur du service",
+        "de": "Servicewert"
+      },
+      "section2": {
+        "es": "Tasas y comisiones",
+        "en": "Taxes and commissions",
+        "pt": "Taxas e comissões",
+        "fr": "Taxes et commissions",
+        "de": "Steuern und Provisionen"
+      },
+      "total": {
+        "paid": {
+          "es": "Total pagado",
+          "en": "Total paid",
+          "pt": "Total pago",
+          "fr": "Total payé",
+          "de": "Gesamtbetrag"
+        },
+        "unpaid": {
+          "es": "Total a cobrar",
+          "en": "Total to charge",
+          "pt": "Total a cobrar",
+          "fr": "Total à payer",
+          "de": "Gesamtbetrag"
+        },
+        "refund": {
+          "es": "total reembolsado",
+          "en": "total refunded",
+          "pt": "total reembolsado",
+          "fr": "total remboursé",
+          "de": "gesamt zurückgegeben"
+        }
+      }
+    }
+  },
+  "comeback": {
+    "es": "Volver al inicio",
+    "en": "Back to home",
+    "pt": "Voltar para o início",
+    "fr": "Retour à la maison",
+    "de": "Zurück zur Startseite"
+  },
+  "cancel": {
+    "es": "Cancelar reserva",
+    "en": "Cancel booking",
+    "pt": "Cancelar reserva",
+    "fr": "Annuler la réservation",
+    "de": "Buchung stornieren"
+  },
+  "cancelModal": {
+    "title": {
+      "es": "¿Estás seguro que quieres cancelar la reserva?",
+      "en": "Are you sure you want to cancel the booking?",
+      "pt": "Tem certeza de que deseja cancelar a reserva?",
+      "fr": "Êtes-vous sûr de vouloir annuler la réservation ?",
+      "de": "Bist du sicher, dass du die Buchung stornieren möchtest?"
+    },
+    "subtitle": {
+      "es": "Si cancelas ahora, perderás esta reserva y tu lugar podría ser ocupado por otra persona. No te preocupes, no se te cobrará nada.",
+      "en": "If you cancel now, you'll lose this booking and your spot may be taken by someone else. Don’t worry, you won’t be charged anything.",
+      "pt": "Se você cancelar agora, perderá esta reserva e sua vaga poderá ser ocupada por outra pessoa. Fique tranquilo, nada será cobrado.",
+      "fr": "Si vous annulez maintenant, vous perdrez cette réservation et votre place pourrait être prise par quelqu’un d’autre. Pas d’inquiétude, aucun frais ne vous sera facturé.",
+      "de": "Wenn du jetzt stornierst, verlierst du diese Buchung und dein Platz könnte anderweitig vergeben werden. Keine Sorge, es wird dir nichts berechnet."
+    },
+    "cancel": {
+      "es": "Cancelar reserva",
+      "en": "Cancel booking",
+      "pt": "Cancelar reserva",
+      "fr": "Annuler la réservation",
+      "de": "Buchung stornieren"
+    }
+  }
+}

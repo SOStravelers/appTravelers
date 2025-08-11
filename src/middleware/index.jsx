@@ -18,6 +18,8 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     isWorker,
     service,
     setLanguage,
+    setCurrency,
+    setTheme,
     setWorker,
     setLoginModal,
   } = store;
@@ -27,9 +29,8 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       if (!user || Object.keys(user).length == 0) {
         await obtenerInformacionUsuario();
       }
-      setTimeout(() => {
-        onMiddlewareComplete();
-      }, 500);
+      onMiddlewareComplete();
+      setTimeout(() => {}, 100);
     };
 
     fetchData();
@@ -38,6 +39,7 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
   const obtenerInformacionUsuario = async () => {
     let cookieAccessToken = Cookies.get("auth.access_token");
     let cookieLanguage = Cookies.get("language");
+    let cookieCurrency = Cookies.get("currency");
 
     const { partner } = router.query;
     if (partner) {
@@ -49,11 +51,10 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
     const result = await fp.get();
 
     // Guardar visitorId
-    if (result.visitorId != null) {
-      PartnerService.sentIdClient(result.visitorId, partner);
-    }
+    // if (result.visitorId != null) {
+    //   PartnerService.sentIdClient(result.visitorId, partner);
+    // }
 
-    console.log("navigator");
     if (typeof window !== "undefined") {
       //cambio lenguage∂
       if (cookieLanguage) {
@@ -92,12 +93,38 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
       Cookies.set("language", "en");
     }
 
+    if (cookieCurrency) {
+      console.log("setCurrency", cookieCurrency);
+      if (
+        cookieCurrency != "usd" &&
+        cookieCurrency != "brl" &&
+        cookieCurrency != "eur"
+      ) {
+        setCurrency("brl");
+        Cookies.set("currency", "brl");
+      } else {
+        setCurrency(cookieCurrency);
+        Cookies.set("currency", cookieCurrency);
+      }
+    } else {
+      if (cookieLanguage == "pt" || cookieLanguage == "es") {
+        setCurrency("brl");
+        Cookies.set("currency", "brl");
+      } else if (cookieLanguage == "en") {
+        setCurrency("usd");
+        Cookies.set("currency", "usd");
+      } else {
+        setCurrency("eur");
+        Cookies.set("currency", "eur");
+      }
+    }
+
     const session = await getSession();
     if (user && Object.keys(user).length > 0) {
       return;
     }
     let route = router.pathname;
-    if (route == "/login") {
+    if (route == "/login" || route == "/register") {
       if (
         (!user || Object.keys(user).length == 0) &&
         !cookieAccessToken &&
@@ -118,7 +145,6 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
         if (cookieAccessToken) {
           const user = await UserService.getUserByToken();
           if (user) {
-            console.log("el user", user);
             if (user.data.type == "business") {
               localStorage.removeItem("access_tokenB");
               Cookies.remove("auth.access_token");
@@ -204,29 +230,30 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
                 setWorker(true);
                 router.push("/worker/home");
                 return;
-              } else {
-                setWorker(false);
-                if (service && Object.keys(service).length > 0) {
-                  // console.log("caso1");
-                  console.log(
-                    "calabaza",
-                    localStorage.getItem("fromCustomSummary"),
-                    localStorage.getItem("fullUrl")
-                  );
-                  if (localStorage.getItem("fromCustomSummary") == "true") {
-                    const url = localStorage.getItem("fullUrl");
-                    localStorage.setItem("fromCustomSummary", "false");
-                    window.location.href = url;
-
-                    return;
-                  } else {
-                    router.push(`/summary`);
-                  }
-                } else {
-                  // console.log("caso2");
-                  router.push("/");
-                }
               }
+              //  else {
+              //   setWorker(false);
+              //   if (service && Object.keys(service).length > 0) {
+              //     // console.log("caso1");
+              //     console.log(
+              //       "calabaza",
+              //       localStorage.getItem("fromCustomSummary"),
+              //       localStorage.getItem("fullUrl")
+              //     );
+              //     if (localStorage.getItem("fromCustomSummary") == "true") {
+              //       const url = localStorage.getItem("fullUrl");
+              //       localStorage.setItem("fromCustomSummary", "false");
+              //       window.location.href = url;
+
+              //       return;
+              //     } else {
+              //       router.push(`/summary`);
+              //     }
+              //   } else {
+              //     // console.log("caso2");
+              //     router.push("/");
+              //   }
+              // }
             }
           } else {
             setLoggedIn(false);
@@ -242,6 +269,8 @@ export const CustomMiddlewareComponent = ({ onMiddlewareComplete }) => {
             return;
           }
         }
+      } else {
+        return;
       }
     }
   };

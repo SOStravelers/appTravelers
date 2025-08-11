@@ -63,3 +63,43 @@ export const horaEnRango = (hora) => {
     return false;
   }
 };
+
+//convierte minutos a horas
+export const formatTime = (duration) => {
+  return duration > 120
+    ? `${(duration / 60).toFixed(1)} hr${duration >= 180 ? "s" : ""}`
+    : `${duration} min`;
+};
+
+// nuevas
+
+const languageToLocale = {
+  es: "es-ES",
+  en: "en-US",
+  pt: "pt-BR",
+  fr: "fr-FR",
+  de: "de-DE",
+};
+
+export const getUserTimeData = (language) => {
+  try {
+    const locale = languageToLocale[language] || "en-US";
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const now = new Date();
+
+    return {
+      timeZone,
+      language, // original (es, pt, etc.)
+      locale, // ej: "es-ES"
+      isoTime: now.toISOString(),
+    };
+  } catch (error) {
+    console.error("Error obteniendo zona horaria:", error);
+    return {
+      timeZone: "UTC",
+      language: "en",
+      locale: "en-US",
+      isoTime: new Date().toISOString(),
+    };
+  }
+};

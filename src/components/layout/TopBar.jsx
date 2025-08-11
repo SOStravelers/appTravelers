@@ -3,19 +3,26 @@ import {
   LogoWhite,
   NotificationIcon,
 } from "@/constants/icons";
+import clsx from "clsx";
+
+import { FiBell, FiBellOff } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
+
 import { random } from "@/lib/utils";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import TextModal from "@/components/utils/modal/TextModal";
-import { Howl } from "howler";
+// import { Howl } from "howler";
 import Router from "next/router";
 import languageData from "@/language/menu.json";
 import { validationImg } from "@/utils/validation";
-const sound = new Howl({
-  src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
-});
+import LanguageSelector from "@/components/utils/selector/LanguageSelector";
+import CurrencySelector from "@/components/utils/selector/CurrencySelector";
+
+// const sound = new Howl({
+//   src: ["/notysound.mp3"], // Ajusta la ruta según la estructura de tu proyecto
+// });
 import { useStore } from "@/store";
 function TopBar() {
   const router = Router;
@@ -24,6 +31,28 @@ function TopBar() {
   const [booking, setBooking] = useState({});
   const [openWorkerModal, setOpenWorkerModal] = useState(false);
   const [isImageAccessible, setIsImageAccessible] = useState(false);
+
+  const [scrolledPastVh, setScrolledPastVh] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      if (isScrolled !== scrolledPastVh) {
+        setScrolledPastVh(isScrolled);
+      }
+    };
+
+    // Set initial state on moun
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolledPastVh]); // Re-run effect if scrolledPastVh changes
+
   const socket = useRef();
   var userId = Cookies.get("auth.user_id");
   useEffect(() => {
@@ -33,26 +62,28 @@ function TopBar() {
       setUser[newUser];
     }
   }, [user]);
-  useEffect(() => {
-    if (isWorker) {
-      console.log("conect socket worker");
-      const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
-      socket.current = io(host);
-      socket.current.emit("add-user", userId);
 
-      socket.current.on("booking-recieve", (data) => {
-        console.log("booking recibido", data);
-        setBooking(data.data);
-        sound.play();
-        setOpenWorkerModal(true);
-      });
-    }
-    return () => {
-      if (socket.current) {
-        socket.current.disconnect();
-      }
-    };
-  }, [isWorker]);
+  // useEffect(() => {
+  //   if (isWorker) {
+  //     console.log("conect socket worker");
+  //     const host = process.env.NEXT_PUBLIC_API_SOCKET_IO;
+  //     socket.current = io(host);
+  //     socket.current.emit("add-user", userId);
+
+  //     socket.current.on("booking-recieve", (data) => {
+  //       console.log("booking recibido", data);
+  //       setBooking(data.data);
+  //       sound.play();
+  //       setOpenWorkerModal(true);
+  //     });
+  //   }
+  //   return () => {
+  //     if (socket.current) {
+  //       socket.current.disconnect();
+  //     }
+  //   };
+  // }, [isWorker]);
+
   const stateBookingWorker = async () => {
     console.log("stateBookingWorker");
     router.push(`/service-details/${booking._id}`);
@@ -63,7 +94,7 @@ function TopBar() {
   };
   const profileUrl = isWorker ? "/worker/profile" : "/profile";
   const initials = () => {
-    if (user && Object.keys(user).length === 0) return "";
+    if (loggedIn) return "";
     const name = user?.personalData?.name;
     if (!name) return "";
     const { first, last } = name;
@@ -81,12 +112,21 @@ function TopBar() {
 
   return (
     <div
-      // className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 ${
-      //   process.env.NEXT_PUBLIC_NODE_ENV != "production"
-      //     ? "bg-blueBorder"
-      //     : "bg-darkBlue"
-      // }`}
-      className={`w-screen z-20 lg:px-10 xl:px-10 flex items-center justify-between h-18 lg:h-16 xl:h-16 px-3 fixed top-0 bg-darkBlue `}
+      className={clsx(
+        "w-screen z-40 fixed top-0 transition-all duration-500",
+        "lg:px-10 xl:px-10 px-3 flex items-center justify-between h-18 lg:h-16 xl:h-16",
+        router.pathname === "/"
+          ? scrolledPastVh
+            ? "bg-darkBlue"
+            : "bg-transparent"
+          : "bg-darkBlue"
+      )}
+      style={{
+        backgroundColor:
+          scrolledPastVh || router.pathname !== "/" ? undefined : "transparent",
+        WebkitBackdropFilter: scrolledPastVh ? "none" : "blur(0px)", // opcional
+        backdropFilter: scrolledPastVh ? "none" : "blur(0px)", // opcional
+      }}
     >
       <TextModal
         title={"Parabéns!!, você tem uma nova reserva"}
@@ -108,21 +148,17 @@ function TopBar() {
           className="mr-2 my-2"
         >
           <LogoWhite
-            href="/"
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              "&:focus": { outline: "none" },
-              fontSize: "0.5rem", // Ajusta el tamaño del texto según tus necesidades
-            }}
-            color={"white"}
+            // remove the old fontSize (it doesn’t affect SVG paths)
+            size={38} // ← pick the pixel size you want (e.g. 18 × 18 px)
+            color="white"
+            style={{ "&:focus": { outline: "none" } }} // keep any extra styles you need
           />
         </Link>
         <div>
-          <p className="text-white font-semibold text-lg">SOS</p>
+          <p className="text-white font-semibold text-md">SOS</p>
           <p
-            style={{ marginTop: "-12px" }}
-            className="text-white font-semibold text-lg"
+            style={{ marginTop: "-10px" }}
+            className="text-white font-semibold text-md"
           >
             Travelers
           </p>
@@ -132,54 +168,33 @@ function TopBar() {
         {loggedIn ? (
           <>
             <div className="d-flex flex-col">
-              {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
-                <h1 className="text-white mr-3 neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
-                  {process.env.NEXT_PUBLIC_NODE_ENV == "dev" ||
-                  process.env.NEXT_PUBLIC_NODE_ENV == "development"
-                    ? "Dev Version"
-                    : " Test Version"}
-                </h1>
-              )}
               {isWorker && (
                 <h1 className="text-white mr-3 neon-green text-xs sm:text-base md:text-lg lg:text-lg xl:text-lg">
                   Worker Mode
                 </h1>
               )}
             </div>
-            {haveNotification ? (
-              <Link href="/notifications" className="lg:mx-4 xl:mx-5">
-                <NotificationIcon
-                  active={"true"}
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    "&:focus": { outline: "none" },
-                    fontSize: "0.1rem", // Ajusta el tamaño del texto según tus necesidades
-                  }}
-                  color="#FFFFFF"
-                  className="mr-3 cursor-pointer"
-                />
-              </Link>
-            ) : (
-              <Link href="/notifications" className="lg:mx-5 xl:mx-5">
-                <NotificationOffIcon
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    "&:focus": { outline: "none" },
-                    fontSize: "0.1rem", // Ajusta el tamaño del texto según tus necesidades
-                  }}
-                  color="#FFFFFF"
-                  className="mr-3 cursor-pointer"
-                />
-              </Link>
-            )}
 
-            {isImageAccessible && user?.img && user?.img.imgUrl ? (
+            <Link href="/notifications" className="relative lg:mx-4 xl:mx-5">
+              {/* campana (siempre) */}
+              <FiBell className="w-5 h-5 mr-2 text-white" />
+
+              {/* puntito SOLO cuando existe notificación */}
+              {haveNotification && (
+                <span className="absolute -top-0.5  inline-flex h-2 w-2">
+                  {/* efecto ping (opcional) */}
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  {/* círculo sólido */}
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                </span>
+              )}
+            </Link>
+
+            {/* {isImageAccessible && user?.img && user?.img.imgUrl ? (
               <Link
                 className="rounded-xl"
                 href={profileUrl}
-                style={{ width: "40px", height: "40px", overflow: "hidden" }}
+                style={{ width: "36px", height: "36px", overflow: "hidden" }}
               >
                 <img
                   src={user.img.imgUrl}
@@ -194,19 +209,11 @@ function TopBar() {
               >
                 {initials()}
               </Link>
-            )}
+            )} */}
           </>
         ) : (
           <>
-            {process.env.NEXT_PUBLIC_NODE_ENV != "production" && (
-              <h1 className="text-white mr-2 neon-dark text-xs  text-center  sm:text-base md:text-lg lg:text-lg xl:text-lg">
-                {process.env.NEXT_PUBLIC_NODE_ENV == "dev" ||
-                process.env.NEXT_PUBLIC_NODE_ENV == "development"
-                  ? "Dev V"
-                  : " Test V"}
-              </h1>
-            )}
-            <Link className="text-white text-sm mr-2" href="/login">
+            {/* <Link className="text-white text-sm mr-2" href="/login">
               {languageData.signIn[language]}
             </Link>
             <Link
@@ -214,7 +221,10 @@ function TopBar() {
               href="/register"
             >
               {languageData.join[language]}
-            </Link>
+            </Link> */}
+
+            <CurrencySelector scrolledPastVh={scrolledPastVh} />
+            <LanguageSelector scrolledPastVh={scrolledPastVh} />
           </>
         )}
       </div>

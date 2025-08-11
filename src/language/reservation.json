@@ -28,12 +28,12 @@
       "de": "Wählen Sie einen anderen Tag.",
       "pt": "Escolha outro dia."
     },
-    "nextButton": {
-      "en": "Next",
-      "es": "Siguiente",
-      "fr": "Suivant",
-      "de": "Weiter",
-      "pt": "Próximo"
+    "applyButton": {
+      "en": "Apply",
+      "es": "Aplicar",
+      "fr": "Appliquer",
+      "de": "Anwenden",
+      "pt": "Aplicar"
     },
     "backButton": {
       "en": "Back",
@@ -41,6 +41,41 @@
       "fr": "Précédent",
       "de": "Zurück",
       "pt": "Voltar"
+    },
+    "noAvailability": {
+      "en": "No availability",
+      "es": "No hay disponibilidad",
+      "fr": "Pas de disponibilité",
+      "de": "Keine Verfügbarkeit",
+      "pt": "Sem disponibilidade"
+    },
+    "adults": {
+      "en": "Adults",
+      "es": "Adultos",
+      "fr": "Adultes",
+      "de": "Erwachsene",
+      "pt": "Adultos"
+    },
+    "people": {
+      "en": "People",
+      "es": "Personas",
+      "fr": "Personnes",
+      "de": "Personen",
+      "pt": "Pessoas"
+    },
+    "children": {
+      "en": "Children",
+      "es": "Niños",
+      "fr": "Enfants",
+      "de": "Kinder",
+      "pt": "Crianças"
+    },
+    "ageRange_2_12": {
+      "en": "Age: 2–12 years",
+      "es": "Edad: 2–12 años",
+      "fr": "Âge : 2 à 12 ans",
+      "de": "Alter: 2–12 Jahre",
+      "pt": "Idade: 2–12 anos"
     }
   }
 }

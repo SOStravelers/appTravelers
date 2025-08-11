@@ -1,70 +1,134 @@
+// components/utils/LoginFormModal.jsx
 import React from "react";
-import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import LoginForm from "@/components/utils/forms/LoginForm";
-import SolidButton from "@/components/utils/buttons/SolidButton";
-import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
-
-const LoginFormModal = ({
+import { useStore } from "@/store";
+export default function LoginFormModal({
   title,
   text,
-  buttonText,
   open,
   setOpen,
   onAccept,
   onCancel,
-}) => {
-  return (
-    <>
-      {open && (
-        <div
-          style={{ zIndex: 1000 }}
-          className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
-        >
-          <div className="relative">
-            <Link href="/">
-              <button className="absolute top-0 right-0 m-4 text-black text-2xl">
-                &times;
-              </button>
-            </Link>
-            <div className="bg-white rounded-2xl w-[90vw] md:w-96 px-8 py-5">
-              <div className="px-5 py-5 pb-1">
-                <h1 className="text-2xl text-center mb-5">{title}</h1>
-                <p className="text-center">{text}</p>
-              </div>
-              <LoginForm />
-              <div className="flex flex-col items-center justify-center mt-10">
-                <p className="text-blackText">
-                  Are you a new?
-                  <Link
-                    className="text-black font-semibold  ml-2"
-                    href={"/register"}
-                  >
-                    Register Here!
-                  </Link>
-                </p>
-                <p className="text-xs mt-5">
-                  By joining, you agree to our{" "}
-                  <Link
-                    href={"terms-of-service"}
-                    className="font-bold text-blackText"
-                  >
-                    Terms of Service &nbsp;
-                  </Link>
-                  and our{" "}
-                  <Link
-                    href={"user-policy"}
-                    className="font-bold text-blackText"
-                  >
-                    Use Policy.
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
-};
+}) {
+  const router = useRouter();
+  const store = useStore();
+  const { user } = store;
+  const handleCancel = () => {
+    console.log("llego");
+    setOpen(false);
+    onCancel?.();
+    if (
+      router.pathname.includes("/booking") ||
+      (router.pathname.includes("/favorites") &&
+        (!user || Object.keys(user).length == 0))
+    ) {
+      router.push("/");
+    }
+  };
 
-export default LoginFormModal;
+  useEffect(() => {
+    if (open) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    // Limpieza al desmontar
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [open]);
+
+  return (
+    <div
+      className={`
+        fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm
+        flex items-center justify-center z-50
+        transition-opacity duration-300 ease-out
+        ${
+          open
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }
+      `}
+      onClick={handleCancel}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={`
+          bg-backgroundModal rounded-2xl w-[90vw] max-w-sm p-5 mx-2
+          transform transition-all duration-200 ease-out
+          ${
+            open
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-95 translate-y-4"
+          }
+        `}
+      >
+        {/* Close button */}
+        <button
+          onClick={handleCancel}
+          className="absolute top-3 right-3 text-textColor text-2xl focus:outline-none"
+        >
+          &times;
+        </button>
+
+        {/* Header */}
+        <h1 className="text-lg text-center  text-textColor mb-3">{title}</h1>
+        {text && (
+          <p className="text-center text-sm  text-textColor mb-5">{text}</p>
+        )}
+
+        {/* Login form */}
+        <LoginForm
+          onClose={handleCancel}
+          onSubmit={(values) => {
+            onAccept?.(values);
+            setOpen(false);
+          }}
+          inputClassName={`
+            w-full border border-gray-300 bg-backgroundModal rounded-md
+            px-3 py-2 text-sm focus:outline-none
+            focus:ring-0 focus:border-gray-500
+            transition-colors duration-150 ease-in-out
+          `}
+        />
+
+        {/* Footer links */}
+        <div className="mt-6 flex flex-col items-center  text-textColor text-sm text-center space-y-2">
+          <p className="text-textColor">
+            New here?
+            <a
+              onClick={() => {
+                setOpen(false);
+                router.push("/register");
+              }}
+              className="ml-1 font-semibold text-blueBorder hover:underline cursor-pointer"
+            >
+              Register Here!
+            </a>
+          </p>
+          <p>
+            By joining, you agree to our{" "}
+            <a
+              onClick={() => router.push("/terms-of-service")}
+              className="font-bold text-textColor hover:underline cursor-pointer"
+            >
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a
+              onClick={() => router.push("/user-policy")}
+              className="font-bold text-textColor hover:underline cursor-pointer"
+            >
+              Use Policy
+            </a>
+            .
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}

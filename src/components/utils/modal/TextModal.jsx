@@ -71,7 +71,7 @@ function TextModal({
               <div className="flex flex-col justify-center items-center">
                 {onAccept && (
                   <SolidButton
-                    py={2}
+                    py="py-2"
                     color={colorAceptButton}
                     text={buttonText}
                     onClick={handleAccept}

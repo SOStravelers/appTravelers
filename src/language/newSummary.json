@@ -1,0 +1,280 @@
+{
+  "confirmSelection": {
+    "title": {
+      "en": "Review & continue",
+      "es": "Revisión y continuar",
+      "fr": "Vérifier et continuer",
+      "de": "Überprüfen & fortfahren",
+      "pt": "Revisar e continuar"
+    },
+    "value": {
+      "es": "Valor:",
+      "en": "Value:",
+      "fr": "Valeur:",
+      "de": "Wert:",
+      "pt": "Valor:"
+    },
+    "payNow": {
+      "es": "Pagarás ahora:",
+      "en": "You will pay now:",
+      "fr": "Vous paierez maintenant :",
+      "de": "Sie zahlen jetzt:",
+      "pt": "Você pagará agora:"
+    },
+    "nextButton": {
+      "en": "Next",
+      "es": "Siguiente",
+      "fr": "Suivant",
+      "de": "Weiter",
+      "pt": "Próximo"
+    },
+    "cancel": {
+      "es": "Cancelación gratuita",
+      "en": "Free cancellation",
+      "fr": "Annulation gratuite",
+      "de": "Kostenlos stornieren",
+      "pt": "Cancelamento gratuito"
+    },
+    "sections": {
+      "date": {
+        "title": {
+          "en": "Date",
+          "es": "Fecha",
+          "fr": "Date",
+          "de": "Datum",
+          "pt": "Data"
+        },
+        "from": {
+          "es": "Desde",
+          "en": "From",
+          "fr": "De",
+          "de": "Von",
+          "pt": "De"
+        },
+        "to": {
+          "en": "to",
+          "es": "a",
+          "fr": "jusqu'à",
+          "de": "bis",
+          "pt": "até"
+        }
+      },
+      "travellers": {
+        "title": {
+          "es": "Viajeros",
+          "en": "Travellers",
+          "fr": "Voyageurs",
+          "de": "Reisende",
+          "pt": "Viajantes"
+        },
+        "adults": {
+          "es": "adultos",
+          "en": "adults",
+          "fr": "adultes",
+          "de": "erwachsene",
+          "pt": "adultos"
+        },
+        "people": {
+          "en": "People",
+          "es": "Personas",
+          "fr": "Personnes",
+          "de": "Personen",
+          "pt": "Pessoas"
+        },
+        "children": {
+          "es": "Niños",
+          "en": "children",
+          "fr": "enfants",
+          "de": "Kinder",
+          "pt": "crianças"
+        },
+        "ageRange_2_12": {
+          "en": "Age: 2–12 years",
+          "es": "Edad: 2–12 años",
+          "fr": "Âge : 2 à 12 ans",
+          "de": "Alter: 2–12 Jahre",
+          "pt": "Idade: 2–12 anos"
+        },
+        "changeButton": {
+          "es": "Cambiar",
+          "en": "Change",
+          "fr": "Changer",
+          "de": "Ändern",
+          "pt": "Mudar"
+        }
+      },
+      "totalPrice": {
+        "title": {
+          "en": "Total price",
+          "es": "Precio total",
+          "fr": "Prix total",
+          "de": "Gesamtpreis",
+          "pt": "Preço total"
+        },
+        "detailsButton": {
+          "en": "Details",
+          "es": "Detalles",
+          "fr": "Détails",
+          "de": "Details",
+          "pt": "Detalhes"
+        }
+      },
+      "booking": {
+        "title": {
+          "es": "Agenda ahora, paga después",
+          "en": "Book now, pay later",
+          "fr": "Réservez maintenant, payez plus tard",
+          "de": "Jetzt buchen, später bezahlen",
+          "pt": "Agende agora, pague depois"
+        },
+        "subtitle": {
+          "es": "Reserva ahora gratis y solo se te cobrará después del ${displayDate} a las ${displayTime} hrs.",
+          "en": "Book now for free and you’ll only be charged after ${displayDate} at ${displayTime} hrs.",
+          "fr": "Réservez maintenant gratuitement et vous ne serez débité qu’après le ${displayDate} à ${displayTime} h.",
+          "de": "Jetzt kostenlos reservieren – die Abbuchung erfolgt erst nach dem ${displayDate} um ${displayTime} Uhr.",
+          "pt": "Reserve agora grátis e só será cobrado após ${displayDate} às ${displayTime}h."
+        },
+        "subtitleMatch": {
+          "es": "No pagarás nada al agendar; solo se te cobrará cuando se realice tu registro facial.",
+          "en": "You won’t pay anything when booking; you’ll only be charged once your facial registration is completed.",
+          "fr": "Aucun paiement à la réservation ; vous ne serez débité qu’une fois votre enregistrement facial effectué.",
+          "de": "Bei der Buchung zahlen Sie nichts; die Abbuchung erfolgt erst nach Abschluss Ihrer Gesichtserfassung.",
+          "pt": "Você não pagará nada ao agendar; a cobrança será feita apenas quando seu cadastro facial for realizado."
+        }
+      },
+      "freeCancelation": {
+        "title": {
+          "es": "Cancelación gratuita",
+          "en": "Free cancellation",
+          "fr": "Annulation gratuite",
+          "de": "Kostenlos stornieren",
+          "pt": "Cancelamento gratuito"
+        },
+        "subtitle": {
+          "es": "Puedes cancelar en cualquier momento sin ningún cargo hasta el ${displayDate} a las ${displayTime} hrs.",
+          "en": "You can cancel at any time without any charge until ${displayDate} at ${displayTime} hrs.",
+          "fr": "Vous pouvez annuler à tout moment sans frais jusqu’au ${displayDate} à ${displayTime} h.",
+          "de": "Sie können jederzeit kostenlos stornieren, bis zum ${displayDate} um ${displayTime} Uhr.",
+          "pt": "Você pode cancelar a qualquer momento sem custo até ${displayDate} às ${displayTime}h."
+        },
+        "subtitleMatch": {
+          "es": "Podrás cancelar sin cargo hasta que el proveedor complete tu registro facial para el estadio y compre la entrada.",
+          "en": "You can cancel free of charge until the provider completes your facial registration for the stadium and purchases the ticket.",
+          "fr": "Vous pourrez annuler sans frais jusqu’à ce que le prestataire termine votre enregistrement facial pour le stade et achète le billet.",
+          "de": "Sie können kostenlos stornieren, bis der Anbieter Ihre Gesichtserfassung für das Stadion abgeschlossen und das Ticket gekauft hat.",
+          "pt": "Você poderá cancelar sem custo até que o fornecedor conclua seu cadastro facial para o estádio e compre o ingresso."
+        }
+      }
+    }
+  },
+  "contactInfo": {
+    "title": {
+      "en": "Enter your personal details",
+      "es": "Ingresa tus detalles personales",
+      "fr": "Entrez vos détails personnels",
+      "de": "Geben Sie Ihre generellen Details ein",
+      "pt": "Digite seus detalhes pessoais"
+    },
+    "value": {
+      "es": "Valor:",
+      "en": "Value:",
+      "fr": "Valeur:",
+      "de": "Wert:",
+      "pt": "Valor:"
+    },
+    "subtitle": {
+      "en": "Checkout is fast and secure",
+      "es": "El checkout es rápido y seguro",
+      "fr": "Le checkout est rapide et sécurisé",
+      "de": "Der Checkout ist schnell und sicher",
+      "pt": "O checkout é rápido e seguro"
+    },
+    "advice": {
+      "en": "We'll only contact you with essential updates or changes to your booking",
+      "es": "Solo contactaremos con actualizaciones esenciales o cambios en tu reserva",
+      "fr": "Nous vous contacterons uniquement en cas de mises à jour essentielles ou de modifications de votre réservation.",
+      "de": "Wir werden Sie nur bei wichtigen Aktualisierungen oder Änderungen Ihrer Buchung kontaktieren.",
+      "pt": "Só entraremos em contato com você em caso de atualizações essenciais ou alterações na sua reserva."
+    },
+    "nameInput": {
+      "title": {
+        "es": "Nombe Completo",
+        "en": "Full Name",
+        "fr": "Nom complet",
+        "de": "Vollständiger Name",
+        "pt": "Nome completo"
+      },
+      "alert": {
+        "en": "Enter your full name using only letters from A to Z, apostrophes ('), and hyphens (-). Example: Mary Smith",
+        "es": "Ingresa tu nombre completo usando solo letras de la A a la Z, apóstrofes (') y guiones (-). Ejemplo: Mary Smith",
+        "fr": "Entrez votre nom complet en utilisant uniquement les lettres de A à Z, les apostrophes (') et les traits d'union (-). Exemple : Mary Smith",
+        "de": "Geben Sie Ihren vollständigen Namen nur mit Buchstaben von A bis Z, Apostrophen (') und Bindestrichen (-) ein. Beispiel: Mary Smith",
+        "pt": "Digite seu nome completo usando apenas letras de A a Z, apóstrofos (') e hífens (-). Exemplo: Mary Smith"
+      }
+    },
+    "emailInput": {
+      "title": {
+        "es": "Correo electrónico",
+        "en": "Email address",
+        "fr": "Adresse e-mail",
+        "de": "E-Mail-Adresse",
+        "pt": "Endereço de e-mail"
+      },
+      "alert": {
+        "en": "Please enter a valid email address (must contain @ and .)",
+        "es": "Por favor, introduce una dirección de correo electrónico válida (debe contener @ y .)",
+        "fr": "Veuillez saisir une adresse e-mail valide (doit contenir @ et .)",
+        "de": "Bitte geben Sie eine gültige E-Mail-Adresse ein (muss @ und . enthalten).",
+        "pt": "Por favor, insira um endereço de e-mail válido (deve conter @ e .)"
+      }
+    },
+    "countryInput": {
+      "title": {
+        "es": "País",
+        "en": "Country",
+        "fr": "Pays",
+        "de": "Land",
+        "pt": "País"
+      },
+      "alert": {
+        "en": "Select a country",
+        "es": "Selecciona un país",
+        "fr": "Sélectionnez un pays",
+        "de": "Wählen Sie ein Land aus",
+        "pt": "Selecione um país"
+      }
+    },
+    "phoneInput": {
+      "title": {
+        "en": "Phone number",
+        "es": "Número de teléfono",
+        "fr": "Numéro de téléphone",
+        "de": "Telefonnummer",
+        "pt": "Número de telefone"
+      },
+      "alert": {
+        "en": "Please enter a phone number for emergency contacts (updates regarding your booking)",
+        "es": "Por favor, introduce un número de teléfono para contactos de emergencia (actualizaciones sobre tu reserva)",
+        "fr": "Veuillez entrer un numéro de téléphone pour les contacts d'urgence (mises à jour concernant votre réservation)",
+        "de": "Bitte geben Sie eine Telefonnummer für Notfallkontakte ein (Aktualisierungen zu Ihrer Buchung)",
+        "pt": "Por favor, insira um número de telefone para contatos de emergência (atualizações sobre sua reserva)"
+      }
+    },
+    "cancel": {
+      "es": "Cancelación gratuita",
+      "en": "Free cancellation",
+      "fr": "Annulation gratuite",
+      "de": "Kostenlos stornieren",
+      "pt": "Cancelamento gratuito"
+    },
+    "buttons": {
+      "paymentButton": {
+        "en": "Go to payment",
+        "es": "Ir al pago",
+        "fr": "Aller au paiement",
+        "de": "Zur Zahlung",
+        "pt": "Ir para o pagamento"
+      }
+    }
+  }
+}

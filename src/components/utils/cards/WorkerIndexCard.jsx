@@ -13,9 +13,7 @@ function WorkerIndexCard(theUser) {
   const [isImageAccessible, setIsImageAccessible] = useState(false);
   const [user, setUser] = useState({});
   useEffect(() => {
-    console.log("wena", theUser);
     setUser(theUser);
-    console.log("user", user.user);
     // setUser(user.user);
   }, [user]);
 

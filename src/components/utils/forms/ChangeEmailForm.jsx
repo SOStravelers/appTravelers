@@ -1,5 +1,7 @@
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import Link from "next/link";
+import InputText from "@/components/utils/inputs/InputText";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import { LockIcon, MailIcon } from "@/constants/icons";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
@@ -81,19 +83,23 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={isWorker ? "Senha atual" : "Current password"}
                     value={value}
-                    icon={LockIcon}
+                    icon={FaLock}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="password"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-red">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -110,19 +116,23 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={isWorker ? "Novo email" : "New email"}
                     value={value}
-                    icon={MailIcon}
+                    icon={FaEnvelope}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="email"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-red">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
@@ -143,31 +153,48 @@ function ChangeEmailForm({ setEmail, setValidatingMail, setId }) {
             {({ value, setValue, onBlur, errors }) => {
               return (
                 <div>
-                  <OutlinedInput
+                  <InputText
                     placeholder={
                       isWorker ? "Confirmar novo email" : "New email"
                     }
                     value={value}
-                    icon={MailIcon}
+                    icon={FaEnvelope}
                     onBlur={onBlur}
                     onChange={(e) => setValue(e.target.value)}
                     type="email"
                   />
-                  {errors.map((error) => (
-                    <p key={error} className="text-red">
-                      {error}
-                    </p>
-                  ))}
+                  {errors.length > 0 ? (
+                    errors.map((error) => (
+                      <p key={error} className="text-errorColor text-xs mt-1">
+                        {error}
+                      </p>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
               );
             }}
           </Field>
 
-          <OutlinedButton
+          {/* <OutlinedButton
             style={{ marginTop: "25px" }}
             text={isWorker ? "Mude o e-mail" : "Change Email"}
             disabled={!isValid}
             type="submit"
+          /> */}
+
+          <OutlinedButton
+            text={isWorker ? "Mude o e-mail" : "Change Email"}
+            disabled={!isValid}
+            px={0}
+            dark="darkLight"
+            textColor="text-white"
+            textSize="text-xs"
+            align="center"
+            minWidth="200px"
+            padding="px-2 py-2"
+            margin="mt-6"
           />
         </form>
       )}

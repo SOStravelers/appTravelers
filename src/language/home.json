@@ -78,5 +78,28 @@
         "pt": "Chegue 15 minutos antes no local da sua reserva e deixe a diversão começar quando o serviço começar! "
       }
     }
-  ]
+  ],
+  "modalPurchaseSuccess": {
+    "title": {
+      "es": "¡Gracias por tu compra!",
+      "en": "Thank you for your purchase!",
+      "fr": "Merci pour votre achat!",
+      "de": "Danke für deine Einkauf!",
+      "pt": "Obrigado por sua compra!"
+    },
+    "body": {
+      "es": "Sigue explorando y reserva más experiencias inolvidables conn nosotros",
+      "en": "Keep exploring and book more unforgettable experiences with us",
+      "fr": "Continuez à explorer et réservez plus d'expériences immédites avec nous",
+      "de": "Entdecken Sie weiter und buchen Sie weitere unvergessliche Erlebnisse bei uns",
+      "pt": "Continue a explorar e reserve mais experiências inesquecíveis com nós"
+    },
+    "button": {
+      "en": "Seguir explorando",
+      "es": "Seguir explorando",
+      "fr": "Suivre l'exploration",
+      "de": "Weitermachen",
+      "pt": "Seguir explorando"
+    }
+  }
 }

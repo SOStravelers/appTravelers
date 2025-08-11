@@ -36,6 +36,29 @@
             "pt":"Português"
         }
     },
+     "currency":{
+        "usd":{
+            "en":"US Dollar",
+            "es":"Dólar americano",
+            "fr":"Dollar américain",
+            "de":"Amerikaner Dollar",
+            "pt":"Dólar americano"
+        },
+        "eur":{
+            "en":"Euro",
+            "es":"Euro",
+            "fr":"Euro",
+            "de":"Euro",
+            "pt":"Euro"
+        },
+        "brl": {
+            "es": "Real Brasileño",
+            "en": "Brazilian Real",
+            "fr": "Réal brésilien",
+            "pt": "Real Brasileiro",
+            "de": "Brasilianischer Real"
+        }
+    },
     "titleLanguage":{
         "en":"Language",
         "es":"Idioma",
@@ -44,12 +67,57 @@
         "pt":"Linguagem"
 
     },
+    "titleCurrency":{
+        "en":"Currency",
+        "es":"Moneda",
+        "fr":"Devise",
+        "de":"Währung",
+        "pt":"Moeda"
+    },
+     "titleTheme":{
+        "es":"Apariencia de la app",
+        "en":"App theme",
+        "fr":"Thème de l'application",
+        "de":"App-Thema",
+        "pt":"Tema da app"
+    },
+    "theme":{
+         "dark":{
+        "en":"Dark theme",
+        "es":"Tema oscuro",
+        "fr":"Thème sombre",
+        "de":"Dunkler Thematik",
+        "pt":"Tema escuro"
+        },
+     "light":{
+        "en":"Light theme",
+        "es":"Tema claro",
+        "fr":"Thème clair",
+        "de":"Hell Thematik",
+        "pt":"Tema claro"
+        },
+    "default":{
+        "en":"Default theme",
+        "es":"Tema por defecto",
+        "fr":"Thème par défaut",
+        "de":"Standard Thematik",
+        "pt":"Tema padrão"
+        }
+    },
     "sigUpButton":{
         "en":"Sign Up now",
         "es":"Registrate ahora",
         "fr":"Inscrivez-vous maintenant",
         "de":"Jetzt registrieren",
         "pt":"Cadastre-se agora"
+    },
+    "loginButton":{
+        "en":"Log in",
+        "es":"Iniciar sesión",
+        "fr":"Se connecter",
+        "de":"Einloggen",
+        "pt":"Entrar"
+            
     },
     "support":{
         "title":{

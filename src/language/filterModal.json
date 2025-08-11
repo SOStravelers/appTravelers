@@ -1,0 +1,30 @@
+{
+  "title": {
+    "es": "Filtros",
+    "en": "Filters",
+    "fr": "Filtres",
+    "de": "Filter",
+    "pt": "Filtros"
+  },
+  "keyword": {
+    "en": "Keyword",
+    "es": "Palabra clave",
+    "fr": "Mot-clé",
+    "de": "Schlüsselwort",
+    "pt": "Palavra-chave"
+  },
+  "price": {
+    "es": "Precio",
+    "en": "Price",
+    "fr": "Prix",
+    "de": "Preis",
+    "pt": "Preço"
+  },
+  "applyButton": {
+    "en": "Apply",
+    "es": "Aplicar",
+    "fr": "Appliquer",
+    "de": "Anwenden",
+    "pt": "Aplicar"
+  }
+}

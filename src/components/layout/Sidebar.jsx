@@ -15,12 +15,12 @@ import {
 function Sidebar() {
   const router = useRouter();
 
-  const { isWorker, user, language } = useStore();
+  const { isWorker, user, language, loggedIn } = useStore();
   const goTo = (ruta) => {
     router.push(ruta);
   };
   const goProfile = () => {
-    if (!user || Object.keys(user).length === 0) {
+    if (!loggedIn) {
       router.push("/guest-settings");
     } else {
       goTo(isWorker ? "/worker/profile" : "/profile");
@@ -29,7 +29,7 @@ function Sidebar() {
 
   return (
     <div
-      className="h-full w-60 pt-32 fixed bottom-0 left-0 z-10 bg-darkBlue items-center hidden md:flex flex-col"
+      className="h-full w-54 pt-32  pl-2 fixed bottom-0 left-0 z-10 bg-darkBlue items-center hidden md:flex flex-col"
       style={{ boxShadow: "2px 2px 34px 0px rgba(0, 0, 0, 0.35)" }}
     >
       <button

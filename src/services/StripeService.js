@@ -1,20 +1,15 @@
 import axios from "axios";
 import { useStore } from "../store/index";
 import Cookies from "js-cookie";
-
+let access_token = Cookies.get("auth.access_token");
 export default class StripeService {
   static resource = "payments/stripe";
-  static resourceAuth = "paymentsAuth/stripe";
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${StripeService.resource}`;
   }
-  static get authUrl() {
-    const { api } = useStore.getState().urls;
-    return `${api}${StripeService.resourceAuth}`;
-  }
+
   static getHeaders() {
-    let access_token = Cookies.get("auth.access_token");
     return {
       Authorization: access_token ? access_token : {},
     };
@@ -22,12 +17,27 @@ export default class StripeService {
 
   // Método existente para crear el PaymentIntent
   static async createPaymentIntent(params, auth = false) {
-    if (auth) {
-      return axios.post(`${this.authUrl}/payment-intents`, params, {
+    console.log("wena", access_token);
+    if (access_token) {
+      return axios.post(`${this.baseUrl}/payment-intents`, params, {
         headers: this.getHeaders(),
       });
     } else {
-      return axios.post(`${this.baseUrl}/payment-intents`, params, {
+      return axios.post(`${this.baseUrl}/noAuth/payment-intents`, params, {
+        headers: this.getHeaders(),
+      });
+    }
+  }
+
+  // Método existente para crear el PaymentIntent
+  static async chargeSavedCard(params, auth = false) {
+    console.log("wena", access_token);
+    if (access_token) {
+      return axios.post(`${this.baseUrl}/paymentIntent/client`, params, {
+        headers: this.getHeaders(),
+      });
+    } else {
+      return axios.post(`${this.baseUrl}/paymentIntent/client`, params, {
         headers: this.getHeaders(),
       });
     }
@@ -36,7 +46,7 @@ export default class StripeService {
   // Nuevo método para manejar las transferencias
   static async handleTransfers(data, auth = false) {
     if (auth) {
-      return axios.post(`${this.authUrl}/transfer-payments`, data, {
+      return axios.post(`${this.baseUrl}/transfer-payments`, data, {
         headers: this.getHeaders(),
       });
     } else {
@@ -48,5 +58,17 @@ export default class StripeService {
         }
       );
     }
+  }
+
+  // Create payment link
+  static async createCheckoutLink(params) {
+    return axios.post(`${this.baseUrl}/create-checkout-link`, params, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  // Create payment link
+  static async chargeBooking(id) {
+    return axios.get(`${this.baseUrl}/chargeBooking/${id}`);
   }
 }

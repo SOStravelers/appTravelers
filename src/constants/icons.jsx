@@ -2397,10 +2397,11 @@ export const FBIcon = ({ ...props }) => (
 export const GoogleIcon = ({ ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="31"
-    height="31"
+    width="28" // antes 31
+    height="28" // antes 31
     viewBox="0 0 31 31"
     fill="none"
+    {...props}
   >
     <path
       d="M28.1651 12.9699H27.1247V12.9163H15.4997V18.083H22.7995C21.7346 21.0907 18.8729 23.2497 15.4997 23.2497C11.2197 23.2497 7.74967 19.7796 7.74967 15.4997C7.74967 11.2197 11.2197 7.74967 15.4997 7.74967C17.4753 7.74967 19.2726 8.49497 20.6412 9.71236L24.2946 6.05888C21.9877 3.9089 18.9019 2.58301 15.4997 2.58301C8.36645 2.58301 2.58301 8.36645 2.58301 15.4997C2.58301 22.6329 8.36645 28.4163 15.4997 28.4163C22.6329 28.4163 28.4163 22.6329 28.4163 15.4997C28.4163 14.6336 28.3272 13.7882 28.1651 12.9699Z"
@@ -2633,11 +2634,18 @@ export const MassageIcon = ({ color = "black", ...props }) => (
   </svg>
 );
 
-export const LogoWhite = ({ color, height, width, ...props }) => (
+// components/icons/LogoWhite.jsx
+export const LogoWhite = ({
+  color = "white",
+  size = 24, // <— new
+  width,
+  height,
+  ...props
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={width || "45"}
-    height={height || "45"}
+    width={width ?? size} // keep width > height override precedence
+    height={height ?? size} // keep height > size precedence
     viewBox="0 0 45 45"
     fill="none"
     {...props}
@@ -2671,11 +2679,11 @@ export const LogoSos = ({ ...props }) => (
         y2="177.227"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#0057FF" stop-opacity="0.15" />
-        <stop offset="0.07" stopColor="#0056FD" stop-opacity="0.3" />
-        <stop offset="0.51" stopColor="#00A0D5" stop-opacity="0.9" />
-        <stop offset="0.93" stopColor="#0056FD" stop-opacity="0.3" />
-        <stop offset="1" stopColor="#0056FD" stop-opacity="0.15" />
+        <stop stopColor="#0057FF" stopOpacity="0.15" />
+        <stop offset="0.07" stopColor="#0056FD" stopOpacity="0.3" />
+        <stop offset="0.51" stopColor="#00A0D5" stopOpacity="0.9" />
+        <stop offset="0.93" stopColor="#0056FD" stopOpacity="0.3" />
+        <stop offset="1" stopColor="#0056FD" stopOpacity="0.15" />
       </linearGradient>
     </defs>
   </svg>
@@ -2705,11 +2713,11 @@ export const LogoSosWhite = ({ ...props }) => (
         y2="177.227"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#0057FF" stop-opacity="0.15" />
-        <stop offset="0.07" stopColor="#0056FD" stop-opacity="0.3" />
-        <stop offset="0.51" stopColor="#00A0D5" stop-opacity="0.9" />
-        <stop offset="0.93" stopColor="#0056FD" stop-opacity="0.3" />
-        <stop offset="1" stopColor="#0056FD" stop-opacity="0.15" />
+        <stop stopColor="#0057FF" stopOpacity="0.15" />
+        <stop offset="0.07" stopColor="#0056FD" stopOpacity="0.3" />
+        <stop offset="0.51" stopColor="#00A0D5" stopOpacity="0.9" />
+        <stop offset="0.93" stopColor="#0056FD" stopOpacity="0.3" />
+        <stop offset="1" stopColor="#0056FD" stopOpacity="0.15" />
       </linearGradient>
     </defs>
   </svg>
@@ -2760,8 +2768,8 @@ export const LogoSosRelleno = ({ ...props }) => (
       cx="52.3557"
       cy="52"
       r="51"
-      fill="black"
-      stroke="black"
+      fill="#0e252d"
+      stroke="#0e252d"
       strokeWidth="2"
     />
     <path

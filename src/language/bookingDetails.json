@@ -1,11 +1,203 @@
 {
   "bookingNumber": {
-    "en": "Booking Number",
-    "es": "Número de Reserva",
-    "fr": "Numéro de Réservation",
+    "en": "Booking number",
+    "es": "Número de reserva",
+    "fr": "Numéro de réservation",
     "de": "Buchungsnummer",
-    "pt": "Número da Reserva"
+    "pt": "Número da reserva"
   },
+  "status": {
+    "confirmed": {
+      "en": "Confirmed",
+      "es": "Confirmado",
+      "fr": "Confirmé",
+      "de": "Bestätigt",
+      "pt": "Confirmado"
+    },
+    "requested": {
+      "en": "Requested",
+      "es": "Solicitado",
+      "fr": "Demandé",
+      "de": "Angefordert",
+      "pt": "Solicitado"
+    },
+    "completed": {
+      "en": "Completed",
+      "es": "Completado",
+      "fr": "Terminé",
+      "de": "Abgeschlossen",
+      "pt": "Completado"
+    },
+    "canceled": {
+      "en": "Canceled",
+      "es": "Cancelado",
+      "fr": "Annulé",
+      "de": "Abgesagt",
+      "pt": "Cancelado"
+    }
+  },
+  "paymentStatus": {
+    "paid": {
+      "es": "Pago confirmado",
+      "en": "Payment confirmed",
+      "pt": "Pagamento confirmado",
+      "fr": "Paiement confirmé",
+      "de": "Zahlung bestätigt"
+    },
+    "unpaid": {
+      "es": "Pago pendiente",
+      "en": "Pending payment",
+      "pt": "Pagamento pendente",
+      "fr": "Paiement en attente",
+      "de": "Ausstehende Zahlung"
+    },
+    "refund": {
+      "es": "Pago reembolsado",
+      "en": "Payment refunded",
+      "pt": "Pagamento reembolsado",
+      "fr": "Paiement remboursé",
+      "de": "Zahlung erstattet"
+    }
+  },
+  "eventButton": {
+    "es": "Info del servicio",
+    "en": "Service Info",
+    "pt": "Info do serviço",
+    "fr": "Infos du service",
+    "de": "Service-Info"
+  },
+  "bookingButton": {
+    "es": "Ver reserva",
+    "en": "View booking",
+    "pt": "Ver reserva",
+    "fr": "Voir la réservation",
+    "de": "Reservierung ansehen"
+  },
+  "infoService": {
+    "date": {
+      "en": "Date",
+      "es": "Fecha",
+      "fr": "Date",
+      "de": "Datum",
+      "pt": "Data"
+    },
+    "duration": {
+      "en": "Duration",
+      "es": "Duración",
+      "fr": "Durée",
+      "de": "Dauer",
+      "pt": "Duração"
+    },
+    "time": {
+      "en": "Time",
+      "es": "Hora",
+      "fr": "Heure",
+      "de": "Uhrzeit",
+      "pt": "Hora"
+    },
+    "location": {
+      "en": "Location",
+      "es": "Ubicación",
+      "fr": "Lieu",
+      "de": "Ort",
+      "pt": "Localização"
+    }
+  },
+  "cardPendingPayment": {
+    "title": {
+      "es": "Pago pendiente de",
+      "en": "Pending payment of",
+      "pt": "Pagamento pendente de",
+      "fr": "Paiement en attente de",
+      "de": "Ausstehende Zahlung"
+    },
+    "body": {
+      "one": {
+        "es": "Se realizará el día",
+        "en": "Scheduled for",
+        "pt": "Marcado para",
+        "fr": "Prévu pour",
+        "de": "Geplant für"
+      },
+      "two": {
+        "es": "a las",
+        "en": "at",
+        "pt": "às",
+        "fr": "à",
+        "de": "um"
+      },
+      "three": {
+        "es": "Puedes cancelar antes de esa fecha sin cargos",
+        "en": "You can cancel before that date with no charges",
+        "pt": "Você pode cancelar antes dessa data sem custos",
+        "fr": "Vous pouvez annuler avant cette date sans frais",
+        "de": "Du kannst vor diesem Datum kostenlos stornieren"
+      }
+    }
+  },
+  "buttons": {
+    "orderDetails": {
+      "es": "Ver detalles del pedido",
+      "en": "View order details",
+      "pt": "Ver detalhes do pedido",
+      "fr": "Voir les détails de la commande",
+      "de": "Bestelldetails ansehen"
+    },
+    "calendar": {
+      "es": "Agregar al calendario",
+      "en": "Add to calendar",
+      "pt": "Adicionar ao calendário",
+      "fr": "Ajouter au calendrier",
+      "de": "Zum Kalender hinzufügen"
+    },
+    "cancel": {
+      "es": "Cancelar reserva",
+      "en": "Cancel booking",
+      "pt": "Cancelar reserva",
+      "fr": "Annuler la réservation",
+      "de": "Reservierung stornieren"
+    }
+  },
+  "cancelModal": {
+    "title": {
+      "es": "¿Estás seguro que quieres cancelar la reserva?",
+      "en": "Are you sure you want to cancel the booking?",
+      "pt": "Tem certeza de que deseja cancelar a reserva?",
+      "fr": "Êtes-vous sûr de vouloir annuler la réservation ?",
+      "de": "Bist du sicher, dass du die Buchung stornieren möchtest?"
+    },
+    "subtitle": {
+      "es": "Si cancelas ahora, perderás esta reserva y tu lugar podría ser ocupado por otra persona. No te preocupes, no se te cobrará nada.",
+      "en": "If you cancel now, you'll lose this booking and your spot may be taken by someone else. Don’t worry, you won’t be charged anything.",
+      "pt": "Se você cancelar agora, perderá esta reserva e sua vaga poderá ser ocupada por outra pessoa. Fique tranquilo, nada será cobrado.",
+      "fr": "Si vous annulez maintenant, vous perdrez cette réservation et votre place pourrait être prise par quelqu’un d’autre. Pas d’inquiétude, aucun frais ne vous sera facturé.",
+      "de": "Wenn du jetzt stornierst, verlierst du diese Buchung und dein Platz könnte anderweitig vergeben werden. Keine Sorge, es wird dir nichts berechnet."
+    },
+    "cancel": {
+      "es": "Cancelar reserva",
+      "en": "Cancel booking",
+      "pt": "Cancelar reserva",
+      "fr": "Annuler la réservation",
+      "de": "Buchung stornieren"
+    }
+  },
+  "provider": {
+    "operator": {
+      "es": "Operador responsable del servicio",
+      "en": "Operator responsible for the service",
+      "pt": "Operador responsável pelo serviço",
+      "fr": "Opérateur responsable du service",
+      "de": "Verantwortlicher Betreiber des Services"
+    },
+    "whatsapp": {
+      "es": "Hablar por WhatsApp",
+      "en": "Chat on WhatsApp",
+      "pt": "Falar no WhatsApp",
+      "fr": "Parler sur WhatsApp",
+      "de": "Auf WhatsApp chatten"
+    }
+  },
+
   "service": {
     "en": "Service",
     "es": "Servicio",
@@ -40,13 +232,6 @@
     "fr": "Frais totaux du service",
     "de": "Gesamtkosten der Dienstleistung",
     "pt": "Taxa total do serviço"
-  },
-  "status": {
-    "en": "Status",
-    "es": "Estado",
-    "fr": "Statut",
-    "de": "Status",
-    "pt": "Status"
   },
 
   "from": {

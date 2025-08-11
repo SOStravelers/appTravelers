@@ -12,12 +12,20 @@ import WorkerService from "@/services/WorkerService";
 import Link from "next/link";
 import languageData from "@/language/settings.json";
 import Cookies from "js-cookie";
+import SettingsComponent from "../components/settings/Settings";
+import { MdEmail } from "react-icons/md";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
 export default function Settings() {
   const { setWorker, isWorker, setService, language, setLanguage } = useStore();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isOnWorker, setIsOnWorker] = useState(false);
   const [isCheckWorker, setisCheckWorker] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [openNotification, setOpenNotification] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -30,6 +38,10 @@ export default function Settings() {
     { value: "de", label: languageData.language[language]["de"] },
     { value: "pt", label: languageData.language[language]["pt"] },
   ];
+  useEffect(() => {
+    setLoading(true);
+    return delay(() => setLoading(false));
+  }, []);
   useEffect(() => {
     setService({});
     document.title = "Settings | SOS Travelers";
@@ -112,135 +124,70 @@ export default function Settings() {
   };
 
   return (
-    <div className="flex flex-col py-20 lg:py-24 xl:py-24 px-5 md:pl-80">
-      {/* <OptionCard title="Languaje" subtitle="English" icon={WorldIcon} /> */}
-
-      <Link href="/support" className="block">
-        <OptionCard
-          title={languageData.support.title[language]}
-          subtitle={languageData.support.body[language]}
-          icon={MailIcon}
-        ></OptionCard>
-      </Link>
-
-      <h1 className={`text-black text-sm font-semibold mt-3 mb-2 `}>
-        {languageData.titleLanguage[language]}
-      </h1>
-      <Select
-        className="w-full max-w-lg rounded-xl my-1 mb-60"
-        options={optionsSupport}
-        value={selection}
-        // onBlur={() =>
-        //   setSelection({
-        //     value: "en",
-        //     label: "English",
-        //   })
-        // }
-        onChange={(selectedOption) => setValue(selectedOption)}
-        isSearchable={false}
-        styles={{
-          control: (provided) => ({
-            ...provided,
-            borderColor: "#00A0D5",
-            borderRadius: "10px",
-            boxShadow: "none",
-            "&:hover": {
-              borderColor: "#00A0D5",
-            },
-          }),
-          option: (provided, state) => ({
-            ...provided,
-            color: state.isSelected ? "#fff" : "#000",
-            backgroundColor: state.isSelected
-              ? "#00A0D5" // Fondo sólido más fuerte para la opción seleccionada
-              : state.isFocused
-              ? "rgba(0, 119, 182, 0.2)" // Fondo más suave para el hover
-              : "#fff", // Fondo blanco por defecto
-            borderRadius: "5px",
-            transition: "background-color 0.3s ease",
-            "&:hover": {
-              backgroundColor: "rgba(0, 119, 182, 0.2)", // Hover igual al enfoque
-            },
-          }),
-        }}
-      />
-
-      <div className="flex flex-col my-4">
-        {(process.env.NEXT_PUBLIC_NODE_ENV === "Development" ||
-          process.env.NODE_ENV === "dev") && (
-          <OptionSwitch
-            title="Worker Mode"
-            onFunction={workerModeOn}
-            offFunction={workerModeOff}
-            initialState={isWorker}
-            isOn={isOnWorker}
-            setIsOn={setIsOnWorker}
+    <div
+      className={`min-h-screen bg-backgroundP pt-4 px-6  flex flex-col items-center
+              transform transition-all duration-800 ease-out
+              transition-opacity duration-800 ease-out
+             ${loading ? opacityAnimation : displayAnimation}
+            `}
+    >
+      <div className="w-full max-w-md flex flex-col self-center">
+        <Link href="support" className="w-full flex mt-3">
+          <OptionCard
+            title={languageData.support.title[language]}
+            subtitle={languageData.support.body[language]}
+            icon={MdEmail}
           />
-        )}
-        {/* <OptionSwitch
+        </Link>
+        <SettingsComponent />
+
+        <div className="flex flex-col my-4">
+          {(process.env.NEXT_PUBLIC_NODE_ENV === "Development" ||
+            process.env.NODE_ENV === "dev") && (
+            <OptionSwitch
+              title="Worker Mode"
+              onFunction={workerModeOn}
+              offFunction={workerModeOff}
+              initialState={isWorker}
+              isOn={isOnWorker}
+              setIsOn={setIsOnWorker}
+            />
+          )}
+          {/* <OptionSwitch
           title="Notifications"
           onFunction={notificationModeOn}
           offFunction={notificationModeOff}
           isOn={isOnNotification}
           setIsOn={setIsOnNotification}
         /> */}
+        </div>
+
+        <TextModal
+          title={`Activate Worker Mode`}
+          text={["Are you sure you want to activate worker mode?"]}
+          buttonText="Let's go"
+          open={open}
+          setOpen={setOpen}
+          onAccept={confirmChangeWorkerMode}
+          onCancel={cancelChangeWorkerMode}
+        />
+        <TextModal
+          title={`Disable notifications`}
+          text={["Which notifications would you like to deactivate?", ""]}
+          buttonText="Accept"
+          open={openNotification}
+          selectOptions={[
+            "Email notifications",
+            "Push notifications",
+            "WhatsApp notifications",
+            "SOS team notifications",
+            "All",
+          ]}
+          setOpen={setOpenNotification}
+          onAccept={confirmNotification}
+          onCancel={cancelNotification}
+        />
       </div>
-      {/*     <div className="mt-10 flex flex-col">
-       
-        <OutlinedButton text="Delete Account" error />
-      </div> */}
-      <TextModal
-        title={`Activate Worker Mode`}
-        text={["Are you sure you want to activate worker mode?"]}
-        buttonText="Let's go"
-        open={open}
-        setOpen={setOpen}
-        onAccept={confirmChangeWorkerMode}
-        onCancel={cancelChangeWorkerMode}
-      />
-      <TextModal
-        title={`Disable notifications`}
-        text={["Which notifications would you like to deactivate?", ""]}
-        buttonText="Accept"
-        open={openNotification}
-        selectOptions={[
-          "Email notifications",
-          "Push notifications",
-          "WhatsApp notifications",
-          "SOS team notifications",
-          "All",
-        ]}
-        setOpen={setOpenNotification}
-        onAccept={confirmNotification}
-        onCancel={cancelNotification}
-      />
     </div>
   );
 }
-
-// export async function getServerSideProps({ req }) {
-//   const redirect = {
-//     redirect: {
-//       destination: "/login",
-//       permanent: false,
-//     },
-//   };
-//   const userId = req.cookies["auth.user_id"];
-//   if (!userId) return redirect;
-
-//   let user = null;
-//   // try {
-//   //   const response = await UserService.get(userId);
-//   //   user = response.data;
-//   //   if (!user) return redirect;
-//   // } catch (error) {
-//   //   console.error(error);
-//   //   return redirect;
-//   // }
-
-//   return {
-//     props: {
-//       user: user,
-//     },
-//   };
-// }

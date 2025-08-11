@@ -11,7 +11,7 @@ import { fullName } from "@/utils/format";
 export default function Chat() {
   const store = useStore();
   const router = useRouter();
-  const { loginModal, setLoginModal } = store;
+  const { loginModal, setLoginModal, loggedIn } = store;
   const [open, setOpen] = useState(false);
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -112,7 +112,7 @@ export default function Chat() {
         </div>
       )}
 
-      {!userId && (
+      {!loggedIn && (
         <LoginFormModal
           open={open}
           setOpen={setOpen}

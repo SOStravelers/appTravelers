@@ -1,7 +1,11 @@
 import Link from "next/link";
-import { NotificationIcon, ClockIcon } from "@/constants/icons";
+import { NotificationIcon } from "@/constants/icons";
 import NotificationService from "@/services/NotificationService";
-function NotificationCard({ id, day, body, title, link, isRead }) {
+import { useStore } from "@/store";
+
+function NotificationCard({ id, day, body, title, link, isRead, imgUrl }) {
+  const { language } = useStore();
+
   const setIsRead = async (id) => {
     try {
       const response = await NotificationService.setIsRead(id);
@@ -10,32 +14,52 @@ function NotificationCard({ id, day, body, title, link, isRead }) {
       console.log(error);
     }
   };
+
   return (
     <Link
       onClick={() => setIsRead(id)}
       href={link}
-      className="flex p-2 w-full max-w-lg rounded-2xl border-b-2 border-blueBorder my-1 items-center"
+      className="flex p-2 w-full max-w-lg rounded-2xl border-b-2 border-blueBorderDark my-1 items-center"
     >
       <div
-        size={1}
-        className="bg-blueBorder p-2 rounded-full mr-2 flex-shrink-0"
-        style={{ width: "40px", height: "40px" }}
+        className="flex-shrink-0 bg-blueBorder rounded-full mr-2 flex items-center justify-center"
+        style={{ width: "40px", height: "40px", overflow: "hidden" }}
       >
-        <NotificationIcon color="#ffffff" size={20} />
+        {imgUrl ? (
+          <img
+            src={imgUrl}
+            alt="thumbnail"
+            className="w-full h-full object-cover rounded-full"
+          />
+        ) : (
+          <NotificationIcon color="#ffffff" size={20} />
+        )}
       </div>
+
       <div className="flex-grow">
-        <p className={` ${!isRead ? "text-black " : "text-greyText"}`}>
-          {title}
+        <p
+          className={` ${
+            !isRead ? "text-textColor " : "text-textColorGraySoft"
+          }`}
+        >
+          {title[language]}
         </p>
-        <p className="text-sm text-blackText">{body}</p>
+        <p
+          className={` text-sm ${
+            !isRead ? "text-textColor " : "text-textColorGraySoft"
+          }`}
+        >
+          {body[language]}
+        </p>
         <p
           className={`text-xs ${
-            !isRead ? "text-black font-semibold" : "text-greyText"
+            !isRead ? "text-textColor font-semibold" : "text-textColorGraySoft"
           }`}
         >
           {day}
         </p>
       </div>
+
       {!isRead && (
         <div
           style={{

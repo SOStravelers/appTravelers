@@ -36,4 +36,11 @@ export default class ServiceService {
       headers: this.getHeaders(),
     });
   }
+
+  //Actualizar estado activo de un servicio
+  static async changeStatus(id, val) {
+    return axios.put(`${this.baseUrl}/changeStatus/one/${id}`, {
+      isActive: val,
+    });
+  }
 }

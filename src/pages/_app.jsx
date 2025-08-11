@@ -1,113 +1,43 @@
 import "@/styles/globals.css";
 import { useRouter } from "next/router";
-import Navbar from "@/components/layout/Navbar";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Layout from "../layouts/Layout";
-import Sidebar from "@/components/layout/Sidebar";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NotificationService from "@/services/NotificationService";
-import awsmobile from "@/aws-exports";
-import { Amplify } from "aws-amplify";
-import { useEffect } from "react";
-import { LogoSosRelleno } from "@/constants/icons";
-// Importa las funciones necesarias para renderizar el SVG a cadena
+import GoogleOneTap from "@/hooks/GoogleOneTap";
 import { renderToString } from "react-dom/server";
-import { routesNavbar, routesSidebar } from "@/utils/variables";
+import { LogoSosRelleno, LogoSosWhite } from "@/constants/icons";
 import Script from "next/script";
 import GoogleAnalytics from "@bradgarropy/next-google-analytics";
+import Cookies from "js-cookie";
+import { alertToast } from "@/utils/alerts.jsx";
+globalThis.alertToast = alertToast;
 export default function App({ Component, pageProps }) {
   const router = useRouter();
-  // useEffect(() => {
-  //   console.log("buenas tardes");
-  //   if ("serviceWorker" in navigator) {
-  //     console.log("Service Worker is supported");
-  //     const registerServiceWorker = () => {
-  //       navigator.serviceWorker.register("/sw.js").then(
-  //         function (registration) {
-  //           console.log(
-  //             "Service Worker registration successful with scope: ",
-  //             registration.scope
-  //           );
-  //           // Solicitar permiso para enviar notificaciones
-  //           console.log("vamos a los permisos");
-  //           Notification.requestPermission().then(async function (permission) {
-  //             if (permission === "granted") {
-  //               console.log("Notification permission granted.");
-  //               // Suscribirse a las notificaciones push
-  //               const responsePublicKey =
-  //                 await NotificationService.getPublicKey();
-  //               console.log(
-  //                 "vamos a la suscripcion",
-  //                 responsePublicKey.data.publicKey
-  //               );
-  //               const data = responsePublicKey.data;
-  //               if (!data) {
-  //                 console.log("No se pudo obtener la clave pública");
-  //                 return;
-  //               }
-  //               const publicKey = urlBase64ToUint8Array(data.publicKey);
-  //               registration.pushManager
-  //                 .subscribe({
-  //                   userVisibleOnly: true,
-  //                   applicationServerKey: publicKey,
-  //                 })
-  //                 .then(async function (subscription) {
-  //                   console.log("se viene la subcripcion", subscription);
-  //                   await NotificationService.createSub(subscription);
-  //                 });
-  //             } else {
-  //               console.log("Unable to get permission to notify.");
-  //             }
-  //           });
-  //         },
-  //         function (err) {
-  //           console.log("Service Worker registration failed: ", err);
-  //         }
-  //       );
-  //     };
+  const [darkMode, setDarkMode] = useState(false);
 
-  //     if (document.readyState === "complete") {
-  //       registerServiceWorker();
-  //     } else {
-  //       window.addEventListener("load", registerServiceWorker);
-  //     }
-  //   }
-  // }, []);
+  /* -------- tema oscuro -------- */
+  useEffect(() => {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setDarkMode(prefersDark);
+  }, []);
 
-  // function urlBase64ToUint8Array(base64String) {
-  //   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-  //   const base64 = (base64String + padding)
-  //     .replace(/-/g, "+")
-  //     .replace(/_/g, "/");
-  //   const rawData = window.atob(base64);
-  //   const outputArray = new Uint8Array(rawData.length);
-  //   for (let i = 0; i < rawData.length; ++i) {
-  //     outputArray[i] = rawData.charCodeAt(i);
-  //   }
-  //   return outputArray;
-  // }
+  useEffect(() => {
+    const root = document.documentElement;
+    const cookieTheme = Cookies.get("theme");
+    if (cookieTheme === "dark") root.classList.add("dark");
+    else if (cookieTheme === "light") root.classList.remove("dark");
+    else darkMode ? root.classList.add("dark") : root.classList.remove("dark");
+  }, [darkMode]);
 
-  const renderNavbar = () => {
-    if (routesNavbar(router)) {
-      return <Navbar />;
-    }
-  };
+  const svgString = darkMode
+    ? renderToString(<LogoSosWhite />)
+    : renderToString(<LogoSosRelleno />);
 
-  const renderSidebar = () => {
-    if (routesSidebar(router)) {
-      return <Sidebar />;
-    }
-  };
-  // Convierte el componente SVG a cadena
-  const svgString = renderToString(<LogoSosRelleno />);
-  let lang;
-  if (typeof window !== "undefined") {
-    lang = window.navigator.userLanguage || window.navigator.language;
-  }
-
-  // Lista de rutas que quieres indexar
+  /* -------- SEO / indexación -------- */
   const indexableRoutes = [
     "/",
     "/login",
@@ -115,25 +45,27 @@ export default function App({ Component, pageProps }) {
     "/terms-of-service",
     "/use-policy",
   ];
-
-  // Lista de dominios que quieres indexar
   const indexableDomains = [
     "https://sostvl.com",
     "https://business.sostvl.com",
   ];
-
-  // Verifica si la ruta actual debe ser indexada
-  const shouldIndex = indexableRoutes.includes(router.pathname);
-
-  // Verifica si el dominio actual debe ser indexado
+  const shouldIndexRoute = indexableRoutes.includes(router.pathname);
   const shouldIndexDomain =
     typeof window !== "undefined" &&
     indexableDomains.includes(window.location.origin);
+
+  const lang =
+    typeof window !== "undefined"
+      ? window.navigator.userLanguage || window.navigator.language
+      : undefined;
+
+  /* -------- render -------- */
   return (
     <>
+      <GoogleOneTap />
+
       <Head>
-        {/* Agrega el logo en el encabezado */}
-        {!shouldIndex || !shouldIndexDomain ? (
+        {!shouldIndexRoute || !shouldIndexDomain ? (
           <meta name="robots" content="noindex" />
         ) : null}
         <link
@@ -141,31 +73,37 @@ export default function App({ Component, pageProps }) {
           href={`data:image/svg+xml,${encodeURIComponent(svgString)}`}
           type="image/svg+xml"
         />
-        {/* Establece el título de la página */}
-        <title>{router.asPath ? router.asPath : "SOS Travelers"}</title>
+        <title>{router.asPath || "SOS Travelers"}</title>
       </Head>
+
       {/* Google Analytics */}
       <Script
         strategy="afterInteractive"
         src="https://www.googletagmanager.com/gtag/js?id=G-RP0PLGCYV9"
       />
-      <Script strategy="afterInteractive" id="google-analytics">
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-
           gtag('config', 'G-RP0PLGCYV9');
         `}
       </Script>
       <GoogleAnalytics measurementId="G-RP0PLGCYV9" />
-      {/* Layout */}
-      <Layout lang={lang}>
-        {renderSidebar()}
-        <ToastContainer position="top-center" theme="dark" />
+
+      {/* /share/[id] no usa Layout */}
+      {Component.noLayout ? (
         <Component {...pageProps} />
-        {renderNavbar()}
-      </Layout>
+      ) : (
+        <Layout lang={lang}>
+          <ToastContainer
+            position="top-right"
+            theme="dark"
+            containerId="bulk"
+          />
+          <Component {...pageProps} />
+        </Layout>
+      )}
     </>
   );
 }

@@ -2,29 +2,181 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
+/* 👇 Asegura que el fondo esté SIEMPRE aplicado */
+html {
+  background-color: var(--color-background-primary);
+}
+body {
+  background-color: var(--color-background-primary);
+  color: var(--color-text, #000); /* opcional */
+}
+/* bloquear seleccion de texto */
+p,
+h1 {
+  @apply select-none;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  
+  --color-background-primary:#F7F7F7;
+  --color-background-secondary:#f8f8f8fe;
+  --color-background-modal:#fffffffe;
+  --color-background-card:#fffffffe;
+  --color-background-card-secondary:#dadada;
+  --color-background-navbar:#fffffffe;
+  --color-text-color:#151515fe;
+  --color-text-colorI:#ffffffe1;
+  --color-text-gray:#5c5b5b;
+    --color-text-gray-soft:#929292;
+  --color-text-blueBorderDark:#00A0D5;
+    --color-text-blueBorderDark-rgb: 0, 160, 213;
+  --color-text-green:#16a34a;
+  --color-text-gray-reverse:#49494a;
+  --color-chip-primary:#d8dadd;
+  --color-input:#eaecf1;
+  --color-error:#cd1414;
+  --color-warning:#e17912;
+  --color-button-light:#001C25;
+  --color-button-heavy:#0e252d;
+   --color-button-gray:#e8e8eb;
 }
+
+.dark {
+  --color-background-primary:#0e252d;
+  --color-background-secondary:#102c36;
+  --color-background-navbar:#001C25;
+  --color-background-modal:#223741;
+  --color-background-card:#28424e;
+  --color-background-card-secondary:#28424e;
+  --color-text-color:#e7e4e4;
+  --color-text-colorI:#151515fe;
+  --color-text-gray:#d7d2d2;
+    --color-text-gray-soft:#5c5b5b;
+  --color-text-blueBorderDark:#ffffffe1;
+  --color-text-blueBorderDark-rgb: 255, 255, 255;
+  --color-text-green:#4ade80;;
+  --color-text-gray-reverse:#cecece;
+  --color-chip-primary:#dce2e7;
+  --color-input:#1f2a30;
+  --color-error:#ec7e7e;
+  --color-warning:#e1d11c;
+  --color-button-light:#314b57;
+  --color-button-heavy:#001C25;
+  --color-button-gray:#28424e;
+}
+
+.border-blue-border-dark {
+  border-color: var(--color-text-blueBorderDark);
+}
+
+.bg-blue-border-dark-opacity {
+  background-color: rgba(var(--color-text-blueBorderDark-rgb), 0.1); /* 50% opacidad */
+}
+
+.logo-light {
+  filter: brightness(4) saturate(0);
+}
+
+.mini-calendar {
+  font-size: 13px !important;
+  --rdp-cell-size: 24px !important;
+  max-width: 270px !important;
+}
+.dark .mini-calendar {
+  color: white !important;
+}
+
+
+
+.mini-calendar .rdp {
+  padding: 2px !important;
+}
+.mini-calendar .rdp-caption {
+  font-size: 10px !important;
+  padding: 2px 0 !important;
+}
+.mini-calendar .rdp-caption_label {
+  font-size: 13px !important;  /* <<<<< ESTE ES EL QUE ACHICA "Junio 2025" */
+  padding: 2px 0 !important;
+}
+.mini-calendar .rdp-head_cell,
+.mini-calendar .rdp-day {
+  font-size: 14px !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.mini-calendar .rdp-nav_button {
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 10px !important;
+  padding: 0 !important;
+}
+
+
 
 body {
   color: rgb(var(--foreground-rgb));
 }
 
+/* Scrollbar visible y delgada solo en escritorio */
+@media (min-width: 768px) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;      /* vertical */
+    height: 6px;     /* horizontal */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+}
+
+/* Ocultar scrollbar completamente en mobile */
+@media (max-width: 767px) {
+  * {
+    scrollbar-width: none; /* Firefox */
+  }
+
+  ::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Edge */
+  }
+}
+
+/* Estilos para datepicker RDP */
 .rdp {
   --rdp-cell-size: 40px !important;
   --rdp-accent-color: #00A0D5 !important;
   --rdp-background-color: #e7edff !important;
-  /* Switch to dark colors for dark themes */
   --rdp-accent-color-dark: #1cdae5 !important;
   --rdp-background-color-dark: #0063d5 !important;
-  /* Outline border for focused elements */
   --rdp-outline: 2px solid var(--rdp-accent-color) !important;
-  /* Outline border for focused and selected elements */
   --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75) !important;
 }
 
+/* Efectos de texto */
 .neon-green {
   color: #00A0D5;
   text-shadow: 0 0 10px #00A0D5, 0 0 1px #00A0D5;
@@ -34,6 +186,7 @@ body {
   text-shadow: 0 0 10px #1CDAE5, 0 0 1px #1CDAE5;
 }
 
+/* Estilos del chat */
 .chat {
   --rad: 20px;
   --rad-sm: 3px;
@@ -41,70 +194,72 @@ body {
   display: flex;
   flex-direction: column;
   padding: 5px;
-  height: 900px; 
+  height: 900px;
   width: 100%;
   margin: 0;
   overflow: auto;
   border-radius: 6px;
   border: 2px solid #00A0D5;
-  @media (max-height: 1200px) {
+}
+
+@media (max-height: 1200px) {
+  .chat {
     height: 650px;
   }
-  @media (max-height: 1000px) {
+}
+@media (max-height: 1000px) {
+  .chat {
     height: 550px;
   }
-  @media (max-height: 900px) {
+}
+@media (max-height: 900px) {
+  .chat {
     height: 490px;
   }
-  @media (max-height: 800px) {
+}
+@media (max-height: 800px) {
+  .chat {
     height: 350px;
   }
-  @media (max-height: 700px) {
-    height: 320px;
-  } 
-  @media (max-height: 650px) {
-    height: 290px;
-  } 
 }
+@media (max-height: 700px) {
+  .chat {
+    height: 320px;
+  }
+}
+@media (max-height: 650px) {
+  .chat {
+    height: 290px;
+  }
+}
+
+/* Mensajes del chat */
 .msg {
   position: relative;
   max-width: 75%;
   padding: 7px 15px;
   margin-bottom: 2px;
 }
-.swiper-pagination-bullet {
-  background: #00A0D5;
-}
 .msg.sent {
   border-radius: var(--rad) var(--rad-sm) var(--rad) var(--rad);
   background: #001C25;
   color: #fff;
-  /* moves it to the right */
   margin-left: auto;
 }
-
 .msg.rcvd {
   border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad);
   background: #00A0D5;
   color: #fff;
-  /* moves it to the left */
   margin-right: auto;
 }
-
-/* Improve radius for messages group */
-
 .msg.sent:first-child,
 .msg.rcvd + .msg.sent {
   border-top-right-radius: var(--rad-sm);
 }
-
 .msg.rcvd:first-child,
 .msg.sent + .msg.rcvd {
   border-top-left-radius: var(--rad-sm);
 }
-
-/* time */
-
 .msg::before {
   content: attr(data-time);
   font-size: 0.8rem;
@@ -112,24 +267,94 @@ body {
   bottom: 100%;
   color: #888;
   white-space: nowrap;
-  /* Hidden by default */
   display: none;
 }
-
 .msg.sent::before {
   right: 15px;
 }
-
 .msg.rcvd::before {
   left: 15px;
 }
-
-/* Show time only for first message in group */
-
 .msg:first-child::before,
 .msg.sent + .msg.rcvd::before,
 .msg.rcvd + .msg.sent::before {
-  /* Show only for first message in group */
   display: block;
 }
 
+/* Estilo de los bullets del Swiper */
+.swiper-pagination-bullet {
+  background: #00A0D5;
+}
+
+/* Scrollbar completamente oculta (si la necesitas en componentes específicos) */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE y Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+}
+
+
+/* VARIABLES PARA PAGINA SIN CONEXION A INTERNET  */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+.animate-fadeIn {
+  animation: fadeIn 0.7s cubic-bezier(0.2,0.8,0.2,1) both;
+}
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(-10px);}
+}
+.animate-bounce-slow {
+  animation: bounce-slow 2.5s infinite;
+}
+
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+.fade-slide-in {
+  animation: fadeSlideIn 0.2s ease-out forwards;
+}
+
+.fade-slide-out {
+  animation: fadeSlideOut 0.2s ease-in forwards;
+}
+
+@keyframes spin-slow { to { transform: rotate(360deg) } }
+.animate-spin-slow { animation: spin-slow 1.2s linear infinite; }
+
+/* Para inputs con nuestro icono derecho */
+.has-custom-calendar::-webkit-calendar-picker-indicator{
+  opacity:0; /* oculto pero clickeable */
+}
+
+/* (opcional) también quita el botón de limpiar en algunos navegadores */
+.has-custom-calendar::-webkit-clear-button{
+  display:none;
+}

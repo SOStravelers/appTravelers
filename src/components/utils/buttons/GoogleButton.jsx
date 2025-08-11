@@ -1,29 +1,52 @@
 import React from "react";
-import { useStore } from "/src/store/index";
-import clsx from "clsx";
+import { useStore } from "@/store"; // ajustado correctamente
 import { useRouter } from "next/router";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { GoogleIcon } from "@/constants/icons";
+import { signIn } from "next-auth/react";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import { FcGoogle } from "react-icons/fc";
 
-function GoogleButton() {
+function GoogleButton({ dark = "darkHeavy" }) {
   const router = useRouter();
+  const currentPath = router.pathname;
+
   const login = async () => {
-    const { front } = useStore.getState().urls;
-    const result = await signIn("google");
-    // Puedes manejar el resultado de la autenticación aquí
-    if (result && result.error) {
-      console.error("Error al iniciar sesión:", result.error);
+    try {
+      // const result = await signIn("google", {
+      //   redirect: false, // manejamos el redirect manualmente
+      // });
+      signIn("google", {
+        callbackUrl: "/",
+      });
+
+      // if (result?.ok) {
+      //   // Si viene de login o register → ir a "/"
+      //   if (["/login", "/register", "/guest-settings"].includes(currentPath)) {
+      //     router.push("/");
+      //   } else {
+      //     router.push(currentPath); // volver a donde estaba
+      //   }
+      // } else {
+      //   // Falló login → enviar a /login
+      //   router.push("/login");
+      // }
+    } catch (err) {
+      console.error("Error durante login con Google", err);
+      router.push("/login");
     }
   };
+
   return (
-    <button
-      className="border-2 border-solid max-w-lg text-lg lg:text-lg rounded-xl py-3 w-full cursor-pointer bg-greyButton border-darkBlue text-black rounded-xl my-2 flex justify-center items-center px-3"
-      type="button"
+    <OutlinedButton
+      text="Continue with Google"
+      icon={FcGoogle}
       onClick={login}
-    >
-      <GoogleIcon />
-      <p className="ml-1  text-base ">Continue with Google</p>
-    </button>
+      textColor="text-white"
+      dark={dark}
+      align="center"
+      padding=" py-2"
+      minWidth="230px"
+      textSize="text-sm"
+    />
   );
 }
 

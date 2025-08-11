@@ -3,83 +3,147 @@ import StripeForm from "@/components/utils/payments/StripeForm";
 import { useStore } from "@/store";
 import StripeService from "@/services/StripeService";
 import { useRouter } from "next/router";
+import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
+import languageData from "@/language/payment.json";
+import {
+  delay,
+  opacityAnimation,
+  displayAnimation,
+} from "@/utils/delayFunction";
+
 export default function Stripe() {
   const [clientSecret, setClientSecret] = useState(null);
+  const [intentType, setIntentType] = useState(null);
+  const [customer, setCustomer] = useState(null);
+  const [data, setData] = useState(null);
+  const [paymentIntent, setPaymentIntent] = useState(null);
   const router = useRouter();
   const initialized = useRef(false);
-  const { service } = useStore();
-  function getFinalCost(service, currency) {
-    console.log("el ");
-    // Busca el objeto de precio con la moneda proporcionada
-    const priceObject = service.price.find(
-      (price) => price.currency === currency
-    );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-    // Si se encontró el objeto de precio, devuelve el costo final
-    if (priceObject) {
-      return priceObject.finalCost;
+  const { service, currency, language } = useStore();
+
+  function getFinalCost() {
+    if (
+      (service.typeService === "tour" || service.typeService === "product") &&
+      service.selectedData
+    ) {
+      return service.selectedData.totalPrice;
+    } else {
+      throw new Error("Datos insuficientes para crear el pago.");
     }
-
-    // Si no se encontró el objeto de precio, devuelve null
-    return null;
   }
 
   useEffect(() => {
+    setLoading(true);
+    return delay(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
     document.title = "Your Payment | SOS Travelers";
-    if (
-      service == null ||
-      service == undefined ||
-      service == "" ||
-      Object.keys(service).length === 0
-    ) {
-      router.push("/");
-      return;
-    }
-    if (!initialized.current) {
-      initialized.current = true;
-      createPaymentIntent();
-    } else {
-      initialized.current = false;
-    }
+
+    const checkAccess = () => {
+      if (typeof window === "undefined") return;
+      console.log("wena-->", localStorage.getItem("fromContactInfo"));
+      console.log("wena 2->>", service);
+      console.log("wena 3->>", Object.keys(service).length);
+      const fromContactInfo =
+        localStorage.getItem("fromContactInfo") === "true";
+
+      if (!fromContactInfo || !service || Object.keys(service).length === 0) {
+        console.log("set Error");
+        setError(true);
+        return;
+      }
+
+      if (!initialized.current) {
+        initialized.current = true;
+        createPaymentIntent();
+      }
+    };
+
+    delay(checkAccess);
   }, []);
 
   const createPaymentIntent = async () => {
     try {
-      if (!service) {
-        throw new Error("El servicio no está definido.");
-      }
-
-      const amount = getFinalCost(service, service.currency) * 100;
-      const currency = service.currency?.toLowerCase();
-
-      if (!amount || !currency) {
+      if (!service || !currency) {
         throw new Error("Datos insuficientes para crear el pago.");
       }
 
-      const response = await StripeService.createPaymentIntent(
-        {
-          amount,
-          currency,
-          service: service.serviceName,
-          subservice: service.nameSubservice,
-          date: service.date,
-          startTime: service.startTime,
-          clientsNumber: service.clientsNumber,
-          language: service.language,
-        },
-        true
-      );
+      const amount = getFinalCost();
+      const currencyValue = ["brl", "usd", "eur"].includes(
+        currency?.toLowerCase()
+      )
+        ? currency.toLowerCase()
+        : "brl";
 
-      console.log("Respuesta de createIntent:", response.data);
+      const laData = {
+        amount,
+        currency: currencyValue,
+        clientData: service.clientData,
+        startTime: service.startTime,
+        selectedData: service.selectedData,
+        language: language,
+        subservice: service._id,
+      };
+      setData(laData);
+      const response = await StripeService.createPaymentIntent(laData, true);
+      console.log("wena54", response.data);
       setClientSecret(response.data.clientSecret);
+      setIntentType(response.data.intentType);
+      setCustomer(response.data.customer);
+      setPaymentIntent(response.data.paymentIntent);
     } catch (error) {
       console.error("Error al crear el PaymentIntent:", error.message);
+      setError(true);
     }
   };
 
-  return (
-    <section className="py-20 md:py-24 px-5 md:pl-80 w-full max-w-2xl">
-      {clientSecret && <StripeForm clientSecret={clientSecret} />}
-    </section>
-  );
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-24 text-center px-4">
+        <p className="text-lg font-semibold text-textColor mb-4">
+          {languageData.stripe.notAvailable[language]}
+        </p>
+
+        <OutlinedButton
+          text="Volver al inicio"
+          onClick={() => router.push("/")}
+          textColor="text-white"
+          dark={"darkLight"}
+          buttonCenter={true}
+          textSize="text-xs"
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div
+        className={`px-6 flex flex-col items-center
+        ${loading ? opacityAnimation : displayAnimation}
+      `}
+      >
+        {clientSecret ? (
+          <StripeForm
+            clientSecret={clientSecret}
+            intentType={intentType}
+            customer={customer}
+            paymentIntent={paymentIntent}
+            data={data}
+            onPaymentSuccess={() => {
+              localStorage.removeItem("fromContactInfo");
+            }}
+          />
+        ) : (
+          <>
+            <div className="fixed inset-0 flex items-center justify-center bg-backgroundP z-10 ">
+              <div className="w-10 h-10 border-4 border-t-transparent border-textColor rounded-full animate-spin"></div>
+            </div>
+          </>
+        )}
+      </div>
+    );
+  }
 }

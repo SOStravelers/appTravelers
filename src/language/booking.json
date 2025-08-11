@@ -74,6 +74,13 @@
       "de": "Heute",
       "pt": "Hoje"
     },
+    "nextBooking": {
+      "es": "Tu próximo evento",
+      "en": "Your next booking",
+      "pt": "Seu próximo evento",
+      "fr": "Votre prochain événement",
+      "de": "Dein nächstes Ereignis"
+    },
     "nextDays": {
       "en": "Next Days",
       "es": "Próximos Días",
@@ -82,6 +89,13 @@
       "pt": "Próximos Dias"
     },
     "noBookings": {
+      "next": {
+        "en": "No bookings for the next days",
+        "es": "No hay reservas para los próximos días",
+        "fr": "Aucune réservation pour les prochains jours",
+        "de": "Keine Buchungen für die nächsten Tage",
+        "pt": "Sem reservas para os próximos dias"
+      },
       "nextDays": {
         "en": "No bookings for the next days",
         "es": "No hay reservas para los próximos días",

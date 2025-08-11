@@ -1,27 +1,15 @@
 import axios from "axios";
 import { useStore } from "../store/index";
 import Cookies from "js-cookie";
-
+let access_token = Cookies.get("auth.access_token");
+import { buildQueryParams } from "@/helpers/apiHelpers";
 export default class BookingService {
-  static resource = "bookingAuth";
+  static resource = "bookings";
 
   static get baseUrl() {
     const { api } = useStore.getState().urls;
     return `${api}${BookingService.resource}`;
   }
-
-  static async create(params) {
-    return axios.post(`${this.baseUrl}`, params, {
-      headers: this.getHeaders(),
-    });
-  }
-  static async createWorkerBooking(params) {
-    console.log("agendando");
-    return axios.post(`${this.baseUrl}/worker/create`, params, {
-      headers: this.getHeaders(),
-    });
-  }
-
   static getHeaders() {
     let access_token = Cookies.get("auth.access_token");
     return {
@@ -29,17 +17,84 @@ export default class BookingService {
     };
   }
 
-  // USER BOOKINGS
+  static async create(params) {
+    console.log("hay token", access_token);
+    if (access_token) {
+      return axios.post(`${this.baseUrl}/create`, params, {
+        headers: this.getHeaders(),
+      });
+    } else {
+      return axios.post(`${this.baseUrl}/noAuth/create`, params, {
+        headers: this.getHeaders(),
+      });
+    }
+  }
 
-  static async getBookingsByMonth(date) {
-    return axios.get(
-      `${this.baseUrl}/client/month?date=${date}&page=1&limit=100`,
+  static async getByToken(id) {
+    return axios.get(`${this.baseUrl}/purchase/data/?token=${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getMyBooking(id) {
+    return axios.get(`${this.baseUrl}/mybooking/${id}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getBookingsByRange(data) {
+    const queryString = buildQueryParams(data);
+    return axios.get(`${this.baseUrl}/list/client?${queryString}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getNextBooking() {
+    return axios.get(`${this.baseUrl}/next/client`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async getByRange(data) {
+    const queryString = buildQueryParams(data);
+    return axios.get(`${this.baseUrl}/list/admin-user?${queryString}`);
+  }
+  static async getHistory(params) {
+    const queryString = buildQueryParams(params);
+    return axios.get(`${this.baseUrl}/client/history?${queryString}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  static async confirm(id) {
+    return axios.put(`${this.baseUrl}/confirm/${id}`);
+  }
+  static async cancel(id) {
+    return axios.put(`${this.baseUrl}/cancel/${id}`);
+  }
+  //Cancela booking de user mediante token de -> /purchase/:token
+  static async cancelByToken(token, id) {
+    return axios.put(`${this.baseUrl}/cancel/id/${token}`, {});
+  }
+  //Cancela booking de user mediante id de booking -> /my-booking/:id
+  static async cancelById(id) {
+    return axios.put(
+      `${this.baseUrl}/cancel/booking/${id}`,
+      {},
       {
         headers: this.getHeaders(),
       }
     );
   }
 
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
+  ///-----------------------------
   static async getBookingsByDay(date) {
     return axios.get(
       `${this.baseUrl}/client/day?date=${date}&page=1&limit=100`,
@@ -196,6 +251,12 @@ export default class BookingService {
   static async getWeekWorker(date) {
     console.log("...getWeekWorker");
     return axios.get(`${this.baseUrl}/worker/week?date=${date}`, {
+      headers: this.getHeaders(),
+    });
+  }
+  static async createWorkerBooking(params) {
+    console.log("agendando");
+    return axios.post(`${this.baseUrl}/worker/create`, params, {
       headers: this.getHeaders(),
     });
   }

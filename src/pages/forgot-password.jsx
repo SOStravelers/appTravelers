@@ -6,7 +6,6 @@ import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
 import OutlinedInput from "@/components/utils/inputs/OutlinedInput";
 import SolidButton from "@/components/utils/buttons/SolidButton";
 import InputText from "@/components/utils/inputs/InputText";
-import { toast } from "react-toastify";
 import {
   delay,
   opacityAnimation,
@@ -67,7 +66,11 @@ export default function ChangePassword() {
         }
       }
     } catch (err) {
-      console.log(err);
+      if (err.status == 500) {
+        alertToast({});
+      } else {
+        alertToast({ message: err?.response?.data?.error || "Error" });
+      }
       setErrorMsg(err.response?.data?.error);
     }
   };
@@ -81,7 +84,7 @@ export default function ChangePassword() {
       );
       if (response.status === 200) {
         startCounter();
-        toast.success("Code Send");
+        alertToast({ message: "Code Send", type: "success" });
         setButtonDisabled(true);
         console.log(response);
 
@@ -98,7 +101,11 @@ export default function ChangePassword() {
         }, 1000);
       }
     } catch (err) {
-      console.log(err);
+      if (err.status == 500) {
+        alertToast({});
+      } else {
+        alertToast({ message: err?.response?.data?.error || "Error" });
+      }
     }
   };
 
@@ -116,9 +123,9 @@ export default function ChangePassword() {
     >
       {codeSend ? (
         <div className="max-w-lg">
-          <p className="text-center text-textColor mb-5">
+          <p className="text-center my-4 text-textColor mb-5">
             Please check your email: <span> </span>
-            <span className="font-semibold">{email}</span>,
+            <span className=" mt-4 font-semibold">{email}</span>
           </p>
           <p className="text-center text-textColor mb-5 text-md">
             for the verification code so you can reset your password.
@@ -132,30 +139,39 @@ export default function ChangePassword() {
           <p className="text-red text-center my-2">{errorMsg}</p>
           <OutlinedButton
             text="Verify"
-            px={0}
             dark="darkLight"
-            py="py-2"
-            disabled={buttonDisabled}
-            margin="my-4"
+            onClick={handleVerifyCode}
             textSize="text-xs"
             textColor="text-white"
-            buttonCenter={true}
-            onClick={handleVerifyCode}
+            align="center"
+            minWidth="200px"
+            padding="px-2 py-2"
+            margin="mt-6"
           />
 
           <OutlinedButton
             text="Resend code"
-            px={0}
             dark="darkLight"
-            py="py-2"
             disabled={buttonDisabled}
-            margin="my-6"
-            textSize="text-xs"
-            textColor="text-white"
-            buttonCenter={true}
             onClick={handleResendCode}
+            textColor="text-white"
+            textSize="text-xs"
+            align="center"
+            minWidth="200px"
+            padding="px-2 py-2"
+            margin="mt-6"
           />
-          {isDisabled && <span>{countdown}</span>}
+          {isDisabled && (
+            <>
+              <span className="text-md flex items-center mt-5 justify-center text-textColor">
+                Review yor email, and set the code!
+              </span>
+              <span className="text-md flex items-center mt-5 justify-center text-textColor">
+                Review yor email! or wait {countdown} seconds if you want to
+                resend code
+              </span>
+            </>
+          )}
         </div>
       ) : (
         <>

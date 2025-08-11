@@ -9,7 +9,7 @@ import OrderModal from "@/components/utils/modal/OrderModal";
 import PurchaseDetail from "@/pages/purchase/PurchaseDetail";
 import ConfirmModalClient from "@/components/utils/modal/ConfirmModalClient";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
-import { alertError } from "@/utils/alerts.jsx";
+import { alertToast } from "@/utils/alerts.jsx";
 import VacationErrorPanel from "@/components/utils/error/VacationErrorPanel";
 import {
   delay,
@@ -58,7 +58,7 @@ export default function MyBooking() {
       console.error(err);
       setError(err?.response?.data?.error || "fetch_failed");
       // opcional: toast
-      alertError({ message: "No se pudo cargar la reserva" });
+      alertToast({ message: "No se pudo cargar la reserva" });
     }
   }, [router.isReady, router.query.id, language]);
   useEffect(() => {
@@ -74,9 +74,9 @@ export default function MyBooking() {
       setOpenConfirmModal(false);
     } catch (err) {
       if (err.status == 500) {
-        alertError({ message: "Error to change, try later" });
+        alertToast({ message: "Error to change, try later" });
       } else {
-        alertError({ message: err.response?.data?.error || "Error" });
+        alertToast({ message: err.response?.data?.error || "Error" });
       }
     }
   };

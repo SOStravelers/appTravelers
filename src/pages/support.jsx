@@ -12,7 +12,6 @@ import { Field, Form } from "houseform";
 import { z } from "zod";
 import InputText from "@/components/utils/inputs/InputText";
 import CustomSelector from "@/components/utils/selector/CustomSelector";
-import { toast } from "react-toastify";
 import {
   delay,
   opacityAnimation,
@@ -66,22 +65,14 @@ export default function SupportPage() {
       console.log(response.data);
       setFormKey((prevKey) => prevKey + 1);
       setSended(true);
-      toast.success("Message sent Successfully", {
-        position: "top-right",
-        // Configuración de la notificación de éxito
-      });
-    } catch (error) {
-      // Manejo de errores
-      let message = "Error sending message";
-      if (error?.response?.status === 409)
-        message = error?.response?.data?.message;
-      else if (error?.response?.status === 400)
-        message = error?.response?.data?.result;
 
-      toast.error(message, {
-        position: "top-right",
-        // Configuración de la notificación de error
-      });
+      alertToast({ message: "Message sent Successfully", type: "success" });
+    } catch (err) {
+      if (err.status == 500) {
+        alertToast({});
+      } else {
+        alertToast({ message: err?.response?.data?.error || "Error" });
+      }
     } finally {
       setIsSubmitting(false); // Establece el estado de envío del formulario a false después de finalizar
     }

@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { MoneyIcon, CheckIcon } from "@/constants/icons";
 import Image from "next/image";
 import { useStore } from "@/store";
-import { toast } from "react-toastify";
 import languageData from "@/language/payment.json";
 
 export default function Payment() {
@@ -62,11 +61,6 @@ export default function Payment() {
         break;
     }
     router.push(url);
-  };
-
-  const bookInCash = async () => {
-    console.log("book in cash ");
-    toast.info("Função indisponível por enquanto.");
   };
 
   return (

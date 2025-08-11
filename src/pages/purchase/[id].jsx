@@ -55,7 +55,7 @@ export default function PurchasePage() {
       cancelData.isBefore = true;
       setPaymentData(cancelData);
     } catch (err) {
-      alertError({});
+      alertToast({});
       setError(err?.response?.data?.error || "fetch_failed"); // 🔹 setea error para mostrar VacationErrorPanel
     }
   }, [router.isReady, router.query.id, language]);
@@ -76,9 +76,9 @@ export default function PurchasePage() {
       setOpenConfirmModal(false);
     } catch (err) {
       if (err.status == 500) {
-        alertError({ message: "Error to change, try later" });
+        alertToast({});
       } else {
-        alertError({ message: err?.response?.data?.error || "Error" });
+        alertToast({ message: err?.response?.data?.error || "Error" });
       }
     }
   };

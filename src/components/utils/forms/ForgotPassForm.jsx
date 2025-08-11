@@ -16,18 +16,18 @@ function ForgotPassForm({ errorMsg, setEmail, handleVerifyMail }) {
         className="w-full"
       />
       {errorMsg && (
-        <p className="text-center text-red text-sm mt-2">{errorMsg}</p>
+        <p className="text-center text-red-300 text-sm mt-2">{errorMsg}</p>
       )}
 
       <OutlinedButton
-        text="Change Password"
-        px={0}
+        text="Send email"
         dark="darkLight"
-        py="py-2"
-        margin="my-4"
         textSize="text-xs"
         textColor="text-white"
-        buttonCenter={true}
+        align="center"
+        minWidth="200px"
+        padding="px-2 py-2"
+        margin="mt-6"
         onClick={handleVerifyMail}
       />
     </form>

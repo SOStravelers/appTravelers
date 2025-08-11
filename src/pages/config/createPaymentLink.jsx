@@ -3,7 +3,6 @@ import { Form, Field } from "houseform";
 import { z } from "zod";
 import InputText from "@/components/utils/inputs/InputText";
 import OutlinedButton from "@/components/utils/buttons/OutlinedButton";
-import { toast } from "react-toastify";
 import { Rings } from "react-loader-spinner";
 import StripeService from "@/services/StripeService";
 import {
@@ -73,17 +72,13 @@ export default function CreateCheckoutLink() {
       if (data.url) {
         setCheckoutUrl(data.url);
         setShowModal(true);
-      } else {
-        toast.error(data.error || "Error generando link", {
-          position: toast.POSITION.BOTTOM_RIGHT,
-          autoClose: 1500,
-        });
       }
-    } catch (error) {
-      toast.error("Error inesperado", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 1500,
-      });
+    } catch (err) {
+      if (err.status == 500) {
+        alertToast({});
+      } else {
+        alertToast({ message: err?.response?.data?.error || "Error" });
+      }
     } finally {
       setLoading(false);
     }
@@ -311,13 +306,12 @@ export default function CreateCheckoutLink() {
                 <OutlinedButton
                   text="Generar link"
                   disabled={!isValid}
-                  px={2}
-                  py="py-2"
-                  dark="darkHeavy"
+                  textSize="text-xs"
                   textColor="text-white"
-                  textSize="text-sm"
-                  margin="mt-4"
-                  buttonCenter={true}
+                  align="center"
+                  minWidth="200px"
+                  padding="px-2 py-2"
+                  margin="mt-6"
                 />
               )}
 

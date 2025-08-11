@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { FaRegCopy, FaCheckCircle } from "react-icons/fa";
-import { toast } from "react-toastify";
 
 export default function CheckoutLinkModal({ isOpen, onClose, url }) {
   useEffect(() => {
@@ -14,10 +13,7 @@ export default function CheckoutLinkModal({ isOpen, onClose, url }) {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(url).then(() => {
-      toast.success("Link copiado al portapapeles", {
-        position: toast.POSITION.BOTTOM_RIGHT,
-        autoClose: 1500,
-      });
+      alertToast({ message: "Link copiado al portapapeles", type: "success" });
     });
   };
 

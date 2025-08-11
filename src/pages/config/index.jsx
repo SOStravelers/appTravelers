@@ -40,20 +40,17 @@ export default function Profile({ user }) {
         <OutlinedButton
           onClick={() => router.push("/config/subservice")}
           text={"Config Subservicios"}
-          px={8}
-          py="py-2"
-          margin={"my-3"}
+          centerWide
+          margin="mb-3"
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
-          buttonCenter={true}
         />
         <OutlinedButton
           onClick={() => router.push("/config/subservice/create")}
           text={"Crear Subservicio"}
-          px={8}
-          py="py-2"
-          margin={"my-3"}
+          centerWide
+          margin="mb-3"
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
@@ -63,13 +60,11 @@ export default function Profile({ user }) {
         <OutlinedButton
           onClick={() => router.push("/config/matches")}
           text={"Config Partidos"}
-          px={8}
-          py="py-2"
-          margin={"my-3"}
+          centerWide
+          margin="mb-3"
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
-          buttonCenter={true}
         />
         <h2 className=" text-textColor text-md mb-2 mt-8  ml-20">
           2. Reservas y pagos
@@ -77,24 +72,20 @@ export default function Profile({ user }) {
         <OutlinedButton
           onClick={() => router.push("/config/bookings")}
           text={"Agenda de bookings"}
-          px={8}
-          margin={"my-3"}
-          py="py-2"
+          centerWide
+          margin="mb-3"
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
-          buttonCenter={true}
         />
         <OutlinedButton
           onClick={() => router.push("/config/createPaymentLink")}
           text={"Generar Link Stripe"}
-          px={8}
-          margin={"my-3"}
-          py="py-2"
+          centerWide
+          margin="mb-3"
           dark="darkLight"
           textSize="text-sm"
           textColor="text-white"
-          buttonCenter={true}
         />
       </div>
     </div>

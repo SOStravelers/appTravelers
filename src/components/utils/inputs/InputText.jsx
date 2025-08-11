@@ -16,6 +16,18 @@ function InputText({
   marginY = "my-1",
   ...props
 }) {
+  // Wrapper de onChange para bloquear negativos si es number
+  const handleChange = (e) => {
+    if (type === "number") {
+      const val = e.target.value;
+      if (val === "" || Number(val) >= 0) {
+        onChange?.(e);
+      }
+    } else {
+      onChange?.(e);
+    }
+  };
+
   return (
     <div
       className={clsx("relative", marginY)}
@@ -24,10 +36,11 @@ function InputText({
       <input
         type={type}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         onBlur={onBlur}
         placeholder={placeholder}
         disabled={disabled}
+        min={type === "number" ? 0 : undefined} // ← HTML bloquea negativos
         className={clsx(
           "px-3 py-2 rounded-md text-sm transition duration-200 focus:outline-none w-full",
           Icon && "pl-11",
@@ -40,7 +53,7 @@ function InputText({
                 "bg-[var(--color-input)] text-[var(--color-text-color)]",
                 "border-gray-300",
                 "placeholder-[var(--color-text-gray-reverse)]",
-                "[&::placeholder]:opacity-70", // ← esta es la línea clave
+                "[&::placeholder]:opacity-70",
                 "focus:ring-1 focus:ring-[var(--color-text-color)]",
               ],
           className

@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import ConfirmModal from "@/components/utils/modal/ConfirmModal";
 import NewSwitch from "@/components/utils/switch/NewSwitch";
 import "react-toastify/dist/ReactToastify.css";
-
+import InputText from "@/components/utils/inputs/InputText";
 /* ───── helper búsqueda ───── */
 const matchName = (nameObj, term) => {
   if (!term) return true;
@@ -255,11 +255,13 @@ export default function BulkTogglePage() {
   };
 
   /* ---------- UI ---------- */
-  if (loading) return <p className="p-10 text-lg">Cargando…</p>;
+  if (loading) return <p className="p-10 text-textColor text-lg">Cargando…</p>;
 
   return (
     <div className="max-w-5xl mx-auto p-6 my-12 md:mt-20 md:ml-60">
-      <h1 className="text-2xl font-bold mb-4">Servicios y Subservicios</h1>
+      <h1 className="text-2xl text-textColor font-bold mb-4">
+        Servicios y Subservicios
+      </h1>
 
       {/* Buscador */}
       <div className="mb-6 w-full md:w-1/2">
@@ -312,7 +314,7 @@ export default function BulkTogglePage() {
       <table className="w-full border">
         <thead className="bg-gray-100">
           <tr>
-            <th className="p-3 w-10 text-center">
+            <th className="p-3 w-10 bg-backgroundModal text-center">
               <input
                 type="checkbox"
                 checked={isAllChecked}
@@ -324,9 +326,13 @@ export default function BulkTogglePage() {
                 className="accent-green-600 w-4 h-4"
               />
             </th>
-            <th className="p-3 text-left">Nombre</th>
-            <th className="p-3 text-center">Activo</th>
-            <th className="p-3"></th>
+            <th className="p-3 text-textColorGray bg-backgroundModal text-left">
+              Nombre
+            </th>
+            <th className="p-3 text-textColorGray bg-backgroundModal  text-center">
+              Activo
+            </th>
+            <th className="p-3 bg-backgroundModal"></th>
           </tr>
         </thead>
 
@@ -380,7 +386,7 @@ export default function BulkTogglePage() {
                       onClick={() =>
                         router.push(`/config/service/info/${g.service._id}`)
                       }
-                      className="text-blue-600 underline flex items-center gap-1"
+                      className="text-green-700 underline flex items-center gap-1"
                     >
                       <FaEdit className="md:hidden" />
                       <span className="hidden md:inline">Ir a editar</span>
@@ -392,7 +398,7 @@ export default function BulkTogglePage() {
                 {serviceOpen &&
                   g.subservices.map((s) => (
                     <tr key={s._id} className="border-b">
-                      <td className="p-3 text-center">
+                      <td className="p-3  text-center">
                         <input
                           type="checkbox"
                           checked={checked.has(s._id)}
@@ -401,7 +407,7 @@ export default function BulkTogglePage() {
                         />
                       </td>
 
-                      <td className="p-3 pl-8">
+                      <td className="p-3 pl-8 text-textColorGray">
                         {typeof s.name === "string"
                           ? s.name
                           : s.name[language] || s.name.es}
@@ -421,7 +427,7 @@ export default function BulkTogglePage() {
                           onClick={() =>
                             router.push(`/config/subservice/info/${s._id}`)
                           }
-                          className="text-blue-600 underline flex items-center gap-1"
+                          className="text-yellow-700 underline flex items-center gap-1"
                         >
                           <FaEdit className="md:hidden" />
                           <span className="hidden md:inline">Ir a editar</span>

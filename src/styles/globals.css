@@ -348,3 +348,13 @@ body {
 
 @keyframes spin-slow { to { transform: rotate(360deg) } }
 .animate-spin-slow { animation: spin-slow 1.2s linear infinite; }
+
+/* Para inputs con nuestro icono derecho */
+.has-custom-calendar::-webkit-calendar-picker-indicator{
+  opacity:0; /* oculto pero clickeable */
+}
+
+/* (opcional) también quita el botón de limpiar en algunos navegadores */
+.has-custom-calendar::-webkit-clear-button{
+  display:none;
+}

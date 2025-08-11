@@ -4,6 +4,7 @@ import SubserviceService from "@/services/SubserviceService";
 import CategoryService from "@/services/CategoryService";
 import CustomSelector from "@/components/utils/selector/CustomSelector";
 import NewSwitch from "@/components/utils/switch/NewSwitch";
+import InputText from "@/components/utils/inputs/InputText";
 import { useStore } from "@/store";
 import { DateTime } from "luxon";
 import { FaTimes } from "react-icons/fa";
@@ -215,10 +216,12 @@ export default function MatchSubservicesConfigPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 pt-4 mb-32">
-      <h1 className="text-2xl font-bold mb-6">Configuración de Partidos</h1>
+      <h1 className="text-2xl text-textColor font-bold mb-6">
+        Configuración de Partidos
+      </h1>
 
       <div className="mb-6">
-        <label className="font-semibold block mb-1">
+        <label className="font-semibold text-textColorGray block mb-1">
           Selecciona un partido
         </label>
         <CustomSelector
@@ -236,35 +239,39 @@ export default function MatchSubservicesConfigPage() {
         <>
           <div className="grid sm:grid-cols-3 gap-4 mb-8">
             <div>
-              <label className="font-medium block mb-1">
+              <label className="font-medium text-textColorGray block mb-1">
                 Nombre del evento
               </label>
-              <input
+              <InputText
                 className="w-full border rounded px-3 py-2"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
               />
             </div>
             <div>
-              <label className="font-medium block mb-1">
+              <label className="font-medium text-textColorGray block mb-1">
                 Fecha y hora (local)
               </label>
-              <input
+              <InputText
                 className="w-full border rounded px-3 py-2"
                 type="datetime-local"
                 value={localDateTime}
                 onChange={(e) => setLocalDateTime(e.target.value)}
+                textColorClass="text-white"
               />
             </div>
-            <div className="flex items-center mt-6 gap-2">
+            <div className="flex text-textColorGray items-center mt-6 gap-2">
               <label>Disponible:</label>
               <NewSwitch checked={available} onChange={setAvailable} />
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 ">
             {categoriesWithProducts.map((c, i) => (
-              <div key={i} className="bg-white border shadow-sm rounded-lg p-4">
+              <div
+                key={i}
+                className="bg-backgroundModal border shadow-sm rounded-lg p-4"
+              >
                 {!c.category ? (
                   <CustomSelector
                     placeholder="Seleccionar categoría"
@@ -283,8 +290,8 @@ export default function MatchSubservicesConfigPage() {
                   />
                 ) : (
                   <>
-                    <div className="flex justify-between mb-3">
-                      <h2 className="font-semibold text-lg">
+                    <div className="flex justify-between mb-3 ">
+                      <h2 className="font-semibold text-textColorGray text-lg">
                         {c.category.title?.[language]}
                       </h2>
                       <FaTimes
@@ -295,7 +302,7 @@ export default function MatchSubservicesConfigPage() {
                     </div>
                     <div className="flex justify-between mb-10">
                       <div className="flex items-center mt-1 gap-2">
-                        <span className="text-sm text-gray-600 italic">
+                        <span className="text-sm text-textColorGray text-gray-600 italic">
                           Tipo:
                         </span>
                         <CustomSelector
@@ -313,7 +320,7 @@ export default function MatchSubservicesConfigPage() {
                           }
                         />
                       </div>
-                      <div className="text-sm flex items-center gap-2">
+                      <div className="text-sm text-textColorGray flex items-center gap-2">
                         Default:
                         <NewSwitch
                           checked={c.default}
@@ -332,11 +339,13 @@ export default function MatchSubservicesConfigPage() {
                         className="grid grid-cols-1  gap-2 items-center text-sm mb-8"
                       >
                         <div className="grid grid-cols-3  gap-3 items-center text-sm mb-8">
-                          <div className="text-md">
+                          <div className="text-md text-textColorGray">
                             {p.product.name[language]}
                           </div>
                           <div className="flex items-center justify-center">
-                            <div className="mr-1">Default:</div>
+                            <div className="mr-1 text-textColorGray">
+                              Default:
+                            </div>
                             <NewSwitch
                               checked={p.default}
                               onChange={() => handleProductDefault(i, j)}
@@ -351,11 +360,14 @@ export default function MatchSubservicesConfigPage() {
                           </div>
                         </div>
                         {["usd", "eur", "brl"].map((cur) => (
-                          <div key={cur} className="grid grid-cols-3 ">
-                            <label className="text-xs text-gray-600 uppercase">
+                          <div
+                            key={cur}
+                            className="grid grid-cols-3 items-center"
+                          >
+                            <label className="text-xs text-textColorGray uppercase">
                               {cur}
                             </label>
-                            <input
+                            <InputText
                               type="number"
                               value={p.price[cur]}
                               onChange={(e) =>
@@ -395,20 +407,21 @@ export default function MatchSubservicesConfigPage() {
                 )}
               </div>
             ))}
-            <button
-              onClick={addCategory}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-            >
-              Agregar categoría
-            </button>
+            <div className="flex flex-col justify-center items-center">
+              <button
+                onClick={addCategory}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+              >
+                + Categoría
+              </button>
+              <button
+                onClick={handleSave}
+                className=" mt-8 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded"
+              >
+                Guardar cambios
+              </button>
+            </div>
           </div>
-
-          <button
-            onClick={handleSave}
-            className="mt-8 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded"
-          >
-            Guardar cambios
-          </button>
         </>
       )}
     </div>

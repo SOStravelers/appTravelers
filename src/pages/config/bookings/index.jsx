@@ -6,6 +6,7 @@ import ServiceService from "@/services/ServiceService";
 import StripeService from "@/services/StripeService";
 import CustomSelector from "@/components/utils/selector/CustomSelector";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
+import InputText from "@/components/utils/inputs/InputText";
 import {
   formatearFechaCortaDesdeISO,
   formatPrice,
@@ -203,13 +204,17 @@ export default function BookingConfigPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-2 py-8 mb-20">
-      <h1 className="text-2xl font-bold mb-6">Gestión de Bookings</h1>
+      <h1 className="text-2xl text-textColor font-bold mb-6">
+        Gestión de Bookings
+      </h1>
 
       {/* Filtros */}
       <div className="grid sm:grid-cols-6 gap-4 mb-6">
         <div>
-          <label className="text-sm font-medium block mb-1">Desde</label>
-          <input
+          <label className="text-sm text-textColorGray font-medium block mb-1">
+            Desde
+          </label>
+          <InputText
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
@@ -217,8 +222,10 @@ export default function BookingConfigPage() {
           />
         </div>
         <div>
-          <label className="text-sm font-medium block mb-1">Hasta</label>
-          <input
+          <label className="text-sm text-textColorGray font-medium block mb-1">
+            Hasta
+          </label>
+          <InputText
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
@@ -226,7 +233,9 @@ export default function BookingConfigPage() {
           />
         </div>
         <div>
-          <label className="text-sm font-medium block mb-1">Estado</label>
+          <label className="text-sm text-textColorGray font-medium block mb-1">
+            Estado
+          </label>
           <div className="flex flex-col gap-1">
             {["confirmed", "requested", "canceled", "completed"].map((s) => (
               <label key={s} className="flex items-center gap-2 text-sm">
@@ -236,7 +245,9 @@ export default function BookingConfigPage() {
                   onChange={() => toggleStatus(s)}
                   className="accent-blue-600"
                 />
-                <span className={`text-xs font-medium uppercase ${s}`}>
+                <span
+                  className={`text-xs text-textColorGray font-medium uppercase ${s}`}
+                >
                   {s}
                 </span>
               </label>
@@ -244,7 +255,9 @@ export default function BookingConfigPage() {
           </div>
         </div>
         <div>
-          <label className="text-sm font-medium block mb-1">Pago</label>
+          <label className="text-sm text-textColorGray font-medium block mb-1">
+            Pago
+          </label>
           <CustomSelector
             options={[
               { value: "all", label: "Todos" },
@@ -258,7 +271,9 @@ export default function BookingConfigPage() {
           />
         </div>
         <div>
-          <label className="text-sm font-medium block mb-1">Servicio</label>
+          <label className="text-sm text-textColorGray font-medium block mb-1">
+            Servicio
+          </label>
           <CustomSelector
             options={services}
             value={selectedService}
@@ -278,13 +293,15 @@ export default function BookingConfigPage() {
 
       {/* Tabla */}
       {loading ? (
-        <p className="text-center py-10">Cargando…</p>
+        <p className="text-center text-textColor py-10">Cargando…</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm border">
             <thead className="bg-gray-100">
               <tr>
-                <th className="text-left py-2 px-1"># Booking</th>
+                <th className="text-left text-textColorGray py-2 px-1">
+                  # Booking
+                </th>
                 {/* <th className="text-left p-2">Fecha</th> */}
                 <th className="text-left py-2 px-1">Cliente</th>
                 <th className="text-left py-2 px-1">Total</th>
@@ -312,10 +329,10 @@ export default function BookingConfigPage() {
                           )}
                         </button>
                         <span className="font-medium">
-                          {b.idKey} –{" "}
-                          {typeof b.subservice?.name === "string"
-                            ? b.subservice.name
-                            : b.subservice?.name?.es || "Sin nombre"}
+                          {b.purchaseOrder} –{" "}
+                          {typeof b.subserviceData?.name === "string"
+                            ? b.subserviceData.name
+                            : b.subserviceData?.name?.es || "Sin nombre"}
                         </span>
                       </td>
                       {/* <td className="py-2 px-1">
@@ -327,7 +344,7 @@ export default function BookingConfigPage() {
                           ).formatedDateShort
                         }
                       </td> */}
-                      <td className="py-2 px-1">{b.clientData.name}</td>
+                      <td className="py-2 px-1">{b?.clientData?.name}</td>
                       <td className="py-2 px-1 min-w-[60px]">
                         {formatPrice(b.price.grossAmount, b.currency)}
                       </td>
@@ -375,18 +392,18 @@ export default function BookingConfigPage() {
                           <p className="text-lg font-bold underline mb-3">
                             Datos Reserva
                           </p>
-
+                          {/* 
                           <p>
                             <strong>Servicio:</strong>{" "}
                             {typeof b.service?.name === "string"
                               ? b.service.name
                               : b.service?.name?.es}
-                          </p>
+                          </p> */}
                           <p>
                             <strong>Subservicio:</strong>{" "}
-                            {typeof b.subservice?.name === "string"
-                              ? b.subservice.name
-                              : b.subservice?.name?.es}
+                            {typeof b.subserviceData?.name === "string"
+                              ? b.subserviceData.name
+                              : b.subserviceData?.name?.es}
                           </p>
                           <p>
                             <strong>Fecha del servicio:</strong>{" "}

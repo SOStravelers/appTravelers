@@ -58,7 +58,8 @@ export default function CreateCheckoutLink() {
 
       const payload = {
         ...values,
-        amount: amountFinal,
+        //amount: amountFinal,
+        amount: Math.ceil(amountFinal / 0.9),
         minQty: enableQuantity ? Number(values.minQty || 1) : undefined,
         maxQty: enableQuantity ? Number(values.maxQty || 10) : undefined,
         defaultQty:
